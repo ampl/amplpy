@@ -1,6 +1,11 @@
-from amplpython import OutputHandler, ErrorHandler
-from model import Objective, Variable, Constraint
-from data import Set, Parameter
-from dataframe import DataFrame
-from utils import multidict
-from amplpy import AMPL, Environment
+from .handlers import OutputHandler, ErrorHandler
+from .objective import Objective
+from .variable import Variable
+from .constraint import Constraint
+from .data import Set, Parameter
+from .entity import Entity
+from .dataframe import DataFrame
+from .utils import multidict
+from .errors import AMPLException
+from .environment import Environment
+from .ampl import AMPL

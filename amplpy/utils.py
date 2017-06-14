@@ -1,5 +1,5 @@
-import amplpython
-from base import BaseClass
+from . import amplpython
+from .base import BaseClass
 
 
 class Tuple(BaseClass):

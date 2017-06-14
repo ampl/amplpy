@@ -1,7 +1,7 @@
-from base import BaseClass
-from utils import Utils, Tuple
-from iterators import RowIterator, ColIterator
-import amplpython
+from .base import BaseClass
+from .utils import Utils, Tuple
+from .iterators import RowIterator, ColIterator
+from . import amplpython
 
 
 class Row(BaseClass):
@@ -35,6 +35,10 @@ class Column(BaseClass):
 
 
 class DataFrame(BaseClass):
+    """
+    A DataFrame object, used to communicate data to and from the AMPL entities.
+    """
+
     def __init__(self, index, columns, **kwargs):
         if index is not None:
             if isinstance(index, basestring):

@@ -1,6 +1,6 @@
-from entity import Entity
-from utils import Utils
-from iterators import MemberRangeIterator
+from .entity import Entity
+from .utils import Utils
+from .iterators import MemberRangeIterator
 
 
 class Set(Entity):
@@ -11,6 +11,9 @@ class Set(Entity):
             _impl,
             lambda it: MemberRangeIterator(it.members())
         )
+
+    def getValues(self):
+        raise NotImplementedError
 
     @classmethod
     def fromSetRef(cls, setRef):

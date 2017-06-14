@@ -1,4 +1,4 @@
-from utils import Utils, Tuple
+from .utils import Utils, Tuple
 
 
 class MapIterator:
