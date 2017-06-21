@@ -1,0 +1,33 @@
+
+model trnloc2a.mod;
+data trnloc2.dat;
+
+
+
+param LB; param UB;
+
+param slack {CITY};
+param scale  default 1;
+param norm;
+param step;
+
+param same  default 0;
+param same_limit := 3;
+
+param iter_limit := 20;
+param LBlog {0..iter_limit}; 
+param UBlog {0..iter_limit}; 
+param scalelog {1..iter_limit};
+param steplog {1..iter_limit};
+
+problem LowerBound: Build, Ship, Supply, Limit, Lagrangian;
+problem UpperBound: Ship, Supply, Demand, Limit, Shipping_Cost;
+
+
+if (1 == 1) then {
+  include trnloc2a.run
+}
+
+if (1 == 1) then {
+  include trnloc2a.run
+}

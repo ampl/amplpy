@@ -1,0 +1,25 @@
+
+param liabilities :=
+1 0
+2 1000
+3 1200
+4 1250;
+
+param income :=
+1 100000
+2 0
+3 0
+4 0;
+
+param target :=
+1 0
+2 100000
+3 110000
+4 121000;
+
+ 
+
+table tbl_prices IN , 'prices360.bit': [tp,assets,scen], price;
+read table tbl_prices;
+
+

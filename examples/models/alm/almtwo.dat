@@ -1,0 +1,12 @@
+
+ 
+
+table tbl_prices360 IN 'ODBC', '.\alm.mdb': [tp,assets,scen], price;
+table tbl_liabs IN 'ODBC', '.\alm.mdb': [tp], liabilities ~ liability;
+table tbl_incomes IN 'ODBC', '.\alm.mdb': [tp], income;
+table tbl_targets IN 'ODBC', '.\alm.mdb': [tp], target;
+
+read table tbl_prices360;
+read table tbl_liabs ;
+read table tbl_incomes ;
+read table tbl_targets ;

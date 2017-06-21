@@ -1,0 +1,8 @@
+table assets IN (data_dir & "/assets.bit"):
+  asset <-[asset];
+
+table indret IN (data_dir & "/indret.bit"):
+  rtime <-[rtime], indret;
+
+table returns IN (data_dir & "/returns.bit"):
+  [TIME, asset], astret;

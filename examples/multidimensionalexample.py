@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+from __future__ import print_function
+import sys
+import os
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+)
+
+
+def main(argc, argv):
+    from amplpy import AMPL, DataFrame
+    os.chdir(os.path.dirname(__file__) or os.curdir)
+    try:
+        ampl = AMPL()
+        ampl.eval("set CITIES; set LINKS within (CITIES cross CITIES);")
+        ampl.eval("param cost {LINKS} >= 0; param capacity {LINKS} >= 0;")
+        ampl.eval("data; set CITIES := PITT NE SE BOS EWR BWI ATL MCO;")
+
+        cost = [2.5, 3.5, 1.7, 0.7, 1.3, 1.3, 0.8, 0.2, 2.1]
+        capacity = [250, 250, 100, 100, 100, 100, 100, 100, 100]
+        LinksFrom = ["PITT", "PITT", "NE", "NE", "NE", "SE", "SE", "SE", "SE"]
+        LinksTo = ["NE", "SE", "BOS", "EWR", "BWI", "EWR", "BWI", "ATL", "MCO"]
+
+        df = DataFrame(("LINKSFrom", "LINKSTo"), ("cost", "capacity"))
+        df.setColumn("LINKSFrom", LinksFrom)
+        df.setColumn("LINKSTo", LinksTo)
+        df.setColumn("cost", cost)
+        df.setColumn("capacity", capacity)
+        print(df)
+
+        ampl.setData(df, "LINKS")
+    except Exception as e:
+        print(e)
+        raise
+
+
+if __name__ == '__main__':
+    main(len(sys.argv), sys.argv)
