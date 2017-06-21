@@ -1,5 +1,6 @@
 from .base import BaseClass
 from .utils import Tuple
+from .dataframe import DataFrame
 from .iterators import EntityIterator
 
 
@@ -55,8 +56,8 @@ class Entity(BaseClass):
 
     def indexarity(self):
         """
-        Get the indexarity of this entity (sum of the dimensions of the indexing
-        sets).
+        Get the indexarity of this entity (sum of the dimensions of the
+        indexing sets).
         This value indicates the arity of the tuple to be passed to the method
         :func:`~amplpy.Entity.get` in order to access an instance of this
         entity. See the following AMPL examples:
@@ -117,12 +118,14 @@ class Entity(BaseClass):
           apply to indexed sets. See :func:`~amplpy.Set.getValues`.
 
         Retruns:
-            A :class:`~amplpy.DataFrame` containing the values for all instances.
+            A :class:`~amplpy.DataFrame` containing the values for all
+            instances.
         """
         if suffixes is None:
-            raise NotImplementedError
+            return DataFrame.fromDataFrameRef(self._impl.getValues())
         else:
-            raise NotImplementedError
+            suffixes = list(map(str, suffixes))
+            return DataFrame.fromDataFrameRef(self._impl.getValues(suffixes))
 
     def setValues(self, data):
         """

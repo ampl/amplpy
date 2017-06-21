@@ -11,6 +11,10 @@ class MapIterator:
     def __iter__(self):
         return self
 
+    def __getitem__(self, key):
+        assert isinstance(key, basestring)
+        return self.function(self.entity.getIndex(key))
+
     def next(self):
         if self.it.equals(self.end):
             raise StopIteration

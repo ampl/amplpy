@@ -24,11 +24,11 @@ class Objective(Entity):
     def __init__(self, _impl):
         Entity.__init__(self, _impl, Objective)
 
-    def value(self, value):
+    def value(self):
         """
         Get the value of the objective.
         """
-        return self._impl.value(value)
+        return self._impl.value()
 
     def astatus(self):
         """

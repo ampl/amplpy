@@ -2,7 +2,8 @@
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
-from .data import Set, Parameter
+from .set import Set
+from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import MapEntities
 from . import amplpython
@@ -311,7 +312,7 @@ class AMPL:
         Args:
           callback: Callback to be executed when the solver is done.
         """
-        raise NotImplementedError
+        raise self._impl.solveAsync(callback)
 
     def interrupt(self):
         """
@@ -435,7 +436,7 @@ class AMPL:
         """
         return self._impl.getValue(scalarExpression)
 
-    def setData(self, dataframe):
+    def setData(self, dataFrame, setName=None):
         """
         Assign the data in the dataframe to the AMPL entities with the names
         corresponding to the column names.
@@ -443,10 +444,44 @@ class AMPL:
         Args:
             dataFrame: The dataframe containing the data to be assigned.
 
+            setName: The name of the set to which the indices values of the
+            DataFrame are to be assigned.
+
         Raises:
             AMPLException: if the data assignment procedure was not successful.
         """
-        self._impl.setData(dataframe._impl)
+        if setName is None:
+            self._impl.setData(dataFrame._impl)
+        else:
+            self._impl.setData(dataFrame._impl, setName)
+
+    def readTable(self, tableName):
+        """
+        Read the table corresponding to the specified name, equivalent to the
+        AMPL statement:
+
+        .. code-block:: ampl
+
+            read table tableName;
+
+        Args:
+            tableName: Name of the table to be read.
+        """
+        self._impl.readTable(tableName)
+
+    def writeTable(self, tableName):
+        """
+        Write the table corresponding to the specified name, equivalent to the
+        AMPL statement
+
+        .. code-block:: ampl
+
+            write table tableName;
+
+        Args:
+            tableName: Name of the table to be written.
+        """
+        self._impl.writeTable(tableName)
 
     def display(self, *amplExpressions):
         """

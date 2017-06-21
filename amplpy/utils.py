@@ -33,11 +33,18 @@ class Tuple(BaseClass):
 
 class Utils:
     @staticmethod
-    def toVariantArray(list):
-        va = amplpython.VariantArray(len(list))
-        for i in xrange(len(list)):
-            va[i] = amplpython.Variant(list[i])
+    def toVariantArray(lst):
+        va = amplpython.VariantArray(len(lst))
+        for i in xrange(len(lst)):
+            va[i] = amplpython.Variant(lst[i])
         return va
+
+    @staticmethod
+    def toTupleArray(lst):
+        ta = amplpython.TupleArray(len(lst))
+        for i in xrange(len(lst)):
+            ta[i] = Tuple(lst[i])._impl
+        return ta
 
     @staticmethod
     def castVariant(variant):
