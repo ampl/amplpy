@@ -41,12 +41,26 @@ def main(argc, argv):
             Class used as an output handler. It only prints the solver output.
             Must implement :class:`amplpy.OutputHandler`.
             """
-            def output(self, kind, text):
-                if kind == amplpy.output.SOLVE:
-                    print('Solver: {}'.format(output))
+            def output(self, kind, msg):
+                if kind == amplpy.Kind.SOLVE:
+                    print('Solver: {}'.format(msg))
+                # print('Kind: {}'.format(kind))
+                # print('Text: {}'.format(msg))
 
+        class MyErrorHandler(amplpy.ErrorHandler):
+            def error(self, exception):
+                print('Error:', exception.getMessage())
+
+            def warning(self, exception):
+                print('Warning:', exception.getMessage())
+
+        # Create an output handler
         outputHandler = MyOutputHandler()
         ampl.setOutputHandler(outputHandler)
+
+        # Create an error handler
+        errorHandler = MyErrorHandler()
+        ampl.setErrorHandler(errorHandler)
 
         class MyInterpretIsOver(amplpy.Runnable):
             """
@@ -59,6 +73,7 @@ def main(argc, argv):
 
         # Create the callback object
         callback = MyInterpretIsOver()
+
         print("Main thread: Model setup complete. Solve on worker thread.")
         # Initiate the async solution process, passing the callback object
         # as a parameter.
@@ -66,11 +81,10 @@ def main(argc, argv):
         # solution process will be completed.
         ampl.solveAsync(callback)
 
-        # Wait for the solution to complete (achieved by waiting on the
-        # std::condition_variable isdone
+        # Wait for the solution to complete
         print("Main thread: Waiting for solution to end...")
         start = time()
-        mutex.acquire()
+        # mutex.acquire()
         duration = time() - start
 
         print("Main thread: done waiting.")
@@ -81,10 +95,11 @@ def main(argc, argv):
         print("Main thread: waited for {} s".format(duration))
         # Print the objective value
         print("Main thread: cost: {}".format(ampl.getValue('cst')))
-
     except Exception as e:
-        print(e)
-        raise
+        print("---")
+        print(e, type(e))
+        print("---")
+        # raise
 
 
 if __name__ == '__main__':

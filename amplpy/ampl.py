@@ -506,7 +506,7 @@ class AMPL:
             outputhandler: The function handling the AMPL output derived from
             interpreting user commands.
         """
-        self._outputhandler = outputhandler
+        # self._outputhandler = outputhandler
         self._impl.setOutputHandler(outputhandler)
 
     def setErrorHandler(self, errorhandler):
@@ -516,7 +516,7 @@ class AMPL:
         Args:
             errorhandler: The object handling AMPL errors and warnings.
         """
-        self._errorhandler = errorhandler
+        # self._errorhandler = errorhandler
         self._impl.setErrorHandler(errorhandler)
 
     def getOutputHandler(self):

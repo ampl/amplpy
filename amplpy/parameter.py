@@ -95,7 +95,8 @@ class Parameter(Entity):
         Set the value of a single instance of this parameter.
 
         Args:
-            *args: value if the parameter is scalar, index and value otherwise.
+            \*args: value if the parameter is scalar, index and value
+            otherwise.
 
         Raises:
             RunTimeError: If the entity has been deleted in the underlying

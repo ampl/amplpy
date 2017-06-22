@@ -2,4 +2,15 @@ from . import amplpython
 
 
 class Runnable(amplpython.Runnable):
-    pass
+    """
+    Represent an object with only one function, which is called as a callback
+    after an async execution has finished. Inherit from this class and use an
+    instance in :func:`~amplpy.AMPL.evalAsync`, :func:`~amplpy.AMPL.readAsync`,
+    :func:`~amplpy.AMPL.readDataAsync`, :func:`~amplpy.AMPL.solveAsync`.
+    """
+
+    def run(self):
+        """
+        Function called when the execution of the async operation is finished.
+        """
+        pass

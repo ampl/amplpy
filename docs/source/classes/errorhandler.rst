@@ -1,9 +1,9 @@
-.. _ref::ErrorHandler:
+.. _ref::Runnable:
 
-ErrorHandler
-------------
+Runnable
+--------
 
-.. autoclass:: amplpy.ErrorHandler
+.. autoclass:: amplpy.Runnable
   :member-order: bysource
   :members:
   :undoc-members:

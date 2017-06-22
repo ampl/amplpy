@@ -8,3 +8,10 @@ OutputHandler
   :members:
   :undoc-members:
   :special-members:
+
+
+.. autoclass:: amplpy.Kind
+  :member-order: bysource
+  :members:
+  :undoc-members:
+  :special-members:

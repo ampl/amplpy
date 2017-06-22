@@ -17,6 +17,7 @@ in namespace ``amplpy``. For brevity the namespace will be omitted.
    classes/environment
    classes/errorhandler
    classes/outputhandler
+   classes/runnable
 
 
 .. _secPythonAlgebraicEntitiesReference:
