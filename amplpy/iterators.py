@@ -1,7 +1,7 @@
 from .utils import Utils, Tuple
 
 
-class MapIterator:
+class Iterator:
     def __init__(self, function, entity):
         self.entity = entity
         self.it = entity.begin()
@@ -22,9 +22,15 @@ class MapIterator:
         self.it.postIncrement()
         return toReturn
 
+    def size(self):
+        return int(self.entity.size())
+
+    def __len__(self):
+        return self.size()
+
 
 def EntityIterator(entity, entityClass):
-    return MapIterator(
+    return Iterator(
         lambda it: (
             Tuple.fromTupleRef(it.first()).toPyObj(),
             entityClass(it.second())
@@ -35,7 +41,7 @@ def EntityIterator(entity, entityClass):
 
 def MemberRangeIterator(entity):
     """Iterator for set members."""
-    return MapIterator(
+    return Iterator(
         lambda it: Tuple.fromTupleRef(it.__ref__()).toPyObj(),
         entity
     )
@@ -43,28 +49,28 @@ def MemberRangeIterator(entity):
 
 def EnvIterator(entity):
     """Iterator for environment classes."""
-    return MapIterator(
+    return Iterator(
         lambda it: (it.first(), it.second()),
         entity
     )
 
 
 def MapEntities(function, entity):
-    return MapIterator(
+    return Iterator(
         lambda it: function(it.__ref__()),
         entity
     )
 
 
 def ColIterator(entity):
-    return MapIterator(
+    return Iterator(
         lambda it: Utils.castVariantRef(it.__ref__()),
         entity
     )
 
 
 def RowIterator(entity):
-    return MapIterator(
+    return Iterator(
         lambda it: Utils.castVariantRef(it.__ref__()),
         entity
     )

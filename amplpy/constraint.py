@@ -39,7 +39,10 @@ class Constraint(Entity):
         available for logical constraints are marked on the method description
         by "Valid only for logical constraints".
         """
-        self._impl.isLogical()
+        try:
+            self._impl.isLogical()
+        except AttributeError:
+            return False
 
     def drop(self):
         """
@@ -175,7 +178,7 @@ class Constraint(Entity):
 
         Note that dual values are often reset by the underlying AMPL
         interpreter by the presolve functionalities triggered by some methods.
-        A possible workaround is to set the option `presolve` to `false`
+        A possible workaround is to set the option `presolve` to `False`
         (see :func:`~amplpy.AMPL.setOption`).
 
         Args:
@@ -187,4 +190,7 @@ class Constraint(Entity):
         """
         Get the AMPL val suffix. Valid only for logical constraints.
         """
-        return self._impl.val()
+        if self.isLogical():
+            return self._impl.val()
+        else:
+            return None

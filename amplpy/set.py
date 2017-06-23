@@ -30,6 +30,9 @@ class Set(Entity):
             lambda it: MemberRangeIterator(it.members())
         )
 
+    def __len__(self):
+        return self.size()
+
     def instances(self):
         """
         Get an iterator to iterate over all the instances in a Set.
@@ -60,8 +63,7 @@ class Set(Entity):
         """
         Get the number of tuples in this set. Valid only for non-indexed sets.
         """
-        # return self._impl.size()
-        raise NotImplementedError
+        return int(self._impl.size())
 
     def contains(self, t):
         """
