@@ -5,7 +5,7 @@ from .constraint import Constraint
 from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
-from .iterators import MapEntities
+from .iterators import EntityIterator
 from . import amplpython
 
 
@@ -176,7 +176,7 @@ class AMPL:
         Raises:
             OutOfRangeException: if the specified set does not exist.
         """
-        return Set.fromSetRef(self._impl.getSet(name))
+        return Set(self._impl.getSet(name))
 
     def getParameter(self, name):
         """
@@ -188,7 +188,7 @@ class AMPL:
         Raises:
             OutOfRangeException: if the specified parameter does not exist.
         """
-        return Parameter.fromParameterRef(self._impl.getParameter(name))
+        return Parameter(self._impl.getParameter(name))
 
     def eval(self, amplstatements):
         """
@@ -543,30 +543,28 @@ class AMPL:
         """
         Get all the variables declared.
         """
-        return MapEntities(Variable, self._impl.getVariables())
+        return EntityIterator(self._impl.getVariables(), Variable)
 
     def getConstraints(self):
         """
         Get all the constraints declared.
         """
-        return MapEntities(Constraint, self._impl.getConstraints())
+        return EntityIterator(self._impl.getConstraints(), Constraint)
 
     def getObjectives(self):
         """
         Get all the objectives declared.
         """
-        return MapEntities(Objective, self._impl.getObjectives())
+        return EntityIterator(self._impl.getObjectives(), Objective)
 
     def getSets(self):
         """
         Get all the sets declared.
         """
-        return MapEntities(Set.fromSetRef, self._impl.getSets())
+        return EntityIterator(self._impl.getSets(), Set)
 
     def getParameters(self):
         """
         Get all the parameters declared.
         """
-        return MapEntities(
-            Parameter.fromParameterRef, self._impl.getParameters()
-        )
+        return EntityIterator(self._impl.getParameters(), Parameter)

@@ -22,8 +22,7 @@ class Set(Entity):
     :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, *args, **kwargs):
-        _impl = kwargs.get('_impl', None)
+    def __init__(self, _impl):
         Entity.__init__(
             self,
             _impl,
@@ -37,20 +36,19 @@ class Set(Entity):
         """
         Get an iterator to iterate over all the instances in a Set.
         """
-        # return EntityIterator(self._impl.instances(), Set)
-        raise NotImplementedError
+        return Entity.instances(self)
 
     def arity(self):
         """
         The arity of s, or number of components in each member of this set.
         """
-        return self._impl.arity()
+        return int(self._impl.arity())
 
     def getValues(self):
         """
         Get values of this set in a DataFrame. Valid only for non-indexed sets.
         """
-        raise NotImplementedError
+        return Entity.getValues(self)
 
     def members(self):
         """
@@ -75,6 +73,7 @@ class Set(Entity):
         """
         raise NotImplementedError
 
+    '''
     def setValues(self, values):
         """
         Set the tuples in this set. Valid only for non-indexed sets.
@@ -110,13 +109,4 @@ class Set(Entity):
         else:
             raise TypeError
         raise NotImplementedError
-
-    def getValues(self):
-        """
-        Get all the tuples in this set instance in a DataFrame.
-        """
-        raise NotImplementedError
-
-    @classmethod
-    def fromSetRef(cls, setRef):
-        return cls(_impl=setRef)
+    '''

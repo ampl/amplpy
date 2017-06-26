@@ -145,6 +145,25 @@ class EntityTestSuite(TestBase.TestBase):
             con.setDual(0)
             self.assertEqual(con.val(), None)
 
+    def testSet(self):
+        loadDietModel(self.ampl)
+        ampl = self.ampl
+        self.assertEqual(
+            ampl.getSet('NUTR').size(),
+            len(ampl.getSet('NUTR'))
+        )
+        for name, st in ampl.getSets():
+            self.assertTrue(isinstance(st.arity(), int))
+            self.assertEqual(st.arity(), 1)
+            self.assertTrue(isinstance(st.size(), int))
+            self.assertEqual(st.size(), len(st))
+            print('$$$$', st.instances())
+            self.assertEqual(len(st.instances()), 1)
+            self.assertEqual(
+                len(dict(st.instances())),
+                len(list(st.instances()))
+            )
+
 
 if __name__ == '__main__':
     unittest.main()

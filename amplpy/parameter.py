@@ -14,8 +14,7 @@ class Parameter(Entity):
     :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, *args, **kwargs):
-        _impl = kwargs.get('_impl', None)
+    def __init__(self, _impl):
         Entity.__init__(
             self,
             _impl,
@@ -49,6 +48,7 @@ class Parameter(Entity):
         """
         return self._impl.hasDefault()
 
+    '''
     def setValues(self, values):
         """
         Assign the values (string or float) to the parameter instances with the
@@ -89,6 +89,7 @@ class Parameter(Entity):
             raise NotImplementedError
         else:
             raise TypeError
+    '''
 
     def set(self, *args):
         """
@@ -112,7 +113,3 @@ class Parameter(Entity):
         else:
             index, value = args
             self._impl.set(index, value)
-
-    @classmethod
-    def fromParameterRef(cls, prameterRef):
-        return cls(_impl=prameterRef)

@@ -41,7 +41,7 @@ def main(argc, argv):
         ampl.setOption('relax_integrality', True)
         # Solve the problem
         ampl.solve()
-        objectives = list(ampl.getObjectives())
+        objectives = list(obj for name, obj in ampl.getObjectives())
         assert objectives[0].value() == ampl.getObjective('cst').value()
         print("QP objective value", ampl.getObjective('cst').value())
 

@@ -45,7 +45,7 @@ class VariableTestSuite(TestBase.TestBase):
         self.assertEqual(ampl.getSet('yy').numInstances(), 8)
         self.assertEqual(ampl.getSet('zz').numInstances(), 8)
         self.assertEqual(
-            max(s.numInstances() for s in ampl.getSets()), 8
+            max(s.numInstances() for name, s in ampl.getSets()), 8
         )
 
     def testParameterIterators(self):
@@ -85,7 +85,7 @@ class VariableTestSuite(TestBase.TestBase):
         self.assertEqual(ampl.getParameter('yy').numInstances(), 8)
         self.assertEqual(ampl.getParameter('zz').numInstances(), 8)
         self.assertEqual(
-            max(p.numInstances() for p in ampl.getParameters()), 8
+            max(p.numInstances() for name, p in ampl.getParameters()), 8
         )
 
     def testVariableIterators(self):
@@ -125,7 +125,7 @@ class VariableTestSuite(TestBase.TestBase):
         self.assertEqual(ampl.getVariable('yy').numInstances(), 8)
         self.assertEqual(ampl.getVariable('zz').numInstances(), 8)
         self.assertEqual(
-            max(var.numInstances() for var in ampl.getVariables()), 8
+            max(var.numInstances() for name, var in ampl.getVariables()), 8
         )
 
     def testConstraintIterators(self):
@@ -164,7 +164,7 @@ class VariableTestSuite(TestBase.TestBase):
         self.assertEqual(ampl.getConstraint('c_z').numInstances(), 4)
         self.assertEqual(ampl.getConstraint('c_xx').numInstances(), 4)
         self.assertEqual(
-            max(con.numInstances() for con in ampl.getConstraints()), 4
+            max(con.numInstances() for name, con in ampl.getConstraints()), 4
         )
 
     def testObjectiveIterators(self):
@@ -203,7 +203,7 @@ class VariableTestSuite(TestBase.TestBase):
         self.assertEqual(ampl.getObjective('c_z').numInstances(), 4)
         self.assertEqual(ampl.getObjective('c_xx').numInstances(), 4)
         self.assertEqual(
-            max(obj.numInstances() for obj in ampl.getObjectives()), 4
+            max(obj.numInstances() for name, obj in ampl.getObjectives()), 4
         )
 
 
