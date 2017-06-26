@@ -21,6 +21,9 @@ class Parameter(Entity):
             lambda it: Utils.castVariantRef(it)
         )
 
+    def __setitem__(self, index, value):
+        self.set(index, value)
+
     def isSymbolic(self):
         """
         Returns True if the parameter is declared as symbolic (can store both
@@ -47,6 +50,40 @@ class Parameter(Entity):
             True.
         """
         return self._impl.hasDefault()
+
+    def value(self):
+        """
+        Get the value of this parameter. Valid only for non-indexed parameters.
+        """
+        return self.get()
+
+    def set(self, *args):
+        """
+        Set the value of a single instance of this parameter.
+
+        Args:
+            \*args: value if the parameter is scalar, index and value
+            otherwise.
+
+        Raises:
+            RunTimeError: If the entity has been deleted in the underlying
+            AMPL.
+
+            LogicError: If the parameter is not scalar and the index is not
+            provided.
+        """
+        assert len(args) in (1, 2)
+        if len(args) == 1:
+            value = args[0]
+            self._impl.set(value)
+        else:
+            index, value = args
+            if isinstance(value, (float, int)):
+                self._impl.setTplDbl(Tuple(index)._impl, value)
+            elif isinstance(value, basestring):
+                self._impl.setTplStr(Tuple(index)._impl, value)
+            else:
+                raise TypeError
 
     def setValues(self, values):
         """
@@ -86,26 +123,3 @@ class Parameter(Entity):
                 raise TypeError
         else:
             Entity.setValues(self, values)
-
-    def set(self, *args):
-        """
-        Set the value of a single instance of this parameter.
-
-        Args:
-            \*args: value if the parameter is scalar, index and value
-            otherwise.
-
-        Raises:
-            RunTimeError: If the entity has been deleted in the underlying
-            AMPL.
-
-            LogicError: If the parameter is not scalar and the index is not
-            provided.
-        """
-        assert len(args) in (1, 2)
-        if len(args) == 1:
-            value = args[0]
-            self._impl.set(value)
-        else:
-            index, value = args
-            self._impl.set(index, value)

@@ -55,6 +55,10 @@ class Utils:
             return variant.str()
 
     @staticmethod
+    def castStringArray(sarray):
+        return [sarray.getIndex(i) for i in range(sarray.size())]
+
+    @staticmethod
     def castVariantRef(variantref):
         return Utils.castVariant(amplpython.Variant(variantref))
 

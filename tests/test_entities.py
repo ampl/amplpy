@@ -174,6 +174,51 @@ class EntityTestSuite(TestBase.TestBase):
         ampl.getSet('T')[2].setValues(['1', 2])
         # ampl.getSet('T2').setValues([(1, 2)])  # FIXME: wrong arity?
 
+    def testParameter(self):
+        loadDietModel(self.ampl)
+        ampl = self.ampl
+        self.assertEqual(
+            ampl.getSet('FOOD').size(),
+            ampl.getParameter('cost').numInstances()
+        )
+        ampl.eval('''
+            param a;
+            param b default a;
+            param c symbolic;
+        ''')
+        self.assertFalse(ampl.getParameter('a').hasDefault())
+        self.assertTrue(ampl.getParameter('b').hasDefault())
+        self.assertFalse(ampl.getParameter('a').isSymbolic())
+        self.assertFalse(ampl.getParameter('b').isSymbolic())
+        self.assertTrue(ampl.getParameter('c').isSymbolic())
+        cost = ampl.getParameter('cost')
+        self.assertEqual(cost.indexarity(), 1)
+        self.assertEqual(cost.getIndexingSets(), ['FOOD'])
+        for i, food in enumerate(ampl.getSet('FOOD').members()):
+            cost[food] = i+1
+            self.assertEqual(cost[food], i+1)
+            cost.set(food, i+2)
+            self.assertEqual(cost[food], i+2)
+        a = ampl.getParameter('a')
+        a.set(10)
+        self.assertEqual(a.value(), 10)
+        c = ampl.getParameter('c')
+        b = ampl.getParameter('c')
+        c.set('a')
+        self.assertEqual(c.value(), 'a')
+        self.assertEqual(b.value(), 'a')
+        self.assertEqual(b.indexarity(), 0)
+        self.assertEqual(a.isScalar(), True)
+        self.assertEqual(b.isScalar(), True)
+        self.assertEqual(c.isScalar(), True)
+        self.assertEqual(cost.isScalar(), False)
+        ampl.eval('param cost2{FOOD};')
+        self.assertTrue(isinstance(cost.getValues(), amplpy.DataFrame))
+        cost2 = ampl.getParameter('cost2')
+        cost2.setValues(cost.getValues())
+        for food in ampl.getSet('FOOD').members():
+            self.assertEqual(cost2[food], cost[food])
+
 
 if __name__ == '__main__':
     unittest.main()

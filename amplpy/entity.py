@@ -113,8 +113,7 @@ class Entity(BaseClass):
             The string representation of the indexing sets for this entity or
             an empty array if the entity is scalar.
         """
-        # return self._impl.getIndexingSets()
-        raise NotImplementedError
+        return Utils.castStringArray(self._impl.getIndexingSets())
 
     def getValues(self, suffixes=None):
         """
@@ -161,6 +160,6 @@ class Entity(BaseClass):
             data: The data to set the entity to.
         """
         if isinstance(data, DataFrame):
-            self._impl.setValues(data._impl)
+            self._impl.setValuesDf(data._impl)
         else:
             raise TypeError
