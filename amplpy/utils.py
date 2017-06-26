@@ -3,10 +3,11 @@ from .base import BaseClass
 
 
 class Tuple(BaseClass):
-    def __init__(self, *args, **kwargs):
-        if len(args) != 0:
-            va = Utils.toVariantArray(list(args))
-            self._impl = amplpython.Tuple.Factory(va, len(args))
+    def __init__(self, values=None, **kwargs):
+        if values is not None:
+            values = Utils.castToList(values)
+            va = Utils.toVariantArray(values)
+            self._impl = amplpython.Tuple.Factory(va, len(values))
         else:
             self._impl = kwargs.get('_impl', None)
 

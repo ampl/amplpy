@@ -48,7 +48,6 @@ class Parameter(Entity):
         """
         return self._impl.hasDefault()
 
-    '''
     def setValues(self, values):
         """
         Assign the values (string or float) to the parameter instances with the
@@ -78,18 +77,15 @@ class Parameter(Entity):
                 raise TypeError
         elif isinstance(values, (list, set)):
             if any(isinstance(value, basestring) for value in values):
-                values = list(map(str, values))
-                print(values)
+                values = list(map(str, data))
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, (float, int)) for value in values):
                 values = list(map(float, values))
-                print(values)
                 self._impl.setValuesDbl(values, len(values))
-        elif isinstance(values, DataFrame):
-            raise NotImplementedError
+            else:
+                raise TypeError
         else:
-            raise TypeError
-    '''
+            Entity.setValues(self, values)
 
     def set(self, *args):
         """

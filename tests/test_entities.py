@@ -66,7 +66,7 @@ class EntityTestSuite(TestBase.TestBase):
         ampl.solve()
         self.assertEqual(
             ampl.getVariable('Buy').numInstances(),
-            len(ampl.getSet('FOOD'))
+            ampl.getSet('FOOD').size()
         )
         f_min = ampl.getParameter('f_min')
         f_max = ampl.getParameter('f_max')
@@ -115,7 +115,7 @@ class EntityTestSuite(TestBase.TestBase):
         ampl.solve()
         self.assertEqual(
             ampl.getConstraint('diet').numInstances(),
-            len(ampl.getSet('NUTR'))
+            ampl.getSet('NUTR').size()
         )
         for index, con in ampl.getConstraint('diet'):
             self.assertTrue(isinstance(con.isLogical(), bool))
@@ -150,19 +150,29 @@ class EntityTestSuite(TestBase.TestBase):
         ampl = self.ampl
         self.assertEqual(
             ampl.getSet('NUTR').size(),
-            len(ampl.getSet('NUTR'))
+            len(ampl.getSet('NUTR').members()),
         )
+        self.assertEqual(
+            len(ampl.getSet('NUTR').members()),
+            len(list(ampl.getSet('NUTR').members()))
+        )
+        self.assertTrue(ampl.getSet('NUTR').contains('A'))
+        self.assertTrue(ampl.getSet('NUTR').contains(('B1',)))
+        self.assertFalse(ampl.getSet('NUTR').contains('X'))
         for name, st in ampl.getSets():
             self.assertTrue(isinstance(st.arity(), int))
             self.assertEqual(st.arity(), 1)
             self.assertTrue(isinstance(st.size(), int))
-            self.assertEqual(st.size(), len(st))
-            print('$$$$', st.instances())
             self.assertEqual(len(st.instances()), 1)
             self.assertEqual(
                 len(dict(st.instances())),
                 len(list(st.instances()))
             )
+            self.assertTrue(isinstance(st.arity(), int))
+        ampl.eval('model; set T{1..2}; set T2;')
+        ampl.getSet('T')[1].setValues([1, 2])
+        ampl.getSet('T')[2].setValues(['1', 2])
+        # ampl.getSet('T2').setValues([(1, 2)])  # FIXME: wrong arity?
 
 
 if __name__ == '__main__':

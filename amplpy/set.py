@@ -1,5 +1,5 @@
 from .entity import Entity
-from .utils import Utils
+from .utils import Utils, Tuple
 from .dataframe import DataFrame
 from .iterators import EntityIterator, MemberRangeIterator
 
@@ -23,14 +23,7 @@ class Set(Entity):
     """
 
     def __init__(self, _impl):
-        Entity.__init__(
-            self,
-            _impl,
-            lambda it: MemberRangeIterator(it.members())
-        )
-
-    def __len__(self):
-        return self.size()
+        Entity.__init__(self, _impl, Set)
 
     def instances(self):
         """
@@ -54,8 +47,8 @@ class Set(Entity):
         """
         Get members (tuples) of this Set. Valid only for non-indexed sets.
         """
-        # return self._impl.members()
-        raise NotImplementedError
+        # FIXME: _impl.members() is missing
+        return MemberRangeIterator(self._impl.get().members(), self.size)
 
     def size(self):
         """
@@ -71,9 +64,8 @@ class Set(Entity):
         Args:
             t: Tuple to be found.
         """
-        raise NotImplementedError
+        return self._impl.contains(Tuple(t)._impl)
 
-    '''
     def setValues(self, values):
         """
         Set the tuples in this set. Valid only for non-indexed sets.
@@ -103,10 +95,15 @@ class Set(Entity):
             AA.setValues(A.getValues())  # A has now the members {1, 2}
         """
         if isinstance(values, (list, set)):
-            pass
-        if isinstance(values, DataFrame):
-            pass
+            if any(isinstance(value, basestring) for value in values):
+                values = list(map(str, values))
+                self._impl.setValuesStr(values, len(values))
+            elif all(isinstance(value, (float, int)) for value in values):
+                values = list(map(float, values))
+                self._impl.setValuesDbl(values, len(values))
+            elif all(isinstance(value, tuple) for value in values):
+                self._impl.setValues(Utils.toTupleArray(values), len(values))
+            else:
+                raise TypeError
         else:
-            raise TypeError
-        raise NotImplementedError
-    '''
+            Entity.setValues(self, values)

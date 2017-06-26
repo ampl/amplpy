@@ -137,7 +137,7 @@ class DataFrame(BaseClass):
             value: A tuple containing all the values for the row to be added.
         """
         assert len(value) == self.getNumCols()
-        self._impl.addRow(Tuple(*value)._impl)
+        self._impl.addRow(Tuple(value)._impl)
 
     def addColumn(self, header, values=[]):
         """
@@ -201,8 +201,7 @@ class DataFrame(BaseClass):
         Returns:
             The row.
         """
-        key = Utils.castToList(key)
-        return Row.fromRowRef(self._impl.getRow(Tuple(*key)._impl))
+        return Row.fromRowRef(self._impl.getRow(Tuple(key)._impl))
 
     def getRowByIndex(self, index):
         """

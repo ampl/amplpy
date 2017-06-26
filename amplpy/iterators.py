@@ -28,7 +28,7 @@ class EntityIterator(Iterator):
         def pair(it):
             entity = entityClass(it.__ref__())
             return (entity.name(), entity)
-        return Iterator.__init__(self, obj, pair)
+        Iterator.__init__(self, obj, pair)
 
     def size(self):
         return int(self.obj.size())
@@ -39,9 +39,8 @@ class EntityIterator(Iterator):
 
 class InstanceIterator(Iterator):
     def __init__(self, obj, instanceClass):
-        return Iterator.__init__(
-            self,
-            obj,
+        Iterator.__init__(
+            self, obj,
             lambda it: (
                 Tuple.fromTupleRef(it.first()).toPyObj(),
                 instanceClass(it.second())
@@ -55,12 +54,21 @@ class InstanceIterator(Iterator):
         return self.size()
 
 
-def MemberRangeIterator(obj):
+class MemberRangeIterator(Iterator):
     """Iterator for set members."""
-    return Iterator(
-        obj,
-        lambda it: Tuple.fromTupleRef(it.__ref__()).toPyObj()
-    )
+    def __init__(self, obj, sizeFunction):
+        Iterator.__init__(
+            self, obj,
+            lambda it: Tuple.fromTupleRef(it.__ref__()).toPyObj()
+        )
+        # FIXME: MemberRange does not implemet size()
+        self.sizeFunction = sizeFunction
+
+    def size(self):
+        return int(self.sizeFunction())
+
+    def __len__(self):
+        return self.size()
 
 
 def EnvIterator(obj):

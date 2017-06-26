@@ -40,7 +40,7 @@ class Entity(BaseClass):
         assert self.wrapFunction is not None
         if len(key) == 1 and isinstance(key, (tuple, list)):
             key = key[0]
-        return self.wrapFunction(self.get(key))
+        return self.get(key)
 
     def instances(self):
         """
@@ -58,7 +58,7 @@ class Entity(BaseClass):
             if not isinstance(index, (tuple, list)):
                 index = (index,)
             assert indexarity == len(index)
-            return self.wrapFunction(self._impl.get(Tuple(*index)._impl))
+            return self.wrapFunction(self._impl.get(Tuple(index)._impl))
 
     def name(self):
         """
@@ -160,27 +160,7 @@ class Entity(BaseClass):
         Args:
             data: The data to set the entity to.
         """
-        if isinstance(data, dict):
-            indices, values = zip(*data.items())
-            indices = Utils.toTupleArray(indices)
-            if any(isinstance(value, basestring) for value in values):
-                values = list(map(str, values))
-                self._impl.setValuesTaStr(indices, values, len(values))
-            elif all(isinstance(value, (float, int)) for value in values):
-                values = list(map(float, values))
-                self._impl.setValuesTaDbl(indices, values, len(values))
-            else:
-                raise TypeError
-        elif isinstance(data, (list, set)):
-            if any(isinstance(data, basestring) for value in data):
-                values = list(map(str, data))
-                print(values)
-                self._impl.setValuesStr(values, len(values))
-            elif all(isinstance(value, (float, int)) for value in data):
-                values = list(map(float, data))
-                print(values)
-                self._impl.setValuesDbl(values, len(values))
-        elif isinstance(data, DataFrame):
-            raise NotImplementedError
+        if isinstance(data, DataFrame):
+            self._impl.setValues(data._impl)
         else:
             raise TypeError
