@@ -6,7 +6,7 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityIterator
-from . import amplpython
+import amplpython
 
 
 class AMPL:

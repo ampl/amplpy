@@ -1,7 +1,7 @@
 from .base import BaseClass
 from .utils import Utils, Tuple
 from .iterators import RowIterator, ColIterator
-from . import amplpython
+import amplpython
 
 
 class Row(BaseClass):

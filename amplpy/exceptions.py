@@ -1,4 +1,4 @@
-from . import amplpython
+import amplpython
 
 class AMPLException(amplpython.AMPLException):
     """
