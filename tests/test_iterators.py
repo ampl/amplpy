@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .context import amplpy
+from context import amplpy
 import TestBase
 import unittest
 
