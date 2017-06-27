@@ -89,5 +89,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
+/clear.sh
 /test.py
 /amplpy/amplpython

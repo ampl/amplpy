@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
+import os
 
 
 with open('README.md') as f:
     readme = f.read()
 
+
+def ls_dir(base_dir):
+    """List files recursively."""
+    base_dir = os.path.join(base_dir, "")
+    return [
+        os.path.join(dirpath.replace(base_dir, "", 1), f)
+        for (dirpath, dirnames, files) in os.walk(base_dir)
+        for f in files
+    ]
+
+
 setup(
     name='amplpy',
-    version='0.1.0',
+    version='0.1.0a3',
     description='Python API for AMPL',
     long_description=readme,
     author='Filipe Brandao',
@@ -28,6 +40,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Topic :: Scientific/Engineering',
-    ]
+    ],
     packages=['amplpy'],
+    package_data={"": ls_dir("amplpy/")},
 )
