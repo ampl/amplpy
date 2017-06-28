@@ -57,7 +57,7 @@ def loadDietModel(ampl):
     ''')
 
 
-class EntityTestSuite(TestBase.TestBase):
+class TestEntities(TestBase.TestBase):
     """Test entities."""
 
     def testVariable(self):

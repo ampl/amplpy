@@ -5,7 +5,7 @@ import TestBase
 import unittest
 
 
-class VariableTestSuite(TestBase.TestBase):
+class TestIterators(TestBase.TestBase):
     """Test Iterators."""
 
     def testSetIterators(self):
