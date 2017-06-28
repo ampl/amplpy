@@ -17,7 +17,7 @@ def main(argc, argv):
             ampl.setOption('solver', argv[1])
 
         modelDirectory = os.path.join(
-            argv[2] if argc == 3 else 'models',
+            argv[2] if argc == 3 else os.path.join('..', 'models'),
             'tracking'
         )
 

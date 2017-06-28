@@ -17,7 +17,7 @@ def main(argc, argv):
             ampl.setOption('solver', argv[1])
 
         # Read the model and data files.
-        modelDirectory = argv[2] if argc == 3 else 'models'
+        modelDirectory = argv[2] if argc == 3 else os.path.join('..', 'models')
         ampl.read(os.path.join(modelDirectory, 'diet/diet.mod'))
         ampl.readData(os.path.join(modelDirectory, 'diet/diet.dat'))
 

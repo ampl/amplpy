@@ -25,7 +25,7 @@ def main(argc, argv):
             ampl.setOption('solver', argv[1])
 
         # Load the AMPL model from file
-        modelDirectory = argv[2] if argc == 3 else 'models'
+        modelDirectory = argv[2] if argc == 3 else os.path.join('..', 'models')
         ampl.read(os.path.join(modelDirectory, 'qpmv/qpmv.mod'))
         ampl.read(os.path.join(modelDirectory, 'qpmv/qpmvbit.run'))
 

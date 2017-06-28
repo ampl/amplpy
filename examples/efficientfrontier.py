@@ -12,7 +12,7 @@ def main(argc, argv):
     os.chdir(os.path.dirname(__file__) or os.curdir)
     try:
         modelDirectory = os.path.join(
-            argv[2] if argc == 3 else 'models',
+            argv[2] if argc == 3 else os.path.join('..', 'models'),
             'qpmv'
         )
 
