@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, Extension
 import os
 
 
@@ -42,5 +42,15 @@ setup(
         'Topic :: Scientific/Engineering',
     ],
     packages=['amplpy'],
+    ext_modules=[Extension(
+        'amplpy.amplpython._amplpython',
+        libraries=['ampl'],
+        library_dirs=[os.path.join('amplpy', 'amplpython', 'lib')],
+        include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
+        runtime_library_dirs=[os.path.join('amplpy', 'amplpython', 'lib')],
+        sources=[
+          os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
+        ],
+    )],
     package_data={"": ls_dir("amplpy/")},
 )
