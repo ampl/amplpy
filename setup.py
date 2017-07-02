@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, Extension
+import platform
 import os
 
 
@@ -17,6 +18,8 @@ def ls_dir(base_dir):
         for f in files
     ]
 
+x64 = platform.architecture()[0] == '64bit'
+libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
@@ -45,9 +48,9 @@ setup(
     ext_modules=[Extension(
         'amplpy.amplpython._amplpython',
         libraries=['ampl'],
-        library_dirs=[os.path.join('amplpy', 'amplpython', 'lib')],
+        library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
-        runtime_library_dirs=[os.path.join('amplpy', 'amplpython', 'lib')],
+        runtime_library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         sources=[
           os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
         ],

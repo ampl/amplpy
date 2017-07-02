@@ -15,7 +15,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib64/
 parts/
 sdist/
 var/
@@ -90,3 +89,4 @@ ENV/
 
 /clear.sh
 /test.py
+/tmp
