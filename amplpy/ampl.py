@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
@@ -6,7 +7,7 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityIterator
-import amplpython
+from . import amplpython
 
 
 class AMPL:

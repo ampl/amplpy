@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
+
 class BaseClass(object):
     def __init__(self, _impl):
         self._impl = _impl

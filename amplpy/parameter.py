@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from .entity import Entity
 from .utils import Utils, Tuple
 from .dataframe import DataFrame

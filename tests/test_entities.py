@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 
-from context import amplpy
-import TestBase
+from .context import amplpy
+from . import TestBase
 import unittest
 
 

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from .outputhandler import OutputHandler, Kind
 from .errorhandler import ErrorHandler
 from .exceptions import AMPLException
