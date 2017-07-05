@@ -18,8 +18,21 @@ def ls_dir(base_dir):
         for f in files
     ]
 
+
 x64 = platform.architecture()[0] == '64bit'
 libdir = 'lib64' if x64 else 'lib32'
+ostype = platform.system()
+
+if ostype == 'Linux':
+    runtime_lib_dirs = [
+        os.path.join('$ORIGIN', 'amplpy', 'amplpython', libdir)
+    ]
+elif ostype == 'Darwin':
+    runtime_lib_dirs = [
+        os.path.join('@loader_path', 'amplpy', 'amplpython', libdir)
+    ]
+else:
+    runtime_lib_dirs = []
 
 setup(
     name='amplpy',
@@ -46,11 +59,11 @@ setup(
     ],
     packages=['amplpy'],
     ext_modules=[Extension(
-        'amplpy.amplpython._amplpython',
+        '_amplpython',
         libraries=['ampl'],
         library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
-        runtime_library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
+        runtime_library_dirs=runtime_lib_dirs,
         sources=[
           os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
         ],
