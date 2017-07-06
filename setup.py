@@ -19,24 +19,22 @@ def ls_dir(base_dir):
     ]
 
 
+def make_relative_rpath(path):
+    ostype = platform.system()
+    if ostype == 'Darwin':
+        return '-Wl,-rpath,@loader_path/' + path
+    elif ostype == 'Linux':
+        return '-Wl,-rpath,$ORIGIN/' + path
+    else:
+        return ''
+
+
 x64 = platform.architecture()[0] == '64bit'
 libdir = 'lib64' if x64 else 'lib32'
-ostype = platform.system()
-
-if ostype == 'Linux':
-    runtime_lib_dirs = [
-        os.path.join('$ORIGIN', 'amplpy', 'amplpython', libdir)
-    ]
-elif ostype == 'Darwin':
-    runtime_lib_dirs = [
-        os.path.join('@loader_path', 'amplpy', 'amplpython', libdir)
-    ]
-else:
-    runtime_lib_dirs = []
 
 setup(
     name='amplpy',
-    version='0.1.0a3',
+    version='0.1.0a25',
     description='Python API for AMPL',
     long_description=readme,
     author='Filipe Brandao',
@@ -63,9 +61,11 @@ setup(
         libraries=['ampl'],
         library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
-        runtime_library_dirs=runtime_lib_dirs,
+        extra_link_args=[
+            make_relative_rpath(os.path.join('amplpy', 'amplpython', libdir))
+        ],
         sources=[
-          os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
+            os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
         ],
     )],
     package_data={"": ls_dir("amplpy/")},
