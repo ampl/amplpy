@@ -38,11 +38,11 @@ class Objective(Entity):
         """
         return self._impl.astatus()
 
-    def sstatus(self, value):
+    def sstatus(self):
         """
         Return the solver status.
         """
-        return self._impl.sstatus(value)
+        return self._impl.sstatus()
 
     def exitcode(self):
         """

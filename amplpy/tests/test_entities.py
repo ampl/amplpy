@@ -72,6 +72,9 @@ class TestEntities(TestBase.TestBase):
         )
         f_min = ampl.getParameter('f_min')
         f_max = ampl.getParameter('f_max')
+        Buy = ampl.getVariable('Buy')
+        self.assertTrue(isinstance(Buy.getValues(), amplpy.DataFrame))
+        self.assertTrue(isinstance(Buy.getValues(['val']), amplpy.DataFrame))
         for index, var in ampl.getVariable('Buy'):
             self.assertTrue(isinstance(var.value(), float))
             var.setValue(f_min[index])
@@ -143,9 +146,17 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(con.lslack(), float))
             self.assertTrue(isinstance(con.uslack(), float))
             self.assertTrue(isinstance(con.slack(), float))
+            self.assertTrue(isinstance(con.status(), basestring))
             self.assertTrue(isinstance(con.sstatus(), basestring))
             con.setDual(0)
             self.assertEqual(con.val(), None)
+        ampl.eval('''
+        var x;
+        var y;
+        s.t. xy: x <==> y;
+        ''')
+        self.assertTrue(ampl.getConstraint('xy').isLogical())
+        self.assertTrue(isinstance(ampl.getConstraint('xy').val(), float))
 
     def testSet(self):
         loadDietModel(self.ampl)
@@ -171,10 +182,13 @@ class TestEntities(TestBase.TestBase):
                 len(list(st.instances()))
             )
             self.assertTrue(isinstance(st.arity(), int))
-        ampl.eval('model; set T{1..2}; set T2;')
+        ampl.eval('model; set T{1..2}; set T2{1..2};')
         ampl.getSet('T')[1].setValues([1, 2])
         ampl.getSet('T')[2].setValues(['1', 2])
-        # ampl.getSet('T2').setValues([(1, 2)])  # FIXME: wrong arity?
+        ampl.getSet('T2')[1].setValues(ampl.getSet('T')[1].getValues())
+        ampl.getSet('T2')[2].setValues(ampl.getSet('T')[2].getValues())
+        ampl.eval('set T3 dimen 2; set T4 dimen 2;')
+        ampl.getSet('T3').setValues([(1, 2)])
 
     def testParameter(self):
         loadDietModel(self.ampl)
@@ -187,6 +201,8 @@ class TestEntities(TestBase.TestBase):
             param a;
             param b default a;
             param c symbolic;
+            param d{1..2} symbolic;
+            param d2{1..2} symbolic;
         ''')
         self.assertFalse(ampl.getParameter('a').hasDefault())
         self.assertTrue(ampl.getParameter('b').hasDefault())
@@ -213,6 +229,22 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(a.isScalar(), True)
         self.assertEqual(b.isScalar(), True)
         self.assertEqual(c.isScalar(), True)
+        d = ampl.getParameter('d')
+        self.assertEqual(d.isScalar(), False)
+        d.set(1, 'a')
+        self.assertEqual(d[1], 'a')
+        d.set(2, 'b')
+        self.assertEqual(d[2], 'b')
+        d.setValues({1: 'x', 2: 'y'})
+        self.assertEqual(d[1], 'x')
+        self.assertEqual(d[2], 'y')
+        d.setValues(['xx', 'yy'])
+        self.assertEqual(d[1], 'xx')
+        self.assertEqual(d[2], 'yy')
+        d2 = ampl.getParameter('d2')
+        d2.setValues(d.getValues())
+        self.assertEqual(d2[1], 'xx')
+        self.assertEqual(d2[2], 'yy')
         self.assertEqual(cost.isScalar(), False)
         ampl.eval('param cost2{FOOD};')
         self.assertTrue(isinstance(cost.getValues(), amplpy.DataFrame))
@@ -220,6 +252,27 @@ class TestEntities(TestBase.TestBase):
         cost2.setValues(cost.getValues())
         for food in ampl.getSet('FOOD').members():
             self.assertEqual(cost2[food], cost[food])
+
+    def testObjective(self):
+        loadDietModel(self.ampl)
+        ampl = self.ampl
+        obj = ampl.getObjective('total_cost')
+        self.assertEqual(
+            len(dict(obj)),
+            obj.numInstances()
+        )
+        self.assertTrue(isinstance(obj.value(), float))
+        self.assertTrue(isinstance(obj.astatus(), basestring))
+        self.assertTrue(isinstance(obj.sstatus(), basestring))
+        self.assertTrue(isinstance(obj.exitcode(), int))
+        self.assertTrue(isinstance(obj.message(), basestring))
+        self.assertTrue(isinstance(obj.result(), basestring))
+        obj.drop()
+        self.assertEqual(obj.astatus(), 'drop')
+        obj.restore()
+        self.assertEqual(obj.astatus(), 'in')
+        self.assertFalse(obj.minimization())
+
 
 
 if __name__ == '__main__':

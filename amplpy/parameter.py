@@ -116,7 +116,7 @@ class Parameter(Entity):
                 raise TypeError
         elif isinstance(values, (list, set)):
             if any(isinstance(value, basestring) for value in values):
-                values = list(map(str, data))
+                values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, (float, int)) for value in values):
                 values = list(map(float, values))

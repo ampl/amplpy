@@ -138,7 +138,9 @@ class Entity(BaseClass):
             return DataFrame.fromDataFrameRef(self._impl.getValues())
         else:
             suffixes = list(map(str, suffixes))
-            return DataFrame.fromDataFrameRef(self._impl.getValues(suffixes))
+            return DataFrame.fromDataFrameRef(
+                self._impl.getValuesLst(suffixes, len(suffixes))
+            )
 
     def setValues(self, data):
         """

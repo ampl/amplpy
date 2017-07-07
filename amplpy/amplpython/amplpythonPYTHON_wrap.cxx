@@ -11,7 +11,6 @@
 #ifdef _MSC_VER
 #define SWIG_PYTHON_INTERPRETER_NO_DEBUG
 #endif
-#define SWIG_PYTHON_INTERPRETER_NO_DEBUG
 
 
 
@@ -781,7 +780,7 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #define PyString_FromString(x) PyUnicode_FromString(x)
 #define PyString_Format(fmt, args)  PyUnicode_Format(fmt, args)
 #define PyString_AsString(str) PyBytes_AsString(str)
-#define PyString_Size(str) PyBytes_Size(str)
+#define PyString_Size(str) PyBytes_Size(str)	
 #define PyString_InternFromString(key) PyUnicode_InternFromString(key)
 #define Py_TPFLAGS_HAVE_CLASS Py_TPFLAGS_BASETYPE
 #define PyString_AS_STRING(x) PyUnicode_AS_STRING(x)
@@ -826,7 +825,7 @@ SWIG_Python_str_AsChar(PyObject *str)
 #if PY_VERSION_HEX >= 0x03000000
 #  define SWIG_Python_str_DelForPy3(x) free( (void*) (x) )
 #else
-#  define SWIG_Python_str_DelForPy3(x)
+#  define SWIG_Python_str_DelForPy3(x) 
 #endif
 
 
@@ -834,7 +833,7 @@ SWIGINTERN PyObject*
 SWIG_Python_str_FromChar(const char *c)
 {
 #if PY_VERSION_HEX >= 0x03000000
-  return PyUnicode_FromString(c);
+  return PyUnicode_FromString(c); 
 #else
   return PyString_FromString(c);
 #endif
@@ -1072,7 +1071,7 @@ SWIG_Python_AddErrorMsg(const char* mesg)
 #  endif
 #  if defined(SWIG_PYTHON_USE_GIL) /* Use PyGILState threads calls */
 #    ifndef SWIG_PYTHON_INITIALIZE_THREADS
-#     define SWIG_PYTHON_INITIALIZE_THREADS  PyEval_InitThreads()
+#     define SWIG_PYTHON_INITIALIZE_THREADS  PyEval_InitThreads() 
 #    endif
 #    ifdef __cplusplus /* C++ code */
        class SWIG_Python_Thread_Block {
@@ -1198,7 +1197,7 @@ SWIGRUNTIME PyObject* SWIG_PyInstanceMethod_New(PyObject *SWIGUNUSEDPARM(self), 
 
 #define SWIG_InternalNewPointerObj(ptr, type, flags)	SWIG_Python_NewPointerObj(NULL, ptr, type, flags)
 
-#define SWIG_CheckImplicit(ty)                          SWIG_Python_CheckImplicit(ty)
+#define SWIG_CheckImplicit(ty)                          SWIG_Python_CheckImplicit(ty) 
 #define SWIG_AcquirePtr(ptr, src)                       SWIG_Python_AcquirePtr(ptr, src)
 #define swig_owntype                                    int
 
@@ -1225,26 +1224,26 @@ SWIGRUNTIME PyObject* SWIG_PyInstanceMethod_New(PyObject *SWIGUNUSEDPARM(self), 
 #define SWIG_SetModule(clientdata, pointer)             SWIG_Python_SetModule(pointer)
 #define SWIG_NewClientData(obj)                         SwigPyClientData_New(obj)
 
-#define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj
-#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg
-#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)
-#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg)
-#define SWIG_fail                        		goto fail
+#define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj                            
+#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg				   
+#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)                        
+#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
+#define SWIG_fail                        		goto fail					   
 
 
 /* Runtime API implementation */
 
 /* Error manipulation */
 
-SWIGINTERN void
+SWIGINTERN void 
 SWIG_Python_SetErrorObj(PyObject *errtype, PyObject *obj) {
-  SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+  SWIG_PYTHON_THREAD_BEGIN_BLOCK; 
   PyErr_SetObject(errtype, obj);
   Py_DECREF(obj);
   SWIG_PYTHON_THREAD_END_BLOCK;
 }
 
-SWIGINTERN void
+SWIGINTERN void 
 SWIG_Python_SetErrorMsg(PyObject *errtype, const char *msg) {
   SWIG_PYTHON_THREAD_BEGIN_BLOCK;
   PyErr_SetString(errtype, msg);
@@ -1265,7 +1264,7 @@ SwigPyBuiltin_AddPublicSymbol(PyObject *seq, const char *key) {
 }
 
 SWIGINTERN void
-SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *name, PyObject *obj) {
+SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *name, PyObject *obj) {   
 #if PY_VERSION_HEX < 0x02030000
   PyDict_SetItemString(d, (char *)name, obj);
 #else
@@ -1279,13 +1278,13 @@ SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *nam
 #else
 
 SWIGINTERN void
-SWIG_Python_SetConstant(PyObject *d, const char *name, PyObject *obj) {
+SWIG_Python_SetConstant(PyObject *d, const char *name, PyObject *obj) {   
 #if PY_VERSION_HEX < 0x02030000
   PyDict_SetItemString(d, (char *)name, obj);
 #else
   PyDict_SetItemString(d, name, obj);
 #endif
-  Py_DECREF(obj);
+  Py_DECREF(obj);                            
 }
 
 #endif
@@ -1344,11 +1343,11 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
     if (!min && !max) {
       return 1;
     } else {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none",
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none", 
 		   name, (min == max ? "" : "at least "), (int)min);
       return 0;
     }
-  }
+  }  
   if (!PyTuple_Check(args)) {
     if (min <= 1 && max >= 1) {
       Py_ssize_t i;
@@ -1363,11 +1362,11 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
   } else {
     Py_ssize_t l = PyTuple_GET_SIZE(args);
     if (l < min) {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d",
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
 		   name, (min == max ? "" : "at least "), (int)min, (int)l);
       return 0;
     } else if (l > max) {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d",
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
 		   name, (min == max ? "" : "at most "), (int)max, (int)l);
       return 0;
     } else {
@@ -1379,7 +1378,7 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
 	objs[l] = 0;
       }
       return i + 1;
-    }
+    }    
   }
 }
 
@@ -1431,14 +1430,14 @@ extern "C" {
 #   undef Py_None
 #   define Py_None SWIG_Py_None()
 #  endif
-SWIGRUNTIMEINLINE PyObject *
+SWIGRUNTIMEINLINE PyObject * 
 _SWIG_Py_None(void)
 {
   PyObject *none = Py_BuildValue((char*)"");
   Py_DECREF(none);
   return none;
 }
-SWIGRUNTIME PyObject *
+SWIGRUNTIME PyObject * 
 SWIG_Py_None(void)
 {
   static PyObject *SWIG_STATIC_POINTER(none) = _SWIG_Py_None();
@@ -1448,7 +1447,7 @@ SWIG_Py_None(void)
 
 /* The python void return value */
 
-SWIGRUNTIMEINLINE PyObject *
+SWIGRUNTIMEINLINE PyObject * 
 SWIG_Py_Void(void)
 {
   PyObject *none = Py_None;
@@ -1468,7 +1467,7 @@ typedef struct {
   PyTypeObject *pytype;
 } SwigPyClientData;
 
-SWIGRUNTIMEINLINE int
+SWIGRUNTIMEINLINE int 
 SWIG_Python_CheckImplicit(swig_type_info *ty)
 {
   SwigPyClientData *data = (SwigPyClientData *)ty->clientdata;
@@ -1483,7 +1482,7 @@ SWIG_Python_ExceptionType(swig_type_info *desc) {
 }
 
 
-SWIGRUNTIME SwigPyClientData *
+SWIGRUNTIME SwigPyClientData * 
 SwigPyClientData_New(PyObject* obj)
 {
   if (!obj) {
@@ -1537,7 +1536,7 @@ SwigPyClientData_New(PyObject* obj)
   }
 }
 
-SWIGRUNTIME void
+SWIGRUNTIME void 
 SwigPyClientData_Del(SwigPyClientData *data) {
   Py_XDECREF(data->newraw);
   Py_XDECREF(data->newargs);
@@ -1638,7 +1637,7 @@ SwigPyObject_repr(SwigPyObject *v, PyObject *args)
     PyString_ConcatAndDel(&repr,nrep);
 # endif
   }
-  return repr;
+  return repr;  
 }
 
 SWIGRUNTIME int
@@ -1659,7 +1658,7 @@ SwigPyObject_richcompare(SwigPyObject *v, SwigPyObject *w, int op)
     return Py_NotImplemented;
   }
   res = PyBool_FromLong( (SwigPyObject_compare(v, w)==0) == (op == Py_EQ) ? 1 : 0);
-  return res;
+  return res;  
 }
 
 
@@ -1719,7 +1718,7 @@ SwigPyObject_dealloc(PyObject *v)
          StopIteration will be active right now, and this needs to
          remain true upon return from SwigPyObject_dealloc.  So save
          and restore. */
-
+      
       PyObject *val = NULL, *type = NULL, *tb = NULL;
       PyErr_Fetch(&val, &type, &tb);
 
@@ -1739,19 +1738,19 @@ SwigPyObject_dealloc(PyObject *v)
       PyErr_Restore(val, type, tb);
 
       Py_XDECREF(res);
-    }
+    } 
 #if !defined(SWIG_PYTHON_SILENT_MEMLEAK)
     else {
       const char *name = SWIG_TypePrettyName(ty);
       printf("swig/python detected a memory leak of type '%s', no destructor found.\n", (name ? name : "unknown"));
     }
 #endif
-  }
+  } 
   Py_XDECREF(next);
   PyObject_DEL(v);
 }
 
-SWIGRUNTIME PyObject*
+SWIGRUNTIME PyObject* 
 SwigPyObject_append(PyObject* v, PyObject* next)
 {
   SwigPyObject *sobj = (SwigPyObject *) v;
@@ -1769,7 +1768,7 @@ SwigPyObject_append(PyObject* v, PyObject* next)
   return SWIG_Py_Void();
 }
 
-SWIGRUNTIME PyObject*
+SWIGRUNTIME PyObject* 
 #ifdef METH_NOARGS
 SwigPyObject_next(PyObject* v)
 #else
@@ -1777,7 +1776,7 @@ SwigPyObject_next(PyObject* v, PyObject *SWIGUNUSEDPARM(args))
 #endif
 {
   SwigPyObject *sobj = (SwigPyObject *) v;
-  if (sobj->next) {
+  if (sobj->next) {    
     Py_INCREF(sobj->next);
     return sobj->next;
   } else {
@@ -1816,13 +1815,13 @@ SwigPyObject_own(PyObject *v, PyObject *args)
 #if (PY_VERSION_HEX < 0x02020000)
   if (!PyArg_ParseTuple(args,(char *)"|O:own",&val))
 #elif (PY_VERSION_HEX < 0x02050000)
-  if (!PyArg_UnpackTuple(args, (char *)"own", 0, 1, &val))
+  if (!PyArg_UnpackTuple(args, (char *)"own", 0, 1, &val)) 
 #else
-  if (!PyArg_UnpackTuple(args, "own", 0, 1, &val))
+  if (!PyArg_UnpackTuple(args, "own", 0, 1, &val)) 
 #endif
     {
       return NULL;
-    }
+    } 
   else
     {
       SwigPyObject *sobj = (SwigPyObject *)v;
@@ -1841,7 +1840,7 @@ SwigPyObject_own(PyObject *v, PyObject *args)
 	  SwigPyObject_disown(v,args);
 	}
 #endif
-      }
+      } 
       return obj;
     }
 }
@@ -1855,7 +1854,7 @@ swigobject_methods[] = {
   {(char *)"append",  (PyCFunction)SwigPyObject_append,  METH_O,       (char *)"appends another 'this' object"},
   {(char *)"next",    (PyCFunction)SwigPyObject_next,    METH_NOARGS,  (char *)"returns the next 'this' object"},
   {(char *)"__repr__",(PyCFunction)SwigPyObject_repr,    METH_NOARGS,  (char *)"returns object representation"},
-  {0, 0, 0, 0}
+  {0, 0, 0, 0}  
 };
 #else
 static PyMethodDef
@@ -1866,7 +1865,7 @@ swigobject_methods[] = {
   {(char *)"append",  (PyCFunction)SwigPyObject_append,  METH_VARARGS,  (char *)"appends another 'this' object"},
   {(char *)"next",    (PyCFunction)SwigPyObject_next,    METH_VARARGS,  (char *)"returns the next 'this' object"},
   {(char *)"__repr__",(PyCFunction)SwigPyObject_repr,   METH_VARARGS,  (char *)"returns object representation"},
-  {0, 0, 0, 0}
+  {0, 0, 0, 0}  
 };
 #endif
 
@@ -2054,16 +2053,16 @@ SWIGRUNTIME int
 SwigPyPacked_print(SwigPyPacked *v, FILE *fp, int SWIGUNUSEDPARM(flags))
 {
   char result[SWIG_BUFFER_SIZE];
-  fputs("<Swig Packed ", fp);
+  fputs("<Swig Packed ", fp); 
   if (SWIG_PackDataName(result, v->pack, v->size, 0, sizeof(result))) {
-    fputs("at ", fp);
-    fputs(result, fp);
+    fputs("at ", fp); 
+    fputs(result, fp); 
   }
-  fputs(v->ty->name,fp);
+  fputs(v->ty->name,fp); 
   fputs(">", fp);
-  return 0;
+  return 0; 
 }
-
+  
 SWIGRUNTIME PyObject *
 SwigPyPacked_repr(SwigPyPacked *v)
 {
@@ -2072,7 +2071,7 @@ SwigPyPacked_repr(SwigPyPacked *v)
     return SWIG_Python_str_FromFormat("<Swig Packed at %s%s>", result, v->ty->name);
   } else {
     return SWIG_Python_str_FromFormat("<Swig Packed %s>", v->ty->name);
-  }
+  }  
 }
 
 SWIGRUNTIME PyObject *
@@ -2083,7 +2082,7 @@ SwigPyPacked_str(SwigPyPacked *v)
     return SWIG_Python_str_FromFormat("%s%s", result, v->ty->name);
   } else {
     return SWIG_Python_str_FromChar(v->ty->name);
-  }
+  }  
 }
 
 SWIGRUNTIME int
@@ -2105,7 +2104,7 @@ SwigPyPacked_type(void) {
 
 SWIGRUNTIMEINLINE int
 SwigPyPacked_Check(PyObject *op) {
-  return ((op)->ob_type == SwigPyPacked_TypeOnce())
+  return ((op)->ob_type == SwigPyPacked_TypeOnce()) 
     || (strcmp((op)->ob_type->tp_name,"SwigPyPacked") == 0);
 }
 
@@ -2270,11 +2269,11 @@ SWIG_This(void)
 
 /* TODO: I don't know how to implement the fast getset in Python 3 right now */
 #if PY_VERSION_HEX>=0x03000000
-#define SWIG_PYTHON_SLOW_GETSET_THIS
+#define SWIG_PYTHON_SLOW_GETSET_THIS 
 #endif
 
 SWIGRUNTIME SwigPyObject *
-SWIG_Python_GetSwigThis(PyObject *pyobj)
+SWIG_Python_GetSwigThis(PyObject *pyobj) 
 {
   PyObject *obj;
 
@@ -2297,7 +2296,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 
 #if (!defined(SWIG_PYTHON_SLOW_GETSET_THIS) && (PY_VERSION_HEX >= 0x02030000))
   if (PyInstance_Check(pyobj)) {
-    obj = _PyInstance_Lookup(pyobj, SWIG_This());
+    obj = _PyInstance_Lookup(pyobj, SWIG_This());      
   } else {
     PyObject **dictptr = _PyObject_GetDictPtr(pyobj);
     if (dictptr != NULL) {
@@ -2330,7 +2329,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 #endif
   if (obj && !SwigPyObject_Check(obj)) {
     /* a PyObject is called 'this', try to get the 'real this'
-       SwigPyObject from it */
+       SwigPyObject from it */ 
     return SWIG_Python_GetSwigThis(obj);
   }
   return (SwigPyObject *)obj;
@@ -2437,7 +2436,7 @@ SWIG_Python_ConvertPtrAndOwn(PyObject *obj, void **ptr, swig_type_info *ty, int 
                   res = SWIG_AddCast(res);
                   res = SWIG_AddNewMask(res);
                 } else {
-                  res = SWIG_AddCast(res);
+                  res = SWIG_AddCast(res);		    
                 }
               }
             }
@@ -2465,13 +2464,13 @@ SWIG_Python_ConvertFunctionPtr(PyObject *obj, void **ptr, swig_type_info *ty) {
     return SWIG_ConvertPtr(obj, ptr, ty, 0);
   } else {
     void *vptr = 0;
-
+    
     /* here we get the method pointer for callbacks */
     const char *doc = (((PyCFunctionObject *)obj) -> m_ml -> ml_doc);
     const char *desc = doc ? strstr(doc, "swig_ptr: ") : 0;
     if (desc)
       desc = ty ? SWIG_UnpackVoidPtr(desc + 10, &vptr, ty->name) : 0;
-    if (!desc)
+    if (!desc) 
       return SWIG_ERROR;
     if (ty) {
       swig_cast_info *tc = SWIG_TypeCheck(desc,ty);
@@ -2503,7 +2502,7 @@ SWIG_Python_ConvertPacked(PyObject *obj, void *ptr, size_t sz, swig_type_info *t
     }
   }
   return SWIG_OK;
-}
+}  
 
 /* -----------------------------------------------------------------------------
  * Create a new pointer object
@@ -2514,7 +2513,7 @@ SWIG_Python_ConvertPacked(PyObject *obj, void *ptr, size_t sz, swig_type_info *t
   'this' attribute.
 */
 
-SWIGRUNTIME PyObject*
+SWIGRUNTIME PyObject* 
 SWIG_Python_NewShadowInstance(SwigPyClientData *data, PyObject *swig_this)
 {
 #if (PY_VERSION_HEX >= 0x02020000)
@@ -2608,7 +2607,7 @@ SWIG_Python_SetSwigThis(PyObject *inst, PyObject *swig_this)
  dict = PyObject_GetAttrString(inst, (char*)"__dict__");
  PyDict_SetItem(dict, SWIG_This(), swig_this);
  Py_DECREF(dict);
-}
+} 
 
 
 SWIGINTERN PyObject *
@@ -2689,7 +2688,7 @@ SWIG_Python_NewPackedObj(void *ptr, size_t sz, swig_type_info *type) {
 }
 
 /* -----------------------------------------------------------------------------*
- *  Get type list
+ *  Get type list 
  * -----------------------------------------------------------------------------*/
 
 #ifdef SWIG_LINK_RUNTIME
@@ -2734,7 +2733,7 @@ PyModule_AddObject(PyObject *m, char *name, PyObject *o)
     PyErr_SetString(PyExc_TypeError, "PyModule_AddObject() needs non-NULL value");
     return SWIG_ERROR;
   }
-
+  
   dict = PyModule_GetDict(m);
   if (dict == NULL) {
     /* Internal error -- modules must have a dict! */
@@ -2811,7 +2810,7 @@ SWIGRUNTIME swig_type_info *
 SWIG_Python_TypeQuery(const char *type)
 {
   PyObject *cache = SWIG_Python_TypeCache();
-  PyObject *key = SWIG_Python_str_FromChar(type);
+  PyObject *key = SWIG_Python_str_FromChar(type); 
   PyObject *obj = PyDict_GetItem(cache, key);
   swig_type_info *descriptor;
   if (obj) {
@@ -2837,7 +2836,7 @@ SWIG_Python_TypeQuery(const char *type)
   return descriptor;
 }
 
-/*
+/* 
    For backward compatibility only
 */
 #define SWIG_POINTER_EXCEPTION  0
@@ -2846,7 +2845,7 @@ SWIG_Python_TypeQuery(const char *type)
 
 SWIGRUNTIME int
 SWIG_Python_AddErrMesg(const char* mesg, int infront)
-{
+{  
   if (PyErr_Occurred()) {
     PyObject *type = 0;
     PyObject *value = 0;
@@ -2870,7 +2869,7 @@ SWIG_Python_AddErrMesg(const char* mesg, int infront)
     return 0;
   }
 }
-
+  
 SWIGRUNTIME int
 SWIG_Python_ArgFail(int argnum)
 {
@@ -2904,10 +2903,10 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
 		     type, otype);
 	return;
       }
-    } else
-#endif
+    } else 
+#endif      
     {
-      const char *otype = (obj ? obj->ob_type->tp_name : 0);
+      const char *otype = (obj ? obj->ob_type->tp_name : 0); 
       if (otype) {
 	PyObject *str = PyObject_Str(obj);
 	const char *cstr = str ? SWIG_Python_str_AsChar(str) : 0;
@@ -2922,7 +2921,7 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
 	Py_XDECREF(str);
 	return;
       }
-    }
+    }   
     PyErr_Format(PyExc_TypeError, "a '%s' is expected", type);
   } else {
     PyErr_Format(PyExc_TypeError, "unexpected type is received");
@@ -2992,7 +2991,7 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
   } else {
     res = f(descr, obj, value);
   }
-
+  
   done:
   Py_DECREF(name);
   return res;
@@ -3373,7 +3372,7 @@ SwigPyObjectType_setattro(PyTypeObject *type, PyObject *name, PyObject *value) {
       return local_set(attribute, (PyObject *)type, value);
 #if PY_VERSION_HEX >= 0x03000000
     PyErr_Format(PyExc_AttributeError, "cannot modify read-only attribute '%.50s.%.400S'", type->tp_name, name);
-#else
+#else 
     PyErr_Format(PyExc_AttributeError, "cannot modify read-only attribute '%.50s.%.400s'", type->tp_name, PyString_AS_STRING(name));
 #endif
   } else {
@@ -3540,13 +3539,13 @@ SwigPyBuiltin_SetMetaType (PyTypeObject *type, PyTypeObject *metatype)
 
 
 
-#define SWIG_exception_fail(code, msg) do { SWIG_Error(code, msg); SWIG_fail; } while(0)
+#define SWIG_exception_fail(code, msg) do { SWIG_Error(code, msg); SWIG_fail; } while(0) 
 
-#define SWIG_contract_assert(expr, msg) if (!(expr)) { SWIG_Error(SWIG_RuntimeError, msg); SWIG_fail; } else
+#define SWIG_contract_assert(expr, msg) if (!(expr)) { SWIG_Error(SWIG_RuntimeError, msg); SWIG_fail; } else 
 
 
 
-  #define SWIG_exception(code, msg) do { SWIG_Error(code, msg); SWIG_fail;; } while(0)
+  #define SWIG_exception(code, msg) do { SWIG_Error(code, msg); SWIG_fail;; } while(0) 
 
 /* -----------------------------------------------------------------------------
  * director_common.swg
@@ -4097,12 +4096,12 @@ static swig_module_info swig_module = {swig_types, 77, 0, 0, 0, 0};
 #endif
 #define SWIG_name    "_amplpython"
 
-#define SWIGVERSION 0x030008
+#define SWIGVERSION 0x030008 
 #define SWIG_VERSION SWIGVERSION
 
 
-#define SWIG_as_voidptr(a) const_cast< void * >(static_cast< const void * >(a))
-#define SWIG_as_voidptrptr(a) ((void)SWIG_as_voidptr(*a),reinterpret_cast< void** >(a))
+#define SWIG_as_voidptr(a) const_cast< void * >(static_cast< const void * >(a)) 
+#define SWIG_as_voidptrptr(a) ((void)SWIG_as_voidptr(*a),reinterpret_cast< void** >(a)) 
 
 
 #include <stdexcept>
@@ -4121,10 +4120,10 @@ namespace swig {
     SwigPtr_PyObject(const SwigPtr_PyObject& item) : _obj(item._obj)
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
-      Py_XINCREF(_obj);
+      Py_XINCREF(_obj);      
       SWIG_PYTHON_THREAD_END_BLOCK;
     }
-
+    
     SwigPtr_PyObject(PyObject *obj, bool initial_ref = true) :_obj(obj)
     {
       if (initial_ref) {
@@ -4133,24 +4132,24 @@ namespace swig {
         SWIG_PYTHON_THREAD_END_BLOCK;
       }
     }
-
-    SwigPtr_PyObject & operator=(const SwigPtr_PyObject& item)
+    
+    SwigPtr_PyObject & operator=(const SwigPtr_PyObject& item) 
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
       Py_XINCREF(item._obj);
       Py_XDECREF(_obj);
       _obj = item._obj;
       SWIG_PYTHON_THREAD_END_BLOCK;
-      return *this;
+      return *this;      
     }
-
-    ~SwigPtr_PyObject()
+    
+    ~SwigPtr_PyObject() 
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
       Py_XDECREF(_obj);
       SWIG_PYTHON_THREAD_END_BLOCK;
     }
-
+    
     operator PyObject *() const
     {
       return _obj;
@@ -4167,12 +4166,12 @@ namespace swig {
 namespace swig {
   struct SwigVar_PyObject : SwigPtr_PyObject {
     SwigVar_PyObject(PyObject* obj = 0) : SwigPtr_PyObject(obj, false) { }
-
+    
     SwigVar_PyObject & operator = (PyObject* obj)
     {
       Py_XDECREF(_obj);
       _obj = obj;
-      return *this;
+      return *this;      
     }
   };
 }
@@ -4200,20 +4199,20 @@ namespace swig {
 #include <string>
 
 
-  #define SWIG_From_long   PyLong_FromLong
+  #define SWIG_From_long   PyLong_FromLong 
 
 
-SWIGINTERNINLINE PyObject*
+SWIGINTERNINLINE PyObject* 
 SWIG_From_unsigned_SS_long  (unsigned long value)
 {
   return (value > LONG_MAX) ?
-    PyLong_FromUnsignedLong(value) : PyLong_FromLong(static_cast< long >(value));
+    PyLong_FromUnsignedLong(value) : PyLong_FromLong(static_cast< long >(value)); 
 }
 
 
 SWIGINTERNINLINE PyObject *
 SWIG_From_size_t  (size_t value)
-{
+{    
   return SWIG_From_unsigned_SS_long  (static_cast< unsigned long >(value));
 }
 
@@ -4301,7 +4300,7 @@ SWIG_CanCastAsInteger(double *d, double min, double max) {
 
 
 SWIGINTERN int
-SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val)
+SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
 {
 #if PY_VERSION_HEX < 0x03000000
   if (PyInt_Check(obj)) {
@@ -4377,7 +4376,7 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
   if (carray) {
     if (size > INT_MAX) {
       swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-      return pchar_descriptor ?
+      return pchar_descriptor ? 
 	SWIG_InternalNewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
     } else {
 #if PY_VERSION_HEX >= 0x03000000
@@ -4396,9 +4395,9 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
 }
 
 
-SWIGINTERNINLINE PyObject *
+SWIGINTERNINLINE PyObject * 
 SWIG_FromCharPtr(const char *cptr)
-{
+{ 
   return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
 }
 
@@ -4522,7 +4521,7 @@ SWIG_AsVal_int (PyObject * obj, int *val)
     } else {
       if (val) *val = static_cast< int >(v);
     }
-  }
+  }  
   return res;
 }
 
@@ -4546,7 +4545,7 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 {
 #if PY_VERSION_HEX>=0x03000000
   if (PyUnicode_Check(obj))
-#else
+#else  
   if (PyString_Check(obj))
 #endif
   {
@@ -4567,7 +4566,7 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 #endif
     if (cptr) {
       if (alloc) {
-	/*
+	/* 
 	   In python the user should not be able to modify the inner
 	   string representation. To warranty that, if you define
 	   SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
@@ -4575,11 +4574,11 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 
 	   The default behavior is just to return the pointer value,
 	   so, be careful.
-	*/
+	*/ 
 #if defined(SWIG_PYTHON_SAFE_CSTRINGS)
-	if (*alloc != SWIG_OLDOBJ)
+	if (*alloc != SWIG_OLDOBJ) 
 #else
-	if (*alloc == SWIG_NEWOBJ)
+	if (*alloc == SWIG_NEWOBJ) 
 #endif
 	{
 	  *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
@@ -4641,7 +4640,7 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 
 
 SWIGINTERN int
-SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
+SWIG_AsPtr_std_string (PyObject * obj, std::string **val) 
 {
   char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
   if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
@@ -4692,7 +4691,7 @@ SWIG_AsVal_bool (PyObject *obj, bool *val)
 }
 
 
-  #define SWIG_From_double   PyFloat_FromDouble
+  #define SWIG_From_double   PyFloat_FromDouble 
 
 SWIGINTERN bool ampl_Variant_equals(ampl::Variant *self,ampl::Variant &b){
       return ampl::internal::compare(*self, b)==0;
@@ -4790,7 +4789,7 @@ SWIGINTERN ampl::DataFrame ampl_DataFrame_factory(int numberOfIndexColumns,char 
 SWIGINTERN bool ampl_SetInstance_Contains(ampl::SetInstance const *self,ampl::Tuple t){
     return self->contains(ampl::TupleRef(t));
   }
-SWIGINTERN void ampl_SetInstance_setValues__SWIG_1(ampl::SetInstance *self,TupleArray &t,std::size_t n){
+SWIGINTERN void ampl_SetInstance_setValues(ampl::SetInstance *self,TupleArray &t,std::size_t n){
     return self->setValues(TupleArray_cast(&t), n);
   }
 SWIGINTERN void ampl_SetInstance_setValues(ampl::SetInstance *self,double *values,std::size_t n){
@@ -4825,7 +4824,7 @@ SWIGINTERN ampl::Entity *EntityArray_cast(EntityArray *self){
 SWIGINTERN EntityArray *EntityArray_frompointer(ampl::Entity *t){
       return reinterpret_cast< EntityArray * >(t);
   }
-SWIGINTERN ampl::DataFrame ampl_Entity_getValues__SWIG_1(ampl::Entity *self,char const *args[],int count){
+SWIGINTERN ampl::DataFrame ampl_Entity_getValues(ampl::Entity *self,char const *args[],int count){
       ampl::StringArgs s(args, count);
       return self->getValues(s);
     }
@@ -4948,7 +4947,7 @@ SWIGINTERN ampl::DataFrame ampl_AMPL_getData(ampl::AMPL *self,char const *args[]
 #include "amplpythonPYTHON_wrap.h"
 
 SwigDirector_ErrorHandler::SwigDirector_ErrorHandler(PyObject *self): ampl::ErrorHandler(), Swig::Director(self) {
-  SWIG_DIRECTOR_RGTR((ampl::ErrorHandler *)this, this);
+  SWIG_DIRECTOR_RGTR((ampl::ErrorHandler *)this, this); 
 }
 
 
@@ -5008,7 +5007,7 @@ void SwigDirector_ErrorHandler::warning(ampl::AMPLException const &arg0) {
 
 
 SwigDirector_Runnable::SwigDirector_Runnable(PyObject *self): ampl::Runnable(), Swig::Director(self) {
-  SWIG_DIRECTOR_RGTR((ampl::Runnable *)this, this);
+  SWIG_DIRECTOR_RGTR((ampl::Runnable *)this, this); 
 }
 
 
@@ -5041,7 +5040,7 @@ void SwigDirector_Runnable::run() {
 
 
 SwigDirector_OutputHandler::SwigDirector_OutputHandler(PyObject *self): ampl::OutputHandler(), Swig::Director(self) {
-  SWIG_DIRECTOR_RGTR((ampl::OutputHandler *)this, this);
+  SWIG_DIRECTOR_RGTR((ampl::OutputHandler *)this, this); 
 }
 
 
@@ -5086,11 +5085,11 @@ SWIGINTERN PyObject *_wrap_StringArray_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "StringArray_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringArray_size" "', argument " "1"" of type '" "ampl::StringArray const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringArray_size" "', argument " "1"" of type '" "ampl::StringArray const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringArray * >(argp1);
   result = (std::size_t)((ampl::StringArray const *)arg1)->size();
@@ -5111,17 +5110,17 @@ SWIGINTERN PyObject *_wrap_StringArray_getIndex(PyObject *self, PyObject *args) 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   char *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:StringArray_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringArray_getIndex" "', argument " "1"" of type '" "ampl::StringArray const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringArray_getIndex" "', argument " "1"" of type '" "ampl::StringArray const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringArray_getIndex" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   result = (char *)((ampl::StringArray const *)arg1)->operator [](arg2);
   resultobj = SWIG_FromCharPtr((const char *)result);
@@ -5136,11 +5135,11 @@ SWIGINTERN PyObject *_wrap_delete_StringArray(PyObject *self, PyObject *args) {
   ampl::StringArray *arg1 = (ampl::StringArray *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_StringArray takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringArray, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringArray" "', argument " "1"" of type '" "ampl::StringArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringArray" "', argument " "1"" of type '" "ampl::StringArray *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringArray * >(argp1);
   {
@@ -5179,11 +5178,11 @@ SWIGINTERN PyObject *_wrap_StringRefArray_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "StringRefArray_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringRefArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringRefArray_size" "', argument " "1"" of type '" "ampl::StringRefArray const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringRefArray_size" "', argument " "1"" of type '" "ampl::StringRefArray const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringRefArray * >(argp1);
   result = (std::size_t)((ampl::StringRefArray const *)arg1)->size();
@@ -5204,17 +5203,17 @@ SWIGINTERN PyObject *_wrap_StringRefArray_getIndex(PyObject *self, PyObject *arg
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   char *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:StringRefArray_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringRefArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringRefArray_getIndex" "', argument " "1"" of type '" "ampl::StringRefArray const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringRefArray_getIndex" "', argument " "1"" of type '" "ampl::StringRefArray const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringRefArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "StringRefArray_getIndex" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   result = (char *)((ampl::StringRefArray const *)arg1)->operator [](arg2);
   resultobj = SWIG_FromCharPtr((const char *)result);
@@ -5229,11 +5228,11 @@ SWIGINTERN PyObject *_wrap_delete_StringRefArray(PyObject *self, PyObject *args)
   ampl::StringRefArray *arg1 = (ampl::StringRefArray *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_StringRefArray takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__StringRefArray, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringRefArray" "', argument " "1"" of type '" "ampl::StringRefArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringRefArray" "', argument " "1"" of type '" "ampl::StringRefArray *""'"); 
   }
   arg1 = reinterpret_cast< ampl::StringRefArray * >(argp1);
   {
@@ -5275,16 +5274,16 @@ SWIGINTERN PyObject *_wrap_VariantArray_el_set(PyObject *self, PyObject *args) {
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariantArray_el_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_el_set" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_el_set" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__Variant, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantArray_el_set" "', argument " "2"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantArray_el_set" "', argument " "2"" of type '" "ampl::Variant *""'"); 
   }
   arg2 = reinterpret_cast< ampl::Variant * >(argp2);
   if (arg1) (arg1)->el = arg2;
@@ -5301,11 +5300,11 @@ SWIGINTERN PyObject *_wrap_VariantArray_el_get(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Variant *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantArray_el_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_el_get" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_el_get" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   result = (ampl::Variant *) ((arg1)->el);
@@ -5323,12 +5322,12 @@ SWIGINTERN int _wrap_new_VariantArray(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   VariantArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_VariantArray",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_VariantArray" "', argument " "1"" of type '" "size_t""'");
-  }
+  } 
   arg1 = static_cast< size_t >(val1);
   {
     try {
@@ -5365,11 +5364,11 @@ SWIGINTERN PyObject *_wrap_delete_VariantArray(PyObject *self, PyObject *args) {
   VariantArray *arg1 = (VariantArray *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_VariantArray takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariantArray" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariantArray" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   {
@@ -5412,17 +5411,17 @@ SWIGINTERN PyObject *_wrap_VariantArray___getitem__(PyObject *self, PyObject *ar
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variant > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariantArray___getitem__",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray___getitem__" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray___getitem__" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "VariantArray___getitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     try {
@@ -5469,23 +5468,23 @@ SWIGINTERN PyObject *_wrap_VariantArray___setitem__(PyObject *self, PyObject *ar
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:VariantArray___setitem__",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray___setitem__" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray___setitem__" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "VariantArray___setitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__Variant,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "VariantArray___setitem__" "', argument " "3"" of type '" "ampl::Variant""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "VariantArray___setitem__" "', argument " "3"" of type '" "ampl::Variant""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariantArray___setitem__" "', argument " "3"" of type '" "ampl::Variant""'");
     } else {
@@ -5532,11 +5531,11 @@ SWIGINTERN PyObject *_wrap_VariantArray_cast(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Variant *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantArray_cast takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_VariantArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_cast" "', argument " "1"" of type '" "VariantArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_cast" "', argument " "1"" of type '" "VariantArray *""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   {
@@ -5576,11 +5575,11 @@ SWIGINTERN PyObject *_wrap_VariantArray_frompointer(PyObject *self, PyObject *ar
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   VariantArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariantArray_frompointer",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_frompointer" "', argument " "1"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantArray_frompointer" "', argument " "1"" of type '" "ampl::Variant *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -5622,16 +5621,16 @@ SWIGINTERN PyObject *_wrap_TupleArray_el_set(PyObject *self, PyObject *args) {
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:TupleArray_el_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_el_set" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_el_set" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__Tuple, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TupleArray_el_set" "', argument " "2"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TupleArray_el_set" "', argument " "2"" of type '" "ampl::Tuple *""'"); 
   }
   arg2 = reinterpret_cast< ampl::Tuple * >(argp2);
   if (arg1) (arg1)->el = arg2;
@@ -5648,11 +5647,11 @@ SWIGINTERN PyObject *_wrap_TupleArray_el_get(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Tuple *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "TupleArray_el_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_el_get" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_el_get" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   result = (ampl::Tuple *) ((arg1)->el);
@@ -5670,12 +5669,12 @@ SWIGINTERN int _wrap_new_TupleArray(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   TupleArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_TupleArray",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_TupleArray" "', argument " "1"" of type '" "size_t""'");
-  }
+  } 
   arg1 = static_cast< size_t >(val1);
   {
     try {
@@ -5712,11 +5711,11 @@ SWIGINTERN PyObject *_wrap_delete_TupleArray(PyObject *self, PyObject *args) {
   TupleArray *arg1 = (TupleArray *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_TupleArray takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TupleArray" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TupleArray" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   {
@@ -5759,17 +5758,17 @@ SWIGINTERN PyObject *_wrap_TupleArray___getitem__(PyObject *self, PyObject *args
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Tuple result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:TupleArray___getitem__",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray___getitem__" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray___getitem__" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TupleArray___getitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     try {
@@ -5816,23 +5815,23 @@ SWIGINTERN PyObject *_wrap_TupleArray___setitem__(PyObject *self, PyObject *args
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:TupleArray___setitem__",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray___setitem__" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray___setitem__" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TupleArray___setitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TupleArray___setitem__" "', argument " "3"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TupleArray___setitem__" "', argument " "3"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TupleArray___setitem__" "', argument " "3"" of type '" "ampl::Tuple""'");
     } else {
@@ -5879,11 +5878,11 @@ SWIGINTERN PyObject *_wrap_TupleArray_cast(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Tuple *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "TupleArray_cast takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_TupleArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_cast" "', argument " "1"" of type '" "TupleArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_cast" "', argument " "1"" of type '" "TupleArray *""'"); 
   }
   arg1 = reinterpret_cast< TupleArray * >(argp1);
   {
@@ -5923,11 +5922,11 @@ SWIGINTERN PyObject *_wrap_TupleArray_frompointer(PyObject *self, PyObject *args
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   TupleArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:TupleArray_frompointer",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__Tuple, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_frompointer" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleArray_frompointer" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   {
@@ -5963,7 +5962,7 @@ fail:
 SWIGINTERN int _wrap_new_OptionalInt__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Optional< int > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_OptionalInt takes no arguments");
   {
     try {
@@ -6003,12 +6002,12 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_1(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< int > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_OptionalInt",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_OptionalInt" "', argument " "1"" of type '" "int""'");
-  }
+  } 
   temp1 = static_cast< int >(val1);
   arg1 = &temp1;
   {
@@ -6047,7 +6046,7 @@ SWIGINTERN int _wrap_new_OptionalInt(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -6066,7 +6065,7 @@ SWIGINTERN int _wrap_new_OptionalInt(PyObject *self, PyObject *args) {
       return _wrap_new_OptionalInt__SWIG_1(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_OptionalInt'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -6082,11 +6081,11 @@ SWIGINTERN PyObject *_wrap_OptionalInt___nonzero__(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalInt___nonzero__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_int_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalInt___nonzero__" "', argument " "1"" of type '" "ampl::Optional< int > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalInt___nonzero__" "', argument " "1"" of type '" "ampl::Optional< int > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< int > * >(argp1);
   {
@@ -6127,11 +6126,11 @@ SWIGINTERN PyObject *_wrap_OptionalInt_value(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalInt_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_int_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalInt_value" "', argument " "1"" of type '" "ampl::Optional< int > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalInt_value" "', argument " "1"" of type '" "ampl::Optional< int > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< int > * >(argp1);
   {
@@ -6169,11 +6168,11 @@ SWIGINTERN PyObject *_wrap_delete_OptionalInt(PyObject *self, PyObject *args) {
   ampl::Optional< int > *arg1 = (ampl::Optional< int > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_OptionalInt takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_int_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalInt" "', argument " "1"" of type '" "ampl::Optional< int > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalInt" "', argument " "1"" of type '" "ampl::Optional< int > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< int > * >(argp1);
   {
@@ -6209,7 +6208,7 @@ fail:
 SWIGINTERN int _wrap_new_OptionalString__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Optional< std::string > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_OptionalString takes no arguments");
   {
     try {
@@ -6247,16 +6246,16 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_1(PyObject *self, PyObject *args) 
   int res1 = SWIG_OLDOBJ ;
   PyObject * obj1 = 0 ;
   ampl::Optional< std::string > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_OptionalString",&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OptionalString" "', argument " "1"" of type '" "std::string const &""'");
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OptionalString" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OptionalString" "', argument " "1"" of type '" "std::string const &""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_OptionalString" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -6298,7 +6297,7 @@ SWIGINTERN int _wrap_new_OptionalString(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -6315,7 +6314,7 @@ SWIGINTERN int _wrap_new_OptionalString(PyObject *self, PyObject *args) {
       return _wrap_new_OptionalString__SWIG_1(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_OptionalString'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -6331,11 +6330,11 @@ SWIGINTERN PyObject *_wrap_OptionalString___nonzero__(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalString___nonzero__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_std__string_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalString___nonzero__" "', argument " "1"" of type '" "ampl::Optional< std::string > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalString___nonzero__" "', argument " "1"" of type '" "ampl::Optional< std::string > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< std::string > * >(argp1);
   {
@@ -6376,11 +6375,11 @@ SWIGINTERN PyObject *_wrap_OptionalString_value(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalString_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_std__string_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalString_value" "', argument " "1"" of type '" "ampl::Optional< std::string > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalString_value" "', argument " "1"" of type '" "ampl::Optional< std::string > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< std::string > * >(argp1);
   {
@@ -6418,11 +6417,11 @@ SWIGINTERN PyObject *_wrap_delete_OptionalString(PyObject *self, PyObject *args)
   ampl::Optional< std::string > *arg1 = (ampl::Optional< std::string > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_OptionalString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_std__string_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalString" "', argument " "1"" of type '" "ampl::Optional< std::string > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalString" "', argument " "1"" of type '" "ampl::Optional< std::string > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< std::string > * >(argp1);
   {
@@ -6458,7 +6457,7 @@ fail:
 SWIGINTERN int _wrap_new_OptionalBool__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Optional< bool > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_OptionalBool takes no arguments");
   {
     try {
@@ -6498,12 +6497,12 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_1(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< bool > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_OptionalBool",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_bool(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_OptionalBool" "', argument " "1"" of type '" "bool""'");
-  }
+  } 
   temp1 = static_cast< bool >(val1);
   arg1 = &temp1;
   {
@@ -6542,7 +6541,7 @@ SWIGINTERN int _wrap_new_OptionalBool(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -6561,7 +6560,7 @@ SWIGINTERN int _wrap_new_OptionalBool(PyObject *self, PyObject *args) {
       return _wrap_new_OptionalBool__SWIG_1(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_OptionalBool'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -6577,11 +6576,11 @@ SWIGINTERN PyObject *_wrap_OptionalBool___nonzero__(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalBool___nonzero__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_bool_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalBool___nonzero__" "', argument " "1"" of type '" "ampl::Optional< bool > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalBool___nonzero__" "', argument " "1"" of type '" "ampl::Optional< bool > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< bool > * >(argp1);
   {
@@ -6622,11 +6621,11 @@ SWIGINTERN PyObject *_wrap_OptionalBool_value(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalBool_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_bool_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalBool_value" "', argument " "1"" of type '" "ampl::Optional< bool > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalBool_value" "', argument " "1"" of type '" "ampl::Optional< bool > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< bool > * >(argp1);
   {
@@ -6664,11 +6663,11 @@ SWIGINTERN PyObject *_wrap_delete_OptionalBool(PyObject *self, PyObject *args) {
   ampl::Optional< bool > *arg1 = (ampl::Optional< bool > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_OptionalBool takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_bool_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalBool" "', argument " "1"" of type '" "ampl::Optional< bool > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalBool" "', argument " "1"" of type '" "ampl::Optional< bool > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< bool > * >(argp1);
   {
@@ -6704,7 +6703,7 @@ fail:
 SWIGINTERN int _wrap_new_OptionalDouble__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Optional< double > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_OptionalDouble takes no arguments");
   {
     try {
@@ -6744,12 +6743,12 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_1(PyObject *self, PyObject *args) 
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< double > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_OptionalDouble",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_OptionalDouble" "', argument " "1"" of type '" "double""'");
-  }
+  } 
   temp1 = static_cast< double >(val1);
   arg1 = &temp1;
   {
@@ -6788,7 +6787,7 @@ SWIGINTERN int _wrap_new_OptionalDouble(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -6807,7 +6806,7 @@ SWIGINTERN int _wrap_new_OptionalDouble(PyObject *self, PyObject *args) {
       return _wrap_new_OptionalDouble__SWIG_1(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_OptionalDouble'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -6823,11 +6822,11 @@ SWIGINTERN PyObject *_wrap_OptionalDouble___nonzero__(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalDouble___nonzero__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalDouble___nonzero__" "', argument " "1"" of type '" "ampl::Optional< double > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalDouble___nonzero__" "', argument " "1"" of type '" "ampl::Optional< double > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< double > * >(argp1);
   {
@@ -6868,11 +6867,11 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_value(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "OptionalDouble_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalDouble_value" "', argument " "1"" of type '" "ampl::Optional< double > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OptionalDouble_value" "', argument " "1"" of type '" "ampl::Optional< double > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< double > * >(argp1);
   {
@@ -6910,11 +6909,11 @@ SWIGINTERN PyObject *_wrap_delete_OptionalDouble(PyObject *self, PyObject *args)
   ampl::Optional< double > *arg1 = (ampl::Optional< double > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_OptionalDouble takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OptionalT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalDouble" "', argument " "1"" of type '" "ampl::Optional< double > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OptionalDouble" "', argument " "1"" of type '" "ampl::Optional< double > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Optional< double > * >(argp1);
   {
@@ -6952,13 +6951,13 @@ SWIGINTERN int _wrap_new_Variant__SWIG_0(PyObject *self, PyObject *args) {
   std::string arg1 ;
   PyObject * obj1 = 0 ;
   ampl::Variant *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Variant",&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_Variant" "', argument " "1"" of type '" "std::string""'");
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_Variant" "', argument " "1"" of type '" "std::string""'"); 
     }
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -7000,12 +6999,12 @@ SWIGINTERN int _wrap_new_Variant__SWIG_1(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Variant *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Variant",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Variant" "', argument " "1"" of type '" "double""'");
-  }
+  } 
   arg1 = static_cast< double >(val1);
   {
     try {
@@ -7044,14 +7043,14 @@ SWIGINTERN int _wrap_new_Variant__SWIG_2(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Variant *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Variant",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Variant" "', argument " "1"" of type '" "ampl::VariantRef const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Variant" "', argument " "1"" of type '" "ampl::VariantRef const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Variant" "', argument " "1"" of type '" "ampl::VariantRef const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Variant" "', argument " "1"" of type '" "ampl::VariantRef const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7090,7 +7089,7 @@ SWIGINTERN int _wrap_new_Variant(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -7122,7 +7121,7 @@ SWIGINTERN int _wrap_new_Variant(PyObject *self, PyObject *args) {
       return _wrap_new_Variant__SWIG_0(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_Variant'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -7139,11 +7138,11 @@ SWIGINTERN PyObject *_wrap_Variant_str(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variant_str takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_str" "', argument " "1"" of type '" "ampl::Variant const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_str" "', argument " "1"" of type '" "ampl::Variant const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7182,11 +7181,11 @@ SWIGINTERN PyObject *_wrap_Variant_dbl(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variant_dbl takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_dbl" "', argument " "1"" of type '" "ampl::Variant const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_dbl" "', argument " "1"" of type '" "ampl::Variant const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7225,11 +7224,11 @@ SWIGINTERN PyObject *_wrap_Variant_type(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Type result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variant_type takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_type" "', argument " "1"" of type '" "ampl::Variant const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_type" "', argument " "1"" of type '" "ampl::Variant const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7268,11 +7267,11 @@ SWIGINTERN PyObject *_wrap_Variant_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variant_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_toString" "', argument " "1"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_toString" "', argument " "1"" of type '" "ampl::Variant *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7315,19 +7314,19 @@ SWIGINTERN PyObject *_wrap_Variant_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Variant_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_equals" "', argument " "1"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_equals" "', argument " "1"" of type '" "ampl::Variant *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Variant,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Variant_equals" "', argument " "2"" of type '" "ampl::Variant &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Variant_equals" "', argument " "2"" of type '" "ampl::Variant &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Variant_equals" "', argument " "2"" of type '" "ampl::Variant &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Variant_equals" "', argument " "2"" of type '" "ampl::Variant &""'"); 
   }
   arg2 = reinterpret_cast< ampl::Variant * >(argp2);
   {
@@ -7370,19 +7369,19 @@ SWIGINTERN PyObject *_wrap_Variant_compare(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   int result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Variant_compare",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_compare" "', argument " "1"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variant_compare" "', argument " "1"" of type '" "ampl::Variant *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Variant,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Variant_compare" "', argument " "2"" of type '" "ampl::Variant &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Variant_compare" "', argument " "2"" of type '" "ampl::Variant &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Variant_compare" "', argument " "2"" of type '" "ampl::Variant &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Variant_compare" "', argument " "2"" of type '" "ampl::Variant &""'"); 
   }
   arg2 = reinterpret_cast< ampl::Variant * >(argp2);
   {
@@ -7420,11 +7419,11 @@ SWIGINTERN PyObject *_wrap_delete_Variant(PyObject *self, PyObject *args) {
   ampl::Variant *arg1 = (ampl::Variant *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Variant takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variant, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Variant" "', argument " "1"" of type '" "ampl::Variant *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Variant" "', argument " "1"" of type '" "ampl::Variant *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7462,13 +7461,13 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_0(PyObject *self, PyObject *args) {
   std::string arg1 ;
   PyObject * obj1 = 0 ;
   ampl::VariantRef *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_VariantRef",&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_VariantRef" "', argument " "1"" of type '" "std::string""'");
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_VariantRef" "', argument " "1"" of type '" "std::string""'"); 
     }
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -7510,12 +7509,12 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_1(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::VariantRef *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_VariantRef",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_VariantRef" "', argument " "1"" of type '" "double""'");
-  }
+  } 
   arg1 = static_cast< double >(val1);
   {
     try {
@@ -7554,14 +7553,14 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_2(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::VariantRef *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_VariantRef",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__Variant,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_VariantRef" "', argument " "1"" of type '" "ampl::Variant const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_VariantRef" "', argument " "1"" of type '" "ampl::Variant const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_VariantRef" "', argument " "1"" of type '" "ampl::Variant const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_VariantRef" "', argument " "1"" of type '" "ampl::Variant const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variant * >(argp1);
   {
@@ -7600,7 +7599,7 @@ SWIGINTERN int _wrap_new_VariantRef(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -7632,7 +7631,7 @@ SWIGINTERN int _wrap_new_VariantRef(PyObject *self, PyObject *args) {
       return _wrap_new_VariantRef__SWIG_0(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_VariantRef'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -7649,11 +7648,11 @@ SWIGINTERN PyObject *_wrap_VariantRef_str(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantRef_str takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_str" "', argument " "1"" of type '" "ampl::VariantRef const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_str" "', argument " "1"" of type '" "ampl::VariantRef const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7692,11 +7691,11 @@ SWIGINTERN PyObject *_wrap_VariantRef_dbl(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantRef_dbl takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_dbl" "', argument " "1"" of type '" "ampl::VariantRef const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_dbl" "', argument " "1"" of type '" "ampl::VariantRef const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7735,11 +7734,11 @@ SWIGINTERN PyObject *_wrap_VariantRef_type(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Type result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantRef_type takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_type" "', argument " "1"" of type '" "ampl::VariantRef const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_type" "', argument " "1"" of type '" "ampl::VariantRef const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7778,11 +7777,11 @@ SWIGINTERN PyObject *_wrap_VariantRef_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariantRef_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_toString" "', argument " "1"" of type '" "ampl::VariantRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_toString" "', argument " "1"" of type '" "ampl::VariantRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7825,19 +7824,19 @@ SWIGINTERN PyObject *_wrap_VariantRef_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariantRef_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_equals" "', argument " "1"" of type '" "ampl::VariantRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_equals" "', argument " "1"" of type '" "ampl::VariantRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantRef_equals" "', argument " "2"" of type '" "ampl::VariantRef &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantRef_equals" "', argument " "2"" of type '" "ampl::VariantRef &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariantRef_equals" "', argument " "2"" of type '" "ampl::VariantRef &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariantRef_equals" "', argument " "2"" of type '" "ampl::VariantRef &""'"); 
   }
   arg2 = reinterpret_cast< ampl::VariantRef * >(argp2);
   {
@@ -7880,19 +7879,19 @@ SWIGINTERN PyObject *_wrap_VariantRef_compare(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   int result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariantRef_compare",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_compare" "', argument " "1"" of type '" "ampl::VariantRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariantRef_compare" "', argument " "1"" of type '" "ampl::VariantRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantRef_compare" "', argument " "2"" of type '" "ampl::VariantRef &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariantRef_compare" "', argument " "2"" of type '" "ampl::VariantRef &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariantRef_compare" "', argument " "2"" of type '" "ampl::VariantRef &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariantRef_compare" "', argument " "2"" of type '" "ampl::VariantRef &""'"); 
   }
   arg2 = reinterpret_cast< ampl::VariantRef * >(argp2);
   {
@@ -7930,11 +7929,11 @@ SWIGINTERN PyObject *_wrap_delete_VariantRef(PyObject *self, PyObject *args) {
   ampl::VariantRef *arg1 = (ampl::VariantRef *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_VariantRef takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariantRef, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariantRef" "', argument " "1"" of type '" "ampl::VariantRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariantRef" "', argument " "1"" of type '" "ampl::VariantRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariantRef * >(argp1);
   {
@@ -7974,13 +7973,13 @@ SWIGINTERN int _wrap_new_TupleRef(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::TupleRef *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_TupleRef",&obj1)) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TupleRef" "', argument " "1"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TupleRef" "', argument " "1"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp1) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TupleRef" "', argument " "1"" of type '" "ampl::Tuple""'");
     } else {
@@ -8025,11 +8024,11 @@ SWIGINTERN PyObject *_wrap_TupleRef_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "TupleRef_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__TupleRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_size" "', argument " "1"" of type '" "ampl::TupleRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_size" "', argument " "1"" of type '" "ampl::TupleRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::TupleRef * >(argp1);
   {
@@ -8068,11 +8067,11 @@ SWIGINTERN PyObject *_wrap_TupleRef_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "TupleRef_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__TupleRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_toString" "', argument " "1"" of type '" "ampl::TupleRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_toString" "', argument " "1"" of type '" "ampl::TupleRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::TupleRef * >(argp1);
   {
@@ -8115,17 +8114,17 @@ SWIGINTERN PyObject *_wrap_TupleRef_getIndex(PyObject *self, PyObject *args) {
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variant > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:TupleRef_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__TupleRef, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_getIndex" "', argument " "1"" of type '" "ampl::TupleRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TupleRef_getIndex" "', argument " "1"" of type '" "ampl::TupleRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::TupleRef * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TupleRef_getIndex" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -8162,11 +8161,11 @@ SWIGINTERN PyObject *_wrap_delete_TupleRef(PyObject *self, PyObject *args) {
   ampl::TupleRef *arg1 = (ampl::TupleRef *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_TupleRef takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__TupleRef, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TupleRef" "', argument " "1"" of type '" "ampl::TupleRef *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TupleRef" "', argument " "1"" of type '" "ampl::TupleRef *""'"); 
   }
   arg1 = reinterpret_cast< ampl::TupleRef * >(argp1);
   {
@@ -8202,7 +8201,7 @@ fail:
 SWIGINTERN int _wrap_new_Tuple__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Tuple *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_Tuple takes no arguments");
   {
     try {
@@ -8241,12 +8240,12 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_1(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Tuple *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Tuple",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Tuple" "', argument " "1"" of type '" "double""'");
-  }
+  } 
   arg1 = static_cast< double >(val1);
   {
     try {
@@ -8286,7 +8285,7 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_2(PyObject *self, PyObject *args) {
   int alloc1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Tuple *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Tuple",&obj1)) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(obj1, &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
@@ -8331,7 +8330,7 @@ SWIGINTERN int _wrap_new_Tuple(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -8358,7 +8357,7 @@ SWIGINTERN int _wrap_new_Tuple(PyObject *self, PyObject *args) {
       return _wrap_new_Tuple__SWIG_2(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_Tuple'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8375,11 +8374,11 @@ SWIGINTERN PyObject *_wrap_Tuple_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Tuple_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Tuple, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_size" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_size" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   {
@@ -8418,11 +8417,11 @@ SWIGINTERN PyObject *_wrap_Tuple_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Tuple_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Tuple, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_toString" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_toString" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   {
@@ -8465,17 +8464,17 @@ SWIGINTERN PyObject *_wrap_Tuple_getIndex(PyObject *self, PyObject *args) {
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variant > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Tuple_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Tuple, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_getIndex" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_getIndex" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Tuple_getIndex" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -8517,19 +8516,19 @@ SWIGINTERN PyObject *_wrap_Tuple_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Tuple_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Tuple, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_equals" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_equals" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Tuple_equals" "', argument " "2"" of type '" "ampl::Tuple &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Tuple_equals" "', argument " "2"" of type '" "ampl::Tuple &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tuple_equals" "', argument " "2"" of type '" "ampl::Tuple &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tuple_equals" "', argument " "2"" of type '" "ampl::Tuple &""'"); 
   }
   arg2 = reinterpret_cast< ampl::Tuple * >(argp2);
   {
@@ -8573,20 +8572,20 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_0(PyObject *self, PyObject *args)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Tuple result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Tuple_Factory",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_VariantArray,  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_Factory" "', argument " "1"" of type '" "VariantArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_Factory" "', argument " "1"" of type '" "VariantArray &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tuple_Factory" "', argument " "1"" of type '" "VariantArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tuple_Factory" "', argument " "1"" of type '" "VariantArray &""'"); 
   }
   arg1 = reinterpret_cast< VariantArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Tuple_Factory" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -8625,13 +8624,13 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_1(PyObject *self, PyObject *args)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   ampl::Tuple result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Tuple_Factory",&obj0)) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_ampl__TupleRef,  0  | 0);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_Factory" "', argument " "1"" of type '" "ampl::TupleRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Tuple_Factory" "', argument " "1"" of type '" "ampl::TupleRef""'"); 
+    }  
     if (!argp1) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tuple_Factory" "', argument " "1"" of type '" "ampl::TupleRef""'");
     } else {
@@ -8676,7 +8675,7 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 2) && (ii < argc); ii++) {
@@ -8705,7 +8704,7 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Tuple_Factory'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8720,11 +8719,11 @@ SWIGINTERN PyObject *_wrap_delete_Tuple(PyObject *self, PyObject *args) {
   ampl::Tuple *arg1 = (ampl::Tuple *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Tuple takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Tuple, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Tuple" "', argument " "1"" of type '" "ampl::Tuple *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Tuple" "', argument " "1"" of type '" "ampl::Tuple *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Tuple * >(argp1);
   {
@@ -8764,12 +8763,12 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_0(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::DataFrame *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_DataFrame",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_DataFrame" "', argument " "1"" of type '" "std::size_t""'");
-  }
+  } 
   arg1 = static_cast< std::size_t >(val1);
   {
     try {
@@ -8806,11 +8805,11 @@ SWIGINTERN PyObject *_wrap_delete_DataFrame(PyObject *self, PyObject *args) {
   ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_DataFrame takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -8850,14 +8849,14 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_1(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::DataFrame *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_DataFrame",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__EntityArgs,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::EntityArgs const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::EntityArgs const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::EntityArgs const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::EntityArgs const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityArgs * >(argp1);
   {
@@ -8897,14 +8896,14 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_2(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::DataFrame *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_DataFrame",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DataFrame" "', argument " "1"" of type '" "ampl::DataFrame const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -8943,7 +8942,7 @@ SWIGINTERN int _wrap_new_DataFrame(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -8975,7 +8974,7 @@ SWIGINTERN int _wrap_new_DataFrame(PyObject *self, PyObject *args) {
       return _wrap_new_DataFrame__SWIG_0(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_DataFrame'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8996,19 +8995,19 @@ SWIGINTERN PyObject *_wrap_DataFrame_clone(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::DataFrame *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_clone" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_clone" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_clone" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_clone" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_clone" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_clone" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
   {
@@ -9047,11 +9046,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumCols(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_getNumCols takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumCols" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumCols" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9090,11 +9089,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumRows(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_getNumRows takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumRows" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumRows" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9133,11 +9132,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumIndices(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_getNumIndices takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumIndices" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getNumIndices" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9179,18 +9178,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_0(PyObject *self, PyObject *ar
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_addRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__TupleRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::TupleRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::TupleRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::TupleRef""'");
     } else {
@@ -9238,18 +9237,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_1(PyObject *self, PyObject *ar
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_addRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9301,18 +9300,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_2(PyObject *self, PyObject *ar
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:DataFrame_addRow",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9324,8 +9323,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_2(PyObject *self, PyObject *ar
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9381,18 +9380,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_addRow",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9404,8 +9403,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, PyObject *ar
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9417,8 +9416,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, PyObject *ar
   {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp4) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9478,18 +9477,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, PyObject *ar
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOO:DataFrame_addRow",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9501,8 +9500,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, PyObject *ar
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "3"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9514,8 +9513,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, PyObject *ar
   {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp4) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "4"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9527,8 +9526,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, PyObject *ar
   {
     res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "DataFrame_addRow" "', argument " "5"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "DataFrame_addRow" "', argument " "5"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp5) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "5"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9576,17 +9575,17 @@ SWIGINTERN PyObject *_wrap_DataFrame_reserve(PyObject *self, PyObject *args) {
   size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_reserve",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_reserve" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_reserve" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataFrame_reserve" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -9624,11 +9623,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_toString" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_toString" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9669,16 +9668,16 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< false > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_getColumn",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getColumn" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getColumn" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::DataFrame const *)arg1)->getColumn(arg2);
@@ -9719,17 +9718,17 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowByIndex(PyObject *self, PyObject *arg
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_getRowByIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRowByIndex" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRowByIndex" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataFrame_getRowByIndex" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -9771,18 +9770,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_0(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_getRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__VariantRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::VariantRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::VariantRef""'");
     } else {
@@ -9831,18 +9830,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_1(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_getRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__TupleRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::TupleRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::TupleRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::TupleRef""'");
     } else {
@@ -9887,11 +9886,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_2(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_getRow takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9930,11 +9929,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getHeaders(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::StringRefArray result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_getHeaders takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getHeaders" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getHeaders" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -9973,11 +9972,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_impl(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::DataFrame *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrame_impl takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_impl" "', argument " "1"" of type '" "ampl::DataFrame const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_impl" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -10017,16 +10016,16 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_addColumn",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumn" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumn" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       ampl_DataFrame_addColumnSWIG(arg1,arg2);
@@ -10066,19 +10065,19 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   {
     arg3 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:DataFrame_addColumnStr",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumnStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumnStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     /* Check if is a list */
     if (PyList_Check(obj2)) {
@@ -10147,16 +10146,16 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:DataFrame_addColumnDbl",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumnDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addColumnDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     /* Check if is a list */
     if (PyList_Check(obj2)) {
@@ -10224,18 +10223,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, PyObject *ar
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_addRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_addRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_addRow" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -10280,7 +10279,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -10390,7 +10389,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'DataFrame_addRow'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10414,18 +10413,18 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_3(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_getRow",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_getRow" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_getRow" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -10470,7 +10469,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -10526,7 +10525,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'DataFrame_getRow'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10551,19 +10550,19 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   {
     arg3 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setColumnStr",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setColumnStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setColumnStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     /* Check if is a list */
     if (PyList_Check(obj2)) {
@@ -10590,7 +10589,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setColumnStr" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -10641,16 +10640,16 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setColumnDbl",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setColumnDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setColumnDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     /* Check if is a list */
     if (PyList_Check(obj2)) {
@@ -10676,7 +10675,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setColumnDbl" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -10727,11 +10726,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblDbl(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setArrayDblDbl",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -10781,7 +10780,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblDbl(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setArrayDblDbl" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -10838,14 +10837,14 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setArrayStrDbl",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -10896,7 +10895,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setArrayStrDbl" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -10953,14 +10952,14 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   {
     arg3 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setArrayDblStr",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11011,7 +11010,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setArrayDblStr" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -11068,7 +11067,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
@@ -11078,7 +11077,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
   if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setArrayStrStr",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setArrayStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11130,7 +11129,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DataFrame_setArrayStrStr" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -11193,11 +11192,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixDblDblDbl",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11225,7 +11224,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixDblDblDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     /* Check if is a list */
@@ -11252,7 +11251,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixDblDblDbl" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11347,32 +11346,32 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrDbl(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixStrStrDbl",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "2"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "2"" of type '" "char const *[]""'"); 
+  } 
   arg2 = reinterpret_cast< char ** >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "4"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "4"" of type '" "char const *[]""'"); 
+  } 
   arg4 = reinterpret_cast< char ** >(argp4);
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixStrStrDbl" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11453,11 +11452,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrDbl(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixDblStrDbl",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11485,17 +11484,17 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrDbl(PyObject *self, PyObject
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "4"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "4"" of type '" "char const *[]""'"); 
+  } 
   arg4 = reinterpret_cast< char ** >(argp4);
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixDblStrDbl" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11582,22 +11581,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblDbl(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixStrDblDbl",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "2"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "2"" of type '" "char const *[]""'"); 
+  } 
   arg2 = reinterpret_cast< char ** >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     /* Check if is a list */
@@ -11624,7 +11623,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblDbl(PyObject *self, PyObject
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixStrDblDbl" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11709,14 +11708,14 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   {
     arg6 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixDblDblStr",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11744,7 +11743,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixDblDblStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     /* Check if is a list */
@@ -11771,7 +11770,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixDblDblStr" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11865,14 +11864,14 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   {
     arg6 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixDblStrStr",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
@@ -11900,17 +11899,17 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "4"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "4"" of type '" "char const *[]""'"); 
+  } 
   arg4 = reinterpret_cast< char ** >(argp4);
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixDblStrStr" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -11998,25 +11997,25 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   {
     arg6 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixStrDblStr",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "2"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "2"" of type '" "char const *[]""'"); 
+  } 
   arg2 = reinterpret_cast< char ** >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     /* Check if is a list */
@@ -12043,7 +12042,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixStrDblStr" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -12133,35 +12132,35 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
-
+  
   {
     arg6 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOOOO:DataFrame_setMatrixStrStrStr",&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "2"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "2"" of type '" "char const *[]""'"); 
+  } 
   arg2 = reinterpret_cast< char ** >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "4"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "4"" of type '" "char const *[]""'"); 
+  } 
   arg4 = reinterpret_cast< char ** >(argp4);
   ecode5 = SWIG_AsVal_size_t(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DataFrame_setMatrixStrStrStr" "', argument " "5"" of type '" "std::size_t""'");
-  }
+  } 
   arg5 = static_cast< std::size_t >(val5);
   {
     /* Check if is a list */
@@ -12235,7 +12234,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   {
     arg2 = NULL;
   }
@@ -12243,7 +12242,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
   ecode1 = SWIG_AsVal_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DataFrame_factory" "', argument " "1"" of type '" "int""'");
-  }
+  } 
   arg1 = static_cast< int >(val1);
   {
     /* Check if is a list */
@@ -12271,7 +12270,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_factory" "', argument " "3"" of type '" "int""'");
-  }
+  } 
   arg3 = static_cast< int >(val3);
   {
     try {
@@ -12315,11 +12314,11 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_size(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameColumn_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_size" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_size" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false > * >(argp1);
   {
@@ -12358,11 +12357,11 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_begin(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< false >::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameColumn_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_begin" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_begin" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false > * >(argp1);
   {
@@ -12401,11 +12400,11 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< false >::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameColumn_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_end" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_end" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false > * >(argp1);
   {
@@ -12448,17 +12447,17 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_getIndex(PyObject *self, PyObject *ar
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrameColumn_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_getIndex" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameColumn_getIndex" "', argument " "1"" of type '" "ampl::internal::Slice< false > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataFrameColumn_getIndex" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -12495,11 +12494,11 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameColumn(PyObject *self, PyObject *args
   ampl::internal::Slice< false > *arg1 = (ampl::internal::Slice< false > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_DataFrameColumn takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrameColumn" "', argument " "1"" of type '" "ampl::internal::Slice< false > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrameColumn" "', argument " "1"" of type '" "ampl::internal::Slice< false > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false > * >(argp1);
   {
@@ -12542,19 +12541,19 @@ SWIGINTERN PyObject *_wrap_ColIterator_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ColIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_equals" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_equals" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp2);
   {
@@ -12597,19 +12596,19 @@ SWIGINTERN PyObject *_wrap_ColIterator_differs(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ColIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_differs" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_differs" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp2);
   {
@@ -12648,11 +12647,11 @@ SWIGINTERN PyObject *_wrap_ColIterator___ref__(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ColIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator___ref__" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator___ref__" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   {
@@ -12697,19 +12696,19 @@ SWIGINTERN PyObject *_wrap_ColIterator_clone(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::Slice< false >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ColIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_clone" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_clone" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ColIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ColIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< false >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp2);
   {
@@ -12748,11 +12747,11 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrement(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::Slice< false >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ColIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   {
@@ -12795,17 +12794,17 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrementBy(PyObject *self, PyObject 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< false >::iterator > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ColIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ColIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -12842,11 +12841,11 @@ SWIGINTERN PyObject *_wrap_delete_ColIterator(PyObject *self, PyObject *args) {
   ampl::internal::Slice< false >::iterator *arg1 = (ampl::internal::Slice< false >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ColIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ColIterator" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ColIterator" "', argument " "1"" of type '" "ampl::internal::Slice< false >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< false >::iterator * >(argp1);
   {
@@ -12885,11 +12884,11 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameRow_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_size" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_size" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true > * >(argp1);
   {
@@ -12928,11 +12927,11 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_begin(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true >::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameRow_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_begin" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_begin" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true > * >(argp1);
   {
@@ -12971,11 +12970,11 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true >::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "DataFrameRow_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_end" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_end" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true > * >(argp1);
   {
@@ -13018,17 +13017,17 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_getIndex(PyObject *self, PyObject *args)
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:DataFrameRow_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_getIndex" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrameRow_getIndex" "', argument " "1"" of type '" "ampl::internal::Slice< true > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataFrameRow_getIndex" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -13065,11 +13064,11 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameRow(PyObject *self, PyObject *args) {
   ampl::internal::Slice< true > *arg1 = (ampl::internal::Slice< true > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_DataFrameRow takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrameRow" "', argument " "1"" of type '" "ampl::internal::Slice< true > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataFrameRow" "', argument " "1"" of type '" "ampl::internal::Slice< true > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true > * >(argp1);
   {
@@ -13112,19 +13111,19 @@ SWIGINTERN PyObject *_wrap_RowIterator_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:RowIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_equals" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_equals" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_equals" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp2);
   {
@@ -13167,19 +13166,19 @@ SWIGINTERN PyObject *_wrap_RowIterator_differs(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:RowIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_differs" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_differs" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_differs" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp2);
   {
@@ -13218,11 +13217,11 @@ SWIGINTERN PyObject *_wrap_RowIterator___ref__(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "RowIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator___ref__" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator___ref__" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   {
@@ -13267,19 +13266,19 @@ SWIGINTERN PyObject *_wrap_RowIterator_clone(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::Slice< true >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:RowIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_clone" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_clone" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RowIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RowIterator_clone" "', argument " "2"" of type '" "ampl::internal::Slice< true >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp2);
   {
@@ -13318,11 +13317,11 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrement(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::Slice< true >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "RowIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   {
@@ -13365,17 +13364,17 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrementBy(PyObject *self, PyObject 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::internal::Slice< true >::iterator > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:RowIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RowIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RowIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -13412,11 +13411,11 @@ SWIGINTERN PyObject *_wrap_delete_RowIterator(PyObject *self, PyObject *args) {
   ampl::internal::Slice< true >::iterator *arg1 = (ampl::internal::Slice< true >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_RowIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RowIterator" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RowIterator" "', argument " "1"" of type '" "ampl::internal::Slice< true >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::Slice< true >::iterator * >(argp1);
   {
@@ -13455,11 +13454,11 @@ SWIGINTERN PyObject *_wrap_Instance_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Instance_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_toString" "', argument " "1"" of type '" "ampl::Instance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_toString" "', argument " "1"" of type '" "ampl::Instance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Instance * >(argp1);
   {
@@ -13498,11 +13497,11 @@ SWIGINTERN PyObject *_wrap_Instance_name(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Instance_name takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_name" "', argument " "1"" of type '" "ampl::Instance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_name" "', argument " "1"" of type '" "ampl::Instance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Instance * >(argp1);
   {
@@ -13541,11 +13540,11 @@ SWIGINTERN PyObject *_wrap_Instance_entity(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Entity > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Instance_entity takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_entity" "', argument " "1"" of type '" "ampl::Instance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_entity" "', argument " "1"" of type '" "ampl::Instance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Instance * >(argp1);
   {
@@ -13583,11 +13582,11 @@ SWIGINTERN PyObject *_wrap_delete_Instance(PyObject *self, PyObject *args) {
   ampl::Instance *arg1 = (ampl::Instance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Instance takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Instance" "', argument " "1"" of type '" "ampl::Instance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Instance" "', argument " "1"" of type '" "ampl::Instance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Instance * >(argp1);
   {
@@ -13626,11 +13625,11 @@ SWIGINTERN PyObject *_wrap_SetInstance_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetInstance_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_size" "', argument " "1"" of type '" "ampl::SetInstance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_size" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -13673,18 +13672,18 @@ SWIGINTERN PyObject *_wrap_SetInstance_contains(PyObject *self, PyObject *args) 
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetInstance_contains",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_contains" "', argument " "1"" of type '" "ampl::SetInstance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_contains" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__TupleRef,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_contains" "', argument " "2"" of type '" "ampl::TupleRef""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_contains" "', argument " "2"" of type '" "ampl::TupleRef""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_contains" "', argument " "2"" of type '" "ampl::TupleRef""'");
     } else {
@@ -13729,11 +13728,11 @@ SWIGINTERN PyObject *_wrap_SetInstance_getValues(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetInstance_getValues takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_getValues" "', argument " "1"" of type '" "ampl::SetInstance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_getValues" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -13766,7 +13765,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetInstance_setValues__SWIG_0(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_SetInstance_setValuesDf(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
   SwigValueWrapper< ampl::DataFrame > arg2 ;
@@ -13775,20 +13774,20 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValues__SWIG_0(PyObject *self, PyObjec
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
-  if (!PyArg_ParseTuple(args,(char *)"O:SetInstance_setValues",&obj1)) SWIG_fail;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SetInstance_setValuesDf",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValues" "', argument " "1"" of type '" "ampl::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValuesDf" "', argument " "1"" of type '" "ampl::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "ampl::DataFrame""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'"); 
+    }  
     if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "ampl::DataFrame""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'");
     } else {
       ampl::DataFrame * temp = reinterpret_cast< ampl::DataFrame * >(argp2);
       arg2 = *temp;
@@ -13831,11 +13830,11 @@ SWIGINTERN PyObject *_wrap_SetInstance_members(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::SetInstance::MemberRange > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetInstance_members takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_members" "', argument " "1"" of type '" "ampl::SetInstance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_members" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -13878,18 +13877,18 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetInstance_Contains",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_Contains" "', argument " "1"" of type '" "ampl::SetInstance const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_Contains" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_Contains" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_Contains" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_Contains" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -13928,7 +13927,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetInstance_setValues__SWIG_1(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_SetInstance_setValues(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
   TupleArray *arg2 = 0 ;
@@ -13941,29 +13940,29 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValues__SWIG_1(PyObject *self, PyObjec
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:SetInstance_setValues",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValues" "', argument " "1"" of type '" "ampl::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValues" "', argument " "1"" of type '" "ampl::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_TupleArray,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetInstance_setValues" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   arg2 = reinterpret_cast< TupleArray * >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetInstance_setValues" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
-      ampl_SetInstance_setValues__SWIG_1(arg1,*arg2,arg3);
+      ampl_SetInstance_setValues(arg1,*arg2,arg3);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -13991,63 +13990,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetInstance_setValues(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  Py_ssize_t ii;
-
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? PyObject_Length(args) : 0;
-  argv[0] = self;
-  for (ii = 0; (ii < 2) && (ii < argc); ii++) {
-    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
-  }
-  argc++;
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__SetInstance, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_ampl__DataFrame, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_SetInstance_setValues__SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__SetInstance, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_TupleArray, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_size_t(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_SetInstance_setValues__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'SetInstance_setValues'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ampl::SetInstance::setValues(ampl::DataFrame)\n"
-    "    ampl::SetInstance::setValues(TupleArray &,std::size_t)\n");
-  return 0;
-}
-
-
 SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
@@ -14059,11 +14001,11 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *ar
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:SetInstance_setValuesDbl",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValuesDbl" "', argument " "1"" of type '" "ampl::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValuesDbl" "', argument " "1"" of type '" "ampl::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -14091,7 +14033,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *ar
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetInstance_setValuesDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -14140,14 +14082,14 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:SetInstance_setValuesStr",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValuesStr" "', argument " "1"" of type '" "ampl::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_setValuesStr" "', argument " "1"" of type '" "ampl::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -14176,7 +14118,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetInstance_setValuesStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -14219,11 +14161,11 @@ SWIGINTERN PyObject *_wrap_delete_SetInstance(PyObject *self, PyObject *args) {
   ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_SetInstance takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetInstance" "', argument " "1"" of type '" "ampl::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetInstance" "', argument " "1"" of type '" "ampl::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
@@ -14263,11 +14205,11 @@ SWIGINTERN int _wrap_new_MemberRange(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::SetInstance::MemberRange *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_MemberRange",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_MemberRange" "', argument " "1"" of type '" "ampl::internal::SetInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_MemberRange" "', argument " "1"" of type '" "ampl::internal::SetInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::SetInstance * >(argp1);
   {
@@ -14306,11 +14248,11 @@ SWIGINTERN PyObject *_wrap_MemberRange_begin(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::SetInstance::MemberRange::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "MemberRange_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MemberRange_begin" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MemberRange_begin" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange * >(argp1);
   {
@@ -14349,11 +14291,11 @@ SWIGINTERN PyObject *_wrap_MemberRange_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::SetInstance::MemberRange::iterator > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "MemberRange_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MemberRange_end" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MemberRange_end" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange * >(argp1);
   {
@@ -14391,11 +14333,11 @@ SWIGINTERN PyObject *_wrap_delete_MemberRange(PyObject *self, PyObject *args) {
   ampl::SetInstance::MemberRange *arg1 = (ampl::SetInstance::MemberRange *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_MemberRange takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_MemberRange" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_MemberRange" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange * >(argp1);
   {
@@ -14434,11 +14376,11 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "iterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator___ref__" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator___ref__" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   {
@@ -14479,11 +14421,11 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrement(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::SetInstance::MemberRange::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "iterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_postIncrement" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_postIncrement" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   {
@@ -14526,17 +14468,17 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrementBy(PyObject *self, PyObject *ar
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::SetInstance::MemberRange::iterator > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:iterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_postIncrementBy" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_postIncrementBy" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "iterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -14578,19 +14520,19 @@ SWIGINTERN PyObject *_wrap_iterator_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:iterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_equals" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_equals" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "iterator_equals" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "iterator_equals" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "iterator_equals" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "iterator_equals" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp2);
   {
@@ -14633,19 +14575,19 @@ SWIGINTERN PyObject *_wrap_iterator_differs(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:iterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_differs" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "iterator_differs" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "iterator_differs" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "iterator_differs" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "iterator_differs" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "iterator_differs" "', argument " "2"" of type '" "ampl::SetInstance::MemberRange::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp2);
   {
@@ -14683,11 +14625,11 @@ SWIGINTERN PyObject *_wrap_delete_iterator(PyObject *self, PyObject *args) {
   ampl::SetInstance::MemberRange::iterator *arg1 = (ampl::SetInstance::MemberRange::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_iterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_iterator" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_iterator" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::SetInstance::MemberRange::iterator * >(argp1);
   {
@@ -14726,11 +14668,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_value(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_value" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_value" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14769,11 +14711,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_astatus(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_astatus" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_astatus" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14812,11 +14754,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_sstatus(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_sstatus" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_sstatus" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14855,11 +14797,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_exitcode(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_exitcode takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_exitcode" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_exitcode" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14898,11 +14840,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_message(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_message takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_message" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_message" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14941,11 +14883,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_result(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_result takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_result" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_result" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -14983,11 +14925,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_drop(PyObject *self, PyObject *args
   ampl::ObjectiveInstance *arg1 = (ampl::ObjectiveInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_drop takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_drop" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_drop" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -15025,11 +14967,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_restore(PyObject *self, PyObject *a
   ampl::ObjectiveInstance *arg1 = (ampl::ObjectiveInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_restore takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_restore" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_restore" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -15068,11 +15010,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_minimization(PyObject *self, PyObje
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveInstance_minimization takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_minimization" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveInstance_minimization" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -15110,11 +15052,11 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveInstance(PyObject *self, PyObject *ar
   ampl::ObjectiveInstance *arg1 = (ampl::ObjectiveInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ObjectiveInstance takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ObjectiveInstance, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveInstance" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveInstance" "', argument " "1"" of type '" "ampl::ObjectiveInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ObjectiveInstance * >(argp1);
   {
@@ -15152,11 +15094,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_0(PyObject *self, PyObject
   ampl::VariableInstance *arg1 = (ampl::VariableInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_fix takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_fix" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_fix" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15198,17 +15140,17 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_1(PyObject *self, PyObject
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableInstance_fix",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_fix" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_fix" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "VariableInstance_fix" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -15246,7 +15188,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix(PyObject *self, PyObject *args) 
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -15278,7 +15220,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix(PyObject *self, PyObject *args) 
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'VariableInstance_fix'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -15293,11 +15235,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_unfix(PyObject *self, PyObject *args
   ampl::VariableInstance *arg1 = (ampl::VariableInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_unfix takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_unfix" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_unfix" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15339,17 +15281,17 @@ SWIGINTERN PyObject *_wrap_VariableInstance_setValue(PyObject *self, PyObject *a
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableInstance_setValue",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_setValue" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_setValue" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "VariableInstance_setValue" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -15387,11 +15329,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_value(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_value" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_value" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15430,11 +15372,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_defeqn(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_defeqn takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_defeqn" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_defeqn" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15473,11 +15415,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_dual(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_dual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_dual" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_dual" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15516,11 +15458,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_init takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_init" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_init" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15559,11 +15501,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init0(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_init0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_init0" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_init0" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15602,11 +15544,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lb takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15645,11 +15587,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_ub takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15688,11 +15630,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb0(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lb0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb0" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb0" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15731,11 +15673,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub0(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_ub0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub0" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub0" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15774,11 +15716,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb1(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lb1 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb1" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb1" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15817,11 +15759,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub1(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_ub1 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub1" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub1" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15860,11 +15802,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb2(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lb2 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb2" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lb2" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15903,11 +15845,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub2(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_ub2 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub2" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_ub2" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15946,11 +15888,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lrc(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lrc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lrc" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lrc" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -15989,11 +15931,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_urc(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_urc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_urc" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_urc" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16032,11 +15974,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lslack(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_lslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lslack" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_lslack" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16075,11 +16017,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_uslack(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_uslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_uslack" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_uslack" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16118,11 +16060,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_rc(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_rc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_rc" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_rc" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16161,11 +16103,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_slack(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_slack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_slack" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_slack" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16204,11 +16146,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_astatus(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_astatus" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_astatus" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16247,11 +16189,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_sstatus(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_sstatus" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_sstatus" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16290,11 +16232,11 @@ SWIGINTERN PyObject *_wrap_VariableInstance_status(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableInstance_status takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_status" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableInstance_status" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16332,11 +16274,11 @@ SWIGINTERN PyObject *_wrap_delete_VariableInstance(PyObject *self, PyObject *arg
   ampl::VariableInstance *arg1 = (ampl::VariableInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_VariableInstance takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__VariableInstance, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableInstance" "', argument " "1"" of type '" "ampl::VariableInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableInstance" "', argument " "1"" of type '" "ampl::VariableInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::VariableInstance * >(argp1);
   {
@@ -16374,11 +16316,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_drop(PyObject *self, PyObject *arg
   ampl::ConstraintInstance *arg1 = (ampl::ConstraintInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_drop takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_drop" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_drop" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16416,11 +16358,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_restore(PyObject *self, PyObject *
   ampl::ConstraintInstance *arg1 = (ampl::ConstraintInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_restore takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_restore" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_restore" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16459,11 +16401,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_body(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_body takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_body" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_body" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16502,11 +16444,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_astatus(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_astatus" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_astatus" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16545,11 +16487,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_defvar(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_defvar takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_defvar" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_defvar" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16588,11 +16530,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_dinit takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dinit" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dinit" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16631,11 +16573,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit0(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_dinit0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dinit0" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dinit0" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16674,11 +16616,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dual(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_dual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_dual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16717,11 +16659,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lb(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_lb takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lb" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lb" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16760,11 +16702,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ub(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_ub takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ub" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ub" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16803,11 +16745,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lbs(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_lbs takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lbs" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lbs" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16846,11 +16788,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ubs(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_ubs takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ubs" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ubs" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16889,11 +16831,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ldual(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_ldual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ldual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_ldual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16932,11 +16874,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_udual(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_udual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_udual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_udual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -16975,11 +16917,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lslack(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_lslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lslack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_lslack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17018,11 +16960,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_uslack(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_uslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_uslack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_uslack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17061,11 +17003,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_slack(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_slack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_slack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_slack" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17104,11 +17046,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_sstatus(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_sstatus" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_sstatus" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17147,11 +17089,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_status(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_status takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_status" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_status" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17193,17 +17135,17 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_setDual(PyObject *self, PyObject *
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ConstraintInstance_setDual",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_setDual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_setDual" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConstraintInstance_setDual" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -17241,11 +17183,11 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_val(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintInstance_val takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_val" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintInstance_val" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17283,11 +17225,11 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintInstance(PyObject *self, PyObject *a
   ampl::ConstraintInstance *arg1 = (ampl::ConstraintInstance *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ConstraintInstance takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ConstraintInstance, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintInstance" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintInstance" "', argument " "1"" of type '" "ampl::ConstraintInstance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ConstraintInstance * >(argp1);
   {
@@ -17329,16 +17271,16 @@ SWIGINTERN PyObject *_wrap_EntityArray_el_set(PyObject *self, PyObject *args) {
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityArray_el_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_el_set" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_el_set" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__Entity, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityArray_el_set" "', argument " "2"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityArray_el_set" "', argument " "2"" of type '" "ampl::Entity *""'"); 
   }
   arg2 = reinterpret_cast< ampl::Entity * >(argp2);
   if (arg1) (arg1)->el = arg2;
@@ -17355,11 +17297,11 @@ SWIGINTERN PyObject *_wrap_EntityArray_el_get(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Entity *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityArray_el_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_el_get" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_el_get" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   result = (ampl::Entity *) ((arg1)->el);
@@ -17377,12 +17319,12 @@ SWIGINTERN int _wrap_new_EntityArray(PyObject *self, PyObject *args) {
   int ecode1 = 0 ;
   PyObject * obj1 = 0 ;
   EntityArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_EntityArray",&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj1, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EntityArray" "', argument " "1"" of type '" "size_t""'");
-  }
+  } 
   arg1 = static_cast< size_t >(val1);
   {
     try {
@@ -17419,11 +17361,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityArray(PyObject *self, PyObject *args) {
   EntityArray *arg1 = (EntityArray *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityArray takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityArray" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityArray" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   {
@@ -17466,17 +17408,17 @@ SWIGINTERN PyObject *_wrap_EntityArray___getitem__(PyObject *self, PyObject *arg
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Entity > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityArray___getitem__",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray___getitem__" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray___getitem__" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityArray___getitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     try {
@@ -17523,23 +17465,23 @@ SWIGINTERN PyObject *_wrap_EntityArray___setitem__(PyObject *self, PyObject *arg
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:EntityArray___setitem__",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray___setitem__" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray___setitem__" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityArray___setitem__" "', argument " "2"" of type '" "size_t""'");
-  }
+  } 
   arg2 = static_cast< size_t >(val2);
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__Entity,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EntityArray___setitem__" "', argument " "3"" of type '" "ampl::Entity""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "EntityArray___setitem__" "', argument " "3"" of type '" "ampl::Entity""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityArray___setitem__" "', argument " "3"" of type '" "ampl::Entity""'");
     } else {
@@ -17586,11 +17528,11 @@ SWIGINTERN PyObject *_wrap_EntityArray_cast(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Entity *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityArray_cast takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_EntityArray, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_cast" "', argument " "1"" of type '" "EntityArray *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_cast" "', argument " "1"" of type '" "EntityArray *""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   {
@@ -17630,11 +17572,11 @@ SWIGINTERN PyObject *_wrap_EntityArray_frompointer(PyObject *self, PyObject *arg
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   EntityArray *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityArray_frompointer",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_frompointer" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArray_frompointer" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17673,11 +17615,11 @@ SWIGINTERN PyObject *_wrap_Entity_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_toString" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_toString" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17716,11 +17658,11 @@ SWIGINTERN PyObject *_wrap_Entity_name(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_name takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_name" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_name" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17759,11 +17701,11 @@ SWIGINTERN PyObject *_wrap_Entity_indexarity(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_indexarity takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_indexarity" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_indexarity" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17802,11 +17744,11 @@ SWIGINTERN PyObject *_wrap_Entity_isScalar(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_isScalar takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_isScalar" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_isScalar" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17845,11 +17787,11 @@ SWIGINTERN PyObject *_wrap_Entity_numInstances(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_numInstances takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_numInstances" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_numInstances" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17888,11 +17830,11 @@ SWIGINTERN PyObject *_wrap_Entity_getIndexingSets(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::StringArray result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_getIndexingSets takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getIndexingSets" "', argument " "1"" of type '" "ampl::Entity const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getIndexingSets" "', argument " "1"" of type '" "ampl::Entity const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17925,17 +17867,17 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Entity_getValues__SWIG_0(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_Entity_getValues(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Entity *arg1 = (ampl::Entity *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Entity_getValues takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getValues" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getValues" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -17977,18 +17919,18 @@ SWIGINTERN PyObject *_wrap_Entity_setValuesDf(PyObject *self, PyObject *args) {
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Entity_setValuesDf",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_setValuesDf" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_setValuesDf" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Entity_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Entity_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Entity_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'");
     } else {
@@ -18027,7 +17969,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Entity_getValues__SWIG_1(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Entity *arg1 = (ampl::Entity *) 0 ;
   char **arg2 ;
@@ -18039,14 +17981,14 @@ SWIGINTERN PyObject *_wrap_Entity_getValues__SWIG_1(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   {
     arg2 = NULL;
   }
-  if (!PyArg_ParseTuple(args,(char *)"OO:Entity_getValues",&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Entity_getValuesLst",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getValues" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Entity_getValuesLst" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -18074,12 +18016,12 @@ SWIGINTERN PyObject *_wrap_Entity_getValues__SWIG_1(PyObject *self, PyObject *ar
   }
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Entity_getValues" "', argument " "3"" of type '" "int""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Entity_getValuesLst" "', argument " "3"" of type '" "int""'");
+  } 
   arg3 = static_cast< int >(val3);
   {
     try {
-      result = ampl_Entity_getValues__SWIG_1(arg1,(char const *(*))arg2,arg3);
+      result = ampl_Entity_getValues(arg1,(char const *(*))arg2,arg3);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -18113,69 +18055,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Entity_getValues(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  Py_ssize_t ii;
-
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? PyObject_Length(args) : 0;
-  argv[0] = self;
-  for (ii = 0; (ii < 2) && (ii < argc); ii++) {
-    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
-  }
-  argc++;
-  if (argc == 1) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__Entity, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_Entity_getValues__SWIG_0(self, args);
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__Entity, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_p_char, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_Entity_getValues__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Entity_getValues'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ampl::Entity::getValues()\n"
-    "    ampl::Entity::getValues(char const *[],int)\n");
-  return 0;
-}
-
-
 SWIGINTERN PyObject *_wrap_delete_Entity(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Entity *arg1 = (ampl::Entity *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Entity takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Entity, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Entity" "', argument " "1"" of type '" "ampl::Entity *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Entity" "', argument " "1"" of type '" "ampl::Entity *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Entity * >(argp1);
   {
@@ -18219,20 +18108,20 @@ SWIGINTERN PyObject *_wrap_EntityArgs_Factory(PyObject *self, PyObject *args) {
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::EntityArgs > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:EntityArgs_Factory",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_EntityArray,  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArgs_Factory" "', argument " "1"" of type '" "EntityArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityArgs_Factory" "', argument " "1"" of type '" "EntityArray &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityArgs_Factory" "', argument " "1"" of type '" "EntityArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityArgs_Factory" "', argument " "1"" of type '" "EntityArray &""'"); 
   }
   arg1 = reinterpret_cast< EntityArray * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityArgs_Factory" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
@@ -18269,11 +18158,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityArgs(PyObject *self, PyObject *args) {
   ampl::EntityArgs *arg1 = (ampl::EntityArgs *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityArgs takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityArgs, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityArgs" "', argument " "1"" of type '" "ampl::EntityArgs *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityArgs" "', argument " "1"" of type '" "ampl::EntityArgs *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityArgs * >(argp1);
   {
@@ -18312,11 +18201,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_begin(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::VariableInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityVariable_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
@@ -18355,11 +18244,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_end(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::VariableInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityVariable_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
@@ -18402,18 +18291,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::BasicEntity< ampl::VariableInstance >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityVariable_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityVariable_find" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityVariable_find" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityVariable_find" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -18458,11 +18347,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_0(PyObject *self, PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariableInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityVariable_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
@@ -18505,18 +18394,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, PyObj
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::VariableInstance > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityVariable_get",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityVariable_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityVariable_get" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityVariable_get" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityVariable_get" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -18561,7 +18450,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get(PyObject *self, PyObject *arg
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -18591,7 +18480,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get(PyObject *self, PyObject *arg
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'BasicEntityVariable_get'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -18606,11 +18495,11 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityVariable(PyObject *self, PyObject *
   ampl::BasicEntity< ampl::VariableInstance > *arg1 = (ampl::BasicEntity< ampl::VariableInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_BasicEntityVariable takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariableInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityVariable" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityVariable" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
@@ -18649,11 +18538,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_begin(PyObject *self, PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::ConstraintInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityConstraint_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
@@ -18692,11 +18581,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_end(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::ConstraintInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityConstraint_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
@@ -18739,18 +18628,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::BasicEntity< ampl::ConstraintInstance >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityConstraint_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityConstraint_find" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityConstraint_find" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityConstraint_find" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -18795,11 +18684,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_0(PyObject *self, PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::ConstraintInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityConstraint_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
@@ -18842,18 +18731,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::ConstraintInstance > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityConstraint_get",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityConstraint_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityConstraint_get" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityConstraint_get" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityConstraint_get" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -18898,7 +18787,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get(PyObject *self, PyObject *a
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -18928,7 +18817,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get(PyObject *self, PyObject *a
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'BasicEntityConstraint_get'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -18943,11 +18832,11 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityConstraint(PyObject *self, PyObject
   ampl::BasicEntity< ampl::ConstraintInstance > *arg1 = (ampl::BasicEntity< ampl::ConstraintInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_BasicEntityConstraint takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityConstraint" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityConstraint" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
@@ -18986,11 +18875,11 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_begin(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::SetInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntitySet_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
@@ -19029,11 +18918,11 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::SetInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntitySet_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
@@ -19076,18 +18965,18 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::BasicEntity< ampl::SetInstance >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntitySet_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntitySet_find" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntitySet_find" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntitySet_find" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19132,11 +19021,11 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_0(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::SetInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntitySet_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
@@ -19179,18 +19068,18 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, PyObject *
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::SetInstance > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntitySet_get",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntitySet_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntitySet_get" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntitySet_get" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntitySet_get" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19235,7 +19124,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -19265,7 +19154,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'BasicEntitySet_get'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -19280,11 +19169,11 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntitySet(PyObject *self, PyObject *args)
   ampl::BasicEntity< ampl::SetInstance > *arg1 = (ampl::BasicEntity< ampl::SetInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_BasicEntitySet takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__SetInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntitySet" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntitySet" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
@@ -19323,11 +19212,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_begin(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::ObjectiveInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityObjective_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
@@ -19366,11 +19255,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_end(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::ObjectiveInstance >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityObjective_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
@@ -19413,18 +19302,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::BasicEntity< ampl::ObjectiveInstance >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityObjective_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityObjective_find" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityObjective_find" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityObjective_find" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19469,11 +19358,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_0(PyObject *self, PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::ObjectiveInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityObjective_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
@@ -19516,18 +19405,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, PyOb
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::ObjectiveInstance > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityObjective_get",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityObjective_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityObjective_get" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityObjective_get" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityObjective_get" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19572,7 +19461,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get(PyObject *self, PyObject *ar
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -19602,7 +19491,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get(PyObject *self, PyObject *ar
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'BasicEntityObjective_get'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -19617,11 +19506,11 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityObjective(PyObject *self, PyObject 
   ampl::BasicEntity< ampl::ObjectiveInstance > *arg1 = (ampl::BasicEntity< ampl::ObjectiveInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_BasicEntityObjective takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityObjective" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityObjective" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
@@ -19660,11 +19549,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_begin(PyObject *self, PyObject *
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::VariantRef >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityParameter_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_begin" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
@@ -19703,11 +19592,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_end(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::BasicEntity< ampl::VariantRef >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityParameter_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_end" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
@@ -19750,18 +19639,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::BasicEntity< ampl::VariantRef >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityParameter_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_find" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityParameter_find" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityParameter_find" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityParameter_find" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19806,11 +19695,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_0(PyObject *self, PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "BasicEntityParameter_get takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
@@ -19853,18 +19742,18 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, PyOb
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:BasicEntityParameter_get",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BasicEntityParameter_get" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityParameter_get" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BasicEntityParameter_get" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BasicEntityParameter_get" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -19909,7 +19798,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get(PyObject *self, PyObject *ar
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -19939,7 +19828,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get(PyObject *self, PyObject *ar
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'BasicEntityParameter_get'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -19954,11 +19843,11 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityParameter(PyObject *self, PyObject 
   ampl::BasicEntity< ampl::VariantRef > *arg1 = (ampl::BasicEntity< ampl::VariantRef > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_BasicEntityParameter takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__BasicEntityT_ampl__VariantRef_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityParameter" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_BasicEntityParameter" "', argument " "1"" of type '" "ampl::BasicEntity< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
@@ -19997,11 +19886,11 @@ SWIGINTERN PyObject *_wrap_Constraint_isLogical(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_isLogical takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_isLogical" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_isLogical" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20039,11 +19928,11 @@ SWIGINTERN PyObject *_wrap_Constraint_drop(PyObject *self, PyObject *args) {
   ampl::Constraint *arg1 = (ampl::Constraint *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_drop takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_drop" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_drop" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20081,11 +19970,11 @@ SWIGINTERN PyObject *_wrap_Constraint_restore(PyObject *self, PyObject *args) {
   ampl::Constraint *arg1 = (ampl::Constraint *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_restore takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_restore" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_restore" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20124,11 +20013,11 @@ SWIGINTERN PyObject *_wrap_Constraint_body(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_body takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_body" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_body" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20167,11 +20056,11 @@ SWIGINTERN PyObject *_wrap_Constraint_astatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_astatus" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_astatus" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20210,11 +20099,11 @@ SWIGINTERN PyObject *_wrap_Constraint_defvar(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_defvar takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_defvar" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_defvar" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20253,11 +20142,11 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_dinit takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dinit" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dinit" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20296,11 +20185,11 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit0(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_dinit0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dinit0" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dinit0" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20339,11 +20228,11 @@ SWIGINTERN PyObject *_wrap_Constraint_dual(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_dual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dual" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_dual" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20382,11 +20271,11 @@ SWIGINTERN PyObject *_wrap_Constraint_lb(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_lb takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lb" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lb" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20425,11 +20314,11 @@ SWIGINTERN PyObject *_wrap_Constraint_ub(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_ub takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ub" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ub" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20468,11 +20357,11 @@ SWIGINTERN PyObject *_wrap_Constraint_lbs(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_lbs takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lbs" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lbs" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20511,11 +20400,11 @@ SWIGINTERN PyObject *_wrap_Constraint_ubs(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_ubs takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ubs" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ubs" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20554,11 +20443,11 @@ SWIGINTERN PyObject *_wrap_Constraint_ldual(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_ldual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ldual" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_ldual" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20597,11 +20486,11 @@ SWIGINTERN PyObject *_wrap_Constraint_udual(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_udual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_udual" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_udual" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20640,11 +20529,11 @@ SWIGINTERN PyObject *_wrap_Constraint_lslack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_lslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lslack" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_lslack" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20683,11 +20572,11 @@ SWIGINTERN PyObject *_wrap_Constraint_uslack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_uslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_uslack" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_uslack" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20726,11 +20615,11 @@ SWIGINTERN PyObject *_wrap_Constraint_slack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_slack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_slack" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_slack" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20769,11 +20658,11 @@ SWIGINTERN PyObject *_wrap_Constraint_sstatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_sstatus" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_sstatus" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20812,11 +20701,11 @@ SWIGINTERN PyObject *_wrap_Constraint_status(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_status takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_status" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_status" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20858,17 +20747,17 @@ SWIGINTERN PyObject *_wrap_Constraint_setDual(PyObject *self, PyObject *args) {
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Constraint_setDual",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_setDual" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_setDual" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Constraint_setDual" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -20906,11 +20795,11 @@ SWIGINTERN PyObject *_wrap_Constraint_val(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Constraint_val takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_val" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Constraint_val" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20948,11 +20837,11 @@ SWIGINTERN PyObject *_wrap_delete_Constraint(PyObject *self, PyObject *args) {
   ampl::Constraint *arg1 = (ampl::Constraint *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Constraint takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Constraint, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Constraint" "', argument " "1"" of type '" "ampl::Constraint *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Constraint" "', argument " "1"" of type '" "ampl::Constraint *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Constraint * >(argp1);
   {
@@ -20991,11 +20880,11 @@ SWIGINTERN PyObject *_wrap_Variable_integrality(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::var::Integrality result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_integrality takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_integrality" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_integrality" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21033,11 +20922,11 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_0(PyObject *self, PyObject *args) 
   ampl::Variable *arg1 = (ampl::Variable *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_fix takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_fix" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_fix" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21079,17 +20968,17 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_1(PyObject *self, PyObject *args) 
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Variable_fix",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_fix" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_fix" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Variable_fix" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -21127,7 +21016,7 @@ SWIGINTERN PyObject *_wrap_Variable_fix(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -21159,7 +21048,7 @@ SWIGINTERN PyObject *_wrap_Variable_fix(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Variable_fix'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -21174,11 +21063,11 @@ SWIGINTERN PyObject *_wrap_Variable_unfix(PyObject *self, PyObject *args) {
   ampl::Variable *arg1 = (ampl::Variable *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_unfix takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_unfix" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_unfix" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21220,17 +21109,17 @@ SWIGINTERN PyObject *_wrap_Variable_setValue(PyObject *self, PyObject *args) {
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Variable_setValue",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_setValue" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_setValue" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Variable_setValue" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -21268,11 +21157,11 @@ SWIGINTERN PyObject *_wrap_Variable_value(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_value" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_value" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21311,11 +21200,11 @@ SWIGINTERN PyObject *_wrap_Variable_astatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_astatus" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_astatus" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21354,11 +21243,11 @@ SWIGINTERN PyObject *_wrap_Variable_defeqn(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_defeqn takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_defeqn" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_defeqn" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21397,11 +21286,11 @@ SWIGINTERN PyObject *_wrap_Variable_dual(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_dual takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_dual" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_dual" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21440,11 +21329,11 @@ SWIGINTERN PyObject *_wrap_Variable_init(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_init takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_init" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_init" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21483,11 +21372,11 @@ SWIGINTERN PyObject *_wrap_Variable_init0(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_init0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_init0" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_init0" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21526,11 +21415,11 @@ SWIGINTERN PyObject *_wrap_Variable_lb(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lb takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21569,11 +21458,11 @@ SWIGINTERN PyObject *_wrap_Variable_ub(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_ub takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21612,11 +21501,11 @@ SWIGINTERN PyObject *_wrap_Variable_lb0(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lb0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb0" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb0" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21655,11 +21544,11 @@ SWIGINTERN PyObject *_wrap_Variable_ub0(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_ub0 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub0" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub0" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21698,11 +21587,11 @@ SWIGINTERN PyObject *_wrap_Variable_lb1(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lb1 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb1" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb1" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21741,11 +21630,11 @@ SWIGINTERN PyObject *_wrap_Variable_ub1(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_ub1 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub1" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub1" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21784,11 +21673,11 @@ SWIGINTERN PyObject *_wrap_Variable_lb2(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lb2 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb2" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lb2" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21827,11 +21716,11 @@ SWIGINTERN PyObject *_wrap_Variable_ub2(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_ub2 takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub2" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_ub2" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21870,11 +21759,11 @@ SWIGINTERN PyObject *_wrap_Variable_lrc(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lrc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lrc" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lrc" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21913,11 +21802,11 @@ SWIGINTERN PyObject *_wrap_Variable_urc(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_urc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_urc" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_urc" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21956,11 +21845,11 @@ SWIGINTERN PyObject *_wrap_Variable_lslack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_lslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lslack" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_lslack" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -21999,11 +21888,11 @@ SWIGINTERN PyObject *_wrap_Variable_uslack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_uslack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_uslack" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_uslack" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22042,11 +21931,11 @@ SWIGINTERN PyObject *_wrap_Variable_rc(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_rc takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_rc" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_rc" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22085,11 +21974,11 @@ SWIGINTERN PyObject *_wrap_Variable_slack(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_slack takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_slack" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_slack" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22128,11 +22017,11 @@ SWIGINTERN PyObject *_wrap_Variable_sstatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_sstatus" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_sstatus" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22171,11 +22060,11 @@ SWIGINTERN PyObject *_wrap_Variable_status(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Variable_status takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_status" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Variable_status" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22213,11 +22102,11 @@ SWIGINTERN PyObject *_wrap_delete_Variable(PyObject *self, PyObject *args) {
   ampl::Variable *arg1 = (ampl::Variable *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Variable takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Variable, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Variable" "', argument " "1"" of type '" "ampl::Variable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Variable" "', argument " "1"" of type '" "ampl::Variable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Variable * >(argp1);
   {
@@ -22256,11 +22145,11 @@ SWIGINTERN PyObject *_wrap_Objective_value(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   double result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_value takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_value" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_value" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22299,11 +22188,11 @@ SWIGINTERN PyObject *_wrap_Objective_astatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_astatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_astatus" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_astatus" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22342,11 +22231,11 @@ SWIGINTERN PyObject *_wrap_Objective_sstatus(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_sstatus takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_sstatus" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_sstatus" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22385,11 +22274,11 @@ SWIGINTERN PyObject *_wrap_Objective_exitcode(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_exitcode takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_exitcode" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_exitcode" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22428,11 +22317,11 @@ SWIGINTERN PyObject *_wrap_Objective_message(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_message takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_message" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_message" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22471,11 +22360,11 @@ SWIGINTERN PyObject *_wrap_Objective_result(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_result takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_result" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_result" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22513,11 +22402,11 @@ SWIGINTERN PyObject *_wrap_Objective_drop(PyObject *self, PyObject *args) {
   ampl::Objective *arg1 = (ampl::Objective *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_drop takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_drop" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_drop" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22555,11 +22444,11 @@ SWIGINTERN PyObject *_wrap_Objective_restore(PyObject *self, PyObject *args) {
   ampl::Objective *arg1 = (ampl::Objective *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_restore takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_restore" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_restore" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22598,11 +22487,11 @@ SWIGINTERN PyObject *_wrap_Objective_minimization(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Objective_minimization takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_minimization" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Objective_minimization" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22640,11 +22529,11 @@ SWIGINTERN PyObject *_wrap_delete_Objective(PyObject *self, PyObject *args) {
   ampl::Objective *arg1 = (ampl::Objective *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Objective takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Objective, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Objective" "', argument " "1"" of type '" "ampl::Objective *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Objective" "', argument " "1"" of type '" "ampl::Objective *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Objective * >(argp1);
   {
@@ -22683,11 +22572,11 @@ SWIGINTERN PyObject *_wrap_Set_arity(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Set_arity takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_arity" "', argument " "1"" of type '" "ampl::Set const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_arity" "', argument " "1"" of type '" "ampl::Set const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -22726,11 +22615,11 @@ SWIGINTERN PyObject *_wrap_Set_getValues(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Set_getValues takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_getValues" "', argument " "1"" of type '" "ampl::Set const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_getValues" "', argument " "1"" of type '" "ampl::Set const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -22769,11 +22658,11 @@ SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Set_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_size" "', argument " "1"" of type '" "ampl::Set const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_size" "', argument " "1"" of type '" "ampl::Set const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -22815,18 +22704,18 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDf(PyObject *self, PyObject *args) {
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Set_setValuesDf",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesDf" "', argument " "1"" of type '" "ampl::Set *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesDf" "', argument " "1"" of type '" "ampl::Set *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Set_setValuesDf" "', argument " "2"" of type '" "ampl::DataFrame""'");
     } else {
@@ -22875,18 +22764,18 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Set_contains",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_contains" "', argument " "1"" of type '" "ampl::Set const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_contains" "', argument " "1"" of type '" "ampl::Set const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_contains" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_contains" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Set_contains" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -22938,25 +22827,25 @@ SWIGINTERN PyObject *_wrap_Set_setValues(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Set_setValues",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValues" "', argument " "1"" of type '" "ampl::Set *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValues" "', argument " "1"" of type '" "ampl::Set *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_TupleArray,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_setValues" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Set_setValues" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Set_setValues" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Set_setValues" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   arg2 = reinterpret_cast< TupleArray * >(argp2);
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Set_setValues" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -22999,11 +22888,11 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDbl(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Set_setValuesDbl",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesDbl" "', argument " "1"" of type '" "ampl::Set *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesDbl" "', argument " "1"" of type '" "ampl::Set *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -23031,7 +22920,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDbl(PyObject *self, PyObject *args) {
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Set_setValuesDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -23080,14 +22969,14 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:Set_setValuesStr",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesStr" "', argument " "1"" of type '" "ampl::Set *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_setValuesStr" "', argument " "1"" of type '" "ampl::Set *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -23116,7 +23005,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Set_setValuesStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -23159,11 +23048,11 @@ SWIGINTERN PyObject *_wrap_delete_Set(PyObject *self, PyObject *args) {
   ampl::Set *arg1 = (ampl::Set *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Set takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Set" "', argument " "1"" of type '" "ampl::Set *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Set" "', argument " "1"" of type '" "ampl::Set *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
@@ -23202,11 +23091,11 @@ SWIGINTERN PyObject *_wrap_Parameter_isSymbolic(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Parameter_isSymbolic takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_isSymbolic" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_isSymbolic" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
@@ -23245,11 +23134,11 @@ SWIGINTERN PyObject *_wrap_Parameter_hasDefault(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Parameter_hasDefault takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_hasDefault" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_hasDefault" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
@@ -23291,18 +23180,18 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_0(PyObject *self, PyObject *args)
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Parameter_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Variant,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Variant""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Variant""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Variant""'");
     } else {
@@ -23350,17 +23239,17 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_1(PyObject *self, PyObject *args)
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Parameter_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Parameter_set" "', argument " "2"" of type '" "double""'");
-  }
+  } 
   arg2 = static_cast< double >(val2);
   {
     try {
@@ -23402,11 +23291,11 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_2(PyObject *self, PyObject *args)
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Parameter_set",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -23459,18 +23348,18 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, PyObject *args)
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Parameter_set",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_set" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_set" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -23482,8 +23371,8 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, PyObject *args)
   {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_ampl__Variant,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Parameter_set" "', argument " "3"" of type '" "ampl::Variant""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Parameter_set" "', argument " "3"" of type '" "ampl::Variant""'"); 
+    }  
     if (!argp3) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_set" "', argument " "3"" of type '" "ampl::Variant""'");
     } else {
@@ -23528,7 +23417,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -23594,7 +23483,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Parameter_set'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -23619,18 +23508,18 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Parameter_setTplDbl",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setTplDbl" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setTplDbl" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setTplDbl" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setTplDbl" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setTplDbl" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -23642,7 +23531,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Parameter_setTplDbl" "', argument " "3"" of type '" "double""'");
-  }
+  } 
   arg3 = static_cast< double >(val3);
   {
     try {
@@ -23688,18 +23577,18 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
   int alloc3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Parameter_setTplStr",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setTplStr" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setTplStr" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setTplStr" "', argument " "2"" of type '" "ampl::Tuple""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setTplStr" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setTplStr" "', argument " "2"" of type '" "ampl::Tuple""'");
     } else {
@@ -23760,19 +23649,19 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOO:Parameter_setValuesTaDbl",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesTaDbl" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesTaDbl" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_TupleArray,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setValuesTaDbl" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setValuesTaDbl" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setValuesTaDbl" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setValuesTaDbl" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   arg2 = reinterpret_cast< TupleArray * >(argp2);
   {
@@ -23800,7 +23689,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Parameter_setValuesTaDbl" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -23853,22 +23742,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-
+  
   {
     arg3 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OOO:Parameter_setValuesTaStr",&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesTaStr" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesTaStr" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_TupleArray,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setValuesTaStr" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Parameter_setValuesTaStr" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setValuesTaStr" "', argument " "2"" of type '" "TupleArray &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Parameter_setValuesTaStr" "', argument " "2"" of type '" "TupleArray &""'"); 
   }
   arg2 = reinterpret_cast< TupleArray * >(argp2);
   {
@@ -23897,7 +23786,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Parameter_setValuesTaStr" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     try {
@@ -23946,11 +23835,11 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesDbl(PyObject *self, PyObject *args
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Parameter_setValuesDbl",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesDbl" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesDbl" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
@@ -23978,7 +23867,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesDbl(PyObject *self, PyObject *args
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Parameter_setValuesDbl" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -24027,14 +23916,14 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:Parameter_setValuesStr",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesStr" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValuesStr" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
@@ -24063,7 +23952,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Parameter_setValuesStr" "', argument " "3"" of type '" "std::size_t""'");
-  }
+  } 
   arg3 = static_cast< std::size_t >(val3);
   {
     try {
@@ -24128,32 +24017,32 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_0(PyObject *self, PyObject 
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
   PyObject * obj6 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Parameter_setValues",&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValues" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValues" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Parameter_setValues" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Parameter_setValues" "', argument " "3"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Parameter_setValues" "', argument " "3"" of type '" "char const *[]""'"); 
+  } 
   arg3 = reinterpret_cast< char ** >(argp3);
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Parameter_setValues" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   res5 = SWIG_ConvertPtr(obj4, &argp5,SWIGTYPE_p_p_char, 0 |  0 );
   if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Parameter_setValues" "', argument " "5"" of type '" "char const *[]""'");
-  }
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Parameter_setValues" "', argument " "5"" of type '" "char const *[]""'"); 
+  } 
   arg5 = reinterpret_cast< char ** >(argp5);
   {
     /* Check if is a list */
@@ -24180,7 +24069,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_0(PyObject *self, PyObject 
   ecode7 = SWIG_AsVal_bool(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
     SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Parameter_setValues" "', argument " "7"" of type '" "bool""'");
-  }
+  } 
   arg7 = static_cast< bool >(val7);
   {
     try {
@@ -24241,17 +24130,17 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, PyObject 
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
   PyObject * obj6 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Parameter_setValues",&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValues" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Parameter_setValues" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Parameter_setValues" "', argument " "2"" of type '" "std::size_t""'");
-  }
+  } 
   arg2 = static_cast< std::size_t >(val2);
   {
     /* Check if is a list */
@@ -24278,7 +24167,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, PyObject 
   ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Parameter_setValues" "', argument " "4"" of type '" "std::size_t""'");
-  }
+  } 
   arg4 = static_cast< std::size_t >(val4);
   {
     /* Check if is a list */
@@ -24327,7 +24216,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, PyObject 
   ecode7 = SWIG_AsVal_bool(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
     SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Parameter_setValues" "', argument " "7"" of type '" "bool""'");
-  }
+  } 
   arg7 = static_cast< bool >(val7);
   {
     try {
@@ -24383,7 +24272,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -24475,7 +24364,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Parameter_setValues'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -24490,11 +24379,11 @@ SWIGINTERN PyObject *_wrap_delete_Parameter(PyObject *self, PyObject *args) {
   ampl::Parameter *arg1 = (ampl::Parameter *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Parameter takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Parameter, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Parameter" "', argument " "1"" of type '" "ampl::Parameter *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Parameter" "', argument " "1"" of type '" "ampl::Parameter *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
@@ -24532,11 +24421,11 @@ SWIGINTERN PyObject *_wrap_delete_VariableIteratorWrapper(PyObject *self, PyObje
   ampl::internal::EntityWrapper< ampl::VariableInstance > *arg1 = (ampl::internal::EntityWrapper< ampl::VariableInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_VariableIteratorWrapper takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariableInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::VariableInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::VariableInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EntityWrapper< ampl::VariableInstance > * >(argp1);
   {
@@ -24579,19 +24468,19 @@ SWIGINTERN PyObject *_wrap_VariableIterator_equals(PyObject *self, PyObject *arg
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp2);
   {
@@ -24634,19 +24523,19 @@ SWIGINTERN PyObject *_wrap_VariableIterator_differs(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp2);
   {
@@ -24689,19 +24578,19 @@ SWIGINTERN PyObject *_wrap_VariableIterator_clone(PyObject *self, PyObject *args
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "VariableIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "VariableIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp2);
   {
@@ -24740,11 +24629,11 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrement(PyObject *self, PyObje
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   {
@@ -24787,17 +24676,17 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrementBy(PyObject *self, PyOb
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:VariableIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "VariableIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -24835,11 +24724,11 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableIterator_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   {
@@ -24878,11 +24767,11 @@ SWIGINTERN PyObject *_wrap_VariableIterator_second(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariableInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "VariableIterator_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "VariableIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   {
@@ -24920,11 +24809,11 @@ SWIGINTERN PyObject *_wrap_delete_VariableIterator(PyObject *self, PyObject *arg
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_VariableIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_VariableIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > * >(argp1);
   {
@@ -24962,11 +24851,11 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIteratorWrapper(PyObject *self, PyOb
   ampl::internal::EntityWrapper< ampl::ConstraintInstance > *arg1 = (ampl::internal::EntityWrapper< ampl::ConstraintInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ConstraintIteratorWrapper takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::ConstraintInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::ConstraintInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EntityWrapper< ampl::ConstraintInstance > * >(argp1);
   {
@@ -25009,19 +24898,19 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_equals(PyObject *self, PyObject *a
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ConstraintIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp2);
   {
@@ -25064,19 +24953,19 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_differs(PyObject *self, PyObject *
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ConstraintIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp2);
   {
@@ -25119,19 +25008,19 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_clone(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ConstraintIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ConstraintIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ConstraintIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp2);
   {
@@ -25170,11 +25059,11 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrement(PyObject *self, PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   {
@@ -25217,17 +25106,17 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrementBy(PyObject *self, Py
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ConstraintIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ConstraintIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -25265,11 +25154,11 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintIterator_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   {
@@ -25308,11 +25197,11 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_second(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::ConstraintInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ConstraintIterator_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ConstraintIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   {
@@ -25350,11 +25239,11 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIterator(PyObject *self, PyObject *a
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ConstraintIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ConstraintIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > > * >(argp1);
   {
@@ -25392,11 +25281,11 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIteratorWrapper(PyObject *self, PyObj
   ampl::internal::EntityWrapper< ampl::ObjectiveInstance > *arg1 = (ampl::internal::EntityWrapper< ampl::ObjectiveInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ObjectiveIteratorWrapper takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::ObjectiveInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::ObjectiveInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > * >(argp1);
   {
@@ -25439,19 +25328,19 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_equals(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ObjectiveIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp2);
   {
@@ -25494,19 +25383,19 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_differs(PyObject *self, PyObject *a
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ObjectiveIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp2);
   {
@@ -25549,19 +25438,19 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_clone(PyObject *self, PyObject *arg
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ObjectiveIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp2);
   {
@@ -25600,11 +25489,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrement(PyObject *self, PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   {
@@ -25647,17 +25536,17 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrementBy(PyObject *self, PyO
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ObjectiveIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ObjectiveIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -25695,11 +25584,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveIterator_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   {
@@ -25738,11 +25627,11 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_second(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::ObjectiveInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ObjectiveIterator_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ObjectiveIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   {
@@ -25780,11 +25669,11 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIterator(PyObject *self, PyObject *ar
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ObjectiveIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ObjectiveIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > > * >(argp1);
   {
@@ -25822,11 +25711,11 @@ SWIGINTERN PyObject *_wrap_delete_SetIteratorWrapper(PyObject *self, PyObject *a
   ampl::internal::EntityWrapper< ampl::SetInstance > *arg1 = (ampl::internal::EntityWrapper< ampl::SetInstance > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_SetIteratorWrapper takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__SetInstance_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::SetInstance > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::SetInstance > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EntityWrapper< ampl::SetInstance > * >(argp1);
   {
@@ -25869,19 +25758,19 @@ SWIGINTERN PyObject *_wrap_SetIterator_equals(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp2);
   {
@@ -25924,19 +25813,19 @@ SWIGINTERN PyObject *_wrap_SetIterator_differs(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp2);
   {
@@ -25979,19 +25868,19 @@ SWIGINTERN PyObject *_wrap_SetIterator_clone(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp2);
   {
@@ -26030,11 +25919,11 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrement(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   {
@@ -26077,17 +25966,17 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrementBy(PyObject *self, PyObject 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:SetIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -26125,11 +26014,11 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetIterator_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   {
@@ -26168,11 +26057,11 @@ SWIGINTERN PyObject *_wrap_SetIterator_second(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::SetInstance > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "SetIterator_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   {
@@ -26210,11 +26099,11 @@ SWIGINTERN PyObject *_wrap_delete_SetIterator(PyObject *self, PyObject *args) {
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_SetIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SetIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > > * >(argp1);
   {
@@ -26252,11 +26141,11 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIteratorWrapper(PyObject *self, PyObj
   ampl::internal::EntityWrapper< ampl::VariantRef > *arg1 = (ampl::internal::EntityWrapper< ampl::VariantRef > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ParameterIteratorWrapper takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariantRef_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ParameterIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::VariantRef > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ParameterIteratorWrapper" "', argument " "1"" of type '" "ampl::internal::EntityWrapper< ampl::VariantRef > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EntityWrapper< ampl::VariantRef > * >(argp1);
   {
@@ -26299,19 +26188,19 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_equals(PyObject *self, PyObject *ar
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ParameterIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp2);
   {
@@ -26354,19 +26243,19 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_differs(PyObject *self, PyObject *a
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ParameterIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp2);
   {
@@ -26409,19 +26298,19 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_clone(PyObject *self, PyObject *arg
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ParameterIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ParameterIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ParameterIterator_clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp2);
   {
@@ -26460,11 +26349,11 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrement(PyObject *self, PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ParameterIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   {
@@ -26507,17 +26396,17 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrementBy(PyObject *self, PyO
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ParameterIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ParameterIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -26555,11 +26444,11 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::TupleRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ParameterIterator_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   {
@@ -26598,11 +26487,11 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_second(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::VariantRef > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "ParameterIterator_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParameterIterator_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   {
@@ -26640,11 +26529,11 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIterator(PyObject *self, PyObject *ar
   ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ParameterIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ParameterIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ParameterIterator" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > * >(argp1);
   {
@@ -26683,11 +26572,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_begin(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapVariable_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   {
@@ -26726,11 +26615,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_end(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapVariable_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   {
@@ -26774,11 +26663,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_find(PyObject *self, PyObject *args
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariable_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -26824,11 +26713,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_size(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapVariable_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   {
@@ -26869,16 +26758,16 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variable > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariable_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariable_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::EntityMap< ampl::Variable > const *)arg1)->operator [](arg2);
@@ -26914,11 +26803,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariable(PyObject *self, PyObject *ar
   ampl::EntityMap< ampl::Variable > *arg1 = (ampl::EntityMap< ampl::Variable > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapVariable takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapVariable" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapVariable" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   {
@@ -26961,19 +26850,19 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_equals(PyObject *self, PyOb
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariableIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp2);
   {
@@ -27016,19 +26905,19 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_differs(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariableIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp2);
   {
@@ -27067,11 +26956,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator___ref__(PyObject *self, PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Variable > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapVariableIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   {
@@ -27116,19 +27005,19 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_clone(PyObject *self, PyObj
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariableIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapVariableIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapVariableIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Variable >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp2);
   {
@@ -27167,11 +27056,11 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrement(PyObject *sel
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapVariableIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   {
@@ -27214,17 +27103,17 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrementBy(PyObject *s
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Variable >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapVariableIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapVariableIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityMapVariableIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -27261,11 +27150,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariableIterator(PyObject *self, PyOb
   ampl::EntityMap< ampl::Variable >::iterator *arg1 = (ampl::EntityMap< ampl::Variable >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapVariableIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapVariableIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapVariableIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Variable >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable >::iterator * >(argp1);
   {
@@ -27304,11 +27193,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_begin(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapConstraint_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   {
@@ -27347,11 +27236,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_end(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapConstraint_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   {
@@ -27395,11 +27284,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_find(PyObject *self, PyObject *ar
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraint_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -27445,11 +27334,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_size(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapConstraint_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   {
@@ -27490,16 +27379,16 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Constraint > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraint_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraint_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::EntityMap< ampl::Constraint > const *)arg1)->operator [](arg2);
@@ -27535,11 +27424,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraint(PyObject *self, PyObject *
   ampl::EntityMap< ampl::Constraint > *arg1 = (ampl::EntityMap< ampl::Constraint > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapConstraint takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapConstraint" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapConstraint" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   {
@@ -27582,19 +27471,19 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_equals(PyObject *self, Py
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraintIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp2);
   {
@@ -27637,19 +27526,19 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_differs(PyObject *self, P
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraintIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp2);
   {
@@ -27688,11 +27577,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator___ref__(PyObject *self, P
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Constraint > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapConstraintIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   {
@@ -27737,19 +27626,19 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_clone(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraintIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapConstraintIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapConstraintIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp2);
   {
@@ -27788,11 +27677,11 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrement(PyObject *s
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapConstraintIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   {
@@ -27835,17 +27724,17 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrementBy(PyObject 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Constraint >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapConstraintIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapConstraintIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityMapConstraintIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -27882,11 +27771,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraintIterator(PyObject *self, Py
   ampl::EntityMap< ampl::Constraint >::iterator *arg1 = (ampl::EntityMap< ampl::Constraint >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapConstraintIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Constraint_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapConstraintIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapConstraintIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Constraint >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint >::iterator * >(argp1);
   {
@@ -27925,11 +27814,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_begin(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapObjective_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   {
@@ -27968,11 +27857,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_end(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapObjective_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   {
@@ -28016,11 +27905,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_find(PyObject *self, PyObject *arg
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjective_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -28066,11 +27955,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_size(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapObjective_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   {
@@ -28111,16 +28000,16 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Objective > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjective_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjective_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::EntityMap< ampl::Objective > const *)arg1)->operator [](arg2);
@@ -28156,11 +28045,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjective(PyObject *self, PyObject *a
   ampl::EntityMap< ampl::Objective > *arg1 = (ampl::EntityMap< ampl::Objective > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapObjective takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapObjective" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapObjective" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   {
@@ -28203,19 +28092,19 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_equals(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjectiveIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp2);
   {
@@ -28258,19 +28147,19 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_differs(PyObject *self, Py
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjectiveIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp2);
   {
@@ -28309,11 +28198,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator___ref__(PyObject *self, Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Objective > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapObjectiveIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   {
@@ -28358,19 +28247,19 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_clone(PyObject *self, PyOb
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjectiveIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapObjectiveIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Objective >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp2);
   {
@@ -28409,11 +28298,11 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrement(PyObject *se
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapObjectiveIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   {
@@ -28456,17 +28345,17 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrementBy(PyObject *
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Objective >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapObjectiveIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapObjectiveIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityMapObjectiveIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -28503,11 +28392,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjectiveIterator(PyObject *self, PyO
   ampl::EntityMap< ampl::Objective >::iterator *arg1 = (ampl::EntityMap< ampl::Objective >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapObjectiveIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Objective_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapObjectiveIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapObjectiveIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Objective >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective >::iterator * >(argp1);
   {
@@ -28546,11 +28435,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_begin(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapSet_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   {
@@ -28589,11 +28478,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapSet_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   {
@@ -28637,11 +28526,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_find(PyObject *self, PyObject *args) {
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSet_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -28687,11 +28576,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_size(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapSet_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   {
@@ -28732,16 +28621,16 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Set > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSet_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSet_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::EntityMap< ampl::Set > const *)arg1)->operator [](arg2);
@@ -28777,11 +28666,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSet(PyObject *self, PyObject *args) {
   ampl::EntityMap< ampl::Set > *arg1 = (ampl::EntityMap< ampl::Set > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapSet takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapSet" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapSet" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   {
@@ -28824,19 +28713,19 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_equals(PyObject *self, PyObject 
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSetIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp2);
   {
@@ -28879,19 +28768,19 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_differs(PyObject *self, PyObject
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSetIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp2);
   {
@@ -28930,11 +28819,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator___ref__(PyObject *self, PyObject
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Set > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapSetIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   {
@@ -28979,19 +28868,19 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_clone(PyObject *self, PyObject *
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSetIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapSetIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapSetIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Set >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp2);
   {
@@ -29030,11 +28919,11 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrement(PyObject *self, Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapSetIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   {
@@ -29077,17 +28966,17 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrementBy(PyObject *self, 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Set >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapSetIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapSetIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityMapSetIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -29124,11 +29013,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSetIterator(PyObject *self, PyObject 
   ampl::EntityMap< ampl::Set >::iterator *arg1 = (ampl::EntityMap< ampl::Set >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapSetIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Set_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapSetIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapSetIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Set >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set >::iterator * >(argp1);
   {
@@ -29167,11 +29056,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_begin(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapParameter_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_begin" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   {
@@ -29210,11 +29099,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_end(PyObject *self, PyObject *args
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapParameter_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_end" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   {
@@ -29258,11 +29147,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_find(PyObject *self, PyObject *arg
   int alloc2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameter_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_find" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
@@ -29308,11 +29197,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_size(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::size_t result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapParameter_size takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_size" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   {
@@ -29353,16 +29242,16 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Parameter > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameter_getIndex",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameter_getIndex" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::EntityMap< ampl::Parameter > const *)arg1)->operator [](arg2);
@@ -29398,11 +29287,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameter(PyObject *self, PyObject *a
   ampl::EntityMap< ampl::Parameter > *arg1 = (ampl::EntityMap< ampl::Parameter > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapParameter takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapParameter" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapParameter" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   {
@@ -29445,19 +29334,19 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_equals(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameterIterator_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_equals" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_equals" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp2);
   {
@@ -29500,19 +29389,19 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_differs(PyObject *self, Py
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameterIterator_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_differs" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_differs" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp2);
   {
@@ -29551,11 +29440,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator___ref__(PyObject *self, Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::Parameter > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapParameterIterator___ref__ takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator___ref__" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   {
@@ -29600,19 +29489,19 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_clone(PyObject *self, PyOb
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameterIterator_clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_clone" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EntityMapParameterIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EntityMapParameterIterator_clone" "', argument " "2"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp2);
   {
@@ -29651,11 +29540,11 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrement(PyObject *se
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EntityMapParameterIterator_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_postIncrement" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   {
@@ -29698,17 +29587,17 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrementBy(PyObject *
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::EntityMap< ampl::Parameter >::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EntityMapParameterIterator_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EntityMapParameterIterator_postIncrementBy" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EntityMapParameterIterator_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -29745,11 +29634,11 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameterIterator(PyObject *self, PyO
   ampl::EntityMap< ampl::Parameter >::iterator *arg1 = (ampl::EntityMap< ampl::Parameter >::iterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EntityMapParameterIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__EntityMapT_ampl__Parameter_t__iterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapParameterIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EntityMapParameterIterator" "', argument " "1"" of type '" "ampl::EntityMap< ampl::Parameter >::iterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter >::iterator * >(argp1);
   {
@@ -29787,11 +29676,11 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_0(PyObject *self, PyObject *args) {
   fmt::CStringRef arg1 ;
   PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
-
+  
   arg1 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
@@ -29825,7 +29714,7 @@ fail:
 SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::AMPLException *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
   {
     try {
@@ -29872,24 +29761,24 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, PyObject *args) {
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   ampl::AMPLException *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OOOO:new_AMPLException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-
+  
   arg1 = PyString_AsString(obj1);
-
+  
   ecode2 = SWIG_AsVal_int(obj2, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_AMPLException" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   ecode3 = SWIG_AsVal_int(obj3, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_AMPLException" "', argument " "3"" of type '" "int""'");
-  }
+  } 
   arg3 = static_cast< int >(val3);
-
+  
   arg4 = PyString_AsString(obj4);
-
+  
   {
     try {
       result = (ampl::AMPLException *)new ampl::AMPLException(arg1,arg2,arg3,arg4);
@@ -29926,7 +29815,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 4) && (ii < argc); ii++) {
@@ -29967,7 +29856,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_AMPLException'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -29983,11 +29872,11 @@ SWIGINTERN PyObject *_wrap_delete_AMPLException(PyObject *self, PyObject *args) 
   ampl::AMPLException *arg1 = (ampl::AMPLException *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_AMPLException takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_AMPLException" "', argument " "1"" of type '" "ampl::AMPLException *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_AMPLException" "', argument " "1"" of type '" "ampl::AMPLException *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
@@ -30026,11 +29915,11 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getSourceName takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getSourceName" "', argument " "1"" of type '" "ampl::AMPLException const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getSourceName" "', argument " "1"" of type '" "ampl::AMPLException const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
@@ -30069,11 +29958,11 @@ SWIGINTERN PyObject *_wrap_AMPLException_getLineNumber(PyObject *self, PyObject 
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getLineNumber takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getLineNumber" "', argument " "1"" of type '" "ampl::AMPLException const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getLineNumber" "', argument " "1"" of type '" "ampl::AMPLException const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
@@ -30112,11 +30001,11 @@ SWIGINTERN PyObject *_wrap_AMPLException_getOffset(PyObject *self, PyObject *arg
   void *argp1 = 0 ;
   int res1 = 0 ;
   int result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getOffset takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getOffset" "', argument " "1"" of type '" "ampl::AMPLException const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getOffset" "', argument " "1"" of type '" "ampl::AMPLException const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
@@ -30155,11 +30044,11 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getMessage takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getMessage" "', argument " "1"" of type '" "ampl::AMPLException const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_getMessage" "', argument " "1"" of type '" "ampl::AMPLException const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
@@ -30196,19 +30085,19 @@ SWIGINTERN int _wrap_new_ErrorHandler(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   PyObject *arg1 = (PyObject *) 0 ;
   ampl::ErrorHandler *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_ErrorHandler takes no arguments");
   arg1 = self;
   {
     try {
       if ( self->ob_type != ((SwigPyClientData*) (SWIGTYPE_p_ampl__ErrorHandler)->clientdata)->pytype ) {
         /* subclassed */
-        result = (ampl::ErrorHandler *)new SwigDirector_ErrorHandler(arg1);
+        result = (ampl::ErrorHandler *)new SwigDirector_ErrorHandler(arg1); 
       } else {
-        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor");
+        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor"); 
         SWIG_fail;
       }
-
+      
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -30241,11 +30130,11 @@ SWIGINTERN PyObject *_wrap_delete_ErrorHandler(PyObject *self, PyObject *args) {
   ampl::ErrorHandler *arg1 = (ampl::ErrorHandler *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_ErrorHandler takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ErrorHandler, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ErrorHandler" "', argument " "1"" of type '" "ampl::ErrorHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ErrorHandler" "', argument " "1"" of type '" "ampl::ErrorHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ErrorHandler * >(argp1);
   {
@@ -30289,19 +30178,19 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_error(PyObject *self, PyObject *args) {
   PyObject * obj1 = 0 ;
   Swig::Director *director = 0;
   bool upcall = false;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ErrorHandler_error",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ErrorHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ErrorHandler_error" "', argument " "1"" of type '" "ampl::ErrorHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ErrorHandler_error" "', argument " "1"" of type '" "ampl::ErrorHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ErrorHandler * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__AMPLException,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ErrorHandler_error" "', argument " "2"" of type '" "ampl::AMPLException const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ErrorHandler_error" "', argument " "2"" of type '" "ampl::AMPLException const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ErrorHandler_error" "', argument " "2"" of type '" "ampl::AMPLException const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ErrorHandler_error" "', argument " "2"" of type '" "ampl::AMPLException const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::AMPLException * >(argp2);
   director = SWIG_DIRECTOR_CAST(arg1);
@@ -30355,19 +30244,19 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_warning(PyObject *self, PyObject *args) 
   PyObject * obj1 = 0 ;
   Swig::Director *director = 0;
   bool upcall = false;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:ErrorHandler_warning",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__ErrorHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ErrorHandler_warning" "', argument " "1"" of type '" "ampl::ErrorHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ErrorHandler_warning" "', argument " "1"" of type '" "ampl::ErrorHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ErrorHandler * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__AMPLException,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ErrorHandler_warning" "', argument " "2"" of type '" "ampl::AMPLException const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ErrorHandler_warning" "', argument " "2"" of type '" "ampl::AMPLException const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ErrorHandler_warning" "', argument " "2"" of type '" "ampl::AMPLException const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ErrorHandler_warning" "', argument " "2"" of type '" "ampl::AMPLException const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::AMPLException * >(argp2);
   director = SWIG_DIRECTOR_CAST(arg1);
@@ -30416,18 +30305,18 @@ SWIGINTERN PyObject *_wrap_disown_ErrorHandler(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:disown_ErrorHandler",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__ErrorHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_ErrorHandler" "', argument " "1"" of type '" "ampl::ErrorHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_ErrorHandler" "', argument " "1"" of type '" "ampl::ErrorHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::ErrorHandler * >(argp1);
   {
     Swig::Director *director = SWIG_DIRECTOR_CAST(arg1);
     if (director) director->swig_disown();
   }
-
+  
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30440,11 +30329,11 @@ SWIGINTERN PyObject *_wrap_delete_Runnable(PyObject *self, PyObject *args) {
   ampl::Runnable *arg1 = (ampl::Runnable *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Runnable takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Runnable, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Runnable" "', argument " "1"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Runnable" "', argument " "1"" of type '" "ampl::Runnable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Runnable * >(argp1);
   {
@@ -30484,11 +30373,11 @@ SWIGINTERN PyObject *_wrap_Runnable_run(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   Swig::Director *director = 0;
   bool upcall = false;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Runnable_run takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Runnable_run" "', argument " "1"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Runnable_run" "', argument " "1"" of type '" "ampl::Runnable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Runnable * >(argp1);
   director = SWIG_DIRECTOR_CAST(arg1);
@@ -30535,19 +30424,19 @@ SWIGINTERN int _wrap_new_Runnable(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   PyObject *arg1 = (PyObject *) 0 ;
   ampl::Runnable *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_Runnable takes no arguments");
   arg1 = self;
   {
     try {
       if ( self->ob_type != ((SwigPyClientData*) (SWIGTYPE_p_ampl__Runnable)->clientdata)->pytype ) {
         /* subclassed */
-        result = (ampl::Runnable *)new SwigDirector_Runnable(arg1);
+        result = (ampl::Runnable *)new SwigDirector_Runnable(arg1); 
       } else {
-        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor");
+        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor"); 
         SWIG_fail;
       }
-
+      
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -30581,18 +30470,18 @@ SWIGINTERN PyObject *_wrap_disown_Runnable(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:disown_Runnable",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_Runnable" "', argument " "1"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_Runnable" "', argument " "1"" of type '" "ampl::Runnable *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Runnable * >(argp1);
   {
     Swig::Director *director = SWIG_DIRECTOR_CAST(arg1);
     if (director) director->swig_disown();
   }
-
+  
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30605,11 +30494,11 @@ SWIGINTERN PyObject *_wrap_delete_OutputHandler(PyObject *self, PyObject *args) 
   ampl::OutputHandler *arg1 = (ampl::OutputHandler *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_OutputHandler takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OutputHandler, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OutputHandler" "', argument " "1"" of type '" "ampl::OutputHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OutputHandler" "', argument " "1"" of type '" "ampl::OutputHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::OutputHandler * >(argp1);
   {
@@ -30658,17 +30547,17 @@ SWIGINTERN PyObject *_wrap_OutputHandler_output(PyObject *self, PyObject *args) 
   PyObject * obj2 = 0 ;
   Swig::Director *director = 0;
   bool upcall = false;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:OutputHandler_output",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__OutputHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OutputHandler_output" "', argument " "1"" of type '" "ampl::OutputHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OutputHandler_output" "', argument " "1"" of type '" "ampl::OutputHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::OutputHandler * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OutputHandler_output" "', argument " "2"" of type '" "ampl::output::Kind""'");
-  }
+  } 
   arg2 = static_cast< ampl::output::Kind >(val2);
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
@@ -30721,19 +30610,19 @@ SWIGINTERN int _wrap_new_OutputHandler(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   PyObject *arg1 = (PyObject *) 0 ;
   ampl::OutputHandler *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_OutputHandler takes no arguments");
   arg1 = self;
   {
     try {
       if ( self->ob_type != ((SwigPyClientData*) (SWIGTYPE_p_ampl__OutputHandler)->clientdata)->pytype ) {
         /* subclassed */
-        result = (ampl::OutputHandler *)new SwigDirector_OutputHandler(arg1);
+        result = (ampl::OutputHandler *)new SwigDirector_OutputHandler(arg1); 
       } else {
-        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor");
+        SWIG_SetErrorMsg(PyExc_RuntimeError,"accessing abstract class or protected constructor"); 
         SWIG_fail;
       }
-
+      
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -30767,18 +30656,18 @@ SWIGINTERN PyObject *_wrap_disown_OutputHandler(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:disown_OutputHandler",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ampl__OutputHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_OutputHandler" "', argument " "1"" of type '" "ampl::OutputHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "disown_OutputHandler" "', argument " "1"" of type '" "ampl::OutputHandler *""'"); 
   }
   arg1 = reinterpret_cast< ampl::OutputHandler * >(argp1);
   {
     Swig::Director *director = SWIG_DIRECTOR_CAST(arg1);
     if (director) director->swig_disown();
   }
-
+  
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30789,7 +30678,7 @@ fail:
 SWIGINTERN int _wrap_new_EnvironmentIterator(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::internal::EnvironmentIterator *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_EnvironmentIterator takes no arguments");
   {
     try {
@@ -30826,11 +30715,11 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIterator(PyObject *self, PyObject *
   ampl::internal::EnvironmentIterator *arg1 = (ampl::internal::EnvironmentIterator *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EnvironmentIterator takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__EnvironmentIterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EnvironmentIterator" "', argument " "1"" of type '" "ampl::internal::EnvironmentIterator *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EnvironmentIterator" "', argument " "1"" of type '" "ampl::internal::EnvironmentIterator *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::EnvironmentIterator * >(argp1);
   {
@@ -30866,7 +30755,7 @@ fail:
 SWIGINTERN int _wrap_new_Environment__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Environment *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_Environment takes no arguments");
   {
     try {
@@ -30905,14 +30794,14 @@ SWIGINTERN int _wrap_new_Environment__SWIG_1(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Environment *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Environment",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__Environment,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Environment" "', argument " "1"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Environment" "', argument " "1"" of type '" "ampl::Environment const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Environment" "', argument " "1"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_Environment" "', argument " "1"" of type '" "ampl::Environment const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -30955,19 +30844,19 @@ SWIGINTERN PyObject *_wrap_Environment_Clone(PyObject *self, PyObject *args) {
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Environment *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Environment_Clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_Clone" "', argument " "1"" of type '" "ampl::Environment *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_Clone" "', argument " "1"" of type '" "ampl::Environment *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Environment,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Environment_Clone" "', argument " "2"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Environment_Clone" "', argument " "2"" of type '" "ampl::Environment const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Environment_Clone" "', argument " "2"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Environment_Clone" "', argument " "2"" of type '" "ampl::Environment const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::Environment * >(argp2);
   {
@@ -31005,11 +30894,11 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, PyObject *args) {
   fmt::CStringRef arg1 ;
   PyObject * obj1 = 0 ;
   ampl::Environment *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_Environment",&obj1)) SWIG_fail;
-
+  
   arg1 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = (ampl::Environment *)new ampl::Environment(arg1);
@@ -31046,7 +30935,7 @@ SWIGINTERN int _wrap_new_Environment(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -31071,7 +30960,7 @@ SWIGINTERN int _wrap_new_Environment(PyObject *self, PyObject *args) {
       return _wrap_new_Environment__SWIG_2(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_Environment'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -31087,11 +30976,11 @@ SWIGINTERN PyObject *_wrap_delete_Environment(PyObject *self, PyObject *args) {
   ampl::Environment *arg1 = (ampl::Environment *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_Environment takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Environment" "', argument " "1"" of type '" "ampl::Environment *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Environment" "', argument " "1"" of type '" "ampl::Environment *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31133,19 +31022,19 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:Environment_put",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_put" "', argument " "1"" of type '" "ampl::Environment *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_put" "', argument " "1"" of type '" "ampl::Environment *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
-
+  
+  
   arg3 = PyString_AsString(obj2);
-
+  
   {
     try {
       (arg1)->put(arg2,arg3);
@@ -31183,16 +31072,16 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Environment_setBinDir",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_setBinDir" "', argument " "1"" of type '" "ampl::Environment *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_setBinDir" "', argument " "1"" of type '" "ampl::Environment *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->setBinDir(arg2);
@@ -31229,11 +31118,11 @@ SWIGINTERN PyObject *_wrap_Environment_getBinDir(PyObject *self, PyObject *args)
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Environment_getBinDir takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_getBinDir" "', argument " "1"" of type '" "ampl::Environment const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_getBinDir" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31272,11 +31161,11 @@ SWIGINTERN PyObject *_wrap_Environment_toString(PyObject *self, PyObject *args) 
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Environment_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_toString" "', argument " "1"" of type '" "ampl::Environment const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_toString" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31315,11 +31204,11 @@ SWIGINTERN PyObject *_wrap_Environment_begin(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Environment::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Environment_begin takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_begin" "', argument " "1"" of type '" "ampl::Environment const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_begin" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31358,11 +31247,11 @@ SWIGINTERN PyObject *_wrap_Environment_end(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::Environment::iterator result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Environment_end takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_end" "', argument " "1"" of type '" "ampl::Environment const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_end" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31403,16 +31292,16 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Environment::iterator result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:Environment_find",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_find" "', argument " "1"" of type '" "ampl::Environment const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_find" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::Environment const *)arg1)->find(arg2);
@@ -31453,19 +31342,19 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_equals(PyObject *self, Py
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EnvironmentIteratorTemplate_equals",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_equals" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp2);
   {
@@ -31508,19 +31397,19 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_differs(PyObject *self, P
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   bool result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EnvironmentIteratorTemplate_differs",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_differs" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp2);
   {
@@ -31563,19 +31452,19 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_Clone(PyObject *self, PyO
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EnvironmentIteratorTemplate_Clone",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "EnvironmentIteratorTemplate_Clone" "', argument " "2"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp2);
   {
@@ -31614,11 +31503,11 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrement(PyObject *s
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EnvironmentIteratorTemplate_postIncrement takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_postIncrement" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   {
@@ -31661,17 +31550,17 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrementBy(PyObject 
   int ecode2 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:EnvironmentIteratorTemplate_postIncrementBy",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_postIncrementBy" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EnvironmentIteratorTemplate_postIncrementBy" "', argument " "2"" of type '" "int""'");
-  }
+  } 
   arg2 = static_cast< int >(val2);
   {
     try {
@@ -31709,11 +31598,11 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_first(PyObject *self, PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::EnvironmentIterator::KeyType result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EnvironmentIteratorTemplate_first takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_first" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   {
@@ -31752,11 +31641,11 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_second(PyObject *self, Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   ampl::internal::EnvironmentIterator::InstanceType result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "EnvironmentIteratorTemplate_second takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EnvironmentIteratorTemplate_second" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   {
@@ -31794,11 +31683,11 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIteratorTemplate(PyObject *self, Py
   ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *arg1 = (ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_EnvironmentIteratorTemplate takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EnvironmentIteratorTemplate" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EnvironmentIteratorTemplate" "', argument " "1"" of type '" "ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *""'"); 
   }
   arg1 = reinterpret_cast< ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > * >(argp1);
   {
@@ -31834,7 +31723,7 @@ fail:
 SWIGINTERN int _wrap_new_AMPL__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::AMPL *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPL takes no arguments");
   {
     try {
@@ -31873,14 +31762,14 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_1(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::AMPL *result = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:new_AMPL",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__Environment,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_AMPL" "', argument " "1"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_AMPL" "', argument " "1"" of type '" "ampl::Environment const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_AMPL" "', argument " "1"" of type '" "ampl::Environment const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_AMPL" "', argument " "1"" of type '" "ampl::Environment const &""'"); 
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   {
@@ -31919,7 +31808,7 @@ SWIGINTERN int _wrap_new_AMPL(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   for (ii = 0; (ii < 1) && (ii < argc); ii++) {
@@ -31936,7 +31825,7 @@ SWIGINTERN int _wrap_new_AMPL(PyObject *self, PyObject *args) {
       return _wrap_new_AMPL__SWIG_1(self, args);
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_AMPL'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -31951,11 +31840,11 @@ SWIGINTERN PyObject *_wrap_delete_AMPL(PyObject *self, PyObject *args) {
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_AMPL takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_AMPL" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_AMPL" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -31996,16 +31885,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Entity > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getEntity",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getEntity" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getEntity" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getEntity(arg2);
@@ -32044,16 +31933,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variable > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getVariable",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getVariable" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getVariable" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getVariable(arg2);
@@ -32092,16 +31981,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Constraint > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getConstraint",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getConstraint" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getConstraint" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getConstraint(arg2);
@@ -32140,16 +32029,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Objective > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getObjective",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getObjective" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getObjective" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getObjective(arg2);
@@ -32188,16 +32077,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Set > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getSet",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getSet" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getSet" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getSet(arg2);
@@ -32236,16 +32125,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Parameter > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getParameter",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getParameter" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getParameter" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getParameter(arg2);
@@ -32283,16 +32172,16 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_eval",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_eval" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_eval" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->eval(arg2);
@@ -32328,11 +32217,11 @@ SWIGINTERN PyObject *_wrap_AMPL_reset(PyObject *self, PyObject *args) {
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_reset takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_reset" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_reset" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32370,11 +32259,11 @@ SWIGINTERN PyObject *_wrap_AMPL_close(PyObject *self, PyObject *args) {
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_close takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_close" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_close" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32413,11 +32302,11 @@ SWIGINTERN PyObject *_wrap_AMPL_isRunning(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_isRunning takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_isRunning" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_isRunning" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32456,11 +32345,11 @@ SWIGINTERN PyObject *_wrap_AMPL_isBusy(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_isBusy takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_isBusy" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_isBusy" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32498,11 +32387,11 @@ SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_solve takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solve" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solve" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32546,19 +32435,19 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_readAsync",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readAsync" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readAsync" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_readAsync" "', argument " "3"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_readAsync" "', argument " "3"" of type '" "ampl::Runnable *""'"); 
   }
   arg3 = reinterpret_cast< ampl::Runnable * >(argp3);
   {
@@ -32602,19 +32491,19 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_readDataAsync",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readDataAsync" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readDataAsync" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_readDataAsync" "', argument " "3"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_readDataAsync" "', argument " "3"" of type '" "ampl::Runnable *""'"); 
   }
   arg3 = reinterpret_cast< ampl::Runnable * >(argp3);
   {
@@ -32658,19 +32547,19 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
   int res3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_evalAsync",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_evalAsync" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_evalAsync" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_evalAsync" "', argument " "3"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_evalAsync" "', argument " "3"" of type '" "ampl::Runnable *""'"); 
   }
   arg3 = reinterpret_cast< ampl::Runnable * >(argp3);
   {
@@ -32712,16 +32601,16 @@ SWIGINTERN PyObject *_wrap_AMPL_solveAsync(PyObject *self, PyObject *args) {
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_solveAsync",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solveAsync" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solveAsync" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_solveAsync" "', argument " "2"" of type '" "ampl::Runnable *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_solveAsync" "', argument " "2"" of type '" "ampl::Runnable *""'"); 
   }
   arg2 = reinterpret_cast< ampl::Runnable * >(argp2);
   {
@@ -32759,11 +32648,11 @@ SWIGINTERN PyObject *_wrap_AMPL_interrupt(PyObject *self, PyObject *args) {
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_interrupt takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_interrupt" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_interrupt" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32802,11 +32691,11 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_0(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_cd takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_cd" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_cd" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -32847,16 +32736,16 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   std::string result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_cd",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_cd" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_cd" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = (arg1)->cd(arg2);
@@ -32893,7 +32782,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -32923,7 +32812,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_cd'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -32942,19 +32831,19 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_setOption",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setOption" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setOption" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
-
+  
+  
   arg3 = PyString_AsString(obj2);
-
+  
   {
     try {
       (arg1)->setOption(arg2,arg3);
@@ -32993,16 +32882,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< std::string > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getOption",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getOption" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getOption" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getOption(arg2);
@@ -33041,16 +32930,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< int > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getIntOption",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getIntOption" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getIntOption" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getIntOption(arg2);
@@ -33092,20 +32981,20 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_setIntOption",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setIntOption" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setIntOption" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_setIntOption" "', argument " "3"" of type '" "int""'");
-  }
+  } 
   arg3 = static_cast< int >(val3);
   {
     try {
@@ -33145,16 +33034,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< double > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getDblOption",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getDblOption" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getDblOption" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getDblOption(arg2);
@@ -33196,20 +33085,20 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_setDblOption",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setDblOption" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setDblOption" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_setDblOption" "', argument " "3"" of type '" "double""'");
-  }
+  } 
   arg3 = static_cast< double >(val3);
   {
     try {
@@ -33249,16 +33138,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::Optional< bool > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getBoolOption",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getBoolOption" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getBoolOption" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getBoolOption(arg2);
@@ -33300,20 +33189,20 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_setBoolOption",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setBoolOption" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setBoolOption" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   ecode3 = SWIG_AsVal_bool(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_setBoolOption" "', argument " "3"" of type '" "bool""'");
-  }
+  } 
   arg3 = static_cast< bool >(val3);
   {
     try {
@@ -33352,16 +33241,16 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_read",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_read" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_read" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->read(arg2);
@@ -33399,16 +33288,16 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_readData",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readData" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->readData(arg2);
@@ -33447,16 +33336,16 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
   SwigValueWrapper< ampl::Variant > result;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_getValue",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getValue" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getValue" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->getValue(arg2);
@@ -33498,24 +33387,24 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, PyObject *args) 
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_setData",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setData" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
-
+  
   arg3 = PyString_AsString(obj2);
-
+  
   {
     try {
       (arg1)->setData((ampl::DataFrame const &)*arg2,arg3);
@@ -33555,19 +33444,19 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_1(PyObject *self, PyObject *args) 
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_setData",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setData" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'");
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_setData" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
   }
   arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
   {
@@ -33606,7 +33495,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -33644,7 +33533,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_setData'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -33660,11 +33549,11 @@ SWIGINTERN PyObject *_wrap_AMPL_toString(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::string result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_toString takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_toString" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_toString" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -33704,16 +33593,16 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_readTable",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readTable" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_readTable" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->readTable(arg2);
@@ -33751,16 +33640,16 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_writeTable",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_writeTable" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_writeTable" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-
+  
   arg2 = PyString_AsString(obj1);
-
+  
   {
     try {
       (arg1)->writeTable(arg2);
@@ -33800,18 +33689,18 @@ SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_0(PyObject *self, PyObject *args) 
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_display",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_display" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_display" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityArgs,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_display" "', argument " "2"" of type '" "ampl::EntityArgs""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_display" "', argument " "2"" of type '" "ampl::EntityArgs""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_display" "', argument " "2"" of type '" "ampl::EntityArgs""'");
     } else {
@@ -33859,18 +33748,18 @@ SWIGINTERN PyObject *_wrap_AMPL_show(PyObject *self, PyObject *args) {
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_show",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_show" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_show" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityArgs,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_show" "', argument " "2"" of type '" "ampl::EntityArgs""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_show" "', argument " "2"" of type '" "ampl::EntityArgs""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_show" "', argument " "2"" of type '" "ampl::EntityArgs""'");
     } else {
@@ -33918,18 +33807,18 @@ SWIGINTERN PyObject *_wrap_AMPL_expand(PyObject *self, PyObject *args) {
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_expand",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_expand" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_expand" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__EntityArgs,  0  | 0);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_expand" "', argument " "2"" of type '" "ampl::EntityArgs""'");
-    }
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_expand" "', argument " "2"" of type '" "ampl::EntityArgs""'"); 
+    }  
     if (!argp2) {
       SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPL_expand" "', argument " "2"" of type '" "ampl::EntityArgs""'");
     } else {
@@ -33977,16 +33866,16 @@ SWIGINTERN PyObject *_wrap_AMPL_setOutputHandler(PyObject *self, PyObject *args)
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_setOutputHandler",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setOutputHandler" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setOutputHandler" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__OutputHandler, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setOutputHandler" "', argument " "2"" of type '" "ampl::OutputHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setOutputHandler" "', argument " "2"" of type '" "ampl::OutputHandler *""'"); 
   }
   arg2 = reinterpret_cast< ampl::OutputHandler * >(argp2);
   {
@@ -34028,16 +33917,16 @@ SWIGINTERN PyObject *_wrap_AMPL_setErrorHandler(PyObject *self, PyObject *args) 
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj1 = 0 ;
-
+  
   if (!PyArg_ParseTuple(args,(char *)"O:AMPL_setErrorHandler",&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setErrorHandler" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_setErrorHandler" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ampl__ErrorHandler, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setErrorHandler" "', argument " "2"" of type '" "ampl::ErrorHandler *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_setErrorHandler" "', argument " "2"" of type '" "ampl::ErrorHandler *""'"); 
   }
   arg2 = reinterpret_cast< ampl::ErrorHandler * >(argp2);
   {
@@ -34077,11 +33966,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutputHandler(PyObject *self, PyObject *args)
   int res1 = 0 ;
   Swig::Director *director = 0;
   ampl::OutputHandler *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getOutputHandler takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getOutputHandler" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getOutputHandler" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34127,11 +34016,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getErrorHandler(PyObject *self, PyObject *args) 
   int res1 = 0 ;
   Swig::Director *director = 0;
   ampl::ErrorHandler *result = 0 ;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getErrorHandler takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getErrorHandler" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getErrorHandler" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34176,11 +34065,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariables(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::EntityMap< ampl::Variable > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getVariables takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getVariables" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getVariables" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34219,11 +34108,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraints(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::EntityMap< ampl::Constraint > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getConstraints takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getConstraints" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getConstraints" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34262,11 +34151,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjectives(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::EntityMap< ampl::Objective > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getObjectives takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getObjectives" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getObjectives" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34305,11 +34194,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getSets(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::EntityMap< ampl::Set > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getSets takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getSets" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getSets" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34348,11 +34237,11 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameters(PyObject *self, PyObject *args) {
   void *argp1 = 0 ;
   int res1 = 0 ;
   SwigValueWrapper< ampl::EntityMap< ampl::Parameter > > result;
-
+  
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getParameters takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getParameters" "', argument " "1"" of type '" "ampl::AMPL const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getParameters" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34396,14 +34285,14 @@ SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_1(PyObject *self, PyObject *args) 
   int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_display",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_display" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_display" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34432,7 +34321,7 @@ SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_1(PyObject *self, PyObject *args) 
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_display" "', argument " "3"" of type '" "int""'");
-  }
+  } 
   arg3 = static_cast< int >(val3);
   {
     try {
@@ -34476,7 +34365,7 @@ SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
     0
   };
   Py_ssize_t ii;
-
+  
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? PyObject_Length(args) : 0;
   argv[0] = self;
@@ -34517,7 +34406,7 @@ SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
       }
     }
   }
-
+  
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_display'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -34539,14 +34428,14 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   SwigValueWrapper< ampl::DataFrame > result;
-
+  
   {
     arg2 = NULL;
   }
   if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_getData",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getData" "', argument " "1"" of type '" "ampl::AMPL *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34575,7 +34464,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_getData" "', argument " "3"" of type '" "int""'");
-  }
+  } 
   arg3 = static_cast< int >(val3);
   {
     try {
@@ -38749,9 +38638,10 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__SetInstance_methods[] = {
   { "size", (PyCFunction) _wrap_SetInstance_size, METH_VARARGS, (char*) "" },
   { "contains", (PyCFunction) _wrap_SetInstance_contains, METH_VARARGS, (char*) "" },
   { "getValues", (PyCFunction) _wrap_SetInstance_getValues, METH_VARARGS, (char*) "" },
-  { "setValues", (PyCFunction) _wrap_SetInstance_setValues, METH_VARARGS, (char*) "" },
+  { "setValuesDf", (PyCFunction) _wrap_SetInstance_setValuesDf, METH_VARARGS, (char*) "" },
   { "members", (PyCFunction) _wrap_SetInstance_members, METH_VARARGS, (char*) "" },
   { "Contains", (PyCFunction) _wrap_SetInstance_Contains, METH_VARARGS, (char*) "" },
+  { "setValues", (PyCFunction) _wrap_SetInstance_setValues, METH_VARARGS, (char*) "" },
   { "setValuesDbl", (PyCFunction) _wrap_SetInstance_setValuesDbl, METH_VARARGS, (char*) "" },
   { "setValuesStr", (PyCFunction) _wrap_SetInstance_setValuesStr, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
@@ -40383,6 +40273,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Entity_methods[] = {
   { "getIndexingSets", (PyCFunction) _wrap_Entity_getIndexingSets, METH_VARARGS, (char*) "" },
   { "getValues", (PyCFunction) _wrap_Entity_getValues, METH_VARARGS, (char*) "" },
   { "setValuesDf", (PyCFunction) _wrap_Entity_setValuesDf, METH_VARARGS, (char*) "" },
+  { "getValuesLst", (PyCFunction) _wrap_Entity_getValuesLst, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -49965,7 +49856,7 @@ SWIG_InitializeModule(void *clientdata) {
   size_t i;
   swig_module_info *module_head, *iter;
   int init;
-
+  
   /* check to see if the circular list has been setup, if not, set it up */
   if (swig_module.next==0) {
     /* Initialize the swig_module */
@@ -49976,7 +49867,7 @@ SWIG_InitializeModule(void *clientdata) {
   } else {
     init = 0;
   }
-
+  
   /* Try and load any already created modules */
   module_head = SWIG_GetModule(clientdata);
   if (!module_head) {
@@ -49993,18 +49884,18 @@ SWIG_InitializeModule(void *clientdata) {
       }
       iter=iter->next;
     } while (iter!= module_head);
-
+    
     /* otherwise we must add our module into the list */
     swig_module.next = module_head->next;
     module_head->next = &swig_module;
   }
-
+  
   /* When multiple interpreters are used, a module could have already been initialized in
        a different interpreter, but not yet have a pointer in this interpreter.
        In this case, we do not want to continue adding types... everything should be
        set up already */
   if (init == 0) return;
-
+  
   /* Now work on filling in swig_module.types */
 #ifdef SWIGRUNTIME_DEBUG
   printf("SWIG_InitializeModule: size %d\n", swig_module.size);
@@ -50013,11 +49904,11 @@ SWIG_InitializeModule(void *clientdata) {
     swig_type_info *type = 0;
     swig_type_info *ret;
     swig_cast_info *cast;
-
+    
 #ifdef SWIGRUNTIME_DEBUG
     printf("SWIG_InitializeModule: type %d %s\n", i, swig_module.type_initial[i]->name);
 #endif
-
+    
     /* if there is another module already loaded */
     if (swig_module.next != &swig_module) {
       type = SWIG_MangledTypeQueryModule(swig_module.next, &swig_module, swig_module.type_initial[i]->name);
@@ -50036,7 +49927,7 @@ SWIG_InitializeModule(void *clientdata) {
     } else {
       type = swig_module.type_initial[i];
     }
-
+    
     /* Insert casting types */
     cast = swig_module.cast_initial[i];
     while (cast->type) {
@@ -50067,7 +49958,7 @@ SWIG_InitializeModule(void *clientdata) {
           if (!ocast) ret = 0;
         }
       }
-
+      
       if (!ret) {
 #ifdef SWIGRUNTIME_DEBUG
         printf("SWIG_InitializeModule: adding cast %s\n", cast->type->name);
@@ -50084,7 +49975,7 @@ SWIG_InitializeModule(void *clientdata) {
     swig_module.types[i] = type;
   }
   swig_module.types[i] = 0;
-
+  
 #ifdef SWIGRUNTIME_DEBUG
   printf("**** SWIG_InitializeModule: Cast List ******\n");
   for (i = 0; i < swig_module.size; ++i) {
@@ -50112,10 +50003,10 @@ SWIG_PropagateClientData(void) {
   size_t i;
   swig_cast_info *equiv;
   static int init_run = 0;
-
+  
   if (init_run) return;
   init_run = 1;
-
+  
   for (i = 0; i < swig_module.size; i++) {
     if (swig_module.types[i]->clientdata) {
       equiv = swig_module.types[i]->cast;
@@ -50143,28 +50034,28 @@ SWIG_PropagateClientData(void) {
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+  
   /* Python-specific SWIG API */
 #define SWIG_newvarlink()                             SWIG_Python_newvarlink()
 #define SWIG_addvarlink(p, name, get_attr, set_attr)  SWIG_Python_addvarlink(p, name, get_attr, set_attr)
 #define SWIG_InstallConstants(d, constants)           SWIG_Python_InstallConstants(d, constants)
-
+  
   /* -----------------------------------------------------------------------------
    * global variable support code.
    * ----------------------------------------------------------------------------- */
-
+  
   typedef struct swig_globalvar {
     char       *name;                  /* Name of global variable */
     PyObject *(*get_attr)(void);       /* Return the current value */
     int       (*set_attr)(PyObject *); /* Set the value */
     struct swig_globalvar *next;
   } swig_globalvar;
-
+  
   typedef struct swig_varlinkobject {
     PyObject_HEAD
     swig_globalvar *vars;
   } swig_varlinkobject;
-
+  
   SWIGINTERN PyObject *
   swig_varlink_repr(swig_varlinkobject *SWIGUNUSEDPARM(v)) {
 #if PY_VERSION_HEX >= 0x03000000
@@ -50173,7 +50064,7 @@ extern "C" {
     return PyString_FromString("<Swig global variables>");
 #endif
   }
-
+  
   SWIGINTERN PyObject *
   swig_varlink_str(swig_varlinkobject *v) {
 #if PY_VERSION_HEX >= 0x03000000
@@ -50211,7 +50102,7 @@ extern "C" {
 #endif
     return str;
   }
-
+  
   SWIGINTERN int
   swig_varlink_print(swig_varlinkobject *v, FILE *fp, int SWIGUNUSEDPARM(flags)) {
     char *tmp;
@@ -50222,7 +50113,7 @@ extern "C" {
     Py_DECREF(str);
     return 0;
   }
-
+  
   SWIGINTERN void
   swig_varlink_dealloc(swig_varlinkobject *v) {
     swig_globalvar *var = v->vars;
@@ -50233,7 +50124,7 @@ extern "C" {
       var = n;
     }
   }
-
+  
   SWIGINTERN PyObject *
   swig_varlink_getattr(swig_varlinkobject *v, char *n) {
     PyObject *res = NULL;
@@ -50250,7 +50141,7 @@ extern "C" {
     }
     return res;
   }
-
+  
   SWIGINTERN int
   swig_varlink_setattr(swig_varlinkobject *v, char *n, PyObject *p) {
     int res = 1;
@@ -50267,7 +50158,7 @@ extern "C" {
     }
     return res;
   }
-
+  
   SWIGINTERN PyTypeObject*
   swig_varlink_type(void) {
     static char varlink__doc__[] = "Swig var link object";
@@ -50339,7 +50230,7 @@ extern "C" {
     }
     return &varlink_type;
   }
-
+  
   /* Create a variable linking object for use later */
   SWIGINTERN PyObject *
   SWIG_Python_newvarlink(void) {
@@ -50349,8 +50240,8 @@ extern "C" {
     }
     return ((PyObject*) result);
   }
-
-  SWIGINTERN void
+  
+  SWIGINTERN void 
   SWIG_Python_addvarlink(PyObject *p, char *name, PyObject *(*get_attr)(void), int (*set_attr)(PyObject *p)) {
     swig_varlinkobject *v = (swig_varlinkobject *) p;
     swig_globalvar *gv = (swig_globalvar *) malloc(sizeof(swig_globalvar));
@@ -50366,18 +50257,18 @@ extern "C" {
     }
     v->vars = gv;
   }
-
+  
   SWIGINTERN PyObject *
   SWIG_globals(void) {
-    static PyObject *_SWIG_globals = 0;
-    if (!_SWIG_globals) _SWIG_globals = SWIG_newvarlink();
+    static PyObject *_SWIG_globals = 0; 
+    if (!_SWIG_globals) _SWIG_globals = SWIG_newvarlink();  
     return _SWIG_globals;
   }
-
+  
   /* -----------------------------------------------------------------------------
    * constants/methods manipulation
    * ----------------------------------------------------------------------------- */
-
+  
   /* Install Constants */
   SWIGINTERN void
   SWIG_Python_InstallConstants(PyObject *d, swig_const_info constants[]) {
@@ -50401,11 +50292,11 @@ extern "C" {
       }
     }
   }
-
+  
   /* -----------------------------------------------------------------------------*/
   /* Fix SwigMethods to carry the callback ptrs when needed */
   /* -----------------------------------------------------------------------------*/
-
+  
   SWIGINTERN void
   SWIG_Python_FixMethods(PyMethodDef *methods,
     swig_const_info *const_table,
@@ -50421,7 +50312,7 @@ extern "C" {
         swig_const_info *ci = 0;
         const char *name = c + 10;
         for (j = 0; const_table[j].type; ++j) {
-          if (strncmp(const_table[j].name, name,
+          if (strncmp(const_table[j].name, name, 
               strlen(const_table[j].name)) == 0) {
             ci = &(const_table[j]);
             break;
@@ -50448,8 +50339,8 @@ extern "C" {
         }
       }
     }
-  }
-
+  } 
+  
 #ifdef __cplusplus
 }
 #endif
@@ -50462,7 +50353,7 @@ extern "C" {
 extern "C"
 #endif
 
-SWIGEXPORT
+SWIGEXPORT 
 #if PY_VERSION_HEX >= 0x03000000
 PyObject*
 #else
@@ -50492,7 +50383,7 @@ SWIG_init(void) {
     NULL
   };
 #endif
-
+  
 #if defined(SWIGPYTHON_BUILTIN)
   static SwigPyClientData SwigPyObject_clientdata = {
     0, 0, 0, 0, 0, 0, 0
@@ -50520,14 +50411,14 @@ SWIG_init(void) {
   PyObject *thisown_descr;
   PyObject *self = 0;
   int i;
-
+  
   (void)builtin_pytype;
   (void)builtin_base_count;
   (void)builtin_basetype;
   (void)tuple;
   (void)static_getset;
   (void)self;
-
+  
   /* metatype is used to implement static member variables. */
   metatype_args = Py_BuildValue("(s(O){})", "SwigPyObjectType", &PyType_Type);
   assert(metatype_args);
@@ -50537,21 +50428,21 @@ SWIG_init(void) {
   metatype->tp_setattro = (setattrofunc) &SwigPyObjectType_setattro;
   assert(PyType_Ready(metatype) >= 0);
 #endif
-
+  
   /* Fix SwigMethods to carry the callback ptrs when needed */
   SWIG_Python_FixMethods(SwigMethods, swig_const_table, swig_types, swig_type_initial);
-
+  
 #if PY_VERSION_HEX >= 0x03000000
   m = PyModule_Create(&SWIG_module);
 #else
   m = Py_InitModule((char *) SWIG_name, SwigMethods);
 #endif
-
+  
   md = d = PyModule_GetDict(m);
   (void)md;
-
+  
   SWIG_InitializeModule(0);
-
+  
 #ifdef SWIGPYTHON_BUILTIN
   SwigPyObject_stype = SWIG_MangledTypeQuery("_p_SwigPyObject");
   assert(SwigPyObject_stype);
@@ -50567,19 +50458,19 @@ SWIG_init(void) {
     return;
 # endif
   }
-
+  
   /* All objects have a 'this' attribute */
   this_descr = PyDescr_NewGetSet(SwigPyObject_type(), &this_getset_def);
   (void)this_descr;
-
+  
   /* All objects have a 'thisown' attribute */
   thisown_descr = PyDescr_NewGetSet(SwigPyObject_type(), &thisown_getset_def);
   (void)thisown_descr;
-
+  
   public_interface = PyList_New(0);
   public_symbol = 0;
   (void)public_symbol;
-
+  
   PyDict_SetItemString(md, "__all__", public_interface);
   Py_DECREF(public_interface);
   for (i = 0; SwigMethods[i].ml_name != NULL; ++i)
@@ -50587,10 +50478,10 @@ SWIG_init(void) {
   for (i = 0; swig_const_table[i].name != 0; ++i)
   SwigPyBuiltin_AddPublicSymbol(public_interface, swig_const_table[i].name);
 #endif
-
+  
   SWIG_InstallConstants(d,swig_const_table);
-
-
+  
+  
   /* type 'ampl::StringArray' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__StringArray_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50613,7 +50504,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "StringArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "StringArray");
   d = md;
-
+  
   /* type 'ampl::StringRefArray' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__StringRefArray_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50636,7 +50527,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "StringRefArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "StringRefArray");
   d = md;
-
+  
   /* type '::VariantArray' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__VariantArray_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50659,7 +50550,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "VariantArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "VariantArray");
   d = md;
-
+  
   /* type '::TupleArray' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__TupleArray_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50682,7 +50573,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "TupleArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "TupleArray");
   d = md;
-
+  
   /* type 'ampl::Optional< int >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__OptionalT_int_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50705,7 +50596,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "OptionalInt", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "OptionalInt");
   d = md;
-
+  
   /* type 'ampl::Optional< std::string >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__OptionalT_std__string_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50728,7 +50619,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "OptionalString", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "OptionalString");
   d = md;
-
+  
   /* type 'ampl::Optional< bool >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__OptionalT_bool_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50751,7 +50642,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "OptionalBool", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "OptionalBool");
   d = md;
-
+  
   /* type 'ampl::Optional< double >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__OptionalT_double_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50777,7 +50668,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "EMPTY",SWIG_From_int(static_cast< int >(ampl::EMPTY)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "NUMERIC",SWIG_From_int(static_cast< int >(ampl::NUMERIC)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "STRING",SWIG_From_int(static_cast< int >(ampl::STRING)));
-
+  
   /* type 'ampl::Variant' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Variant_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50800,7 +50691,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Variant", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Variant");
   d = md;
-
+  
   /* type 'ampl::VariantRef' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__VariantRef_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50823,7 +50714,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "VariantRef", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "VariantRef");
   d = md;
-
+  
   /* type 'ampl::TupleRef' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__TupleRef_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50846,7 +50737,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "TupleRef", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "TupleRef");
   d = md;
-
+  
   /* type 'ampl::Tuple' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Tuple_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50869,7 +50760,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Tuple", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Tuple");
   d = md;
-
+  
   /* type 'ampl::DataFrame' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__DataFrame_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50892,7 +50783,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "DataFrame", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "DataFrame");
   d = md;
-
+  
   /* type 'ampl::internal::Slice< false >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__SliceT_false_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50915,7 +50806,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "DataFrameColumn", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "DataFrameColumn");
   d = md;
-
+  
   /* type 'ampl::internal::Slice< false >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__SliceT_false_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50938,7 +50829,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ColIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ColIterator");
   d = md;
-
+  
   /* type 'ampl::internal::Slice< true >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__SliceT_true_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50961,7 +50852,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "DataFrameRow", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "DataFrameRow");
   d = md;
-
+  
   /* type 'ampl::internal::Slice< true >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__SliceT_true_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -50984,7 +50875,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "RowIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "RowIterator");
   d = md;
-
+  
   /* type 'ampl::Instance' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Instance_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51007,7 +50898,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Instance", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Instance");
   d = md;
-
+  
   /* type 'ampl::SetInstance' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__SetInstance_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51041,7 +50932,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "SetInstance", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "SetInstance");
   d = md;
-
+  
   /* type 'ampl::SetInstance::MemberRange' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__SetInstance__MemberRange_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51064,7 +50955,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "MemberRange", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "MemberRange");
   d = md;
-
+  
   /* type 'ampl::SetInstance::MemberRange::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__SetInstance__MemberRange__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51087,7 +50978,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "iterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "iterator");
   d = md;
-
+  
   /* type 'ampl::ObjectiveInstance' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__ObjectiveInstance_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51121,7 +51012,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ObjectiveInstance", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ObjectiveInstance");
   d = md;
-
+  
   /* type 'ampl::VariableInstance' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__VariableInstance_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51155,7 +51046,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "VariableInstance", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "VariableInstance");
   d = md;
-
+  
   /* type 'ampl::ConstraintInstance' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__ConstraintInstance_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51189,7 +51080,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ConstraintInstance", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ConstraintInstance");
   d = md;
-
+  
   /* type '::EntityArray' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__EntityArray_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51212,7 +51103,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityArray");
   d = md;
-
+  
   /* type 'ampl::Entity' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Entity_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51235,7 +51126,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Entity", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Entity");
   d = md;
-
+  
   /* type 'ampl::EntityArgs' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityArgs_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51258,7 +51149,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityArgs", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityArgs");
   d = md;
-
+  
   /* type 'ampl::BasicEntity< ampl::VariableInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__BasicEntityT_ampl__VariableInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51292,7 +51183,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "BasicEntityVariable", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "BasicEntityVariable");
   d = md;
-
+  
   /* type 'ampl::BasicEntity< ampl::ConstraintInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__BasicEntityT_ampl__ConstraintInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51326,7 +51217,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "BasicEntityConstraint", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "BasicEntityConstraint");
   d = md;
-
+  
   /* type 'ampl::BasicEntity< ampl::SetInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__BasicEntityT_ampl__SetInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51360,7 +51251,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "BasicEntitySet", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "BasicEntitySet");
   d = md;
-
+  
   /* type 'ampl::BasicEntity< ampl::ObjectiveInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__BasicEntityT_ampl__ObjectiveInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51394,7 +51285,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "BasicEntityObjective", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "BasicEntityObjective");
   d = md;
-
+  
   /* type 'ampl::BasicEntity< ampl::VariantRef >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__BasicEntityT_ampl__VariantRef_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51428,7 +51319,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "BasicEntityParameter", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "BasicEntityParameter");
   d = md;
-
+  
   /* type 'ampl::Constraint' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Constraint_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51465,7 +51356,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "CONTINUOUS",SWIG_From_int(static_cast< int >(ampl::var::CONTINUOUS)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "BINARY",SWIG_From_int(static_cast< int >(ampl::var::BINARY)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "INTEGER",SWIG_From_int(static_cast< int >(ampl::var::INTEGER)));
-
+  
   /* type 'ampl::Variable' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Variable_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51499,7 +51390,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Variable", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Variable");
   d = md;
-
+  
   /* type 'ampl::Objective' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Objective_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51533,7 +51424,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Objective", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Objective");
   d = md;
-
+  
   /* type 'ampl::Set' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Set_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51567,7 +51458,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Set", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Set");
   d = md;
-
+  
   /* type 'ampl::Parameter' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Parameter_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51601,7 +51492,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Parameter", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Parameter");
   d = md;
-
+  
   /* type 'ampl::internal::EntityWrapper< ampl::VariableInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EntityWrapperT_ampl__VariableInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51624,7 +51515,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "VariableIteratorWrapper", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "VariableIteratorWrapper");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51647,7 +51538,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "VariableIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "VariableIterator");
   d = md;
-
+  
   /* type 'ampl::internal::EntityWrapper< ampl::ConstraintInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51670,7 +51561,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ConstraintIteratorWrapper", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ConstraintIteratorWrapper");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ConstraintInstance > >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51693,7 +51584,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ConstraintIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ConstraintIterator");
   d = md;
-
+  
   /* type 'ampl::internal::EntityWrapper< ampl::ObjectiveInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51716,7 +51607,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ObjectiveIteratorWrapper", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ObjectiveIteratorWrapper");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::ObjectiveInstance > >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51739,7 +51630,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ObjectiveIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ObjectiveIterator");
   d = md;
-
+  
   /* type 'ampl::internal::EntityWrapper< ampl::SetInstance >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EntityWrapperT_ampl__SetInstance_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51762,7 +51653,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "SetIteratorWrapper", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "SetIteratorWrapper");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::SetInstance > >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51785,7 +51676,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "SetIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "SetIterator");
   d = md;
-
+  
   /* type 'ampl::internal::EntityWrapper< ampl::VariantRef >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EntityWrapperT_ampl__VariantRef_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51808,7 +51699,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ParameterIteratorWrapper", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ParameterIteratorWrapper");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51831,7 +51722,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ParameterIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ParameterIterator");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Variable >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Variable_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51854,7 +51745,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapVariable", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapVariable");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Variable >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Variable_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51877,7 +51768,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapVariableIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapVariableIterator");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Constraint >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Constraint_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51900,7 +51791,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapConstraint", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapConstraint");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Constraint >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Constraint_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51923,7 +51814,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapConstraintIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapConstraintIterator");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Objective >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Objective_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51946,7 +51837,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapObjective", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapObjective");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Objective >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Objective_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51969,7 +51860,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapObjectiveIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapObjectiveIterator");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Set >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Set_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -51992,7 +51883,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapSet", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapSet");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Set >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Set_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52015,7 +51906,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapSetIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapSetIterator");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Parameter >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Parameter_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52038,7 +51929,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapParameter", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapParameter");
   d = md;
-
+  
   /* type 'ampl::EntityMap< ampl::Parameter >::iterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__EntityMapT_ampl__Parameter_t__iterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52061,7 +51952,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EntityMapParameterIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EntityMapParameterIterator");
   d = md;
-
+  
   /* type 'ampl::AMPLException' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__AMPLException_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52084,7 +51975,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "AMPLException", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "AMPLException");
   d = md;
-
+  
   /* type 'ampl::ErrorHandler' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__ErrorHandler_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52107,7 +51998,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "ErrorHandler", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "ErrorHandler");
   d = md;
-
+  
   /* type 'ampl::Runnable' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Runnable_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52191,7 +52082,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "UNLOAD",SWIG_From_int(static_cast< int >(ampl::output::UNLOAD)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "UPDATE",SWIG_From_int(static_cast< int >(ampl::output::UPDATE)));
   SWIG_Python_SetConstant(d, d == md ? public_interface : NULL, "WRITE",SWIG_From_int(static_cast< int >(ampl::output::WRITE)));
-
+  
   /* type 'ampl::OutputHandler' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__OutputHandler_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52214,7 +52105,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "OutputHandler", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "OutputHandler");
   d = md;
-
+  
   /* type 'ampl::internal::EnvironmentIterator' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__EnvironmentIterator_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52237,7 +52128,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EnvironmentIterator", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EnvironmentIterator");
   d = md;
-
+  
   /* type 'ampl::Environment' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__Environment_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52260,7 +52151,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "Environment", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "Environment");
   d = md;
-
+  
   /* type 'ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator >' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t_type;
   builtin_pytype->tp_dict = d = PyDict_New();
@@ -52283,7 +52174,7 @@ SWIG_init(void) {
   PyModule_AddObject(m, "EnvironmentIteratorTemplate", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "EnvironmentIteratorTemplate");
   d = md;
-
+  
   /* type 'ampl::AMPL' */
   builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__AMPL_type;
   builtin_pytype->tp_dict = d = PyDict_New();

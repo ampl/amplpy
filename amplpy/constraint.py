@@ -42,7 +42,7 @@ class Constraint(Entity):
         by "Valid only for logical constraints".
         """
         try:
-            self._impl.isLogical()
+            return self._impl.isLogical()
         except AttributeError:
             return False
 

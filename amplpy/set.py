@@ -94,7 +94,7 @@ class Set(Entity):
         .. code-block:: python
 
             A, AA = ampl.getSet('A'), ampl.getSet('AA')
-            AA.setValues(A.getValues())  # A has now the members {1, 2}
+            AA.setValues(A.getValues())  # AA has now the members {1, 2}
         """
         if isinstance(values, (list, set)):
             if any(isinstance(value, basestring) for value in values):
