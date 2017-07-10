@@ -4930,7 +4930,7 @@ SWIGINTERN ampl::internal::EnvironmentIterator::KeyType ampl_internal_CountedIte
 SWIGINTERN ampl::internal::EnvironmentIterator::InstanceType ampl_internal_CountedIterator_Sl_ampl_internal_EnvironmentIterator_Sg__second(ampl::internal::CountedIterator< ampl::internal::EnvironmentIterator > *self){
         return self->operator*().second;
       }
-SWIGINTERN void ampl_AMPL_display__SWIG_1(ampl::AMPL *self,char const *args[],int count){
+SWIGINTERN void ampl_AMPL_display(ampl::AMPL *self,char const *args[],int count){
   ampl::StringArgs s(args, count);
   self->display(s);
 }
@@ -33680,7 +33680,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_0(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   SwigValueWrapper< ampl::EntityArgs > arg2 ;
@@ -34274,7 +34274,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_1(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   char **arg2 ;
@@ -34289,10 +34289,10 @@ SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_1(PyObject *self, PyObject *args) 
   {
     arg2 = NULL;
   }
-  if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_display",&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_displayLst",&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_display" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_displayLst" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   {
@@ -34320,12 +34320,12 @@ SWIGINTERN PyObject *_wrap_AMPL_display__SWIG_1(PyObject *self, PyObject *args) 
   }
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_display" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_displayLst" "', argument " "3"" of type '" "int""'");
   } 
   arg3 = static_cast< int >(val3);
   {
     try {
-      ampl_AMPL_display__SWIG_1(arg1,(char const *(*))arg2,arg3);
+      ampl_AMPL_display(arg1,(char const *(*))arg2,arg3);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -34356,63 +34356,6 @@ fail:
     free((char *)arg2);
   }
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  Py_ssize_t ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? PyObject_Length(args) : 0;
-  argv[0] = self;
-  for (ii = 0; (ii < 2) && (ii < argc); ii++) {
-    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
-  }
-  argc++;
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_ampl__EntityArgs, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_AMPL_display__SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_p_char, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_AMPL_display__SWIG_1(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_display'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ampl::AMPL::display(ampl::EntityArgs)\n"
-    "    ampl::AMPL::display(char const *[],int)\n");
-  return 0;
 }
 
 
@@ -49205,6 +49148,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
   { "getObjectives", (PyCFunction) _wrap_AMPL_getObjectives, METH_VARARGS, (char*) "" },
   { "getSets", (PyCFunction) _wrap_AMPL_getSets, METH_VARARGS, (char*) "" },
   { "getParameters", (PyCFunction) _wrap_AMPL_getParameters, METH_VARARGS, (char*) "" },
+  { "displayLst", (PyCFunction) _wrap_AMPL_displayLst, METH_VARARGS, (char*) "" },
   { "getData", (PyCFunction) _wrap_AMPL_getData, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };

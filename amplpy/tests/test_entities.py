@@ -151,9 +151,9 @@ class TestEntities(TestBase.TestBase):
             con.setDual(0)
             self.assertEqual(con.val(), None)
         ampl.eval('''
-        var x;
-        var y;
-        s.t. xy: x <==> y;
+            var x;
+            var y;
+            s.t. xy: x <==> y;
         ''')
         self.assertTrue(ampl.getConstraint('xy').isLogical())
         self.assertTrue(isinstance(ampl.getConstraint('xy').val(), float))

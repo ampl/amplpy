@@ -135,10 +135,10 @@ class Entity(BaseClass):
             instances.
         """
         if suffixes is None:
-            return DataFrame.fromDataFrameRef(self._impl.getValues())
+            return DataFrame._fromDataFrameRef(self._impl.getValues())
         else:
             suffixes = list(map(str, suffixes))
-            return DataFrame.fromDataFrameRef(
+            return DataFrame._fromDataFrameRef(
                 self._impl.getValuesLst(suffixes, len(suffixes))
             )
 

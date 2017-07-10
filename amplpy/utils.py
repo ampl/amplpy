@@ -7,7 +7,7 @@ from .base import BaseClass
 class Tuple(BaseClass):
     def __init__(self, values=None, **kwargs):
         if values is not None:
-            values = Utils.castToList(values)
+            values = Utils.convToList(values)
             va = Utils.toVariantArray(values)
             self._impl = amplpython.Tuple.Factory(va, len(values))
         else:
@@ -24,10 +24,7 @@ class Tuple(BaseClass):
         if size == 1:
             return Utils.castVariant(self._impl.getIndex(0))
         else:
-            return tuple(
-                Utils.castVariant(self._impl.getIndex(i))
-                for i in range(size)
-            )
+            return self.toTuple()
 
     @classmethod
     def fromTupleRef(cls, tupleRef):
@@ -65,18 +62,13 @@ class Utils:
         return Utils.castVariant(amplpython.Variant(variantref))
 
     @staticmethod
-    def castToList(value):
-        if isinstance(value, (list, tuple)):
+    def convToList(value):
+        if isinstance(value, list):
+            return value
+        elif isinstance(value, tuple):
             return list(value)
         else:
             return [value]
-
-    @staticmethod
-    def castToTuple(value):
-        if isinstance(value, (list, tuple)):
-            return tuple(value)
-        else:
-            return tuple([value])
 
 
 def multidict(d):

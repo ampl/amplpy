@@ -49,6 +49,10 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(
             max(s.numInstances() for name, s in ampl.getSets()), 8
         )
+        self.assertEqual(
+            ampl.getSet('x').name(),
+            ampl.getSets()['x'].name()
+        )
 
     def testParameterIterators(self):
         ampl = self.ampl
@@ -88,6 +92,10 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(ampl.getParameter('zz').numInstances(), 8)
         self.assertEqual(
             max(p.numInstances() for name, p in ampl.getParameters()), 8
+        )
+        self.assertEqual(
+            ampl.getParameter('x').name(),
+            ampl.getParameters()['x'].name()
         )
 
     def testVariableIterators(self):
@@ -129,6 +137,10 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(
             max(var.numInstances() for name, var in ampl.getVariables()), 8
         )
+        self.assertEqual(
+            ampl.getVariable('x').name(),
+            ampl.getVariables()['x'].name()
+        )
 
     def testConstraintIterators(self):
         ampl = self.ampl
@@ -168,6 +180,10 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(
             max(con.numInstances() for name, con in ampl.getConstraints()), 4
         )
+        self.assertEqual(
+            ampl.getConstraint('c_x').name(),
+            ampl.getConstraints()['c_x'].name()
+        )
 
     def testObjectiveIterators(self):
         ampl = self.ampl
@@ -206,6 +222,10 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(ampl.getObjective('c_xx').numInstances(), 4)
         self.assertEqual(
             max(obj.numInstances() for name, obj in ampl.getObjectives()), 4
+        )
+        self.assertEqual(
+            ampl.getObjective('c_x').name(),
+            ampl.getObjectives()['c_x'].name()
         )
 
 

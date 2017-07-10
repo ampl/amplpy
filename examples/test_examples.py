@@ -19,8 +19,7 @@ class TestExamples(unittest.TestCase):
 
     def testAsyncExample(self):
         import asyncexample
-        # asyncexample.main(1, [None])
-        pass
+        asyncexample.main(1, [None])
 
     def testDataFrameExample(self):
         import dataframeexample

@@ -238,9 +238,9 @@ class DataFrame(BaseClass):
         ncols = self.getNumCols()
         nindices = self.getNumIndices()
         for key, value in values.items():
-            key = Utils.castToList(key)
+            key = Utils.convToList(key)
             assert len(key) == nindices
-            value = Utils.castToList(value)
+            value = Utils.convToList(value)
             assert len(value) == ncols-nindices
             self.addRow(key + value)
 
@@ -257,5 +257,5 @@ class DataFrame(BaseClass):
         return d
 
     @classmethod
-    def fromDataFrameRef(cls, dfRef):
+    def _fromDataFrameRef(cls, dfRef):
         return cls(None, None, _impl=dfRef)

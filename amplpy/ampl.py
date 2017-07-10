@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+from threading import Thread, Lock
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
@@ -7,6 +8,8 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityIterator
+from .entity import Entity
+from .utils import Utils
 from . import amplpython
 
 
@@ -72,6 +75,7 @@ class AMPL:
             self._impl = amplpython.AMPL(environment._impl)
         self._outputhandler = None
         self._errorhandler = None
+        self._lock = Lock()
 
     def __del__(self):
         """
@@ -111,7 +115,7 @@ class AMPL:
             DataFrame capturing the output of the display
             command in tabular form.
         """
-        return DataFrame.fromDataFrameRef(
+        return DataFrame._fromDataFrameRef(
             self._impl.getData(list(statements), len(statements))
         )
 
@@ -129,7 +133,7 @@ class AMPL:
         Returns:
             The AMPL entity with the specified name.
         """
-        raise NotImplementedError  # TODO
+        return Entity(self._impl.getEntity(name))
 
     def getVariable(self, name):
         """
@@ -256,7 +260,7 @@ class AMPL:
         """
         self._impl.solve()
 
-    def readAsync(self, filename, callback):
+    def readAsync(self, fileName, callback):
         """
         Interprets the specified file asynchronously, interpreting it as a
         model or a script file. As a side effect, it invalidates all entities
@@ -264,15 +268,20 @@ class AMPL:
         entities will be re-populated lazily (at first access).
 
         Args:
-            filename: Path to the file (Relative to the current working
+            fileName: Path to the file (Relative to the current working
             directory or absolute).
 
             callback: Callback to be executed when the file has been
             interpreted.
         """
-        raise NotImplementedError
+        def async():
+            self._lock.acquire()
+            self.read(fileName)
+            callback.run()
+            self._lock.release()
+        Thread(target=async).start()
 
-    def readDataAsync(self, filename, callback):
+    def readDataAsync(self, fileName, callback):
         """
         Interprets the specified data file asynchronously. When interpreting is
         over, the specified callback is called. The file is interpreted as
@@ -281,12 +290,17 @@ class AMPL:
         re-populated lazily (at first access)
 
         Args:
-            filename: Full path to the file.
+            fileName: Full path to the file.
 
             callback: Callback to be executed when the file has been
             interpreted.
         """
-        raise NotImplementedError
+        def async():
+            self._lock.acquire()
+            self.readData(fileName)
+            callback.run()
+            self._lock.release()
+        Thread(target=async).start()
 
     def evalAsync(self, amplstatements, callback):
         """
@@ -304,7 +318,12 @@ class AMPL:
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
-        raise NotImplementedError
+        def async():
+            self._lock.acquire()
+            self.eval(amplstatements)
+            callback.run()
+            self._lock.release()
+        Thread(target=async).start()
 
     def solveAsync(self, callback):
         """
@@ -313,7 +332,12 @@ class AMPL:
         Args:
           callback: Callback to be executed when the solver is done.
         """
-        raise self._impl.solveAsync(callback)
+        def async():
+            self._lock.acquire()
+            self.solve()
+            callback.run()
+            self._lock.release()
+        Thread(target=async).start()
 
     def interrupt(self):
         """
@@ -322,7 +346,7 @@ class AMPL:
         evalAsync(), solveAsync(), readAsync() and readDataAsync().
         Does nothing if the engine and the solver are idle.
         """
-        raise NotImplementedError
+        self._impl.interrupt()
 
     def cd(self, path=None):
         """
@@ -435,7 +459,7 @@ class AMPL:
         Returns:
             The value of the expression.
         """
-        return self._impl.getValue(scalarExpression)
+        return Utils.castVariant(self._impl.getValue(scalarExpression))
 
     def setData(self, dataFrame, setName=None):
         """
@@ -497,7 +521,8 @@ class AMPL:
         Args:
             amplExpressions: Expressions to be evaluated.
         """
-        raise NotImplementedError
+        exprs = list(map(str, amplExpressions))
+        self._impl.displayLst(exprs, len(exprs))
 
     def setOutputHandler(self, outputhandler):
         """
@@ -507,7 +532,7 @@ class AMPL:
             outputhandler: The function handling the AMPL output derived from
             interpreting user commands.
         """
-        # self._outputhandler = outputhandler
+        self._outputhandler = outputhandler
         self._impl.setOutputHandler(outputhandler)
 
     def setErrorHandler(self, errorhandler):
@@ -517,7 +542,7 @@ class AMPL:
         Args:
             errorhandler: The object handling AMPL errors and warnings.
         """
-        # self._errorhandler = errorhandler
+        self._errorhandler = errorhandler
         self._impl.setErrorHandler(errorhandler)
 
     def getOutputHandler(self):

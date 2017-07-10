@@ -11,8 +11,6 @@ def main(argc, argv):
     from time import time
     from threading import Lock
     os.chdir(os.path.dirname(__file__) or os.curdir)
-    mutex = Lock()
-    mutex.acquire()
     try:
         ampl = AMPL()
         ampl.setOption('reset_initial_guesses', True)
@@ -33,6 +31,10 @@ def main(argc, argv):
         ampl.readTable('assetstable')
         ampl.readTable('astrets')
 
+        # Create a lock
+        mutex = Lock()
+        mutex.acquire()
+
         # Set the output handler to accumulate the output messages
         class MyOutputHandler(amplpy.OutputHandler):
             """
@@ -42,8 +44,6 @@ def main(argc, argv):
             def output(self, kind, msg):
                 if kind == amplpy.Kind.SOLVE:
                     print('Solver: {}'.format(msg))
-                # print('Kind: {}'.format(kind))
-                # print('Text: {}'.format(msg))
 
         class MyErrorHandler(amplpy.ErrorHandler):
             def error(self, exception):
@@ -52,6 +52,15 @@ def main(argc, argv):
             def warning(self, exception):
                 print('Warning:', exception.getMessage())
 
+        class MyInterpretIsOver(amplpy.Runnable):
+            """
+            Object used to communicate the end of the async operation. Must
+            implement :class:`amplpy.Runnable`.
+            """
+            def run(self):
+                print("Solution process ended. Notifying waiting thread.")
+                mutex.release()
+
         # Create an output handler
         outputHandler = MyOutputHandler()
         ampl.setOutputHandler(outputHandler)
@@ -59,15 +68,6 @@ def main(argc, argv):
         # Create an error handler
         errorHandler = MyErrorHandler()
         ampl.setErrorHandler(errorHandler)
-
-        class MyInterpretIsOver(amplpy.Runnable):
-            """
-            Object used to communicate the end of the async operation. Must
-            implement :class:`amplpy.Runnable`.
-            """
-            def run():
-                print("Solution process ended. Notifying waiting thread.")
-                mutex.release()
 
         # Create the callback object
         callback = MyInterpretIsOver()
@@ -78,11 +78,11 @@ def main(argc, argv):
         # The function run() will be called by the AMPL API when the
         # solution process will be completed.
         ampl.solveAsync(callback)
-
+        ampl.interrupt()
         # Wait for the solution to complete
         print("Main thread: Waiting for solution to end...")
         start = time()
-        # mutex.acquire()
+        mutex.acquire()
         duration = time() - start
 
         print("Main thread: done waiting.")
@@ -94,10 +94,8 @@ def main(argc, argv):
         # Print the objective value
         print("Main thread: cost: {}".format(ampl.getValue('cst')))
     except Exception as e:
-        print("---")
         print(e, type(e))
-        print("---")
-        # raise
+        raise
 
 
 if __name__ == '__main__':

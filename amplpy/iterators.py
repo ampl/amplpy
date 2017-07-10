@@ -13,10 +13,6 @@ class Iterator:
     def __iter__(self):
         return self
 
-    def __getitem__(self, key):
-        assert isinstance(key, basestring)
-        return self.function(self.obj.getIndex(key))
-
     def next(self):
         if self.it.equals(self.end):
             raise StopIteration
@@ -27,10 +23,17 @@ class Iterator:
 
 class EntityIterator(Iterator):
     def __init__(self, obj, entityClass):
+        self.entityClass = entityClass
+
         def pair(it):
             entity = entityClass(it.__ref__())
             return (entity.name(), entity)
+
         Iterator.__init__(self, obj, pair)
+
+    def __getitem__(self, key):
+        assert isinstance(key, basestring)
+        return self.entityClass(self.obj.getIndex(key))
 
     def size(self):
         return int(self.obj.size())
