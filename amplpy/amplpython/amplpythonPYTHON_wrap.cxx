@@ -4027,52 +4027,58 @@ namespace Swig {
 #define SWIGTYPE_p_ampl__EntityMapT_ampl__Variable_t__iterator swig_types[30]
 #define SWIGTYPE_p_ampl__Environment swig_types[31]
 #define SWIGTYPE_p_ampl__ErrorHandler swig_types[32]
-#define SWIGTYPE_p_ampl__Instance swig_types[33]
-#define SWIGTYPE_p_ampl__Objective swig_types[34]
-#define SWIGTYPE_p_ampl__ObjectiveInstance swig_types[35]
-#define SWIGTYPE_p_ampl__OptionalT_bool_t swig_types[36]
-#define SWIGTYPE_p_ampl__OptionalT_double_t swig_types[37]
-#define SWIGTYPE_p_ampl__OptionalT_int_t swig_types[38]
-#define SWIGTYPE_p_ampl__OptionalT_std__string_t swig_types[39]
-#define SWIGTYPE_p_ampl__OutputHandler swig_types[40]
-#define SWIGTYPE_p_ampl__Parameter swig_types[41]
-#define SWIGTYPE_p_ampl__Runnable swig_types[42]
-#define SWIGTYPE_p_ampl__Set swig_types[43]
-#define SWIGTYPE_p_ampl__SetInstance swig_types[44]
-#define SWIGTYPE_p_ampl__SetInstance__MemberRange swig_types[45]
-#define SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator swig_types[46]
-#define SWIGTYPE_p_ampl__StringArray swig_types[47]
-#define SWIGTYPE_p_ampl__StringRefArray swig_types[48]
-#define SWIGTYPE_p_ampl__Tuple swig_types[49]
-#define SWIGTYPE_p_ampl__TupleRef swig_types[50]
-#define SWIGTYPE_p_ampl__Variable swig_types[51]
-#define SWIGTYPE_p_ampl__VariableInstance swig_types[52]
-#define SWIGTYPE_p_ampl__Variant swig_types[53]
-#define SWIGTYPE_p_ampl__VariantRef swig_types[54]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t swig_types[55]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t swig_types[56]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t swig_types[57]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t swig_types[58]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t swig_types[59]
-#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t swig_types[60]
-#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t swig_types[61]
-#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t swig_types[62]
-#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__SetInstance_t swig_types[63]
-#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariableInstance_t swig_types[64]
-#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariantRef_t swig_types[65]
-#define SWIGTYPE_p_ampl__internal__EnvironmentIterator swig_types[66]
-#define SWIGTYPE_p_ampl__internal__SliceT_false_t swig_types[67]
-#define SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator swig_types[68]
-#define SWIGTYPE_p_ampl__internal__SliceT_true_t swig_types[69]
-#define SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator swig_types[70]
-#define SWIGTYPE_p_char swig_types[71]
-#define SWIGTYPE_p_double swig_types[72]
-#define SWIGTYPE_p_iterator swig_types[73]
-#define SWIGTYPE_p_p_char swig_types[74]
-#define SWIGTYPE_p_std__runtime_error swig_types[75]
-#define SWIGTYPE_p_unsigned_int swig_types[76]
-static swig_type_info *swig_types[78];
-static swig_module_info swig_module = {swig_types, 77, 0, 0, 0, 0};
+#define SWIGTYPE_p_ampl__FileIOException swig_types[33]
+#define SWIGTYPE_p_ampl__Instance swig_types[34]
+#define SWIGTYPE_p_ampl__InvalidSubscriptException swig_types[35]
+#define SWIGTYPE_p_ampl__LicenseException swig_types[36]
+#define SWIGTYPE_p_ampl__NoDataException swig_types[37]
+#define SWIGTYPE_p_ampl__Objective swig_types[38]
+#define SWIGTYPE_p_ampl__ObjectiveInstance swig_types[39]
+#define SWIGTYPE_p_ampl__OptionalT_bool_t swig_types[40]
+#define SWIGTYPE_p_ampl__OptionalT_double_t swig_types[41]
+#define SWIGTYPE_p_ampl__OptionalT_int_t swig_types[42]
+#define SWIGTYPE_p_ampl__OptionalT_std__string_t swig_types[43]
+#define SWIGTYPE_p_ampl__OutputHandler swig_types[44]
+#define SWIGTYPE_p_ampl__Parameter swig_types[45]
+#define SWIGTYPE_p_ampl__Runnable swig_types[46]
+#define SWIGTYPE_p_ampl__Set swig_types[47]
+#define SWIGTYPE_p_ampl__SetInstance swig_types[48]
+#define SWIGTYPE_p_ampl__SetInstance__MemberRange swig_types[49]
+#define SWIGTYPE_p_ampl__SetInstance__MemberRange__iterator swig_types[50]
+#define SWIGTYPE_p_ampl__StringArray swig_types[51]
+#define SWIGTYPE_p_ampl__StringRefArray swig_types[52]
+#define SWIGTYPE_p_ampl__SyntaxErrorException swig_types[53]
+#define SWIGTYPE_p_ampl__Tuple swig_types[54]
+#define SWIGTYPE_p_ampl__TupleRef swig_types[55]
+#define SWIGTYPE_p_ampl__UnsupportedOperationException swig_types[56]
+#define SWIGTYPE_p_ampl__Variable swig_types[57]
+#define SWIGTYPE_p_ampl__VariableInstance swig_types[58]
+#define SWIGTYPE_p_ampl__Variant swig_types[59]
+#define SWIGTYPE_p_ampl__VariantRef swig_types[60]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t_t swig_types[61]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t_t swig_types[62]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__SetInstance_t_t swig_types[63]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariableInstance_t_t swig_types[64]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EntityWrapperT_ampl__VariantRef_t_t swig_types[65]
+#define SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t swig_types[66]
+#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ConstraintInstance_t swig_types[67]
+#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__ObjectiveInstance_t swig_types[68]
+#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__SetInstance_t swig_types[69]
+#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariableInstance_t swig_types[70]
+#define SWIGTYPE_p_ampl__internal__EntityWrapperT_ampl__VariantRef_t swig_types[71]
+#define SWIGTYPE_p_ampl__internal__EnvironmentIterator swig_types[72]
+#define SWIGTYPE_p_ampl__internal__SliceT_false_t swig_types[73]
+#define SWIGTYPE_p_ampl__internal__SliceT_false_t__iterator swig_types[74]
+#define SWIGTYPE_p_ampl__internal__SliceT_true_t swig_types[75]
+#define SWIGTYPE_p_ampl__internal__SliceT_true_t__iterator swig_types[76]
+#define SWIGTYPE_p_char swig_types[77]
+#define SWIGTYPE_p_double swig_types[78]
+#define SWIGTYPE_p_iterator swig_types[79]
+#define SWIGTYPE_p_p_char swig_types[80]
+#define SWIGTYPE_p_std__runtime_error swig_types[81]
+#define SWIGTYPE_p_unsigned_int swig_types[82]
+static swig_type_info *swig_types[84];
+static swig_module_info swig_module = {swig_types, 83, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5149,11 +5155,22 @@ SWIGINTERN PyObject *_wrap_delete_StringArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5242,11 +5259,96 @@ SWIGINTERN PyObject *_wrap_delete_StringRefArray(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_runtime_error_what(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  std::runtime_error *arg1 = (std::runtime_error *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char *result = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "runtime_error_what takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__runtime_error, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "runtime_error_what" "', argument " "1"" of type '" "std::runtime_error const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::runtime_error * >(argp1);
+  result = (char *)((std::runtime_error const *)arg1)->what();
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_runtime_error(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  std::runtime_error *arg1 = (std::runtime_error *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_runtime_error takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_std__runtime_error, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_runtime_error" "', argument " "1"" of type '" "std::runtime_error *""'"); 
+  }
+  arg1 = reinterpret_cast< std::runtime_error * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5336,11 +5438,22 @@ SWIGINTERN int _wrap_new_VariantArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5378,11 +5491,22 @@ SWIGINTERN PyObject *_wrap_delete_VariantArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5430,11 +5554,22 @@ SWIGINTERN PyObject *_wrap_VariantArray___getitem__(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5500,11 +5635,22 @@ SWIGINTERN PyObject *_wrap_VariantArray___setitem__(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5545,11 +5691,22 @@ SWIGINTERN PyObject *_wrap_VariantArray_cast(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5589,11 +5746,22 @@ SWIGINTERN PyObject *_wrap_VariantArray_frompointer(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5683,11 +5851,22 @@ SWIGINTERN int _wrap_new_TupleArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5725,11 +5904,22 @@ SWIGINTERN PyObject *_wrap_delete_TupleArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5777,11 +5967,22 @@ SWIGINTERN PyObject *_wrap_TupleArray___getitem__(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5847,11 +6048,22 @@ SWIGINTERN PyObject *_wrap_TupleArray___setitem__(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5892,11 +6104,22 @@ SWIGINTERN PyObject *_wrap_TupleArray_cast(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5936,11 +6159,22 @@ SWIGINTERN PyObject *_wrap_TupleArray_frompointer(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -5971,11 +6205,22 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6017,11 +6262,22 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6095,11 +6351,22 @@ SWIGINTERN PyObject *_wrap_OptionalInt___nonzero__(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6140,11 +6407,22 @@ SWIGINTERN PyObject *_wrap_OptionalInt_value(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6182,11 +6460,22 @@ SWIGINTERN PyObject *_wrap_delete_OptionalInt(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6217,11 +6506,22 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6266,11 +6566,22 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6344,11 +6655,22 @@ SWIGINTERN PyObject *_wrap_OptionalString___nonzero__(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6389,11 +6711,22 @@ SWIGINTERN PyObject *_wrap_OptionalString_value(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6431,11 +6764,22 @@ SWIGINTERN PyObject *_wrap_delete_OptionalString(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6466,11 +6810,22 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6512,11 +6867,22 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6590,11 +6956,22 @@ SWIGINTERN PyObject *_wrap_OptionalBool___nonzero__(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6635,11 +7012,22 @@ SWIGINTERN PyObject *_wrap_OptionalBool_value(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6677,11 +7065,22 @@ SWIGINTERN PyObject *_wrap_delete_OptionalBool(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6712,11 +7111,22 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6758,11 +7168,22 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6836,11 +7257,22 @@ SWIGINTERN PyObject *_wrap_OptionalDouble___nonzero__(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6881,11 +7313,22 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_value(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6923,11 +7366,22 @@ SWIGINTERN PyObject *_wrap_delete_OptionalDouble(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -6969,11 +7423,22 @@ SWIGINTERN int _wrap_new_Variant__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7013,11 +7478,22 @@ SWIGINTERN int _wrap_new_Variant__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7060,11 +7536,22 @@ SWIGINTERN int _wrap_new_Variant__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7152,11 +7639,22 @@ SWIGINTERN PyObject *_wrap_Variant_str(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7195,11 +7693,22 @@ SWIGINTERN PyObject *_wrap_Variant_dbl(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7238,11 +7747,22 @@ SWIGINTERN PyObject *_wrap_Variant_type(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7281,11 +7801,22 @@ SWIGINTERN PyObject *_wrap_Variant_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7336,11 +7867,22 @@ SWIGINTERN PyObject *_wrap_Variant_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7391,11 +7933,22 @@ SWIGINTERN PyObject *_wrap_Variant_compare(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7433,11 +7986,22 @@ SWIGINTERN PyObject *_wrap_delete_Variant(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7479,11 +8043,22 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7523,11 +8098,22 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7570,11 +8156,22 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7662,11 +8259,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_str(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7705,11 +8313,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_dbl(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7748,11 +8367,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_type(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7791,11 +8421,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7846,11 +8487,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7901,11 +8553,22 @@ SWIGINTERN PyObject *_wrap_VariantRef_compare(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7943,11 +8606,22 @@ SWIGINTERN PyObject *_wrap_delete_VariantRef(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -7995,11 +8669,22 @@ SWIGINTERN int _wrap_new_TupleRef(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8038,11 +8723,22 @@ SWIGINTERN PyObject *_wrap_TupleRef_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8081,11 +8777,22 @@ SWIGINTERN PyObject *_wrap_TupleRef_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8133,11 +8840,22 @@ SWIGINTERN PyObject *_wrap_TupleRef_getIndex(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8175,11 +8893,22 @@ SWIGINTERN PyObject *_wrap_delete_TupleRef(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8210,11 +8939,22 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8254,11 +8994,22 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8299,11 +9050,22 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8388,11 +9150,22 @@ SWIGINTERN PyObject *_wrap_Tuple_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8431,11 +9204,22 @@ SWIGINTERN PyObject *_wrap_Tuple_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8483,11 +9267,22 @@ SWIGINTERN PyObject *_wrap_Tuple_getIndex(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8538,11 +9333,22 @@ SWIGINTERN PyObject *_wrap_Tuple_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8594,11 +9400,22 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_0(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8646,11 +9463,22 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_1(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8733,11 +9561,22 @@ SWIGINTERN PyObject *_wrap_delete_Tuple(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8777,11 +9616,22 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8819,11 +9669,22 @@ SWIGINTERN PyObject *_wrap_delete_DataFrame(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8866,11 +9727,22 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -8913,11 +9785,22 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9017,11 +9900,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_clone(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9060,11 +9954,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumCols(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9103,11 +10008,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumRows(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9146,11 +10062,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumIndices(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9205,11 +10132,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_0(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9264,11 +10202,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_1(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9340,11 +10289,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_2(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9433,11 +10393,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9543,11 +10514,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9594,11 +10576,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_reserve(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9637,11 +10630,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9685,11 +10689,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9737,11 +10752,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowByIndex(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9797,11 +10823,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_0(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9857,11 +10894,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_1(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9900,11 +10948,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_2(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9943,11 +11002,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getHeaders(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -9986,11 +11056,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_impl(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10033,11 +11114,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10108,11 +11200,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10185,11 +11288,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10250,11 +11364,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10440,11 +11565,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_3(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10598,11 +11734,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10684,11 +11831,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10789,11 +11947,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblDbl(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -10904,11 +12073,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11019,11 +12199,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11138,11 +12329,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11282,11 +12484,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11402,11 +12615,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrDbl(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11525,11 +12749,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrDbl(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11654,11 +12889,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblDbl(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11802,11 +13048,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -11941,11 +13198,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12074,11 +13342,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12192,11 +13471,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12279,11 +13569,22 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12328,11 +13629,22 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_size(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12371,11 +13683,22 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_begin(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12414,11 +13737,22 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12466,11 +13800,22 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_getIndex(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12508,11 +13853,22 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameColumn(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12563,11 +13919,22 @@ SWIGINTERN PyObject *_wrap_ColIterator_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12618,11 +13985,22 @@ SWIGINTERN PyObject *_wrap_ColIterator_differs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12661,11 +14039,22 @@ SWIGINTERN PyObject *_wrap_ColIterator___ref__(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12718,11 +14107,22 @@ SWIGINTERN PyObject *_wrap_ColIterator_clone(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12761,11 +14161,22 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrement(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12813,11 +14224,22 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrementBy(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12855,11 +14277,22 @@ SWIGINTERN PyObject *_wrap_delete_ColIterator(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12898,11 +14331,22 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12941,11 +14385,22 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_begin(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -12984,11 +14439,22 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13036,11 +14502,22 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_getIndex(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13078,11 +14555,22 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameRow(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13133,11 +14621,22 @@ SWIGINTERN PyObject *_wrap_RowIterator_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13188,11 +14687,22 @@ SWIGINTERN PyObject *_wrap_RowIterator_differs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13231,11 +14741,22 @@ SWIGINTERN PyObject *_wrap_RowIterator___ref__(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13288,11 +14809,22 @@ SWIGINTERN PyObject *_wrap_RowIterator_clone(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13331,11 +14863,22 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrement(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13383,11 +14926,22 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrementBy(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13425,11 +14979,22 @@ SWIGINTERN PyObject *_wrap_delete_RowIterator(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13468,11 +15033,22 @@ SWIGINTERN PyObject *_wrap_Instance_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13511,11 +15087,22 @@ SWIGINTERN PyObject *_wrap_Instance_name(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13554,11 +15141,22 @@ SWIGINTERN PyObject *_wrap_Instance_entity(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13571,6 +15169,60 @@ SWIGINTERN PyObject *_wrap_Instance_entity(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj((new ampl::Entity(static_cast< const ampl::Entity& >(result))), SWIGTYPE_p_ampl__Entity, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Instance_key(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Instance *arg1 = (ampl::Instance *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ampl::Tuple result;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Instance_key takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_key" "', argument " "1"" of type '" "ampl::Instance const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Instance * >(argp1);
+  {
+    try {
+      result = ((ampl::Instance const *)arg1)->key();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new ampl::Tuple(static_cast< const ampl::Tuple& >(result))), SWIGTYPE_p_ampl__Tuple, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -13596,11 +15248,22 @@ SWIGINTERN PyObject *_wrap_delete_Instance(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13639,11 +15302,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13699,11 +15373,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_contains(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13742,11 +15427,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_getValues(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13801,11 +15497,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDf(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13844,11 +15551,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_members(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13904,11 +15622,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -13967,11 +15696,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValues(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14042,11 +15782,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14127,11 +15878,22 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14175,11 +15937,22 @@ SWIGINTERN PyObject *_wrap_delete_SetInstance(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14219,11 +15992,22 @@ SWIGINTERN int _wrap_new_MemberRange(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14262,11 +16046,22 @@ SWIGINTERN PyObject *_wrap_MemberRange_begin(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14305,11 +16100,22 @@ SWIGINTERN PyObject *_wrap_MemberRange_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14347,11 +16153,22 @@ SWIGINTERN PyObject *_wrap_delete_MemberRange(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14390,11 +16207,22 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14435,11 +16263,22 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrement(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14487,11 +16326,22 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrementBy(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14542,11 +16392,22 @@ SWIGINTERN PyObject *_wrap_iterator_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14597,11 +16458,22 @@ SWIGINTERN PyObject *_wrap_iterator_differs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14639,11 +16511,22 @@ SWIGINTERN PyObject *_wrap_delete_iterator(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14682,11 +16565,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_value(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14725,11 +16619,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_astatus(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14768,11 +16673,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_sstatus(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14811,11 +16727,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_exitcode(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14854,11 +16781,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_message(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14897,11 +16835,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_result(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14939,11 +16888,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_drop(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -14981,11 +16941,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_restore(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15024,11 +16995,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_minimization(PyObject *self, PyObje
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15066,11 +17048,22 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveInstance(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15108,11 +17101,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_0(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15159,11 +17163,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_1(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15249,11 +17264,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_unfix(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15300,11 +17326,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_setValue(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15343,11 +17380,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_value(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15386,11 +17434,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_defeqn(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15429,11 +17488,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_dual(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15472,11 +17542,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15515,11 +17596,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init0(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15558,11 +17650,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15601,11 +17704,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15644,11 +17758,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15687,11 +17812,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15730,11 +17866,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15773,11 +17920,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15816,11 +17974,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb2(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15859,11 +18028,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub2(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15902,11 +18082,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lrc(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15945,11 +18136,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_urc(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -15988,11 +18190,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lslack(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16031,11 +18244,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_uslack(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16074,11 +18298,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_rc(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16117,11 +18352,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_slack(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16160,11 +18406,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_astatus(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16203,11 +18460,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_sstatus(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16246,11 +18514,22 @@ SWIGINTERN PyObject *_wrap_VariableInstance_status(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16288,11 +18567,22 @@ SWIGINTERN PyObject *_wrap_delete_VariableInstance(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16330,11 +18620,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_drop(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16372,11 +18673,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_restore(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16415,11 +18727,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_body(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16458,11 +18781,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_astatus(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16501,11 +18835,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_defvar(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16544,11 +18889,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16587,11 +18943,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit0(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16630,11 +18997,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dual(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16673,11 +19051,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lb(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16716,11 +19105,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ub(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16759,11 +19159,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lbs(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16802,11 +19213,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ubs(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16845,11 +19267,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ldual(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16888,11 +19321,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_udual(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16931,11 +19375,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lslack(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -16974,11 +19429,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_uslack(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17017,11 +19483,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_slack(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17060,11 +19537,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_sstatus(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17103,11 +19591,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_status(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17154,11 +19653,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_setDual(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17197,11 +19707,22 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_val(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17239,11 +19760,22 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintInstance(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17333,11 +19865,22 @@ SWIGINTERN int _wrap_new_EntityArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17375,11 +19918,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityArray(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17427,11 +19981,22 @@ SWIGINTERN PyObject *_wrap_EntityArray___getitem__(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17497,11 +20062,22 @@ SWIGINTERN PyObject *_wrap_EntityArray___setitem__(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17542,11 +20118,22 @@ SWIGINTERN PyObject *_wrap_EntityArray_cast(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17586,11 +20173,22 @@ SWIGINTERN PyObject *_wrap_EntityArray_frompointer(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17629,11 +20227,22 @@ SWIGINTERN PyObject *_wrap_Entity_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17672,11 +20281,22 @@ SWIGINTERN PyObject *_wrap_Entity_name(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17715,11 +20335,22 @@ SWIGINTERN PyObject *_wrap_Entity_indexarity(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17758,11 +20389,22 @@ SWIGINTERN PyObject *_wrap_Entity_isScalar(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17801,11 +20443,22 @@ SWIGINTERN PyObject *_wrap_Entity_numInstances(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17844,11 +20497,22 @@ SWIGINTERN PyObject *_wrap_Entity_getIndexingSets(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17887,11 +20551,22 @@ SWIGINTERN PyObject *_wrap_Entity_getValues(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -17946,11 +20621,22 @@ SWIGINTERN PyObject *_wrap_Entity_setValuesDf(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18026,11 +20712,22 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18074,11 +20771,22 @@ SWIGINTERN PyObject *_wrap_delete_Entity(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18130,11 +20838,22 @@ SWIGINTERN PyObject *_wrap_EntityArgs_Factory(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18172,11 +20891,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityArgs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18215,11 +20945,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_begin(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18258,11 +20999,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_end(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18318,11 +21070,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18361,11 +21124,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_0(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18421,11 +21195,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18509,11 +21294,22 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityVariable(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18552,11 +21348,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_begin(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18595,11 +21402,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_end(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18655,11 +21473,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18698,11 +21527,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_0(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18758,11 +21598,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18846,11 +21697,22 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityConstraint(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18889,11 +21751,22 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_begin(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18932,11 +21805,22 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -18992,11 +21876,22 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19035,11 +21930,22 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_0(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19095,11 +22001,22 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19183,11 +22100,22 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntitySet(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19226,11 +22154,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_begin(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19269,11 +22208,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_end(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19329,11 +22279,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19372,11 +22333,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_0(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19432,11 +22404,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19520,11 +22503,22 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityObjective(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19563,11 +22557,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_begin(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19606,11 +22611,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_end(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19666,11 +22682,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19709,11 +22736,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_0(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19769,11 +22807,22 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19857,11 +22906,22 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityParameter(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19900,11 +22960,22 @@ SWIGINTERN PyObject *_wrap_Constraint_isLogical(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19942,11 +23013,22 @@ SWIGINTERN PyObject *_wrap_Constraint_drop(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -19984,11 +23066,22 @@ SWIGINTERN PyObject *_wrap_Constraint_restore(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20027,11 +23120,22 @@ SWIGINTERN PyObject *_wrap_Constraint_body(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20070,11 +23174,22 @@ SWIGINTERN PyObject *_wrap_Constraint_astatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20113,11 +23228,22 @@ SWIGINTERN PyObject *_wrap_Constraint_defvar(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20156,11 +23282,22 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20199,11 +23336,22 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20242,11 +23390,22 @@ SWIGINTERN PyObject *_wrap_Constraint_dual(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20285,11 +23444,22 @@ SWIGINTERN PyObject *_wrap_Constraint_lb(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20328,11 +23498,22 @@ SWIGINTERN PyObject *_wrap_Constraint_ub(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20371,11 +23552,22 @@ SWIGINTERN PyObject *_wrap_Constraint_lbs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20414,11 +23606,22 @@ SWIGINTERN PyObject *_wrap_Constraint_ubs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20457,11 +23660,22 @@ SWIGINTERN PyObject *_wrap_Constraint_ldual(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20500,11 +23714,22 @@ SWIGINTERN PyObject *_wrap_Constraint_udual(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20543,11 +23768,22 @@ SWIGINTERN PyObject *_wrap_Constraint_lslack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20586,11 +23822,22 @@ SWIGINTERN PyObject *_wrap_Constraint_uslack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20629,11 +23876,22 @@ SWIGINTERN PyObject *_wrap_Constraint_slack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20672,11 +23930,22 @@ SWIGINTERN PyObject *_wrap_Constraint_sstatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20715,11 +23984,22 @@ SWIGINTERN PyObject *_wrap_Constraint_status(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20766,11 +24046,22 @@ SWIGINTERN PyObject *_wrap_Constraint_setDual(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20809,11 +24100,22 @@ SWIGINTERN PyObject *_wrap_Constraint_val(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20851,11 +24153,22 @@ SWIGINTERN PyObject *_wrap_delete_Constraint(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20894,11 +24207,22 @@ SWIGINTERN PyObject *_wrap_Variable_integrality(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20936,11 +24260,22 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -20987,11 +24322,22 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21077,11 +24423,22 @@ SWIGINTERN PyObject *_wrap_Variable_unfix(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21128,11 +24485,22 @@ SWIGINTERN PyObject *_wrap_Variable_setValue(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21171,11 +24539,22 @@ SWIGINTERN PyObject *_wrap_Variable_value(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21214,11 +24593,22 @@ SWIGINTERN PyObject *_wrap_Variable_astatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21257,11 +24647,22 @@ SWIGINTERN PyObject *_wrap_Variable_defeqn(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21300,11 +24701,22 @@ SWIGINTERN PyObject *_wrap_Variable_dual(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21343,11 +24755,22 @@ SWIGINTERN PyObject *_wrap_Variable_init(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21386,11 +24809,22 @@ SWIGINTERN PyObject *_wrap_Variable_init0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21429,11 +24863,22 @@ SWIGINTERN PyObject *_wrap_Variable_lb(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21472,11 +24917,22 @@ SWIGINTERN PyObject *_wrap_Variable_ub(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21515,11 +24971,22 @@ SWIGINTERN PyObject *_wrap_Variable_lb0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21558,11 +25025,22 @@ SWIGINTERN PyObject *_wrap_Variable_ub0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21601,11 +25079,22 @@ SWIGINTERN PyObject *_wrap_Variable_lb1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21644,11 +25133,22 @@ SWIGINTERN PyObject *_wrap_Variable_ub1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21687,11 +25187,22 @@ SWIGINTERN PyObject *_wrap_Variable_lb2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21730,11 +25241,22 @@ SWIGINTERN PyObject *_wrap_Variable_ub2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21773,11 +25295,22 @@ SWIGINTERN PyObject *_wrap_Variable_lrc(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21816,11 +25349,22 @@ SWIGINTERN PyObject *_wrap_Variable_urc(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21859,11 +25403,22 @@ SWIGINTERN PyObject *_wrap_Variable_lslack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21902,11 +25457,22 @@ SWIGINTERN PyObject *_wrap_Variable_uslack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21945,11 +25511,22 @@ SWIGINTERN PyObject *_wrap_Variable_rc(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -21988,11 +25565,22 @@ SWIGINTERN PyObject *_wrap_Variable_slack(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22031,11 +25619,22 @@ SWIGINTERN PyObject *_wrap_Variable_sstatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22074,11 +25673,22 @@ SWIGINTERN PyObject *_wrap_Variable_status(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22116,11 +25726,22 @@ SWIGINTERN PyObject *_wrap_delete_Variable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22159,11 +25780,22 @@ SWIGINTERN PyObject *_wrap_Objective_value(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22202,11 +25834,22 @@ SWIGINTERN PyObject *_wrap_Objective_astatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22245,11 +25888,22 @@ SWIGINTERN PyObject *_wrap_Objective_sstatus(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22288,11 +25942,22 @@ SWIGINTERN PyObject *_wrap_Objective_exitcode(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22331,11 +25996,22 @@ SWIGINTERN PyObject *_wrap_Objective_message(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22374,11 +26050,22 @@ SWIGINTERN PyObject *_wrap_Objective_result(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22416,11 +26103,22 @@ SWIGINTERN PyObject *_wrap_Objective_drop(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22458,11 +26156,22 @@ SWIGINTERN PyObject *_wrap_Objective_restore(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22501,11 +26210,22 @@ SWIGINTERN PyObject *_wrap_Objective_minimization(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22543,11 +26263,22 @@ SWIGINTERN PyObject *_wrap_delete_Objective(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22586,11 +26317,22 @@ SWIGINTERN PyObject *_wrap_Set_arity(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22629,11 +26371,22 @@ SWIGINTERN PyObject *_wrap_Set_getValues(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22672,11 +26425,22 @@ SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22731,11 +26495,22 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDf(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22791,11 +26566,22 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22854,11 +26640,22 @@ SWIGINTERN PyObject *_wrap_Set_setValues(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -22929,11 +26726,22 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDbl(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23014,11 +26822,22 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23062,11 +26881,22 @@ SWIGINTERN PyObject *_wrap_delete_Set(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23105,11 +26935,22 @@ SWIGINTERN PyObject *_wrap_Parameter_isSymbolic(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23148,11 +26989,22 @@ SWIGINTERN PyObject *_wrap_Parameter_hasDefault(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23207,11 +27059,22 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_0(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23258,11 +27121,22 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_1(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23310,11 +27184,22 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_2(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23388,11 +27273,22 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23540,11 +27436,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23609,11 +27516,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23698,11 +27616,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23795,11 +27724,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23876,11 +27816,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesDbl(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -23961,11 +27912,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24078,11 +28040,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_0(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24225,11 +28198,22 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24393,11 +28377,22 @@ SWIGINTERN PyObject *_wrap_delete_Parameter(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24435,11 +28430,22 @@ SWIGINTERN PyObject *_wrap_delete_VariableIteratorWrapper(PyObject *self, PyObje
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24490,11 +28496,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_equals(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24545,11 +28562,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_differs(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24600,11 +28628,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_clone(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24643,11 +28682,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrement(PyObject *self, PyObje
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24695,11 +28745,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrementBy(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24738,11 +28799,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24781,11 +28853,22 @@ SWIGINTERN PyObject *_wrap_VariableIterator_second(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24823,11 +28906,22 @@ SWIGINTERN PyObject *_wrap_delete_VariableIterator(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24865,11 +28959,22 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIteratorWrapper(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24920,11 +29025,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_equals(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -24975,11 +29091,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_differs(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25030,11 +29157,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_clone(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25073,11 +29211,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrement(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25125,11 +29274,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrementBy(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25168,11 +29328,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25211,11 +29382,22 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_second(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25253,11 +29435,22 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIterator(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25295,11 +29488,22 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIteratorWrapper(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25350,11 +29554,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_equals(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25405,11 +29620,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_differs(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25460,11 +29686,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_clone(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25503,11 +29740,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrement(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25555,11 +29803,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrementBy(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25598,11 +29857,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25641,11 +29911,22 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_second(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25683,11 +29964,22 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIterator(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25725,11 +30017,22 @@ SWIGINTERN PyObject *_wrap_delete_SetIteratorWrapper(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25780,11 +30083,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_equals(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25835,11 +30149,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_differs(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25890,11 +30215,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_clone(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25933,11 +30269,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrement(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -25985,11 +30332,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrementBy(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26028,11 +30386,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26071,11 +30440,22 @@ SWIGINTERN PyObject *_wrap_SetIterator_second(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26113,11 +30493,22 @@ SWIGINTERN PyObject *_wrap_delete_SetIterator(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26155,11 +30546,22 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIteratorWrapper(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26210,11 +30612,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_equals(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26265,11 +30678,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_differs(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26320,11 +30744,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_clone(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26363,11 +30798,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrement(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26415,11 +30861,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrementBy(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26458,11 +30915,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26501,11 +30969,22 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_second(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26543,11 +31022,22 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIterator(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26586,11 +31076,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_begin(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26629,11 +31130,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_end(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26682,11 +31194,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_find(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26727,11 +31250,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_size(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26775,11 +31309,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26817,11 +31362,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariable(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26872,11 +31428,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_equals(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26927,11 +31494,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_differs(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -26970,11 +31548,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator___ref__(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27027,11 +31616,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_clone(PyObject *self, PyObj
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27070,11 +31670,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrement(PyObject *sel
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27122,11 +31733,22 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrementBy(PyObject *s
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27164,11 +31786,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariableIterator(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27207,11 +31840,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_begin(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27250,11 +31894,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_end(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27303,11 +31958,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_find(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27348,11 +32014,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_size(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27396,11 +32073,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27438,11 +32126,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraint(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27493,11 +32192,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_equals(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27548,11 +32258,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_differs(PyObject *self, P
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27591,11 +32312,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator___ref__(PyObject *self, P
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27648,11 +32380,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_clone(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27691,11 +32434,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrement(PyObject *s
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27743,11 +32497,22 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrementBy(PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27785,11 +32550,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraintIterator(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27828,11 +32604,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_begin(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27871,11 +32658,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_end(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27924,11 +32722,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_find(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -27969,11 +32778,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_size(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28017,11 +32837,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28059,11 +32890,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjective(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28114,11 +32956,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_equals(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28169,11 +33022,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_differs(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28212,11 +33076,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator___ref__(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28269,11 +33144,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_clone(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28312,11 +33198,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrement(PyObject *se
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28364,11 +33261,22 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrementBy(PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28406,11 +33314,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjectiveIterator(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28449,11 +33368,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_begin(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28492,11 +33422,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28545,11 +33486,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_find(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28590,11 +33542,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_size(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28638,11 +33601,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28680,11 +33654,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSet(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28735,11 +33720,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_equals(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28790,11 +33786,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_differs(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28833,11 +33840,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator___ref__(PyObject *self, PyObject
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28890,11 +33908,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_clone(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28933,11 +33962,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrement(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -28985,11 +34025,22 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrementBy(PyObject *self, 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29027,11 +34078,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSetIterator(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29070,11 +34132,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_begin(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29113,11 +34186,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_end(PyObject *self, PyObject *args
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29166,11 +34250,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_find(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29211,11 +34306,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_size(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29259,11 +34365,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29301,11 +34418,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameter(PyObject *self, PyObject *a
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29356,11 +34484,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_equals(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29411,11 +34550,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_differs(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29454,11 +34604,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator___ref__(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29511,11 +34672,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_clone(PyObject *self, PyOb
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29554,11 +34726,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrement(PyObject *se
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29606,11 +34789,22 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrementBy(PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29648,11 +34842,22 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameterIterator(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29673,26 +34878,44 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_0(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
+  ampl::AMPLException *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
-  
-  arg1 = PyString_AsString(obj1);
-  
+  res1 = SWIG_ConvertPtr(obj1, &argp1, SWIGTYPE_p_ampl__AMPLException,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_AMPLException" "', argument " "1"" of type '" "ampl::AMPLException const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_AMPLException" "', argument " "1"" of type '" "ampl::AMPLException const &""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
+      result = (ampl::AMPLException *)new ampl::AMPLException((ampl::AMPLException const &)*arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29713,21 +34936,37 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
-  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
+  if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
+  
+  arg1 = PyString_AsString(obj1);
+  
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException();
+      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29747,6 +34986,52 @@ fail:
 
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPLException *result = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
+  {
+    try {
+      result = (ampl::AMPLException *)new ampl::AMPLException();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__AMPLException, SWIG_BUILTIN_INIT |  0 );
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  return -1;
+}
+
+
+SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   fmt::CStringRef arg1 ;
   int arg2 ;
@@ -29786,11 +35071,22 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29822,14 +35118,22 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_AMPLException__SWIG_1(self, args);
+    return _wrap_new_AMPLException__SWIG_2(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_ampl__AMPLException, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_AMPLException__SWIG_0(self, args);
+    }
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_AMPLException__SWIG_0(self, args);
+      return _wrap_new_AMPLException__SWIG_1(self, args);
     }
   }
   if (argc == 4) {
@@ -29850,7 +35154,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
           int res = SWIG_AsCharPtrAndSize(argv[3], 0, NULL, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_new_AMPLException__SWIG_2(self, args);
+            return _wrap_new_AMPLException__SWIG_3(self, args);
           }
         }
       }
@@ -29860,6 +35164,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_AMPLException'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ampl::AMPLException::AMPLException(ampl::AMPLException const &)\n"
     "    ampl::AMPLException::AMPLException(fmt::CStringRef)\n"
     "    ampl::AMPLException::AMPLException()\n"
     "    ampl::AMPLException::AMPLException(fmt::CStringRef,int,int,fmt::CStringRef)\n");
@@ -29886,11 +35191,22 @@ SWIGINTERN PyObject *_wrap_delete_AMPLException(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29929,11 +35245,22 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -29972,11 +35299,22 @@ SWIGINTERN PyObject *_wrap_AMPLException_getLineNumber(PyObject *self, PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30015,11 +35353,22 @@ SWIGINTERN PyObject *_wrap_AMPLException_getOffset(PyObject *self, PyObject *arg
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30058,11 +35407,22 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30075,6 +35435,801 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
     }
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPLException_setSourceName(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPLException *arg1 = (ampl::AMPLException *) 0 ;
+  std::string *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AMPLException_setSourceName",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPLException_setSourceName" "', argument " "1"" of type '" "ampl::AMPLException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPLException_setSourceName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AMPLException_setSourceName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try {
+      (arg1)->setSourceName((std::string const &)*arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj1 = 0 ;
+  ampl::LicenseException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_LicenseException",&obj1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_LicenseException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_LicenseException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try {
+      result = (ampl::LicenseException *)new ampl::LicenseException((std::string const &)*arg1);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__LicenseException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LicenseException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::LicenseException *arg1 = (ampl::LicenseException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_LicenseException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__LicenseException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LicenseException" "', argument " "1"" of type '" "ampl::LicenseException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::LicenseException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj1 = 0 ;
+  ampl::FileIOException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_FileIOException",&obj1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FileIOException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FileIOException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try {
+      result = (ampl::FileIOException *)new ampl::FileIOException((std::string const &)*arg1);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__FileIOException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_FileIOException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::FileIOException *arg1 = (ampl::FileIOException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_FileIOException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__FileIOException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_FileIOException" "', argument " "1"" of type '" "ampl::FileIOException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::FileIOException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj1 = 0 ;
+  ampl::UnsupportedOperationException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_UnsupportedOperationException",&obj1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_UnsupportedOperationException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_UnsupportedOperationException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try {
+      result = (ampl::UnsupportedOperationException *)new ampl::UnsupportedOperationException((std::string const &)*arg1);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__UnsupportedOperationException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_UnsupportedOperationException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::UnsupportedOperationException *arg1 = (ampl::UnsupportedOperationException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_UnsupportedOperationException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__UnsupportedOperationException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_UnsupportedOperationException" "', argument " "1"" of type '" "ampl::UnsupportedOperationException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::UnsupportedOperationException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  int arg2 ;
+  int arg3 ;
+  fmt::CStringRef arg4 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  ampl::InvalidSubscriptException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_InvalidSubscriptException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  
+  arg1 = PyString_AsString(obj1);
+  
+  ecode2 = SWIG_AsVal_int(obj2, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_InvalidSubscriptException" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj3, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_InvalidSubscriptException" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  
+  arg4 = PyString_AsString(obj4);
+  
+  {
+    try {
+      result = (ampl::InvalidSubscriptException *)new ampl::InvalidSubscriptException(arg1,arg2,arg3,arg4);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__InvalidSubscriptException, SWIG_BUILTIN_INIT |  0 );
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_InvalidSubscriptException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::InvalidSubscriptException *arg1 = (ampl::InvalidSubscriptException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_InvalidSubscriptException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__InvalidSubscriptException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_InvalidSubscriptException" "', argument " "1"" of type '" "ampl::InvalidSubscriptException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::InvalidSubscriptException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  int arg2 ;
+  int arg3 ;
+  fmt::CStringRef arg4 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  ampl::SyntaxErrorException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_SyntaxErrorException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  
+  arg1 = PyString_AsString(obj1);
+  
+  ecode2 = SWIG_AsVal_int(obj2, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_SyntaxErrorException" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj3, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_SyntaxErrorException" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  
+  arg4 = PyString_AsString(obj4);
+  
+  {
+    try {
+      result = (ampl::SyntaxErrorException *)new ampl::SyntaxErrorException(arg1,arg2,arg3,arg4);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__SyntaxErrorException, SWIG_BUILTIN_INIT |  0 );
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_SyntaxErrorException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::SyntaxErrorException *arg1 = (ampl::SyntaxErrorException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_SyntaxErrorException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SyntaxErrorException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SyntaxErrorException" "', argument " "1"" of type '" "ampl::SyntaxErrorException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::SyntaxErrorException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  int arg2 ;
+  int arg3 ;
+  fmt::CStringRef arg4 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  ampl::NoDataException *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_NoDataException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  
+  arg1 = PyString_AsString(obj1);
+  
+  ecode2 = SWIG_AsVal_int(obj2, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_NoDataException" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj3, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_NoDataException" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  
+  arg4 = PyString_AsString(obj4);
+  
+  {
+    try {
+      result = (ampl::NoDataException *)new ampl::NoDataException(arg1,arg2,arg3,arg4);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__NoDataException, SWIG_BUILTIN_INIT |  0 );
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  return -1;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_NoDataException(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::NoDataException *arg1 = (ampl::NoDataException *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "delete_NoDataException takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__NoDataException, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_NoDataException" "', argument " "1"" of type '" "ampl::NoDataException *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::NoDataException * >(argp1);
+  {
+    try {
+      delete arg1;
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_SyntaxError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -30102,11 +36257,22 @@ SWIGINTERN int _wrap_new_ErrorHandler(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30144,11 +36310,22 @@ SWIGINTERN PyObject *_wrap_delete_ErrorHandler(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30207,11 +36384,22 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_error(PyObject *self, PyObject *args) {
       catch (std::range_error) {
         SWIG_exception(SWIG_ValueError, "Range Error");
       }
+      
       catch (ampl::AMPLException e) {
         SWIG_exception(SWIG_SyntaxError, e.what());
       }
       catch (std::logic_error e) {
-        SWIG_exception(SWIG_TypeError     , e.what());
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::UnsupportedOperationException e)
+      {
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::LicenseException e) {
+        SWIG_exception(SWIG_SystemError, e.what());
+      }
+      catch (ampl::FileIOException e) {
+        SWIG_exception(SWIG_IOError, e.what());
       }
       catch (std::runtime_error e) {
         SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30273,11 +36461,22 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_warning(PyObject *self, PyObject *args) 
       catch (std::range_error) {
         SWIG_exception(SWIG_ValueError, "Range Error");
       }
+      
       catch (ampl::AMPLException e) {
         SWIG_exception(SWIG_SyntaxError, e.what());
       }
       catch (std::logic_error e) {
-        SWIG_exception(SWIG_TypeError     , e.what());
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::UnsupportedOperationException e)
+      {
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::LicenseException e) {
+        SWIG_exception(SWIG_SystemError, e.what());
+      }
+      catch (ampl::FileIOException e) {
+        SWIG_exception(SWIG_IOError, e.what());
       }
       catch (std::runtime_error e) {
         SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30343,11 +36542,22 @@ SWIGINTERN PyObject *_wrap_delete_Runnable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30394,11 +36604,22 @@ SWIGINTERN PyObject *_wrap_Runnable_run(PyObject *self, PyObject *args) {
       catch (std::range_error) {
         SWIG_exception(SWIG_ValueError, "Range Error");
       }
+      
       catch (ampl::AMPLException e) {
         SWIG_exception(SWIG_SyntaxError, e.what());
       }
       catch (std::logic_error e) {
-        SWIG_exception(SWIG_TypeError     , e.what());
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::UnsupportedOperationException e)
+      {
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::LicenseException e) {
+        SWIG_exception(SWIG_SystemError, e.what());
+      }
+      catch (ampl::FileIOException e) {
+        SWIG_exception(SWIG_IOError, e.what());
       }
       catch (std::runtime_error e) {
         SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30441,11 +36662,22 @@ SWIGINTERN int _wrap_new_Runnable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30508,11 +36740,22 @@ SWIGINTERN PyObject *_wrap_delete_OutputHandler(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30578,11 +36821,22 @@ SWIGINTERN PyObject *_wrap_OutputHandler_output(PyObject *self, PyObject *args) 
       catch (std::range_error) {
         SWIG_exception(SWIG_ValueError, "Range Error");
       }
+      
       catch (ampl::AMPLException e) {
         SWIG_exception(SWIG_SyntaxError, e.what());
       }
       catch (std::logic_error e) {
-        SWIG_exception(SWIG_TypeError     , e.what());
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::UnsupportedOperationException e)
+      {
+        SWIG_exception(SWIG_TypeError, e.what());
+      }
+      catch (ampl::LicenseException e) {
+        SWIG_exception(SWIG_SystemError, e.what());
+      }
+      catch (ampl::FileIOException e) {
+        SWIG_exception(SWIG_IOError, e.what());
       }
       catch (std::runtime_error e) {
         SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30627,11 +36881,22 @@ SWIGINTERN int _wrap_new_OutputHandler(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30687,11 +36952,22 @@ SWIGINTERN int _wrap_new_EnvironmentIterator(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30729,11 +37005,22 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIterator(PyObject *self, PyObject *
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30764,11 +37051,22 @@ SWIGINTERN int _wrap_new_Environment__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30811,11 +37109,22 @@ SWIGINTERN int _wrap_new_Environment__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30866,11 +37175,22 @@ SWIGINTERN PyObject *_wrap_Environment_Clone(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30906,11 +37226,22 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -30990,11 +37321,22 @@ SWIGINTERN PyObject *_wrap_delete_Environment(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31042,11 +37384,22 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31089,11 +37442,22 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31132,11 +37496,22 @@ SWIGINTERN PyObject *_wrap_Environment_getBinDir(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31175,11 +37550,22 @@ SWIGINTERN PyObject *_wrap_Environment_toString(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31218,11 +37604,22 @@ SWIGINTERN PyObject *_wrap_Environment_begin(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31261,11 +37658,22 @@ SWIGINTERN PyObject *_wrap_Environment_end(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31309,11 +37717,22 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31364,11 +37783,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_equals(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31419,11 +37849,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_differs(PyObject *self, P
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31474,11 +37915,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_Clone(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31517,11 +37969,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrement(PyObject *s
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31569,11 +38032,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrementBy(PyObject 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31612,11 +38086,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_first(PyObject *self, PyO
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31655,11 +38140,22 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_second(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31697,11 +38193,22 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIteratorTemplate(PyObject *self, Py
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31732,11 +38239,22 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31779,11 +38297,22 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31854,11 +38383,22 @@ SWIGINTERN PyObject *_wrap_delete_AMPL(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31902,11 +38442,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31950,11 +38501,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -31998,11 +38560,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32046,11 +38619,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32094,11 +38678,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32142,11 +38737,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32189,11 +38795,22 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32231,11 +38848,22 @@ SWIGINTERN PyObject *_wrap_AMPL_reset(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32273,11 +38901,22 @@ SWIGINTERN PyObject *_wrap_AMPL_close(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32316,11 +38955,22 @@ SWIGINTERN PyObject *_wrap_AMPL_isRunning(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32359,11 +39009,22 @@ SWIGINTERN PyObject *_wrap_AMPL_isBusy(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32401,11 +39062,22 @@ SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32457,11 +39129,22 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32513,11 +39196,22 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32569,11 +39263,22 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32620,11 +39325,22 @@ SWIGINTERN PyObject *_wrap_AMPL_solveAsync(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32662,11 +39378,22 @@ SWIGINTERN PyObject *_wrap_AMPL_interrupt(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32705,11 +39432,22 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_0(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32753,11 +39491,22 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32851,11 +39600,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32899,11 +39659,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -32947,11 +39718,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33003,11 +39785,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33051,11 +39844,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33107,11 +39911,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33155,11 +39970,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33211,11 +40037,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33258,11 +40095,22 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33305,11 +40153,22 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33353,11 +40212,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33412,11 +40282,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33466,11 +40347,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_1(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33563,11 +40455,22 @@ SWIGINTERN PyObject *_wrap_AMPL_toString(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33610,11 +40513,22 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33657,11 +40571,22 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33716,11 +40641,22 @@ SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33775,11 +40711,22 @@ SWIGINTERN PyObject *_wrap_AMPL_show(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33834,11 +40781,22 @@ SWIGINTERN PyObject *_wrap_AMPL_expand(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33885,11 +40843,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setOutputHandler(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33936,11 +40905,22 @@ SWIGINTERN PyObject *_wrap_AMPL_setErrorHandler(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -33980,11 +40960,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutputHandler(PyObject *self, PyObject *args)
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34030,11 +41021,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getErrorHandler(PyObject *self, PyObject *args) 
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34079,11 +41081,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariables(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34122,11 +41135,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraints(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34165,11 +41189,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjectives(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34208,11 +41243,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getSets(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34251,11 +41297,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameters(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34330,11 +41387,22 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34416,11 +41484,22 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
     }
+    
     catch (ampl::AMPLException e) {
       SWIG_exception(SWIG_SyntaxError, e.what());
     }
     catch (std::logic_error e) {
-      SWIG_exception(SWIG_TypeError     , e.what());
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
     }
     catch (std::runtime_error e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
@@ -34904,6 +41983,228 @@ static PyHeapTypeObject SwigPyBuiltin__ampl__StringRefArray_type = {
 };
 
 SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__StringRefArray_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__StringRefArray_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_runtime_error)
+static SwigPyGetSet runtime_error___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__std__runtime_error_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"std::runtime_error.__dict__", (void*) &runtime_error___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__std__runtime_error_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__std__runtime_error_methods[] = {
+  { "what", (PyCFunction) _wrap_runtime_error_what, METH_VARARGS, (char*) "" },
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__std__runtime_error_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.runtime_error",               /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_runtime_error_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__std__runtime_error_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__std__runtime_error_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__std__runtime_error_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__std__runtime_error_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "std::runtime_error",                     /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__std__runtime_error_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__std__runtime_error_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__std__runtime_error_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) SwigPyBuiltin_BadInit,         /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__std__runtime_error_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__std__runtime_error_type};
 
 SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_VariantArray)
 static SwigPyGetSet VariantArray_el_getset = { _wrap_VariantArray_el_get, _wrap_VariantArray_el_set };
@@ -38357,6 +45658,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Instance_methods[] = {
   { "toString", (PyCFunction) _wrap_Instance_toString, METH_VARARGS, (char*) "" },
   { "name", (PyCFunction) _wrap_Instance_name, METH_VARARGS, (char*) "" },
   { "entity", (PyCFunction) _wrap_Instance_entity, METH_VARARGS, (char*) "" },
+  { "key", (PyCFunction) _wrap_Instance_key, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -47529,6 +54831,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPLException_methods[] = {
   { "getLineNumber", (PyCFunction) _wrap_AMPLException_getLineNumber, METH_VARARGS, (char*) "" },
   { "getOffset", (PyCFunction) _wrap_AMPLException_getOffset, METH_VARARGS, (char*) "" },
   { "getMessage", (PyCFunction) _wrap_AMPLException_getMessage, METH_VARARGS, (char*) "" },
+  { "setSourceName", (PyCFunction) _wrap_AMPLException_setSourceName, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -47721,6 +55024,1332 @@ static PyHeapTypeObject SwigPyBuiltin__ampl__AMPLException_type = {
 };
 
 SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__AMPLException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__AMPLException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_LicenseException)
+static SwigPyGetSet LicenseException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__LicenseException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::LicenseException.__dict__", (void*) &LicenseException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__LicenseException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__LicenseException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__LicenseException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.LicenseException",            /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_LicenseException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__LicenseException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__LicenseException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__LicenseException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__LicenseException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::LicenseException",                 /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__LicenseException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__LicenseException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__LicenseException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_LicenseException,    /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__LicenseException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__LicenseException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_FileIOException)
+static SwigPyGetSet FileIOException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__FileIOException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::FileIOException.__dict__", (void*) &FileIOException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__FileIOException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__FileIOException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__FileIOException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.FileIOException",             /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_FileIOException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__FileIOException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__FileIOException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__FileIOException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__FileIOException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::FileIOException",                  /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__FileIOException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__FileIOException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__FileIOException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_FileIOException,     /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__FileIOException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__FileIOException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_UnsupportedOperationException)
+static SwigPyGetSet UnsupportedOperationException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__UnsupportedOperationException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::UnsupportedOperationException.__dict__", (void*) &UnsupportedOperationException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__UnsupportedOperationException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__UnsupportedOperationException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__UnsupportedOperationException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.UnsupportedOperationException", /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_UnsupportedOperationException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__UnsupportedOperationException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__UnsupportedOperationException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__UnsupportedOperationException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__UnsupportedOperationException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::UnsupportedOperationException",    /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__UnsupportedOperationException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__UnsupportedOperationException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__UnsupportedOperationException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_UnsupportedOperationException, /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__UnsupportedOperationException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__UnsupportedOperationException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_InvalidSubscriptException)
+static SwigPyGetSet InvalidSubscriptException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__InvalidSubscriptException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::InvalidSubscriptException.__dict__", (void*) &InvalidSubscriptException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__InvalidSubscriptException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__InvalidSubscriptException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__InvalidSubscriptException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.InvalidSubscriptException",   /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_InvalidSubscriptException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__InvalidSubscriptException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__InvalidSubscriptException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__InvalidSubscriptException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__InvalidSubscriptException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::InvalidSubscriptException",        /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__InvalidSubscriptException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__InvalidSubscriptException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__InvalidSubscriptException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_InvalidSubscriptException, /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__InvalidSubscriptException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__InvalidSubscriptException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_SyntaxErrorException)
+static SwigPyGetSet SyntaxErrorException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__SyntaxErrorException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::SyntaxErrorException.__dict__", (void*) &SyntaxErrorException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__SyntaxErrorException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__SyntaxErrorException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__SyntaxErrorException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.SyntaxErrorException",        /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_SyntaxErrorException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__SyntaxErrorException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__SyntaxErrorException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__SyntaxErrorException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__SyntaxErrorException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::SyntaxErrorException",             /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__SyntaxErrorException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__SyntaxErrorException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__SyntaxErrorException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_SyntaxErrorException, /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__SyntaxErrorException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__SyntaxErrorException_type};
+
+SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_NoDataException)
+static SwigPyGetSet NoDataException___dict___getset = { SwigPyObject_get___dict__, 0 };
+SWIGINTERN PyGetSetDef SwigPyBuiltin__ampl__NoDataException_getset[] = {
+    { (char*) "__dict__", (getter) SwigPyBuiltin_GetterClosure, (setter) 0, (char*)"ampl::NoDataException.__dict__", (void*) &NoDataException___dict___getset }
+,
+    {NULL, NULL, NULL, NULL, NULL} /* Sentinel */
+};
+
+SWIGINTERN PyObject *
+SwigPyBuiltin__ampl__NoDataException_richcompare(PyObject *self, PyObject *other, int op) {
+  PyObject *result = NULL;
+  PyObject *tuple = PyTuple_New(1);
+  assert(tuple);
+  PyTuple_SET_ITEM(tuple, 0, other);
+  Py_XINCREF(other);
+  if (!result) {
+    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
+      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
+    } else {
+      result = Py_NotImplemented;
+      Py_INCREF(result);
+    }
+  }
+  Py_DECREF(tuple);
+  return result;
+}
+
+SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__NoDataException_methods[] = {
+  { NULL, NULL, 0, NULL } /* Sentinel */
+};
+
+static PyHeapTypeObject SwigPyBuiltin__ampl__NoDataException_type = {
+  {
+#if PY_VERSION_HEX >= 0x03000000
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
+    PyObject_HEAD_INIT(NULL)
+    0,                                        /* ob_size */
+#endif
+    "amplpython.NoDataException",             /* tp_name */
+    sizeof(SwigPyObject),                     /* tp_basicsize */
+    0,                                        /* tp_itemsize */
+    (destructor) _wrap_delete_NoDataException_closure, /* tp_dealloc */
+    (printfunc) 0,                            /* tp_print */
+    (getattrfunc) 0,                          /* tp_getattr */
+    (setattrfunc) 0,                          /* tp_setattr */
+#if PY_VERSION_HEX >= 0x03000000
+    0,                                        /* tp_compare */
+#else
+    (cmpfunc) 0,                              /* tp_compare */
+#endif
+    (reprfunc) 0,                             /* tp_repr */
+    &SwigPyBuiltin__ampl__NoDataException_type.as_number,      /* tp_as_number */
+    &SwigPyBuiltin__ampl__NoDataException_type.as_sequence,    /* tp_as_sequence */
+    &SwigPyBuiltin__ampl__NoDataException_type.as_mapping,     /* tp_as_mapping */
+    (hashfunc) 0,                             /* tp_hash */
+    (ternaryfunc) 0,                          /* tp_call */
+    (reprfunc) 0,                             /* tp_str */
+    (getattrofunc) 0,                         /* tp_getattro */
+    (setattrofunc) 0,                         /* tp_setattro */
+    &SwigPyBuiltin__ampl__NoDataException_type.as_buffer,      /* tp_as_buffer */
+#if PY_VERSION_HEX >= 0x03000000
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE,   /* tp_flags */
+#else
+    Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES, /* tp_flags */
+#endif
+    "ampl::NoDataException",                  /* tp_doc */
+    (traverseproc) 0,                         /* tp_traverse */
+    (inquiry) 0,                              /* tp_clear */
+    (richcmpfunc) SwigPyBuiltin__ampl__NoDataException_richcompare, /* feature:python:tp_richcompare */
+    0,                                        /* tp_weaklistoffset */
+    (getiterfunc) 0,                          /* tp_iter */
+    (iternextfunc) 0,                         /* tp_iternext */
+    SwigPyBuiltin__ampl__NoDataException_methods, /* tp_methods */
+    0,                                        /* tp_members */
+    SwigPyBuiltin__ampl__NoDataException_getset, /* tp_getset */
+    0,                                        /* tp_base */
+    0,                                        /* tp_dict */
+    (descrgetfunc) 0,                         /* tp_descr_get */
+    (descrsetfunc) 0,                         /* tp_descr_set */
+    (Py_ssize_t)offsetof(SwigPyObject, dict), /* tp_dictoffset */
+    (initproc) _wrap_new_NoDataException,     /* tp_init */
+    (allocfunc) 0,                            /* tp_alloc */
+    (newfunc) 0,                              /* tp_new */
+    (freefunc) 0,                             /* tp_free */
+    (inquiry) 0,                              /* tp_is_gc */
+    (PyObject*) 0,                            /* tp_bases */
+    (PyObject*) 0,                            /* tp_mro */
+    (PyObject*) 0,                            /* tp_cache */
+    (PyObject*) 0,                            /* tp_subclasses */
+    (PyObject*) 0,                            /* tp_weaklist */
+    (destructor) 0,                           /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+    (int) 0,                                  /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    (destructor) 0,                           /* tp_finalize */
+#endif
+#ifdef COUNT_ALLOCS
+    (Py_ssize_t) 0,                           /* tp_allocs */
+    (Py_ssize_t) 0,                           /* tp_frees */
+    (Py_ssize_t) 0,                           /* tp_maxalloc */
+#if PY_VERSION_HEX >= 0x02050000
+    (struct _typeobject*) 0,                  /* tp_prev */
+#endif
+    (struct _typeobject*) 0,                  /* tp_next */
+#endif
+  },
+#if PY_VERSION_HEX >= 0x03050000
+  {
+    (unaryfunc) 0,                            /* am_await */
+    (unaryfunc) 0,                            /* am_aiter */
+    (unaryfunc) 0,                            /* am_anext */
+  },
+#endif
+  {
+    (binaryfunc) 0,                           /* nb_add */
+    (binaryfunc) 0,                           /* nb_subtract */
+    (binaryfunc) 0,                           /* nb_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_remainder */
+    (binaryfunc) 0,                           /* nb_divmod */
+    (ternaryfunc) 0,                          /* nb_power */
+    (unaryfunc) 0,                            /* nb_negative */
+    (unaryfunc) 0,                            /* nb_positive */
+    (unaryfunc) 0,                            /* nb_absolute */
+    (inquiry) 0,                              /* nb_nonzero */
+    (unaryfunc) 0,                            /* nb_invert */
+    (binaryfunc) 0,                           /* nb_lshift */
+    (binaryfunc) 0,                           /* nb_rshift */
+    (binaryfunc) 0,                           /* nb_and */
+    (binaryfunc) 0,                           /* nb_xor */
+    (binaryfunc) 0,                           /* nb_or */
+#if PY_VERSION_HEX < 0x03000000
+    (coercion) 0,                             /* nb_coerce */
+#endif
+    (unaryfunc) 0,                            /* nb_int */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* nb_reserved */
+#else
+    (unaryfunc) 0,                            /* nb_long */
+#endif
+    (unaryfunc) 0,                            /* nb_float */
+#if PY_VERSION_HEX < 0x03000000
+    (unaryfunc) 0,                            /* nb_oct */
+    (unaryfunc) 0,                            /* nb_hex */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_add */
+    (binaryfunc) 0,                           /* nb_inplace_subtract */
+    (binaryfunc) 0,                           /* nb_inplace_multiply */
+#if PY_VERSION_HEX < 0x03000000
+    (binaryfunc) 0,                           /* nb_inplace_divide */
+#endif
+    (binaryfunc) 0,                           /* nb_inplace_remainder */
+    (ternaryfunc) 0,                          /* nb_inplace_power */
+    (binaryfunc) 0,                           /* nb_inplace_lshift */
+    (binaryfunc) 0,                           /* nb_inplace_rshift */
+    (binaryfunc) 0,                           /* nb_inplace_and */
+    (binaryfunc) 0,                           /* nb_inplace_xor */
+    (binaryfunc) 0,                           /* nb_inplace_or */
+    (binaryfunc) 0,                           /* nb_floor_divide */
+    (binaryfunc) 0,                           /* nb_true_divide */
+    (binaryfunc) 0,                           /* nb_inplace_floor_divide */
+    (binaryfunc) 0,                           /* nb_inplace_true_divide */
+#if PY_VERSION_HEX >= 0x02050000
+    (unaryfunc) 0,                            /* nb_index */
+#endif
+#if PY_VERSION_HEX >= 0x03050000
+    (binaryfunc) 0,                           /* nb_matrix_multiply */
+    (binaryfunc) 0,                           /* nb_inplace_matrix_multiply */
+#endif
+  },
+  {
+    (lenfunc) 0,                              /* mp_length */
+    (binaryfunc) 0,                           /* mp_subscript */
+    (objobjargproc) 0,                        /* mp_ass_subscript */
+  },
+  {
+    (lenfunc) 0,                              /* sq_length */
+    (binaryfunc) 0,                           /* sq_concat */
+    (ssizeargfunc) 0,                         /* sq_repeat */
+    (ssizeargfunc) 0,                         /* sq_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_slice */
+#else
+    (ssizessizeargfunc) 0,                    /* sq_slice */
+#endif
+    (ssizeobjargproc) 0,                      /* sq_ass_item */
+#if PY_VERSION_HEX >= 0x03000000
+    (void*) 0,                                /* was_sq_ass_slice */
+#else
+    (ssizessizeobjargproc) 0,                 /* sq_ass_slice */
+#endif
+    (objobjproc) 0,                           /* sq_contains */
+    (binaryfunc) 0,                           /* sq_inplace_concat */
+    (ssizeargfunc) 0,                         /* sq_inplace_repeat */
+  },
+  {
+#if PY_VERSION_HEX < 0x03000000
+    (readbufferproc) 0,                       /* bf_getreadbuffer */
+    (writebufferproc) 0,                      /* bf_getwritebuffer */
+    (segcountproc) 0,                         /* bf_getsegcount */
+    (charbufferproc) 0,                       /* bf_getcharbuffer */
+#endif
+#if PY_VERSION_HEX >= 0x02060000
+    (getbufferproc) 0,                        /* bf_getbuffer */
+    (releasebufferproc) 0,                    /* bf_releasebuffer */
+#endif
+  },
+    (PyObject*) 0,                            /* ht_name */
+    (PyObject*) 0,                            /* ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+    (PyObject*) 0,                            /* ht_qualname */
+    (struct _dictkeysobject*) 0,              /* ht_cached_keys */
+#endif
+};
+
+SWIGINTERN SwigPyClientData SwigPyBuiltin__ampl__NoDataException_clientdata = {0, 0, 0, 0, 0, 0, (PyTypeObject *)&SwigPyBuiltin__ampl__NoDataException_type};
 
 SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_ErrorHandler)
 static SwigPyGetSet ErrorHandler___dict___getset = { SwigPyObject_get___dict__, 0 };
@@ -49394,8 +58023,35 @@ static void *_p_ampl__BasicEntityT_ampl__VariantRef_tTo_p_ampl__Entity(void *x, 
 static void *_p_ampl__ObjectiveTo_p_ampl__Entity(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ampl::Entity *) (ampl::BasicEntity< ampl::ObjectiveInstance > *) ((ampl::Objective *) x));
 }
+static void *_p_ampl__InvalidSubscriptExceptionTo_p_ampl__AMPLException(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ampl::AMPLException *)  ((ampl::InvalidSubscriptException *) x));
+}
+static void *_p_ampl__SyntaxErrorExceptionTo_p_ampl__AMPLException(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ampl::AMPLException *)  ((ampl::SyntaxErrorException *) x));
+}
+static void *_p_ampl__NoDataExceptionTo_p_ampl__AMPLException(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ampl::AMPLException *)  ((ampl::NoDataException *) x));
+}
 static void *_p_ampl__AMPLExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((std::runtime_error *)  ((ampl::AMPLException *) x));
+}
+static void *_p_ampl__LicenseExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *)  ((ampl::LicenseException *) x));
+}
+static void *_p_ampl__FileIOExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *)  ((ampl::FileIOException *) x));
+}
+static void *_p_ampl__UnsupportedOperationExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *)  ((ampl::UnsupportedOperationException *) x));
+}
+static void *_p_ampl__InvalidSubscriptExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *) (ampl::AMPLException *) ((ampl::InvalidSubscriptException *) x));
+}
+static void *_p_ampl__SyntaxErrorExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *) (ampl::AMPLException *) ((ampl::SyntaxErrorException *) x));
+}
+static void *_p_ampl__NoDataExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((std::runtime_error *) (ampl::AMPLException *) ((ampl::NoDataException *) x));
 }
 static void *_p_ampl__SetInstanceTo_p_ampl__Instance(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ampl::Instance *)  ((ampl::SetInstance *) x));
@@ -49448,7 +58104,11 @@ static swig_type_info _swigt__p_ampl__EntityMapT_ampl__Variable_t = {"_p_ampl__E
 static swig_type_info _swigt__p_ampl__EntityMapT_ampl__Variable_t__iterator = {"_p_ampl__EntityMapT_ampl__Variable_t__iterator", "ampl::EntityMap< ampl::Variable >::iterator *", 0, 0, (void*)&SwigPyBuiltin__ampl__EntityMapT_ampl__Variable_t__iterator_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Environment = {"_p_ampl__Environment", "ampl::Environment *", 0, 0, (void*)&SwigPyBuiltin__ampl__Environment_clientdata, 0};
 static swig_type_info _swigt__p_ampl__ErrorHandler = {"_p_ampl__ErrorHandler", "ampl::ErrorHandler *", 0, 0, (void*)&SwigPyBuiltin__ampl__ErrorHandler_clientdata, 0};
+static swig_type_info _swigt__p_ampl__FileIOException = {"_p_ampl__FileIOException", "ampl::FileIOException *", 0, 0, (void*)&SwigPyBuiltin__ampl__FileIOException_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Instance = {"_p_ampl__Instance", "ampl::Instance *", 0, 0, (void*)&SwigPyBuiltin__ampl__Instance_clientdata, 0};
+static swig_type_info _swigt__p_ampl__InvalidSubscriptException = {"_p_ampl__InvalidSubscriptException", "ampl::InvalidSubscriptException *", 0, 0, (void*)&SwigPyBuiltin__ampl__InvalidSubscriptException_clientdata, 0};
+static swig_type_info _swigt__p_ampl__LicenseException = {"_p_ampl__LicenseException", "ampl::LicenseException *", 0, 0, (void*)&SwigPyBuiltin__ampl__LicenseException_clientdata, 0};
+static swig_type_info _swigt__p_ampl__NoDataException = {"_p_ampl__NoDataException", "ampl::NoDataException *", 0, 0, (void*)&SwigPyBuiltin__ampl__NoDataException_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Objective = {"_p_ampl__Objective", "ampl::Objective *", 0, 0, (void*)&SwigPyBuiltin__ampl__Objective_clientdata, 0};
 static swig_type_info _swigt__p_ampl__ObjectiveInstance = {"_p_ampl__ObjectiveInstance", "ampl::internal::EntityWrapper< ampl::ObjectiveInstance >::InstanceType *|ampl::ObjectiveInstance *", 0, 0, (void*)&SwigPyBuiltin__ampl__ObjectiveInstance_clientdata, 0};
 static swig_type_info _swigt__p_ampl__OptionalT_bool_t = {"_p_ampl__OptionalT_bool_t", "ampl::Optional< bool > *", 0, 0, (void*)&SwigPyBuiltin__ampl__OptionalT_bool_t_clientdata, 0};
@@ -49464,8 +58124,10 @@ static swig_type_info _swigt__p_ampl__SetInstance__MemberRange = {"_p_ampl__SetI
 static swig_type_info _swigt__p_ampl__SetInstance__MemberRange__iterator = {"_p_ampl__SetInstance__MemberRange__iterator", "ampl::SetInstance::MemberRange::iterator *", 0, 0, (void*)&SwigPyBuiltin__ampl__SetInstance__MemberRange__iterator_clientdata, 0};
 static swig_type_info _swigt__p_ampl__StringArray = {"_p_ampl__StringArray", "ampl::StringArray *", 0, 0, (void*)&SwigPyBuiltin__ampl__StringArray_clientdata, 0};
 static swig_type_info _swigt__p_ampl__StringRefArray = {"_p_ampl__StringRefArray", "ampl::StringRefArray *", 0, 0, (void*)&SwigPyBuiltin__ampl__StringRefArray_clientdata, 0};
+static swig_type_info _swigt__p_ampl__SyntaxErrorException = {"_p_ampl__SyntaxErrorException", "ampl::SyntaxErrorException *", 0, 0, (void*)&SwigPyBuiltin__ampl__SyntaxErrorException_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Tuple = {"_p_ampl__Tuple", "ampl::Tuple *", 0, 0, (void*)&SwigPyBuiltin__ampl__Tuple_clientdata, 0};
 static swig_type_info _swigt__p_ampl__TupleRef = {"_p_ampl__TupleRef", "ampl::internal::EntityWrapper< ampl::VariableInstance >::KeyType *|ampl::internal::EntityWrapper< ampl::ConstraintInstance >::KeyType *|ampl::internal::EntityWrapper< ampl::ObjectiveInstance >::KeyType *|ampl::TupleRef *|ampl::internal::EntityWrapper< ampl::VariantRef >::KeyType *|ampl::internal::EntityWrapper< ampl::SetInstance >::KeyType *", 0, 0, (void*)&SwigPyBuiltin__ampl__TupleRef_clientdata, 0};
+static swig_type_info _swigt__p_ampl__UnsupportedOperationException = {"_p_ampl__UnsupportedOperationException", "ampl::UnsupportedOperationException *", 0, 0, (void*)&SwigPyBuiltin__ampl__UnsupportedOperationException_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Variable = {"_p_ampl__Variable", "ampl::Variable *", 0, 0, (void*)&SwigPyBuiltin__ampl__Variable_clientdata, 0};
 static swig_type_info _swigt__p_ampl__VariableInstance = {"_p_ampl__VariableInstance", "ampl::internal::EntityWrapper< ampl::VariableInstance >::InstanceType *|ampl::VariableInstance *", 0, 0, (void*)&SwigPyBuiltin__ampl__VariableInstance_clientdata, 0};
 static swig_type_info _swigt__p_ampl__Variant = {"_p_ampl__Variant", "ampl::Variant *", 0, 0, (void*)&SwigPyBuiltin__ampl__Variant_clientdata, 0};
@@ -49490,7 +58152,7 @@ static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_iterator = {"_p_iterator", "iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__runtime_error = {"_p_std__runtime_error", "std::runtime_error *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__runtime_error = {"_p_std__runtime_error", "std::runtime_error *", 0, 0, (void*)&SwigPyBuiltin__std__runtime_error_clientdata, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "std::size_t *|unsigned int *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
@@ -49527,7 +58189,11 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ampl__EntityMapT_ampl__Variable_t__iterator,
   &_swigt__p_ampl__Environment,
   &_swigt__p_ampl__ErrorHandler,
+  &_swigt__p_ampl__FileIOException,
   &_swigt__p_ampl__Instance,
+  &_swigt__p_ampl__InvalidSubscriptException,
+  &_swigt__p_ampl__LicenseException,
+  &_swigt__p_ampl__NoDataException,
   &_swigt__p_ampl__Objective,
   &_swigt__p_ampl__ObjectiveInstance,
   &_swigt__p_ampl__OptionalT_bool_t,
@@ -49543,8 +58209,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ampl__SetInstance__MemberRange__iterator,
   &_swigt__p_ampl__StringArray,
   &_swigt__p_ampl__StringRefArray,
+  &_swigt__p_ampl__SyntaxErrorException,
   &_swigt__p_ampl__Tuple,
   &_swigt__p_ampl__TupleRef,
+  &_swigt__p_ampl__UnsupportedOperationException,
   &_swigt__p_ampl__Variable,
   &_swigt__p_ampl__VariableInstance,
   &_swigt__p_ampl__Variant,
@@ -49583,7 +58251,7 @@ static swig_cast_info _swigc__p_TupleArray[] = {  {&_swigt__p_TupleArray, 0, 0, 
 static swig_cast_info _swigc__p_ValueType[] = {  {&_swigt__p_ValueType, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_VariantArray[] = {  {&_swigt__p_VariantArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__AMPL[] = {  {&_swigt__p_ampl__AMPL, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ampl__AMPLException[] = {  {&_swigt__p_ampl__AMPLException, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__AMPLException[] = {  {&_swigt__p_ampl__AMPLException, 0, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_ampl__AMPLException, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_ampl__AMPLException, 0, 0},  {&_swigt__p_ampl__NoDataException, _p_ampl__NoDataExceptionTo_p_ampl__AMPLException, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__ConstraintInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Constraint, _p_ampl__ConstraintTo_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__ObjectiveInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Objective, _p_ampl__ObjectiveTo_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__SetInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__SetInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Set, _p_ampl__SetTo_p_ampl__BasicEntityT_ampl__SetInstance_t, 0, 0},{0, 0, 0, 0}};
@@ -49606,7 +58274,11 @@ static swig_cast_info _swigc__p_ampl__EntityMapT_ampl__Variable_t[] = {  {&_swig
 static swig_cast_info _swigc__p_ampl__EntityMapT_ampl__Variable_t__iterator[] = {  {&_swigt__p_ampl__EntityMapT_ampl__Variable_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Environment[] = {  {&_swigt__p_ampl__Environment, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__ErrorHandler[] = {  {&_swigt__p_ampl__ErrorHandler, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__FileIOException[] = {  {&_swigt__p_ampl__FileIOException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Instance[] = {  {&_swigt__p_ampl__Instance, 0, 0, 0},  {&_swigt__p_ampl__SetInstance, _p_ampl__SetInstanceTo_p_ampl__Instance, 0, 0},  {&_swigt__p_ampl__ObjectiveInstance, _p_ampl__ObjectiveInstanceTo_p_ampl__Instance, 0, 0},  {&_swigt__p_ampl__VariableInstance, _p_ampl__VariableInstanceTo_p_ampl__Instance, 0, 0},  {&_swigt__p_ampl__ConstraintInstance, _p_ampl__ConstraintInstanceTo_p_ampl__Instance, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__InvalidSubscriptException[] = {  {&_swigt__p_ampl__InvalidSubscriptException, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__LicenseException[] = {  {&_swigt__p_ampl__LicenseException, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__NoDataException[] = {  {&_swigt__p_ampl__NoDataException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Objective[] = {  {&_swigt__p_ampl__Objective, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__ObjectiveInstance[] = {  {&_swigt__p_ampl__ObjectiveInstance, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__OptionalT_bool_t[] = {  {&_swigt__p_ampl__OptionalT_bool_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -49622,8 +58294,10 @@ static swig_cast_info _swigc__p_ampl__SetInstance__MemberRange[] = {  {&_swigt__
 static swig_cast_info _swigc__p_ampl__SetInstance__MemberRange__iterator[] = {  {&_swigt__p_ampl__SetInstance__MemberRange__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__StringArray[] = {  {&_swigt__p_ampl__StringArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__StringRefArray[] = {  {&_swigt__p_ampl__StringRefArray, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__SyntaxErrorException[] = {  {&_swigt__p_ampl__SyntaxErrorException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Tuple[] = {  {&_swigt__p_TupleArray, _p_TupleArrayTo_p_ampl__Tuple, 0, 0},  {&_swigt__p_ampl__Tuple, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__TupleRef[] = {  {&_swigt__p_ampl__TupleRef, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__UnsupportedOperationException[] = {  {&_swigt__p_ampl__UnsupportedOperationException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Variable[] = {  {&_swigt__p_ampl__Variable, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__VariableInstance[] = {  {&_swigt__p_ampl__VariableInstance, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__Variant[] = {  {&_swigt__p_VariantArray, _p_VariantArrayTo_p_ampl__Variant, 0, 0},  {&_swigt__p_ampl__Variant, 0, 0, 0},{0, 0, 0, 0}};
@@ -49648,7 +58322,7 @@ static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_iterator[] = {  {&_swigt__p_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__runtime_error[] = {  {&_swigt__p_std__runtime_error, 0, 0, 0},  {&_swigt__p_ampl__AMPLException, _p_ampl__AMPLExceptionTo_p_std__runtime_error, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__runtime_error[] = {  {&_swigt__p_std__runtime_error, 0, 0, 0},  {&_swigt__p_ampl__AMPLException, _p_ampl__AMPLExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__NoDataException, _p_ampl__NoDataExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__LicenseException, _p_ampl__LicenseExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__FileIOException, _p_ampl__FileIOExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__UnsupportedOperationException, _p_ampl__UnsupportedOperationExceptionTo_p_std__runtime_error, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
@@ -49685,7 +58359,11 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ampl__EntityMapT_ampl__Variable_t__iterator,
   _swigc__p_ampl__Environment,
   _swigc__p_ampl__ErrorHandler,
+  _swigc__p_ampl__FileIOException,
   _swigc__p_ampl__Instance,
+  _swigc__p_ampl__InvalidSubscriptException,
+  _swigc__p_ampl__LicenseException,
+  _swigc__p_ampl__NoDataException,
   _swigc__p_ampl__Objective,
   _swigc__p_ampl__ObjectiveInstance,
   _swigc__p_ampl__OptionalT_bool_t,
@@ -49701,8 +58379,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ampl__SetInstance__MemberRange__iterator,
   _swigc__p_ampl__StringArray,
   _swigc__p_ampl__StringRefArray,
+  _swigc__p_ampl__SyntaxErrorException,
   _swigc__p_ampl__Tuple,
   _swigc__p_ampl__TupleRef,
+  _swigc__p_ampl__UnsupportedOperationException,
   _swigc__p_ampl__Variable,
   _swigc__p_ampl__VariableInstance,
   _swigc__p_ampl__Variant,
@@ -50470,6 +59150,29 @@ SWIG_init(void) {
   Py_INCREF(builtin_pytype);
   PyModule_AddObject(m, "StringRefArray", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "StringRefArray");
+  d = md;
+  
+  /* type 'std::runtime_error' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__std__runtime_error_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'runtime_error'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "runtime_error", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "runtime_error");
   d = md;
   
   /* type '::VariantArray' */
@@ -51903,6 +60606,17 @@ SWIG_init(void) {
   SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
   builtin_pytype->tp_new = PyType_GenericNew;
   builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_std__runtime_error");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'AMPLException' as base 'std::runtime_error' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
   builtin_bases[builtin_base_count] = NULL;
   SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
   PyDict_SetItemString(d, "this", this_descr);
@@ -51918,6 +60632,210 @@ SWIG_init(void) {
   Py_INCREF(builtin_pytype);
   PyModule_AddObject(m, "AMPLException", (PyObject*) builtin_pytype);
   SwigPyBuiltin_AddPublicSymbol(public_interface, "AMPLException");
+  d = md;
+  
+  /* type 'ampl::LicenseException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__LicenseException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_std__runtime_error");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'LicenseException' as base 'std::runtime_error' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'LicenseException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "LicenseException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "LicenseException");
+  d = md;
+  
+  /* type 'ampl::FileIOException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__FileIOException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_std__runtime_error");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'FileIOException' as base 'std::runtime_error' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'FileIOException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "FileIOException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "FileIOException");
+  d = md;
+  
+  /* type 'ampl::UnsupportedOperationException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__UnsupportedOperationException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_std__runtime_error");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'UnsupportedOperationException' as base 'std::runtime_error' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'UnsupportedOperationException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "UnsupportedOperationException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "UnsupportedOperationException");
+  d = md;
+  
+  /* type 'ampl::InvalidSubscriptException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__InvalidSubscriptException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_ampl__AMPLException");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'InvalidSubscriptException' as base 'ampl::AMPLException' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'InvalidSubscriptException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "InvalidSubscriptException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "InvalidSubscriptException");
+  d = md;
+  
+  /* type 'ampl::SyntaxErrorException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__SyntaxErrorException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_ampl__AMPLException");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'SyntaxErrorException' as base 'ampl::AMPLException' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'SyntaxErrorException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "SyntaxErrorException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "SyntaxErrorException");
+  d = md;
+  
+  /* type 'ampl::NoDataException' */
+  builtin_pytype = (PyTypeObject *)&SwigPyBuiltin__ampl__NoDataException_type;
+  builtin_pytype->tp_dict = d = PyDict_New();
+  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
+  builtin_pytype->tp_new = PyType_GenericNew;
+  builtin_base_count = 0;
+  builtin_basetype = SWIG_MangledTypeQuery("_p_ampl__AMPLException");
+  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
+    builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
+  } else {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'NoDataException' as base 'ampl::AMPLException' has not been initialized.\n");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  builtin_bases[builtin_base_count] = NULL;
+  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);
+  PyDict_SetItemString(d, "this", this_descr);
+  PyDict_SetItemString(d, "thisown", thisown_descr);
+  if (PyType_Ready(builtin_pytype) < 0) {
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'NoDataException'.");
+#if PY_VERSION_HEX >= 0x03000000
+    return NULL;
+#else
+    return;
+#endif
+  }
+  Py_INCREF(builtin_pytype);
+  PyModule_AddObject(m, "NoDataException", (PyObject*) builtin_pytype);
+  SwigPyBuiltin_AddPublicSymbol(public_interface, "NoDataException");
   d = md;
   
   /* type 'ampl::ErrorHandler' */
