@@ -256,6 +256,9 @@ class DataFrame(BaseClass):
             d[key] = row[nindices:]
         return d
 
+    def toList(self):
+        return [tuple(self.getRowByIndex(i)) for i in range(self.getNumRows())]
+
     @classmethod
     def _fromDataFrameRef(cls, dfRef):
         return cls(None, None, _impl=dfRef)

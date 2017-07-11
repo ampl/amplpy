@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from threading import Thread, Lock
+from .errorhandler import ErrorHandler
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
@@ -108,13 +109,14 @@ class AMPL:
             statements: The display statements to be fetched.
 
         Raises:
-            AMPLException: if the AMPL visualization command does not succeed
+            RuntimeError: if the AMPL visualization command does not succeed
             for one of the reasons listed above.
 
         Returns:
             DataFrame capturing the output of the display
             command in tabular form.
         """
+        # FIXME: only works for the first statement.
         return DataFrame._fromDataFrameRef(
             self._impl.getData(list(statements), len(statements))
         )
@@ -128,7 +130,7 @@ class AMPL:
             name: Name of the entity.
 
         Raises:
-            OutOfRangeException: if the specified entity does not exist.
+            ValueError: if the specified entity does not exist.
 
         Returns:
             The AMPL entity with the specified name.
@@ -143,7 +145,7 @@ class AMPL:
             name: Name of the variable to be found.
 
         Raises:
-            OutOfRangeException: if the specified variable does not exist.
+            ValueError: if the specified variable does not exist.
         """
         return Variable(self._impl.getVariable(name))
 
@@ -155,7 +157,7 @@ class AMPL:
             name: Name of the constraint to be found.
 
         Raises:
-            OutOfRangeException: if the specified constraint does not exist.
+            ValueError: if the specified constraint does not exist.
         """
         return Constraint(self._impl.getConstraint(name))
 
@@ -167,7 +169,7 @@ class AMPL:
             name: Name of the objective to be found.
 
         Raises:
-            OutOfRangeException: if the specified objective does not exist.
+            ValueError: if the specified objective does not exist.
         """
         return Objective(self._impl.getObjective(name))
 
@@ -179,7 +181,7 @@ class AMPL:
             name: Name of the set to be found.
 
         Raises:
-            OutOfRangeException: if the specified set does not exist.
+            ValueError: if the specified set does not exist.
         """
         return Set(self._impl.getSet(name))
 
@@ -191,7 +193,7 @@ class AMPL:
             name: Name of the parameter to be found.
 
         Raises:
-            OutOfRangeException: if the specified parameter does not exist.
+            ValueError: if the specified parameter does not exist.
         """
         return Parameter(self._impl.getParameter(name))
 
@@ -228,7 +230,7 @@ class AMPL:
         Clears all entities in the underlying AMPL interpreter, clears all maps
         and invalidates all entities.
         """
-        self.eval("reset;")
+        self.eval('reset;')
         # self._impl.reset()  # FIXME: causes Segmentation fault
 
     def close(self):
@@ -243,13 +245,13 @@ class AMPL:
         """
         Returns true if the underlying engine is running.
         """
-        self._impl.isRunning()
+        return self._impl.isRunning()
 
     def isBusy(self):
         """
         Returns true if the underlying engine is doing an async operation.
         """
-        self._impl.isBusy()
+        return self._impl.isBusy()
 
     def solve(self):
         """
@@ -379,12 +381,12 @@ class AMPL:
 
             TypeError: if the value has an invalid type.
         """
-        if isinstance(value, int):
+        if isinstance(value, bool):
+            return self._impl.setBoolOption(name, value)
+        elif isinstance(value, int):
             return self._impl.setIntOption(name, value)
         elif isinstance(value, float):
-            return self._impl.setIntOption(name, value)
-        elif isinstance(value, bool):
-            return self._impl.setBoolOption(name, value)
+            return self._impl.setDblOption(name, value)
         elif isinstance(value, basestring):
             return self._impl.setOption(name, value)
         else:
