@@ -9,27 +9,31 @@ class AMPLException(amplpython.AMPLException):
     """
     def __init__(self, _impl):
         self._impl = _impl
+        self.sourceName = _impl.getSourceName()
+        self.lineNumber = _impl.getLineNumber()
+        self.offset = _impl.getOffset()
+        self.message = _impl.getMessage()
 
     def getSourceName(self):
         """
         Get the name of the file where the error was detected.
         """
-        return self._impl.getSourceName()
+        return self.sourceName
 
     def getLineNumber(self):
         """
         Get the row where the error is located.
         """
-        return self._impl.getLineNumber()
+        return self.lineNumber
 
     def getOffset(self):
         """
         Get the offset where the error is located.
         """
-        return self._impl.getOffset()
+        return self.offset
 
     def getMessage(self):
         """
         Get the error message.
         """
-        return self._impl.getMessage()
+        return self.message

@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 from threading import Thread, Lock
 from .errorhandler import ErrorHandler
+from .outputhandler import OutputHandler
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
@@ -9,6 +10,7 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityIterator
+from .exceptions import AMPLException
 from .entity import Entity
 from .utils import Utils
 from . import amplpython
@@ -534,8 +536,13 @@ class AMPL:
             outputhandler: The function handling the AMPL output derived from
             interpreting user commands.
         """
+        class OutputHandlerInternal(OutputHandler):
+            def output(self, kind, msg):
+                outputhandler.output(kind, msg)
+
         self._outputhandler = outputhandler
-        self._impl.setOutputHandler(outputhandler)
+        self._outputhandler_internal = OutputHandlerInternal()
+        self._impl.setOutputHandler(self._outputhandler_internal)
 
     def setErrorHandler(self, errorhandler):
         """
@@ -544,8 +551,20 @@ class AMPL:
         Args:
             errorhandler: The object handling AMPL errors and warnings.
         """
+        class InternalErrorHandler(ErrorHandler):
+            def error(self, exception):
+                if isinstance(exception, amplpython.AMPLException):
+                    exception = AMPLException(exception)
+                errorhandler.error(exception)
+
+            def warning(self, exception):
+                if isinstance(exception, amplpython.AMPLException):
+                    exception = AMPLException(exception)
+                errorhandler.warning(exception)
+
         self._errorhandler = errorhandler
-        self._impl.setErrorHandler(errorhandler)
+        self._errorhandler_internal = InternalErrorHandler()
+        self._impl.setErrorHandler(self._errorhandler_internal)
 
     def getOutputHandler(self):
         """
@@ -554,7 +573,6 @@ class AMPL:
         Returns:
             The current output handler.
         """
-        self._outputhandler = self._impl.getOutputHandler()
         return self._outputhandler
 
     def getErrorHandler(self):
@@ -564,7 +582,6 @@ class AMPL:
         Returns:
             The current error handler.
         """
-        self._errorhandler = self._impl.getErrorHandler()
         return self._errorhandler
 
     def getVariables(self):

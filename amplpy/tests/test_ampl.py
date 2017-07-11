@@ -84,19 +84,28 @@ class TestAMPL(TestBase.TestBase):
         ampl = self.ampl
 
         class MyOutputHandler(amplpy.OutputHandler):
+            def __init__(self):
+                self.lastmsg = None
+
             def output(self, kind, msg):
                 if kind == amplpy.Kind.DISPLAY:
                     print('Display: |{}|'.format(msg))
                 self.lastmsg = msg
 
         class MyErrorHandler(amplpy.ErrorHandler):
+            def __init__(self):
+                self.lastError = None
+                self.lastWarning = None
+
             def error(self, exception):
+                print(type(exception))
                 print('Error:', exception.getMessage())
-                self.lastError = exception.getMessage()
+                self.lastError = exception
 
             def warning(self, exception):
+                print(type(exception))
                 print('Warning:', exception.getMessage())
-                self.lastWarning = exception.getMessage()
+                self.lastWarning = exception
 
         outputHandler = MyOutputHandler()
         ampl.setOutputHandler(outputHandler)
@@ -110,13 +119,25 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue('3 = 3' in outputHandler.lastmsg)
         ampl.eval('display X;')
         self.assertEqual(
-            str(errorHandler.lastWarning),
+            str(errorHandler.lastWarning.getMessage()),
             'X is not defined'
         )
         ampl.eval('diy X;')
         self.assertEqual(
-            str(errorHandler.lastError),
+            str(errorHandler.lastError.getMessage()),
             'syntax error'
+        )
+        self.assertTrue(
+            isinstance(errorHandler.lastWarning.getSourceName(), basestring)
+        )
+        self.assertTrue(
+            isinstance(errorHandler.lastWarning.getLineNumber(), int)
+        )
+        self.assertTrue(
+            isinstance(errorHandler.lastWarning.getOffset(), int)
+        )
+        self.assertTrue(
+            isinstance(errorHandler.lastWarning.getMessage(), basestring)
         )
 
 
