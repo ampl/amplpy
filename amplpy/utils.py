@@ -4,6 +4,18 @@ from . import amplpython
 from .base import BaseClass
 
 
+def lock_call(call, lock):
+    lock.acquire()
+    try:
+        result = call()
+    except Exception:
+        lock.release()
+        raise
+    else:
+        lock.release()
+        return result
+
+
 class Tuple(BaseClass):
     def __init__(self, values=None, **kwargs):
         if values is not None:

@@ -12,8 +12,9 @@ from .dataframe import DataFrame
 from .iterators import EntityIterator
 from .exceptions import AMPLException
 from .entity import Entity
-from .utils import Utils
+from .utils import Utils, lock_call
 from . import amplpython
+import time
 
 
 class AMPL:
@@ -76,8 +77,8 @@ class AMPL:
             self._impl = amplpython.AMPL()
         else:
             self._impl = amplpython.AMPL(environment._impl)
-        self._outputhandler = None
         self._errorhandler = None
+        self._outputhandler = None
         self._lock = Lock()
 
     def __del__(self):
@@ -119,8 +120,11 @@ class AMPL:
             command in tabular form.
         """
         # FIXME: only works for the first statement.
-        return DataFrame._fromDataFrameRef(
-            self._impl.getData(list(statements), len(statements))
+        return lock_call(
+            lambda: DataFrame._fromDataFrameRef(
+                self._impl.getData(list(statements), len(statements))
+            ),
+            self._lock
         )
 
     def getEntity(self, name):
@@ -137,7 +141,10 @@ class AMPL:
         Returns:
             The AMPL entity with the specified name.
         """
-        return Entity(self._impl.getEntity(name))
+        return lock_call(
+            lambda: Entity(self._impl.getEntity(name)),
+            self._lock
+        )
 
     def getVariable(self, name):
         """
@@ -149,7 +156,10 @@ class AMPL:
         Raises:
             ValueError: if the specified variable does not exist.
         """
-        return Variable(self._impl.getVariable(name))
+        return lock_call(
+            lambda: Variable(self._impl.getVariable(name)),
+            self._lock
+        )
 
     def getConstraint(self, name):
         """
@@ -161,7 +171,10 @@ class AMPL:
         Raises:
             ValueError: if the specified constraint does not exist.
         """
-        return Constraint(self._impl.getConstraint(name))
+        return lock_call(
+            lambda: Constraint(self._impl.getConstraint(name)),
+            self._lock
+        )
 
     def getObjective(self, name):
         """
@@ -173,7 +186,10 @@ class AMPL:
         Raises:
             ValueError: if the specified objective does not exist.
         """
-        return Objective(self._impl.getObjective(name))
+        return lock_call(
+            lambda: Objective(self._impl.getObjective(name)),
+            self._lock
+        )
 
     def getSet(self, name):
         """
@@ -185,7 +201,10 @@ class AMPL:
         Raises:
             ValueError: if the specified set does not exist.
         """
-        return Set(self._impl.getSet(name))
+        return lock_call(
+            lambda: Set(self._impl.getSet(name)),
+            self._lock
+        )
 
     def getParameter(self, name):
         """
@@ -197,7 +216,10 @@ class AMPL:
         Raises:
             ValueError: if the specified parameter does not exist.
         """
-        return Parameter(self._impl.getParameter(name))
+        return lock_call(
+            lambda: Parameter(self._impl.getParameter(name)),
+            self._lock
+        )
 
     def eval(self, amplstatements):
         """
@@ -225,15 +247,18 @@ class AMPL:
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
-        self._impl.eval(amplstatements)
+        lock_call(
+            lambda: self._impl.eval(amplstatements),
+            self._lock
+        )
 
     def reset(self):
         """
         Clears all entities in the underlying AMPL interpreter, clears all maps
         and invalidates all entities.
         """
-        self.eval('reset;')
         # self._impl.reset()  # FIXME: causes Segmentation fault
+        self.eval('reset;')
 
     def close(self):
         """
@@ -247,13 +272,21 @@ class AMPL:
         """
         Returns true if the underlying engine is running.
         """
-        return self._impl.isRunning()
+        return lock_call(
+            lambda: self._impl.isRunning(),
+            self._lock
+        )
 
     def isBusy(self):
         """
         Returns true if the underlying engine is doing an async operation.
         """
-        return self._impl.isBusy()
+        # return self._impl.isBusy()
+        if self._lock.acquire(False):
+            self._lock.release()
+            return False
+        else:
+            return True
 
     def solve(self):
         """
@@ -262,7 +295,10 @@ class AMPL:
         Raises:
             RunTimeError: if the underlying interpreter is not running.
         """
-        self._impl.solve()
+        return lock_call(
+            lambda: self._impl.solve(),
+            self._lock
+        )
 
     def readAsync(self, fileName, callback):
         """
@@ -280,9 +316,14 @@ class AMPL:
         """
         def async():
             self._lock.acquire()
-            self.read(fileName)
-            callback.run()
-            self._lock.release()
+            try:
+                self._impl.read(fileName)
+            except Exception:
+                self._lock.release()
+                raise
+            else:
+                self._lock.release()
+                callback.run()
         Thread(target=async).start()
 
     def readDataAsync(self, fileName, callback):
@@ -301,9 +342,14 @@ class AMPL:
         """
         def async():
             self._lock.acquire()
-            self.readData(fileName)
-            callback.run()
-            self._lock.release()
+            try:
+                self._impl.readData(fileName)
+            except Exception:
+                self._lock.release()
+                raise
+            else:
+                self._lock.release()
+                callback.run()
         Thread(target=async).start()
 
     def evalAsync(self, amplstatements, callback):
@@ -324,9 +370,15 @@ class AMPL:
         """
         def async():
             self._lock.acquire()
-            self.eval(amplstatements)
-            callback.run()
-            self._lock.release()
+            try:
+                time.sleep(0.01)  # FIXME: without sleep() it locks
+                self._impl.eval(amplstatements)
+            except Exception:
+                self._lock.release()
+                raise
+            else:
+                self._lock.release()
+                callback.run()
         Thread(target=async).start()
 
     def solveAsync(self, callback):
@@ -338,10 +390,22 @@ class AMPL:
         """
         def async():
             self._lock.acquire()
-            self.solve()
-            callback.run()
-            self._lock.release()
+            try:
+                self._impl.solve()
+            except Exception:
+                self._lock.release()
+                raise
+            else:
+                self._lock.release()
+                callback.run()
         Thread(target=async).start()
+
+    def wait(self):
+        """
+        Wait for the current async operation to finish.
+        """
+        self._lock.acquire()
+        self._lock.release()
 
     def interrupt(self):
         """
@@ -365,9 +429,15 @@ class AMPL:
             Current working directory.
         """
         if path is None:
-            return self._impl.cd()
+            return lock_call(
+                lambda: self._impl.cd(),
+                self._lock
+            )
         else:
-            return self._impl.cd(path)
+            return lock_call(
+                lambda: self._impl.cd(path),
+                self._lock
+            )
 
     def setOption(self, name, value):
         """
@@ -384,13 +454,25 @@ class AMPL:
             TypeError: if the value has an invalid type.
         """
         if isinstance(value, bool):
-            return self._impl.setBoolOption(name, value)
+            lock_call(
+                lambda: self._impl.setBoolOption(name, value),
+                self._lock
+            )
         elif isinstance(value, int):
-            return self._impl.setIntOption(name, value)
+            lock_call(
+                lambda: self._impl.setIntOption(name, value),
+                self._lock
+            )
         elif isinstance(value, float):
-            return self._impl.setDblOption(name, value)
+            lock_call(
+                lambda: self._impl.setDblOption(name, value),
+                self._lock
+            )
         elif isinstance(value, basestring):
-            return self._impl.setOption(name, value)
+            lock_call(
+                lambda: self._impl.setOption(name, value),
+                self._lock
+            )
         else:
             raise TypeError
 
@@ -409,16 +491,20 @@ class AMPL:
             InvalidArgumet: if the option name is not valid.
         """
         try:
-            value = self._impl.getOption(name).value()
+            value = lock_call(
+                lambda: self._impl.getOption(name).value(),
+                self._lock
+            )
         except RuntimeError:
             return None
-        try:
-            return int(value)
-        except ValueError:
+        else:
             try:
-                return float(value)
+                return int(value)
             except ValueError:
-                return value
+                try:
+                    return float(value)
+                except ValueError:
+                    return value
 
     def read(self, fileName):
         """
@@ -433,7 +519,10 @@ class AMPL:
         Raises:
             RunTimeError: in case the file does not exist.
         """
-        self._impl.read(fileName)
+        lock_call(
+            lambda: self._impl.read(fileName),
+            self._lock
+        )
 
     def readData(self, fileName):
         """
@@ -449,7 +538,10 @@ class AMPL:
         Raises:
             RunTimeError: in case the file does not exist.
         """
-        self._impl.readData(fileName)
+        lock_call(
+            lambda: self._impl.readData(fileName),
+            self._lock
+        )
 
     def getValue(self, scalarExpression):
         """
@@ -463,7 +555,10 @@ class AMPL:
         Returns:
             The value of the expression.
         """
-        return Utils.castVariant(self._impl.getValue(scalarExpression))
+        return lock_call(
+            lambda: Utils.castVariant(self._impl.getValue(scalarExpression)),
+            self._lock
+        )
 
     def setData(self, dataFrame, setName=None):
         """
@@ -480,9 +575,15 @@ class AMPL:
             AMPLException: if the data assignment procedure was not successful.
         """
         if setName is None:
-            self._impl.setData(dataFrame._impl)
+            lock_call(
+                lambda: self._impl.setData(dataFrame._impl),
+                self._lock
+            )
         else:
-            self._impl.setData(dataFrame._impl, setName)
+            lock_call(
+                lambda: self._impl.setData(dataFrame._impl, setName),
+                self._lock
+            )
 
     def readTable(self, tableName):
         """
@@ -496,7 +597,10 @@ class AMPL:
         Args:
             tableName: Name of the table to be read.
         """
-        self._impl.readTable(tableName)
+        lock_call(
+            lambda: self._impl.readTable(tableName),
+            self._lock
+        )
 
     def writeTable(self, tableName):
         """
@@ -510,7 +614,10 @@ class AMPL:
         Args:
             tableName: Name of the table to be written.
         """
-        self._impl.writeTable(tableName)
+        lock_call(
+            lambda: self._impl.writeTable(tableName),
+            self._lock
+        )
 
     def display(self, *amplExpressions):
         """
@@ -526,7 +633,10 @@ class AMPL:
             amplExpressions: Expressions to be evaluated.
         """
         exprs = list(map(str, amplExpressions))
-        self._impl.displayLst(exprs, len(exprs))
+        lock_call(
+            lambda: self._impl.displayLst(exprs, len(exprs)),
+            self._lock
+        )
 
     def setOutputHandler(self, outputhandler):
         """
@@ -542,7 +652,12 @@ class AMPL:
 
         self._outputhandler = outputhandler
         self._outputhandler_internal = OutputHandlerInternal()
-        self._impl.setOutputHandler(self._outputhandler_internal)
+        lock_call(
+            lambda: self._impl.setOutputHandler(
+                self._outputhandler_internal
+            ),
+            self._lock
+        )
 
     def setErrorHandler(self, errorhandler):
         """
@@ -564,7 +679,10 @@ class AMPL:
 
         self._errorhandler = errorhandler
         self._errorhandler_internal = InternalErrorHandler()
-        self._impl.setErrorHandler(self._errorhandler_internal)
+        lock_call(
+            lambda: self._impl.setErrorHandler(self._errorhandler_internal),
+            self._lock
+        )
 
     def getOutputHandler(self):
         """
@@ -588,28 +706,48 @@ class AMPL:
         """
         Get all the variables declared.
         """
-        return EntityIterator(self._impl.getVariables(), Variable)
+        variables = lock_call(
+            lambda: self._impl.getVariables(),
+            self._lock
+        )
+        return EntityIterator(variables, Variable)
 
     def getConstraints(self):
         """
         Get all the constraints declared.
         """
-        return EntityIterator(self._impl.getConstraints(), Constraint)
+        constraints = lock_call(
+            lambda: self._impl.getConstraints(),
+            self._lock
+        )
+        return EntityIterator(constraints, Constraint)
 
     def getObjectives(self):
         """
         Get all the objectives declared.
         """
-        return EntityIterator(self._impl.getObjectives(), Objective)
+        objectives = lock_call(
+            lambda: self._impl.getObjectives(),
+            self._lock
+        )
+        return EntityIterator(objectives, Objective)
 
     def getSets(self):
         """
         Get all the sets declared.
         """
-        return EntityIterator(self._impl.getSets(), Set)
+        sets = lock_call(
+            lambda: self._impl.getSets(),
+            self._lock
+        )
+        return EntityIterator(sets, Set)
 
     def getParameters(self):
         """
         Get all the parameters declared.
         """
-        return EntityIterator(self._impl.getParameters(), Parameter)
+        parameters = lock_call(
+            lambda: self._impl.getParameters(),
+            self._lock
+        )
+        return EntityIterator(parameters, Parameter)

@@ -21,6 +21,7 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(isinstance(ampl.getEntity('X'), amplpy.Entity))
         self.assertEqual(ampl.getEntity('X').getValues().getNumRows(), 10)
         self.assertEqual(ampl.getData('X').getNumRows(), 10)
+
         with self.assertRaises(RuntimeError):
             self.assertRaises(ampl.getData('XXX'))
         with self.assertRaises(ValueError):
@@ -139,6 +140,154 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(
             isinstance(errorHandler.lastWarning.getMessage(), basestring)
         )
+
+    def testEmptyHandlers(self):
+        ampl = self.ampl
+        callback = amplpy.Runnable()
+        outputHandler = amplpy.OutputHandler()
+        errorHandler = amplpy.ErrorHandler()
+        ampl.setOutputHandler(outputHandler)
+        ampl.setErrorHandler(errorHandler)
+        ampl.evalAsync('display 1;', callback)
+        ampl.wait()
+
+    def testBrokenHandlers(self):
+        ampl = self.ampl
+
+        class MyOutputHandler(amplpy.OutputHandler):
+            def output(self, kind, msg):
+                assert False
+
+        class ErrorHandlerIgnore(amplpy.ErrorHandler):
+            def error(self, exception):
+                assert True
+
+            def warning(self, exception):
+                assert True
+
+        class ErrorHandlerRaise(amplpy.ErrorHandler):
+            def error(self, exception):
+                raise exception
+
+            def warning(self, exception):
+                raise exception
+
+        with self.assertRaises(RuntimeError):
+            ampl.eval('X X;')
+
+        errorHandlerIgnore = ErrorHandlerIgnore()
+        ampl.setErrorHandler(errorHandlerIgnore)
+        ampl.eval('X X;')
+
+        errorHandlerRaise = ErrorHandlerRaise()
+        ampl.setErrorHandler(errorHandlerRaise)
+        with self.assertRaises(RuntimeError):
+            ampl.eval('X X;')
+
+    def testAsync(self):
+        from threading import Lock
+        import tempfile
+        import shutil
+
+        ampl = self.ampl
+        dirpath = tempfile.mkdtemp()
+
+        def str2file(filename, content):
+            fullpath = os.path.join(dirpath, filename)
+            with open(fullpath, 'w') as f:
+                print(content, file=f)
+            return fullpath
+
+        class MyOutputHandler(amplpy.OutputHandler):
+            def output(self, kind, msg):
+                pass
+
+        class MyErrorHandler(amplpy.ErrorHandler):
+            def __init__(self, mutex1, mutex2):
+                self.mutex1 = mutex1
+                self.mutex2 = mutex2
+
+            def error(self, exception):
+                try:
+                    self.mutex1.release()
+                except Exception:
+                    pass
+                try:
+                    self.mutex2.release()
+                except Exception:
+                    pass
+                raise exception
+
+            def warning(self, exception):
+                print('Warning:', exception.getMessage())
+
+        class Callback(amplpy.Runnable):
+            def __init__(self, mutex1, mutex2):
+                self.ready = False
+                self.mutex1 = mutex1
+                self.mutex2 = mutex2
+
+            def run(self):
+                self.mutex2.acquire()
+                self.ready = True
+                self.mutex1.release()
+                self.mutex2.release()
+
+        model = str2file('model.mod', '''
+            set X;
+            set A := 1..10000000;
+            param p{i in A} := i;
+        ''')
+        data = str2file('data.dat', '''
+            set X := 1, 2, 3;
+        ''')
+
+        mutex1 = Lock()
+        mutex2 = Lock()
+        try:
+            callback = Callback(mutex1, mutex2)
+            outputHandler = MyOutputHandler()
+            ampl.setOutputHandler(outputHandler)
+            errorHandler = MyErrorHandler(mutex1, mutex2)
+            ampl.setErrorHandler(errorHandler)
+
+            mutex1.acquire()
+            mutex2.acquire()
+            callback.ready = False
+            ampl.readAsync(model, callback)
+            self.assertFalse(callback.ready)
+            mutex2.release()
+            mutex1.acquire()
+            self.assertTrue(callback.ready)
+
+            mutex2.acquire()
+            callback.ready = False
+            ampl.readDataAsync(data, callback)
+            self.assertFalse(callback.ready)
+            mutex2.release()
+            mutex1.acquire()
+            self.assertTrue(callback.ready)
+
+            mutex2.acquire()
+            callback.ready = False
+            ampl.evalAsync('display {i in A: i not in A};', callback)
+            self.assertTrue(ampl.isBusy())
+            ampl.interrupt()
+            self.assertFalse(callback.ready)
+            mutex2.release()
+            mutex1.acquire()
+            self.assertTrue(callback.ready)
+            self.assertFalse(ampl.isBusy())
+            self.assertTrue(ampl.isRunning())
+
+        except Exception:
+            mutex1.acquire(False)
+            mutex1.release()
+            mutex2.acquire(False)
+            mutex2.release()
+            raise
+
+        shutil.rmtree(dirpath)
 
 
 if __name__ == '__main__':

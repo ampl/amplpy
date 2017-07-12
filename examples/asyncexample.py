@@ -43,6 +43,7 @@ def main(argc, argv):
             """
             def output(self, kind, msg):
                 if kind == amplpy.Kind.SOLVE:
+                    assert ampl.isBusy()
                     print('Solver: {}'.format(msg))
 
         class MyErrorHandler(amplpy.ErrorHandler):
@@ -78,7 +79,8 @@ def main(argc, argv):
         # The function run() will be called by the AMPL API when the
         # solution process will be completed.
         ampl.solveAsync(callback)
-        ampl.interrupt()
+        # ampl.evalAsync('solve;', callback)
+
         # Wait for the solution to complete
         print("Main thread: Waiting for solution to end...")
         start = time()
