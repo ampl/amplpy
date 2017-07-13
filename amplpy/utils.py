@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
+from past.builtins import basestring
+
 from . import amplpython
 from .base import BaseClass
 
@@ -43,18 +46,18 @@ class Tuple(BaseClass):
         return cls(_impl=amplpython.Tuple.Factory(tupleRef))
 
 
-class Utils:
+class Utils(object):
     @staticmethod
     def toVariantArray(lst):
         va = amplpython.VariantArray(len(lst))
-        for i in xrange(len(lst)):
+        for i in range(len(lst)):
             va[i] = amplpython.Variant(lst[i])
         return va
 
     @staticmethod
     def toTupleArray(lst):
         ta = amplpython.TupleArray(len(lst))
-        for i in xrange(len(lst)):
+        for i in range(len(lst)):
             ta[i] = Tuple(lst[i])._impl
         return ta
 

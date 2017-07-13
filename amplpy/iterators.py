@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
+from past.builtins import basestring
+
 from .utils import Utils, Tuple
 
 
-class Iterator:
+class Iterator(object):
     def __init__(self, obj, function):
         self.obj = obj
         self.it = obj.begin()
@@ -13,7 +16,7 @@ class Iterator:
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.it.equals(self.end):
             raise StopIteration
         toReturn = self.function(self.it)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
+from past.builtins import basestring
+
 from threading import Thread, Lock
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
@@ -17,7 +20,7 @@ from . import amplpython
 import time
 
 
-class AMPL:
+class AMPL(object):
     """An AMPL translator.
 
     An object of this class can be used to do the following tasks:

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
+from past.builtins import basestring
+
 from .entity import Entity
 from .utils import Utils, Tuple
 from .dataframe import DataFrame
@@ -71,7 +74,7 @@ class Parameter(Entity):
             RuntimeError: If the entity has been deleted in the underlying
             AMPL.
 
-            ValueError: If the parameter is not scalar and the index is not
+            TypeError: If the parameter is not scalar and the index is not
             provided.
         """
         assert len(args) in (1, 2)
@@ -104,7 +107,7 @@ class Parameter(Entity):
             TypeError: If called on a scalar parameter.
         """
         if isinstance(values, dict):
-            indices, values = zip(*values.items())
+            indices, values = list(zip(*values.items()))
             indices = Utils.toTupleArray(indices)
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))

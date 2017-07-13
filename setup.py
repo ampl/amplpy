@@ -11,9 +11,8 @@ with open('README.md') as f:
 
 def ls_dir(base_dir):
     """List files recursively."""
-    base_dir = os.path.join(base_dir, "")
     return [
-        os.path.join(dirpath.replace(base_dir, "", 1), f)
+        os.path.join(dirpath.replace(base_dir, '', 1), f)
         for (dirpath, dirnames, files) in os.walk(base_dir)
         for f in files
     ]
@@ -68,5 +67,6 @@ setup(
             os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
         ],
     )],
-    package_data={"": ls_dir("amplpy/")},
+    package_data={'': ls_dir('amplpy/')},
+    install_requires=['future >= 0.15.0']
 )
