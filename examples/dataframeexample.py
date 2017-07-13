@@ -12,12 +12,12 @@ def main(argc, argv):
         # Create first dataframe (for data indexed over NUTR)
         # Add data row by row
         df1 = DataFrame('NUTR', ('n_min', 'n_max'))
-        df1.addRow(('A', 700, 20000))
-        df1.addRow(('B1', 700, 20000))
-        df1.addRow(('B2', 700, 20000))
-        df1.addRow(('C', 700, 20000))
-        df1.addRow(('CAL', 16000, 24000))
-        df1.addRow(('NA', 0.0, 50000))
+        df1.addRow('A', 700, 20000)
+        df1.addRow('B1', 700, 20000)
+        df1.addRow('B2', 700, 20000)
+        df1.addRow('C', 700, 20000)
+        df1.addRow('CAL', 16000, 24000)
+        df1.addRow('NA', 0.0, 50000)
 
         # Create second dataframe (for data indexed over FOOD)
         # Add column by column
@@ -33,7 +33,7 @@ def main(argc, argv):
 
         # Create third dataframe, to assign data to the AMPL entity
         # param amt{NUTR, FOOD};
-        df3 = DataFrame(('NUTR', 'FOOD'))
+        df3 = DataFrame(index=('NUTR', 'FOOD'))
         # Populate the set columns
         nutrWithMultiplicity = ['']*48
         foodWithMultiplicity = ['']*48

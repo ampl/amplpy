@@ -11,8 +11,8 @@ class Row(BaseClass):
     Represents a row in a :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, **kwargs):
-        self._impl = kwargs.get('_impl', None)
+    def __init__(self, _impl):
+        self._impl = _impl
 
     def __iter__(self):
         return RowIterator(self._impl)
@@ -23,28 +23,20 @@ class Row(BaseClass):
     def toString(self):
         return str(list(self))
 
-    @classmethod
-    def fromRowRef(cls, rRef):
-        return cls(_impl=rRef)
-
 
 class Column(BaseClass):
     """
     Represents a column in a :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, **kwargs):
-        self._impl = kwargs.get('_impl', None)
+    def __init__(self, _impl):
+        self._impl = _impl
 
     def __iter__(self):
         return ColIterator(self._impl)
 
     def toString(self):
         return str(list(self))
-
-    @classmethod
-    def fromColumnRef(cls, cRef):
-        return cls(_impl=cRef)
 
 
 class DataFrame(BaseClass):
@@ -102,6 +94,10 @@ class DataFrame(BaseClass):
         else:
             self._impl = kwargs.get('_impl', None)
 
+    def __iter__(self):
+        # FIXME: C++ iterators for dataframes not working with SWIG.
+        return (self.getRowByIndex(i) for i in range(self.getNumRows()))
+
     def getNumCols(self):
         """
         Get the total number of columns in this dataframe (indexarity + number
@@ -130,14 +126,18 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumIndices()
 
-    def addRow(self, value):
+    def addRow(self, *value):
         """
          Add a row to the DataFrame. The size of the tuple must be equal to the
          total number of columns in the dataframe.
 
          Args:
-            value: A tuple containing all the values for the row to be added.
+            value: A single argument with a tuple containing all the values
+            for the row to be added, or multiple arguments with the values for
+            each column.
         """
+        if len(value) == 1 and isinstance(value[0], (tuple, list)):
+            value = value[0]
         assert len(value) == self.getNumCols()
         self._impl.addRow(Tuple(value)._impl)
 
@@ -172,7 +172,7 @@ class DataFrame(BaseClass):
         Args:
             header: The header of the column.
         """
-        return Column.fromColumnRef(self._impl.getColumn(header))
+        return Column(self._impl.getColumn(header))
 
     def setColumn(self, header, values):
         """
@@ -203,7 +203,7 @@ class DataFrame(BaseClass):
         Returns:
             The row.
         """
-        return Row.fromRowRef(self._impl.getRow(Tuple(key)._impl))
+        return Row(self._impl.getRow(Tuple(key)._impl))
 
     def getRowByIndex(self, index):
         """
@@ -216,7 +216,7 @@ class DataFrame(BaseClass):
             The corresponding row.
         """
         assert isinstance(index, int)
-        return Row.fromRowRef(self._impl.getRowByIndex(index))
+        return Row(self._impl.getRowByIndex(index))
 
     def getHeaders(self):
         """
