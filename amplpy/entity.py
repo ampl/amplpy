@@ -38,29 +38,47 @@ class Entity(BaseClass):
         assert self.wrapFunction is not None
         return InstanceIterator(self._impl, self.wrapFunction)
 
-    def __getitem__(self, *key):
+    def __getitem__(self, index):
+        if not isinstance(index, (tuple, list)):
+            index = [index]
+        return self.get(*index)
+
+    def get(self, *index):
+        """
+        Get the instance with the specified index.
+
+        Returns:
+            The corresponding instance.
+        """
         assert self.wrapFunction is not None
-        if len(key) == 1 and isinstance(key, (tuple, list)):
-            key = key[0]
-        return self.get(key)
+        if len(index) == 1 and isinstance(index[0], (tuple, list)):
+            index = index[0]
+        if len(index) == 0:
+            return self.wrapFunction(self._impl.get())
+        else:
+            return self.wrapFunction(self._impl.get(Tuple(index)._impl))
+
+    def find(self, *index):
+        """
+        Searches the current entity for an instance with the specified index.
+
+        Returns:
+            The wanted instance if found, otherwise it returns `None`.
+        """
+        assert self.wrapFunction is not None
+        if len(index) == 1 and isinstance(index[0], (tuple, list)):
+            index = index[0]
+        it = self._impl.find(Tuple(index)._impl)
+        if it == self._impl.end():
+            return None
+        else:
+            return self.wrapFunction(it)
 
     def instances(self):
         """
         Get all the instances in this entity..
         """
         return InstanceIterator(self._impl, self.wrapFunction)
-
-    def get(self, index=None):
-        assert self.wrapFunction is not None
-        indexarity = self._impl.indexarity()
-        if index is None:
-            assert indexarity == 0
-            return self.wrapFunction(self._impl.get())
-        else:
-            if not isinstance(index, (tuple, list)):
-                index = (index,)
-            assert indexarity == len(index)
-            return self.wrapFunction(self._impl.get(Tuple(index)._impl))
 
     def name(self):
         """
