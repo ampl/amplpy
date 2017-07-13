@@ -14,8 +14,8 @@ class Variable(Entity):
     See http://www.ampl.com/NEW/suffbuiltin.html for a list of the available
     suffixes.
 
-    All these methods throw a LogicError if called for a non scalar
-    objective and an RunTimeError if called on an entity which has been deleted
+    All these methods throw a TypeError if called for a non scalar
+    objective and an RuntimeError if called on an entity which has been deleted
     in the underlying intepreter.
 
     To gain access to all the values in an entity (for all instances and all

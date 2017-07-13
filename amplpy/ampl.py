@@ -70,7 +70,7 @@ class AMPL:
             the environment variables in which the AMPL interpreter will run.
 
         Raises:
-            RunTimeError: If no valid AMPL license has been found or if the
+            RuntimeError: If no valid AMPL license has been found or if the
             translator cannot be started for any other reason.
         """
         if environment is None:
@@ -243,7 +243,7 @@ class AMPL:
           be passed to the interpreter.
 
         Raises:
-          RunTimeError: if the input is not a complete AMPL statement (e.g.
+          RuntimeError: if the input is not a complete AMPL statement (e.g.
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
@@ -293,7 +293,7 @@ class AMPL:
         Solve the current model.
 
         Raises:
-            RunTimeError: if the underlying interpreter is not running.
+            RuntimeError: if the underlying interpreter is not running.
         """
         return lock_call(
             lambda: self._impl.solve(),
@@ -364,7 +364,7 @@ class AMPL:
           interpreted.
 
         Raises:
-          RunTimeError: if the input is not a complete AMPL statement (e.g.
+          RuntimeError: if the input is not a complete AMPL statement (e.g.
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
@@ -517,7 +517,7 @@ class AMPL:
             fileName: Full path to the file.
 
         Raises:
-            RunTimeError: in case the file does not exist.
+            RuntimeError: in case the file does not exist.
         """
         lock_call(
             lambda: self._impl.read(fileName),
@@ -536,7 +536,7 @@ class AMPL:
             fileName: Full path to the file.
 
         Raises:
-            RunTimeError: in case the file does not exist.
+            RuntimeError: in case the file does not exist.
         """
         lock_call(
             lambda: self._impl.readData(fileName),

@@ -64,14 +64,14 @@ class Parameter(Entity):
         Set the value of a single instance of this parameter.
 
         Args:
-            \*args: value if the parameter is scalar, index and value
+            args: value if the parameter is scalar, index and value
             otherwise.
 
         Raises:
-            RunTimeError: If the entity has been deleted in the underlying
+            RuntimeError: If the entity has been deleted in the underlying
             AMPL.
 
-            LogicError: If the parameter is not scalar and the index is not
+            ValueError: If the parameter is not scalar and the index is not
             provided.
         """
         assert len(args) in (1, 2)
@@ -97,11 +97,11 @@ class Parameter(Entity):
             let {i in indices} par[i] := values[i];
 
         Args:
-            values: dictionary or :class:`~amplpy.DataFrame` with the indices
-            and the values to be set.
+            values: list, dictionary or :class:`~amplpy.DataFrame` with the
+            indices and the values to be set.
 
         Raises:
-            LogicError: If called on a scalar parameter.
+            TypeError: If called on a scalar parameter.
         """
         if isinstance(values, dict):
             indices, values = zip(*values.items())

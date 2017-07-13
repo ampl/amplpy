@@ -18,7 +18,7 @@ class Constraint(Entity):
     Note that, since this class represents both algebraic and logical
     constraints, some suffixes might not be available for every entity.
 
-    An LogicError is thrown if one of such methods is called for
+    An TypeError is thrown if one of such methods is called for
     a non-scalar constraint and if a method corresponding to a suffix which is
     not supported by the type of the constraint is called.
     A runtime error is thrown if any property of an entity which has been

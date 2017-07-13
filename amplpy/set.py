@@ -10,12 +10,12 @@ class Set(Entity):
     """
     Represents an AMPL set. In case of not indexed sets, this class exposes
     iterators for accessing its elements. The members of the set are tuples.
-    All these methods throw a LogicError if called for an indexed set.
+    All these methods throw a TypeError if called for an indexed set.
 
     In case of indexed sets, you can gain access to the instances using the
     operator [].
 
-    All the accessors in this class throw an RunTimeError if the instance has
+    All the accessors in this class throw an RuntimeError if the instance has
     been deleted in the underlying AMPL interpreter.
 
     Data can be assigned to the set using the methods
