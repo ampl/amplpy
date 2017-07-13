@@ -25,17 +25,17 @@ class TestAMPL(TestBase.TestBase):
 
         with self.assertRaises(RuntimeError):
             self.assertRaises(ampl.getData('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getEntity('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getSet('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getParameter('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getVariable('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getConstraint('XXX'))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.assertRaises(ampl.getObjective('XXX'))
         ampl.reset()  # FIXME: seems to have no efect after eval()
         ampl.eval('set _s; param _p; var _v; s.t. _c: _v = 0; maximize _o: 0;')

@@ -139,7 +139,7 @@ class AMPL(object):
             name: Name of the entity.
 
         Raises:
-            ValueError: if the specified entity does not exist.
+            TypeError: if the specified entity does not exist.
 
         Returns:
             The AMPL entity with the specified name.
@@ -157,7 +157,7 @@ class AMPL(object):
             name: Name of the variable to be found.
 
         Raises:
-            ValueError: if the specified variable does not exist.
+            TypeError: if the specified variable does not exist.
         """
         return lock_call(
             lambda: Variable(self._impl.getVariable(name)),
@@ -172,7 +172,7 @@ class AMPL(object):
             name: Name of the constraint to be found.
 
         Raises:
-            ValueError: if the specified constraint does not exist.
+            TypeError: if the specified constraint does not exist.
         """
         return lock_call(
             lambda: Constraint(self._impl.getConstraint(name)),
@@ -187,7 +187,7 @@ class AMPL(object):
             name: Name of the objective to be found.
 
         Raises:
-            ValueError: if the specified objective does not exist.
+            TypeError: if the specified objective does not exist.
         """
         return lock_call(
             lambda: Objective(self._impl.getObjective(name)),
@@ -202,7 +202,7 @@ class AMPL(object):
             name: Name of the set to be found.
 
         Raises:
-            ValueError: if the specified set does not exist.
+            TypeError: if the specified set does not exist.
         """
         return lock_call(
             lambda: Set(self._impl.getSet(name)),
@@ -217,7 +217,7 @@ class AMPL(object):
             name: Name of the parameter to be found.
 
         Raises:
-            ValueError: if the specified parameter does not exist.
+            TypeError: if the specified parameter does not exist.
         """
         return lock_call(
             lambda: Parameter(self._impl.getParameter(name)),
