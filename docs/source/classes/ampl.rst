@@ -8,3 +8,10 @@ AMPL
   :members:
   :undoc-members:
   :special-members:
+
+
+.. autoclass:: amplpy.EntityMap
+  :member-order: bysource
+  :members:
+  :undoc-members:
+  :special-members:

@@ -10,7 +10,7 @@ great stability and speed; the library just acts as an intermediary, and the add
 CPU usage) depends mostly on how much data is read back from AMPL, the size of the model as such is irrelevant.
 Functions for directly assigning data to AMPL parameters and sets are provided, which can be used instead of the
 normal AMPL data reading procedures. AMPL API has been written with usability in mind, and it is easy to access
-its functionalities from C++, Java and  MATLAB.
+its functionalities from  C++, Java,  MATLAB, C# and Python.
 
 Who can use AMPL API
 --------------------
@@ -35,7 +35,7 @@ System requirements
 -------------------
 
 As AMPL API uses AMPL for model generation, the AMPL executable is needed and is generally provided. The solution is then obtained through external solvers.
-In general, a valid AMPL setup and any C++ compiler compatible with C++98 syntax are necessary and sufficient conditions for the correct execution of AMPL API.
+In general, a valid AMPL setup and Python 2.7 or 3.x are necessary and sufficient conditions for the correct execution of AMPL API.
 The officially supported platforms are all Windows flavours, various Linux 32/64 bits and OSX.
 Ports to any other platform supported by AMPL can be easily obtained.
 
@@ -43,7 +43,7 @@ Ports to any other platform supported by AMPL can be easily obtained.
 About this manual
 -----------------
 
-This document intends to guide a developer in the process of implementing an “AMPL API based” application in C++.
+This document intends to guide a developer in the process of implementing an “AMPL API based” application in Python.
 The section :ref:`secClassStructure` presents the main logic of the API, which does not change depending on which programming environment is chosen.
 Further sections walk the reader through the implementation of the most common applications, finally the sections
 :ref:`secReferencePython` and :ref:`secExamplesPython` contain respectively the API reference documentation and a collection of examples.
