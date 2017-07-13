@@ -9,7 +9,7 @@ from .constraint import Constraint
 from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
-from .iterators import EntityIterator
+from .iterators import EntityMap
 from .exceptions import AMPLException
 from .entity import Entity
 from .utils import Utils, lock_call
@@ -710,7 +710,7 @@ class AMPL:
             lambda: self._impl.getVariables(),
             self._lock
         )
-        return EntityIterator(variables, Variable)
+        return EntityMap(variables, Variable)
 
     def getConstraints(self):
         """
@@ -720,7 +720,7 @@ class AMPL:
             lambda: self._impl.getConstraints(),
             self._lock
         )
-        return EntityIterator(constraints, Constraint)
+        return EntityMap(constraints, Constraint)
 
     def getObjectives(self):
         """
@@ -730,7 +730,7 @@ class AMPL:
             lambda: self._impl.getObjectives(),
             self._lock
         )
-        return EntityIterator(objectives, Objective)
+        return EntityMap(objectives, Objective)
 
     def getSets(self):
         """
@@ -740,7 +740,7 @@ class AMPL:
             lambda: self._impl.getSets(),
             self._lock
         )
-        return EntityIterator(sets, Set)
+        return EntityMap(sets, Set)
 
     def getParameters(self):
         """
@@ -750,4 +750,4 @@ class AMPL:
             lambda: self._impl.getParameters(),
             self._lock
         )
-        return EntityIterator(parameters, Parameter)
+        return EntityMap(parameters, Parameter)

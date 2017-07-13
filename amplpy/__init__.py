@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from .outputhandler import OutputHandler, Kind
 from .errorhandler import ErrorHandler
 from .exceptions import AMPLException
+from .iterators import EntityMap
 from .runnable import Runnable
 from .objective import Objective
 from .variable import Variable

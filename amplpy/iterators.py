@@ -21,7 +21,7 @@ class Iterator:
         return toReturn
 
 
-class EntityIterator(Iterator):
+class EntityMap(Iterator):
     def __init__(self, obj, entityClass):
         self.entityClass = entityClass
 
