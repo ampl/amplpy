@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python API reference &#8212; AMPL API 1.4-alpha documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.4-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AMPL" href="classes/ampl.html" />
+    <link rel="prev" title="Python quick start" href="quick-start.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="classes/ampl.html" title="AMPL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quick-start.html" title="Python quick start"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python API reference</a><ul>
+<li><a class="reference internal" href="#ampl-classes">AMPL classes</a></li>
+<li><a class="reference internal" href="#algebraic-entities-classes">Algebraic entities classes</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="quick-start.html"
+                        title="previous chapter">Python quick start</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="classes/ampl.html"
+                        title="next chapter">AMPL</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-api-reference">
+<span id="secreferencepython"></span><h1>Python API reference<a class="headerlink" href="#python-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ampl-classes">
+<h2>AMPL classes<a class="headerlink" href="#ampl-classes" title="Permalink to this headline">¶</a></h2>
+<p>All functions and classes provided by the AMPL API reside
+in namespace <code class="docutils literal"><span class="pre">amplpy</span></code>. For brevity the namespace will be omitted.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classes/ampl.html">AMPL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/dataframe.html">DataFrame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/errorhandler.html">Runnable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/outputhandler.html">OutputHandler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/runnable.html">ErrorHandler</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="algebraic-entities-classes">
+<span id="secpythonalgebraicentitiesreference"></span><h2>Algebraic entities classes<a class="headerlink" href="#algebraic-entities-classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classes/entity.html">Entity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/variable.html">Variable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/constraint.html">Constraint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/objective.html">Objective</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/set.html">Set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes/parameter.html">Parameter</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classes/amplexception.html">AMPLException</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="classes/ampl.html" title="AMPL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="quick-start.html" title="Python quick start"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2017, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

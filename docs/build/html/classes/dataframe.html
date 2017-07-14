@@ -1,0 +1,298 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>DataFrame &#8212; AMPL API 1.4-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.4-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Environment" href="environment.html" />
+    <link rel="prev" title="AMPL" href="ampl.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="environment.html" title="Environment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ampl.html" title="AMPL"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ampl.html"
+                        title="previous chapter">AMPL</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="environment.html"
+                        title="next chapter">Environment</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/classes/dataframe.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dataframe">
+<span id="ref-dataframe"></span><h1>DataFrame<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="amplpy.DataFrame">
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">DataFrame</code><span class="sig-paren">(</span><em>index</em>, <em>columns=()</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>A DataFrame object, used to communicate data to and from the AMPL entities.</p>
+<p>An object of this class can be used to do the following tasks:
+- Assign values to AMPL entities (once the DataFrame is populated, use
+<a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal"><span class="pre">setData()</span></code></a> to assign its values to the modelling entities
+in its columns)
+- Get values from AMPL, decoupling the values from the AMPL entities they
+originate via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a>.</p>
+<p>A DataFrame object can be created in various ways.</p>
+<ul class="simple">
+<li>Create a skeleton by specifiying manually the indexing columns and the
+column headers.</li>
+<li>Get values from AMPL, decoupling the values from the AMPL entities they
+originate from (via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a>).</li>
+</ul>
+<p>Populating a DataFrame object can be done adding row by row to a
+pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.addRow" title="amplpy.DataFrame.addRow"><code class="xref py py-func docutils literal"><span class="pre">addRow()</span></code></a>, setting whole
+columns of a pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal"><span class="pre">setColumn()</span></code></a>
+or adding columns (including indexing columns) via
+<a class="reference internal" href="#amplpy.DataFrame.addColumn" title="amplpy.DataFrame.addColumn"><code class="xref py py-func docutils literal"><span class="pre">addColumn()</span></code></a>.</p>
+<p>Modifying a DataFrame object can be done via
+<a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal"><span class="pre">setColumn()</span></code></a> or, item by item, via
+<code class="xref py py-func docutils literal"><span class="pre">setValue()</span></code>.</p>
+<p>Accessing data in a DataFrame can be done row by row using
+<a class="reference internal" href="#amplpy.DataFrame.getRow" title="amplpy.DataFrame.getRow"><code class="xref py py-func docutils literal"><span class="pre">getRow()</span></code></a> or by column via
+<a class="reference internal" href="#amplpy.DataFrame.getColumn" title="amplpy.DataFrame.getColumn"><code class="xref py py-func docutils literal"><span class="pre">getColumn()</span></code></a>.</p>
+<dl class="method">
+<dt id="amplpy.DataFrame.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>index</em>, <em>columns=()</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new DataFrame with specifed index and column headers.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">index: Index column;</p>
+<p class="last">columns: Column headers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.__iter__">
+<code class="descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getNumCols">
+<code class="descname">getNumCols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getNumCols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total number of columns in this dataframe (indexarity + number
+of values).</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The number of columns.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getNumRows">
+<code class="descname">getNumRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getNumRows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of data rows in this dataframe.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The number of rows.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getNumIndices">
+<code class="descname">getNumIndices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getNumIndices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of indices (the indexarity) of this dataframe.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The number of indices needed to access one row of this dataframe.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.addRow">
+<code class="descname">addRow</code><span class="sig-paren">(</span><em>*value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.addRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a row to the DataFrame. The size of the tuple must be equal to the
+total number of columns in the dataframe.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>value: A single argument with a tuple containing all the values
+for the row to be added, or multiple arguments with the values for
+each column.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.addColumn">
+<code class="descname">addColumn</code><span class="sig-paren">(</span><em>header</em>, <em>values=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.addColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new column with the corresponding header and values to the
+dataframe.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">header: The name of the new column.</p>
+<p class="last">values: A list of size <a class="reference internal" href="#amplpy.DataFrame.getNumRows" title="amplpy.DataFrame.getNumRows"><code class="xref py py-func docutils literal"><span class="pre">getNumRows()</span></code></a> with
+all the values of the new column.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getColumn">
+<code class="descname">getColumn</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the specified column as a view object.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>header: The header of the column.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.setColumn">
+<code class="descname">setColumn</code><span class="sig-paren">(</span><em>header</em>, <em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.setColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the values of a column.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">header: The header of the column to be set.</p>
+<p class="last">values: The values to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getRow">
+<code class="descname">getRow</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a row by value of the indexing columns. If the index is not
+specified, gets the only row of a dataframe with no indexing columns.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>key: Tuple representing the index of the desired row.</dd>
+<dt>Returns:</dt>
+<dd>The row.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getRowByIndex">
+<code class="descname">getRowByIndex</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getRowByIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row by numeric index.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>index: Zero-based index of the row to get.</dd>
+<dt>Returns:</dt>
+<dd>The corresponding row.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.getHeaders">
+<code class="descname">getHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.getHeaders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the headers of this DataFrame.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The headers of this DataFrame.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.setValues">
+<code class="descname">setValues</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.setValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the values of a DataFrame from a dictionary.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>values: Dictionary with the values to set.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.toDict">
+<code class="descname">toDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.toDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="amplpy.DataFrame.toList">
+<code class="descname">toList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.toList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.DataFrame.__module__">
+<code class="descname">__module__</code><em class="property"> = 'amplpy.dataframe'</em><a class="headerlink" href="#amplpy.DataFrame.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="environment.html" title="Environment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ampl.html" title="AMPL"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2017, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

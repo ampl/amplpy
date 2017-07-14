@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Variable &#8212; AMPL API 1.4-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.4-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Constraint" href="constraint.html" />
+    <link rel="prev" title="Entity" href="entity.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="constraint.html" title="Constraint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="entity.html" title="Entity"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="entity.html"
+                        title="previous chapter">Entity</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="constraint.html"
+                        title="next chapter">Constraint</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/classes/variable.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="variable">
+<span id="ref-variable"></span><h1>Variable<a class="headerlink" href="#variable" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="amplpy.Variable">
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Variable</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">Entity</span></code></a>.</p>
+<p>Represents an AMPL decision variable. Note that, in case of a scalar
+variable, all the properties of the variable instance can be accessed
+through methods like <a class="reference internal" href="#amplpy.Variable.value" title="amplpy.Variable.value"><code class="xref py py-func docutils literal"><span class="pre">value()</span></code></a>. The methods have the
+same name of the corresponding AMPL suffixes.
+See <a class="reference external" href="http://www.ampl.com/NEW/suffbuiltin.html">http://www.ampl.com/NEW/suffbuiltin.html</a> for a list of the available
+suffixes.</p>
+<p>All these methods throw a TypeError if called for a non scalar
+objective and an RuntimeError if called on an entity which has been deleted
+in the underlying intepreter.</p>
+<p>To gain access to all the values in an entity (for all instances and all
+suffixes for that entities), see <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a> and the
+<a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a> class.</p>
+<dl class="method">
+<dt id="amplpy.Variable.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value of this variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.fix">
+<code class="descname">fix</code><span class="sig-paren">(</span><em>value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.fix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix all instances of this variable to a value if provided or to
+their current value otherwise.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>value: value to be set.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.unfix">
+<code class="descname">unfix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.unfix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unfix all instances of this variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.setValue">
+<code class="descname">setValue</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current value of this variable (does not fix it),
+equivalent to the AMPL command <cite>let</cite>.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>value: value to be set.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.astatus">
+<code class="descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.astatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the AMPL status (fixed, presolved, or substituted out).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.defeqn">
+<code class="descname">defeqn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.defeqn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the index in <cite>_con</cite> of “defining constraint” used to substitute
+variable out.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.dual">
+<code class="descname">dual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.dual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dual value on defining constraint of variable substituted out.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current initial guess.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.init0">
+<code class="descname">init0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.init0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the original initial guess (set by <cite>:=</cite> or`default` or by a data
+statement).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lb">
+<code class="descname">lb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current lower bound. See <a class="reference internal" href="../class-structure.html#secvariablesuffixesnotes"><span class="std std-ref">Note on variables suffixes</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.ub">
+<code class="descname">ub</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.ub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current upper bound. See <a class="reference internal" href="../class-structure.html#secvariablesuffixesnotes"><span class="std std-ref">Note on variables suffixes</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lb0">
+<code class="descname">lb0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lb0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the initial lower bounds, from the var declaration.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.ub0">
+<code class="descname">ub0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.ub0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the initial upper bound, from the var declaration.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lb1">
+<code class="descname">lb1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lb1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the weaker lower bound from AMPL’s presolve phase.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.ub1">
+<code class="descname">ub1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.ub1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the weaker upper bound from AMPL’s presolve phase.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lb2">
+<code class="descname">lb2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lb2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the stronger lower bound from AMPL’s presolve phase.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.ub2">
+<code class="descname">ub2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.ub2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the stronger upper bound from AMPL’s presolve phase.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lrc">
+<code class="descname">lrc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lrc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the reduced cost at lower bound.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.urc">
+<code class="descname">urc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.urc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the reduced cost at upper bound.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.lslack">
+<code class="descname">lslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.lslack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the slack at lower bound (<code class="docutils literal"><span class="pre">val</span> <span class="pre">-</span> <span class="pre">lb</span></code>). See
+<a class="reference internal" href="../class-structure.html#secvariablesuffixesnotes"><span class="std std-ref">Note on variables suffixes</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.uslack">
+<code class="descname">uslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.uslack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the slack at upper bound (<code class="docutils literal"><span class="pre">ub</span> <span class="pre">-</span> <span class="pre">val</span></code>). See
+<a class="reference internal" href="../class-structure.html#secvariablesuffixesnotes"><span class="std std-ref">Note on variables suffixes</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.rc">
+<code class="descname">rc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.rc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reduced cost (at the nearer bound).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.slack">
+<code class="descname">slack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.slack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bound slack which is the lesser of
+<a class="reference internal" href="#amplpy.Variable.lslack" title="amplpy.Variable.lslack"><code class="xref py py-func docutils literal"><span class="pre">lslack()</span></code></a> and <a class="reference internal" href="#amplpy.Variable.uslack" title="amplpy.Variable.uslack"><code class="xref py py-func docutils literal"><span class="pre">uslack()</span></code></a>.
+See <a class="reference internal" href="../class-structure.html#secvariablesuffixesnotes"><span class="std std-ref">Note on variables suffixes</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.sstatus">
+<code class="descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.sstatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solver status (basis status of variable).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Variable.status">
+<code class="descname">status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Variable.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>AMPL status if not <cite>in</cite>, otherwise solver status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.Variable.__module__">
+<code class="descname">__module__</code><em class="property"> = 'amplpy.variable'</em><a class="headerlink" href="#amplpy.Variable.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="constraint.html" title="Constraint"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="entity.html" title="Entity"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2017, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

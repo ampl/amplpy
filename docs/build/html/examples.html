@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python API examples &#8212; AMPL API 1.4-alpha documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.4-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="AMPLException" href="classes/amplexception.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="classes/amplexception.html" title="AMPLException"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python API examples</a><ul>
+<li><a class="reference internal" href="#example-1-first-steps">Example 1: First steps</a></li>
+<li><a class="reference internal" href="#example-2-get-and-set-ampl-options">Example 2: Get and set AMPL options</a></li>
+<li><a class="reference internal" href="#example-3-use-ampl-asynchronously">Example 3: Use AMPL asynchronously</a></li>
+<li><a class="reference internal" href="#example-4-get-and-set-data-through-dataframes">Example 4: Get and set data through DataFrames</a></li>
+<li><a class="reference internal" href="#example-5-operate-with-multidimensional-data">Example 5: Operate with multidimensional data</a></li>
+<li><a class="reference internal" href="#example-6-assign-all-data-to-a-model-and-solve-it">Example 6: Assign all data to a model and solve it</a></li>
+<li><a class="reference internal" href="#example-7-build-an-efficient-frontier">Example 7: Build an efficient frontier</a></li>
+<li><a class="reference internal" href="#example-8-simple-heuristic">Example 8: Simple heuristic</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="classes/amplexception.html"
+                        title="previous chapter">AMPLException</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/examples.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-api-examples">
+<span id="secexamplespython"></span><h1>Python API examples<a class="headerlink" href="#python-api-examples" title="Permalink to this headline">¶</a></h1>
+<p>This section lists a few examples in Python.
+These are the same files that can be found in the <em>examples</em> directory of the
+distribution, and show the basic usage of the Python API.</p>
+<div class="section" id="example-1-first-steps">
+<h2>Example 1: First steps<a class="headerlink" href="#example-1-first-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/firstexample.py" download=""><code class="xref download docutils literal"><span class="pre">firstexample.py</span></code></a></p>
+<p>This example shows how to</p>
+<ul class="simple">
+<li>read an AMPL model</li>
+<li>reassign values to parameters</li>
+<li>solve the model</li>
+<li>display the objective function value</li>
+</ul>
+</div>
+<div class="section" id="example-2-get-and-set-ampl-options">
+<h2>Example 2: Get and set AMPL options<a class="headerlink" href="#example-2-get-and-set-ampl-options" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/optionsexample.py" download=""><code class="xref download docutils literal"><span class="pre">optionsexample.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>get and set AMPL options</li>
+</ul>
+</div>
+<div class="section" id="example-3-use-ampl-asynchronously">
+<h2>Example 3: Use AMPL asynchronously<a class="headerlink" href="#example-3-use-ampl-asynchronously" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/asyncexample.py" download=""><code class="xref download docutils literal"><span class="pre">asyncexample.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>set a callback for AMPL async operation (implementing <a class="reference internal" href="classes/errorhandler.html#amplpy.Runnable" title="amplpy.Runnable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Runnable</span></code></a>)</li>
+<li>start and interrupt async operations</li>
+</ul>
+</div>
+<div class="section" id="example-4-get-and-set-data-through-dataframes">
+<h2>Example 4: Get and set data through DataFrames<a class="headerlink" href="#example-4-get-and-set-data-through-dataframes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/dataframeexample.py" download=""><code class="xref download docutils literal"><span class="pre">dataframeexample.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>Use <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">amplpy.DataFrame</span></code></a> objects to assign values to sets and parameters</li>
+<li>Use an <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">amplpy.DataFrame</span></code></a> object to fetch and decouple values from a variable</li>
+</ul>
+</div>
+<div class="section" id="example-5-operate-with-multidimensional-data">
+<h2>Example 5: Operate with multidimensional data<a class="headerlink" href="#example-5-operate-with-multidimensional-data" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/multidimensionalexample.py" download=""><code class="xref download docutils literal"><span class="pre">multidimensionalexample.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>Use a <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">amplpy.DataFrame</span></code></a> to assign values to multidimensional parameters</li>
+</ul>
+</div>
+<div class="section" id="example-6-assign-all-data-to-a-model-and-solve-it">
+<h2>Example 6: Assign all data to a model and solve it<a class="headerlink" href="#example-6-assign-all-data-to-a-model-and-solve-it" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/dietmodel.py" download=""><code class="xref download docutils literal"><span class="pre">dietmodel.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>Assign all the data necessary to generate a model instance programmatically</li>
+</ul>
+</div>
+<div class="section" id="example-7-build-an-efficient-frontier">
+<h2>Example 7: Build an efficient frontier<a class="headerlink" href="#example-7-build-an-efficient-frontier" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/efficientfrontier.py" download=""><code class="xref download docutils literal"><span class="pre">efficientfrontier.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>build an efficient frontier by repeteatly solve a portfolio problem in AMPL</li>
+</ul>
+</div>
+<div class="section" id="example-8-simple-heuristic">
+<h2>Example 8: Simple heuristic<a class="headerlink" href="#example-8-simple-heuristic" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/trackingmodel.py" download=""><code class="xref download docutils literal"><span class="pre">trackingmodel.py</span></code></a></p>
+<p>This example shows how to:</p>
+<ul class="simple">
+<li>Do a simple heuristics for solving a QMIP problem, using the relaxed solution as a hint</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="classes/amplexception.html" title="AMPLException"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2017, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

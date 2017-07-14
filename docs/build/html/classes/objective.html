@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Objective &#8212; AMPL API 1.4-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.4-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Set" href="set.html" />
+    <link rel="prev" title="Constraint" href="constraint.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="set.html" title="Set"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="constraint.html" title="Constraint"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="constraint.html"
+                        title="previous chapter">Constraint</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="set.html"
+                        title="next chapter">Set</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/classes/objective.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="objective">
+<span id="ref-objective"></span><h1>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="amplpy.Objective">
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Objective</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">Entity</span></code></a>.</p>
+<p>Represents an AMPL objective. Note that, in case of a scalar objective, all
+the properties (corresponding to AMPL suffixes) of the objective instance
+can be accessed through methods like <a class="reference internal" href="#amplpy.Objective.value" title="amplpy.Objective.value"><code class="xref py py-func docutils literal"><span class="pre">value()</span></code></a>.
+The methods have the same name of the corresponding AMPL suffixes.
+See <a class="reference external" href="http://www.ampl.com/NEW/suffbuiltin.html">http://www.ampl.com/NEW/suffbuiltin.html</a> for a list of the available
+suffixes.</p>
+<p>All these methods throw a TypeError if called for a non scalar
+objective and an RuntimeError if called on an entity which has been deleted
+in the underlying intepreter.</p>
+<p>To gain access to all the values in an entity (for all instances and all
+suffixes for that entities), see <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a> and the
+<a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a> class.</p>
+<dl class="method">
+<dt id="amplpy.Objective.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of the objective.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.astatus">
+<code class="descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.astatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the AMPL status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.sstatus">
+<code class="descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.sstatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the solver status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.exitcode">
+<code class="descname">exitcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.exitcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exit code returned by solver after most recent solve with this
+objective.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.message">
+<code class="descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result message returned by solver after most recent solve with this
+objective.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.result">
+<code class="descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result string returned by solver after most recent solve with this
+objective.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop this objective instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore this objective (if it had been dropped, no effect otherwise).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.Objective.minimization">
+<code class="descname">minimization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.minimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sense of this objective. Returns True if minimize,
+False if maximize.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.Objective.__module__">
+<code class="descname">__module__</code><em class="property"> = 'amplpy.objective'</em><a class="headerlink" href="#amplpy.Objective.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="set.html" title="Set"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="constraint.html" title="Constraint"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2017, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
