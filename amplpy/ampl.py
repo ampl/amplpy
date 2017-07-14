@@ -17,7 +17,6 @@ from .exceptions import AMPLException
 from .entity import Entity
 from .utils import Utils, lock_call
 from . import amplpython
-import time
 
 
 class AMPL(object):
@@ -374,7 +373,6 @@ class AMPL(object):
         def async():
             self._lock.acquire()
             try:
-                time.sleep(0.01)  # FIXME: without sleep() it locks
                 self._impl.eval(amplstatements)
             except Exception:
                 self._lock.release()

@@ -272,7 +272,6 @@ class TestAMPL(TestBase.TestBase):
             mutex2.acquire()
             callback.ready = False
             ampl.evalAsync('display {i in A: i not in A};', callback)
-            self.assertTrue(ampl.isBusy())
             ampl.interrupt()
             self.assertFalse(callback.ready)
             mutex2.release()
