@@ -1,5 +1,23 @@
 # -*- coding: utf-8 -*-
+"""
+AMPLPY
+------
 
+AMPL API is an interface that allows developers to access the features of the
+AMPL interpreter from within a programming language. All model generation and
+solver interaction is handled directly by AMPL, which leads to great stability
+and speed; the library just acts as an intermediary, and the added overhead
+(in terms of memory and CPU usage) depends mostly on how much data is read
+back from AMPL, the size of the model as such is irrelevant. Functions for
+directly assigning data to AMPL parameters and sets are provided, which can
+be used instead of the normal AMPL data reading procedures.
+
+Repositories:
+`````````````
+
+* GitHub Repository: https://github.com/ampl/amplpy
+* PyPI Repository: https://pypi.python.org/pypi/amplpy
+"""
 from setuptools import setup, Extension
 import platform
 import os
@@ -33,26 +51,36 @@ libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.1.0a25',
+    version='0.1.0a33',
     description='Python API for AMPL',
-    long_description=readme,
-    author='Filipe Brandao',
-    author_email='fdabrandao@ampl.com',
-    url='https://github.com/ampl/amplpy',
-    license='BSD',
+    long_description=__doc__,
+    license='BSD-3',
     platforms='any',
+    author='Filipe Brandão',
+    author_email='fdabrandao@ampl.com',
+    url='http://ampl.com/',
+    download_url='https://github.com/ampl/amplpy',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Console',
-        'Operating System :: OS Independent',
+        'License :: OSI Approved',
+        'Topic :: Software Development',
+        'Topic :: Scientific/Engineering',
+        'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
+        'Operating System :: POSIX',
+        'Operating System :: Unix',
+        'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Programming Language :: C++',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Topic :: Scientific/Engineering',
+        'Programming Language :: Python :: Implementation :: CPython',
     ],
     packages=['amplpy'],
     ext_modules=[Extension(
