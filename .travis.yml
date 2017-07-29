@@ -5,8 +5,14 @@ matrix:
         - docker
     - os: osx
 
+env:
+  global:
+    - TWINE_USERNAME=fdabrandao
+    # Note: TWINE_PASSWORD is set in Travis settings
+
 script:
   - python updatelib.py
   - pip install cibuildwheel==0.4.0
   - cibuildwheel --output-dir wheelhouse
-
+  - python -m pip install twine
+  - python -m twine upload wheelhouse/*.whl
