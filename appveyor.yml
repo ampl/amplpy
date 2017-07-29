@@ -1,4 +1,5 @@
 build_script:
+  - python updatelib.py
   - pip install cibuildwheel==0.4.0
   - cibuildwheel --output-dir wheelhouse
 artifacts:
