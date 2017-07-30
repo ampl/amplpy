@@ -34,9 +34,8 @@ from setuptools import setup, Extension
 import platform
 import os
 
-
-with open('README.md') as f:
-    readme = f.read()
+OSTYPE = platform.system()
+x64 = platform.architecture()[0] == '64bit'
 
 
 def ls_dir(base_dir):
@@ -49,21 +48,19 @@ def ls_dir(base_dir):
 
 
 def make_relative_rpath(path):
-    ostype = platform.system()
-    if ostype == 'Darwin':
+    if OSTYPE == 'Darwin':
         return '-Wl,-rpath,@loader_path/' + path
-    elif ostype == 'Linux':
+    elif OSTYPE == 'Linux':
         return '-Wl,-rpath,$ORIGIN/' + path
     else:
         return ''
 
 
-x64 = platform.architecture()[0] == '64bit'
 libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.1.1a2',
+    version='0.1.1a4',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
@@ -73,13 +70,13 @@ setup(
     url='http://ampl.com/',
     download_url='https://github.com/ampl/amplpy',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
-        'License :: OSI Approved',
         'Topic :: Software Development',
         'Topic :: Scientific/Engineering',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX',
         'Operating System :: Unix',
         'Operating System :: MacOS',
@@ -100,6 +97,9 @@ setup(
         libraries=['ampl'],
         library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
+        extra_compile_args=[
+            '/EHsc' if OSTYPE == 'Windows' else ''
+        ],
         extra_link_args=[
             make_relative_rpath(os.path.join('amplpy', 'amplpython', libdir))
         ],
