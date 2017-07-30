@@ -5,6 +5,10 @@ build_script:
   - python updatelib.py
   - pip install cibuildwheel==0.4.0
   - cibuildwheel --output-dir wheelhouse
+artifacts:
+  - path: "wheelhouse\\*.whl"
+    name: Wheels
+on_success:
   - ps: >-
       if ($env:APPVEYOR_REPO_TAG -eq "true") {
         python -m pip install twine
@@ -13,6 +17,3 @@ build_script:
         python -m pip install twine
         python -m twine upload (resolve-path wheelhouse\*.whl)
       }
-artifacts:
-  - path: "wheelhouse\\*.whl"
-    name: Wheels

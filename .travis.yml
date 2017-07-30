@@ -14,5 +14,7 @@ script:
   - python updatelib.py
   - pip install cibuildwheel==0.4.0
   - cibuildwheel --output-dir wheelhouse
+
+after_success:
   - python -m pip install twine
   - python -m twine upload wheelhouse/*.whl
