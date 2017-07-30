@@ -67,7 +67,7 @@ class TestEntities(TestBase.TestBase):
     def testVariable(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
-        ampl.solve()
+        # ampl.solve()
         self.assertEqual(
             ampl.getVariable('Buy').numInstances(),
             ampl.getSet('FOOD').size()
@@ -119,7 +119,7 @@ class TestEntities(TestBase.TestBase):
     def testConstraint(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
-        ampl.solve()
+        # ampl.solve()
         self.assertEqual(
             ampl.getConstraint('diet').numInstances(),
             ampl.getSet('NUTR').size()

@@ -60,7 +60,7 @@ libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.1.1a4',
+    version='0.1.1a5',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
@@ -98,7 +98,7 @@ setup(
         library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
         extra_compile_args=[
-            '/EHsc' if OSTYPE == 'Windows' else ''
+            '/EHsc' if OSTYPE == 'Windows' else '-std=c++11'
         ],
         extra_link_args=[
             make_relative_rpath(os.path.join('amplpy', 'amplpython', libdir))
