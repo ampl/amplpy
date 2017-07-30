@@ -10,4 +10,4 @@ artifacts:
     name: Wheels
 on_success:
   - pip install twine
-  - cmd: python -m twine upload wheelhouse\*.whl || echo "Error!"
+  - cmd: python -m twine upload wheelhouse\*.whl || exit 0
