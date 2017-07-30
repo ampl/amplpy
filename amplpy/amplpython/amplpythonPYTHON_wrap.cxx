@@ -4186,6 +4186,15 @@ namespace swig {
 #include <stddef.h>
 
 
+#if PY_VERSION_HEX>=0x03000000
+  #define _PyString_AsString(str) PyUnicode_AsUTF8(str)
+  #define _PyString_Check(obj) PyUnicode_Check(obj)
+#else
+  #define _PyString_AsString(str) PyString_AsString(str)
+  #define _PyString_Check(obj) PyString_Check(obj)
+#endif
+
+
   namespace std {
 #if _WIN64
     typedef unsigned __int64 size_t;
@@ -10595,7 +10604,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -11013,7 +11022,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -11075,7 +11084,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     /* Check if is a list */
@@ -11084,10 +11093,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
       int i = 0;
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj2,i);
-        if (PyString_Check(o))
-        arg3[i] = PyString_AsString(PyList_GetItem(obj2,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj2,i);
+        if (_PyString_Check(obj)) {
+          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
           return NULL;
@@ -11163,7 +11172,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     /* Check if is a list */
@@ -11600,7 +11609,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     /* Check if is a list */
@@ -11609,10 +11618,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
       int i = 0;
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj2,i);
-        if (PyString_Check(o))
-        arg3[i] = PyString_AsString(PyList_GetItem(obj2,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj2,i);
+        if (_PyString_Check(obj)) {
+          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
           return NULL;
@@ -11697,7 +11706,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     /* Check if is a list */
@@ -11923,10 +11932,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -12070,10 +12079,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
       int i = 0;
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj2,i);
-        if (PyString_Check(o))
-        arg3[i] = PyString_AsString(PyList_GetItem(obj2,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj2,i);
+        if (_PyString_Check(obj)) {
+          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
           return NULL;
@@ -12176,10 +12185,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -12199,10 +12208,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       int i = 0;
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj2,i);
-        if (PyString_Check(o))
-        arg3[i] = PyString_AsString(PyList_GetItem(obj2,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj2,i);
+        if (_PyString_Check(obj)) {
+          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
           return NULL;
@@ -12918,10 +12927,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
       int i = 0;
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj5,i);
-        if (PyString_Check(o))
-        arg6[i] = PyString_AsString(PyList_GetItem(obj5,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj5,i);
+        if (_PyString_Check(obj)) {
+          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
           return NULL;
@@ -13067,10 +13076,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
       int i = 0;
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj5,i);
-        if (PyString_Check(o))
-        arg6[i] = PyString_AsString(PyList_GetItem(obj5,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj5,i);
+        if (_PyString_Check(obj)) {
+          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
           return NULL;
@@ -13210,10 +13219,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
       int i = 0;
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj5,i);
-        if (PyString_Check(o))
-        arg6[i] = PyString_AsString(PyList_GetItem(obj5,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj5,i);
+        if (_PyString_Check(obj)) {
+          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
           return NULL;
@@ -13338,10 +13347,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
       int i = 0;
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj5,i);
-        if (PyString_Check(o))
-        arg6[i] = PyString_AsString(PyList_GetItem(obj5,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj5,i);
+        if (_PyString_Check(obj)) {
+          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
           return NULL;
@@ -13430,10 +13439,10 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -15701,10 +15710,10 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -20450,10 +20459,10 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -26458,10 +26467,10 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -27349,10 +27358,10 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
       int i = 0;
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj2,i);
-        if (PyString_Check(o))
-        arg3[i] = PyString_AsString(PyList_GetItem(obj2,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj2,i);
+        if (_PyString_Check(obj)) {
+          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
           return NULL;
@@ -27535,10 +27544,10 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -30898,7 +30907,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -31649,7 +31658,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -32400,7 +32409,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -33151,7 +33160,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -33902,7 +33911,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -34478,7 +34487,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   {
     try {
@@ -34583,7 +34592,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"OOOO:new_AMPLException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   ecode2 = SWIG_AsVal_int(obj2, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -34596,7 +34605,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, PyObject *args) {
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = PyString_AsString(obj4);
+  arg4 = _PyString_AsString(obj4);
   
   {
     try {
@@ -35045,7 +35054,7 @@ SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_LicenseException",&obj1)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   {
     try {
@@ -35147,7 +35156,7 @@ SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_FileIOException",&obj1)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   {
     try {
@@ -35249,7 +35258,7 @@ SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject 
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_UnsupportedOperationException",&obj1)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   {
     try {
@@ -35361,7 +35370,7 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
   
   if (!PyArg_ParseTuple(args,(char *)"OOOO:new_InvalidSubscriptException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   ecode2 = SWIG_AsVal_int(obj2, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -35374,7 +35383,7 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = PyString_AsString(obj4);
+  arg4 = _PyString_AsString(obj4);
   
   {
     try {
@@ -35486,7 +35495,7 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"OOOO:new_SyntaxErrorException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   ecode2 = SWIG_AsVal_int(obj2, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -35499,7 +35508,7 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args) {
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = PyString_AsString(obj4);
+  arg4 = _PyString_AsString(obj4);
   
   {
     try {
@@ -35611,7 +35620,7 @@ SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"OOOO:new_NoDataException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   ecode2 = SWIG_AsVal_int(obj2, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -35624,7 +35633,7 @@ SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args) {
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = PyString_AsString(obj4);
+  arg4 = _PyString_AsString(obj4);
   
   {
     try {
@@ -36684,7 +36693,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, PyObject *args) {
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_Environment",&obj1)) SWIG_fail;
   
-  arg1 = PyString_AsString(obj1);
+  arg1 = _PyString_AsString(obj1);
   
   {
     try {
@@ -36837,10 +36846,10 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   
-  arg3 = PyString_AsString(obj2);
+  arg3 = _PyString_AsString(obj2);
   
   {
     try {
@@ -36897,7 +36906,7 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -37167,7 +37176,7 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -37880,7 +37889,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -37938,7 +37947,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -37996,7 +38005,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -38054,7 +38063,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -38112,7 +38121,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -38170,7 +38179,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -38227,7 +38236,7 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -38550,7 +38559,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -38616,7 +38625,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -38682,7 +38691,7 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -38911,7 +38920,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39016,10 +39025,10 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   
-  arg3 = PyString_AsString(obj2);
+  arg3 = _PyString_AsString(obj2);
   
   {
     try {
@@ -39077,7 +39086,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39135,7 +39144,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39196,7 +39205,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -39259,7 +39268,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39320,7 +39329,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -39383,7 +39392,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39444,7 +39453,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   ecode3 = SWIG_AsVal_bool(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -39506,7 +39515,7 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39563,7 +39572,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39621,7 +39630,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39690,7 +39699,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, PyObject *args) 
   }
   arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
   
-  arg3 = PyString_AsString(obj2);
+  arg3 = _PyString_AsString(obj2);
   
   {
     try {
@@ -39918,7 +39927,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -39975,7 +39984,7 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = PyString_AsString(obj1);
+  arg2 = _PyString_AsString(obj1);
   
   {
     try {
@@ -40759,10 +40768,10 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
@@ -40855,10 +40864,10 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
       int i = 0;
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
-        PyObject *o = PyList_GetItem(obj1,i);
-        if (PyString_Check(o))
-        arg2[i] = PyString_AsString(PyList_GetItem(obj1,i));
-        else {
+        PyObject *obj = PyList_GetItem(obj1,i);
+        if (_PyString_Check(obj)) {
+          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+        } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
           return NULL;
