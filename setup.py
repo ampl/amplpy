@@ -56,11 +56,20 @@ def make_relative_rpath(path):
         return ''
 
 
+def compile_args():
+    if OSTYPE == 'Windows':
+        return ['/TP /EHsc']
+    elif OSTYPE == 'Linux':
+        return ['-std=c++11']
+    else:
+        return []
+
+
 libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.1.1a5',
+    version='0.1.1a6',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
@@ -97,9 +106,7 @@ setup(
         libraries=['ampl'],
         library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
         include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
-        extra_compile_args=[
-            '/EHsc' if OSTYPE == 'Windows' else '-std=c++11'
-        ],
+        extra_compile_args=compile_args(),
         extra_link_args=[
             make_relative_rpath(os.path.join('amplpy', 'amplpython', libdir))
         ],
