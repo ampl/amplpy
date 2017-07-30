@@ -9,11 +9,5 @@ artifacts:
   - path: "wheelhouse\\*.whl"
     name: Wheels
 on_success:
-  - ps: >-
-      if ($env:APPVEYOR_REPO_TAG -eq "true") {
-        python -m pip install twine
-        python -m twine upload (resolve-path wheelhouse\*.whl) 2> $null
-      } else {
-        python -m pip install twine
-        python -m twine upload (resolve-path wheelhouse\*.whl) 2> $null
-      }
+  - pip install twine
+  - cmd: python -m twine upload wheelhouse\*.whl || echo "Error!"
