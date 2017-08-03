@@ -89,11 +89,25 @@ class DataFrame(BaseClass):
                 index = (index,)
             if isinstance(columns, basestring):
                 columns = (columns,)
+            index_names = [
+                col[0] if isinstance(col, tuple) else col
+                for col in index
+            ]
+            column_names = [
+                col[0] if isinstance(col, tuple) else col
+                for col in columns
+            ]
             self._impl = amplpython.DataFrame.factory(
-                len(index),
-                list(index) + list(columns),
-                len(index) + len(columns)
+                len(index_names),
+                list(index_names) + list(column_names),
+                len(index_names) + len(column_names)
             )
+            for col in index:
+                if isinstance(col, tuple):
+                    self.setColumn(col[0], col[1])
+            for col in columns:
+                if isinstance(col, tuple):
+                    self.setColumn(col[0], col[1])
         else:
             self._impl = kwargs.get('_impl', None)
 
