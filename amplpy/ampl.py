@@ -19,6 +19,11 @@ from .utils import Utils, lock_call
 from . import amplpython
 
 
+class DefaultOutputHandler(OutputHandler):
+    def output(self, kind, msg):
+        print(msg)
+
+
 class AMPL(object):
     """An AMPL translator.
 
@@ -82,6 +87,7 @@ class AMPL(object):
         self._errorhandler = None
         self._outputhandler = None
         self._lock = Lock()
+        self.setOutputHandler(DefaultOutputHandler())
 
     def __del__(self):
         """
