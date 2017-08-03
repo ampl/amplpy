@@ -88,6 +88,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
+/register.sh
 /clear.sh
+/test.sh
 /test.py
 /tmp
