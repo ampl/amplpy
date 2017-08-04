@@ -21,6 +21,14 @@ to download a working version that can be installed quickly.
 
 Documentation: http://ampl.com/api/nightly/python/
 
+## Examples
+
+- Quick start: [Diet Model](notebooks/diet.ipynb)
+
+- More examples:
+  - [examples/](examples/)
+  - [notebooks/](notebooks/)
+
 ### Repositories
 
 - GitHub Repository: https://github.com/ampl/amplpy
@@ -47,3 +55,4 @@ BSD-3
 
 ***
 Copyright © 2017 AMPL Optimization inc. All rights reserved.
+
