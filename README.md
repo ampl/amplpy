@@ -19,12 +19,12 @@ or
 [trial page](http://ampl.com/try-ampl/request-a-full-trial/)
 to download a working version that can be installed quickly.
 
-### Documentation:
+#### Documentation
 
 - http://amplpy.readthedocs.io
 - http://ampl.com/api/nightly/python/
 
-### Examples
+#### Examples
 
 - Quick start: [Diet Model](notebooks/diet.ipynb)
 
@@ -32,19 +32,25 @@ to download a working version that can be installed quickly.
   - [examples/](examples/)
   - [notebooks/](notebooks/)
 
-### Repositories
+#### Repositories
 
 - GitHub Repository: https://github.com/ampl/amplpy
 - PyPI Repository: https://pypi.python.org/pypi/amplpy
 
-### Setup
+#### Setup
 
 Install from the [repository](https://pypi.python.org/pypi/amplpy):
 ```
 $ pip install pympl
 ```
+Or:
+```
+$ python -m pip install pympl
+```
 
-Or build and install locally:
+Note: For Windows, Linux, and macOS, the `amplpy` package comes with 26 binary wheels for Python 2.7, 3.3, 3.4, 3.5, and 3.6. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
+
+Alternatively, you can build and install the package locally:
 ```
 $ git clone git@github.com:ampl/amplpy.git
 $ cd amplpy
@@ -52,7 +58,7 @@ $ python setup.py build
 $ pip install . --upgrade
 ```
 
-### License
+#### License
 
 BSD-3
 

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting started &#8212; AMPL API 1.4-alpha documentation</title>
+    <title>Getting started &#8212; AMPL API 1.4a (amplpy-0.2.0) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.4-alpha',
+        VERSION:     '1.4a (amplpy-0.2.0)',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -101,10 +101,20 @@ working version that can be installed quickly.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pip install amplpy
 </pre></div>
 </div>
+<p>Or alternatively:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python -m pip install amplpy
+</pre></div>
+</div>
+<p>Note: For Windows, Linux, and macOS, the <code class="docutils literal"><span class="pre">amplpy</span></code> package comes with 26 binary
+wheels for Python 2.7, 3.3, 3.4, 3.5, and 3.6. Please make sure that you are
+using the latest version of <code class="docutils literal"><span class="pre">pip</span></code> before installing <code class="docutils literal"><span class="pre">amplpy</span></code> (upgrade using
+<code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code>).
+If a binary wheel for your platform is not available,
+a C++ compiler and python development libraries will be required.</p>
 </div>
 <div class="section" id="initial-test">
 <h2>Initial test<a class="headerlink" href="#initial-test" title="Permalink to this headline">¶</a></h2>
-<p>To begin, open a command/terminal window and clone our git repository</p>
+<p>To begin, open a command/terminal window and clone our <a class="reference external" href="https://github.com/ampl/amplpy">GitHub repository</a>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>git clone git@github.com:ampl/amplpy.git
 </pre></div>
 </div>
@@ -115,7 +125,8 @@ working version that can be installed quickly.</p>
 <p>where optionally <code class="docutils literal"><span class="pre">&lt;solver&gt;</span></code> is the name of a solver that has been installed with AMPL.
 (If a solver is not specified, AMPL’s default choice will be used.) This will solve
 several small diet problems and then display the optimal amounts of the foods
-from the last solution.</p>
+from the last solution. Alternatively, you can download the examples directly from
+<a class="reference external" href="https://github.com/ampl/amplpy/tree/master/examples">https://github.com/ampl/amplpy/tree/master/examples</a>.</p>
 </div>
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
@@ -151,7 +162,7 @@ include with your application the AMPL executable (<code class="docutils literal
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4-alpha documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
