@@ -66,7 +66,10 @@ class TestDataFrame(TestBase.TestBase):
         df3.addColumn('amt', values)
 
     def testPandas(self):
-        import pandas as pd
+        try:
+            import pandas as pd
+        except ImportError:
+            return
         df = pd.DataFrame({
             'a': [1, 2],
             'b': [3, 4]
