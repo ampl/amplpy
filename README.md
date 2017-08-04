@@ -19,7 +19,10 @@ or
 [trial page](http://ampl.com/try-ampl/request-a-full-trial/)
 to download a working version that can be installed quickly.
 
-Documentation: http://ampl.com/api/nightly/python/
+## Documentation:
+
+- http://amplpy.readthedocs.io
+- http://ampl.com/api/nightly/python/
 
 ## Examples
 
@@ -55,4 +58,3 @@ BSD-3
 
 ***
 Copyright © 2017 AMPL Optimization inc. All rights reserved.
-

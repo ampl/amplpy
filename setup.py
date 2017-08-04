@@ -22,7 +22,11 @@ or
 `trial page <http://ampl.com/try-ampl/request-a-full-trial/>`_
 to download a working version that can be installed quickly.
 
-Documentation: http://ampl.com/api/nightly/python/
+Documentation:
+``````````````
+
+* http://amplpy.readthedocs.io
+* http://ampl.com/api/nightly/python/
 
 Repositories:
 `````````````
@@ -69,7 +73,7 @@ libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.1.1',
+    version='0.1.2',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
