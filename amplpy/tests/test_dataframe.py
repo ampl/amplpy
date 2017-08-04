@@ -65,6 +65,21 @@ class TestDataFrame(TestBase.TestBase):
         ]
         df3.addColumn('amt', values)
 
+    def testPandas(self):
+        import pandas as pd
+        df = pd.DataFrame({
+            'a': [1, 2],
+            'b': [3, 4]
+        },
+            index=['x', 'y']
+        )
+        df = DataFrame.fromPandas(df)
+        self.assertTrue(isinstance(df.toDict(), dict))
+        self.assertTrue(isinstance(df.toList(), list))
+        self.assertTrue(isinstance(df.toPandas(), pd.DataFrame))
+        self.assertEqual(set(df.toDict().keys()), set(['x', 'y']))
+        self.assertEqual(set(df.toList()[0][1:]), set([1, 3]))
+
 
 if __name__ == '__main__':
     unittest.main()

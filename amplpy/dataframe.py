@@ -262,6 +262,9 @@ class DataFrame(BaseClass):
             self.addRow(key + value)
 
     def toDict(self):
+        """
+        Return a dictionary with the DataFrame data.
+        """
         d = {}
         nindices = self.getNumIndices()
         for i in range(self.getNumRows()):
@@ -274,7 +277,47 @@ class DataFrame(BaseClass):
         return d
 
     def toList(self):
+        """
+        Return a list with the DataFrame data.
+        """
         return [tuple(self.getRowByIndex(i)) for i in range(self.getNumRows())]
+
+    def toPandas(self):
+        """
+        Return a pandas DataFrame with the DataFrame data.
+        """
+        import pandas as pd
+        nindices = self.getNumIndices()
+        headers = self.getHeaders()
+        columns = {
+            header: list(self.getColumn(header))
+            for header in headers[nindices:]
+        }
+        index = zip(*[
+            list(self.getColumn(header))
+            for header in headers[:nindices]
+        ])
+        index = [key if len(key) > 1 else key[0] for key in index]
+        return pd.DataFrame(columns, index=index)
+
+    @classmethod
+    def fromPandas(cls, df):
+        """
+        Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
+        """
+        keys = [
+            key if isinstance(key, tuple) else (key,)
+            for key in df.index.tolist()
+        ]
+        index = [
+            ('index{}'.format(i), cindex)
+            for i, cindex in enumerate(zip(*keys))
+        ]
+        columns = [
+            (cname, df[cname].tolist())
+            for cname in df.columns.tolist()
+        ]
+        return cls(index=index, columns=columns)
 
     @classmethod
     def _fromDataFrameRef(cls, dfRef):

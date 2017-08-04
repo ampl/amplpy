@@ -21,7 +21,7 @@ from . import amplpython
 
 class DefaultOutputHandler(OutputHandler):
     def output(self, kind, msg):
-        print(msg)
+        print(msg, end='')
 
 
 class AMPL(object):
