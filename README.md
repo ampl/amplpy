@@ -26,7 +26,7 @@ to download a working version that can be installed quickly.
 
 #### Examples
 
-- Quick start: [Diet Model](notebooks/diet.ipynb)
+- Quick start: [Introductory Tutorial](notebooks/quickstart.ipynb)
 
 - More examples:
   - [examples/](examples/)
