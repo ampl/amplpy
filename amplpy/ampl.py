@@ -81,7 +81,19 @@ class AMPL(object):
             translator cannot be started for any other reason.
         """
         if environment is None:
-            self._impl = amplpython.AMPL()
+            try:
+                self._impl = amplpython.AMPL()
+            except RuntimeError as e:
+                from sys import stderr
+                if str(e).startswith('AMPL could not be started'):
+                    message = (
+                        '''* Please make sure that the AMPL folder is in the'''
+                        ''' system search path. *'''
+                    )
+                    print('*' * len(message))
+                    print(message)
+                    print('*' * len(message))
+                raise
         else:
             self._impl = amplpython.AMPL(environment._impl)
         self._errorhandler = None
@@ -274,7 +286,10 @@ class AMPL(object):
         execute optimization commands without restarting it will throw an
         exception.
         """
-        self._impl.close()
+        try:
+            self._impl.close()
+        except AttributeError:
+            pass
 
     def isRunning(self):
         """
