@@ -773,3 +773,23 @@ class AMPL(object):
             self._lock
         )
         return EntityMap(parameters, Parameter)
+
+    def getOptions(self):
+        """
+        Get all the options.
+        """
+        class Options(object):
+            def __getitem__(_self, name):
+                return self.getOption(name)
+
+            def __setitem__(_self, name, value):
+                self.setOption(name, value)
+
+        return Options()
+
+    var = property(getVariables)
+    con = property(getConstraints)
+    obj = property(getObjectives)
+    set = property(getSets)
+    param = property(getParameters)
+    option = property(getOptions)
