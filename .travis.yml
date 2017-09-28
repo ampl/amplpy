@@ -12,6 +12,7 @@ env:
 
 script:
   - python updatelib.py
+  - pip install requests==2.5.3
   - pip install cibuildwheel==0.5.1
   - cibuildwheel --output-dir wheelhouse
 
