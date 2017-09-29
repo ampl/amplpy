@@ -85,6 +85,18 @@ The first line creates a new AMPL object with all default settings, incapsulated
 The second, which is the preferred way to access AMPL options, gets the value of the option
 `version` from AMPL as a string and prints the result on the active console.
 
+
+If the AMPL installation directory is not in the system search path, you should create
+the AMPL object as follows instead:
+
+.. code-block:: python
+
+   from amplpy import AMPL, Environment
+   ampl = AMPL(Environment('full path to the AMPL installation directory'))
+
+Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if the path includes backslashes.
+
+
 Load a model from file
 ----------------------
 
@@ -147,7 +159,7 @@ The same is true for all other entities.
 Modify model data (assign values to parameters)
 -----------------------------------------------
 
-The input data of an optimisation model is stored in its parameters; these can be scalar or vectorial entities.
+The input data of an optimization model is stored in its parameters; these can be scalar or vectorial entities.
 Two ways are provided to change the value of vectorial parameter: change specific values or change all values at
 once. The example shows an example of both ways, reassigning the values of the parameter costs firstly specifically,
 then altogether. Each time, it then solves the model and get the objective function. The function used to change the

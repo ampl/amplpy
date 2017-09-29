@@ -378,6 +378,30 @@ This method will fail if called on an AMPL expression which does not evaluate to
   print(ampl.getValue('pp'))
 
 
+.. _secAlternativeAccess:
+
+Alternative method to access entities
+-------------------------------------
+
+For those that prefer a less verbose syntax,
+there is an alternative and more compact syntax for accessing entities and options:
+
+* Accessing ``ampl.var[name]`` is equivalent to ``ampl.getVariable(name)`` (:func:`amplpy.AMPL.getVariable()`);
+* Accessing ``ampl.con[name]`` is equivalent to ``ampl.getConstraint(name)`` (:func:`amplpy.AMPL.getConstraint()`);
+* Accessing ``ampl.obj[name]`` is equivalent to ``ampl.getObjective(name)`` (:func:`amplpy.AMPL.getObjective()`);
+* Accessing ``ampl.set[name]`` is equivalent to ``ampl.getSet(name)`` (:func:`amplpy.AMPL.getSet()`);
+* Accessing ``ampl.param[name]`` is equivalent to ``ampl.getParameter(name)`` (:func:`amplpy.AMPL.getParameter()`);
+* Accessing ``ampl.option[name]`` is equivalent to ``ampl.getOption(name)`` (:func:`amplpy.AMPL.getOption()`).
+
+Setting entities and options is also possible:
+
+* ``ampl.var[name] = value`` is equivalent to ``ampl.getVariable(name).setValue(value)``  (:func:`amplpy.Variable.setValue()`);
+* ``ampl.con[name] = value`` is equivalent to ``ampl.getConstraint(name).setDual(value)`` (:func:`amplpy.Constraint.setDual()`);
+* ``ampl.set[name] = values`` is equivalent to ``ampl.getSet(name).setValues(values)`` (:func:`amplpy.Set.setValues()`);
+* ``ampl.param[name] = value`` is equivalent to ``ampl.getParameter(name).set(value)`` if the parameter is scalar (:func:`amplpy.Parameter.set()`), ``ampl.getParameter(name).setValues(value)`` otherwise (:func:`amplpy.Parameter.setValues()`);
+* ``ampl.option[name] = value`` is equivalent to ``ampl.setOption(name, value)`` (:func:`amplpy.AMPL.setOption()`).
+
+
 .. _secVariableSuffixesNotes:
 
 Note on variables suffixes

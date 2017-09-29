@@ -63,10 +63,12 @@ Import the ``amplpy`` modude with
    import amplpy
 
 Together with your existing AMPL implementation, this will provide the full
-object library and access to all AMPL functions.
+object library and access to all AMPL functions. Please make sure that the
+folder containing the AMPL executable is in the system search path.
 
 Deployment
 ----------
 
 To deploy AMPL API applications to users who do not have their own AMPL installations,
 include with your application the AMPL executable (``ampl`` or ``ampl.exe``), and the ``amplpy`` package.
+Note that the folder containing the AMPL executable should be in the system search path.

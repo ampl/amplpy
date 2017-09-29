@@ -54,6 +54,7 @@ Alternatively, you can build and install the package locally:
 ```
 $ git clone git@github.com:ampl/amplpy.git
 $ cd amplpy
+$ python updatelib.py
 $ python setup.py build
 $ pip install . --upgrade
 ```
