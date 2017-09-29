@@ -38,13 +38,6 @@ class EntityMap(Iterator):
         assert isinstance(key, basestring)
         return self.entityClass(self.obj.getIndex(key))
 
-    def __setitem__(self, key, value):
-        item = self.__getitem__(key)
-        if isinstance(value, (float, int, basestring)):
-            item.set(value)
-        else:
-            item.setValues(value)
-
     def size(self):
         return int(self.obj.size())
 

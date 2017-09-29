@@ -15,7 +15,7 @@ from .dataframe import DataFrame
 from .iterators import EntityMap
 from .exceptions import AMPLException
 from .entity import Entity
-from .utils import Utils, lock_call
+from .utils import Utils, lock_and_call
 from . import amplpython
 
 
@@ -140,7 +140,7 @@ class AMPL(object):
             command in tabular form.
         """
         # FIXME: only works for the first statement.
-        return lock_call(
+        return lock_and_call(
             lambda: DataFrame._fromDataFrameRef(
                 self._impl.getData(list(statements), len(statements))
             ),
@@ -161,7 +161,7 @@ class AMPL(object):
         Returns:
             The AMPL entity with the specified name.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Entity(self._impl.getEntity(name)),
             self._lock
         )
@@ -176,7 +176,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified variable does not exist.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Variable(self._impl.getVariable(name)),
             self._lock
         )
@@ -191,7 +191,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified constraint does not exist.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Constraint(self._impl.getConstraint(name)),
             self._lock
         )
@@ -206,7 +206,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified objective does not exist.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Objective(self._impl.getObjective(name)),
             self._lock
         )
@@ -221,7 +221,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified set does not exist.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Set(self._impl.getSet(name)),
             self._lock
         )
@@ -236,7 +236,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified parameter does not exist.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Parameter(self._impl.getParameter(name)),
             self._lock
         )
@@ -267,7 +267,7 @@ class AMPL(object):
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
-        lock_call(
+        lock_and_call(
             lambda: self._impl.eval(amplstatements),
             self._lock
         )
@@ -295,7 +295,7 @@ class AMPL(object):
         """
         Returns true if the underlying engine is running.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: self._impl.isRunning(),
             self._lock
         )
@@ -318,7 +318,7 @@ class AMPL(object):
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: self._impl.solve(),
             self._lock
         )
@@ -451,12 +451,12 @@ class AMPL(object):
             Current working directory.
         """
         if path is None:
-            return lock_call(
+            return lock_and_call(
                 lambda: self._impl.cd(),
                 self._lock
             )
         else:
-            return lock_call(
+            return lock_and_call(
                 lambda: self._impl.cd(path),
                 self._lock
             )
@@ -476,22 +476,22 @@ class AMPL(object):
             TypeError: if the value has an invalid type.
         """
         if isinstance(value, bool):
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setBoolOption(name, value),
                 self._lock
             )
         elif isinstance(value, int):
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setIntOption(name, value),
                 self._lock
             )
         elif isinstance(value, float):
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setDblOption(name, value),
                 self._lock
             )
         elif isinstance(value, basestring):
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setOption(name, value),
                 self._lock
             )
@@ -513,7 +513,7 @@ class AMPL(object):
             InvalidArgumet: if the option name is not valid.
         """
         try:
-            value = lock_call(
+            value = lock_and_call(
                 lambda: self._impl.getOption(name).value(),
                 self._lock
             )
@@ -541,7 +541,7 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        lock_call(
+        lock_and_call(
             lambda: self._impl.read(fileName),
             self._lock
         )
@@ -560,7 +560,7 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        lock_call(
+        lock_and_call(
             lambda: self._impl.readData(fileName),
             self._lock
         )
@@ -577,7 +577,7 @@ class AMPL(object):
         Returns:
             The value of the expression.
         """
-        return lock_call(
+        return lock_and_call(
             lambda: Utils.castVariant(self._impl.getValue(scalarExpression)),
             self._lock
         )
@@ -597,12 +597,12 @@ class AMPL(object):
             AMPLException: if the data assignment procedure was not successful.
         """
         if setName is None:
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setData(dataFrame._impl),
                 self._lock
             )
         else:
-            lock_call(
+            lock_and_call(
                 lambda: self._impl.setData(dataFrame._impl, setName),
                 self._lock
             )
@@ -619,7 +619,7 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be read.
         """
-        lock_call(
+        lock_and_call(
             lambda: self._impl.readTable(tableName),
             self._lock
         )
@@ -636,7 +636,7 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be written.
         """
-        lock_call(
+        lock_and_call(
             lambda: self._impl.writeTable(tableName),
             self._lock
         )
@@ -655,7 +655,7 @@ class AMPL(object):
             amplExpressions: Expressions to be evaluated.
         """
         exprs = list(map(str, amplExpressions))
-        lock_call(
+        lock_and_call(
             lambda: self._impl.displayLst(exprs, len(exprs)),
             self._lock
         )
@@ -674,7 +674,7 @@ class AMPL(object):
 
         self._outputhandler = outputhandler
         self._outputhandler_internal = OutputHandlerInternal()
-        lock_call(
+        lock_and_call(
             lambda: self._impl.setOutputHandler(
                 self._outputhandler_internal
             ),
@@ -701,7 +701,7 @@ class AMPL(object):
 
         self._errorhandler = errorhandler
         self._errorhandler_internal = InternalErrorHandler()
-        lock_call(
+        lock_and_call(
             lambda: self._impl.setErrorHandler(self._errorhandler_internal),
             self._lock
         )
@@ -728,7 +728,7 @@ class AMPL(object):
         """
         Get all the variables declared.
         """
-        variables = lock_call(
+        variables = lock_and_call(
             lambda: self._impl.getVariables(),
             self._lock
         )
@@ -738,7 +738,7 @@ class AMPL(object):
         """
         Get all the constraints declared.
         """
-        constraints = lock_call(
+        constraints = lock_and_call(
             lambda: self._impl.getConstraints(),
             self._lock
         )
@@ -748,7 +748,7 @@ class AMPL(object):
         """
         Get all the objectives declared.
         """
-        objectives = lock_call(
+        objectives = lock_and_call(
             lambda: self._impl.getObjectives(),
             self._lock
         )
@@ -758,7 +758,7 @@ class AMPL(object):
         """
         Get all the sets declared.
         """
-        sets = lock_call(
+        sets = lock_and_call(
             lambda: self._impl.getSets(),
             self._lock
         )
@@ -768,15 +768,95 @@ class AMPL(object):
         """
         Get all the parameters declared.
         """
-        parameters = lock_call(
+        parameters = lock_and_call(
             lambda: self._impl.getParameters(),
             self._lock
         )
         return EntityMap(parameters, Parameter)
 
-    def getOptions(self):
+    def _var(self):
         """
-        Get all the options.
+        Get/Set a variable.
+        """
+        class Variables(object):
+            def __getitem__(_self, name):
+                return self.getVariable(name)
+
+            def __setitem__(_self, name, value):
+                self.getVariable(name).setValue(value)
+
+            def __iter__(_self):
+                return self.getVariables()
+
+        return Variables()
+
+    def _con(self):
+        """
+        Get/Set a constraint.
+        """
+        class Constraints(object):
+            def __getitem__(_self, name):
+                return self.getConstraint(name)
+
+            def __setitem__(_self, name, value):
+                self.getConstraint(name).setDual(value)
+
+            def __iter__(_self):
+                return self.getConstraints()
+
+        return Constraints()
+
+    def _obj(self):
+        """
+        Get an objective.
+        """
+        class Objectives(object):
+            def __getitem__(_self, name):
+                return self.getObjective(name)
+
+            def __iter__(_self):
+                return self.getObjectives()
+
+        return Objectives()
+
+    def _set(self):
+        """
+        Get/Set a set.
+        """
+        class Sets(object):
+            def __getitem__(_self, name):
+                return self.getSet(name)
+
+            def __setitem__(_self, name, values):
+                self.getSet(name).setValues(values)
+
+            def __iter__(_self):
+                return self.getSets()
+
+        return Sets()
+
+    def _param(self):
+        """
+        Get/Set a parameter.
+        """
+        class Parameters(object):
+            def __getitem__(_self, name):
+                return self.getParameter(name)
+
+            def __setitem__(_self, name, value):
+                if isinstance(value, (float, int, basestring)):
+                    self.getParameter(name).set(value)
+                else:
+                    self.getParameter(name).setValues(value)
+
+            def __iter__(_self):
+                return self.getParameters()
+
+        return Parameters()
+
+    def _option(self):
+        """
+        Get/Set an option.
         """
         class Options(object):
             def __getitem__(_self, name):
@@ -787,9 +867,9 @@ class AMPL(object):
 
         return Options()
 
-    var = property(getVariables)
-    con = property(getConstraints)
-    obj = property(getObjectives)
-    set = property(getSets)
-    param = property(getParameters)
-    option = property(getOptions)
+    var = property(_var)
+    con = property(_con)
+    obj = property(_obj)
+    set = property(_set)
+    param = property(_param)
+    option = property(_option)

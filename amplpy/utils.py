@@ -7,7 +7,7 @@ from . import amplpython
 from .base import BaseClass
 
 
-def lock_call(call, lock):
+def lock_and_call(call, lock):
     lock.acquire()
     try:
         result = call()
