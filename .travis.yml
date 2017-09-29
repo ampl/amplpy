@@ -16,5 +16,5 @@ script:
   - cibuildwheel --output-dir wheelhouse
 
 after_success:
-  - python -m pip install twine
+  - sudo python -m pip install twine
   - python -m twine upload wheelhouse/*.whl || true
