@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.0 - 2017-10-13
+- Add alternative method of access entities and options
+
 ## 0.2.0 - 2017-08-05
 - Add DataFrame.fromPandas and DataFrame.toPandas
 

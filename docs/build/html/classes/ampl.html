@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AMPL &#8212; AMPL API 1.4a (amplpy-0.2.0) documentation</title>
+    <title>AMPL &#8212; AMPL API 1.4 (amplpy-0.3.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.4a (amplpy-0.2.0)',
+        VERSION:     '1.4 (amplpy-0.3.0)',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -168,6 +168,12 @@ directory).</dd>
 <dd><p>Stops the underlying engine, and release all any further attempt to
 execute optimization commands without restarting it will throw an
 exception.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.AMPL.con">
+<code class="descname">con</code><a class="headerlink" href="#amplpy.AMPL.con" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set a constraint.</p>
 </dd></dl>
 
 <dl class="method">
@@ -438,6 +444,24 @@ Does nothing if the engine and the solver are idle.</p>
 <dd><p>Returns true if the underlying engine is running.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="amplpy.AMPL.obj">
+<code class="descname">obj</code><a class="headerlink" href="#amplpy.AMPL.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an objective.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.AMPL.option">
+<code class="descname">option</code><a class="headerlink" href="#amplpy.AMPL.option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set an option.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.AMPL.param">
+<code class="descname">param</code><a class="headerlink" href="#amplpy.AMPL.param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set a parameter.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="amplpy.AMPL.read">
 <code class="descname">read</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.read" title="Permalink to this definition">¶</a></dt>
@@ -524,6 +548,12 @@ AMPL statement:</p>
 and invalidates all entities.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="amplpy.AMPL.set">
+<code class="descname">set</code><a class="headerlink" href="#amplpy.AMPL.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set a set.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="amplpy.AMPL.setData">
 <code class="descname">setData</code><span class="sig-paren">(</span><em>dataFrame</em>, <em>setName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setData" title="Permalink to this definition">¶</a></dt>
@@ -595,6 +625,12 @@ interpreting user commands.</dd>
 <dt>Args:</dt>
 <dd>callback: Callback to be executed when the solver is done.</dd>
 </dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.AMPL.var">
+<code class="descname">var</code><a class="headerlink" href="#amplpy.AMPL.var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set a variable.</p>
 </dd></dl>
 
 <dl class="method">
@@ -669,7 +705,7 @@ AMPL statement</p>
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>

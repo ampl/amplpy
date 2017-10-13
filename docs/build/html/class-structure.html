@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Class structure &#8212; AMPL API 1.4a (amplpy-0.2.0) documentation</title>
+    <title>Class structure &#8212; AMPL API 1.4 (amplpy-0.3.0) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.4a (amplpy-0.2.0)',
+        VERSION:     '1.4 (amplpy-0.3.0)',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="getting-started.html" title="Getting started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -63,6 +63,7 @@
 <li><a class="reference internal" href="#access-to-scalar-values">Access to scalar values</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#alternative-method-to-access-entities">Alternative method to access entities</a></li>
 <li><a class="reference internal" href="#note-on-variables-suffixes">Note on variables suffixes</a></li>
 </ul>
 </li>
@@ -405,6 +406,27 @@ This method will fail if called on an AMPL expression which does not evaluate to
 </div>
 </div>
 </div>
+<div class="section" id="alternative-method-to-access-entities">
+<span id="secalternativeaccess"></span><h2>Alternative method to access entities<a class="headerlink" href="#alternative-method-to-access-entities" title="Permalink to this headline">¶</a></h2>
+<p>For those that prefer a less verbose syntax,
+there is an alternative and more compact syntax for accessing entities and options:</p>
+<ul class="simple">
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.var[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getVariable(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.con[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getConstraint(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.obj[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getObjective(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getObjective()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.set[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getSet(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getSet()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.param[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getParameter(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getParameter()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal"><span class="pre">ampl.option[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getOption(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOption" title="amplpy.AMPL.getOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getOption()</span></code></a>).</li>
+</ul>
+<p>Setting entities and options is also possible:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">ampl.var[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getVariable(name).setValue(value)</span></code>  (<a class="reference internal" href="classes/variable.html#amplpy.Variable.setValue" title="amplpy.Variable.setValue"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.setValue()</span></code></a>);</li>
+<li><code class="docutils literal"><span class="pre">ampl.con[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getConstraint(name).setDual(value)</span></code> (<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.setDual" title="amplpy.Constraint.setDual"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.setDual()</span></code></a>);</li>
+<li><code class="docutils literal"><span class="pre">ampl.set[name]</span> <span class="pre">=</span> <span class="pre">values</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getSet(name).setValues(values)</span></code> (<a class="reference internal" href="classes/set.html#amplpy.Set.setValues" title="amplpy.Set.setValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Set.setValues()</span></code></a>);</li>
+<li><code class="docutils literal"><span class="pre">ampl.param[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getParameter(name).set(value)</span></code> if the parameter is scalar (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.set" title="amplpy.Parameter.set"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Parameter.set()</span></code></a>), <code class="docutils literal"><span class="pre">ampl.getParameter(name).setValues(value)</span></code> otherwise (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.setValues" title="amplpy.Parameter.setValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Parameter.setValues()</span></code></a>);</li>
+<li><code class="docutils literal"><span class="pre">ampl.option[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.setOption(name,</span> <span class="pre">value)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setOption()</span></code></a>).</li>
+</ul>
+</div>
 <div class="section" id="note-on-variables-suffixes">
 <span id="secvariablesuffixesnotes"></span><h2>Note on variables suffixes<a class="headerlink" href="#note-on-variables-suffixes" title="Permalink to this headline">¶</a></h2>
 <p>For AMPL versions prior to 20150516, there was a glitch with
@@ -440,7 +462,7 @@ other variables have been instantiated.  Example:</p>
         <li class="right" >
           <a href="getting-started.html" title="Getting started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

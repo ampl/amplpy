@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Python quick start &#8212; AMPL API 1.4a (amplpy-0.2.0) documentation</title>
+    <title>Python quick start &#8212; AMPL API 1.4 (amplpy-0.3.0) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.4a (amplpy-0.2.0)',
+        VERSION:     '1.4 (amplpy-0.3.0)',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -165,6 +165,13 @@ on the console.</p>
 <p>The first line creates a new AMPL object with all default settings, incapsulated in a smart pointer to ensure resource deletion.
 The second, which is the preferred way to access AMPL options, gets the value of the option
 <cite>version</cite> from AMPL as a string and prints the result on the active console.</p>
+<p>If the AMPL installation directory is not in the system search path, you should create
+the AMPL object as follows instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span><span class="p">,</span> <span class="n">Environment</span>
+<span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">(</span><span class="n">Environment</span><span class="p">(</span><span class="s1">&#39;full path to the AMPL installation directory&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Note that you may need to use raw strings (e.g., <cite>r’C:\ampl\ampl.mswin64’</cite>) or escape the slashes (e.g., <cite>‘C:\\ampl\\ampl.mswin64’</cite>) if the path includes backslashes.</p>
 </div>
 <div class="section" id="load-a-model-from-file">
 <h2>Load a model from file<a class="headerlink" href="#load-a-model-from-file" title="Permalink to this headline">¶</a></h2>
@@ -216,7 +223,7 @@ to the objective function value:</p>
 </div>
 <div class="section" id="modify-model-data-assign-values-to-parameters">
 <h2>Modify model data (assign values to parameters)<a class="headerlink" href="#modify-model-data-assign-values-to-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The input data of an optimisation model is stored in its parameters; these can be scalar or vectorial entities.
+<p>The input data of an optimization model is stored in its parameters; these can be scalar or vectorial entities.
 Two ways are provided to change the value of vectorial parameter: change specific values or change all values at
 once. The example shows an example of both ways, reassigning the values of the parameter costs firstly specifically,
 then altogether. Each time, it then solves the model and get the objective function. The function used to change the
@@ -297,7 +304,7 @@ by value.</p>
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4a (amplpy-0.2.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.3.0) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
