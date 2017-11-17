@@ -9868,6 +9868,136 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DataFrame_equals(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
+  ampl::DataFrame *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_equals",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_equals" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_equals" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_equals" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
+  }
+  arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
+  {
+    try {
+      result = (bool)((ampl::DataFrame const *)arg1)->operator ==((ampl::DataFrame const &)*arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataFrame_differs(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
+  ampl::DataFrame *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DataFrame_differs",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_differs" "', argument " "1"" of type '" "ampl::DataFrame const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__DataFrame,  0  | 0);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_differs" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_differs" "', argument " "2"" of type '" "ampl::DataFrame const &""'"); 
+  }
+  arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
+  {
+    try {
+      result = (bool)((ampl::DataFrame const *)arg1)->operator !=((ampl::DataFrame const &)*arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DataFrame_getNumCols(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
@@ -34481,17 +34611,12 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
-  PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
-  
-  arg1 = _PyString_AsString(obj1);
-  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
+      result = (ampl::AMPLException *)new ampl::AMPLException();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -34531,12 +34656,17 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
-  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
+  if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
+  
+  arg1 = _PyString_AsString(obj1);
+  
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException();
+      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -34660,7 +34790,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_AMPLException__SWIG_2(self, args);
+    return _wrap_new_AMPLException__SWIG_1(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -34675,7 +34805,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_AMPLException__SWIG_1(self, args);
+      return _wrap_new_AMPLException__SWIG_2(self, args);
     }
   }
   if (argc == 4) {
@@ -34707,8 +34837,8 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_AMPLException'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    ampl::AMPLException::AMPLException(ampl::AMPLException const &)\n"
-    "    ampl::AMPLException::AMPLException(fmt::CStringRef)\n"
     "    ampl::AMPLException::AMPLException()\n"
+    "    ampl::AMPLException::AMPLException(fmt::CStringRef)\n"
     "    ampl::AMPLException::AMPLException(fmt::CStringRef,int,int,fmt::CStringRef)\n");
   return -1;
 }
@@ -35605,39 +35735,16 @@ fail:
 SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   fmt::CStringRef arg1 ;
-  int arg2 ;
-  int arg3 ;
-  fmt::CStringRef arg4 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
   ampl::NoDataException *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_NoDataException",&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:new_NoDataException",&obj1)) SWIG_fail;
   
   arg1 = _PyString_AsString(obj1);
   
-  ecode2 = SWIG_AsVal_int(obj2, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_NoDataException" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj3, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_NoDataException" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  
-  arg4 = _PyString_AsString(obj4);
-  
   {
     try {
-      result = (ampl::NoDataException *)new ampl::NoDataException(arg1,arg2,arg3,arg4);
+      result = (ampl::NoDataException *)new ampl::NoDataException(arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -37212,6 +37319,59 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj((new ampl::Environment::iterator(static_cast< const ampl::Environment::iterator& >(result))), SWIGTYPE_p_ampl__internal__CountedIteratorT_ampl__internal__EnvironmentIterator_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Environment_size(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Environment *arg1 = (ampl::Environment *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::size_t result;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "Environment_size takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_size" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Environment * >(argp1);
+  {
+    try {
+      result = (std::size_t)((ampl::Environment const *)arg1)->size();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -43884,6 +44044,11 @@ SwigPyBuiltin__ampl__DataFrame_richcompare(PyObject *self, PyObject *other, int 
   assert(tuple);
   PyTuple_SET_ITEM(tuple, 0, other);
   Py_XINCREF(other);
+  switch (op) {
+    case Py_EQ : result = _wrap_DataFrame_equals(self, tuple); break;
+    case Py_NE : result = _wrap_DataFrame_differs(self, tuple); break;
+    default : break;
+  }
   if (!result) {
     if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {
       result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);
@@ -43898,6 +44063,8 @@ SwigPyBuiltin__ampl__DataFrame_richcompare(PyObject *self, PyObject *other, int 
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__DataFrame_methods[] = {
   { "clone", (PyCFunction) _wrap_DataFrame_clone, METH_VARARGS, (char*) "" },
+  { "equals", (PyCFunction) _wrap_DataFrame_equals, METH_VARARGS, (char*) "" },
+  { "differs", (PyCFunction) _wrap_DataFrame_differs, METH_VARARGS, (char*) "" },
   { "getNumCols", (PyCFunction) _wrap_DataFrame_getNumCols, METH_VARARGS, (char*) "" },
   { "getNumRows", (PyCFunction) _wrap_DataFrame_getNumRows, METH_VARARGS, (char*) "" },
   { "getNumIndices", (PyCFunction) _wrap_DataFrame_getNumIndices, METH_VARARGS, (char*) "" },
@@ -56685,6 +56852,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Environment_methods[] = {
   { "begin", (PyCFunction) _wrap_Environment_begin, METH_VARARGS, (char*) "" },
   { "end", (PyCFunction) _wrap_Environment_end, METH_VARARGS, (char*) "" },
   { "find", (PyCFunction) _wrap_Environment_find, METH_VARARGS, (char*) "" },
+  { "size", (PyCFunction) _wrap_Environment_size, METH_VARARGS, (char*) "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -57436,9 +57604,6 @@ static void *_p_ampl__InvalidSubscriptExceptionTo_p_ampl__AMPLException(void *x,
 static void *_p_ampl__SyntaxErrorExceptionTo_p_ampl__AMPLException(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ampl::AMPLException *)  ((ampl::SyntaxErrorException *) x));
 }
-static void *_p_ampl__NoDataExceptionTo_p_ampl__AMPLException(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((ampl::AMPLException *)  ((ampl::NoDataException *) x));
-}
 static void *_p_ampl__AMPLExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((std::runtime_error *)  ((ampl::AMPLException *) x));
 }
@@ -57458,7 +57623,7 @@ static void *_p_ampl__SyntaxErrorExceptionTo_p_std__runtime_error(void *x, int *
     return (void *)((std::runtime_error *) (ampl::AMPLException *) ((ampl::SyntaxErrorException *) x));
 }
 static void *_p_ampl__NoDataExceptionTo_p_std__runtime_error(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((std::runtime_error *) (ampl::AMPLException *) ((ampl::NoDataException *) x));
+    return (void *)((std::runtime_error *)  ((ampl::NoDataException *) x));
 }
 static void *_p_ampl__SetInstanceTo_p_ampl__Instance(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ampl::Instance *)  ((ampl::SetInstance *) x));
@@ -57658,7 +57823,7 @@ static swig_cast_info _swigc__p_TupleArray[] = {  {&_swigt__p_TupleArray, 0, 0, 
 static swig_cast_info _swigc__p_ValueType[] = {  {&_swigt__p_ValueType, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_VariantArray[] = {  {&_swigt__p_VariantArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__AMPL[] = {  {&_swigt__p_ampl__AMPL, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ampl__AMPLException[] = {  {&_swigt__p_ampl__AMPLException, 0, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_ampl__AMPLException, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_ampl__AMPLException, 0, 0},  {&_swigt__p_ampl__NoDataException, _p_ampl__NoDataExceptionTo_p_ampl__AMPLException, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ampl__AMPLException[] = {  {&_swigt__p_ampl__AMPLException, 0, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_ampl__AMPLException, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_ampl__AMPLException, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__ConstraintInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Constraint, _p_ampl__ConstraintTo_p_ampl__BasicEntityT_ampl__ConstraintInstance_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__ObjectiveInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Objective, _p_ampl__ObjectiveTo_p_ampl__BasicEntityT_ampl__ObjectiveInstance_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ampl__BasicEntityT_ampl__SetInstance_t[] = {  {&_swigt__p_ampl__BasicEntityT_ampl__SetInstance_t, 0, 0, 0},  {&_swigt__p_ampl__Set, _p_ampl__SetTo_p_ampl__BasicEntityT_ampl__SetInstance_t, 0, 0},{0, 0, 0, 0}};
@@ -57729,7 +57894,7 @@ static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_iterator[] = {  {&_swigt__p_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__runtime_error[] = {  {&_swigt__p_std__runtime_error, 0, 0, 0},  {&_swigt__p_ampl__AMPLException, _p_ampl__AMPLExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__NoDataException, _p_ampl__NoDataExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__LicenseException, _p_ampl__LicenseExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__FileIOException, _p_ampl__FileIOExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__UnsupportedOperationException, _p_ampl__UnsupportedOperationExceptionTo_p_std__runtime_error, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__runtime_error[] = {  {&_swigt__p_std__runtime_error, 0, 0, 0},  {&_swigt__p_ampl__AMPLException, _p_ampl__AMPLExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__InvalidSubscriptException, _p_ampl__InvalidSubscriptExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__SyntaxErrorException, _p_ampl__SyntaxErrorExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__LicenseException, _p_ampl__LicenseExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__FileIOException, _p_ampl__FileIOExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__UnsupportedOperationException, _p_ampl__UnsupportedOperationExceptionTo_p_std__runtime_error, 0, 0},  {&_swigt__p_ampl__NoDataException, _p_ampl__NoDataExceptionTo_p_std__runtime_error, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
@@ -60217,11 +60382,11 @@ SWIG_init(void) {
   SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);
   builtin_pytype->tp_new = PyType_GenericNew;
   builtin_base_count = 0;
-  builtin_basetype = SWIG_MangledTypeQuery("_p_ampl__AMPLException");
+  builtin_basetype = SWIG_MangledTypeQuery("_p_std__runtime_error");
   if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData*) builtin_basetype->clientdata)->pytype) {
     builtin_bases[builtin_base_count++] = ((SwigPyClientData*) builtin_basetype->clientdata)->pytype;
   } else {
-    PyErr_SetString(PyExc_TypeError, "Could not create type 'NoDataException' as base 'ampl::AMPLException' has not been initialized.\n");
+    PyErr_SetString(PyExc_TypeError, "Could not create type 'NoDataException' as base 'std::runtime_error' has not been initialized.\n");
 #if PY_VERSION_HEX >= 0x03000000
     return NULL;
 #else
