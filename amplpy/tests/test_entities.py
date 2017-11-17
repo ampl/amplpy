@@ -255,6 +255,14 @@ class TestEntities(TestBase.TestBase):
         for food in ampl.getSet('FOOD').members():
             self.assertEqual(cost2[food], cost[food])
 
+    def testPrecision(self):
+        PI = 3.1415926535897932384626433832795028841971
+        ampl = self.ampl
+        ampl.eval('param x;')
+        ampl.getParameter('x').set(PI)
+        ampl.eval("display x;")  # invalidate cache
+        self.assertEqual(ampl.param['x'].value(), PI)
+
     def testObjective(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
