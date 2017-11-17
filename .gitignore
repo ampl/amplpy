@@ -88,6 +88,7 @@ ENV/
 # Rope project settings
 .ropeproject
 
+/workspace_private
 /bumpversion.sh
 /register.sh
 /clear.sh
