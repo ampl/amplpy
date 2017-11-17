@@ -2,15 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.1 - 2017-11-17
+- Fix precision issue in parameters.
+
 ## 0.3.0 - 2017-10-13
-- Add alternative method of access entities and options
+- Introduce alternative method to access entities.
 
 ## 0.2.0 - 2017-08-05
-- Add DataFrame.fromPandas and DataFrame.toPandas
+- Add DataFrame.fromPandas and DataFrame.toPandas.
 
 ## 0.1.2 - 2017-08-04
-- Improve DataFrame initialization
-- Fix issue with stdout in jupyter notebooks
+- Improve DataFrame initialization.
+- Fix issue with stdout in jupyter notebooks.
 
 ## 0.1.1 - 2017-07-30
 - Fix issues with strings in Python 3.
