@@ -873,3 +873,32 @@ class AMPL(object):
     set = property(_set)
     param = property(_param)
     option = property(_option)
+
+    def _exportGurobiModel(self, minimize=True, _vars=True, _cons=True):
+        """
+        Export the model to Gurobi.
+        """
+        from gurobipy import GRB, read
+        from tempfile import mkdtemp
+        from shutil import rmtree
+        from os import path
+        tmp_dir = mkdtemp()
+        self.eval('option auxfiles rc; write m{}/model;'.format(tmp_dir))
+        mps_file = path.join(tmp_dir, 'model.mps')
+        col_file = path.join(tmp_dir, 'model.col')
+        row_file = path.join(tmp_dir, 'model.row')
+        model = read(mps_file)
+        if minimize is False:
+            model.ModelSense = GRB.MAXIMIZE
+        if _vars is True:
+            model._vars = {
+                var: model.getVarByName('C{:04d}'.format(i+1))
+                for (i, var) in enumerate(open(col_file, 'r').read().split())
+            }
+        if _cons is True:
+            model._cons = {
+                con: model.getConstrByName('R{:04d}'.format(i+1))
+                for (i, con) in enumerate(open(row_file, 'r').read().split())
+            }
+        rmtree(tmp_dir)
+        return model
