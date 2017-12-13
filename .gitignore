@@ -93,5 +93,7 @@ ENV/
 /register.sh
 /clear.sh
 /test.sh
+/test2.sh
+/test3.sh
 /test.py
 /tmp

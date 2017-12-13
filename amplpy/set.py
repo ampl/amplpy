@@ -2,6 +2,7 @@
 from __future__ import print_function, absolute_import, division
 from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
+from numbers import Real
 
 from .entity import Entity
 from .utils import Utils, Tuple
@@ -38,7 +39,8 @@ class Set(Entity):
 
     def arity(self):
         """
-        The arity of s, or number of components in each member of this set.
+        The arity of the set, or number of components in each member of this
+        set.
         """
         return int(self._impl.arity())
 
@@ -103,7 +105,7 @@ class Set(Entity):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
-            elif all(isinstance(value, (float, int)) for value in values):
+            elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             elif all(isinstance(value, tuple) for value in values):

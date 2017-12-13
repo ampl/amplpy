@@ -2,6 +2,7 @@
 from __future__ import print_function, absolute_import, division
 from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
+from numbers import Real
 
 from .base import BaseClass
 from .utils import Utils, Tuple
@@ -176,7 +177,7 @@ class DataFrame(BaseClass):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.addColumnStr(header, values)
-            elif all(isinstance(value, (float, int)) for value in values):
+            elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.addColumnDbl(header, values)
             else:
@@ -203,7 +204,7 @@ class DataFrame(BaseClass):
         if any(isinstance(value, basestring) for value in values):
             values = list(map(str, values))
             self._impl.setColumnStr(header, values, len(values))
-        elif all(isinstance(value, (float, int)) for value in values):
+        elif all(isinstance(value, Real) for value in values):
             values = list(map(float, values))
             self._impl.setColumnDbl(header, values, len(values))
         else:
@@ -305,6 +306,8 @@ class DataFrame(BaseClass):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
         """
+        import pandas as pd
+        assert isinstance(df, pd.DataFrame)
         keys = [
             key if isinstance(key, tuple) else (key,)
             for key in df.index.tolist()

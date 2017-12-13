@@ -2,6 +2,7 @@
 from __future__ import print_function, absolute_import, division
 from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
+from numbers import Real
 
 from .entity import Entity
 from .utils import Utils, Tuple
@@ -83,7 +84,7 @@ class Parameter(Entity):
             self._impl.set(value)
         else:
             index, value = args
-            if isinstance(value, (float, int)):
+            if isinstance(value, Real):
                 self._impl.setTplDbl(Tuple(index)._impl, value)
             elif isinstance(value, basestring):
                 self._impl.setTplStr(Tuple(index)._impl, value)
@@ -112,7 +113,7 @@ class Parameter(Entity):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesTaStr(indices, values, len(values))
-            elif all(isinstance(value, (float, int)) for value in values):
+            elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesTaDbl(indices, values, len(values))
             else:
@@ -121,7 +122,7 @@ class Parameter(Entity):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
-            elif all(isinstance(value, (float, int)) for value in values):
+            elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             else:

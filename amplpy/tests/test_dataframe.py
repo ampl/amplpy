@@ -7,6 +7,7 @@ from . import TestBase
 import unittest
 from amplpy import DataFrame
 import amplpy
+import os
 
 
 class TestDataFrame(TestBase.TestBase):
@@ -72,7 +73,7 @@ class TestDataFrame(TestBase.TestBase):
             return
         df = pd.DataFrame({
             'a': [1, 2],
-            'b': [3, 4]
+            'b': [3.5, 4]
         },
             index=['x', 'y']
         )
@@ -81,7 +82,15 @@ class TestDataFrame(TestBase.TestBase):
         self.assertTrue(isinstance(df.toList(), list))
         self.assertTrue(isinstance(df.toPandas(), pd.DataFrame))
         self.assertEqual(set(df.toDict().keys()), set(['x', 'y']))
-        self.assertEqual(set(df.toList()[0][1:]), set([1, 3]))
+        self.assertEqual(set(df.toList()[0][1:]), set([1, 3.5]))
+        csv_file = os.path.join(os.path.dirname(__file__), 'data.csv')
+        p_df = pd.read_table(csv_file, sep=';', index_col=0)
+        df = DataFrame.fromPandas(p_df)
+        self.assertTrue(isinstance(df.toDict(), dict))
+        self.assertEqual(set(df.toDict().keys()), set([1.0, 2.0, 3.0]))
+        self.assertEqual(set(df.toList()[0]), set([1.0, 0.01]))
+        self.assertEqual(set(df.toList()[1]), set([2.0, 0.02]))
+        self.assertEqual(set(df.toList()[2]), set([3.0, 0.03]))
 
 
 if __name__ == '__main__':
