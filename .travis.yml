@@ -4,16 +4,16 @@ matrix:
       services:
         - docker
     - os: osx
-
+      osx_image: xcode7.3
 env:
   global:
     - TWINE_USERNAME=fdabrandao
     # Note: TWINE_PASSWORD is set in Travis settings
 
 script:
-  - sudo python -m pip install urllib3[secure] --upgrade
+  - pip install urllib3[secure] --upgrade
   - python updatelib.py
-  - sudo python -m pip install cibuildwheel==0.5.1
+  - pip install cibuildwheel==0.5.1
   - cibuildwheel --output-dir wheelhouse
 
 after_success:
