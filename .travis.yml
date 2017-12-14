@@ -11,9 +11,9 @@ env:
     # Note: TWINE_PASSWORD is set in Travis settings
 
 script:
-  - pip install urllib3[secure] --upgrade
+  - sudo pip install urllib3[secure] --upgrade
   - python updatelib.py
-  - pip install cibuildwheel==0.5.1
+  - sudo pip install cibuildwheel==0.5.1
   - cibuildwheel --output-dir wheelhouse
 
 after_success:
