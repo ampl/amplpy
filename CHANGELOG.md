@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.3 - 2018-01-09
+- Fix issues related to the passing of infinity to AMPL.
+
 ## 0.3.2 - 2017-12-13
 - Fix issue with DataFrames created with pandas.read_table.
 
