@@ -263,6 +263,17 @@ class TestEntities(TestBase.TestBase):
         ampl.eval("display x;")  # invalidate cache
         self.assertEqual(ampl.param['x'].value(), PI)
 
+    def testInfinity(self):
+        inf = float('inf')
+        ampl = self.ampl
+        ampl.eval('param x;')
+        ampl.getParameter('x').set(inf)
+        self.assertEqual(ampl.getValue('x'), inf)
+        ampl.eval('param y{1..3};')
+        ampl.getParameter('y').setValues([inf]*3)
+        for i in range(3):
+            self.assertEqual(ampl.getValue('y[{}]'.format(i+1)), inf)
+
     def testObjective(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
