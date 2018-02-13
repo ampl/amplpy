@@ -24,6 +24,14 @@ class DefaultOutputHandler(OutputHandler):
         print(msg, end='')
 
 
+class DefaultErrorHandler(ErrorHandler):
+    def error(self, exception):
+        print('Error:', exception.getMessage())
+
+    def warning(self, exception):
+        print('Warning:', exception.getMessage())
+
+
 class AMPL(object):
     """An AMPL translator.
 
@@ -100,6 +108,7 @@ class AMPL(object):
         self._outputhandler = None
         self._lock = Lock()
         self.setOutputHandler(DefaultOutputHandler())
+        self.setErrorHandler(DefaultErrorHandler())
 
     def __del__(self):
         """
