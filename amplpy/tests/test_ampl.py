@@ -174,8 +174,9 @@ class TestAMPL(TestBase.TestBase):
             def warning(self, exception):
                 raise exception
 
-        with self.assertRaises(RuntimeError):
-            ampl.eval('X X;')
+        self.assertEqual(ampl.getErrorHandler().last_error, None)
+        ampl.eval('X X;')
+        self.assertEqual(ampl.getErrorHandler().last_error, 'syntax error')
 
         errorHandlerIgnore = ErrorHandlerIgnore()
         ampl.setErrorHandler(errorHandlerIgnore)

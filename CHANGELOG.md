@@ -2,8 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.3.4 - 2018-02-13
+## 0.3.4 - 2018-02-24
 - Fix: error messages not being shown in Jupyter Notebooks
+- Breaking: AMPL syntax errors no longer raise exceptions by default
 
 ## 0.3.3 - 2018-01-09
 - Fix issues related to the passing of infinity to AMPL.

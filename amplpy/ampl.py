@@ -24,12 +24,18 @@ class DefaultOutputHandler(OutputHandler):
         print(msg, end='')
 
 
-class DefaultErrorHandler(ErrorHandler):
+class DefaultErrorHandler(amplpython.ErrorHandler):
+    def __init__(self):
+        self.last_error = None
+        self.last_warning = None
+
     def error(self, exception):
-        print('Error:', exception.getMessage())
+        self.last_error = exception.getMessage()
+        print('Error:', self.last_error)
 
     def warning(self, exception):
-        print('Warning:', exception.getMessage())
+        self.last_warning = exception.getMessage()
+        print('Warning:', self.last_warning)
 
 
 class AMPL(object):
@@ -63,8 +69,8 @@ class AMPL(object):
     - Generic errors coming from misusing the API, which are detected in
       Python, are thrown as exceptions.
 
-    The default implementation of the error handler throws exceptions on errors
-    and prints to console on warnings.
+    The default implementation of the error handler prints errors and warnings
+    to the console.
 
     The output of every user interaction with the underlying translator is
     handled implementing the abstract class :class:`~amplpy.OutputHandler`.
@@ -263,8 +269,8 @@ class AMPL(object):
         OutputHandler (see getOutputHandler and
         setOutputHandler).
 
-        By default, errors are reported as exceptions and warnings are printed
-        on stdout. This behavior can be changed reassigning an ErrorHandler
+        By default, errors and warnings are printed on stdout.
+        This behavior can be changed reassigning an ErrorHandler
         using setErrorHandler.
 
         Args:

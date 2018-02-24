@@ -118,7 +118,7 @@ Error handling is two-faced:
   and :func:`amplpy.AMPL.setErrorHandler()`.
 * Generic errors coming from the API, which are detected outside the translator are thrown as exceptions.
 
-The default implementation of the error handler throws exceptions on errors and prints the warnings to stdout.
+The default implementation of the error handler prints the errors and warnings to stdout.
 
 
 
