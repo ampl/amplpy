@@ -8,6 +8,10 @@ from .entity import Entity
 from .utils import Utils, Tuple
 from .dataframe import DataFrame
 from .iterators import MemberRangeIterator
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 
 class Set(Entity):
@@ -113,4 +117,7 @@ class Set(Entity):
             else:
                 raise TypeError
         else:
+            if np is not None and isinstance(values, np.ndarray):
+                self.setValues(DataFrame.fromNumpy(values).toList())
+                return
             Entity.setValues(self, values)

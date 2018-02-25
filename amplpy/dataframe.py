@@ -8,6 +8,14 @@ from .base import BaseClass
 from .utils import Utils, Tuple
 from .iterators import RowIterator, ColIterator
 from . import amplpython
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 
 class Row(BaseClass):
@@ -208,6 +216,7 @@ class DataFrame(BaseClass):
             values = list(map(float, values))
             self._impl.setColumnDbl(header, values, len(values))
         else:
+            print(values)
             raise NotImplementedError
 
     def getRow(self, key):
@@ -244,7 +253,9 @@ class DataFrame(BaseClass):
             The headers of this DataFrame.
         """
         headers = self._impl.getHeaders()
-        return tuple(headers.getIndex(i) for i in range(headers.size()))
+        return tuple(
+            headers.getIndex(i) for i in range(self._impl.getNumCols())
+        )
 
     def setValues(self, values):
         """
@@ -272,22 +283,38 @@ class DataFrame(BaseClass):
             row = list(self.getRowByIndex(i))
             if nindices > 1:
                 key = tuple(row[:nindices])
-            else:
+            elif nindices == 1:
                 key = row[0]
-            d[key] = row[nindices:]
+            else:
+                key = None
+            if len(row) - nindices == 0:
+                d[key] = None
+            elif len(row) - nindices == 1:
+                d[key] = row[nindices]
+            else:
+                d[key] = tuple(row[nindices:])
         return d
 
     def toList(self):
         """
         Return a list with the DataFrame data.
         """
-        return [tuple(self.getRowByIndex(i)) for i in range(self.getNumRows())]
+        if self.getNumCols() > 1:
+            return [
+                tuple(self.getRowByIndex(i))
+                for i in range(self.getNumRows())
+            ]
+        else:
+            return [
+                self.getRowByIndex(i)[0]
+                for i in range(self.getNumRows())
+            ]
 
     def toPandas(self):
         """
         Return a pandas DataFrame with the DataFrame data.
         """
-        import pandas as pd
+        assert pd is not None
         nindices = self.getNumIndices()
         headers = self.getHeaders()
         columns = {
@@ -299,14 +326,17 @@ class DataFrame(BaseClass):
             for header in headers[:nindices]
         ])
         index = [key if len(key) > 1 else key[0] for key in index]
-        return pd.DataFrame(columns, index=index)
+        if index == []:
+            return pd.DataFrame(columns, index=None)
+        else:
+            return pd.DataFrame(columns, index=index)
 
     @classmethod
     def fromPandas(cls, df):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
         """
-        import pandas as pd
+        assert pd is not None
         assert isinstance(df, pd.DataFrame)
         keys = [
             key if isinstance(key, tuple) else (key,)
@@ -320,6 +350,27 @@ class DataFrame(BaseClass):
             (cname, df[cname].tolist())
             for cname in df.columns.tolist()
         ]
+        return cls(index=index, columns=columns)
+
+    @classmethod
+    def fromNumpy(cls, data):
+        """
+        Create a :class:`~amplpy.DataFrame` from a numpy array or matrix.
+        """
+        assert np is not None
+        if isinstance(data, np.ndarray):
+            index = []
+            if len(data.shape) == 1:
+                columns = [('value', data.tolist())]
+            elif len(data.shape) == 2:
+                columns = [
+                    ('c{}'.format(i), col)
+                    for i, col in enumerate(zip(*data.tolist()))
+                ]
+            else:
+                raise TypeError
+        else:
+            raise TypeError
         return cls(index=index, columns=columns)
 
     @classmethod

@@ -2,9 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.0 - ##########
+- Improve interaction with Pandas and Numpy.
+- Add DataFrame.fromNumpy.
+- Entity.setValues now accepts Pandas DataFrames.
+- Parameter.setValues and Set.setValues now accept Numpy arrays and matrices.
+- Breaking: DataFrame.toList and DataFrame.doDict do not wrap scalar values into lists anymore.
+
 ## 0.3.4 - 2018-02-24
 - Fix: error messages not being shown in Jupyter Notebooks
-- Breaking: AMPL syntax errors no longer raise exceptions by default
+- Breaking: AMPL errors no longer raise exceptions by default
 
 ## 0.3.3 - 2018-01-09
 - Fix issues related to the passing of infinity to AMPL.

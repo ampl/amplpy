@@ -77,12 +77,31 @@ class TestDataFrame(TestBase.TestBase):
         },
             index=['x', 'y']
         )
+        df2 = pd.DataFrame({
+            'a': [10, 20, 30],
+        },
+            index=['x', 'y', 'z']
+        )
+        df3 = pd.DataFrame({}, index=['xx', 'yy'])
         df = DataFrame.fromPandas(df)
+        df2 = DataFrame.fromPandas(df2)
+        df3 = DataFrame.fromPandas(df3)
         self.assertTrue(isinstance(df.toDict(), dict))
         self.assertTrue(isinstance(df.toList(), list))
         self.assertTrue(isinstance(df.toPandas(), pd.DataFrame))
+
+        self.assertEqual(df.toList()[0][1:], (1, 3.5))
+        self.assertEqual(df2.toList()[0], ('x', 10))
+        self.assertEqual(df3.toList()[0], 'xx')
+
         self.assertEqual(set(df.toDict().keys()), set(['x', 'y']))
-        self.assertEqual(set(df.toList()[0][1:]), set([1, 3.5]))
+        self.assertEqual(set(df2.toDict().keys()), set(['x', 'y', 'z']))
+        self.assertEqual(set(df3.toDict().keys()), set(['xx', 'yy']))
+
+        self.assertEqual(df.toDict()['x'], (1, 3.5))
+        self.assertEqual(df2.toDict()['x'], 10)
+        self.assertEqual(df3.toDict()['xx'], None)
+
         csv_file = os.path.join(os.path.dirname(__file__), 'data.csv')
         p_df = pd.read_table(csv_file, sep=';', index_col=0)
         df = DataFrame.fromPandas(p_df)
@@ -92,6 +111,29 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(set(df.toList()[1]), set([2.0, 0.02]))
         self.assertEqual(set(df.toList()[2]), set([3.0, 0.03]))
 
+    def testNumpy(self):
+        try:
+            import numpy as np
+        except ImportError:
+            return
+        arr = np.array([1, 2, 3])
+        self.assertEqual(
+            DataFrame.fromNumpy(arr).toList(),
+            [1, 2, 3]
+        )
+        mat = np.matrix([[1, 2], [3, 4], [5, 6]])
+        self.assertEqual(
+            DataFrame.fromNumpy(mat).toList(),
+            [(1, 2), (3, 4), (5, 6)]
+        )
+        self.assertEqual(
+            DataFrame.fromNumpy(mat[:, 0]).toList(),
+            [1, 3, 5]
+        )
+        self.assertEqual(
+            DataFrame.fromNumpy(mat[:, 1]).toList(),
+            [2, 4, 6]
+        )
 
 if __name__ == '__main__':
     unittest.main()

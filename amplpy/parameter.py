@@ -7,6 +7,10 @@ from numbers import Real
 from .entity import Entity
 from .utils import Utils, Tuple
 from .dataframe import DataFrame
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 
 class Parameter(Entity):
@@ -118,7 +122,7 @@ class Parameter(Entity):
                 self._impl.setValuesTaDbl(indices, values, len(values))
             else:
                 raise TypeError
-        elif isinstance(values, (list, set)):
+        elif isinstance(values, (list, tuple)):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
@@ -128,4 +132,7 @@ class Parameter(Entity):
             else:
                 raise TypeError
         else:
+            if np is not None and isinstance(values, np.ndarray):
+                self.setValues(DataFrame.fromNumpy(values).toList())
+                return
             Entity.setValues(self, values)

@@ -7,6 +7,10 @@ from .base import BaseClass
 from .utils import Utils, Tuple
 from .dataframe import DataFrame
 from .iterators import InstanceIterator
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 
 
 class Entity(BaseClass):
@@ -194,4 +198,8 @@ class Entity(BaseClass):
         if isinstance(data, DataFrame):
             self._impl.setValuesDf(data._impl)
         else:
+            if pd is not None and isinstance(data, pd.DataFrame):
+                df = DataFrame.fromPandas(data)
+                self._impl.setValuesDf(df._impl)
+                return
             raise TypeError
