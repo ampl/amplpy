@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AMPL &#8212; AMPL API 1.4 (amplpy-0.3.4) documentation</title>
+    <title>AMPL &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.4 (amplpy-0.3.4)',
+        VERSION:     '1.4 (amplpy-0.4.0)',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.3.4) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -111,8 +111,8 @@ the <a class="reference internal" href="runnable.html#amplpy.ErrorHandler" title
 <li>Generic errors coming from misusing the API, which are detected in
 Python, are thrown as exceptions.</li>
 </ul>
-<p>The default implementation of the error handler throws exceptions on errors
-and prints to console on warnings.</p>
+<p>The default implementation of the error handler prints errors and warnings
+to the console.</p>
 <p>The output of every user interaction with the underlying translator is
 handled implementing the abstract class <a class="reference internal" href="outputhandler.html#amplpy.OutputHandler" title="amplpy.OutputHandler"><code class="xref py py-class docutils literal"><span class="pre">OutputHandler</span></code></a>.
 The (only) method is called at each block of output from the translator.
@@ -201,8 +201,8 @@ re-populated lazily (at first access)</p>
 <p>The output of interpreting the statements is passed to the current
 OutputHandler (see getOutputHandler and
 setOutputHandler).</p>
-<p>By default, errors are reported as exceptions and warnings are printed
-on stdout. This behavior can be changed reassigning an ErrorHandler
+<p>By default, errors and warnings are printed on stdout.
+This behavior can be changed reassigning an ErrorHandler
 using setErrorHandler.</p>
 <dl class="docutils">
 <dt>Args:</dt>
@@ -705,7 +705,7 @@ AMPL statement</p>
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.3.4) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>

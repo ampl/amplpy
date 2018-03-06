@@ -12,7 +12,7 @@ back from AMPL, the size of the model as such is irrelevant. Functions for
 directly assigning data to AMPL parameters and sets are provided, which can
 be used instead of the normal AMPL data reading procedures.  AMPL API has been
 written with usability in mind, and it is easy to access its functionalities
-from C++, Java, C#, MATLAB and Python.
+from C++, Java, C#, MATLAB, R and Python.
 
 The AMPL API can function as an add-on to any existing AMPL installation. If
 you do not yet have an AMPL installation on the computer where you will be
@@ -73,7 +73,7 @@ libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='0.3.4',
+    version='0.4.0b1',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
