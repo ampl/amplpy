@@ -81,7 +81,7 @@
 <span id="ref-ampl"></span><h1>AMPL<a class="headerlink" href="#ampl" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.AMPL">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">AMPL</code><span class="sig-paren">(</span><em>environment=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">AMPL</code><span class="sig-paren">(</span><em>environment=None</em>, <em>langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL" title="Permalink to this definition">¶</a></dt>
 <dd><p>An AMPL translator.</p>
 <p>An object of this class can be used to do the following tasks:</p>
 <ul class="simple">
@@ -129,7 +129,7 @@ kills the underlying  interpreter).</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>environment=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>environment=None</em>, <em>langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor:
 creates a new AMPL instance with the specified environment if provided.</p>
 <dl class="docutils">
@@ -556,12 +556,12 @@ and invalidates all entities.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.setData">
-<code class="descname">setData</code><span class="sig-paren">(</span><em>dataFrame</em>, <em>setName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setData</code><span class="sig-paren">(</span><em>data</em>, <em>setName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign the data in the dataframe to the AMPL entities with the names
 corresponding to the column names.</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><p class="first">dataFrame: The dataframe containing the data to be assigned.</p>
+<dd><p class="first">data: The dataframe containing the data to be assigned.</p>
 <p class="last">setName: The name of the set to which the indices values of the
 DataFrame are to be assigned.</p>
 </dd>
