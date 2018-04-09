@@ -196,7 +196,7 @@ class TestEntities(TestBase.TestBase):
             import numpy as np
         except ImportError:
             pass
-        finally:
+        else:
             ampl.getSet('T')[1].setValues(np.array([1, 2]))
             self.assertEqual(ampl.getSet('T')[1].size(), 2)
             ampl.getSet('T3').setValues(np.array([[1, 2], [3, 4]]))
@@ -269,7 +269,7 @@ class TestEntities(TestBase.TestBase):
             import numpy as np
         except ImportError:
             pass
-        finally:
+        else:
             ampl.eval('param lst{1..3};')
             ampl.getParameter('lst').setValues(np.array([1, 2, 3]))
 
