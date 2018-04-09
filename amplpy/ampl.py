@@ -17,6 +17,10 @@ from .exceptions import AMPLException
 from .entity import Entity
 from .utils import Utils, lock_and_call
 from . import amplpython
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 
 
 class DefaultOutputHandler(OutputHandler):
@@ -597,13 +601,13 @@ class AMPL(object):
             self._lock
         )
 
-    def setData(self, dataFrame, setName=None):
+    def setData(self, data, setName=None):
         """
         Assign the data in the dataframe to the AMPL entities with the names
         corresponding to the column names.
 
         Args:
-            dataFrame: The dataframe containing the data to be assigned.
+            data: The dataframe containing the data to be assigned.
 
             setName: The name of the set to which the indices values of the
             DataFrame are to be assigned.
@@ -611,14 +615,17 @@ class AMPL(object):
         Raises:
             AMPLException: if the data assignment procedure was not successful.
         """
+        if not isinstance(data, DataFrame):
+            if pd is not None and isinstance(data, pd.DataFrame):
+                data = DataFrame.fromPandas(data)
         if setName is None:
             lock_and_call(
-                lambda: self._impl.setData(dataFrame._impl),
+                lambda: self._impl.setData(data._impl),
                 self._lock
             )
         else:
             lock_and_call(
-                lambda: self._impl.setData(dataFrame._impl, setName),
+                lambda: self._impl.setData(data._impl, setName),
                 self._lock
             )
 

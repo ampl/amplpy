@@ -67,6 +67,7 @@ class TestDataFrame(TestBase.TestBase):
         df3.addColumn('amt', values)
 
     def testPandas(self):
+        ampl = self.ampl
         try:
             import pandas as pd
         except ImportError:
@@ -77,6 +78,15 @@ class TestDataFrame(TestBase.TestBase):
         },
             index=['x', 'y']
         )
+        ampl.eval('''
+            set S;
+            param a{S};
+            param b{S};
+        ''')
+        ampl.setData(df, 'S')
+        self.assertEqual(list(ampl.set['S'].members()), ['x', 'y'])
+        self.assertEqual(ampl.param['a']['x'], 1)
+        self.assertEqual(ampl.param['a']['y'], 2)
         df2 = pd.DataFrame({
             'a': [10, 20, 30],
         },
@@ -112,11 +122,18 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(set(df.toList()[2]), set([3.0, 0.03]))
 
     def testNumpy(self):
+        ampl = self.ampl
         try:
             import numpy as np
         except ImportError:
             return
+        ampl.eval('set X;')
         arr = np.array([1, 2, 3])
+        ampl.set['X'] = arr
+        self.assertEqual(list(ampl.set['X'].members()), [1, 2, 3])
+        ampl.eval('param p{1..3};')
+        ampl.param['p'] = arr
+        self.assertEqual(ampl.param['p'][2], 2)
         self.assertEqual(
             DataFrame.fromNumpy(arr).toList(),
             [1, 2, 3]

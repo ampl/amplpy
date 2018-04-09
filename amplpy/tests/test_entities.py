@@ -192,6 +192,16 @@ class TestEntities(TestBase.TestBase):
         ampl.eval('set T3 dimen 2; set T4 dimen 2;')
         ampl.getSet('T3').setValues([(1, 2)])
 
+        try:
+            import numpy as np
+        except ImportError:
+            pass
+        finally:
+            ampl.getSet('T')[1].setValues(np.array([1, 2]))
+            self.assertEqual(ampl.getSet('T')[1].size(), 2)
+            ampl.getSet('T3').setValues(np.array([[1, 2], [3, 4]]))
+            self.assertEqual(ampl.getSet('T3').size(), 2)
+
     def testParameter(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
@@ -255,6 +265,14 @@ class TestEntities(TestBase.TestBase):
         for food in ampl.getSet('FOOD').members():
             self.assertEqual(cost2[food], cost[food])
 
+        try:
+            import numpy as np
+        except ImportError:
+            pass
+        finally:
+            ampl.eval('param lst{1..3};')
+            ampl.getParameter('lst').setValues(np.array([1, 2, 3]))
+
     def testPrecision(self):
         PI = 3.1415926535897932384626433832795028841971
         ampl = self.ampl
@@ -293,7 +311,6 @@ class TestEntities(TestBase.TestBase):
         obj.restore()
         self.assertEqual(obj.astatus(), 'in')
         self.assertFalse(obj.minimization())
-
 
 
 if __name__ == '__main__':
