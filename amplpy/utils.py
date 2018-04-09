@@ -51,7 +51,12 @@ class Utils(object):
     def toVariantArray(lst):
         va = amplpython.VariantArray(len(lst))
         for i in range(len(lst)):
-            va[i] = amplpython.Variant(lst[i])
+            if isinstance(lst[i], unicode):
+                va[i] = amplpython.Variant(str(lst[i]))
+                # FIXME: This is just a workaround for issue amplapi#332
+                # The real fix requires a new release of amplapi
+            else:
+                va[i] = amplpython.Variant(lst[i])
         return va
 
     @staticmethod
