@@ -2,6 +2,7 @@
 from __future__ import print_function, absolute_import, division
 from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
+from sys import version_info
 
 from . import amplpython
 from .base import BaseClass
@@ -51,6 +52,8 @@ class Utils(object):
     def toVariantArray(lst):
         va = amplpython.VariantArray(len(lst))
         for i in range(len(lst)):
+            if version_info.major == 3:
+                unicode = str
             if isinstance(lst[i], unicode):
                 va[i] = amplpython.Variant(str(lst[i]))
                 # FIXME: This is just a workaround for issue amplapi#332
