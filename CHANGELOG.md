@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.1 - 2018-04-12
+- Fix: compatibility issues with multiple python versions.
+
 ## 0.4.0 - 2018-04-10
 - Improve interaction with Pandas and Numpy.
 - Add DataFrame.fromNumpy.
