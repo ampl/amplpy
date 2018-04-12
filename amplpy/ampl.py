@@ -84,7 +84,7 @@ class AMPL(object):
     :func:`~amplpy.AMPL.setOutputHandler`.
     """
 
-    def __init__(self, environment=None):
+    def __init__(self, environment=None, langext=None):
         """
         Constructor:
         creates a new AMPL instance with the specified environment if provided.
@@ -117,6 +117,7 @@ class AMPL(object):
         self._errorhandler = None
         self._outputhandler = None
         self._lock = Lock()
+        self._langext = langext
         self.setOutputHandler(DefaultOutputHandler())
         self.setErrorHandler(DefaultErrorHandler())
 
@@ -286,6 +287,8 @@ class AMPL(object):
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
+        if self._langext is not None:
+            amplstatements = self._langext.translate(amplstatements)
         lock_and_call(
             lambda: self._impl.eval(amplstatements),
             self._lock
@@ -560,10 +563,16 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        lock_and_call(
-            lambda: self._impl.read(fileName),
-            self._lock
-        )
+        if self._langext is not None:
+            with open(os.path.join(self.cd(),
+                      self.option['ampl_include'],
+                      fileName)) as f:
+                self.eval(f.read())
+        else:
+            lock_and_call(
+                lambda: self._impl.read(fileName),
+                self._lock
+            )
 
     def readData(self, fileName):
         """
@@ -895,6 +904,39 @@ class AMPL(object):
     set = property(_set)
     param = property(_param)
     option = property(_option)
+
+    def _exportData(self, datfile):
+        def ampl_set(name, values):
+            def format_entry(e):
+                return repr(e).replace(' ', '')
+
+            return 'set {0} := {1};'.format(
+                name, ','.join(format_entry(e) for e in values)
+            )
+
+        def ampl_param(name, values):
+            def format_entry(k, v):
+                k = repr(k).strip('()').replace(' ', '')
+                v = repr(v).strip('()').replace(' ', '')
+                return '[{0}]{1}'.format(k, v)
+
+            return 'param {0} := {1};'.format(
+                name, ''.join(format_entry(k, v) for k, v in values.items())
+            )
+
+        with open(datfile, 'w') as f:
+            for name, entity in self.getSets():
+                values = entity.getValues().toList()
+                print(ampl_set(name, values), file=f)
+            for name, entity in self.getParameters():
+                if entity.isScalar():
+                    print(
+                        'param {} := {};'.format(name, entity.value()),
+                        file=f
+                    )
+                else:
+                    values = entity.getValues().toDict()
+                    print(ampl_param(name, values), file=f)
 
     def _exportGurobiModel(self, minimize=True, _vars=True, _cons=True):
         """
