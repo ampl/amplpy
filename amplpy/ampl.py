@@ -21,6 +21,7 @@ try:
     import pandas as pd
 except ImportError:
     pd = None
+inf = float('inf')
 
 
 class DefaultOutputHandler(OutputHandler):
@@ -917,7 +918,12 @@ class AMPL(object):
         def ampl_param(name, values):
             def format_entry(k, v):
                 k = repr(k).strip('()').replace(' ', '')
-                v = repr(v).strip('()').replace(' ', '')
+                if v == inf:
+                    v = "Infinity"
+                elif v == -inf:
+                    v = "-Infinity"
+                else:
+                    v = repr(v).strip('()').replace(' ', '')
                 return '[{0}]{1}'.format(k, v)
 
             return 'param {0} := {1};'.format(
