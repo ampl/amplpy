@@ -944,9 +944,9 @@ class AMPL(object):
                     values = entity.getValues().toDict()
                     print(ampl_param(name, values), file=f)
 
-    def _exportGurobiModel(self, minimize=True, _vars=True, _cons=True):
+    def exportGurobiModel(self, minimize=True):
         """
-        Export the model to Gurobi.
+        Export the model to Gurobi as a gurobipy.Model object.
         """
         from gurobipy import GRB, read
         from tempfile import mkdtemp
@@ -960,15 +960,14 @@ class AMPL(object):
         model = read(mps_file)
         if minimize is False:
             model.ModelSense = GRB.MAXIMIZE
-        if _vars is True:
-            model._vars = {
-                var: model.getVarByName('C{:04d}'.format(i+1))
-                for (i, var) in enumerate(open(col_file, 'r').read().split())
-            }
-        if _cons is True:
-            model._cons = {
-                con: model.getConstrByName('R{:04d}'.format(i+1))
-                for (i, con) in enumerate(open(row_file, 'r').read().split())
-            }
+        var_names = open(col_file, 'r').read().splitlines()
+        con_names = open(row_file, 'r').read().splitlines()
+        for var in model.getVars():
+            index = int(var.VarName[1:])-1
+            var.VarName = var_names[index]
+        for con in model.getConstrs():
+            index = int(con.ConstrName[1:])-1
+            con.ConstrName = con_names[index]
+        model.update()
         rmtree(tmp_dir)
         return model
