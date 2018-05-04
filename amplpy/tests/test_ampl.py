@@ -110,6 +110,9 @@ class TestAMPL(TestBase.TestBase):
                 print('Warning:', exception.getMessage())
                 self.lastWarning = exception
 
+            def check(self):
+                pass
+
         outputHandler = MyOutputHandler()
         ampl.setOutputHandler(outputHandler)
         errorHandler = MyErrorHandler()
@@ -167,16 +170,23 @@ class TestAMPL(TestBase.TestBase):
             def warning(self, exception):
                 assert True
 
+            def check(self):
+                pass
+
         class ErrorHandlerRaise(amplpy.ErrorHandler):
             def error(self, exception):
-                raise exception
+                self.error_count += 1
 
             def warning(self, exception):
-                raise exception
+                self.warning_count += 1
 
-        self.assertEqual(ampl.getErrorHandler().last_error, None)
-        ampl.eval('X X;')
-        self.assertEqual(ampl.getErrorHandler().last_error, 'syntax error')
+            def check(self):
+                if self.error_count != 0 or self.warning_count != 0:
+                    raise RuntimeError('Errors: {}; Warnings: {}'.format(
+                            self.error_count, self.warning_count))
+
+        with self.assertRaises(RuntimeError):
+            ampl.eval('X X;')
 
         errorHandlerIgnore = ErrorHandlerIgnore()
         ampl.setErrorHandler(errorHandlerIgnore)

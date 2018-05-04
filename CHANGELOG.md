@@ -2,8 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.5.0 - 2018-##-##
-- Add experimental feature exportData.
+
+## 0.5.0 - 2018-05-##
+- Breaking: AMPL errors raise exceptions by default
+- Add AMPL.exportData.
+- Add AMPL.exportGurobiModel.
 
 ## 0.4.1 - 2018-04-12
 - Fix: compatibility issues with multiple python versions.
@@ -16,8 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Breaking: DataFrame.toList and DataFrame.doDict do not wrap scalar values into lists anymore.
 
 ## 0.3.4 - 2018-02-24
-- Fix: error messages not being shown in Jupyter Notebooks
-- Breaking: AMPL errors no longer raise exceptions by default
+- Fix: error messages not being shown in Jupyter Notebooks.
+- Breaking: AMPL errors no longer raise exceptions by default.
 
 ## 0.3.3 - 2018-01-09
 - Fix issues related to the passing of infinity to AMPL.

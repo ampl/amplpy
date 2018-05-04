@@ -25,7 +25,7 @@ class OutputHandler(amplpython.OutputHandler):
 
             msg: text of the output by the AMPL interpreter.
         """
-        pass
+        print(msg, end='')
 
 
 class Kind(object):
