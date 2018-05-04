@@ -905,7 +905,15 @@ class AMPL(object):
     param = property(_param)
     option = property(_option)
 
-    def _exportData(self, datfile):
+    def exportData(self, datfile):
+        """
+        Create a .dat file with the data that has been loaded.
+
+        Args:
+            datfile: Path to the file (Relative to the current working
+            directory or absolute).
+        """
+
         def ampl_set(name, values):
             def format_entry(e):
                 return repr(e).replace(' ', '')
