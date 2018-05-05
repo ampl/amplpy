@@ -18,7 +18,7 @@ env:
 script:
   - $PIP install urllib3[secure] --upgrade
   - python updatelib.py
-  - $PIP install cibuildwheel==0.7.2
+  - $PIP install cibuildwheel==0.8.0
   - cibuildwheel --output-dir wheelhouse
 
 after_success:

@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## 0.5.0 - 2018-05-##
-- Breaking: AMPL errors raise exceptions by default
+- Breaking: AMPL errors raise exceptions by default.
+- Breaking: Drop support for Python 3.3 on Linux.
 - Add AMPL.exportData.
 - Add AMPL.exportGurobiModel.
 
