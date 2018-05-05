@@ -23,4 +23,4 @@ script:
 
 after_success:
   - sudo python -m pip install twine
-  - python -m twine upload wheelhouse/*.whl || true
+  - sudo python -m twine upload wheelhouse/*.whl || true
