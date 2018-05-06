@@ -1,26 +1,21 @@
-language: python
-
 matrix:
   include:
     - sudo: required
       services:
         - docker
-      env: PIP=pip
     - os: osx
-      language: generic
-      env: PIP=pip2
-
+      osx_image: xcode7.3
 env:
   global:
     - TWINE_USERNAME=fdabrandao
     # Note: TWINE_PASSWORD is set in Travis settings
 
 script:
-  - $PIP install urllib3[secure] --upgrade
+  - sudo pip install urllib3[secure] --upgrade
   - python updatelib.py
-  - $PIP install cibuildwheel==0.8.0
+  - sudo pip install cibuildwheel==0.8.0
   - cibuildwheel --output-dir wheelhouse
 
 after_success:
   - sudo python -m pip install twine
-  - sudo python -m twine upload wheelhouse/*.whl || true
+  - python -m twine upload wheelhouse/*.whl || true
