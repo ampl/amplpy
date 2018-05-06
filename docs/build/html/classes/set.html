@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Set &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
+    <title>Set &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.4 (amplpy-0.4.0)',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -26,8 +18,7 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Parameter" href="parameter.html" />
     <link rel="prev" title="Objective" href="objective.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="objective.html" title="Objective"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -61,12 +52,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -90,13 +83,14 @@ operator [].</p>
 <p>All the accessors in this class throw an RuntimeError if the instance has
 been deleted in the underlying AMPL interpreter.</p>
 <p>Data can be assigned to the set using the methods
-<a class="reference internal" href="#amplpy.Set.setValues" title="amplpy.Set.setValues"><code class="xref py py-func docutils literal"><span class="pre">setValues()</span></code></a> (for non-indexed sets only) or using
-<a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal"><span class="pre">setData()</span></code></a> and an object of class
-<a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a>.</p>
+<a class="reference internal" href="#amplpy.Set.setValues" title="amplpy.Set.setValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">setValues()</span></code></a> (for non-indexed sets only) or using
+<a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal notranslate"><span class="pre">setData()</span></code></a> and an object of class
+<a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</p>
 <dl class="method">
 <dt id="amplpy.Set.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.instances">
@@ -146,21 +140,21 @@ Valid only for non-indexed sets.</p>
 <dd><p>Set the tuples in this set. Valid only for non-indexed sets.</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>values: A list of tuples or a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a>.</dd>
+<dd>values: A list of tuples or a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</dd>
 </dl>
-<p>In the case of a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a>, the number of indexing
+<p>In the case of a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, the number of indexing
 columns of the must be equal to the arity of the set. In the case of
 a list of tuples, the arity of each tuple must be equal to the arity
 of the set.</p>
 <p>For example, considering the following AMPL entities and corresponding
 Python objects:</p>
-<div class="highlight-ampl"><div class="highlight"><pre><span></span><span class="kd">set</span> <span class="nv">A</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">;</span>
+<div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">set</span> <span class="nv">A</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">;</span>
 <span class="kd">param</span> <span class="nv">p</span><span class="p">{</span>i<span class="w"> </span><span class="kr">in</span><span class="w"> </span>A<span class="p">}</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>i<span class="o">+</span><span class="mi">10</span><span class="p">;</span>
 <span class="kd">set</span> <span class="nv">AA</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The following is valid:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">,</span> <span class="n">AA</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getSet</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getSet</span><span class="p">(</span><span class="s1">&#39;AA&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">,</span> <span class="n">AA</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getSet</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getSet</span><span class="p">(</span><span class="s1">&#39;AA&#39;</span><span class="p">)</span>
 <span class="n">AA</span><span class="o">.</span><span class="n">setValues</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">getValues</span><span class="p">())</span>  <span class="c1"># AA has now the members {1, 2}</span>
 </pre></div>
 </div>
@@ -193,13 +187,13 @@ Python objects:</p>
         <li class="right" >
           <a href="objective.html" title="Objective"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

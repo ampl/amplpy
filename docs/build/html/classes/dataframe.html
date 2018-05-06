@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DataFrame &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
+    <title>DataFrame &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.4 (amplpy-0.4.0)',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -26,8 +18,7 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Environment" href="environment.html" />
     <link rel="prev" title="AMPL" href="ampl.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="ampl.html" title="AMPL"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -61,12 +52,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -85,28 +78,28 @@
 <dd><p>A DataFrame object, used to communicate data to and from the AMPL entities.</p>
 <p>An object of this class can be used to do the following tasks:
 - Assign values to AMPL entities (once the DataFrame is populated, use
-<a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal"><span class="pre">setData()</span></code></a> to assign its values to the modelling entities
+<a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal notranslate"><span class="pre">setData()</span></code></a> to assign its values to the modelling entities
 in its columns)
 - Get values from AMPL, decoupling the values from the AMPL entities they
-originate via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a>.</p>
+originate via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">getValues()</span></code></a>.</p>
 <p>A DataFrame object can be created in various ways.</p>
 <ul class="simple">
 <li>Create a skeleton by specifiying manually the indexing columns and the
 column headers.</li>
 <li>Get values from AMPL, decoupling the values from the AMPL entities they
-originate from (via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">getValues()</span></code></a>).</li>
+originate from (via <a class="reference internal" href="entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">getValues()</span></code></a>).</li>
 </ul>
 <p>Populating a DataFrame object can be done adding row by row to a
-pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.addRow" title="amplpy.DataFrame.addRow"><code class="xref py py-func docutils literal"><span class="pre">addRow()</span></code></a>, setting whole
-columns of a pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal"><span class="pre">setColumn()</span></code></a>
+pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.addRow" title="amplpy.DataFrame.addRow"><code class="xref py py-func docutils literal notranslate"><span class="pre">addRow()</span></code></a>, setting whole
+columns of a pre-existing skeleton via <a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal notranslate"><span class="pre">setColumn()</span></code></a>
 or adding columns (including indexing columns) via
-<a class="reference internal" href="#amplpy.DataFrame.addColumn" title="amplpy.DataFrame.addColumn"><code class="xref py py-func docutils literal"><span class="pre">addColumn()</span></code></a>.</p>
+<a class="reference internal" href="#amplpy.DataFrame.addColumn" title="amplpy.DataFrame.addColumn"><code class="xref py py-func docutils literal notranslate"><span class="pre">addColumn()</span></code></a>.</p>
 <p>Modifying a DataFrame object can be done via
-<a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal"><span class="pre">setColumn()</span></code></a> or, item by item, via
-<code class="xref py py-func docutils literal"><span class="pre">setValue()</span></code>.</p>
+<a class="reference internal" href="#amplpy.DataFrame.setColumn" title="amplpy.DataFrame.setColumn"><code class="xref py py-func docutils literal notranslate"><span class="pre">setColumn()</span></code></a> or, item by item, via
+<code class="xref py py-func docutils literal notranslate"><span class="pre">setValue()</span></code>.</p>
 <p>Accessing data in a DataFrame can be done row by row using
-<a class="reference internal" href="#amplpy.DataFrame.getRow" title="amplpy.DataFrame.getRow"><code class="xref py py-func docutils literal"><span class="pre">getRow()</span></code></a> or by column via
-<a class="reference internal" href="#amplpy.DataFrame.getColumn" title="amplpy.DataFrame.getColumn"><code class="xref py py-func docutils literal"><span class="pre">getColumn()</span></code></a>.</p>
+<a class="reference internal" href="#amplpy.DataFrame.getRow" title="amplpy.DataFrame.getRow"><code class="xref py py-func docutils literal notranslate"><span class="pre">getRow()</span></code></a> or by column via
+<a class="reference internal" href="#amplpy.DataFrame.getColumn" title="amplpy.DataFrame.getColumn"><code class="xref py py-func docutils literal notranslate"><span class="pre">getColumn()</span></code></a>.</p>
 <dl class="method">
 <dt id="amplpy.DataFrame.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>index</em>, <em>columns=()</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.__init__" title="Permalink to this definition">¶</a></dt>
@@ -176,7 +169,7 @@ dataframe.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><p class="first">header: The name of the new column.</p>
-<p class="last">values: A list of size <a class="reference internal" href="#amplpy.DataFrame.getNumRows" title="amplpy.DataFrame.getNumRows"><code class="xref py py-func docutils literal"><span class="pre">getNumRows()</span></code></a> with
+<p class="last">values: A list of size <a class="reference internal" href="#amplpy.DataFrame.getNumRows" title="amplpy.DataFrame.getNumRows"><code class="xref py py-func docutils literal notranslate"><span class="pre">getNumRows()</span></code></a> with
 all the values of the new column.</p>
 </dd>
 </dl>
@@ -270,13 +263,13 @@ specified, gets the only row of a dataframe with no indexing columns.</p>
 <dl class="classmethod">
 <dt id="amplpy.DataFrame.fromPandas">
 <em class="property">classmethod </em><code class="descname">fromPandas</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.fromPandas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a <a class="reference internal" href="#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a> from a pandas DataFrame.</p>
+<dd><p>Create a <a class="reference internal" href="#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> from a pandas DataFrame.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="amplpy.DataFrame.fromNumpy">
 <em class="property">classmethod </em><code class="descname">fromNumpy</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.DataFrame.fromNumpy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a <a class="reference internal" href="#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></a> from a numpy array or matrix.</p>
+<dd><p>Create a <a class="reference internal" href="#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> from a numpy array or matrix.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -306,13 +299,13 @@ specified, gets the only row of a dataframe with no indexing columns.</p>
         <li class="right" >
           <a href="ampl.html" title="AMPL"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

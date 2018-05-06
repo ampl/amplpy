@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting started &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
+    <title>Getting started &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4 (amplpy-0.4.0)',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -26,8 +18,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Class structure" href="class-structure.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -71,12 +62,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -98,31 +91,31 @@ be working with the API, see our
 <a class="reference external" href="http://ampl.com/try-ampl/request-a-full-trial/">trial page</a> to download a
 working version that can be installed quickly.</p>
 <p>In order to install the Python API you just need to run</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install amplpy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install amplpy
 </pre></div>
 </div>
 <p>Or alternatively:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python -m pip install amplpy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install amplpy
 </pre></div>
 </div>
-<p>Note: For Windows, Linux, and macOS, the <code class="docutils literal"><span class="pre">amplpy</span></code> package comes with 26 binary
+<p>Note: For Windows, Linux, and macOS, the <code class="docutils literal notranslate"><span class="pre">amplpy</span></code> package comes with 26 binary
 wheels for Python 2.7, 3.3, 3.4, 3.5, and 3.6. Please make sure that you are
-using the latest version of <code class="docutils literal"><span class="pre">pip</span></code> before installing <code class="docutils literal"><span class="pre">amplpy</span></code> (upgrade using
-<code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code>).
+using the latest version of <code class="docutils literal notranslate"><span class="pre">pip</span></code> before installing <code class="docutils literal notranslate"><span class="pre">amplpy</span></code> (upgrade using
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code>).
 If a binary wheel for your platform is not available,
 a C++ compiler and python development libraries will be required.</p>
 </div>
 <div class="section" id="initial-test">
 <h2>Initial test<a class="headerlink" href="#initial-test" title="Permalink to this headline">¶</a></h2>
 <p>To begin, open a command/terminal window and clone our <a class="reference external" href="https://github.com/ampl/amplpy">GitHub repository</a>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone git@github.com:ampl/amplpy.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:ampl/amplpy.git
 </pre></div>
 </div>
-<p>To complete an initial test, run <code class="docutils literal"><span class="pre">firstexample</span></code> with</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python amplpy/examples/firstexample.py &lt;solver&gt;
+<p>To complete an initial test, run <code class="docutils literal notranslate"><span class="pre">firstexample</span></code> with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python amplpy/examples/firstexample.py &lt;solver&gt;
 </pre></div>
 </div>
-<p>where optionally <code class="docutils literal"><span class="pre">&lt;solver&gt;</span></code> is the name of a solver that has been installed with AMPL.
+<p>where optionally <code class="docutils literal notranslate"><span class="pre">&lt;solver&gt;</span></code> is the name of a solver that has been installed with AMPL.
 (If a solver is not specified, AMPL’s default choice will be used.) This will solve
 several small diet problems and then display the optimal amounts of the foods
 from the last solution. Alternatively, you can download the examples directly from
@@ -130,8 +123,8 @@ from the last solution. Alternatively, you can download the examples directly fr
 </div>
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
-<p>Import the <code class="docutils literal"><span class="pre">amplpy</span></code> modude with</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">amplpy</span>
+<p>Import the <code class="docutils literal notranslate"><span class="pre">amplpy</span></code> modude with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">amplpy</span>
 </pre></div>
 </div>
 <p>Together with your existing AMPL implementation, this will provide the full
@@ -141,7 +134,7 @@ folder containing the AMPL executable is in the system search path.</p>
 <div class="section" id="deployment">
 <h2>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
 <p>To deploy AMPL API applications to users who do not have their own AMPL installations,
-include with your application the AMPL executable (<code class="docutils literal"><span class="pre">ampl</span></code> or <code class="docutils literal"><span class="pre">ampl.exe</span></code>), and the <code class="docutils literal"><span class="pre">amplpy</span></code> package.
+include with your application the AMPL executable (<code class="docutils literal notranslate"><span class="pre">ampl</span></code> or <code class="docutils literal notranslate"><span class="pre">ampl.exe</span></code>), and the <code class="docutils literal notranslate"><span class="pre">amplpy</span></code> package.
 Note that the folder containing the AMPL executable should be in the system search path.</p>
 </div>
 </div>
@@ -164,12 +157,12 @@ Note that the folder containing the AMPL executable should be in the system sear
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

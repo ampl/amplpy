@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Class structure &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
+    <title>Class structure &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.4 (amplpy-0.4.0)',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -26,8 +18,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Python quick start" href="quick-start.html" />
     <link rel="prev" title="Getting started" href="getting-started.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="getting-started.html" title="Getting started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -84,12 +75,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -105,7 +98,7 @@
 <p>AMPL API library consists of a collection of classes to interact with the underlying AMPL interpreter and to access
 its inputs and outputs. It uses generic collections to represent the various entities which comprise a mathematical
 model. The structure of these entities is explained in this section.</p>
-<p>The main class used to interact with AMPL, instantiate and interrogate the models is <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal"><span class="pre">amplpy.AMPL</span></code></a>.
+<p>The main class used to interact with AMPL, instantiate and interrogate the models is <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.AMPL</span></code></a>.
 One object of this class represents an execution of an AMPL translator, and is the first class that has to be instantiated when
 developing a solution based on AMPL API. It allows the interaction with the underlying AMPL translator, issuing commands,
 getting diagnostics and controlling the process.</p>
@@ -118,21 +111,21 @@ and will be presented more in detail in the section <a class="reference internal
 </div>
 <div class="section" id="ampl-class">
 <span id="secamplclass"></span><h2>AMPL class<a class="headerlink" href="#ampl-class" title="Permalink to this headline">¶</a></h2>
-<p>For all calculations, AMPL API uses an underlying AMPL execution engine, which is wrapped by the class <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal"><span class="pre">amplpy.AMPL</span></code></a>.
+<p>For all calculations, AMPL API uses an underlying AMPL execution engine, which is wrapped by the class <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.AMPL</span></code></a>.
 Thus, one instance of this class is the first object to be created when writing a program which uses the AMPL API
 library. The object is quite resource-heavy, therefore it should be explicitly closed as soon as it is not needed anymore,
-with a call to <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.close" title="amplpy.AMPL.close"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.close()</span></code></a>
+with a call to <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.close" title="amplpy.AMPL.close"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.close()</span></code></a>
 .</p>
 <p>All the model creation and structural alteration operations are to be expressed in AMPL language through the
 AMPL main object; moreover, the class provides access to the current state represented via the classes derived
-from <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Entity</span></code></a>, as shown in section <a class="reference internal" href="reference.html#secpythonalgebraicentitiesreference"><span class="std std-ref">Algebraic entities classes</span></a> and provides several other functionalities
+from <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Entity</span></code></a>, as shown in section <a class="reference internal" href="reference.html#secpythonalgebraicentitiesreference"><span class="std std-ref">Algebraic entities classes</span></a> and provides several other functionalities
 (see <a class="reference internal" href="reference.html#secreferencepython"><span class="std std-ref">Python API reference</span></a>).</p>
 <p>The functions can be split in three groups: direct AMPL interaction, model interrogation and commands.</p>
 <div class="section" id="direct-interaction-with-ampl">
 <h3>Direct interaction with AMPL<a class="headerlink" href="#direct-interaction-with-ampl" title="Permalink to this headline">¶</a></h3>
-<p>The methods available to input AMPL commands are <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.eval()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.read()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readData" title="amplpy.AMPL.readData"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.readData()</span></code></a>;
+<p>The methods available to input AMPL commands are <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.eval()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.read()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readData" title="amplpy.AMPL.readData"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.readData()</span></code></a>;
 they send the strings specified (or the specified files) to the AMPL engine for interpretation.
-Their async versions: <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.evalAsync()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readAsync" title="amplpy.AMPL.readAsync"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.readAsync()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readDataAsync" title="amplpy.AMPL.readDataAsync"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.readDataAsync()</span></code></a>,
+Their async versions: <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.evalAsync()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readAsync" title="amplpy.AMPL.readAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.readAsync()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.readDataAsync" title="amplpy.AMPL.readDataAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.readDataAsync()</span></code></a>,
 permit the calling program to continue the execution while the underlying AMPL process is busy in some time consuming operation,
 and to define a callback to be executed when the operation is over.</p>
 </div>
@@ -141,20 +134,20 @@ and to define a callback to be executed when the operation is over.</p>
 <p>Evaluating AMPL files or statements creates various kind of entities in the underlying AMPL process.
 To get the object (or, in general, programmatic) representation of such entities, the programmer can follow two main courses.</p>
 <ul class="simple">
-<li>Get an <a class="reference internal" href="classes/ampl.html#amplpy.EntityMap" title="amplpy.EntityMap"><code class="xref py py-class docutils literal"><span class="pre">amplpy.EntityMap</span></code></a> of all available entities, to iterate through them. The methods to obtain such lists are:<ul>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariables" title="amplpy.AMPL.getVariables"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getVariables()</span></code></a> gets the map of all the defined variables</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraints" title="amplpy.AMPL.getConstraints"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getConstraints()</span></code></a> gets the map of all the defined constraints</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjectives" title="amplpy.AMPL.getObjectives"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getObjectives()</span></code></a> gets the map of all the defined objectives</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSets" title="amplpy.AMPL.getSets"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getSets()</span></code></a> gets the map of all the defined sets</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameters" title="amplpy.AMPL.getParameters"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getParameters()</span></code></a> gets the map of all the defined parameters</li>
+<li>Get an <a class="reference internal" href="classes/ampl.html#amplpy.EntityMap" title="amplpy.EntityMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.EntityMap</span></code></a> of all available entities, to iterate through them. The methods to obtain such lists are:<ul>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariables" title="amplpy.AMPL.getVariables"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariables()</span></code></a> gets the map of all the defined variables</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraints" title="amplpy.AMPL.getConstraints"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getConstraints()</span></code></a> gets the map of all the defined constraints</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjectives" title="amplpy.AMPL.getObjectives"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getObjectives()</span></code></a> gets the map of all the defined objectives</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSets" title="amplpy.AMPL.getSets"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSets()</span></code></a> gets the map of all the defined sets</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameters" title="amplpy.AMPL.getParameters"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameters()</span></code></a> gets the map of all the defined parameters</li>
 </ul>
 </li>
 <li>Knowing the AMPL name of an entity, use commands to get the specific entity directly:<ul>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getVariable()</span></code></a> returns the <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Variable</span></code></a> representing the AMPL variable with the specified name, if it exists</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a> returns the <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Constraint</span></code></a> representing the AMPL constraint with the specified name, if it exists</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getObjective()</span></code></a> returns the <a class="reference internal" href="classes/objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Objective</span></code></a> representing the AMPL objective with the specified name, if it exists</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> returns the <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Parameter</span></code></a> representing the AMPL parameter with the specified name, if it exists</li>
-<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getSet()</span></code></a> returns the <a class="reference internal" href="classes/set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Set</span></code></a> representing the AMPL set with the specified name, if it exists</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariable()</span></code></a> returns the <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Variable</span></code></a> representing the AMPL variable with the specified name, if it exists</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a> returns the <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Constraint</span></code></a> representing the AMPL constraint with the specified name, if it exists</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getObjective()</span></code></a> returns the <a class="reference internal" href="classes/objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Objective</span></code></a> representing the AMPL objective with the specified name, if it exists</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> returns the <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Parameter</span></code></a> representing the AMPL parameter with the specified name, if it exists</li>
+<li><a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a> returns the <a class="reference internal" href="classes/set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Set</span></code></a> representing the AMPL set with the specified name, if it exists</li>
 </ul>
 </li>
 </ul>
@@ -163,7 +156,7 @@ and to extract or assign data. Updating the state of the programmatic entities i
 dependency handling. Communication with the underlying engine is therefore executed only when an entity’s properties
 are being accessed and only when necessary.
 An entity is invalidated (needs refreshing) if one of the entities it depends from has been manipulated or if a generic
-AMPL statement evaluation is performed (through <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.eval()</span></code></a> or similar routines). This is one of the reasons
+AMPL statement evaluation is performed (through <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.eval()</span></code></a> or similar routines). This is one of the reasons
 why it is generally better to use the embedded functionalities (e.g. fixing a variable through the corresponding API
 function call) than using AMPL statements: in the latter case, the API invalidates all entities, as the effects of
 such generic statements cannot be predicted.
@@ -172,27 +165,27 @@ which access data or modify entities frequently.</p>
 </div>
 <div class="section" id="commands-and-options">
 <h3>Commands and options<a class="headerlink" href="#commands-and-options" title="Permalink to this headline">¶</a></h3>
-<p>Some AMPL commands are encapsulated by functions in the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal"><span class="pre">amplpy.AMPL</span></code></a> class for ease of access.
-These comprise <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.solve()</span></code></a> and others.
-To access and set options in AMPL, the functions <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOption" title="amplpy.AMPL.getOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getOption()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setOption()</span></code></a> are provided.
+<p>Some AMPL commands are encapsulated by functions in the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.AMPL</span></code></a> class for ease of access.
+These comprise <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.solve()</span></code></a> and others.
+To access and set options in AMPL, the functions <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOption" title="amplpy.AMPL.getOption"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getOption()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.setOption()</span></code></a> are provided.
 These functions provide an easier programmatic access to the AMPL options.
 In general, when an encapsulation is available for an AMPL command, the programmatic access to it is to be preferred to calling the same command using
-<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.eval()</span></code></a>.</p>
+<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.eval()</span></code></a>.</p>
 </div>
 <div class="section" id="output-and-errors-handling">
 <h3>Output and errors handling<a class="headerlink" href="#output-and-errors-handling" title="Permalink to this headline">¶</a></h3>
-<p>The output from the AMPL translator is handled implementing the interface <a class="reference internal" href="classes/outputhandler.html#amplpy.OutputHandler" title="amplpy.OutputHandler"><code class="xref py py-class docutils literal"><span class="pre">amplpy.OutputHandler</span></code></a>.
-The method <a class="reference internal" href="classes/outputhandler.html#amplpy.OutputHandler.output" title="amplpy.OutputHandler.output"><code class="xref py py-func docutils literal"><span class="pre">amplpy.OutputHandler.output()</span></code></a> is called at each block of output from the translator. The current output handler
-can be accessed and set via <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOutputHandler" title="amplpy.AMPL.getOutputHandler"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getOutputHandler()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOutputHandler" title="amplpy.AMPL.setOutputHandler"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setOutputHandler()</span></code></a>;
+<p>The output from the AMPL translator is handled implementing the interface <a class="reference internal" href="classes/outputhandler.html#amplpy.OutputHandler" title="amplpy.OutputHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.OutputHandler</span></code></a>.
+The method <a class="reference internal" href="classes/outputhandler.html#amplpy.OutputHandler.output" title="amplpy.OutputHandler.output"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.OutputHandler.output()</span></code></a> is called at each block of output from the translator. The current output handler
+can be accessed and set via <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOutputHandler" title="amplpy.AMPL.getOutputHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getOutputHandler()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOutputHandler" title="amplpy.AMPL.setOutputHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.setOutputHandler()</span></code></a>;
 the default output handler prints each block to the standard console output.</p>
 <p>Error handling is two-faced:</p>
 <ul class="simple">
-<li>Errors coming from the underlying AMPL translator (e.g. syntax errors and warnings obtained calling the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.eval()</span></code></a> method)
-are handled by the <a class="reference internal" href="classes/runnable.html#amplpy.ErrorHandler" title="amplpy.ErrorHandler"><code class="xref py py-class docutils literal"><span class="pre">amplpy.ErrorHandler</span></code></a> which can be set and get via <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getErrorHandler" title="amplpy.AMPL.getErrorHandler"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getErrorHandler()</span></code></a>
-and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setErrorHandler" title="amplpy.AMPL.setErrorHandler"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setErrorHandler()</span></code></a>.</li>
+<li>Errors coming from the underlying AMPL translator (e.g. syntax errors and warnings obtained calling the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.eval()</span></code></a> method)
+are handled by the <a class="reference internal" href="classes/runnable.html#amplpy.ErrorHandler" title="amplpy.ErrorHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.ErrorHandler</span></code></a> which can be set and get via <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getErrorHandler" title="amplpy.AMPL.getErrorHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getErrorHandler()</span></code></a>
+and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setErrorHandler" title="amplpy.AMPL.setErrorHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.setErrorHandler()</span></code></a>.</li>
 <li>Generic errors coming from the API, which are detected outside the translator are thrown as exceptions.</li>
 </ul>
-<p>The default implementation of the error handler prints the errors and warnings to stdout.</p>
+<p>The default implementation of the error handler throws exceptions on errors and prints the warnings to stdout.</p>
 </div>
 </div>
 <div class="section" id="modelling-entities-classes">
@@ -203,48 +196,48 @@ They are used to access the current state of the AMPL translator
 (e.g. to find the values of a variable), and to some extent they can be
 used for data input (e.g. assign values to a parameter, fix a variable).</p>
 <p>Objects of these classes cannot be created programmatically by the user: the model creation and structural
-modification is handled in AMPL (see section <a class="reference internal" href="#secamplclass"><span class="std std-ref">AMPL class</span></a>), through the methods <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.eval()</span></code></a>
-and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.read()</span></code></a>. The base class is <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Entity</span></code></a>.</p>
-<p>The classes derived from <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Entity</span></code></a> represent algebraic entites
+modification is handled in AMPL (see section <a class="reference internal" href="#secamplclass"><span class="std std-ref">AMPL class</span></a>), through the methods <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.eval()</span></code></a>
+and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.read()</span></code></a>. The base class is <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Entity</span></code></a>.</p>
+<p>The classes derived from <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Entity</span></code></a> represent algebraic entites
 (e.g. a variable indexed over a set in AMPL), and are implemented as a map
 from an object (number, string or tuple) to an instance which allow access
-to its instances (methods <a class="reference internal" href="classes/entity.html#amplpy.Entity.__getitem__" title="amplpy.Entity.__getitem__"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.__getitem__()</span></code></a> and
-<a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.get()</span></code></a>).
-The case of scalar entities (like the AMPL entity defined by <code class="docutils literal"><span class="pre">var</span> <span class="pre">x;</span></code>) is handled at Entity level, and will be
+to its instances (methods <a class="reference internal" href="classes/entity.html#amplpy.Entity.__getitem__" title="amplpy.Entity.__getitem__"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.__getitem__()</span></code></a> and
+<a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.get()</span></code></a>).
+The case of scalar entities (like the AMPL entity defined by <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x;</span></code>) is handled at Entity level, and will be
 illustrated in the paragraph regarding instances below.
-The derived classes are: <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Variable</span></code></a>, <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Constraint</span></code></a>, <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Parameter</span></code></a>,
-<a class="reference internal" href="classes/objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Objective</span></code></a> and <a class="reference internal" href="classes/set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Set</span></code></a>.</p>
+The derived classes are: <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Variable</span></code></a>, <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Constraint</span></code></a>, <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Parameter</span></code></a>,
+<a class="reference internal" href="classes/objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Objective</span></code></a> and <a class="reference internal" href="classes/set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Set</span></code></a>.</p>
 <p>Any instance object represents a single instance of an algebraic entity
 (e.g.  the value of a variable for a specific value of its indexing set),
 and is treated as a scalar entity.
-Entities and instances are both handled by the class <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Entity</span></code></a>.
+Entities and instances are both handled by the class <a class="reference internal" href="classes/entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Entity</span></code></a>.
 An entity (algebraic entity in AMPL)
 can contain various instance objects (instances in AMPL), while each instance has to be part of exactly one
 entity. The exact methods and properties of the entity depend on the particular kind of entity under consideration
 (i.e. variable, constraint, parameter).</p>
-<p>As an example, for indexed entities, the class <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Variable</span></code></a> has functionalities like <a class="reference internal" href="classes/variable.html#amplpy.Variable.fix" title="amplpy.Variable.fix"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.fix()</span></code></a> and <a class="reference internal" href="classes/variable.html#amplpy.Variable.unfix" title="amplpy.Variable.unfix"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.unfix()</span></code></a>,
+<p>As an example, for indexed entities, the class <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Variable</span></code></a> has functionalities like <a class="reference internal" href="classes/variable.html#amplpy.Variable.fix" title="amplpy.Variable.fix"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Variable.fix()</span></code></a> and <a class="reference internal" href="classes/variable.html#amplpy.Variable.unfix" title="amplpy.Variable.unfix"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Variable.unfix()</span></code></a>,
 which would fix or unfix all instances which are part of the algebraic entity, and for instances the
-class <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Variable</span></code></a> has properties like <a class="reference internal" href="classes/variable.html#amplpy.Variable.value" title="amplpy.Variable.value"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.value()</span></code></a>
-and <a class="reference internal" href="classes/variable.html#amplpy.Variable.dual" title="amplpy.Variable.dual"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.dual()</span></code></a> (together with instance level fix and unfix methods).</p>
-<p>The class <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Constraint</span></code></a> has functionalities like <a class="reference internal" href="classes/constraint.html#amplpy.Constraint.drop" title="amplpy.Constraint.drop"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.drop()</span></code></a> and
-<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.restore" title="amplpy.Constraint.restore"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.restore()</span></code></a> on its entity level,
-and on its instance level it has properties like <a class="reference internal" href="classes/constraint.html#amplpy.Constraint.body" title="amplpy.Constraint.body"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.body()</span></code></a> and
-<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.dual" title="amplpy.Constraint.dual"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.dual()</span></code></a>
+class <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Variable</span></code></a> has properties like <a class="reference internal" href="classes/variable.html#amplpy.Variable.value" title="amplpy.Variable.value"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Variable.value()</span></code></a>
+and <a class="reference internal" href="classes/variable.html#amplpy.Variable.dual" title="amplpy.Variable.dual"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Variable.dual()</span></code></a> (together with instance level fix and unfix methods).</p>
+<p>The class <a class="reference internal" href="classes/constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Constraint</span></code></a> has functionalities like <a class="reference internal" href="classes/constraint.html#amplpy.Constraint.drop" title="amplpy.Constraint.drop"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Constraint.drop()</span></code></a> and
+<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.restore" title="amplpy.Constraint.restore"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Constraint.restore()</span></code></a> on its entity level,
+and on its instance level it has properties like <a class="reference internal" href="classes/constraint.html#amplpy.Constraint.body" title="amplpy.Constraint.body"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Constraint.body()</span></code></a> and
+<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.dual" title="amplpy.Constraint.dual"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Constraint.dual()</span></code></a>
 (and methods like drop and restore for the single instance).</p>
-<p>Note that the class <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Parameter</span></code></a>, which represent an algebraic parameter, represents
+<p>Note that the class <a class="reference internal" href="classes/parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Parameter</span></code></a>, which represent an algebraic parameter, represents
 its instances by objects (typically double numbers or strings) and therefore does not have special methods
 on its instance level.</p>
 <div class="section" id="access-to-instances-and-values">
 <span id="secaccessinstancesandvalues"></span><h3>Access to instances and values<a class="headerlink" href="#access-to-instances-and-values" title="Permalink to this headline">¶</a></h3>
-<p>The instances can be accessed from the parent entity through functions like <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.get()</span></code></a>, available for
+<p>The instances can be accessed from the parent entity through functions like <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.get()</span></code></a>, available for
 all entity classes or via the indexing operator.
 All data corresponding to the entity can be accessed through the instances, but the computational overhead of such kind of
-access is quite considerable. To avoid this, the user can gain bulk data access through a <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">amplpy.DataFrame</span></code></a> object;
-reference to these object can be obtained using <a class="reference internal" href="classes/entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.getValues()</span></code></a> methods.
-In case of scalar entities (e.g. the entity declared in AMPL with the statement <code class="docutils literal"><span class="pre">var</span> <span class="pre">x;</span></code>), all the instance specific methods are
-replicated at Entity level, to allow the code fragment <code class="docutils literal"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">x.value()</span></code> instead of the more explicit <code class="docutils literal"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">x.get().value()</span></code>.
+access is quite considerable. To avoid this, the user can gain bulk data access through a <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.DataFrame</span></code></a> object;
+reference to these object can be obtained using <a class="reference internal" href="classes/entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.getValues()</span></code></a> methods.
+In case of scalar entities (e.g. the entity declared in AMPL with the statement <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x;</span></code>), all the instance specific methods are
+replicated at Entity level, to allow the code fragment <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">x.value()</span></code> instead of the more explicit <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">x.get().value()</span></code>.
 See example below:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
 <span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x;&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
@@ -252,17 +245,17 @@ See example below:</p>
 <span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>  <span class="c1"># Access through explicit reference to the instance</span>
 </pre></div>
 </div>
-<p>Indexed entities are central in modelling via AMPL. This is why the <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.get()</span></code></a> method
+<p>Indexed entities are central in modelling via AMPL. This is why the <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.get()</span></code></a> method
 and the indexing operator can be used in multiple ways, to adapt to specific use cases.
 These will be presented below, by mean of some examples.</p>
 <p><strong>Scalar Entities</strong> In general, as seen above, access to an instance of a scalar entity is not needed, as all functionalities of the instance are replicated at entity level in this case. Anyway,
-to gain explicit access to an instance, the function <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.get()</span></code></a> can be used without parameters, as shown below.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x;&#39;</span><span class="p">)</span>
+to gain explicit access to an instance, the function <a class="reference internal" href="classes/entity.html#amplpy.Entity.get" title="amplpy.Entity.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.get()</span></code></a> can be used without parameters, as shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x;&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><strong>Indexed Entities</strong> Instances of indexed entities can be accessed as shown below:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
 <span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x{1..2, 4..5, 7..8};&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
@@ -285,7 +278,7 @@ the same declarations of the example above to illustrate how to:</p>
 <li>Find if an instance exists or not</li>
 <li>Enumerate all the instances</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Find using iterator</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find using iterator</span>
 <span class="n">instance</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Instance not found&quot;</span><span class="p">)</span>
@@ -298,13 +291,13 @@ the same declarations of the example above to illustrate how to:</p>
 <span class="n">xdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The currently defined entities are obtained from the various get methods of the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal"><span class="pre">amplpy.AMPL</span></code></a> object
+<p>The currently defined entities are obtained from the various get methods of the <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.AMPL</span></code></a> object
 (see section <a class="reference internal" href="#secamplclass"><span class="std std-ref">AMPL class</span></a>). Once a reference to an entity is created, the entity is automatically kept up-to-date
 with the corresponding entity in the AMPL interpreter. That is, if a reference to a newly created AMPL variable
-is obtained by means of <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>, and the model the variable is part of is then solved
-by means of <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.solve()</span></code></a>, the values of the instances of the variable will automatically be updated.
+is obtained by means of <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>, and the model the variable is part of is then solved
+by means of <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.solve()</span></code></a>, the values of the instances of the variable will automatically be updated.
 The following code snippet should demonstrate the concept.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x;&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x;&#39;</span><span class="p">)</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;maximize z: x;&#39;</span><span class="p">)</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;subject to c: x&lt;=10;&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
@@ -326,13 +319,13 @@ The following code snippet should demonstrate the concept.</p>
 on the values in the indexing set(s).  The order in which these indexing sets is handled in the AMPL entities is
 not always consistent with the ordering in which the data for such sets is defined, so it is often desirable, even when interested
 in only data (decoupled from the AMPL entities) to keep track of the indexing values which corresponds to each value.</p>
-<p>Moreover, when dealing with AMPL entities (like <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal"><span class="pre">amplpy.Variable</span></code></a>), consistency is guaranteed for every instance.
+<p>Moreover, when dealing with AMPL entities (like <a class="reference internal" href="classes/variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.Variable</span></code></a>), consistency is guaranteed for every instance.
 This means that, if a reference to an instance is kept and in the underlying AMPL interpreter the value of the instance
 is changed, the value read from the instance object will be always consistent with the AMPL value and, if an instance is
 deleted in AMPL, an exception will be thrown when accessing it. This has the obvious benefit of allowing the user to rely
 on the values of the instances, but has a price in terms of computational overhead. For example, accessing in this way the value
 of 1000 instances:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
 <span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;set A := 1..1000; param c{i in A} default 0; var x{i in 1..1000} := c[i];&#39;</span><span class="p">)</span>
 
@@ -348,16 +341,16 @@ of 1000 instances:</p>
 </pre></div>
 </div>
 <p>will check at each access if the referenced instance is valid or not, resulting in a computational overhead. Moreover,
-in a multi-threaded environment (like when using <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.evalAsync()</span></code></a>), the value of the underlying collection of instances
+in a multi-threaded environment (like when using <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.evalAsync()</span></code></a>), the value of the underlying collection of instances
 could be be changed by the interpreter while the main program is iterating through them, leading to undetermined results.</p>
-<p>To ease data communication and handling, the class <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal"><span class="pre">amplpy.DataFrame</span></code></a> is provided. Its usage is two-fold:</p>
+<p>To ease data communication and handling, the class <a class="reference internal" href="classes/dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">amplpy.DataFrame</span></code></a> is provided. Its usage is two-fold:</p>
 <ul class="simple">
 <li>It allows definition of data for multiple parameters in one single call to the underlying interpterer</li>
 <li>It decouples data and entities, reducing the computational overhead and risks related to concurrency</li>
 </ul>
 <p><cite>amplpy.DataFrame</cite> objects should therefore be used in these circumnstances, together with the methods
-<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setData()</span></code></a> and <a class="reference internal" href="classes/entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Entity.getValues()</span></code></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create a new dataframe with one indexing column (A) and another column (c)</span>
+<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setData" title="amplpy.AMPL.setData"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.setData()</span></code></a> and <a class="reference internal" href="classes/entity.html#amplpy.Entity.getValues" title="amplpy.Entity.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Entity.getValues()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new dataframe with one indexing column (A) and another column (c)</span>
 <span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span><span class="p">,</span> <span class="n">DataFrame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
@@ -389,9 +382,9 @@ the correspondence between indexing set and actual value of the instances.</p>
 <div class="section" id="access-to-scalar-values">
 <span id="secaccesstoscalars"></span><h3>Access to scalar values<a class="headerlink" href="#access-to-scalar-values" title="Permalink to this headline">¶</a></h3>
 <p>Simplified access to scalar values, like the value of a scalar variable or parameter or, in general, any
-AMPL expression that can be evaluated to a single string or number, is possible using the convenience method <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getValue" title="amplpy.AMPL.getValue"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getValue()</span></code></a>.
+AMPL expression that can be evaluated to a single string or number, is possible using the convenience method <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getValue" title="amplpy.AMPL.getValue"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getValue()</span></code></a>.
 This method will fail if called on an AMPL expression which does not evaluate to a single value. See below for an example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
 <span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;var x{i in 1..3} := i;&#39;</span><span class="p">)</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;param p symbolic := &quot;test&quot;;&#39;</span><span class="p">)</span>
@@ -411,20 +404,20 @@ This method will fail if called on an AMPL expression which does not evaluate to
 <p>For those that prefer a less verbose syntax,
 there is an alternative and more compact syntax for accessing entities and options:</p>
 <ul class="simple">
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.var[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getVariable(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>);</li>
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.con[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getConstraint(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a>);</li>
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.obj[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getObjective(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getObjective()</span></code></a>);</li>
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.set[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getSet(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getSet()</span></code></a>);</li>
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.param[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getParameter(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getParameter()</span></code></a>);</li>
-<li>Accessing <code class="docutils literal"><span class="pre">ampl.option[name]</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getOption(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOption" title="amplpy.AMPL.getOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.getOption()</span></code></a>).</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.var[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getVariable(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.con[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getConstraint(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.obj[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getObjective(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getObjective()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.set[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getSet(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.param[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getParameter(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a>);</li>
+<li>Accessing <code class="docutils literal notranslate"><span class="pre">ampl.option[name]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getOption(name)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getOption" title="amplpy.AMPL.getOption"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getOption()</span></code></a>).</li>
 </ul>
 <p>Setting entities and options is also possible:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">ampl.var[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getVariable(name).setValue(value)</span></code>  (<a class="reference internal" href="classes/variable.html#amplpy.Variable.setValue" title="amplpy.Variable.setValue"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Variable.setValue()</span></code></a>);</li>
-<li><code class="docutils literal"><span class="pre">ampl.con[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getConstraint(name).setDual(value)</span></code> (<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.setDual" title="amplpy.Constraint.setDual"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Constraint.setDual()</span></code></a>);</li>
-<li><code class="docutils literal"><span class="pre">ampl.set[name]</span> <span class="pre">=</span> <span class="pre">values</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getSet(name).setValues(values)</span></code> (<a class="reference internal" href="classes/set.html#amplpy.Set.setValues" title="amplpy.Set.setValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Set.setValues()</span></code></a>);</li>
-<li><code class="docutils literal"><span class="pre">ampl.param[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.getParameter(name).set(value)</span></code> if the parameter is scalar (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.set" title="amplpy.Parameter.set"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Parameter.set()</span></code></a>), <code class="docutils literal"><span class="pre">ampl.getParameter(name).setValues(value)</span></code> otherwise (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.setValues" title="amplpy.Parameter.setValues"><code class="xref py py-func docutils literal"><span class="pre">amplpy.Parameter.setValues()</span></code></a>);</li>
-<li><code class="docutils literal"><span class="pre">ampl.option[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal"><span class="pre">ampl.setOption(name,</span> <span class="pre">value)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal"><span class="pre">amplpy.AMPL.setOption()</span></code></a>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">ampl.var[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getVariable(name).setValue(value)</span></code>  (<a class="reference internal" href="classes/variable.html#amplpy.Variable.setValue" title="amplpy.Variable.setValue"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Variable.setValue()</span></code></a>);</li>
+<li><code class="docutils literal notranslate"><span class="pre">ampl.con[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getConstraint(name).setDual(value)</span></code> (<a class="reference internal" href="classes/constraint.html#amplpy.Constraint.setDual" title="amplpy.Constraint.setDual"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Constraint.setDual()</span></code></a>);</li>
+<li><code class="docutils literal notranslate"><span class="pre">ampl.set[name]</span> <span class="pre">=</span> <span class="pre">values</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getSet(name).setValues(values)</span></code> (<a class="reference internal" href="classes/set.html#amplpy.Set.setValues" title="amplpy.Set.setValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Set.setValues()</span></code></a>);</li>
+<li><code class="docutils literal notranslate"><span class="pre">ampl.param[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.getParameter(name).set(value)</span></code> if the parameter is scalar (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.set" title="amplpy.Parameter.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Parameter.set()</span></code></a>), <code class="docutils literal notranslate"><span class="pre">ampl.getParameter(name).setValues(value)</span></code> otherwise (<a class="reference internal" href="classes/parameter.html#amplpy.Parameter.setValues" title="amplpy.Parameter.setValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Parameter.setValues()</span></code></a>);</li>
+<li><code class="docutils literal notranslate"><span class="pre">ampl.option[name]</span> <span class="pre">=</span> <span class="pre">value</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">ampl.setOption(name,</span> <span class="pre">value)</span></code> (<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.setOption()</span></code></a>).</li>
 </ul>
 </div>
 <div class="section" id="note-on-variables-suffixes">
@@ -433,7 +426,7 @@ there is an alternative and more compact syntax for accessing entities and optio
 v.lb, v.ub, v.lslack, v.uslack, and v.slack where v is a variable
 instantiated without need of presolve and after one or more
 other variables have been instantiated.  Example:</p>
-<div class="highlight-ampl"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nv">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nv">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nv">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="kr">display</span><span class="w"> </span><span class="nv">y</span><span class="p">.</span><span class="kr">lb</span><span class="p">;</span>
 <span class="kr">display</span><span class="w"> </span><span class="nv">x</span><span class="p">.</span><span class="kr">ub</span><span class="p">;</span>
@@ -462,12 +455,12 @@ other variables have been instantiated.  Example:</p>
         <li class="right" >
           <a href="getting-started.html" title="Getting started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

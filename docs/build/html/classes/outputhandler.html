@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>OutputHandler &#8212; AMPL API 1.4 (amplpy-0.4.0) documentation</title>
+    <title>OutputHandler &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.4 (amplpy-0.4.0)',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -26,8 +18,7 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ErrorHandler" href="runnable.html" />
     <link rel="prev" title="Runnable" href="errorhandler.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="errorhandler.html" title="Runnable"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -61,12 +52,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -85,7 +78,7 @@
 <dd><p>Implement this interface to handle the outputs from the calls to any
 function that causes the underlying AMPL interpreter to display a message.</p>
 <p>Note that errors and warnings are not passed through this interface,
-see <a class="reference internal" href="runnable.html#amplpy.ErrorHandler" title="amplpy.ErrorHandler"><code class="xref py py-class docutils literal"><span class="pre">ErrorHandler</span></code></a> for more information.</p>
+see <a class="reference internal" href="runnable.html#amplpy.ErrorHandler" title="amplpy.ErrorHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorHandler</span></code></a> for more information.</p>
 <dl class="method">
 <dt id="amplpy.OutputHandler.output">
 <code class="descname">output</code><span class="sig-paren">(</span><em>kind</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.OutputHandler.output" title="Permalink to this definition">¶</a></dt>
@@ -119,120 +112,120 @@ executing a statement.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.WAITING">
 <code class="descname">WAITING</code><em class="property"> = 0</em><a class="headerlink" href="#amplpy.Kind.WAITING" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">prompt2</span></code>, returned when incomplete statements are interpreted.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">prompt2</span></code>, returned when incomplete statements are interpreted.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.BREAK">
 <code class="descname">BREAK</code><em class="property"> = 1</em><a class="headerlink" href="#amplpy.Kind.BREAK" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">break</span></code>, displayed when an operation is interrupted with SIGINT.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">break</span></code>, displayed when an operation is interrupted with SIGINT.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.CD">
 <code class="descname">CD</code><em class="property"> = 2</em><a class="headerlink" href="#amplpy.Kind.CD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">cd</span></code>, returned by the <code class="docutils literal"><span class="pre">cd</span></code> function.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">cd</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">cd</span></code> function.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.DISPLAY">
 <code class="descname">DISPLAY</code><em class="property"> = 3</em><a class="headerlink" href="#amplpy.Kind.DISPLAY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">display</span></code>, returned by the <code class="docutils literal"><span class="pre">display</span></code> function.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">display</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">display</span></code> function.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.EXIT">
 <code class="descname">EXIT</code><em class="property"> = 4</em><a class="headerlink" href="#amplpy.Kind.EXIT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">exit</span></code>, returned as last message from AMPL before exiting the
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">exit</span></code>, returned as last message from AMPL before exiting the
 interpreter.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.EXPAND">
 <code class="descname">EXPAND</code><em class="property"> = 5</em><a class="headerlink" href="#amplpy.Kind.EXPAND" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">expand</span></code>, returned by the <code class="docutils literal"><span class="pre">expand</span></code> function.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">expand</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">expand</span></code> function.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.LOAD">
 <code class="descname">LOAD</code><em class="property"> = 6</em><a class="headerlink" href="#amplpy.Kind.LOAD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">load</span></code>, returned by the <code class="docutils literal"><span class="pre">load</span></code> function when loading a library.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">load</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">load</span></code> function when loading a library.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.OPTION">
 <code class="descname">OPTION</code><em class="property"> = 7</em><a class="headerlink" href="#amplpy.Kind.OPTION" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">option</span></code>, returned by the <code class="docutils literal"><span class="pre">option</span></code> function when getting the
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">option</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">option</span></code> function when getting the
 value of an option.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.PRINT">
 <code class="descname">PRINT</code><em class="property"> = 8</em><a class="headerlink" href="#amplpy.Kind.PRINT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">print</span></code>, returned by the <code class="docutils literal"><span class="pre">print</span></code> function when printing values
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">print</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">print</span></code> function when printing values
 from AMPL command line.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.PROMPT">
 <code class="descname">PROMPT</code><em class="property"> = 9</em><a class="headerlink" href="#amplpy.Kind.PROMPT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">prompt1</span></code>, normal AMPL prompt.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">prompt1</span></code>, normal AMPL prompt.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.SOLUTION">
 <code class="descname">SOLUTION</code><em class="property"> = 10</em><a class="headerlink" href="#amplpy.Kind.SOLUTION" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">solution</span></code>, returned when loading a solution with the command
-<code class="docutils literal"><span class="pre">solution</span></code>, contains the solver message.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">solution</span></code>, returned when loading a solution with the command
+<code class="docutils literal notranslate"><span class="pre">solution</span></code>, contains the solver message.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.SOLVE">
 <code class="descname">SOLVE</code><em class="property"> = 11</em><a class="headerlink" href="#amplpy.Kind.SOLVE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">solve</span></code>, returned by the <code class="docutils literal"><span class="pre">solve</span></code> function, contains the solver
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">solve</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">solve</span></code> function, contains the solver
 message.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.SHOW">
 <code class="descname">SHOW</code><em class="property"> = 12</em><a class="headerlink" href="#amplpy.Kind.SHOW" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">show</span></code>, returned by the <code class="docutils literal"><span class="pre">show</span></code> function.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">show</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">show</span></code> function.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.XREF">
 <code class="descname">XREF</code><em class="property"> = 13</em><a class="headerlink" href="#amplpy.Kind.XREF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">xref</span></code>, returned by the <code class="docutils literal"><span class="pre">xref</span></code> function.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">xref</span></code>, returned by the <code class="docutils literal notranslate"><span class="pre">xref</span></code> function.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.SHELL_OUTPUT">
 <code class="descname">SHELL_OUTPUT</code><em class="property"> = 14</em><a class="headerlink" href="#amplpy.Kind.SHELL_OUTPUT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of the AMPL command <code class="docutils literal"><span class="pre">shell</span></code>.</p>
+<dd><p>Output of the AMPL command <code class="docutils literal notranslate"><span class="pre">shell</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.SHELL_MESSAGE">
 <code class="descname">SHELL_MESSAGE</code><em class="property"> = 15</em><a class="headerlink" href="#amplpy.Kind.SHELL_MESSAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Messages from the command <code class="docutils literal"><span class="pre">shell</span></code>.</p>
+<dd><p>Messages from the command <code class="docutils literal notranslate"><span class="pre">shell</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.MISC">
 <code class="descname">MISC</code><em class="property"> = 16</em><a class="headerlink" href="#amplpy.Kind.MISC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output <code class="docutils literal"><span class="pre">misc</span></code>.</p>
+<dd><p>Output <code class="docutils literal notranslate"><span class="pre">misc</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.WRITE_TABLE">
 <code class="descname">WRITE_TABLE</code><em class="property"> = 17</em><a class="headerlink" href="#amplpy.Kind.WRITE_TABLE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Messages from the command <code class="docutils literal"><span class="pre">write</span> <span class="pre">table</span></code>.</p>
+<dd><p>Messages from the command <code class="docutils literal notranslate"><span class="pre">write</span> <span class="pre">table</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.READ_TABLE">
 <code class="descname">READ_TABLE</code><em class="property"> = 18</em><a class="headerlink" href="#amplpy.Kind.READ_TABLE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Messages from the command <code class="docutils literal"><span class="pre">read</span> <span class="pre">table</span></code>.</p>
+<dd><p>Messages from the command <code class="docutils literal notranslate"><span class="pre">read</span> <span class="pre">table</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -244,49 +237,49 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.CALL">
 <code class="descname">CALL</code><em class="property"> = 22</em><a class="headerlink" href="#amplpy.Kind.CALL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a script <code class="docutils literal"><span class="pre">call</span></code>.</p>
+<dd><p>Output of a script <code class="docutils literal notranslate"><span class="pre">call</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.CHECK">
 <code class="descname">CHECK</code><em class="property"> = 23</em><a class="headerlink" href="#amplpy.Kind.CHECK" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">check</span></code> operation.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">check</span></code> operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.CLOSE">
 <code class="descname">CLOSE</code><em class="property"> = 24</em><a class="headerlink" href="#amplpy.Kind.CLOSE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">close</span></code> command for output redirection.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">close</span></code> command for output redirection.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.COMMANDS">
 <code class="descname">COMMANDS</code><em class="property"> = 25</em><a class="headerlink" href="#amplpy.Kind.COMMANDS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">commands</span></code> call into another file.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">commands</span></code> call into another file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.CONTINUE">
 <code class="descname">CONTINUE</code><em class="property"> = 26</em><a class="headerlink" href="#amplpy.Kind.CONTINUE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Issued when <code class="docutils literal"><span class="pre">continue</span></code> is encountered.</p>
+<dd><p>Issued when <code class="docutils literal notranslate"><span class="pre">continue</span></code> is encountered.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.DATA">
 <code class="descname">DATA</code><em class="property"> = 27</em><a class="headerlink" href="#amplpy.Kind.DATA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">data</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">data</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.DELETECMD">
 <code class="descname">DELETECMD</code><em class="property"> = 28</em><a class="headerlink" href="#amplpy.Kind.DELETECMD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">delete</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">delete</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.DROP">
 <code class="descname">DROP</code><em class="property"> = 29</em><a class="headerlink" href="#amplpy.Kind.DROP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">drop</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">drop</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -321,31 +314,31 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.ENVIRON">
 <code class="descname">ENVIRON</code><em class="property"> = 34</em><a class="headerlink" href="#amplpy.Kind.ENVIRON" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">environ</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">environ</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.FIX">
 <code class="descname">FIX</code><em class="property"> = 35</em><a class="headerlink" href="#amplpy.Kind.FIX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">fix</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">fix</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.FOR">
 <code class="descname">FOR</code><em class="property"> = 36</em><a class="headerlink" href="#amplpy.Kind.FOR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">for</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">for</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.IF">
 <code class="descname">IF</code><em class="property"> = 37</em><a class="headerlink" href="#amplpy.Kind.IF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of an <code class="docutils literal"><span class="pre">if</span></code> command.</p>
+<dd><p>Output of an <code class="docutils literal notranslate"><span class="pre">if</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.LET">
 <code class="descname">LET</code><em class="property"> = 38</em><a class="headerlink" href="#amplpy.Kind.LET" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">let</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">let</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -357,7 +350,7 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.OBJECTIVE">
 <code class="descname">OBJECTIVE</code><em class="property"> = 40</em><a class="headerlink" href="#amplpy.Kind.OBJECTIVE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of an <code class="docutils literal"><span class="pre">objective</span></code> command.</p>
+<dd><p>Output of an <code class="docutils literal notranslate"><span class="pre">objective</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -369,19 +362,19 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.PRINTF">
 <code class="descname">PRINTF</code><em class="property"> = 42</em><a class="headerlink" href="#amplpy.Kind.PRINTF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">printf</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">printf</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.PROBLEM">
 <code class="descname">PROBLEM</code><em class="property"> = 43</em><a class="headerlink" href="#amplpy.Kind.PROBLEM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">problem</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">problem</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.PURGE">
 <code class="descname">PURGE</code><em class="property"> = 44</em><a class="headerlink" href="#amplpy.Kind.PURGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">purge</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">purge</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -393,19 +386,19 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.READ">
 <code class="descname">READ</code><em class="property"> = 46</em><a class="headerlink" href="#amplpy.Kind.READ" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">read</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">read</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.RELOAD">
 <code class="descname">RELOAD</code><em class="property"> = 47</em><a class="headerlink" href="#amplpy.Kind.RELOAD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">reload</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">reload</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.REMOVE">
 <code class="descname">REMOVE</code><em class="property"> = 48</em><a class="headerlink" href="#amplpy.Kind.REMOVE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">remove</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">remove</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -423,13 +416,13 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.RESET">
 <code class="descname">RESET</code><em class="property"> = 51</em><a class="headerlink" href="#amplpy.Kind.RESET" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">reset</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">reset</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.RESTORE">
 <code class="descname">RESTORE</code><em class="property"> = 52</em><a class="headerlink" href="#amplpy.Kind.RESTORE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">restore</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">restore</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -453,31 +446,31 @@ message.</p>
 <dl class="attribute">
 <dt id="amplpy.Kind.THEN">
 <code class="descname">THEN</code><em class="property"> = 56</em><a class="headerlink" href="#amplpy.Kind.THEN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Beginning of the <code class="docutils literal"><span class="pre">then</span></code> part of an if statement.</p>
+<dd><p>Beginning of the <code class="docutils literal notranslate"><span class="pre">then</span></code> part of an if statement.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.UNFIX">
 <code class="descname">UNFIX</code><em class="property"> = 57</em><a class="headerlink" href="#amplpy.Kind.UNFIX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of an <code class="docutils literal"><span class="pre">unfix</span></code> command.</p>
+<dd><p>Output of an <code class="docutils literal notranslate"><span class="pre">unfix</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.UNLOAD">
 <code class="descname">UNLOAD</code><em class="property"> = 58</em><a class="headerlink" href="#amplpy.Kind.UNLOAD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of an <code class="docutils literal"><span class="pre">unload</span></code> command.</p>
+<dd><p>Output of an <code class="docutils literal notranslate"><span class="pre">unload</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.UPDATE">
 <code class="descname">UPDATE</code><em class="property"> = 59</em><a class="headerlink" href="#amplpy.Kind.UPDATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of an <code class="docutils literal"><span class="pre">update</span></code> command.</p>
+<dd><p>Output of an <code class="docutils literal notranslate"><span class="pre">update</span></code> command.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Kind.WRITE">
 <code class="descname">WRITE</code><em class="property"> = 60</em><a class="headerlink" href="#amplpy.Kind.WRITE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output of a <code class="docutils literal"><span class="pre">write</span></code> command.</p>
+<dd><p>Output of a <code class="docutils literal notranslate"><span class="pre">write</span></code> command.</p>
 </dd></dl>
 
 </dd></dl>
@@ -502,13 +495,13 @@ message.</p>
         <li class="right" >
           <a href="errorhandler.html" title="Runnable"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.4.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>
