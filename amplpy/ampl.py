@@ -978,3 +978,17 @@ class AMPL(object):
         model.update()
         rmtree(tmp_dir)
         return model
+
+    def _startRecording(self, filename):
+        """
+        Start recording the session to a file for debug purposes.
+        """
+        self.setOption('_log_file_name', filename)
+        self.setOption('_log_input_only', True)
+        self.setOption('_log', True)
+
+    def _stopRecording(self):
+        """
+        Stop recording the session.
+        """
+        self.setOption('_log', False)
