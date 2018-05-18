@@ -4732,6 +4732,12 @@ SWIGINTERN ampl::Tuple ampl_Tuple_Factory__SWIG_0(VariantArray &args,std::size_t
 SWIGINTERN ampl::Tuple ampl_Tuple_Factory__SWIG_1(ampl::TupleRef t){
     return ampl::Tuple(t);
   }
+SWIGINTERN void ampl_DataFrame_setValueSWIG__SWIG_0(ampl::DataFrame *self,ampl::Tuple rowIndex,fmt::CStringRef colHeader,ampl::Variant value){
+	self->setValue(ampl::TupleRef(rowIndex), colHeader, value);
+}
+SWIGINTERN void ampl_DataFrame_setValueSWIG__SWIG_1(ampl::DataFrame *self,std::size_t rowIndex,std::size_t colIndex,ampl::Variant value){
+	self->setValue(rowIndex, colIndex, value);
+}
 SWIGINTERN void ampl_DataFrame_addColumnSWIG(ampl::DataFrame *self,fmt::CStringRef header){
   return self->addColumn(header);
 }
@@ -11134,6 +11140,254 @@ SWIGINTERN PyObject *_wrap_DataFrame_impl(PyObject *self, PyObject *args) {
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
+  ampl::Tuple arg2 ;
+  fmt::CStringRef arg3 ;
+  SwigValueWrapper< ampl::Variant > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp4 ;
+  int res4 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setValueSWIG",&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setValueSWIG" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_ampl__Tuple,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DataFrame_setValueSWIG" "', argument " "2"" of type '" "ampl::Tuple""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_setValueSWIG" "', argument " "2"" of type '" "ampl::Tuple""'");
+    } else {
+      ampl::Tuple * temp = reinterpret_cast< ampl::Tuple * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  
+  arg3 = _PyString_AsString(obj2);
+  
+  {
+    res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_ampl__Variant,  0  | 0);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setValueSWIG" "', argument " "4"" of type '" "ampl::Variant""'"); 
+    }  
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_setValueSWIG" "', argument " "4"" of type '" "ampl::Variant""'");
+    } else {
+      ampl::Variant * temp = reinterpret_cast< ampl::Variant * >(argp4);
+      arg4 = *temp;
+      if (SWIG_IsNewObj(res4)) delete temp;
+    }
+  }
+  {
+    try {
+      ampl_DataFrame_setValueSWIG__SWIG_0(arg1,arg2,arg3,arg4);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_1(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::DataFrame *arg1 = (ampl::DataFrame *) 0 ;
+  std::size_t arg2 ;
+  std::size_t arg3 ;
+  SwigValueWrapper< ampl::Variant > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  void *argp4 ;
+  int res4 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DataFrame_setValueSWIG",&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataFrame_setValueSWIG" "', argument " "1"" of type '" "ampl::DataFrame *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DataFrame_setValueSWIG" "', argument " "2"" of type '" "std::size_t""'");
+  } 
+  arg2 = static_cast< std::size_t >(val2);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DataFrame_setValueSWIG" "', argument " "3"" of type '" "std::size_t""'");
+  } 
+  arg3 = static_cast< std::size_t >(val3);
+  {
+    res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_ampl__Variant,  0  | 0);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DataFrame_setValueSWIG" "', argument " "4"" of type '" "ampl::Variant""'"); 
+    }  
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DataFrame_setValueSWIG" "', argument " "4"" of type '" "ampl::Variant""'");
+    } else {
+      ampl::Variant * temp = reinterpret_cast< ampl::Variant * >(argp4);
+      arg4 = *temp;
+      if (SWIG_IsNewObj(res4)) delete temp;
+    }
+  }
+  {
+    try {
+      ampl_DataFrame_setValueSWIG__SWIG_1(arg1,arg2,arg3,arg4);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  Py_ssize_t ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? PyObject_Length(args) : 0;
+  argv[0] = self;
+  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
+    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
+  }
+  argc++;
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__DataFrame, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_ampl__Tuple, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_ampl__Variant, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_DataFrame_setValueSWIG__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__DataFrame, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_size_t(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_ampl__Variant, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_DataFrame_setValueSWIG__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'DataFrame_setValueSWIG'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ampl::DataFrame::setValueSWIG(ampl::Tuple,fmt::CStringRef,ampl::Variant)\n"
+    "    ampl::DataFrame::setValueSWIG(std::size_t,std::size_t,ampl::Variant)\n");
+  return 0;
 }
 
 
@@ -38033,6 +38287,482 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_0(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::string result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AMPL_exportData",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportData" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AMPL_exportData" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  {
+    try {
+      result = ((ampl::AMPL const *)arg1)->exportData(arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_1(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::string result;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_exportData takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportData" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  {
+    try {
+      result = ((ampl::AMPL const *)arg1)->exportData();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_2(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  fmt::CStringRef arg2 ;
+  bool arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AMPL_exportData",&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  
+  arg2 = _PyString_AsString(obj1);
+  
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_exportData" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try {
+      (arg1)->exportData(arg2,arg3);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_3(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  fmt::CStringRef arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AMPL_exportData",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportData" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  
+  arg2 = _PyString_AsString(obj1);
+  
+  {
+    try {
+      (arg1)->exportData(arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportData(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  Py_ssize_t ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? PyObject_Length(args) : 0;
+  argv[0] = self;
+  for (ii = 0; (ii < 2) && (ii < argc); ii++) {
+    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
+  }
+  argc++;
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AMPL_exportData__SWIG_1(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AMPL_exportData__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_AMPL_exportData__SWIG_3(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AMPL_exportData__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_exportData'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ampl::AMPL::exportData(bool) const\n"
+    "    ampl::AMPL::exportData() const\n"
+    "    ampl::AMPL::exportData(fmt::CStringRef,bool)\n"
+    "    ampl::AMPL::exportData(fmt::CStringRef)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_0(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::string result;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_exportModel takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportModel" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  {
+    try {
+      result = ((ampl::AMPL const *)arg1)->exportModel();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_1(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  fmt::CStringRef arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AMPL_exportModel",&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_exportModel" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  
+  arg2 = _PyString_AsString(obj1);
+  
+  {
+    try {
+      ((ampl::AMPL const *)arg1)->exportModel(arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_exportModel(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  Py_ssize_t ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? PyObject_Length(args) : 0;
+  argv[0] = self;
+  for (ii = 0; (ii < 1) && (ii < argc); ii++) {
+    argv[ii + 1] = PyTuple_GET_ITEM(args,ii);
+  }
+  argc++;
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AMPL_exportModel__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_AMPL_exportModel__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'AMPL_exportModel'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ampl::AMPL::exportModel() const\n"
+    "    ampl::AMPL::exportModel(fmt::CStringRef) const\n");
+  return 0;
+}
+
+
 SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
@@ -39588,6 +40318,59 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj((new ampl::Optional< bool >(static_cast< const ampl::Optional< bool >& >(result))), SWIGTYPE_p_ampl__OptionalT_bool_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_getCurrentObjectiveName(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::string result;
+  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPL_getCurrentObjectiveName takes no arguments");
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_getCurrentObjectiveName" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  {
+    try {
+      result = (arg1)->getCurrentObjectiveName();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
   return NULL;
@@ -44076,6 +44859,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__DataFrame_methods[] = {
   { "getRow", (PyCFunction) _wrap_DataFrame_getRow, METH_VARARGS, (char*) "" },
   { "getHeaders", (PyCFunction) _wrap_DataFrame_getHeaders, METH_VARARGS, (char*) "" },
   { "impl", (PyCFunction) _wrap_DataFrame_impl, METH_VARARGS, (char*) "" },
+  { "setValueSWIG", (PyCFunction) _wrap_DataFrame_setValueSWIG, METH_VARARGS, (char*) "" },
   { "addColumn", (PyCFunction) _wrap_DataFrame_addColumn, METH_VARARGS, (char*) "" },
   { "addColumnStr", (PyCFunction) _wrap_DataFrame_addColumnStr, METH_VARARGS, (char*) "" },
   { "addColumnDbl", (PyCFunction) _wrap_DataFrame_addColumnDbl, METH_VARARGS, (char*) "" },
@@ -57307,6 +58091,8 @@ SwigPyBuiltin__ampl__AMPL_richcompare(PyObject *self, PyObject *other, int op) {
 }
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
+  { "exportData", (PyCFunction) _wrap_AMPL_exportData, METH_VARARGS, (char*) "" },
+  { "exportModel", (PyCFunction) _wrap_AMPL_exportModel, METH_VARARGS, (char*) "" },
   { "getEntity", (PyCFunction) _wrap_AMPL_getEntity, METH_VARARGS, (char*) "" },
   { "getVariable", (PyCFunction) _wrap_AMPL_getVariable, METH_VARARGS, (char*) "" },
   { "getConstraint", (PyCFunction) _wrap_AMPL_getConstraint, METH_VARARGS, (char*) "" },
@@ -57332,6 +58118,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
   { "getDblOption", (PyCFunction) _wrap_AMPL_getDblOption, METH_VARARGS, (char*) "" },
   { "setDblOption", (PyCFunction) _wrap_AMPL_setDblOption, METH_VARARGS, (char*) "" },
   { "getBoolOption", (PyCFunction) _wrap_AMPL_getBoolOption, METH_VARARGS, (char*) "" },
+  { "getCurrentObjectiveName", (PyCFunction) _wrap_AMPL_getCurrentObjectiveName, METH_VARARGS, (char*) "" },
   { "setBoolOption", (PyCFunction) _wrap_AMPL_setBoolOption, METH_VARARGS, (char*) "" },
   { "read", (PyCFunction) _wrap_AMPL_read, METH_VARARGS, (char*) "" },
   { "readData", (PyCFunction) _wrap_AMPL_readData, METH_VARARGS, (char*) "" },
