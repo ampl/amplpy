@@ -45,16 +45,34 @@ def updatelib():
     except Exception:
         pass
     shutil.copytree(include_dir, amplpy_include)
+    print(
+        '*\n!.gitignore\n',
+        file=open(os.path.join(amplpy_include, '.gitignore'), 'w')
+    )
 
     for libname, lib in [('lib32', lib32), ('lib64', lib64)]:
+        dstdir = os.path.join('amplpy', 'amplpython', libname)
+        try:
+            shutil.rmtree(dstdir)
+            os.mkdir(dstdir)
+        except Exception:
+            pass
+        print(
+            '*\n!.gitignore\n',
+            file=open(os.path.join(dstdir, '.gitignore'), 'w')
+        )
         print('{}:'.format(libname))
         for filename in os.listdir(lib):
             if filename.endswith('.jar'):
                 continue
+            if 'java' in filename:
+                continue
+            if 'csharp' in filename:
+                continue
             print('\t{}'.format(filename))
             shutil.copyfile(
                 os.path.join(lib, filename),
-                os.path.join('amplpy', 'amplpython', libname, filename)
+                os.path.join(dstdir, filename)
             )
 
 
