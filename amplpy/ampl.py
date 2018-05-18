@@ -992,3 +992,12 @@ class AMPL(object):
         Stop recording the session.
         """
         self.setOption('_log', False)
+
+    def _loadSession(self, filename):
+        """
+        Load a recorded session.
+        """
+        try:
+            self.eval(open(filename).read())
+        except RuntimeError as e:
+            print(e)
