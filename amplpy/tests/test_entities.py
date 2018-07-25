@@ -296,6 +296,7 @@ class TestEntities(TestBase.TestBase):
         loadDietModel(self.ampl)
         ampl = self.ampl
         obj = ampl.getObjective('total_cost')
+        self.assertEqual(ampl.getCurrentObjective().name(), 'total_cost')
         self.assertEqual(
             len(dict(obj)),
             obj.numInstances()
@@ -310,7 +311,25 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(obj.astatus(), 'drop')
         obj.restore()
         self.assertEqual(obj.astatus(), 'in')
-        self.assertFalse(obj.minimization())
+        self.assertTrue(obj.minimization())
+        ampl.eval('''
+            maximize A: 1;
+            minimize B: 1;
+            maximize C: 1;
+        ''')
+        self.assertEqual(ampl.getCurrentObjective(), None)
+        ampl.eval('objective A;')
+        self.assertEqual(ampl.getCurrentObjective().name(), 'A')
+        self.assertFalse(ampl.getCurrentObjective().minimization())
+        ampl.eval('objective B;')
+        self.assertEqual(ampl.getCurrentObjective().name(), 'B')
+        self.assertTrue(ampl.getCurrentObjective().minimization())
+        ampl.eval('objective C;')
+        self.assertEqual(ampl.getCurrentObjective().name(), 'C')
+        self.assertFalse(ampl.getCurrentObjective().minimization())
+        ampl.eval('objective A;')
+        self.assertEqual(ampl.getCurrentObjective().name(), 'A')
+        self.assertFalse(ampl.getCurrentObjective().minimization())
 
 
 if __name__ == '__main__':

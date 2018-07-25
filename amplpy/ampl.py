@@ -805,6 +805,16 @@ class AMPL(object):
         )
         return EntityMap(parameters, Parameter)
 
+    def getCurrentObjective(self):
+        """
+        Get the the current objective. Returns `None` if no objective is set.
+        """
+        name = self._impl.getCurrentObjectiveName()
+        if name == '':
+            return None
+        else:
+            return self.getObjective(name)
+
     def _var(self):
         """
         Get/Set a variable.
@@ -973,7 +983,7 @@ class AMPL(object):
         for con in model.getConstrs():
             index = int(con.ConstrName[1:])-1
             con.ConstrName = con_names[index]
-        if not self.getObjective(con_names[model.NumConstrs]).minimization():
+        if not self.getCurrentObjective().minimization():
             model.ModelSense = GRB.MAXIMIZE
         model.update()
         rmtree(tmp_dir)

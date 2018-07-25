@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Upgrade internal API to v2.0.
 - Add experimental methods AMPL._startRecording and AMPL._stopRecording.
 - Add experimental method AMPL._loadSession.
+- Add method AMPL.getCurrentObjective.
+- Fix truncated values in sets (amplapi#337).
 
 ## 0.5.0 - 2018-05-06
 - Breaking: AMPL errors raise exceptions by default.
