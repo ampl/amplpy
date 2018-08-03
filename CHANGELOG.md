@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Add experimental methods AMPL._startRecording and AMPL._stopRecording.
 - Add experimental method AMPL._loadSession.
 - Add method AMPL.getCurrentObjective.
+- Add support to Python 3.7.
 - Fix truncated values in sets (amplapi#337).
 
 ## 0.5.0 - 2018-05-06

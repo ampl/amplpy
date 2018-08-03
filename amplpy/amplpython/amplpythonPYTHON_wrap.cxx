@@ -11479,7 +11479,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj2,i);
         if (_PyString_Check(obj)) {
-          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(obj2,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
@@ -12004,7 +12004,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj2,i);
         if (_PyString_Check(obj)) {
-          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(obj2,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
@@ -12318,7 +12318,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -12465,7 +12465,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj2,i);
         if (_PyString_Check(obj)) {
-          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(obj2,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
@@ -12571,7 +12571,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -12594,7 +12594,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj2,i);
         if (_PyString_Check(obj)) {
-          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(obj2,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
@@ -13313,7 +13313,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj5,i);
         if (_PyString_Check(obj)) {
-          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(obj5,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
@@ -13462,7 +13462,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj5,i);
         if (_PyString_Check(obj)) {
-          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(obj5,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
@@ -13605,7 +13605,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj5,i);
         if (_PyString_Check(obj)) {
-          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(obj5,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
@@ -13733,7 +13733,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj5,i);
         if (_PyString_Check(obj)) {
-          arg6[i] = _PyString_AsString(PyList_GetItem(obj5,i));
+          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(obj5,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg6);
@@ -13825,7 +13825,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -16096,7 +16096,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -20845,7 +20845,7 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -26853,7 +26853,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -27744,7 +27744,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj2,i);
         if (_PyString_Check(obj)) {
-          arg3[i] = _PyString_AsString(PyList_GetItem(obj2,i));
+          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(obj2,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg3);
@@ -27930,7 +27930,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -41713,7 +41713,7 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
@@ -41809,7 +41809,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(obj1,i);
         if (_PyString_Check(obj)) {
-          arg2[i] = _PyString_AsString(PyList_GetItem(obj1,i));
+          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(obj1,i));
         } else {
           PyErr_SetString(PyExc_TypeError,"list must contain strings");
           free(arg2);
