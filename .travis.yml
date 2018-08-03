@@ -13,7 +13,7 @@ env:
 script:
   - sudo pip install urllib3[secure] --upgrade
   - python updatelib.py
-  - sudo pip install cibuildwheel==0.8.0
+  - sudo pip install cibuildwheel==0.9.4
   - cibuildwheel --output-dir wheelhouse
 
 after_success:
