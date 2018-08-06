@@ -345,7 +345,8 @@ class AMPL(object):
             callback: Callback to be executed when the file has been
             interpreted.
         """
-        def async():
+
+        def async_call():
             self._lock.acquire()
             try:
                 self._errorhandler.reset()
@@ -357,7 +358,7 @@ class AMPL(object):
             else:
                 self._lock.release()
                 callback.run()
-        Thread(target=async).start()
+        Thread(target=async_call).start()
 
     def readDataAsync(self, fileName, callback):
         """
@@ -373,7 +374,7 @@ class AMPL(object):
             callback: Callback to be executed when the file has been
             interpreted.
         """
-        def async():
+        def async_call():
             self._lock.acquire()
             try:
                 self._errorhandler.reset()
@@ -385,7 +386,7 @@ class AMPL(object):
             else:
                 self._lock.release()
                 callback.run()
-        Thread(target=async).start()
+        Thread(target=async_call).start()
 
     def evalAsync(self, amplstatements, callback):
         """
@@ -403,7 +404,7 @@ class AMPL(object):
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
-        def async():
+        def async_call():
             self._lock.acquire()
             try:
                 self._errorhandler.reset()
@@ -415,7 +416,7 @@ class AMPL(object):
             else:
                 self._lock.release()
                 callback.run()
-        Thread(target=async).start()
+        Thread(target=async_call).start()
 
     def solveAsync(self, callback):
         """
@@ -424,7 +425,7 @@ class AMPL(object):
         Args:
           callback: Callback to be executed when the solver is done.
         """
-        def async():
+        def async_call():
             self._lock.acquire()
             try:
                 self._errorhandler.reset()
@@ -436,7 +437,7 @@ class AMPL(object):
             else:
                 self._lock.release()
                 callback.run()
-        Thread(target=async).start()
+        Thread(target=async_call).start()
 
     def wait(self):
         """
