@@ -15,4 +15,4 @@ from .dataframe import DataFrame
 from .utils import multidict
 from .environment import Environment
 from .ampl import AMPL
-__version__ = '0.6.0rc3'
+__version__ = 'v0.6.0rc4'
