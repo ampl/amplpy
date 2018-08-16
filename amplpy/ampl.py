@@ -243,7 +243,7 @@ class AMPL(object):
             self._lock
         )
 
-    def eval(self, amplstatements):
+    def eval(self, amplstatements, **kwargs):
         """
         Parses AMPL code and evaluates it as a possibly empty sequence of AMPL
         declarations and statements.
@@ -270,7 +270,7 @@ class AMPL(object):
           interpreter is not running.
         """
         if self._langext is not None:
-            amplstatements = self._langext.translate(amplstatements)
+            amplstatements = self._langext.translate(amplstatements, **kwargs)
         self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.eval(amplstatements),
@@ -388,7 +388,7 @@ class AMPL(object):
                 callback.run()
         Thread(target=async_call).start()
 
-    def evalAsync(self, amplstatements, callback):
+    def evalAsync(self, amplstatements, callback, **kwargs):
         """
         Interpret the given AMPL statement asynchronously.
 
@@ -404,6 +404,9 @@ class AMPL(object):
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
+        if self._langext is not None:
+            amplstatements = self._langext.translate(amplstatements, **kwargs)
+
         def async_call():
             self._lock.acquire()
             try:
@@ -559,16 +562,10 @@ class AMPL(object):
             RuntimeError: in case the file does not exist.
         """
         self._errorhandler.reset()
-        if self._langext is not None:
-            with open(os.path.join(self.cd(),
-                      self.option['ampl_include'],
-                      fileName)) as f:
-                self.eval(f.read())
-        else:
-            lock_and_call(
-                lambda: self._impl.read(fileName),
-                self._lock
-            )
+        lock_and_call(
+            lambda: self._impl.read(fileName),
+            self._lock
+        )
         self._errorhandler.check()
 
     def readData(self, fileName):
