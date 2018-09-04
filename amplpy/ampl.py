@@ -983,9 +983,21 @@ class AMPL(object):
             con.ConstrName = con_names[index]
         if not self.getCurrentObjective().minimization():
             model.ModelSense = GRB.MAXIMIZE
+        model._var_names = var_names
+        model._con_names = con_names
         model.update()
         rmtree(tmp_dir)
         return model
+
+    def importGurobiSolution(self, grbmodel):
+        """
+        Import the solution from a gurobipy.Model object.
+        """
+        self.eval(''.join(
+            'let {} := {};'.format(var_name, grbmodel.getVarByName(var_name).X)
+            for var_name in grbmodel._var_names
+        ))
+        # FIXME: retrieve other attributes as well
 
     def _startRecording(self, filename):
         """
