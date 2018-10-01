@@ -34865,12 +34865,17 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
+  PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
-  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
+  if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
+  
+  arg1 = _PyString_AsString(obj1);
+  
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException();
+      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -34910,17 +34915,12 @@ fail:
 
 SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
-  PyObject * obj1 = 0 ;
   ampl::AMPLException *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:new_AMPLException",&obj1)) SWIG_fail;
-  
-  arg1 = _PyString_AsString(obj1);
-  
+  if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "new_AMPLException takes no arguments");
   {
     try {
-      result = (ampl::AMPLException *)new ampl::AMPLException(arg1);
+      result = (ampl::AMPLException *)new ampl::AMPLException();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35044,7 +35044,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_AMPLException__SWIG_1(self, args);
+    return _wrap_new_AMPLException__SWIG_2(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -35059,7 +35059,7 @@ SWIGINTERN int _wrap_new_AMPLException(PyObject *self, PyObject *args) {
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_AMPLException__SWIG_2(self, args);
+      return _wrap_new_AMPLException__SWIG_1(self, args);
     }
   }
   if (argc == 4) {
@@ -35091,8 +35091,8 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_AMPLException'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    ampl::AMPLException::AMPLException(ampl::AMPLException const &)\n"
-    "    ampl::AMPLException::AMPLException()\n"
     "    ampl::AMPLException::AMPLException(fmt::CStringRef)\n"
+    "    ampl::AMPLException::AMPLException()\n"
     "    ampl::AMPLException::AMPLException(fmt::CStringRef,int,int,fmt::CStringRef)\n");
   return -1;
 }
@@ -35155,7 +35155,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
   ampl::AMPLException *arg1 = (ampl::AMPLException *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  std::string result;
+  std::string *result = 0 ;
   
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getSourceName takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
@@ -35165,7 +35165,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
     try {
-      result = ((ampl::AMPLException const *)arg1)->getSourceName();
+      result = (std::string *) &((ampl::AMPLException const *)arg1)->getSourceName();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35196,7 +35196,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
       SWIG_exception(SWIG_UnknownError,"Unknown exception");
     }
   }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
   return resultobj;
 fail:
   return NULL;
@@ -35314,7 +35314,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
   ampl::AMPLException *arg1 = (ampl::AMPLException *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  std::string result;
+  std::string *result = 0 ;
   
   if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, "AMPLException_getMessage takes no arguments");
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPLException, 0 |  0 );
@@ -35324,7 +35324,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
   arg1 = reinterpret_cast< ampl::AMPLException * >(argp1);
   {
     try {
-      result = ((ampl::AMPLException const *)arg1)->getMessage();
+      result = (std::string *) &((ampl::AMPLException const *)arg1)->getMessage();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35355,7 +35355,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_UnknownError,"Unknown exception");
     }
   }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
   return resultobj;
 fail:
   return NULL;
@@ -35432,17 +35432,26 @@ fail:
 
 SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
   PyObject * obj1 = 0 ;
   ampl::LicenseException *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_LicenseException",&obj1)) SWIG_fail;
-  
-  arg1 = _PyString_AsString(obj1);
-  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_LicenseException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_LicenseException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
   {
     try {
-      result = (ampl::LicenseException *)new ampl::LicenseException(arg1);
+      result = (ampl::LicenseException *)new ampl::LicenseException((std::string const &)*arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35474,8 +35483,10 @@ SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__LicenseException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj == Py_None ? -1 : 0;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return -1;
 }
 
@@ -35534,17 +35545,26 @@ fail:
 
 SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
   PyObject * obj1 = 0 ;
   ampl::FileIOException *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_FileIOException",&obj1)) SWIG_fail;
-  
-  arg1 = _PyString_AsString(obj1);
-  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FileIOException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FileIOException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
   {
     try {
-      result = (ampl::FileIOException *)new ampl::FileIOException(arg1);
+      result = (ampl::FileIOException *)new ampl::FileIOException((std::string const &)*arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35576,8 +35596,10 @@ SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__FileIOException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj == Py_None ? -1 : 0;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return -1;
 }
 
@@ -35636,17 +35658,26 @@ fail:
 
 SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  fmt::CStringRef arg1 ;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
   PyObject * obj1 = 0 ;
   ampl::UnsupportedOperationException *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_UnsupportedOperationException",&obj1)) SWIG_fail;
-  
-  arg1 = _PyString_AsString(obj1);
-  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_UnsupportedOperationException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_UnsupportedOperationException" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
   {
     try {
-      result = (ampl::UnsupportedOperationException *)new ampl::UnsupportedOperationException(arg1);
+      result = (ampl::UnsupportedOperationException *)new ampl::UnsupportedOperationException((std::string const &)*arg1);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -35678,8 +35709,10 @@ SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject 
     }
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__UnsupportedOperationException, SWIG_BUILTIN_INIT |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj == Py_None ? -1 : 0;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return -1;
 }
 
