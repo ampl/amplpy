@@ -2,7 +2,7 @@
 
 set -e
 BASE_PATH=$PATH
-PYLIST="cp27-cp27m cp27-cp27mu cp34-cp34m cp35-cp35m cp36-cp36m"
+PYLIST="cp27-cp27m cp27-cp27mu cp34-cp34m cp35-cp35m cp36-cp36m cp37-cp37m"
 
 if [ "$#" -eq 0 ]; then
   	echo "Usage: $0 [32|64]"
