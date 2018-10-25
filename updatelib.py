@@ -52,7 +52,7 @@ def updatelib():
     )
 
     print('wrapper:')
-    for filename in os.listdir(wraper_dir):
+    for filename in os.listdir(wrapper_dir):
         print('\t{}'.format(filename))
         shutil.copyfile(
             os.path.join(wrapper_dir, filename),
