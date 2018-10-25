@@ -38,6 +38,7 @@ def updatelib():
     include_dir = os.path.join(tmpdir, 'include', 'ampl')
     lib32 = os.path.join(tmpdir, 'lib32')
     lib64 = os.path.join(tmpdir, 'lib64')
+    wrapper_dir = os.path.join(tmpdir, 'python')
 
     amplpy_include = os.path.join('amplpy', 'amplpython', 'include', 'ampl')
     try:
@@ -49,6 +50,14 @@ def updatelib():
         '*\n!.gitignore\n',
         file=open(os.path.join(amplpy_include, '.gitignore'), 'w')
     )
+
+    print('wrapper:')
+    for filename in os.listdir(wraper_dir):
+        print('\t{}'.format(filename))
+        shutil.copyfile(
+            os.path.join(wrapper_dir, filename),
+            os.path.join('amplpy', 'amplpython', filename)
+        )
 
     for libname, lib in [('lib32', lib32), ('lib64', lib64)]:
         dstdir = os.path.join('amplpy', 'amplpython', libname)
