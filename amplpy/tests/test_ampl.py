@@ -301,6 +301,15 @@ class TestAMPL(TestBase.TestBase):
 
         shutil.rmtree(dirpath)
 
+    def testGetOutput(self):
+        ampl = self.ampl
+        self.assertEqual(ampl.getOutput('display 5;'), '5 = 5\n\n')
+        with self.assertRaises(RuntimeError):
+            ampl.getOutput("display 3")
+        with self.assertRaises(RuntimeError):
+            ampl.getOutput("for {i in 1..10} {")
+        self.assertEqual(ampl.getOutput('display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
+
 
 if __name__ == '__main__':
     unittest.main()

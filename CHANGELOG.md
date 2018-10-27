@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Add support to Python 3.7.
 - Fix truncated values in sets (amplapi#337).
 - Add method AMPL.importGurobiSolution.
+- Add method AMPL.getOutput.
 
 ## 0.5.0 - 2018-05-06
 - Breaking: AMPL errors raise exceptions by default.

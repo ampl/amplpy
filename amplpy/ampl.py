@@ -278,6 +278,20 @@ class AMPL(object):
         )
         self._errorhandler.check()
 
+    def getOutput(self, amplstatements):
+        """
+        Equivalent to :func:`~amplpy.AMPL.eval` but returns the output as a
+        string.
+
+        Args:
+          amplstatements: A collection of AMPL statements and declarations to
+          be passed to the interpreter.
+
+        Returns:
+          A string with the output.
+        """
+        return self._impl.getOutput(amplstatements)
+
     def reset(self):
         """
         Clears all entities in the underlying AMPL interpreter, clears all maps
