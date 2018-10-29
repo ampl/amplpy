@@ -345,7 +345,7 @@ class AMPL(object):
         )
         self._errorhandler.check()
 
-    def readAsync(self, fileName, callback):
+    def readAsync(self, fileName, callback, **kwargs):
         """
         Interprets the specified file asynchronously, interpreting it as a
         model or a script file. As a side effect, it invalidates all entities
@@ -359,6 +359,12 @@ class AMPL(object):
             callback: Callback to be executed when the file has been
             interpreted.
         """
+        if self._langext is not None:
+            with open(fileName, 'r') as fin:
+                newmodel = self._langext.translate(fin.read(), **kwargs)
+                with open(fileName+'.translated', 'w') as fout:
+                    fout.write(newmodel)
+                    fileName += '.translated'
 
         def async_call():
             self._lock.acquire()
@@ -562,7 +568,7 @@ class AMPL(object):
                 except ValueError:
                     return value
 
-    def read(self, fileName):
+    def read(self, fileName, **kwargs):
         """
         Interprets the specified file (script or model or mixed) As a side
         effect, it invalidates all entities (as the passed file can contain any
@@ -575,6 +581,12 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
+        if self._langext is not None:
+            with open(fileName, 'r') as fin:
+                newmodel = self._langext.translate(fin.read(), **kwargs)
+                with open(fileName+'.translated', 'w') as fout:
+                    fout.write(newmodel)
+                    fileName += '.translated'
         self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.read(fileName),
