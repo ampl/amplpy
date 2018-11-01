@@ -52,7 +52,7 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(len(ampl.getConstraints()), 1)
         self.assertEqual(len(ampl.getObjectives()), 1)
         ampl.reset()
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             ampl.eval('X')
         self.assertTrue(ampl.isRunning())
         self.assertFalse(ampl.isBusy())
@@ -304,9 +304,9 @@ class TestAMPL(TestBase.TestBase):
     def testGetOutput(self):
         ampl = self.ampl
         self.assertEqual(ampl.getOutput('display 5;'), '5 = 5\n\n')
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             ampl.getOutput("display 3")
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             ampl.getOutput("for {i in 1..10} {")
         self.assertEqual(ampl.getOutput('display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
 
