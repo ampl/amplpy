@@ -73,7 +73,7 @@ libdir = 'lib64' if x64 else 'lib32'
 
 setup(
     name='amplpy',
-    version='v0.6.0rc8',
+    version='v0.6.0rc9',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
