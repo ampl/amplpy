@@ -170,22 +170,14 @@ class TestAMPL(TestBase.TestBase):
             def warning(self, exception):
                 assert True
 
-            def check(self):
-                pass
-
         class ErrorHandlerRaise(amplpy.ErrorHandler):
             def error(self, exception):
-                self.error_count += 1
+                raise RuntimeError('failed')
 
             def warning(self, exception):
-                self.warning_count += 1
+                raise RuntimeError('failed')
 
-            def check(self):
-                if self.error_count != 0 or self.warning_count != 0:
-                    raise RuntimeError('Errors: {}; Warnings: {}'.format(
-                            self.error_count, self.warning_count))
-
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(amplpy.AMPLException):
             ampl.eval('X X;')
 
         errorHandlerIgnore = ErrorHandlerIgnore()

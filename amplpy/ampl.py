@@ -271,12 +271,11 @@ class AMPL(object):
         """
         if self._langext is not None:
             amplstatements = self._langext.translate(amplstatements, **kwargs)
-        self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.eval(amplstatements),
             self._lock
         )
-        self._errorhandler.check()
+        self._errorhandler_wrapper.check()
 
     def getOutput(self, amplstatements):
         """
@@ -338,12 +337,10 @@ class AMPL(object):
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.solve(),
             self._lock
         )
-        self._errorhandler.check()
 
     def readAsync(self, fileName, callback, **kwargs):
         """
@@ -369,9 +366,8 @@ class AMPL(object):
         def async_call():
             self._lock.acquire()
             try:
-                self._errorhandler.reset()
                 self._impl.read(fileName)
-                self._errorhandler.check()
+                self._errorhandler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -397,9 +393,8 @@ class AMPL(object):
         def async_call():
             self._lock.acquire()
             try:
-                self._errorhandler.reset()
                 self._impl.readData(fileName)
-                self._errorhandler.check()
+                self._errorhandler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -430,9 +425,8 @@ class AMPL(object):
         def async_call():
             self._lock.acquire()
             try:
-                self._errorhandler.reset()
                 self._impl.eval(amplstatements)
-                self._errorhandler.check()
+                self._errorhandler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -451,9 +445,7 @@ class AMPL(object):
         def async_call():
             self._lock.acquire()
             try:
-                self._errorhandler.reset()
                 self._impl.solve()
-                self._errorhandler.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -587,12 +579,11 @@ class AMPL(object):
                 with open(fileName+'.translated', 'w') as fout:
                     fout.write(newmodel)
                     fileName += '.translated'
-        self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.read(fileName),
             self._lock
         )
-        self._errorhandler.check()
+        self._errorhandler_wrapper.check()
 
     def readData(self, fileName):
         """
@@ -608,12 +599,11 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        self._errorhandler.reset()
         lock_and_call(
             lambda: self._impl.readData(fileName),
             self._lock
         )
-        self._errorhandler.check()
+        self._errorhandler_wrapper.check()
 
     def getValue(self, scalarExpression):
         """
@@ -741,23 +731,46 @@ class AMPL(object):
         Args:
             errorhandler: The object handling AMPL errors and warnings.
         """
-        class InternalErrorHandler(amplpython.ErrorHandler):
+        class ErrorHandlerWrapper(ErrorHandler):
+            def __init__(self, errorhandler):
+                self.errorhandler = errorhandler
+                self.last_exception = None
+
             def error(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
                     exception = AMPLException(exception)
-                errorhandler.error(exception)
-                errorhandler.error_count += 1
+                try:
+                    self.errorhandler.error(exception)
+                except Exception as e:
+                    self.last_exception = e
 
             def warning(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
                     exception = AMPLException(exception)
-                errorhandler.warning(exception)
-                errorhandler.warning_count += 1
+                try:
+                    self.errorhandler.warning(exception)
+                except Exception as e:
+                    self.last_exception = e
+
+            def check(self):
+                if self.last_exception is not None:
+                    e, self.last_exception = self.last_exception, None
+                    raise e
+
+        errorhandler_wrapper = ErrorHandlerWrapper(errorhandler)
+
+        class InnerErrorHandler(amplpython.ErrorHandler):
+            def error(self, exception):
+                errorhandler_wrapper.error(exception)
+
+            def warning(self, exception):
+                errorhandler_wrapper.warning(exception)
 
         self._errorhandler = errorhandler
-        self._errorhandler_internal = InternalErrorHandler()
+        self._errorhandler_inner = InnerErrorHandler()
+        self._errorhandler_wrapper = errorhandler_wrapper
         lock_and_call(
-            lambda: self._impl.setErrorHandler(self._errorhandler_internal),
+            lambda: self._impl.setErrorHandler(self._errorhandler_inner),
             self._lock
         )
 
