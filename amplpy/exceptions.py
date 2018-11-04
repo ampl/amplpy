@@ -12,6 +12,7 @@ class AMPLException(Exception):
     """
     def __init__(self, _impl):
         self._impl = _impl
+        self.what = self._impl.what()
         self.sourceName = _impl.getSourceName()
         self.lineNumber = _impl.getLineNumber()
         self.offset = _impl.getOffset()
@@ -40,3 +41,6 @@ class AMPLException(Exception):
         Get the error message.
         """
         return self.message
+
+    def __str__(self):
+        return self.what.lstrip('file: -').strip('\n')

@@ -19,11 +19,13 @@ class ErrorHandler:
         """
         Receives notification of an error.
         """
-        print('Error:', amplexception.getMessage())
+        msg = '\t'+str(amplexception).replace('\n', '\n\t')
+        print('Error:\n{:s}'.format(msg))
         raise amplexception
 
     def warning(self, amplexception):
         """
         Receives notification of a warning.
         """
-        print('Warning:', amplexception.getMessage())
+        msg = '\t'+str(amplexception).replace('\n', '\n\t')
+        print('Warning:\n{:s}'.format(msg))
