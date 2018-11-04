@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.6.0 - ###-##-##
+## 0.6.0 - 2018-11-03
 - Upgrade internal API to v2.0.
 - Add experimental methods AMPL._startRecording and AMPL._stopRecording.
 - Add experimental method AMPL._loadSession.
