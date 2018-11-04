@@ -30,7 +30,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'AMPL API'
-copyright = u'2013-2017, AMPL Inc'
+copyright = u'2013-2018, AMPL Inc'
 
 # Version numbers to be  defined at command line
 # The short X.Y version.

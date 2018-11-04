@@ -6,14 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AMPL &#8212; AMPL API 1.4 (amplpy-0.5.0) documentation</title>
+    <title>AMPL &#8212; AMPL API 2.0 (amplpy-v0.6.0) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="DataFrame" href="dataframe.html" />
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -245,7 +245,7 @@ types of entities).</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.eval">
-<code class="descname">eval</code><span class="sig-paren">(</span><em>amplstatements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.eval" title="Permalink to this definition">¶</a></dt>
+<code class="descname">eval</code><span class="sig-paren">(</span><em>amplstatements</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses AMPL code and evaluates it as a possibly empty sequence of AMPL
 declarations and statements.</p>
 <p>As a side effect, it invalidates all entities (as the passed statements
@@ -265,6 +265,20 @@ be passed to the interpreter.</dd>
 <dd>RuntimeError: if the input is not a complete AMPL statement (e.g.
 if it does not end with semicolon) or if the underlying
 interpreter is not running.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="amplpy.AMPL.getOutput">
+<code class="descname">getOutput</code><span class="sig-paren">(</span><em>amplstatements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <a class="reference internal" href="#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> but returns the output as a
+string.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>amplstatements: A collection of AMPL statements and declarations to
+be passed to the interpreter.</dd>
+<dt>Returns:</dt>
+<dd>A string with the output.</dd>
 </dl>
 </dd></dl>
 
@@ -307,7 +321,7 @@ exception.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.readAsync">
-<code class="descname">readAsync</code><span class="sig-paren">(</span><em>fileName</em>, <em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readAsync</code><span class="sig-paren">(</span><em>fileName</em>, <em>callback</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified file asynchronously, interpreting it as a
 model or a script file. As a side effect, it invalidates all entities
 (as the passed file can contain any arbitrary command); the lists of
@@ -341,7 +355,7 @@ interpreted.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.evalAsync">
-<code class="descname">evalAsync</code><span class="sig-paren">(</span><em>amplstatements</em>, <em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.evalAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">evalAsync</code><span class="sig-paren">(</span><em>amplstatements</em>, <em>callback</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.evalAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpret the given AMPL statement asynchronously.</p>
 <dl class="docutils">
 <dt>Args:</dt>
@@ -433,7 +447,7 @@ exist, returns None.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.read">
-<code class="descname">read</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.read" title="Permalink to this definition">¶</a></dt>
+<code class="descname">read</code><span class="sig-paren">(</span><em>fileName</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified file (script or model or mixed) As a side
 effect, it invalidates all entities (as the passed file can contain any
 arbitrary command); the lists of entities will be re-populated lazily
@@ -605,6 +619,12 @@ interpreting user commands.</dd>
 <dd><p>Get all the parameters declared.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="amplpy.AMPL.getCurrentObjective">
+<code class="descname">getCurrentObjective</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getCurrentObjective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the the current objective. Returns <cite>None</cite> if no objective is set.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="amplpy.AMPL.var">
 <code class="descname">var</code><a class="headerlink" href="#amplpy.AMPL.var" title="Permalink to this definition">¶</a></dt>
@@ -652,16 +672,22 @@ directory or absolute).</dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="amplpy.AMPL.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.ampl'</em><a class="headerlink" href="#amplpy.AMPL.__module__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="amplpy.AMPL.exportGurobiModel">
 <code class="descname">exportGurobiModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportGurobiModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the model to Gurobi as a gurobipy.Model object.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="amplpy.AMPL.importGurobiSolution">
+<code class="descname">importGurobiSolution</code><span class="sig-paren">(</span><em>grbmodel</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.importGurobiSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import the solution from a gurobipy.Model object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.AMPL.__module__">
+<code class="descname">__module__</code><em class="property"> = 'amplpy.ampl'</em><a class="headerlink" href="#amplpy.AMPL.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -716,13 +742,13 @@ directory or absolute).</dd>
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 1.4 (amplpy-0.5.0) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.0) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2017, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+        &#169; Copyright 2013-2018, AMPL Inc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
     </div>
   </body>
 </html>
