@@ -1015,8 +1015,8 @@ class AMPL(object):
 
         previous = {
             'solver': self.getOption('solver'),
+            'auxfiles': self.getOption('auxfiles'),
             'gurobi_options': self.getOption('gurobi_options'),
-            'org_auxfiles': self.getOption('auxfiles'),
         }
         temporary = {
             'solver': 'gurobi',
@@ -1026,14 +1026,13 @@ class AMPL(object):
                 timelim=0
                 presolve=0
                 heurfrac=0
-                outlev=1
+                outlev=0
             '''.format(model_file)
         }
 
         for option in temporary:
             self.setOption(option, temporary[option])
-        self.eval('write b{}/model;'.format(tmp_dir))
-        self.solve()
+        self.getOutput('write b{}/model; solve;'.format(tmp_dir))
         for option in previous:
             self.setOption(option, previous[option])
 
