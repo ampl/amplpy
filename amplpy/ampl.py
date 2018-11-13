@@ -87,12 +87,16 @@ class AMPL(object):
                 from sys import stderr
                 if str(e).startswith('AMPL could not be started'):
                     message = (
-                        '''* Please make sure that the AMPL folder is in the'''
-                        ''' system search path. *'''
+                        '''Please make sure that the AMPL folder is in '''
+                        '''the system search path, or\n'''
+                        '''specify the path via:\n'''
+                        '''    AMPL(Environment('full path to the AMPL '''
+                        '''installation directory'))'''
                     )
-                    print('*' * len(message))
-                    print(message)
-                    print('*' * len(message))
+                    print('*' * 79, file=stderr)
+                    for line in message.split('\n'):
+                        print('* {:75} *'.format(line), file=stderr)
+                    print('*' * 79, file=stderr)
                 raise
         else:
             self._impl = amplpython.AMPL(environment._impl)
