@@ -1007,23 +1007,37 @@ class AMPL(object):
         from shutil import rmtree
         from os import path
         tmp_dir = mkdtemp()
-        self.eval('option auxfiles rc; write m{}/model;'.format(tmp_dir))
-        mps_file = path.join(tmp_dir, 'model.mps')
-        col_file = path.join(tmp_dir, 'model.col')
-        row_file = path.join(tmp_dir, 'model.row')
-        model = read(mps_file)
-        var_names = open(col_file, 'r').read().splitlines()
-        con_names = open(row_file, 'r').read().splitlines()
-        for var in model.getVars():
-            index = int(var.VarName[1:])-1
-            var.VarName = var_names[index]
-        for con in model.getConstrs():
-            index = int(con.ConstrName[1:])-1
-            con.ConstrName = con_names[index]
-        if not self.getCurrentObjective().minimization():
-            model.ModelSense = GRB.MAXIMIZE
-        model._var_names = var_names
-        model._con_names = con_names
+        model_file = path.join(tmp_dir, 'model.mps')
+
+        previous = {
+            'solver': self.getOption('solver'),
+            'gurobi_options': self.getOption('gurobi_options'),
+            'org_auxfiles': self.getOption('auxfiles'),
+        }
+        temporary = {
+            'solver': 'gurobi',
+            'auxfiles': 'rc',
+            'gurobi_options': '''
+                writeprob={}
+                timelim=0
+                presolve=0
+                heurfrac=0
+                outlev=1
+            '''.format(model_file)
+        }
+
+        for option in temporary:
+            self.setOption(option, temporary[option])
+        self.eval('write b{}/model;'.format(tmp_dir))
+        self.solve()
+        for option in previous:
+            self.setOption(option, previous[option])
+
+        model = read(model_file)
+        if model_file.endswith('.mps'):
+            if not self.getCurrentObjective().minimization():
+                model.ModelSense = GRB.MAXIMIZE
+                model.setObjective(- model.getObjective())
         model.update()
         rmtree(tmp_dir)
         return model
@@ -1033,8 +1047,8 @@ class AMPL(object):
         Import the solution from a gurobipy.Model object.
         """
         self.eval(''.join(
-            'let {} := {};'.format(var_name, grbmodel.getVarByName(var_name).X)
-            for var_name in grbmodel._var_names
+            'let {} := {};'.format(var.VarName, var.X)
+            for var in grbmodel.getVars()
         ))
         # FIXME: retrieve other attributes as well
 
