@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting started &#8212; AMPL API 2.0 (amplpy-v0.6.0) documentation</title>
+    <title>Getting started &#8212; AMPL API 2.0 (amplpy-v0.6.1) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-v0.6.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-v0.6.1) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -120,6 +120,15 @@ a C++ compiler and python development libraries will be required.</p>
 several small diet problems and then display the optimal amounts of the foods
 from the last solution. Alternatively, you can download the examples directly from
 <a class="reference external" href="https://github.com/ampl/amplpy/tree/master/examples">https://github.com/ampl/amplpy/tree/master/examples</a>.</p>
+<p>Note that the folder containing the AMPL executable should be in the system search path.
+Otherwise, the error message “AMPL could not be started” will be shown.
+If the AMPL installation directory is not in the system search path,
+you can add it passing a new <a class="reference internal" href="classes/environment.html#amplpy.Environment" title="amplpy.Environment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></a> to <a class="reference internal" href="classes/ampl.html#amplpy.AMPL" title="amplpy.AMPL"><code class="xref py py-class docutils literal notranslate"><span class="pre">AMPL</span></code></a> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span><span class="p">,</span> <span class="n">Environment</span>
+<span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">(</span><span class="n">Environment</span><span class="p">(</span><span class="s1">&#39;full path to the AMPL installation directory&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Note that you may need to use raw strings (e.g., <cite>r’C:\ampl\ampl.mswin64’</cite>) or escape the slashes (e.g., <cite>‘C:\\ampl\\ampl.mswin64’</cite>) if the path includes backslashes.</p>
 </div>
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
@@ -157,7 +166,7 @@ Note that the folder containing the AMPL executable should be in the system sear
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-v0.6.0) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-v0.6.1) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

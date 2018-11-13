@@ -62,7 +62,7 @@ all the code in the examples below does not include exception handling.
   # Print them
   print(df2)
 
-Needed headers and AMPL environment creation
+Needed modules and AMPL environment creation
 --------------------------------------------
 
 For a simple hello world program, first import the needed classes from the `amplpy` package.
