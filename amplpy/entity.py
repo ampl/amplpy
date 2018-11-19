@@ -198,7 +198,7 @@ class Entity(BaseClass):
         if isinstance(data, DataFrame):
             self._impl.setValuesDf(data._impl)
         else:
-            if pd is not None and isinstance(data, pd.DataFrame):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.fromPandas(data)
                 self._impl.setValuesDf(df._impl)
                 return

@@ -121,6 +121,44 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(set(df.toList()[1]), set([2.0, 0.02]))
         self.assertEqual(set(df.toList()[2]), set([3.0, 0.03]))
 
+    def testPandasAdvanced(self):
+        ampl = self.ampl
+        try:
+            import pandas as pd
+        except ImportError:
+            return
+        ampl.eval('''
+            set someSet := {"First", "Second"};
+            param N := 5;
+            param x1{someSet, 1..N} default 0;
+            param x2{someSet, 1..N} default 0;
+            param x3{someSet, 1..N} default 0;
+            param x4{someSet, 1..N} default 0;
+        ''')
+
+        df = pd.DataFrame([
+                [1, 2, 3, 4, 5],
+                [6, 7, 8, 9, 0]
+            ],
+            index=['First', 'Second'],
+            columns=[1, 2, 3, 4, 5]
+        )
+        ampl.param['x1'] = pd.DataFrame.from_dict(
+            df.stack().to_dict(),
+            orient='index',
+            columns=['v']
+        )
+        ampl.param['x2'] = pd.DataFrame(df.stack())
+        ampl.param['x3'] = df.stack().to_dict()
+        ampl.param['x4'] = df.stack()
+        d1 = ampl.param['x1'].getValues().toDict()
+        d2 = ampl.param['x2'].getValues().toDict()
+        d3 = ampl.param['x3'].getValues().toDict()
+        d4 = ampl.param['x4'].getValues().toDict()
+        self.assertEqual(d1, d2)
+        self.assertEqual(d2, d3)
+        self.assertEqual(d3, d4)
+
     def testNumpy(self):
         ampl = self.ampl
         try:

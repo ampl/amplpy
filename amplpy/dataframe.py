@@ -337,7 +337,10 @@ class DataFrame(BaseClass):
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
         """
         assert pd is not None
-        assert isinstance(df, pd.DataFrame)
+        if isinstance(df, pd.Series):
+            df = pd.DataFrame(df)
+        else:
+            assert isinstance(df, pd.DataFrame)
         keys = [
             key if isinstance(key, tuple) else (key,)
             for key in df.index.tolist()
@@ -347,7 +350,7 @@ class DataFrame(BaseClass):
             for i, cindex in enumerate(zip(*keys))
         ]
         columns = [
-            (cname, df[cname].tolist())
+            (str(cname), df[cname].tolist())
             for cname in df.columns.tolist()
         ]
         return cls(index=index, columns=columns)
