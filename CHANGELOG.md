@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.6.2 - ####-##-##
 - Add support for Pandas Series.
+- Add optional gurobiDriver parameter to AMPL.exportGurobiModel.
 
 ## 0.6.1 - 2018-11-13
 - Improve robustness of AMPL.exportGurobiModel.

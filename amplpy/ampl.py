@@ -1002,7 +1002,7 @@ class AMPL(object):
                     values = entity.getValues().toDict()
                     print(ampl_param(name, values), file=f)
 
-    def exportGurobiModel(self):
+    def exportGurobiModel(self, gurobiDriver='gurobi'):
         """
         Export the model to Gurobi as a gurobipy.Model object.
         """
@@ -1015,12 +1015,12 @@ class AMPL(object):
 
         previous = {
             'solver': self.getOption('solver'),
-            'auxfiles': self.getOption('auxfiles'),
+            'gurobi_auxfiles': self.getOption('auxfiles'),
             'gurobi_options': self.getOption('gurobi_options'),
         }
         temporary = {
-            'solver': 'gurobi',
-            'auxfiles': 'rc',
+            'solver': gurobiDriver,
+            'gurobi_auxfiles': 'rc',
             'gurobi_options': '''
                 writeprob={}
                 timelim=0
@@ -1032,7 +1032,11 @@ class AMPL(object):
 
         for option in temporary:
             self.setOption(option, temporary[option])
-        self.getOutput('write b{}/model; solve;'.format(tmp_dir))
+
+        output = self.getOutput('solve;')
+        if not path.isfile(model_file):
+            raise RuntimeError(output)
+
         for option in previous:
             self.setOption(option, previous[option])
 
