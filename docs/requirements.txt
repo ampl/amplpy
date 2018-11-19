@@ -1,1 +1,1 @@
-amplpy==v0.6.1
+amplpy==v0.6.2b0
