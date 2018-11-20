@@ -1005,6 +1005,12 @@ class AMPL(object):
     def exportGurobiModel(self, gurobiDriver='gurobi'):
         """
         Export the model to Gurobi as a gurobipy.Model object.
+
+        Args:
+            gurobiDriver: The name or the path of the Gurobi solver driver.
+
+        Returns:
+            A :class:`gurobipy.Model` object with the model loaded.
         """
         from gurobipy import GRB, read
         from tempfile import mkdtemp
@@ -1052,6 +1058,9 @@ class AMPL(object):
     def importGurobiSolution(self, grbmodel):
         """
         Import the solution from a gurobipy.Model object.
+
+        Args:
+            grbmodel: A :class:`gurobipy.Model` object with the model solved.
         """
         self.eval(''.join(
             'let {} := {};'.format(var.VarName, var.X)

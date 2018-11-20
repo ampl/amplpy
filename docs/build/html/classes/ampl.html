@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AMPL &#8212; AMPL API 2.0 (amplpy-v0.6.1) documentation</title>
+    <title>AMPL &#8212; AMPL API 2.0 (amplpy-v0.6.2) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.1) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.2) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -674,14 +674,24 @@ directory or absolute).</dd>
 
 <dl class="method">
 <dt id="amplpy.AMPL.exportGurobiModel">
-<code class="descname">exportGurobiModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportGurobiModel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exportGurobiModel</code><span class="sig-paren">(</span><em>gurobiDriver='gurobi'</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportGurobiModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the model to Gurobi as a gurobipy.Model object.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>gurobiDriver: The name or the path of the Gurobi solver driver.</dd>
+<dt>Returns:</dt>
+<dd>A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model loaded.</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.importGurobiSolution">
 <code class="descname">importGurobiSolution</code><span class="sig-paren">(</span><em>grbmodel</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.importGurobiSolution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import the solution from a gurobipy.Model object.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>grbmodel: A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model solved.</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -742,7 +752,7 @@ directory or absolute).</dd>
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.1) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-v0.6.2) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
