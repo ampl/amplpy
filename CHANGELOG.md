@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.6.4 - 2019-##-##
+## 0.6.4 - 2019-02-13
 - Fix dll loading issue with python versions that come with conda.
 
 ## 0.6.3 - 2018-12-04
