@@ -64,4 +64,4 @@ $ pip install . --upgrade
 BSD-3
 
 ***
-Copyright © 2017-2018 AMPL Optimization inc. All rights reserved.
+Copyright © 2017-2019 AMPL Optimization inc. All rights reserved.
