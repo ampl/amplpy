@@ -1020,9 +1020,9 @@ class AMPL(object):
         model_file = path.join(tmp_dir, 'model.mps')
 
         previous = {
-            'solver': self.getOption('solver'),
-            'gurobi_auxfiles': self.getOption('auxfiles'),
-            'gurobi_options': self.getOption('gurobi_options'),
+            'solver': self.getOption('solver') or '',
+            'gurobi_auxfiles': self.getOption('auxfiles') or '',
+            'gurobi_options': self.getOption('gurobi_options') or '',
         }
         temporary = {
             'solver': gurobiDriver,
@@ -1065,6 +1065,7 @@ class AMPL(object):
         self.eval(''.join(
             'let {} := {};'.format(var.VarName, var.X)
             for var in grbmodel.getVars()
+            if '$' not in var.VarName
         ))
         # FIXME: retrieve other attributes as well
 
