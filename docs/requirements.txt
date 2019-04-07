@@ -1,1 +1,1 @@
-amplpy==0.6.5b1
+amplpy==0.6.5b2
