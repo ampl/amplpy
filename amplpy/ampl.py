@@ -1002,12 +1002,13 @@ class AMPL(object):
                     values = entity.getValues().toDict()
                     print(ampl_param(name, values), file=f)
 
-    def exportGurobiModel(self, gurobiDriver='gurobi'):
+    def exportGurobiModel(self, gurobiDriver='gurobi', verbose=False):
         """
         Export the model to Gurobi as a gurobipy.Model object.
 
         Args:
             gurobiDriver: The name or the path of the Gurobi solver driver.
+            verbose: Whether should generate verbose output.
 
         Returns:
             A :class:`gurobipy.Model` object with the model loaded.
@@ -1016,6 +1017,11 @@ class AMPL(object):
         from tempfile import mkdtemp
         from shutil import rmtree
         from os import path
+        import sys
+        if (sys.version_info > (3, 0)):
+            from io import StringIO
+        else:
+            from io import BytesIO as StringIO
         tmp_dir = mkdtemp()
         model_file = path.join(tmp_dir, 'model.mps')
 
@@ -1046,7 +1052,13 @@ class AMPL(object):
         for option in previous:
             self.setOption(option, previous[option])
 
+        text_trap = StringIO()
+        stdout = sys.stdout
+        sys.stdout = text_trap
         model = read(model_file)
+        sys.stdout = stdout
+        if verbose:
+            print(text_trap.getvalue())
         if model_file.endswith('.mps'):
             if not self.getCurrentObjective().minimization():
                 model.ModelSense = GRB.MAXIMIZE
