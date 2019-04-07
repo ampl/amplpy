@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.6.5 - 2019-04-##
 - Improve AMPL.exportGurobiModel and AMPL.importGurobiSolution.
 - Add verbose option to AMPL.exportGurobiModel.
+- Add register_magics to register `%%ampl` and `%%ampl_eval`.
 
 ## 0.6.4 - 2019-02-13
 - Fix dll loading issue with python versions that come with conda.
