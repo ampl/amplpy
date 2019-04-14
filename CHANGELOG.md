@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.6.5 - 2019-04-##
+## 0.6.5 - 2019-04-14
 - Improve AMPL.exportGurobiModel and AMPL.importGurobiSolution.
 - Add verbose option to AMPL.exportGurobiModel.
 - Add register_magics to register `%%ampl` and `%%ampl_eval`.
