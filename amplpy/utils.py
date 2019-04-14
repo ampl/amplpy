@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring, unicode
-from sys import version_info
+from builtins import object, range
+from past.builtins import unicode
 
 from . import amplpython
 from .base import BaseClass
