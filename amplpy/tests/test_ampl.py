@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
 
 from . import TestBase
@@ -83,7 +82,6 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(ampl.getOption('d'), True)
 
     def testHandlers(self):
-        from time import sleep
         ampl = self.ampl
 
         class MyOutputHandler(amplpy.OutputHandler):
