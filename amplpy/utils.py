@@ -22,7 +22,7 @@ def register_magics(store_name='_ampl_cells', ampl_object=None):
 
     @magics_class
     class StoreAMPL(Magics):
-        def __init__(self, shell=None,  **kwargs):
+        def __init__(self, shell=None, **kwargs):
             Magics.__init__(self, shell=shell, **kwargs)
             self._store = []
             shell.user_ns[store_name] = self._store
