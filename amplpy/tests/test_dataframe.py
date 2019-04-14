@@ -14,7 +14,7 @@ class TestDataFrame(TestBase.TestBase):
     """Test DataFrame."""
 
     def testDataFrame(self):
-        ampl = self.ampl
+        self.ampl
         # Create first dataframe (for data indexed over NUTR)
         # Add data row by row
         df1 = DataFrame('NUTR', ('n_min', 'n_max'))
