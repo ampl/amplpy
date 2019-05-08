@@ -990,8 +990,14 @@ class AMPL(object):
 
         with open(datfile, 'w') as f:
             for name, entity in self.getSets():
-                values = entity.getValues().toList()
-                print(ampl_set(name, values), file=f)
+                if not entity.isScalar():
+                    for idx_name,value in entity.instances():
+                        print('set ', name, '[', idx_name, '] := ',
+                              ','.join(str(v) for v in value.getValues().toList()),
+                              ';', sep='', file=f)
+                else:
+                    values = entity.getValues().toList()
+                    print(ampl_set(name, values), file=f)
             for name, entity in self.getParameters():
                 if entity.isScalar():
                     print(
