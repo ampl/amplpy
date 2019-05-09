@@ -965,9 +965,16 @@ class AMPL(object):
             directory or absolute).
         """
 
-        def ampl_set(name, values):
+        def ampl_set(name, values, idx=None):
             def format_entry(e):
                 return repr(e).replace(' ', '')
+
+            if idx != None:
+                return 'set {0}[{1}] := {2};'.format(
+                    name, format_entry(idx), ','.join(format_entry(e)\
+                                                      for e in values)
+                )
+
 
             return 'set {0} := {1};'.format(
                 name, ','.join(format_entry(e) for e in values)
@@ -992,9 +999,8 @@ class AMPL(object):
             for name, entity in self.getSets():
                 if not entity.isScalar():
                     for idx_name,value in entity.instances():
-                        print('set ', name, '[', idx_name, '] := ',
-                              ','.join(str(v) for v in value.getValues().toList()),
-                              ';', sep='', file=f)
+                        print(ampl_set(name, value.getValues().toList(),
+                                       idx=idx_name), file=f)
                 else:
                     values = entity.getValues().toList()
                     print(ampl_set(name, values), file=f)
