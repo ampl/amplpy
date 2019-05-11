@@ -956,6 +956,16 @@ class AMPL(object):
     param = property(_param)
     option = property(_option)
 
+    def exportModel(self, modfile):
+        """
+        Create a .mod file with the model that has been loaded.
+
+        Args:
+            modfile: Path to the file (Relative to the current working
+            directory or absolute).
+        """
+        self._impl.exportModel(modfile)
+
     def exportData(self, datfile):
         """
         Create a .dat file with the data that has been loaded.
@@ -964,49 +974,7 @@ class AMPL(object):
             datfile: Path to the file (Relative to the current working
             directory or absolute).
         """
-
-        def ampl_set(name, values):
-            def format_entry(e):
-                return repr(e).replace(' ', '')
-
-            return 'set {0} := {1};'.format(
-                name, ','.join(format_entry(e) for e in values)
-            )
-
-        def ampl_param(name, values):
-            def format_entry(k, v):
-                k = repr(k).strip('()').replace(' ', '')
-                if v == inf:
-                    v = "Infinity"
-                elif v == -inf:
-                    v = "-Infinity"
-                else:
-                    v = repr(v).strip('()').replace(' ', '')
-                return '[{0}]{1}'.format(k, v)
-
-            return 'param {0} := {1};'.format(
-                name, ''.join(format_entry(k, v) for k, v in values.items())
-            )
-
-        with open(datfile, 'w') as f:
-            for name, entity in self.getSets():
-                if not entity.isScalar():
-                    for idx_name,value in entity.instances():
-                        print('set ', name, '[', idx_name, '] := ',
-                              ','.join(str(v) for v in value.getValues().toList()),
-                              ';', sep='', file=f)
-                else:
-                    values = entity.getValues().toList()
-                    print(ampl_set(name, values), file=f)
-            for name, entity in self.getParameters():
-                if entity.isScalar():
-                    print(
-                        'param {} := {};'.format(name, entity.value()),
-                        file=f
-                    )
-                else:
-                    values = entity.getValues().toDict()
-                    print(ampl_param(name, values), file=f)
+        self._impl.exportData(datfile)
 
     def exportGurobiModel(self, gurobiDriver='gurobi', verbose=False):
         """

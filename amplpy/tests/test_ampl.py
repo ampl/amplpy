@@ -191,17 +191,7 @@ class TestAMPL(TestBase.TestBase):
 
     def testAsync(self):
         from threading import Lock
-        import tempfile
-        import shutil
-
         ampl = self.ampl
-        dirpath = tempfile.mkdtemp()
-
-        def str2file(filename, content):
-            fullpath = os.path.join(dirpath, filename)
-            with open(fullpath, 'w') as f:
-                print(content, file=f)
-            return fullpath
 
         class MyOutputHandler(amplpy.OutputHandler):
             def output(self, kind, msg):
@@ -238,12 +228,12 @@ class TestAMPL(TestBase.TestBase):
                 self.mutex1.release()
                 self.mutex2.release()
 
-        model = str2file('model.mod', '''
+        model = self.str2file('model.mod', '''
             set X;
             set A := 1..10000000;
             param p{i in A} := i;
         ''')
-        data = str2file('data.dat', '''
+        data = self.str2file('data.dat', '''
             set X := 1, 2, 3;
         ''')
 
@@ -291,8 +281,6 @@ class TestAMPL(TestBase.TestBase):
             mutex2.release()
             raise
 
-        shutil.rmtree(dirpath)
-
     def testGetOutput(self):
         ampl = self.ampl
         self.assertEqual(ampl.getOutput('display 5;'), '5 = 5\n\n')
@@ -301,6 +289,34 @@ class TestAMPL(TestBase.TestBase):
         with self.assertRaises(ValueError):
             ampl.getOutput("for {i in 1..10} {")
         self.assertEqual(ampl.getOutput('display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
+
+    def testExport(self):
+        ampl = self.ampl
+        model = self.str2file('model.mod', '''
+            set A;
+            set FLOOR;
+            set family {FLOOR};
+        ''')
+        data = self.str2file('data.dat', '''
+            set A := 1, 2, 3, 4;
+            set FLOOR := 'first' 'second';
+            set family['first'] := 'Gutierrez';
+            set family['second'] := 'Montoro';
+        ''')
+        ampl.read(model)
+        ampl.readData(data)
+        model2 = self.tmpfile('model2.mod')
+        data2 = self.tmpfile('data2.dat')
+        ampl.exportModel(model2)
+        ampl.exportData(data2)
+        ampl.reset()
+        ampl.read(model2)
+        ampl.readData(data2)
+        self.assertEqual(ampl.set['family']['first'].getValues().toList(),
+            ['Gutierrez'])
+        self.assertEqual(ampl.set['family']['second'].getValues().toList(),
+            ['Montoro'])
+        self.assertEqual(ampl.set['A'].getValues().toList(), [1, 2, 3, 4])
 
 
 if __name__ == '__main__':
