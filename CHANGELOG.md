@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.6.6 - 2019-05-##
+## 0.6.6 - 2019-05-11
 - Update internal library.
 - Add AMPL.exportModel.
 - AMPL.exportData now supports indexed sets.
