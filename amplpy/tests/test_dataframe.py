@@ -137,9 +137,9 @@ class TestDataFrame(TestBase.TestBase):
         ''')
 
         df = pd.DataFrame([
-                [1, 2, 3, 4, 5],
-                [6, 7, 8, 9, 0]
-            ],
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 0]
+        ],
             index=['First', 'Second'],
             columns=[1, 2, 3, 4, 5]
         )
@@ -158,6 +158,39 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(d1, d2)
         self.assertEqual(d2, d3)
         self.assertEqual(d3, d4)
+
+    def testPandasNamedColumns(self):
+        ampl = self.ampl
+        try:
+            import pandas as pd
+        except ImportError:
+            return
+        df_unindexed = pd.DataFrame([
+            ['Apple', 'Red', 3, 1.29],
+            ['Apple', 'Green', 9, 0.99],
+            ['Pear', 'Red', 25, 2.59],
+            ['Pear', 'Green', 26, 2.79],
+            ['Lime', 'Green', 99, 0.39]
+        ],
+            columns=['Fruit', 'Color', 'Count', 'Price']
+        )
+        self.assertEqual(DataFrame.fromPandas(
+            df_unindexed).getHeaders(),
+            ('index0', 'Fruit', 'Color', 'Count', 'Price'))
+
+        df_indexed = df_unindexed.set_index(['Fruit', 'Color'])
+        self.assertEqual(DataFrame.fromPandas(df_indexed).getHeaders(),
+                         ('Fruit', 'Color', 'Count', 'Price'))
+
+        df = pd.DataFrame([
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 0]
+        ],
+            index=['First', 'Second'],
+            columns=[1, 2, 3, 4, 5]
+        )
+        self.assertEqual(DataFrame.fromPandas(
+            df.stack()).getHeaders(), ('index0', 'index1', '0'))
 
     def testNumpy(self):
         ampl = self.ampl

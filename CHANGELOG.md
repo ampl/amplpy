@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.7 - 2019-##-##
+- DataFrame.fromPandas now uses index names as header names when available.
+
 ## 0.6.6 - 2019-05-11
 - Update internal library.
 - Add AMPL.exportModel.

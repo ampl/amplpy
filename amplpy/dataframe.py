@@ -345,10 +345,20 @@ class DataFrame(BaseClass):
             key if isinstance(key, tuple) else (key,)
             for key in df.index.tolist()
         ]
-        index = [
-            ('index{}'.format(i), cindex)
-            for i, cindex in enumerate(zip(*keys))
-        ]
+        if df.index.names == [None]:
+            index = [
+                ('index{}'.format(i), cindex)
+                for i, cindex in enumerate(zip(*keys))
+            ]
+        else:
+            index_names = [
+                name if name is not None else 'index{}'.format(i)
+                for i, name in enumerate(df.index.names)
+            ]
+            index = [
+                (index_names[i], cindex)
+                for i, cindex in enumerate(zip(*keys))
+            ]
         columns = [
             (str(cname), df[cname].tolist())
             for cname in df.columns.tolist()
