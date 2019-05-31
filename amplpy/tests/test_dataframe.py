@@ -113,7 +113,7 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(df3.toDict()['xx'], None)
 
         csv_file = os.path.join(os.path.dirname(__file__), 'data.csv')
-        p_df = pd.read_table(csv_file, sep=';', index_col=0)
+        p_df = pd.read_csv(csv_file, sep=';', index_col=0)
         df = DataFrame.fromPandas(p_df)
         self.assertTrue(isinstance(df.toDict(), dict))
         self.assertEqual(set(df.toDict().keys()), set([1.0, 2.0, 3.0]))
@@ -209,7 +209,7 @@ class TestDataFrame(TestBase.TestBase):
             DataFrame.fromNumpy(arr).toList(),
             [1, 2, 3]
         )
-        mat = np.matrix([[1, 2], [3, 4], [5, 6]])
+        mat = np.array([[1, 2], [3, 4], [5, 6]])
         self.assertEqual(
             DataFrame.fromNumpy(mat).toList(),
             [(1, 2), (3, 4), (5, 6)]
