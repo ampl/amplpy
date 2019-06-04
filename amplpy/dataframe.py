@@ -354,7 +354,6 @@ class DataFrame(BaseClass):
             for i, cindex in enumerate(zip(*keys))
         ]
         if index_names is not None:
-            print(index, index_names)
             assert len(index) == len(index_names)
             for i in range(len(index)):
                 index[i] = (index_names[i], index[i][1])
