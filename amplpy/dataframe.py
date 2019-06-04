@@ -332,9 +332,13 @@ class DataFrame(BaseClass):
             return pd.DataFrame(columns, index=index)
 
     @classmethod
-    def fromPandas(cls, df):
+    def fromPandas(cls, df, index_names=None):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
+
+        Args:
+            df: Pandas DataFrame to load.
+            index_names: index names to use.
         """
         assert pd is not None
         if isinstance(df, pd.Series):
@@ -345,20 +349,15 @@ class DataFrame(BaseClass):
             key if isinstance(key, tuple) else (key,)
             for key in df.index.tolist()
         ]
-        if df.index.names == [None]:
-            index = [
-                ('index{}'.format(i), cindex)
-                for i, cindex in enumerate(zip(*keys))
-            ]
-        else:
-            index_names = [
-                name if name is not None else 'index{}'.format(i)
-                for i, name in enumerate(df.index.names)
-            ]
-            index = [
-                (index_names[i], cindex)
-                for i, cindex in enumerate(zip(*keys))
-            ]
+        index = [
+            ('index{}'.format(i), cindex)
+            for i, cindex in enumerate(zip(*keys))
+        ]
+        if index_names is not None:
+            print(index, index_names)
+            assert len(index) == len(index_names)
+            for i in range(len(index)):
+                index[i] = (index_names[i], index[i][1])
         columns = [
             (str(cname), df[cname].tolist())
             for cname in df.columns.tolist()

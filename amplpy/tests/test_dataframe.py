@@ -174,14 +174,19 @@ class TestDataFrame(TestBase.TestBase):
         ],
             columns=['Fruit', 'Color', 'Count', 'Price']
         )
+        # RangeIndex
         self.assertEqual(DataFrame.fromPandas(
             df_unindexed).getHeaders(),
             ('index0', 'Fruit', 'Color', 'Count', 'Price'))
 
+        # MultiIndex
         df_indexed = df_unindexed.set_index(['Fruit', 'Color'])
-        self.assertEqual(DataFrame.fromPandas(df_indexed).getHeaders(),
-                         ('Fruit', 'Color', 'Count', 'Price'))
+        self.assertEqual(
+            DataFrame.fromPandas(df_indexed,
+                                 index_names=['Fruit', 'Color']).getHeaders(),
+            ('Fruit', 'Color', 'Count', 'Price'))
 
+        # Index without name
         df = pd.DataFrame([
             [1, 2, 3, 4, 5],
             [6, 7, 8, 9, 0]
