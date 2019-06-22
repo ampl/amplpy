@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.6.7 - 2019-##-##
 - Add optional parameter index_names to DataFrame.fromPandas.
 - Add DataFrame.fromDict to load data from dictionaries.
+- Allow setting entity values directly from dictionaries.
 
 ## 0.6.6 - 2019-05-11
 - Update internal library.

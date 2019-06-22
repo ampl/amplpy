@@ -865,7 +865,10 @@ class AMPL(object):
                 return self.getVariable(name)
 
             def __setitem__(_self, name, value):
-                self.getVariable(name).setValue(value)
+                if isinstance(value, (float, int, basestring)):
+                    self.getVariable(name).setValue(value)
+                else:
+                    self.getVariable(name).setValues(value)
 
             def __iter__(_self):
                 return self.getVariables()

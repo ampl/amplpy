@@ -331,6 +331,17 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.getCurrentObjective().name(), 'A')
         self.assertFalse(ampl.getCurrentObjective().minimization())
 
+    def testSetValues(self):
+        ampl = self.ampl
+        ampl.eval('var x{1..3};')
+        d = {1: 2, 2: 5, 3: 9}
+        ampl.var['x'].setValues(d)
+        self.assertEqual(d, ampl.var['x'].getValues().toDict())
+
+        d = {1: 11, 2: 55, 3: 99}
+        ampl.var['x'] = d
+        self.assertEqual(d, ampl.var['x'].getValues().toDict())
+
 
 if __name__ == '__main__':
     unittest.main()

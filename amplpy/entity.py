@@ -197,6 +197,8 @@ class Entity(BaseClass):
         """
         if isinstance(data, DataFrame):
             self._impl.setValuesDf(data._impl)
+        elif isinstance(data, dict):
+            self._impl.setValuesDf(DataFrame.fromDict(data)._impl)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.fromPandas(data)
