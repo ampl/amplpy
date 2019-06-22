@@ -332,6 +332,52 @@ class DataFrame(BaseClass):
             return pd.DataFrame(columns, index=index)
 
     @classmethod
+    def fromDict(cls, dic, index_names=None, column_names=None):
+        """
+        Create a :class:`~amplpy.DataFrame` from a dictionary.
+
+        Args:
+            dic: dictionary to load.
+            index_names: index names to use.
+            column_names: column names to use.
+        """
+        assert isinstance(dic, dict)
+        assert len(dic) != 0
+
+        def to_tuple(e):
+            if isinstance(e, (tuple, list)):
+                return tuple(e)
+            else:
+                return (e,)
+
+        lst_index = list(map(to_tuple, dic.keys()))
+        lst_columns = list(map(to_tuple, dic.values()))
+        nindices, ncolumns = len(lst_index[0]), len(lst_columns[0])
+        assert index_names is None or nindices == len(index_names)
+        assert column_names is None or ncolumns == len(column_names)
+        assert all(len(k) == nindices for k in lst_index)
+        assert all(len(v) == ncolumns for v in lst_columns)
+
+        index = zip(*lst_index)
+        columns = zip(*lst_columns)
+
+        if index_names is None:
+            index_names = ['index{}'.format(i) for i in range(nindices)]
+
+        if column_names is None:
+            column_names = ['value{}'.format(i) for i in range(ncolumns)]
+
+        index = [
+            (index_names[i], cindex)
+            for i, cindex in enumerate(zip(*lst_index))
+        ]
+        columns = [
+            (column_names[i], column)
+            for i, column in enumerate(zip(*lst_columns))
+        ]
+        return cls(index=index, columns=columns)
+
+    @classmethod
     def fromPandas(cls, df, index_names=None):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.

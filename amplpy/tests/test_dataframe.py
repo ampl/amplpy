@@ -228,6 +228,18 @@ class TestDataFrame(TestBase.TestBase):
             [2, 4, 6]
         )
 
+    def testDict(self):
+        dic = {'aa': 'bb', 'c': 'a'}
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+        dic = {1: 2}
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+        dic = {1: 2, 3: 4}
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+        dic = {2.0: ('a', 'b'), 3: ('1', '2')}
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+        dic = {(2.0, 'c'): ('a', 'b'), (3, 'a'): ('1', '2')}
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+
 
 if __name__ == '__main__':
     unittest.main()
