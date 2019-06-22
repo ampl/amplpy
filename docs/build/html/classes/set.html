@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Set &#8212; AMPL API 2.0 (amplpy-0.6.6) documentation</title>
+    <meta charset="utf-8" />
+    <title>Set &#8212; AMPL API 2.0 (amplpy-0.6.7) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="objective.html" title="Objective"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.6) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -51,13 +49,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -74,7 +70,7 @@
 <span id="ref-set"></span><h1>Set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.Set">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Set</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">Set</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents an AMPL set. In case of not indexed sets, this class exposes
 iterators for accessing its elements. The members of the set are tuples.
 All these methods throw a TypeError if called for an indexed set.</p>
@@ -88,59 +84,59 @@ been deleted in the underlying AMPL interpreter.</p>
 <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</p>
 <dl class="method">
 <dt id="amplpy.Set.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.instances">
-<code class="descname">instances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.instances" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">instances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.instances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an iterator to iterate over all the instances in a Set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.arity">
-<code class="descname">arity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.arity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">arity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.arity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The arity of the set, or number of components in each member of this
 set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.getValues">
-<code class="descname">getValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.getValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.getValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get values of this set in a DataFrame. Valid only for non-indexed sets.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.members">
-<code class="descname">members</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.members" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">members</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.members" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get members (tuples) of this Set. Valid only for non-indexed sets.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.size">
-<code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.size" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the number of tuples in this set. Valid only for non-indexed sets.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.contains">
-<code class="descname">contains</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.contains" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.contains" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check wether this set instance contains the specified Tuple.
 Valid only for non-indexed sets.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>t: Tuple to be found.</dd>
+<dl class="simple">
+<dt>Args:</dt><dd><p>t: Tuple to be found.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Set.setValues">
-<code class="descname">setValues</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.setValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setValues</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Set.setValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the tuples in this set. Valid only for non-indexed sets.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>values: A list of tuples or a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</dd>
+<dl class="simple">
+<dt>Args:</dt><dd><p>values: A list of tuples or a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</p>
+</dd>
 </dl>
 <p>In the case of a <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, the number of indexing
 columns of the must be equal to the arity of the set. In the case of
@@ -162,7 +158,7 @@ Python objects:</p>
 
 <dl class="attribute">
 <dt id="amplpy.Set.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.set'</em><a class="headerlink" href="#amplpy.Set.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.set'</em><a class="headerlink" href="#amplpy.Set.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -187,13 +183,13 @@ Python objects:</p>
         <li class="right" >
           <a href="objective.html" title="Objective"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.6) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ErrorHandler &#8212; AMPL API 2.0 (amplpy-0.6.6) documentation</title>
+    <meta charset="utf-8" />
+    <title>ErrorHandler &#8212; AMPL API 2.0 (amplpy-0.6.7) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="outputhandler.html" title="OutputHandler"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.6) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -51,13 +49,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -74,7 +70,7 @@
 <span id="ref-errorhandler"></span><h1>ErrorHandler<a class="headerlink" href="#errorhandler" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.ErrorHandler">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">ErrorHandler</code><a class="headerlink" href="#amplpy.ErrorHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">ErrorHandler</code><a class="headerlink" href="#amplpy.ErrorHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>A basic interface for AMPL error handlers. If an application needs to
 implement customised error handling, it must implement this interface and
 then register an instance with the AMPL API using the
@@ -83,20 +79,31 @@ interpreter will then report all errors and warnings through this
 interface as <a class="reference internal" href="amplexception.html#amplpy.AMPLException" title="amplpy.AMPLException"><code class="xref py py-class docutils literal notranslate"><span class="pre">AMPLException</span></code></a> objects.</p>
 <dl class="method">
 <dt id="amplpy.ErrorHandler.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>amplexception</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.ErrorHandler.error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">amplexception</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.ErrorHandler.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives notification of an error.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.ErrorHandler.warning">
-<code class="descname">warning</code><span class="sig-paren">(</span><em>amplexception</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.ErrorHandler.warning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">amplexception</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.ErrorHandler.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives notification of a warning.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="amplpy.ErrorHandler.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.errorhandler'</em><a class="headerlink" href="#amplpy.ErrorHandler.__module__" title="Permalink to this definition">¶</a></dt>
+<dt id="amplpy.ErrorHandler.__dict__">
+<code class="sig-name descname">__dict__</code><em class="property"> = mappingproxy({'__module__': 'amplpy.errorhandler', '__doc__': '\n    A basic interface for AMPL error handlers. If an application needs to\n    implement customised error handling, it must implement this interface and\n    then register an instance with the AMPL API using the\n    :func:`~amplpy.AMPL.setErrorHandler` method. The underlying AMPL\n    interpreter will then report all errors and warnings through this\n    interface as :class:`~amplpy.AMPLException` objects.\n    ', 'error': &lt;function ErrorHandler.error&gt;, 'warning': &lt;function ErrorHandler.warning&gt;, '__dict__': &lt;attribute '__dict__' of 'ErrorHandler' objects&gt;, '__weakref__': &lt;attribute '__weakref__' of 'ErrorHandler' objects&gt;})</em><a class="headerlink" href="#amplpy.ErrorHandler.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.ErrorHandler.__module__">
+<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.errorhandler'</em><a class="headerlink" href="#amplpy.ErrorHandler.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="amplpy.ErrorHandler.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#amplpy.ErrorHandler.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -120,13 +127,13 @@ interface as <a class="reference internal" href="amplexception.html#amplpy.AMPLE
         <li class="right" >
           <a href="outputhandler.html" title="OutputHandler"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.6) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>
