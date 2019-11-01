@@ -42,7 +42,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
-        sudo pip install cibuildwheel==0.9.4
+        pip install cibuildwheel==0.9.4
         CIBW_SKIP='cp34-*' cibuildwheel --platform windows --output-dir wheelhouse .
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
