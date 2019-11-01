@@ -1,7 +1,2 @@
-nose
-sphinx
-coverage
-bokeh
-pandas
-jupyter
+
 
