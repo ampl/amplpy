@@ -4,13 +4,13 @@ jobs:
   steps: 
     - task: UsePythonVersion@0
     - bash: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
         pip install cibuildwheel==0.12.0
         cibuildwheel --platform linux --output-dir wheelhouse .
-        python -m pip install twine
-        python -m twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
+        pip install twine
+        twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: macos
@@ -18,13 +18,13 @@ jobs:
   steps: 
     - task: UsePythonVersion@0
     - bash: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
         pip install cibuildwheel==0.12.0
         cibuildwheel --platform macos --output-dir wheelhouse .
-        python -m pip install twine
-        python -m twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
+        pip install twine
+        twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: windows
@@ -43,12 +43,12 @@ jobs:
     - script: choco install vcpython27 -f -y
       displayName: Install Visual C++ for Python 2.7
     - bash: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
         pip install cibuildwheel==0.12.0
         CIBW_SKIP='cp34-*' cibuildwheel --platform windows --output-dir wheelhouse .
         pip install twine
-        python -m twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
+        twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
