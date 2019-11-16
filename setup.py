@@ -70,10 +70,11 @@ def compile_args():
 
 
 libdir = 'lib64' if x64 else 'lib32'
+cppinterface = os.path.join('amplpy', 'amplpython', 'cppinterface')
 
 setup(
     name='amplpy',
-    version='0.6.9b0',
+    version='0.6.9b1',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
@@ -109,14 +110,14 @@ setup(
     ext_modules=[Extension(
         '_amplpython',
         libraries=['ampl'],
-        library_dirs=[os.path.join('amplpy', 'amplpython', libdir)],
-        include_dirs=[os.path.join('amplpy', 'amplpython', 'include')],
+        library_dirs=[os.path.join(cppinterface, libdir)],
+        include_dirs=[os.path.join(cppinterface, 'include')],
         extra_compile_args=compile_args(),
         extra_link_args=[
-            make_relative_rpath(os.path.join('amplpy', 'amplpython', libdir))
+            make_relative_rpath(os.path.join(cppinterface, libdir))
         ],
         sources=[
-            os.path.join('amplpy', 'amplpython', 'amplpythonPYTHON_wrap.cxx')
+            os.path.join(cppinterface, 'amplpythonPYTHON_wrap.cxx')
         ],
     )],
     package_data={'': ls_dir('amplpy/')},

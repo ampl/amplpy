@@ -17,6 +17,6 @@ if platform.system() == 'Windows':
     except:
         pass
 
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'cppinterface'))
 from amplpython import *
 from amplpython import _READTABLE, _WRITETABLE

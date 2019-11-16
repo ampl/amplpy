@@ -40,7 +40,7 @@ def updatelib():
     lib64 = os.path.join(tmpdir, 'lib64')
     wrapper_dir = os.path.join(tmpdir, 'python')
 
-    amplpy_include = os.path.join('amplpy', 'amplpython', 'include', 'ampl')
+    amplpy_include = os.path.join('amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
     try:
         shutil.rmtree(amplpy_include)
     except Exception:
@@ -56,11 +56,11 @@ def updatelib():
         print('\t{}'.format(filename))
         shutil.copyfile(
             os.path.join(wrapper_dir, filename),
-            os.path.join('amplpy', 'amplpython', filename)
+            os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
         )
 
     for libname, lib in [('lib32', lib32), ('lib64', lib64)]:
-        dstdir = os.path.join('amplpy', 'amplpython', libname)
+        dstdir = os.path.join('amplpy', 'amplpython', 'cppinterface', libname)
         try:
             shutil.rmtree(dstdir)
             os.mkdir(dstdir)
