@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
-
 import os
+import sys
 import ctypes
 import platform
 
@@ -18,5 +17,6 @@ if platform.system() == 'Windows':
     except:
         pass
 
-from .amplpython import *
-from .amplpython import _READTABLE, _WRITETABLE
+sys.path.append(os.path.dirname(__file__))
+from amplpython import *
+from amplpython import _READTABLE, _WRITETABLE
