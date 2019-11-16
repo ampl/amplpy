@@ -7,7 +7,7 @@ jobs:
         pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
-        pip install cibuildwheel==0.12.0
+        pip install cibuildwheel==1.0.0
         cibuildwheel --platform linux --output-dir wheelhouse .
         pip install twine
         twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
@@ -21,7 +21,7 @@ jobs:
         pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
-        pip install cibuildwheel==0.12.0
+        pip install cibuildwheel==1.0.0
         cibuildwheel --platform macos --output-dir wheelhouse .
         pip install twine
         twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0
@@ -40,13 +40,15 @@ jobs:
     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.6', architecture: x64}}
     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x86}}
     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x64}}
+    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.8', architecture: x86}}
+    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.8', architecture: x64}}
     - script: choco install vcpython27 -f -y
       displayName: Install Visual C++ for Python 2.7
     - bash: |
         pip install --upgrade pip
         pip install urllib3[secure] --upgrade
         python updatelib.py
-        pip install cibuildwheel==0.12.0
+        pip install cibuildwheel==1.0.0
         CIBW_SKIP='cp34-*' cibuildwheel --platform windows --output-dir wheelhouse .
         pip install twine
         twine upload -u $(TWINE_USERNAME) -p $(TWINE_PASSWORD) wheelhouse/*.whl || exit 0

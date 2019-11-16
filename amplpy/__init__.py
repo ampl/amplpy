@@ -15,4 +15,4 @@ from .dataframe import DataFrame
 from .utils import multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
-__version__ = '0.6.8b1'
+__version__ = '0.6.8rc0'
