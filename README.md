@@ -48,7 +48,7 @@ Or:
 $ python -m pip install amplpy
 ```
 
-Note: For Windows, Linux, and macOS, the `amplpy` package comes with 26 binary wheels for Python 2.7, 3.4, 3.5, 3.6, and 3.7. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
+Note: For Windows, Linux, and macOS, the `amplpy` package comes with 33 binary wheels for Python 2.7, 3.5, 3.6, 3.7, and 3.8. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
 
 Alternatively, you can build and install the package locally:
 ```
