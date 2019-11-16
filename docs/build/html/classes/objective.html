@@ -1,10 +1,12 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>Objective &#8212; AMPL API 2.0 (amplpy-0.6.7) documentation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Objective &#8212; AMPL API 2.0 (amplpy-0.6.8) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,7 +31,7 @@
         <li class="right" >
           <a href="constraint.html" title="Constraint"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -49,11 +51,13 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -70,7 +74,7 @@
 <span id="ref-objective"></span><h1>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.Objective">
-<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">Objective</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Objective</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a>.</p>
 <p>Represents an AMPL objective. Note that, in case of a scalar objective, all
 the properties (corresponding to AMPL suffixes) of the objective instance
@@ -86,71 +90,71 @@ suffixes for that entities), see <a class="reference internal" href="entity.html
 <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> class.</p>
 <dl class="method">
 <dt id="amplpy.Objective.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.value">
-<code class="sig-name descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value of the objective.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.astatus">
-<code class="sig-name descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.astatus" title="Permalink to this definition">¶</a></dt>
+<code class="descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.astatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the AMPL status.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.sstatus">
-<code class="sig-name descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.sstatus" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.sstatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the solver status.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.exitcode">
-<code class="sig-name descname">exitcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.exitcode" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exitcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.exitcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exit code returned by solver after most recent solve with this
 objective.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.message">
-<code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result message returned by solver after most recent solve with this
 objective.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.result">
-<code class="sig-name descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.result" title="Permalink to this definition">¶</a></dt>
+<code class="descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result string returned by solver after most recent solve with this
 objective.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.drop">
-<code class="sig-name descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.drop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Drop this objective instance.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.restore">
-<code class="sig-name descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.restore" title="Permalink to this definition">¶</a></dt>
+<code class="descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.restore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore this objective (if it had been dropped, no effect otherwise).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Objective.minimization">
-<code class="sig-name descname">minimization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.minimization" title="Permalink to this definition">¶</a></dt>
+<code class="descname">minimization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Objective.minimization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the sense of this objective. Returns True if minimize,
 False if maximize.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Objective.__module__">
-<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.objective'</em><a class="headerlink" href="#amplpy.Objective.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__module__</code><em class="property"> = 'amplpy.objective'</em><a class="headerlink" href="#amplpy.Objective.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -175,13 +179,13 @@ False if maximize.</p>
         <li class="right" >
           <a href="constraint.html" title="Constraint"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

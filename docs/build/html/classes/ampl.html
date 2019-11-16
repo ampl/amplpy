@@ -1,10 +1,12 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>AMPL &#8212; AMPL API 2.0 (amplpy-0.6.7) documentation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>AMPL &#8212; AMPL API 2.0 (amplpy-0.6.8) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,7 +31,7 @@
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -49,11 +51,13 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -70,35 +74,35 @@
 <span id="ref-ampl"></span><h1>AMPL<a class="headerlink" href="#ampl" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.AMPL">
-<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">AMPL</code><span class="sig-paren">(</span><em class="sig-param">environment=None</em>, <em class="sig-param">langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">AMPL</code><span class="sig-paren">(</span><em>environment=None</em>, <em>langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL" title="Permalink to this definition">¶</a></dt>
 <dd><p>An AMPL translator.</p>
 <p>An object of this class can be used to do the following tasks:</p>
 <ul class="simple">
-<li><p>Run AMPL code. See <a class="reference internal" href="#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> and
-<a class="reference internal" href="#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">evalAsync()</span></code></a>.</p></li>
-<li><p>Read models and data from files. See <a class="reference internal" href="#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">read()</span></code></a>,
+<li>Run AMPL code. See <a class="reference internal" href="#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> and
+<a class="reference internal" href="#amplpy.AMPL.evalAsync" title="amplpy.AMPL.evalAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">evalAsync()</span></code></a>.</li>
+<li>Read models and data from files. See <a class="reference internal" href="#amplpy.AMPL.read" title="amplpy.AMPL.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">read()</span></code></a>,
 <a class="reference internal" href="#amplpy.AMPL.readData" title="amplpy.AMPL.readData"><code class="xref py py-func docutils literal notranslate"><span class="pre">readData()</span></code></a>, <a class="reference internal" href="#amplpy.AMPL.readAsync" title="amplpy.AMPL.readAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">readAsync()</span></code></a>, and
-<a class="reference internal" href="#amplpy.AMPL.readDataAsync" title="amplpy.AMPL.readDataAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">readDataAsync()</span></code></a>.</p></li>
-<li><p>Solve optimization problems constructed from model and data (see
-<a class="reference internal" href="#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal notranslate"><span class="pre">solve()</span></code></a> and <a class="reference internal" href="#amplpy.AMPL.solveAsync" title="amplpy.AMPL.solveAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">solveAsync()</span></code></a>).</p></li>
-<li><p>Access single Elements of an optimization problem. See
+<a class="reference internal" href="#amplpy.AMPL.readDataAsync" title="amplpy.AMPL.readDataAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">readDataAsync()</span></code></a>.</li>
+<li>Solve optimization problems constructed from model and data (see
+<a class="reference internal" href="#amplpy.AMPL.solve" title="amplpy.AMPL.solve"><code class="xref py py-func docutils literal notranslate"><span class="pre">solve()</span></code></a> and <a class="reference internal" href="#amplpy.AMPL.solveAsync" title="amplpy.AMPL.solveAsync"><code class="xref py py-func docutils literal notranslate"><span class="pre">solveAsync()</span></code></a>).</li>
+<li>Access single Elements of an optimization problem. See
 <a class="reference internal" href="#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">getVariable()</span></code></a>, <a class="reference internal" href="#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal notranslate"><span class="pre">getConstraint()</span></code></a>,
 <a class="reference internal" href="#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal notranslate"><span class="pre">getObjective()</span></code></a>, <a class="reference internal" href="#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">getSet()</span></code></a>,
-and <a class="reference internal" href="#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">getParameter()</span></code></a>.</p></li>
-<li><p>Access lists of available entities of an optimization problem. See
+and <a class="reference internal" href="#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">getParameter()</span></code></a>.</li>
+<li>Access lists of available entities of an optimization problem. See
 <a class="reference internal" href="#amplpy.AMPL.getVariables" title="amplpy.AMPL.getVariables"><code class="xref py py-func docutils literal notranslate"><span class="pre">getVariables()</span></code></a>, <a class="reference internal" href="#amplpy.AMPL.getConstraints" title="amplpy.AMPL.getConstraints"><code class="xref py py-func docutils literal notranslate"><span class="pre">getConstraints()</span></code></a>,
 <a class="reference internal" href="#amplpy.AMPL.getObjectives" title="amplpy.AMPL.getObjectives"><code class="xref py py-func docutils literal notranslate"><span class="pre">getObjectives()</span></code></a>, <a class="reference internal" href="#amplpy.AMPL.getSets" title="amplpy.AMPL.getSets"><code class="xref py py-func docutils literal notranslate"><span class="pre">getSets()</span></code></a>,
-and <a class="reference internal" href="#amplpy.AMPL.getParameters" title="amplpy.AMPL.getParameters"><code class="xref py py-func docutils literal notranslate"><span class="pre">getParameters()</span></code></a>.</p></li>
+and <a class="reference internal" href="#amplpy.AMPL.getParameters" title="amplpy.AMPL.getParameters"><code class="xref py py-func docutils literal notranslate"><span class="pre">getParameters()</span></code></a>.</li>
 </ul>
 <p>Error handling is two-faced:</p>
 <ul class="simple">
-<li><p>Errors coming from the underlying AMPL translator (e.g. syntax errors and
+<li>Errors coming from the underlying AMPL translator (e.g. syntax errors and
 warnings obtained calling the eval method) are handled by
 the <a class="reference internal" href="runnable.html#amplpy.ErrorHandler" title="amplpy.ErrorHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorHandler</span></code></a> which can be set and get via
 <a class="reference internal" href="#amplpy.AMPL.getErrorHandler" title="amplpy.AMPL.getErrorHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">getErrorHandler()</span></code></a> and
-<a class="reference internal" href="#amplpy.AMPL.setErrorHandler" title="amplpy.AMPL.setErrorHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">setErrorHandler()</span></code></a>.</p></li>
-<li><p>Generic errors coming from misusing the API, which are detected in
-Python, are thrown as exceptions.</p></li>
+<a class="reference internal" href="#amplpy.AMPL.setErrorHandler" title="amplpy.AMPL.setErrorHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">setErrorHandler()</span></code></a>.</li>
+<li>Generic errors coming from misusing the API, which are detected in
+Python, are thrown as exceptions.</li>
 </ul>
 <p>The default implementation of the error handler throws exceptions on errors
 and prints to console on warnings.</p>
@@ -110,23 +114,23 @@ The current output handler can be accessed and set via
 <a class="reference internal" href="#amplpy.AMPL.setOutputHandler" title="amplpy.AMPL.setOutputHandler"><code class="xref py py-func docutils literal notranslate"><span class="pre">setOutputHandler()</span></code></a>.</p>
 <dl class="method">
 <dt id="amplpy.AMPL.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">environment=None</em>, <em class="sig-param">langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>environment=None</em>, <em>langext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor:
 creates a new AMPL instance with the specified environment if provided.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>environment (<a class="reference internal" href="environment.html#amplpy.Environment" title="amplpy.Environment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></a>): This allows the user to
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>environment (<a class="reference internal" href="environment.html#amplpy.Environment" title="amplpy.Environment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></a>): This allows the user to
 specify the location of the AMPL binaries to be used and to modify
-the environment variables in which the AMPL interpreter will run.</p>
-</dd>
-<dt>Raises:</dt><dd><p>RuntimeError: If no valid AMPL license has been found or if the
-translator cannot be started for any other reason.</p>
-</dd>
+the environment variables in which the AMPL interpreter will run.</dd>
+<dt>Raises:</dt>
+<dd>RuntimeError: If no valid AMPL license has been found or if the
+translator cannot be started for any other reason.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.__del__">
-<code class="sig-name descname">__del__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__del__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__del__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.__del__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default destructor:
 releases all the resources related to the AMPL instance (most notably
 kills the underlying  interpreter).</p>
@@ -134,7 +138,7 @@ kills the underlying  interpreter).</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getData">
-<code class="sig-name descname">getData</code><span class="sig-paren">(</span><em class="sig-param">*statements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getData</code><span class="sig-paren">(</span><em>*statements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the data corresponding to the display statements. The statements
 can be AMPL expressions, or entities. It captures the equivalent of the
 command:</p>
@@ -148,100 +152,100 @@ results of the display statements cannot be indexed over the same set.
 As a result, any attempt to get data from more than one set, or to get
 data for multiple parameters with a different number of indexing sets
 will fail.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>statements: The display statements to be fetched.</p>
-</dd>
-<dt>Raises:</dt><dd><p>RuntimeError: if the AMPL visualization command does not succeed
-for one of the reasons listed above.</p>
-</dd>
-<dt>Returns:</dt><dd><p>DataFrame capturing the output of the display
-command in tabular form.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>statements: The display statements to be fetched.</dd>
+<dt>Raises:</dt>
+<dd>RuntimeError: if the AMPL visualization command does not succeed
+for one of the reasons listed above.</dd>
+<dt>Returns:</dt>
+<dd>DataFrame capturing the output of the display
+command in tabular form.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getEntity">
-<code class="sig-name descname">getEntity</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getEntity" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getEntity</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getEntity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get entity corresponding to the specified name (looks for it in all
 types of entities).</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the entity.</p>
-</dd>
-<dt>Raises:</dt><dd><p>TypeError: if the specified entity does not exist.</p>
-</dd>
-<dt>Returns:</dt><dd><p>The AMPL entity with the specified name.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the entity.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: if the specified entity does not exist.</dd>
+<dt>Returns:</dt>
+<dd>The AMPL entity with the specified name.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getVariable">
-<code class="sig-name descname">getVariable</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getVariable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getVariable</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getVariable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the variable with the corresponding name.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the variable to be found.</p>
-</dd>
-<dt>Raises:</dt><dd><p>TypeError: if the specified variable does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the variable to be found.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: if the specified variable does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getConstraint">
-<code class="sig-name descname">getConstraint</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getConstraint" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getConstraint</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getConstraint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the constraint with the corresponding name.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the constraint to be found.</p>
-</dd>
-<dt>Raises:</dt><dd><p>TypeError: if the specified constraint does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the constraint to be found.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: if the specified constraint does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getObjective">
-<code class="sig-name descname">getObjective</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getObjective" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getObjective</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getObjective" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Get the objective with the corresponding name.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the objective to be found.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the objective to be found.</dd>
 </dl>
 </div></blockquote>
-<dl class="simple">
-<dt>Raises:</dt><dd><p>TypeError: if the specified objective does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd>TypeError: if the specified objective does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getSet">
-<code class="sig-name descname">getSet</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getSet" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getSet</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the set with the corresponding name.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the set to be found.</p>
-</dd>
-<dt>Raises:</dt><dd><p>TypeError: if the specified set does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the set to be found.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: if the specified set does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getParameter">
-<code class="sig-name descname">getParameter</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getParameter" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getParameter</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getParameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the parameter with the corresponding name.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Name of the parameter to be found.</p>
-</dd>
-<dt>Raises:</dt><dd><p>TypeError: if the specified parameter does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Name of the parameter to be found.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: if the specified parameter does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.eval">
-<code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param">amplstatements</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.eval" title="Permalink to this definition">¶</a></dt>
+<code class="descname">eval</code><span class="sig-paren">(</span><em>amplstatements</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses AMPL code and evaluates it as a possibly empty sequence of AMPL
 declarations and statements.</p>
 <p>As a side effect, it invalidates all entities (as the passed statements
@@ -253,41 +257,41 @@ setOutputHandler).</p>
 <p>By default, errors and warnings are printed on stdout.
 This behavior can be changed reassigning an ErrorHandler
 using setErrorHandler.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>amplstatements: A collection of AMPL statements and declarations to
-be passed to the interpreter.</p>
-</dd>
-<dt>Raises:</dt><dd><p>RuntimeError: if the input is not a complete AMPL statement (e.g.
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>amplstatements: A collection of AMPL statements and declarations to
+be passed to the interpreter.</dd>
+<dt>Raises:</dt>
+<dd>RuntimeError: if the input is not a complete AMPL statement (e.g.
 if it does not end with semicolon) or if the underlying
-interpreter is not running.</p>
-</dd>
+interpreter is not running.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getOutput">
-<code class="sig-name descname">getOutput</code><span class="sig-paren">(</span><em class="sig-param">amplstatements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOutput" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getOutput</code><span class="sig-paren">(</span><em>amplstatements</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOutput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equivalent to <a class="reference internal" href="#amplpy.AMPL.eval" title="amplpy.AMPL.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> but returns the output as a
 string.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>amplstatements: A collection of AMPL statements and declarations to
-be passed to the interpreter.</p>
-</dd>
-<dt>Returns:</dt><dd><p>A string with the output.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>amplstatements: A collection of AMPL statements and declarations to
+be passed to the interpreter.</dd>
+<dt>Returns:</dt>
+<dd>A string with the output.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.reset">
-<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.reset" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears all entities in the underlying AMPL interpreter, clears all maps
 and invalidates all entities.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.close">
-<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.close" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops the underlying engine, and release all any further attempt to
 execute optimization commands without restarting it will throw an
 exception.</p>
@@ -295,37 +299,38 @@ exception.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.isRunning">
-<code class="sig-name descname">isRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.isRunning" title="Permalink to this definition">¶</a></dt>
+<code class="descname">isRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.isRunning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the underlying engine is running.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.isBusy">
-<code class="sig-name descname">isBusy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.isBusy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">isBusy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.isBusy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the underlying engine is doing an async operation.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.solve">
-<code class="sig-name descname">solve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.solve" title="Permalink to this definition">¶</a></dt>
+<code class="descname">solve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.solve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solve the current model.</p>
-<dl class="simple">
-<dt>Raises:</dt><dd><p>RuntimeError: if the underlying interpreter is not running.</p>
-</dd>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd>RuntimeError: if the underlying interpreter is not running.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.readAsync">
-<code class="sig-name descname">readAsync</code><span class="sig-paren">(</span><em class="sig-param">fileName</em>, <em class="sig-param">callback</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readAsync</code><span class="sig-paren">(</span><em>fileName</em>, <em>callback</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified file asynchronously, interpreting it as a
 model or a script file. As a side effect, it invalidates all entities
 (as the passed file can contain any arbitrary command); the lists of
 entities will be re-populated lazily (at first access).</p>
-<dl>
-<dt>Args:</dt><dd><p>fileName: Path to the file (Relative to the current working
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">fileName: Path to the file (Relative to the current working
 directory or absolute).</p>
-<p>callback: Callback to be executed when the file has been
+<p class="last">callback: Callback to be executed when the file has been
 interpreted.</p>
 </dd>
 </dl>
@@ -333,15 +338,16 @@ interpreted.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.readDataAsync">
-<code class="sig-name descname">readDataAsync</code><span class="sig-paren">(</span><em class="sig-param">fileName</em>, <em class="sig-param">callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readDataAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readDataAsync</code><span class="sig-paren">(</span><em>fileName</em>, <em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readDataAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified data file asynchronously. When interpreting is
 over, the specified callback is called. The file is interpreted as
 data. As a side effect, it invalidates all entities (as the passed file
 can contain any arbitrary command); the lists of entities will be
 re-populated lazily (at first access)</p>
-<dl>
-<dt>Args:</dt><dd><p>fileName: Full path to the file.</p>
-<p>callback: Callback to be executed when the file has been
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">fileName: Full path to the file.</p>
+<p class="last">callback: Callback to be executed when the file has been
 interpreted.</p>
 </dd>
 </dl>
@@ -349,40 +355,41 @@ interpreted.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.evalAsync">
-<code class="sig-name descname">evalAsync</code><span class="sig-paren">(</span><em class="sig-param">amplstatements</em>, <em class="sig-param">callback</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.evalAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">evalAsync</code><span class="sig-paren">(</span><em>amplstatements</em>, <em>callback</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.evalAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpret the given AMPL statement asynchronously.</p>
-<dl>
-<dt>Args:</dt><dd><p>amplstatements: A collection of AMPL statements and declarations to
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">amplstatements: A collection of AMPL statements and declarations to
 be passed to the interpreter.</p>
-<p>callback: Callback to be executed when the statement has been
+<p class="last">callback: Callback to be executed when the statement has been
 interpreted.</p>
 </dd>
-<dt>Raises:</dt><dd><p>RuntimeError: if the input is not a complete AMPL statement (e.g.
+<dt>Raises:</dt>
+<dd>RuntimeError: if the input is not a complete AMPL statement (e.g.
 if it does not end with semicolon) or if the underlying
-interpreter is not running.</p>
-</dd>
+interpreter is not running.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.solveAsync">
-<code class="sig-name descname">solveAsync</code><span class="sig-paren">(</span><em class="sig-param">callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.solveAsync" title="Permalink to this definition">¶</a></dt>
+<code class="descname">solveAsync</code><span class="sig-paren">(</span><em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.solveAsync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solve the current model asynchronously.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>callback: Callback to be executed when the solver is done.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>callback: Callback to be executed when the solver is done.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.wait">
-<code class="sig-name descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.wait" title="Permalink to this definition">¶</a></dt>
+<code class="descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the current async operation to finish.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.interrupt">
-<code class="sig-name descname">interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.interrupt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.interrupt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interrupt an underlying asynchronous operation (execution of AMPL code
 by the AMPL interpreter). An asynchronous operation can be started via
 evalAsync(), solveAsync(), readAsync() and readDataAsync().
@@ -391,324 +398,327 @@ Does nothing if the engine and the solver are idle.</p>
 
 <dl class="method">
 <dt id="amplpy.AMPL.cd">
-<code class="sig-name descname">cd</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.cd" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cd</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.cd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get or set the current working directory from the underlying
 interpreter (see <a class="reference external" href="https://en.wikipedia.org/wiki/Working_directory">https://en.wikipedia.org/wiki/Working_directory</a>).</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>path: New working directory or None (to display the working
-directory).</p>
-</dd>
-<dt>Returns:</dt><dd><p>Current working directory.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>path: New working directory or None (to display the working
+directory).</dd>
+<dt>Returns:</dt>
+<dd>Current working directory.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.setOption">
-<code class="sig-name descname">setOption</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setOption" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setOption</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setOption" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set an AMPL option to a specified value.</p>
-<dl>
-<dt>Args:</dt><dd><p>name: Name of the option to be set (alphanumeric without spaces).</p>
-<p>value: The value the option must be set to.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">name: Name of the option to be set (alphanumeric without spaces).</p>
+<p class="last">value: The value the option must be set to.</p>
 </dd>
-<dt>Raises:</dt><dd><p>InvalidArgumet: if the option name is not valid.</p>
-<p>TypeError: if the value has an invalid type.</p>
+<dt>Raises:</dt>
+<dd><p class="first">InvalidArgumet: if the option name is not valid.</p>
+<p class="last">TypeError: if the value has an invalid type.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getOption">
-<code class="sig-name descname">getOption</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOption" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getOption</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOption" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Get the current value of the specified option. If the option does not
 exist, returns None.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>name: Option name.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name: Option name.</dd>
 </dl>
 </div></blockquote>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>Value of the option.</p>
-</dd>
-<dt>Raises:</dt><dd><p>InvalidArgumet: if the option name is not valid.</p>
-</dd>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>Value of the option.</dd>
+<dt>Raises:</dt>
+<dd>InvalidArgumet: if the option name is not valid.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.read">
-<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param">fileName</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.read" title="Permalink to this definition">¶</a></dt>
+<code class="descname">read</code><span class="sig-paren">(</span><em>fileName</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified file (script or model or mixed) As a side
 effect, it invalidates all entities (as the passed file can contain any
 arbitrary command); the lists of entities will be re-populated lazily
 (at first access).</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>fileName: Full path to the file.</p>
-</dd>
-<dt>Raises:</dt><dd><p>RuntimeError: in case the file does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>fileName: Full path to the file.</dd>
+<dt>Raises:</dt>
+<dd>RuntimeError: in case the file does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.readData">
-<code class="sig-name descname">readData</code><span class="sig-paren">(</span><em class="sig-param">fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readData</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interprets the specified file as an AMPL data file. As a side effect,
 it invalidates all entities (as the passed file can contain any
 arbitrary command); the lists of entities will be re-populated lazily
 (at first access). After reading the file, the interpreter is put back
 to “model” mode.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>fileName: Full path to the file.</p>
-</dd>
-<dt>Raises:</dt><dd><p>RuntimeError: in case the file does not exist.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>fileName: Full path to the file.</dd>
+<dt>Raises:</dt>
+<dd>RuntimeError: in case the file does not exist.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getValue">
-<code class="sig-name descname">getValue</code><span class="sig-paren">(</span><em class="sig-param">scalarExpression</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getValue" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getValue</code><span class="sig-paren">(</span><em>scalarExpression</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a scalar value from the underlying AMPL interpreter, as a double or
 a string.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>scalarExpression: An AMPL expression which evaluates to a scalar
-value.</p>
-</dd>
-<dt>Returns:</dt><dd><p>The value of the expression.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>scalarExpression: An AMPL expression which evaluates to a scalar
+value.</dd>
+<dt>Returns:</dt>
+<dd>The value of the expression.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.setData">
-<code class="sig-name descname">setData</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">setName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setData</code><span class="sig-paren">(</span><em>data</em>, <em>setName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign the data in the dataframe to the AMPL entities with the names
 corresponding to the column names.</p>
-<dl>
-<dt>Args:</dt><dd><p>data: The dataframe containing the data to be assigned.</p>
-<p>setName: The name of the set to which the indices values of the
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">data: The dataframe containing the data to be assigned.</p>
+<p class="last">setName: The name of the set to which the indices values of the
 DataFrame are to be assigned.</p>
 </dd>
-<dt>Raises:</dt><dd><p>AMPLException: if the data assignment procedure was not successful.</p>
-</dd>
+<dt>Raises:</dt>
+<dd>AMPLException: if the data assignment procedure was not successful.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.readTable">
-<code class="sig-name descname">readTable</code><span class="sig-paren">(</span><em class="sig-param">tableName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readTable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readTable</code><span class="sig-paren">(</span><em>tableName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.readTable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the table corresponding to the specified name, equivalent to the
 AMPL statement:</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">read table</span> <span class="nv">tableName</span><span class="p">;</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>Args:</dt><dd><p>tableName: Name of the table to be read.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>tableName: Name of the table to be read.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.writeTable">
-<code class="sig-name descname">writeTable</code><span class="sig-paren">(</span><em class="sig-param">tableName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.writeTable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">writeTable</code><span class="sig-paren">(</span><em>tableName</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.writeTable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the table corresponding to the specified name, equivalent to the
 AMPL statement</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kr">write</span><span class="w"> </span><span class="kd">table</span> <span class="nv">tableName</span><span class="p">;</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>Args:</dt><dd><p>tableName: Name of the table to be written.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>tableName: Name of the table to be written.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.display">
-<code class="sig-name descname">display</code><span class="sig-paren">(</span><em class="sig-param">*amplExpressions</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.display" title="Permalink to this definition">¶</a></dt>
+<code class="descname">display</code><span class="sig-paren">(</span><em>*amplExpressions</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.display" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes on the current OutputHandler the outcome of the AMPL statement.</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kr">display</span><span class="w"> </span>e1<span class="p">,</span><span class="w"> </span>e2<span class="p">,</span><span class="w"> </span><span class="o">..</span><span class="p">,</span><span class="w"> </span>en<span class="p">;</span>
 </pre></div>
 </div>
 <p>where e1, …, en are the strings passed to the procedure.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>amplExpressions: Expressions to be evaluated.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>amplExpressions: Expressions to be evaluated.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.setOutputHandler">
-<code class="sig-name descname">setOutputHandler</code><span class="sig-paren">(</span><em class="sig-param">outputhandler</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setOutputHandler" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setOutputHandler</code><span class="sig-paren">(</span><em>outputhandler</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setOutputHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a new output handler.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>outputhandler: The function handling the AMPL output derived from
-interpreting user commands.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>outputhandler: The function handling the AMPL output derived from
+interpreting user commands.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.setErrorHandler">
-<code class="sig-name descname">setErrorHandler</code><span class="sig-paren">(</span><em class="sig-param">errorhandler</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setErrorHandler" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setErrorHandler</code><span class="sig-paren">(</span><em>errorhandler</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.setErrorHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a new error handler.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>errorhandler: The object handling AMPL errors and warnings.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>errorhandler: The object handling AMPL errors and warnings.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getOutputHandler">
-<code class="sig-name descname">getOutputHandler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOutputHandler" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getOutputHandler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getOutputHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current output handler.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>The current output handler.</p>
-</dd>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The current output handler.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getErrorHandler">
-<code class="sig-name descname">getErrorHandler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getErrorHandler" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getErrorHandler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getErrorHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current error handler.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>The current error handler.</p>
-</dd>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The current error handler.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getVariables">
-<code class="sig-name descname">getVariables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getVariables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getVariables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getVariables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the variables declared.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getConstraints">
-<code class="sig-name descname">getConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getConstraints" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getConstraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the constraints declared.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getObjectives">
-<code class="sig-name descname">getObjectives</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getObjectives" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getObjectives</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getObjectives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the objectives declared.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getSets">
-<code class="sig-name descname">getSets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getSets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getSets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getSets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the sets declared.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getParameters">
-<code class="sig-name descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getParameters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getParameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the parameters declared.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.getCurrentObjective">
-<code class="sig-name descname">getCurrentObjective</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getCurrentObjective" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getCurrentObjective</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.getCurrentObjective" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the the current objective. Returns <cite>None</cite> if no objective is set.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.var">
-<em class="property">property </em><code class="sig-name descname">var</code><a class="headerlink" href="#amplpy.AMPL.var" title="Permalink to this definition">¶</a></dt>
+<code class="descname">var</code><a class="headerlink" href="#amplpy.AMPL.var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get/Set a variable.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.con">
-<em class="property">property </em><code class="sig-name descname">con</code><a class="headerlink" href="#amplpy.AMPL.con" title="Permalink to this definition">¶</a></dt>
+<code class="descname">con</code><a class="headerlink" href="#amplpy.AMPL.con" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get/Set a constraint.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.obj">
-<em class="property">property </em><code class="sig-name descname">obj</code><a class="headerlink" href="#amplpy.AMPL.obj" title="Permalink to this definition">¶</a></dt>
+<code class="descname">obj</code><a class="headerlink" href="#amplpy.AMPL.obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an objective.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.set">
-<em class="property">property </em><code class="sig-name descname">set</code><a class="headerlink" href="#amplpy.AMPL.set" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set</code><a class="headerlink" href="#amplpy.AMPL.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get/Set a set.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.param">
-<em class="property">property </em><code class="sig-name descname">param</code><a class="headerlink" href="#amplpy.AMPL.param" title="Permalink to this definition">¶</a></dt>
+<code class="descname">param</code><a class="headerlink" href="#amplpy.AMPL.param" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get/Set a parameter.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="amplpy.AMPL.option">
-<em class="property">property </em><code class="sig-name descname">option</code><a class="headerlink" href="#amplpy.AMPL.option" title="Permalink to this definition">¶</a></dt>
+<code class="descname">option</code><a class="headerlink" href="#amplpy.AMPL.option" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get/Set an option.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.exportModel">
-<code class="sig-name descname">exportModel</code><span class="sig-paren">(</span><em class="sig-param">modfile</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportModel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exportModel</code><span class="sig-paren">(</span><em>modfile</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a .mod file with the model that has been loaded.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>modfile: Path to the file (Relative to the current working
-directory or absolute).</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>modfile: Path to the file (Relative to the current working
+directory or absolute).</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.exportData">
-<code class="sig-name descname">exportData</code><span class="sig-paren">(</span><em class="sig-param">datfile</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exportData</code><span class="sig-paren">(</span><em>datfile</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a .dat file with the data that has been loaded.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>datfile: Path to the file (Relative to the current working
-directory or absolute).</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>datfile: Path to the file (Relative to the current working
+directory or absolute).</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.exportGurobiModel">
-<code class="sig-name descname">exportGurobiModel</code><span class="sig-paren">(</span><em class="sig-param">gurobiDriver='gurobi'</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportGurobiModel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exportGurobiModel</code><span class="sig-paren">(</span><em>gurobiDriver='gurobi'</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.exportGurobiModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the model to Gurobi as a gurobipy.Model object.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>gurobiDriver: The name or the path of the Gurobi solver driver.
-verbose: Whether should generate verbose output.</p>
-</dd>
-<dt>Returns:</dt><dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model loaded.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>gurobiDriver: The name or the path of the Gurobi solver driver.
+verbose: Whether should generate verbose output.</dd>
+<dt>Returns:</dt>
+<dd>A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model loaded.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.AMPL.importGurobiSolution">
-<code class="sig-name descname">importGurobiSolution</code><span class="sig-paren">(</span><em class="sig-param">grbmodel</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.importGurobiSolution" title="Permalink to this definition">¶</a></dt>
+<code class="descname">importGurobiSolution</code><span class="sig-paren">(</span><em>grbmodel</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.AMPL.importGurobiSolution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import the solution from a gurobipy.Model object.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>grbmodel: A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model solved.</p>
-</dd>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>grbmodel: A <code class="xref py py-class docutils literal notranslate"><span class="pre">gurobipy.Model</span></code> object with the model solved.</dd>
 </dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.AMPL.__dict__">
-<code class="sig-name descname">__dict__</code><em class="property"> = mappingproxy({'__module__': 'amplpy.ampl', '__doc__': 'An AMPL translator.\n\n    An object of this class can be used to do the following tasks:\n\n    - Run AMPL code. See :func:`~amplpy.AMPL.eval` and\n      :func:`~amplpy.AMPL.evalAsync`.\n    - Read models and data from files. See :func:`~amplpy.AMPL.read`,\n      :func:`~amplpy.AMPL.readData`, :func:`~amplpy.AMPL.readAsync`, and\n      :func:`~amplpy.AMPL.readDataAsync`.\n    - Solve optimization problems constructed from model and data (see\n      :func:`~amplpy.AMPL.solve` and :func:`~amplpy.AMPL.solveAsync`).\n    - Access single Elements of an optimization problem. See\n      :func:`~amplpy.AMPL.getVariable`, :func:`~amplpy.AMPL.getConstraint`,\n      :func:`~amplpy.AMPL.getObjective`, :func:`~amplpy.AMPL.getSet`,\n      and :func:`~amplpy.AMPL.getParameter`.\n    - Access lists of available entities of an optimization problem. See\n      :func:`~amplpy.AMPL.getVariables`, :func:`~amplpy.AMPL.getConstraints`,\n      :func:`~amplpy.AMPL.getObjectives`, :func:`~amplpy.AMPL.getSets`,\n      and :func:`~amplpy.AMPL.getParameters`.\n\n    Error handling is two-faced:\n\n    - Errors coming from the underlying AMPL translator (e.g. syntax errors and\n      warnings obtained calling the eval method) are handled by\n      the :class:`~amplpy.ErrorHandler` which can be set and get via\n      :func:`~amplpy.AMPL.getErrorHandler` and\n      :func:`~amplpy.AMPL.setErrorHandler`.\n    - Generic errors coming from misusing the API, which are detected in\n      Python, are thrown as exceptions.\n\n    The default implementation of the error handler throws exceptions on errors\n    and prints to console on warnings.\n\n    The output of every user interaction with the underlying translator is\n    handled implementing the abstract class :class:`~amplpy.OutputHandler`.\n    The (only) method is called at each block of output from the translator.\n    The current output handler can be accessed and set via\n    :func:`~amplpy.AMPL.getOutputHandler` and\n    :func:`~amplpy.AMPL.setOutputHandler`.\n    ', '__init__': &lt;function AMPL.__init__&gt;, '__del__': &lt;function AMPL.__del__&gt;, 'getData': &lt;function AMPL.getData&gt;, 'getEntity': &lt;function AMPL.getEntity&gt;, 'getVariable': &lt;function AMPL.getVariable&gt;, 'getConstraint': &lt;function AMPL.getConstraint&gt;, 'getObjective': &lt;function AMPL.getObjective&gt;, 'getSet': &lt;function AMPL.getSet&gt;, 'getParameter': &lt;function AMPL.getParameter&gt;, 'eval': &lt;function AMPL.eval&gt;, 'getOutput': &lt;function AMPL.getOutput&gt;, 'reset': &lt;function AMPL.reset&gt;, 'close': &lt;function AMPL.close&gt;, 'isRunning': &lt;function AMPL.isRunning&gt;, 'isBusy': &lt;function AMPL.isBusy&gt;, 'solve': &lt;function AMPL.solve&gt;, 'readAsync': &lt;function AMPL.readAsync&gt;, 'readDataAsync': &lt;function AMPL.readDataAsync&gt;, 'evalAsync': &lt;function AMPL.evalAsync&gt;, 'solveAsync': &lt;function AMPL.solveAsync&gt;, 'wait': &lt;function AMPL.wait&gt;, 'interrupt': &lt;function AMPL.interrupt&gt;, 'cd': &lt;function AMPL.cd&gt;, 'setOption': &lt;function AMPL.setOption&gt;, 'getOption': &lt;function AMPL.getOption&gt;, 'read': &lt;function AMPL.read&gt;, 'readData': &lt;function AMPL.readData&gt;, 'getValue': &lt;function AMPL.getValue&gt;, 'setData': &lt;function AMPL.setData&gt;, 'readTable': &lt;function AMPL.readTable&gt;, 'writeTable': &lt;function AMPL.writeTable&gt;, 'display': &lt;function AMPL.display&gt;, 'setOutputHandler': &lt;function AMPL.setOutputHandler&gt;, 'setErrorHandler': &lt;function AMPL.setErrorHandler&gt;, 'getOutputHandler': &lt;function AMPL.getOutputHandler&gt;, 'getErrorHandler': &lt;function AMPL.getErrorHandler&gt;, 'getVariables': &lt;function AMPL.getVariables&gt;, 'getConstraints': &lt;function AMPL.getConstraints&gt;, 'getObjectives': &lt;function AMPL.getObjectives&gt;, 'getSets': &lt;function AMPL.getSets&gt;, 'getParameters': &lt;function AMPL.getParameters&gt;, 'getCurrentObjective': &lt;function AMPL.getCurrentObjective&gt;, '_var': &lt;function AMPL._var&gt;, '_con': &lt;function AMPL._con&gt;, '_obj': &lt;function AMPL._obj&gt;, '_set': &lt;function AMPL._set&gt;, '_param': &lt;function AMPL._param&gt;, '_option': &lt;function AMPL._option&gt;, 'var': &lt;property object&gt;, 'con': &lt;property object&gt;, 'obj': &lt;property object&gt;, 'set': &lt;property object&gt;, 'param': &lt;property object&gt;, 'option': &lt;property object&gt;, 'exportModel': &lt;function AMPL.exportModel&gt;, 'exportData': &lt;function AMPL.exportData&gt;, 'exportGurobiModel': &lt;function AMPL.exportGurobiModel&gt;, 'importGurobiSolution': &lt;function AMPL.importGurobiSolution&gt;, '_startRecording': &lt;function AMPL._startRecording&gt;, '_stopRecording': &lt;function AMPL._stopRecording&gt;, '_loadSession': &lt;function AMPL._loadSession&gt;, '__dict__': &lt;attribute '__dict__' of 'AMPL' objects&gt;, '__weakref__': &lt;attribute '__weakref__' of 'AMPL' objects&gt;})</em><a class="headerlink" href="#amplpy.AMPL.__dict__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__dict__</code><em class="property"> = dict_proxy({'getObjectives': &lt;function getObjectives&gt;, '__module__': 'amplpy.ampl', 'set': &lt;property object&gt;, 'getConstraints': &lt;function getConstraints&gt;, '_param': &lt;function _param&gt;, 'readData': &lt;function readData&gt;, 'solveAsync': &lt;function solveAsync&gt;, 'cd': &lt;function cd&gt;, 'readAsync': &lt;function readAsync&gt;, 'getOutput': &lt;function getOutput&gt;, '_var': &lt;function _var&gt;, 'getCurrentObjective': &lt;function getCurrentObjective&gt;, 'exportData': &lt;function exportData&gt;, 'getObjective': &lt;function getObjective&gt;, 'getSet': &lt;function getSet&gt;, 'getValue': &lt;function getValue&gt;, '__weakref__': &lt;attribute '__weakref__' of 'AMPL' objects&gt;, '__init__': &lt;function __init__&gt;, 'getSets': &lt;function getSets&gt;, 'display': &lt;function display&gt;, '_startRecording': &lt;function _startRecording&gt;, 'setOption': &lt;function setOption&gt;, 'getParameter': &lt;function getParameter&gt;, 'param': &lt;property object&gt;, 'getOutputHandler': &lt;function getOutputHandler&gt;, '__dict__': &lt;attribute '__dict__' of 'AMPL' objects&gt;, 'writeTable': &lt;function writeTable&gt;, '_obj': &lt;function _obj&gt;, '_option': &lt;function _option&gt;, 'setOutputHandler': &lt;function setOutputHandler&gt;, 'getVariable': &lt;function getVariable&gt;, 'var': &lt;property object&gt;, 'isBusy': &lt;function isBusy&gt;, 'getData': &lt;function getData&gt;, '__doc__': 'An AMPL translator.\n\n    An object of this class can be used to do the following tasks:\n\n    - Run AMPL code. See :func:`~amplpy.AMPL.eval` and\n      :func:`~amplpy.AMPL.evalAsync`.\n    - Read models and data from files. See :func:`~amplpy.AMPL.read`,\n      :func:`~amplpy.AMPL.readData`, :func:`~amplpy.AMPL.readAsync`, and\n      :func:`~amplpy.AMPL.readDataAsync`.\n    - Solve optimization problems constructed from model and data (see\n      :func:`~amplpy.AMPL.solve` and :func:`~amplpy.AMPL.solveAsync`).\n    - Access single Elements of an optimization problem. See\n      :func:`~amplpy.AMPL.getVariable`, :func:`~amplpy.AMPL.getConstraint`,\n      :func:`~amplpy.AMPL.getObjective`, :func:`~amplpy.AMPL.getSet`,\n      and :func:`~amplpy.AMPL.getParameter`.\n    - Access lists of available entities of an optimization problem. See\n      :func:`~amplpy.AMPL.getVariables`, :func:`~amplpy.AMPL.getConstraints`,\n      :func:`~amplpy.AMPL.getObjectives`, :func:`~amplpy.AMPL.getSets`,\n      and :func:`~amplpy.AMPL.getParameters`.\n\n    Error handling is two-faced:\n\n    - Errors coming from the underlying AMPL translator (e.g. syntax errors and\n      warnings obtained calling the eval method) are handled by\n      the :class:`~amplpy.ErrorHandler` which can be set and get via\n      :func:`~amplpy.AMPL.getErrorHandler` and\n      :func:`~amplpy.AMPL.setErrorHandler`.\n    - Generic errors coming from misusing the API, which are detected in\n      Python, are thrown as exceptions.\n\n    The default implementation of the error handler throws exceptions on errors\n    and prints to console on warnings.\n\n    The output of every user interaction with the underlying translator is\n    handled implementing the abstract class :class:`~amplpy.OutputHandler`.\n    The (only) method is called at each block of output from the translator.\n    The current output handler can be accessed and set via\n    :func:`~amplpy.AMPL.getOutputHandler` and\n    :func:`~amplpy.AMPL.setOutputHandler`.\n    ', 'getOption': &lt;function getOption&gt;, 'setData': &lt;function setData&gt;, 'option': &lt;property object&gt;, 'read': &lt;function read&gt;, 'getErrorHandler': &lt;function getErrorHandler&gt;, 'getVariables': &lt;function getVariables&gt;, 'readDataAsync': &lt;function readDataAsync&gt;, 'setErrorHandler': &lt;function setErrorHandler&gt;, '__del__': &lt;function __del__&gt;, 'readTable': &lt;function readTable&gt;, 'getEntity': &lt;function getEntity&gt;, '_con': &lt;function _con&gt;, 'eval': &lt;function eval&gt;, 'interrupt': &lt;function interrupt&gt;, 'getConstraint': &lt;function getConstraint&gt;, 'getParameters': &lt;function getParameters&gt;, 'wait': &lt;function wait&gt;, 'reset': &lt;function reset&gt;, 'isRunning': &lt;function isRunning&gt;, 'importGurobiSolution': &lt;function importGurobiSolution&gt;, 'close': &lt;function close&gt;, 'exportGurobiModel': &lt;function exportGurobiModel&gt;, '_loadSession': &lt;function _loadSession&gt;, '_stopRecording': &lt;function _stopRecording&gt;, 'solve': &lt;function solve&gt;, 'obj': &lt;property object&gt;, 'evalAsync': &lt;function evalAsync&gt;, 'exportModel': &lt;function exportModel&gt;, '_set': &lt;function _set&gt;, 'con': &lt;property object&gt;})</em><a class="headerlink" href="#amplpy.AMPL.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.AMPL.__module__">
-<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.ampl'</em><a class="headerlink" href="#amplpy.AMPL.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__module__</code><em class="property"> = 'amplpy.ampl'</em><a class="headerlink" href="#amplpy.AMPL.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.AMPL.__weakref__">
-<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#amplpy.AMPL.__weakref__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__weakref__</code><a class="headerlink" href="#amplpy.AMPL.__weakref__" title="Permalink to this definition">¶</a></dt>
 <dd><p>list of weak references to the object (if defined)</p>
 </dd></dl>
 
@@ -716,31 +726,31 @@ verbose: Whether should generate verbose output.</p>
 
 <dl class="class">
 <dt id="amplpy.EntityMap">
-<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">EntityMap</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">entityClass</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">EntityMap</code><span class="sig-paren">(</span><em>obj</em>, <em>entityClass</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="amplpy.EntityMap.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">entityClass</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>obj</em>, <em>entityClass</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.EntityMap.__getitem__">
-<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__getitem__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.EntityMap.size">
-<code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.size" title="Permalink to this definition">¶</a></dt>
+<code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.EntityMap.__len__">
-<code class="sig-name descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__len__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.EntityMap.__len__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.EntityMap.__module__">
-<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.iterators'</em><a class="headerlink" href="#amplpy.EntityMap.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__module__</code><em class="property"> = 'amplpy.iterators'</em><a class="headerlink" href="#amplpy.EntityMap.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -765,13 +775,13 @@ verbose: Whether should generate verbose output.</p>
         <li class="right" >
           <a href="../reference.html" title="Python API reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

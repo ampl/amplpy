@@ -1,10 +1,12 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>Python quick start &#8212; AMPL API 2.0 (amplpy-0.6.7) documentation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python quick start &#8212; AMPL API 2.0 (amplpy-0.6.8) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -29,7 +31,7 @@
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -64,11 +66,13 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -185,11 +189,11 @@ No further communication is made between the AMPL interpreter and the Python obj
 <p>AMPL API provides Python representations of the AMPL entities. Usually, not all the entities are
 of interest for the programmer. The generic procedure is:</p>
 <ol class="arabic simple">
-<li><p>Identify the entities that need interaction (either data read or modification)</p></li>
-<li><p>For each of these entities, get the entity through the AMPL API using one of the
+<li>Identify the entities that need interaction (either data read or modification)</li>
+<li>For each of these entities, get the entity through the AMPL API using one of the
 following functions: <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>,
 <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getObjective()</span></code></a>,
-<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a>.</p></li>
+<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a>.</li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">totalcost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getObjective</span><span class="p">(</span><span class="s1">&#39;total_cost&#39;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Objective is:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
@@ -293,12 +297,12 @@ by value.</p>
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.7) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.8) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
