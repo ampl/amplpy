@@ -74,7 +74,7 @@ cppinterface = os.path.join('amplpy', 'amplpython', 'cppinterface')
 
 setup(
     name='amplpy',
-    version='0.6.9',
+    version='0.6.10',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',

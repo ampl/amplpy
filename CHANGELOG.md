@@ -2,8 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.10 - 2019-11-16
+- Fix "ImportError: DLL load failed" not fixed in the previous version.
+
 ## 0.6.9 - 2019-11-16
-- Fix "ImportError: No module named _amplpython".
+- Fix "ImportError: No module named _amplpython" introduced in the previous version.
 
 ## 0.6.8 - 2019-11-16
 - Add Python 3.8 support.
