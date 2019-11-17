@@ -276,8 +276,7 @@ class AMPL(object):
         Clears all entities in the underlying AMPL interpreter, clears all maps
         and invalidates all entities.
         """
-        # self._impl.reset()  # FIXME: causes Segmentation fault
-        self.eval('reset;')
+        self._impl.reset()
 
     def close(self):
         """
