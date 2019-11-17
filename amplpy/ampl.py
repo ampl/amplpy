@@ -15,7 +15,7 @@ from .dataframe import DataFrame
 from .iterators import EntityMap
 from .exceptions import AMPLException
 from .entity import Entity
-from .utils import Utils, lock_and_call
+from .utils import Utils
 from . import amplpython
 try:
     import pandas as pd
@@ -146,11 +146,8 @@ class AMPL(object):
             command in tabular form.
         """
         # FIXME: only works for the first statement.
-        return lock_and_call(
-            lambda: DataFrame._fromDataFrameRef(
-                self._impl.getData(list(statements), len(statements))
-            ),
-            self._lock
+        return DataFrame._fromDataFrameRef(
+            self._impl.getData(list(statements), len(statements))
         )
 
     def getEntity(self, name):
@@ -167,10 +164,7 @@ class AMPL(object):
         Returns:
             The AMPL entity with the specified name.
         """
-        return lock_and_call(
-            lambda: Entity(self._impl.getEntity(name)),
-            self._lock
-        )
+        return Entity(self._impl.getEntity(name))
 
     def getVariable(self, name):
         """
@@ -182,10 +176,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified variable does not exist.
         """
-        return lock_and_call(
-            lambda: Variable(self._impl.getVariable(name)),
-            self._lock
-        )
+        return Variable(self._impl.getVariable(name))
 
     def getConstraint(self, name):
         """
@@ -197,10 +188,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified constraint does not exist.
         """
-        return lock_and_call(
-            lambda: Constraint(self._impl.getConstraint(name)),
-            self._lock
-        )
+        return Constraint(self._impl.getConstraint(name))
 
     def getObjective(self, name):
         """
@@ -212,10 +200,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified objective does not exist.
         """
-        return lock_and_call(
-            lambda: Objective(self._impl.getObjective(name)),
-            self._lock
-        )
+        return Objective(self._impl.getObjective(name))
 
     def getSet(self, name):
         """
@@ -227,10 +212,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified set does not exist.
         """
-        return lock_and_call(
-            lambda: Set(self._impl.getSet(name)),
-            self._lock
-        )
+        return Set(self._impl.getSet(name))
 
     def getParameter(self, name):
         """
@@ -242,10 +224,7 @@ class AMPL(object):
         Raises:
             TypeError: if the specified parameter does not exist.
         """
-        return lock_and_call(
-            lambda: Parameter(self._impl.getParameter(name)),
-            self._lock
-        )
+        return Parameter(self._impl.getParameter(name))
 
     def eval(self, amplstatements, **kwargs):
         """
@@ -275,10 +254,7 @@ class AMPL(object):
         """
         if self._langext is not None:
             amplstatements = self._langext.translate(amplstatements, **kwargs)
-        lock_and_call(
-            lambda: self._impl.eval(amplstatements),
-            self._lock
-        )
+        self._impl.eval(amplstatements)
         self._errorhandler_wrapper.check()
 
     def getOutput(self, amplstatements):
@@ -318,10 +294,7 @@ class AMPL(object):
         """
         Returns true if the underlying engine is running.
         """
-        return lock_and_call(
-            lambda: self._impl.isRunning(),
-            self._lock
-        )
+        return self._impl.isRunning()
 
     def isBusy(self):
         """
@@ -341,12 +314,9 @@ class AMPL(object):
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        lock_and_call(
-            lambda: self._impl.solve(),
-            self._lock
-        )
+        self._impl.solve()
 
-    def readAsync(self, fileName, callback, **kwargs):
+    def readAsync(self, fileName, callback=None, **kwargs):
         """
         Interprets the specified file asynchronously, interpreting it as a
         model or a script file. As a side effect, it invalidates all entities
@@ -377,10 +347,11 @@ class AMPL(object):
                 raise
             else:
                 self._lock.release()
-                callback.run()
+                if callback is not None:
+                    callback.run()
         Thread(target=async_call).start()
 
-    def readDataAsync(self, fileName, callback):
+    def readDataAsync(self, fileName, callback=None):
         """
         Interprets the specified data file asynchronously. When interpreting is
         over, the specified callback is called. The file is interpreted as
@@ -404,10 +375,11 @@ class AMPL(object):
                 raise
             else:
                 self._lock.release()
-                callback.run()
+                if callback is not None:
+                    callback.run()
         Thread(target=async_call).start()
 
-    def evalAsync(self, amplstatements, callback, **kwargs):
+    def evalAsync(self, amplstatements, callback=None, **kwargs):
         """
         Interpret the given AMPL statement asynchronously.
 
@@ -436,10 +408,11 @@ class AMPL(object):
                 raise
             else:
                 self._lock.release()
-                callback.run()
+                if callback is not None:
+                    callback.run()
         Thread(target=async_call).start()
 
-    def solveAsync(self, callback):
+    def solveAsync(self, callback=None):
         """
         Solve the current model asynchronously.
 
@@ -455,7 +428,8 @@ class AMPL(object):
                 raise
             else:
                 self._lock.release()
-                callback.run()
+                if callback is not None:
+                    callback.run()
         Thread(target=async_call).start()
 
     def wait(self):
@@ -487,15 +461,9 @@ class AMPL(object):
             Current working directory.
         """
         if path is None:
-            return lock_and_call(
-                lambda: self._impl.cd(),
-                self._lock
-            )
+            return self._impl.cd()
         else:
-            return lock_and_call(
-                lambda: self._impl.cd(path),
-                self._lock
-            )
+            return self._impl.cd(path)
 
     def setOption(self, name, value):
         """
@@ -512,25 +480,13 @@ class AMPL(object):
             TypeError: if the value has an invalid type.
         """
         if isinstance(value, bool):
-            lock_and_call(
-                lambda: self._impl.setBoolOption(name, value),
-                self._lock
-            )
+            self._impl.setBoolOption(name, value)
         elif isinstance(value, int):
-            lock_and_call(
-                lambda: self._impl.setIntOption(name, value),
-                self._lock
-            )
+            self._impl.setIntOption(name, value)
         elif isinstance(value, float):
-            lock_and_call(
-                lambda: self._impl.setDblOption(name, value),
-                self._lock
-            )
+            self._impl.setDblOption(name, value)
         elif isinstance(value, basestring):
-            lock_and_call(
-                lambda: self._impl.setOption(name, value),
-                self._lock
-            )
+            self._impl.setOption(name, value)
         else:
             raise TypeError
 
@@ -549,10 +505,7 @@ class AMPL(object):
             InvalidArgumet: if the option name is not valid.
         """
         try:
-            value = lock_and_call(
-                lambda: self._impl.getOption(name).value(),
-                self._lock
-            )
+            value = self._impl.getOption(name).value()
         except RuntimeError:
             return None
         else:
@@ -583,10 +536,7 @@ class AMPL(object):
                 with open(fileName+'.translated', 'w') as fout:
                     fout.write(newmodel)
                     fileName += '.translated'
-        lock_and_call(
-            lambda: self._impl.read(fileName),
-            self._lock
-        )
+        self._impl.read(fileName)
         self._errorhandler_wrapper.check()
 
     def readData(self, fileName):
@@ -603,10 +553,7 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        lock_and_call(
-            lambda: self._impl.readData(fileName),
-            self._lock
-        )
+        self._impl.readData(fileName)
         self._errorhandler_wrapper.check()
 
     def getValue(self, scalarExpression):
@@ -621,10 +568,7 @@ class AMPL(object):
         Returns:
             The value of the expression.
         """
-        return lock_and_call(
-            lambda: Utils.castVariant(self._impl.getValue(scalarExpression)),
-            self._lock
-        )
+        return Utils.castVariant(self._impl.getValue(scalarExpression))
 
     def setData(self, data, setName=None):
         """
@@ -644,15 +588,9 @@ class AMPL(object):
             if pd is not None and isinstance(data, pd.DataFrame):
                 data = DataFrame.fromPandas(data)
         if setName is None:
-            lock_and_call(
-                lambda: self._impl.setData(data._impl),
-                self._lock
-            )
+            self._impl.setData(data._impl)
         else:
-            lock_and_call(
-                lambda: self._impl.setData(data._impl, setName),
-                self._lock
-            )
+            self._impl.setData(data._impl, setName)
 
     def readTable(self, tableName):
         """
@@ -666,10 +604,7 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be read.
         """
-        lock_and_call(
-            lambda: self._impl.readTable(tableName),
-            self._lock
-        )
+        self._impl.readTable(tableName)
 
     def writeTable(self, tableName):
         """
@@ -683,10 +618,7 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be written.
         """
-        lock_and_call(
-            lambda: self._impl.writeTable(tableName),
-            self._lock
-        )
+        self._impl.writeTable(tableName)
 
     def display(self, *amplExpressions):
         """
@@ -702,10 +634,7 @@ class AMPL(object):
             amplExpressions: Expressions to be evaluated.
         """
         exprs = list(map(str, amplExpressions))
-        lock_and_call(
-            lambda: self._impl.displayLst(exprs, len(exprs)),
-            self._lock
-        )
+        self._impl.displayLst(exprs, len(exprs))
 
     def setOutputHandler(self, outputhandler):
         """
@@ -721,11 +650,8 @@ class AMPL(object):
 
         self._outputhandler = outputhandler
         self._outputhandler_internal = OutputHandlerInternal()
-        lock_and_call(
-            lambda: self._impl.setOutputHandler(
-                self._outputhandler_internal
-            ),
-            self._lock
+        self._impl.setOutputHandler(
+            self._outputhandler_internal
         )
 
     def setErrorHandler(self, errorhandler):
@@ -773,10 +699,7 @@ class AMPL(object):
         self._errorhandler = errorhandler
         self._errorhandler_inner = InnerErrorHandler()
         self._errorhandler_wrapper = errorhandler_wrapper
-        lock_and_call(
-            lambda: self._impl.setErrorHandler(self._errorhandler_inner),
-            self._lock
-        )
+        self._impl.setErrorHandler(self._errorhandler_inner)
 
     def getOutputHandler(self):
         """
@@ -800,50 +723,35 @@ class AMPL(object):
         """
         Get all the variables declared.
         """
-        variables = lock_and_call(
-            lambda: self._impl.getVariables(),
-            self._lock
-        )
+        variables = self._impl.getVariables()
         return EntityMap(variables, Variable)
 
     def getConstraints(self):
         """
         Get all the constraints declared.
         """
-        constraints = lock_and_call(
-            lambda: self._impl.getConstraints(),
-            self._lock
-        )
+        constraints = self._impl.getConstraints()
         return EntityMap(constraints, Constraint)
 
     def getObjectives(self):
         """
         Get all the objectives declared.
         """
-        objectives = lock_and_call(
-            lambda: self._impl.getObjectives(),
-            self._lock
-        )
+        objectives = self._impl.getObjectives()
         return EntityMap(objectives, Objective)
 
     def getSets(self):
         """
         Get all the sets declared.
         """
-        sets = lock_and_call(
-            lambda: self._impl.getSets(),
-            self._lock
-        )
+        sets = self._impl.getSets()
         return EntityMap(sets, Set)
 
     def getParameters(self):
         """
         Get all the parameters declared.
         """
-        parameters = lock_and_call(
-            lambda: self._impl.getParameters(),
-            self._lock
-        )
+        parameters = self._impl.getParameters()
         return EntityMap(parameters, Parameter)
 
     def getCurrentObjective(self):

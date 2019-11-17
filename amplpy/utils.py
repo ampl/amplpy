@@ -45,18 +45,6 @@ def register_magics(store_name='_ampl_cells', ampl_object=None):
     get_ipython().register_magics(StoreAMPL)
 
 
-def lock_and_call(call, lock):
-    lock.acquire()
-    try:
-        result = call()
-    except Exception:
-        lock.release()
-        raise
-    else:
-        lock.release()
-        return result
-
-
 class Tuple(BaseClass):
     def __init__(self, values=None, **kwargs):
         if values is not None:
