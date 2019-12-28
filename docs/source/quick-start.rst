@@ -19,7 +19,15 @@ all the code in the examples below does not include exception handling.
 .. code-block:: python
 
   from amplpy import AMPL
+  # Create an AMPL instance
   ampl = AMPL()
+
+  """
+  # If the AMPL installation directory is not in the system search path:
+  from amplpy import Environment
+  ampl = AMPL(
+      Environment('full path to the AMPL installation directory'))
+  """
 
   # Interpret the two files
   ampl.read('models/diet.mod')

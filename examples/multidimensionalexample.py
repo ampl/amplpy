@@ -10,7 +10,16 @@ def main(argc, argv):
     from amplpy import AMPL, DataFrame
     os.chdir(os.path.dirname(__file__) or os.curdir)
     try:
+        # Create an AMPL instance
         ampl = AMPL()
+
+        """
+        # If the AMPL installation directory is not in the system search path:
+        from amplpy import Environment
+        ampl = AMPL(
+            Environment('full path to the AMPL installation directory'))
+        """
+
         ampl.eval('set CITIES; set LINKS within (CITIES cross CITIES);')
         ampl.eval('param cost {LINKS} >= 0; param capacity {LINKS} >= 0;')
         ampl.eval('data; set CITIES := PITT NE SE BOS EWR BWI ATL MCO;')

@@ -13,6 +13,13 @@ def main(argc, argv):
         # Create an AMPL instance
         ampl = AMPL()
 
+        """
+        # If the AMPL installation directory is not in the system search path:
+        from amplpy import Environment
+        ampl = AMPL(
+            Environment('full path to the AMPL installation directory'))
+        """
+
         # Get the value of the option presolve and print
         presolve = ampl.getOption('presolve')
         print("AMPL presolve is", presolve)

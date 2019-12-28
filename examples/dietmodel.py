@@ -10,7 +10,15 @@ def main(argc, argv):
     from amplpy import AMPL, DataFrame
     os.chdir(os.path.dirname(__file__) or os.curdir)
     try:
+        # Create an AMPL instance
         ampl = AMPL()
+
+        """
+        # If the AMPL installation directory is not in the system search path:
+        from amplpy import Environment
+        ampl = AMPL(
+            Environment('full path to the AMPL installation directory'))
+        """
 
         if argc > 1:
             ampl.setOption('solver', argv[1])

@@ -57,7 +57,7 @@ def main(argc, argv):
         ]
         df3.addColumn('amt', values)
 
-        # Create AMPL object
+        # Create an AMPL instance
         ampl = AMPL()
 
         if argc > 1:
