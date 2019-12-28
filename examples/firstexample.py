@@ -24,7 +24,7 @@ def main(argc, argv):
         ampl.solve()
 
         # Get objective entity by AMPL name
-        totalcost = ampl.getObjective('total_cost')
+        totalcost = ampl.getObjective('Total_Cost')
         # Print it
         print("Objective is:", totalcost.value())
 

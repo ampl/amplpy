@@ -79,7 +79,7 @@ def main(argc, argv):
         # Print out the result
         print(
             "Objective function value: {}".format(
-                ampl.getObjective('total_cost').value()
+                ampl.getObjective('Total_Cost').value()
             )
         )
 

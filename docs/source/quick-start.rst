@@ -22,14 +22,14 @@ all the code in the examples below does not include exception handling.
   ampl = AMPL()
 
   # Interpret the two files
-  ampl.read('models/diet/diet.mod')
-  ampl.readData('models/diet/diet.dat')
+  ampl.read('models/diet.mod')
+  ampl.readData('models/diet.dat')
 
   # Solve
   ampl.solve()
 
   # Get objective entity by AMPL name
-  totalcost = ampl.getObjective('total_cost')
+  totalcost = ampl.getObjective('Total_Cost')
   # Print it
   print("Objective is:", totalcost.value())
 
@@ -136,7 +136,7 @@ of interest for the programmer. The generic procedure is:
 
 .. code-block:: python
 
-    totalcost = ampl.getObjective('total_cost')
+    totalcost = ampl.getObjective('Total_Cost')
     print("Objective is:", totalcost.get().value())
 
 It can be noted that we access an Objective to interrogate AMPL API about the objective function.

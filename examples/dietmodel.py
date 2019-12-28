@@ -61,7 +61,7 @@ def main(argc, argv):
 
         ampl.solve()
 
-        print('Objective: {}'.format(ampl.getObjective('total_cost').value()))
+        print('Objective: {}'.format(ampl.getObjective('Total_Cost').value()))
     except Exception as e:
         print(e)
         raise
