@@ -36,18 +36,57 @@ Repositories:
 """
 from setuptools import setup, Extension
 import platform
+import sys
 import os
 
 OSTYPE = platform.system()
-arch = platform.processor()
+ARCH = platform.processor()
 x64 = platform.architecture()[0] == '64bit'
+
+if ARCH == 'ppc64le':
+    LIBRARY = 'ppc64le'
+else:
+    LIBRARY = 'amd64' if x64 else 'intel32'
+
+if OSTYPE == 'Darwin':
+    LIBRARY_EXT = '.dylib'
+elif OSTYPE == 'Linux':
+    LIBRARY_EXT = '.so'
+else:
+    LIBRARY_EXT = '.dll'
+
+CPP_BASE = os.path.join('amplpy', 'amplpython', 'cppinterface')
+LIBRARY_BASE = os.path.join(CPP_BASE, 'lib')
+LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
+
 
 def ls_dir(base_dir):
     """List files recursively."""
     return [
-        os.path.join(dirpath.replace(base_dir, '', 1), f)
+        os.path.join(dirpath, fname)
         for (dirpath, dirnames, files) in os.walk(base_dir)
-        for f in files
+        for fname in files
+    ]
+
+
+def package_content():
+    all_files = ls_dir('amplpy/')
+    if 'sdist' in sys.argv:
+        lst = all_files
+    else:
+        source_only = [
+            fpath for fpath in all_files
+            if not fpath.startswith(LIBRARY_BASE)
+        ]
+        library_only = [
+            fpath for fpath in all_files
+            if fpath.startswith(LIBRARY_DIR)
+            if LIBRARY_EXT in fpath[fpath.rfind('/'):]
+        ]
+        lst = source_only + library_only
+    return [
+        fpath.replace('amplpy/', '', 1)
+        for fpath in lst
     ]
 
 
@@ -72,15 +111,10 @@ def compile_args():
     else:
         return []
 
-if arch == 'ppc64le':
-    libdir = 'ppc64le'
-else:
-    libdir = 'amd64' if x64 else 'intel32'
-cppinterface = os.path.join('amplpy', 'amplpython', 'cppinterface')
 
 setup(
     name='amplpy',
-    version='0.6.10',
+    version='0.6.11rc1',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
@@ -116,16 +150,16 @@ setup(
     ext_modules=[Extension(
         '_amplpython',
         libraries=['ampl'],
-        library_dirs=[os.path.join(cppinterface, libdir)],
-        include_dirs=[os.path.join(cppinterface, 'include')],
+        library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
+        include_dirs=[os.path.join(CPP_BASE, 'include')],
         extra_compile_args=compile_args(),
         extra_link_args=[
-            make_relative_rpath(os.path.join(cppinterface, libdir))
+            make_relative_rpath(os.path.join(LIBRARY_BASE, LIBRARY))
         ],
         sources=[
-            os.path.join(cppinterface, 'amplpythonPYTHON_wrap.cxx')
+            os.path.join(CPP_BASE, 'amplpythonPYTHON_wrap.cxx')
         ],
     )],
-    package_data={'': ls_dir('amplpy/')},
+    package_data={'': package_content()},
     install_requires=['future >= 0.15.0']
 )

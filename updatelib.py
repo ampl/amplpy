@@ -3,15 +3,14 @@
 from __future__ import print_function
 
 import os
+import sys
 import shutil
 import tempfile
 
 VERSION = 'nightly'
-API_URL = 'https://ampl.com/builds/upload/releases/amplapi/2020-02-27/api/nightly/libampl.zip'
-# API_URL = 'http://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
+API_URL = 'http://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
 
-
-def updatelib():
+def updatelib(archs):
     from zipfile import ZipFile
     try:
         from urllib import urlretrieve
@@ -37,11 +36,7 @@ def updatelib():
         pass
 
     include_dir = os.path.join(tmpdir, 'include', 'ampl')
-    intel32 = os.path.join(tmpdir, 'intel32')
-    amd64 = os.path.join(tmpdir, 'amd64')
-    ppc64le = os.path.join(tmpdir, 'ppc64le')
     wrapper_dir = os.path.join(tmpdir, 'python')
-    libs = [('intel32', intel32), ('amd64', amd64), ('ppc64le', ppc64le)]
 
     amplpy_include = os.path.join('amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
     try:
@@ -62,19 +57,23 @@ def updatelib():
             os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
         )
 
-    for libname, lib in libs:
-        dstdir = os.path.join('amplpy', 'amplpython', 'cppinterface', libname)
-        try:
-            shutil.rmtree(dstdir)
-            os.mkdir(dstdir)
-        except Exception:
-            pass
-        print(
-            '*\n!.gitignore\n',
-            file=open(os.path.join(dstdir, '.gitignore'), 'w')
-        )
+    dstbase = os.path.join('amplpy', 'amplpython', 'cppinterface', 'lib')
+    try:
+        shutil.rmtree(dstbase)
+        os.mkdir(dstbase)
+    except Exception:
+        pass
+    print(
+        '*\n!.gitignore\n',
+        file=open(os.path.join(dstbase, '.gitignore'), 'w')
+    )
+
+    for libname in archs:
+        srcdir = os.path.join(tmpdir, libname)
+        dstdir = os.path.join(dstbase, libname)
+        os.mkdir(dstdir)
         print('{}:'.format(libname))
-        for filename in os.listdir(lib):
+        for filename in os.listdir(srcdir):
             if filename.endswith('.jar'):
                 continue
             if 'java' in filename:
@@ -83,10 +82,13 @@ def updatelib():
                 continue
             print('\t{}'.format(filename))
             shutil.copyfile(
-                os.path.join(lib, filename),
+                os.path.join(srcdir, filename),
                 os.path.join(dstdir, filename)
             )
 
 
 if __name__ == '__main__':
-    updatelib()
+    if len(sys.argv) > 1:
+        updatelib(sys.argv[1:])
+    else:
+        updatelib(['intel32', 'amd64', 'ppc64le'])

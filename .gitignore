@@ -91,6 +91,10 @@ ENV/
 # VSCode
 .vscode
 
+# Temprary files
+*~
+#*
+
 /workspace_private
 /bumpversion.sh
 /register.sh

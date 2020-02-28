@@ -5,8 +5,9 @@ import ctypes
 import platform
 
 if platform.system() == 'Windows':
-    lib32 = os.path.join(os.path.dirname(__file__), 'cppinterface', 'lib32')
-    lib64 = os.path.join(os.path.dirname(__file__), 'cppinterface', 'lib64')
+    libbase = os.path.join(os.path.dirname(__file__), 'cppinterface', 'lib')
+    lib32 = os.path.join(libbase, 'intel32')
+    lib64 = os.path.join(libbase, 'amd64')
     from glob import glob
     try:
         if ctypes.sizeof(ctypes.c_voidp) == 4:
