@@ -7,7 +7,8 @@ import shutil
 import tempfile
 
 VERSION = 'nightly'
-API_URL = 'http://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
+API_URL = 'https://ampl.com/builds/upload/releases/amplapi/2020-02-27/api/nightly/libampl.zip'
+# API_URL = 'http://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
 
 
 def updatelib():
@@ -36,9 +37,11 @@ def updatelib():
         pass
 
     include_dir = os.path.join(tmpdir, 'include', 'ampl')
-    lib32 = os.path.join(tmpdir, 'lib32')
-    lib64 = os.path.join(tmpdir, 'lib64')
+    intel32 = os.path.join(tmpdir, 'intel32')
+    amd64 = os.path.join(tmpdir, 'amd64')
+    ppc64le = os.path.join(tmpdir, 'ppc64le')
     wrapper_dir = os.path.join(tmpdir, 'python')
+    libs = [('intel32', intel32), ('amd64', amd64), ('ppc64le', ppc64le)]
 
     amplpy_include = os.path.join('amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
     try:
@@ -59,7 +62,7 @@ def updatelib():
             os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
         )
 
-    for libname, lib in [('lib32', lib32), ('lib64', lib64)]:
+    for libname, lib in libs:
         dstdir = os.path.join('amplpy', 'amplpython', 'cppinterface', libname)
         try:
             shutil.rmtree(dstdir)

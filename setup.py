@@ -39,8 +39,8 @@ import platform
 import os
 
 OSTYPE = platform.system()
+arch = platform.processor()
 x64 = platform.architecture()[0] == '64bit'
-
 
 def ls_dir(base_dir):
     """List files recursively."""
@@ -64,12 +64,18 @@ def compile_args():
     if OSTYPE == 'Windows':
         return ['/TP /EHsc']
     elif OSTYPE == 'Linux':
-        return ['-std=c++11']
+        ignore_gcc8_warnings = [
+            '-Wno-stringop-truncation', 
+            '-Wno-catch-value'
+        ]
+        return ['-std=c++11'] + ignore_gcc8_warnings
     else:
         return []
 
-
-libdir = 'lib64' if x64 else 'lib32'
+if arch == 'ppc64le':
+    libdir = 'ppc64le'
+else:
+    libdir = 'amd64' if x64 else 'intel32'
 cppinterface = os.path.join('amplpy', 'amplpython', 'cppinterface')
 
 setup(
