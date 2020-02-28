@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.11 - 2020-02-28
+- Add support for ppc64le.
+
 ## 0.6.10 - 2019-11-16
 - Fix "ImportError: DLL load failed" not fixed in the previous version.
 
