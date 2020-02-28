@@ -38,8 +38,7 @@ Example 3: Use AMPL asynchronously
 
 This example shows how to:
 
-* set a callback for AMPL async operation (implementing :class:`amplpy.Runnable`)
-* start and interrupt async operations
+* start an AMPL async operation
 
 
 Example 4: Get and set data through DataFrames

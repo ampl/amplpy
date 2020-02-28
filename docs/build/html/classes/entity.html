@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Entity &#8212; AMPL API 2.0 (amplpy-0.6.10) documentation</title>
+    <meta charset="utf-8" />
+    <title>Entity &#8212; AMPL API 2.0 (amplpy-0.6.11) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Variable" href="variable.html" />
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="runnable.html" title="ErrorHandler"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -51,17 +49,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -74,7 +70,7 @@
 <span id="ref-entity"></span><h1>Entity<a class="headerlink" href="#entity" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.Entity">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>_impl</em>, <em>wrapFunction=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">Entity</code><span class="sig-paren">(</span><em class="sig-param">_impl</em>, <em class="sig-param">wrapFunction=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity" title="Permalink to this definition">¶</a></dt>
 <dd><p>An AMPL entity such as a parameter or a variable.</p>
 <p>An entity can either represent a single instance of an AMPL algebraic
 entity or, if the corresponding declaration has an indexing expression, a
@@ -87,68 +83,68 @@ suffixes for that entities), use the function
 <p>The algebraic entities which currenty have an equivalent class in the API
 are:</p>
 <ul class="simple">
-<li>Variables (see <a class="reference internal" href="variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code></a>)</li>
-<li>Constraints (see <a class="reference internal" href="constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Constraint</span></code></a>)</li>
-<li>Objectives (see <a class="reference internal" href="objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal notranslate"><span class="pre">Objective</span></code></a>)</li>
-<li>Sets (see <a class="reference internal" href="set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>)</li>
-<li>Parameters (see <a class="reference internal" href="parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>)</li>
+<li><p>Variables (see <a class="reference internal" href="variable.html#amplpy.Variable" title="amplpy.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code></a>)</p></li>
+<li><p>Constraints (see <a class="reference internal" href="constraint.html#amplpy.Constraint" title="amplpy.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Constraint</span></code></a>)</p></li>
+<li><p>Objectives (see <a class="reference internal" href="objective.html#amplpy.Objective" title="amplpy.Objective"><code class="xref py py-class docutils literal notranslate"><span class="pre">Objective</span></code></a>)</p></li>
+<li><p>Sets (see <a class="reference internal" href="set.html#amplpy.Set" title="amplpy.Set"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>)</p></li>
+<li><p>Parameters (see <a class="reference internal" href="parameter.html#amplpy.Parameter" title="amplpy.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>)</p></li>
 </ul>
 <dl class="method">
 <dt id="amplpy.Entity.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em>, <em>wrapFunction=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">_impl</em>, <em class="sig-param">wrapFunction=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.__iter__">
-<code class="descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__iter__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__iter__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.__getitem__">
-<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__getitem__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.__setitem__">
-<code class="descname">__setitem__</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__setitem__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.__setitem__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>*index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">*index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the instance with the specified index.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>The corresponding instance.</dd>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The corresponding instance.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>*index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.find" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">*index</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>Searches the current entity for an instance with the specified index.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>The wanted instance if found, otherwise it returns <cite>None</cite>.</dd>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The wanted instance if found, otherwise it returns <cite>None</cite>.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.instances">
-<code class="descname">instances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.instances" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">instances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.instances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the instances in this entity..</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.name">
-<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the name of this entity.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.indexarity">
-<code class="descname">indexarity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.indexarity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">indexarity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.indexarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the indexarity of this entity (sum of the dimensions of the
 indexing sets).
 This value indicates the arity of the tuple to be passed to the method
@@ -160,67 +156,67 @@ entity. See the following AMPL examples:</p>
 <span class="kd">var</span> <span class="nv">zz</span><span class="w"> </span><span class="p">{{(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)}};</span><span class="w">   </span><span class="c1"># indexarity = 2</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>The sum of the dimensions of the indexing sets or 0 if the
-entity is not indexed.</dd>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The sum of the dimensions of the indexing sets or 0 if the
+entity is not indexed.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.isScalar">
-<code class="descname">isScalar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.isScalar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isScalar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.isScalar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check whether this entity is scalar. Equivalent to testing whether
 <a class="reference internal" href="#amplpy.Entity.indexarity" title="amplpy.Entity.indexarity"><code class="xref py py-func docutils literal notranslate"><span class="pre">indexarity()</span></code></a> is equal to zero.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>True if the entity is scalar (not indexed over any set).</dd>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>True if the entity is scalar (not indexed over any set).</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.numInstances">
-<code class="descname">numInstances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.numInstances" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">numInstances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.numInstances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the number of instances in this entity.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.getIndexingSets">
-<code class="descname">getIndexingSets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.getIndexingSets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getIndexingSets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.getIndexingSets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the AMPL string representation of the sets on which this entity is
 indexed. The obtained vector can be modified without any effect to the
 entity.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>The string representation of the indexing sets for this entity or
-an empty array if the entity is scalar.</dd>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The string representation of the indexing sets for this entity or
+an empty array if the entity is scalar.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.getValues">
-<code class="descname">getValues</code><span class="sig-paren">(</span><em>suffixes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.getValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getValues</code><span class="sig-paren">(</span><em class="sig-param">suffixes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.getValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>If a list of suffixes is provided, get the specified suffixes value for
 all instances. Otherwise, get all the principal values of this entity.
 The specific returned value depends on the type of entity (see list
 below). For:</p>
 <ul class="simple">
-<li>Variables and Objectives it returns the suffix <code class="docutils literal notranslate"><span class="pre">val</span></code>.</li>
-<li>Parameters it returns their values.</li>
-<li>Constraints it returns the suffix <code class="docutils literal notranslate"><span class="pre">dual</span></code>.</li>
-<li>Sets it returns all the members of the set. Note that it does not
-apply to indexed sets. See <a class="reference internal" href="set.html#amplpy.Set.getValues" title="amplpy.Set.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">getValues()</span></code></a>.</li>
+<li><p>Variables and Objectives it returns the suffix <code class="docutils literal notranslate"><span class="pre">val</span></code>.</p></li>
+<li><p>Parameters it returns their values.</p></li>
+<li><p>Constraints it returns the suffix <code class="docutils literal notranslate"><span class="pre">dual</span></code>.</p></li>
+<li><p>Sets it returns all the members of the set. Note that it does not
+apply to indexed sets. See <a class="reference internal" href="set.html#amplpy.Set.getValues" title="amplpy.Set.getValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">getValues()</span></code></a>.</p></li>
 </ul>
-<dl class="docutils">
-<dt>Retruns:</dt>
-<dd>A <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> containing the values for all
-instances.</dd>
+<dl class="simple">
+<dt>Retruns:</dt><dd><p>A <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> containing the values for all
+instances.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Entity.setValues">
-<code class="descname">setValues</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.setValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setValues</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Entity.setValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the values of this entiy to the correponding values of a
 DataFrame indexed over the same sets (or a subset).
 This function assigns the values in the first data column of
@@ -233,15 +229,15 @@ In particular, the statement:</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="p">{</span>s<span class="w"> </span><span class="kr">in</span><span class="w"> </span>S<span class="p">}</span> <span class="nv">x</span><span class="p">[</span>s<span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>y<span class="p">[</span>s<span class="p">];</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>data: The data to set the entity to.</dd>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: The data to set the entity to.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Entity.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.entity'</em><a class="headerlink" href="#amplpy.Entity.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.entity'</em><a class="headerlink" href="#amplpy.Entity.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -266,13 +262,13 @@ In particular, the statement:</p>
         <li class="right" >
           <a href="runnable.html" title="ErrorHandler"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
     </div>
   </body>
 </html>

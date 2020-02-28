@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Parameter &#8212; AMPL API 2.0 (amplpy-0.6.10) documentation</title>
+    <meta charset="utf-8" />
+    <title>Parameter &#8212; AMPL API 2.0 (amplpy-0.6.11) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="AMPLException" href="amplexception.html" />
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="set.html" title="Set"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -51,17 +49,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -74,7 +70,7 @@
 <span id="ref-parameter"></span><h1>Parameter<a class="headerlink" href="#parameter" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.Parameter">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Parameter</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">Parameter</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents an AMPL parameter. The values can be float or string (in case of
 symbolic parameters).</p>
 <p>Data can be assigned to the set using the methods
@@ -83,25 +79,25 @@ using <a class="reference internal" href="ampl.html#amplpy.AMPL.setData" title="
 <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>.</p>
 <dl class="method">
 <dt id="amplpy.Parameter.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Parameter.__setitem__">
-<code class="descname">__setitem__</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.__setitem__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.__setitem__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Parameter.isSymbolic">
-<code class="descname">isSymbolic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.isSymbolic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isSymbolic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.isSymbolic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the parameter is declared as symbolic (can store both
 numerical and string values).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Parameter.hasDefault">
-<code class="descname">hasDefault</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.hasDefault" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hasDefault</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.hasDefault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the parameter has a default initial value. In case of the
 following AMPL code:</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">param</span> <span class="nv">a</span><span class="p">;</span>
@@ -109,33 +105,32 @@ following AMPL code:</p>
 </pre></div>
 </div>
 <p>the function will return true for parameter <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>True if the parameter has a default initial value. Please note
+<dl class="simple">
+<dt>Returns:</dt><dd><p>True if the parameter has a default initial value. Please note
 that if the parameter has a default expression which refers to
 another parameter which value is not defined, this will return
-True.</dd>
+True.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Parameter.value">
-<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value of this parameter. Valid only for non-indexed parameters.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Parameter.set">
-<code class="descname">set</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value of a single instance of this parameter.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>args: value if the parameter is scalar, index and value
-otherwise.</dd>
-<dt>Raises:</dt>
-<dd><p class="first">RuntimeError: If the entity has been deleted in the underlying
+<dl>
+<dt>Args:</dt><dd><p>args: value if the parameter is scalar, index and value
+otherwise.</p>
+</dd>
+<dt>Raises:</dt><dd><p>RuntimeError: If the entity has been deleted in the underlying
 AMPL.</p>
-<p class="last">TypeError: If the parameter is not scalar and the index is not
+<p>TypeError: If the parameter is not scalar and the index is not
 provided.</p>
 </dd>
 </dl>
@@ -143,24 +138,24 @@ provided.</p>
 
 <dl class="method">
 <dt id="amplpy.Parameter.setValues">
-<code class="descname">setValues</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.setValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setValues</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Parameter.setValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign the values (string or float) to the parameter instances with the
 specified indices, equivalent to the AMPL code:</p>
 <div class="highlight-ampl notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="p">{</span>i<span class="w"> </span><span class="kr">in</span><span class="w"> </span>indices<span class="p">}</span> <span class="nv">par</span><span class="p">[</span>i<span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>values<span class="p">[</span>i<span class="p">];</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>values: list, dictionary or <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> with the
-indices and the values to be set.</dd>
-<dt>Raises:</dt>
-<dd>TypeError: If called on a scalar parameter.</dd>
+<dl class="simple">
+<dt>Args:</dt><dd><p>values: list, dictionary or <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> with the
+indices and the values to be set.</p>
+</dd>
+<dt>Raises:</dt><dd><p>TypeError: If called on a scalar parameter.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Parameter.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.parameter'</em><a class="headerlink" href="#amplpy.Parameter.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.parameter'</em><a class="headerlink" href="#amplpy.Parameter.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -185,13 +180,13 @@ indices and the values to be set.</dd>
         <li class="right" >
           <a href="set.html" title="Set"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
     </div>
   </body>
 </html>

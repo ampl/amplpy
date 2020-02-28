@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Python quick start &#8212; AMPL API 2.0 (amplpy-0.6.10) documentation</title>
+    <meta charset="utf-8" />
+    <title>Python quick start &#8212; AMPL API 2.0 (amplpy-0.6.11) documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Python API reference" href="reference.html" />
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -66,17 +64,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -97,48 +93,56 @@ Full class reference is given in <a class="reference internal" href="reference.h
 <p>This is the complete listing of the example. Please note that, for clarity of presentation,
 all the code in the examples below does not include exception handling.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amplpy</span> <span class="kn">import</span> <span class="n">AMPL</span>
+<span class="c1"># Create an AMPL instance</span>
 <span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
 
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"># If the AMPL installation directory is not in the system search path:</span>
+<span class="sd">from amplpy import Environment</span>
+<span class="sd">ampl = AMPL(</span>
+<span class="sd">    Environment(&#39;full path to the AMPL installation directory&#39;))</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="c1"># Interpret the two files</span>
-<span class="n">ampl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;models/diet/diet.mod&#39;</span><span class="p">)</span>
-<span class="n">ampl</span><span class="o">.</span><span class="n">readData</span><span class="p">(</span><span class="s1">&#39;models/diet/diet.dat&#39;</span><span class="p">)</span>
+<span class="n">ampl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;models/diet.mod&#39;</span><span class="p">)</span>
+<span class="n">ampl</span><span class="o">.</span><span class="n">readData</span><span class="p">(</span><span class="s1">&#39;models/diet.dat&#39;</span><span class="p">)</span>
 
 <span class="c1"># Solve</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
 
 <span class="c1"># Get objective entity by AMPL name</span>
-<span class="n">totalcost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getObjective</span><span class="p">(</span><span class="s1">&#39;total_cost&#39;</span><span class="p">)</span>
+<span class="n">totalcost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getObjective</span><span class="p">(</span><span class="s1">&#39;Total_Cost&#39;</span><span class="p">)</span>
 <span class="c1"># Print it</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Objective is:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Objective is:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 
 <span class="c1"># Reassign data - specific instances</span>
 <span class="n">cost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getParameter</span><span class="p">(</span><span class="s1">&#39;cost&#39;</span><span class="p">)</span>
 <span class="n">cost</span><span class="o">.</span><span class="n">setValues</span><span class="p">({</span><span class="s1">&#39;BEEF&#39;</span><span class="p">:</span> <span class="mf">5.01</span><span class="p">,</span> <span class="s1">&#39;HAM&#39;</span><span class="p">:</span> <span class="mf">4.55</span><span class="p">})</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Increased costs of beef and ham.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Increased costs of beef and ham.&quot;</span><span class="p">)</span>
 
 <span class="c1"># Resolve and display objective</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 
 <span class="c1"># Reassign data - all instances</span>
 <span class="n">cost</span><span class="o">.</span><span class="n">setValues</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">5.01</span><span class="p">,</span> <span class="mf">4.55</span><span class="p">])</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Updated all costs.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updated all costs.&quot;</span><span class="p">)</span>
 
 <span class="c1"># Resolve and display objective</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 
 <span class="c1"># Get the values of the variable Buy in a dataframe object</span>
 <span class="n">buy</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;Buy&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">buy</span><span class="o">.</span><span class="n">getValues</span><span class="p">()</span>
 <span class="c1"># Print them</span>
-<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
 <span class="c1"># Get the values of an expression into a DataFrame object</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="s1">&#39;{j in FOOD} 100*Buy[j]/Buy[j].ub&#39;</span><span class="p">)</span>
 <span class="c1"># Print them</span>
-<span class="k">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -152,7 +156,7 @@ all the code in the examples below does not include exception handling.</p>
 of the option <cite>version</cite> as defined in the underlying AMPL executable and prints the result
 on the console.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ampl</span> <span class="o">=</span> <span class="n">AMPL</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">ampl</span><span class="o">.</span><span class="n">getOption</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ampl</span><span class="o">.</span><span class="n">getOption</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The first line creates a new AMPL object with all default settings, incapsulated in a smart pointer to ensure resource deletion.
@@ -189,14 +193,14 @@ No further communication is made between the AMPL interpreter and the Python obj
 <p>AMPL API provides Python representations of the AMPL entities. Usually, not all the entities are
 of interest for the programmer. The generic procedure is:</p>
 <ol class="arabic simple">
-<li>Identify the entities that need interaction (either data read or modification)</li>
-<li>For each of these entities, get the entity through the AMPL API using one of the
+<li><p>Identify the entities that need interaction (either data read or modification)</p></li>
+<li><p>For each of these entities, get the entity through the AMPL API using one of the
 following functions: <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getVariable" title="amplpy.AMPL.getVariable"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getVariable()</span></code></a>,
 <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getConstraint" title="amplpy.AMPL.getConstraint"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getConstraint()</span></code></a>, <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getObjective" title="amplpy.AMPL.getObjective"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getObjective()</span></code></a>,
-<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a>.</li>
+<a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getParameter" title="amplpy.AMPL.getParameter"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getParameter()</span></code></a> and <a class="reference internal" href="classes/ampl.html#amplpy.AMPL.getSet" title="amplpy.AMPL.getSet"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.AMPL.getSet()</span></code></a>.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">totalcost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getObjective</span><span class="p">(</span><span class="s1">&#39;total_cost&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Objective is:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">totalcost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getObjective</span><span class="p">(</span><span class="s1">&#39;Total_Cost&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Objective is:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>It can be noted that we access an Objective to interrogate AMPL API about the objective function.
@@ -223,18 +227,18 @@ then altogether. Each time, it then solves the model and get the objective funct
 values is overloaded, and is in both cases <a class="reference internal" href="classes/parameter.html#amplpy.Parameter.setValues" title="amplpy.Parameter.setValues"><code class="xref py py-func docutils literal notranslate"><span class="pre">amplpy.Parameter.setValues()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cost</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getParameter</span><span class="p">(</span><span class="s1">&#39;cost&#39;</span><span class="p">)</span>
 <span class="n">cost</span><span class="o">.</span><span class="n">setValues</span><span class="p">({</span><span class="s1">&#39;BEEF&#39;</span><span class="p">:</span> <span class="mf">5.01</span><span class="p">,</span> <span class="s1">&#39;HAM&#39;</span><span class="p">:</span> <span class="mf">4.55</span><span class="p">})</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Increased costs of beef and ham.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Increased costs of beef and ham.&quot;</span><span class="p">)</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">solve</span><span class="p">();</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>The code above assigns the values 5.01 and 4.55 to the parameter cost for the objects beef and ham respectively.
 If the order of the indexing of an entity is known (i.e. for multiple reassignment), it is not necessary to specify
 both the index and the value. A collection of values is assigned to each of the parameter values, in the order they are represented in AMPL.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cost</span><span class="o">.</span><span class="n">setValues</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">5.01</span><span class="p">,</span> <span class="mf">4.55</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Updated all costs.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updated all costs.&quot;</span><span class="p">)</span>
 <span class="n">ampl</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New objective value:&quot;</span><span class="p">,</span> <span class="n">totalcost</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>The statements above produce the following output:</p>
@@ -254,7 +258,7 @@ the entity, and there is a considerable performance gain. To do so, we first get
 <span class="n">buy</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getVariable</span><span class="p">(</span><span class="s1">&#39;Buy&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">buy</span><span class="o">.</span><span class="n">getValues</span><span class="p">()</span>
 <span class="c1"># Print them</span>
-<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -267,7 +271,7 @@ We can obtain this data into a dataframe using the function <a class="reference 
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the values of an expression into a DataFrame object</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">ampl</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="s2">&quot;{j in FOOD} 100*Buy[j]/Buy[j].ub&quot;</span><span class="p">)</span>
 <span class="c1"># Print them</span>
-<span class="k">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -297,12 +301,12 @@ by value.</p>
         <li class="right" >
           <a href="class-structure.html" title="Class structure"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
     </div>
   </body>
 </html>

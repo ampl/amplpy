@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Constraint &#8212; AMPL API 2.0 (amplpy-0.6.10) documentation</title>
+    <meta charset="utf-8" />
+    <title>Constraint &#8212; AMPL API 2.0 (amplpy-0.6.11) documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Objective" href="objective.html" />
@@ -31,7 +29,7 @@
         <li class="right" >
           <a href="variable.html" title="Variable"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Python API reference</a> &#187;</li> 
       </ul>
     </div>
@@ -51,17 +49,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -74,7 +70,7 @@
 <span id="ref-constraint"></span><h1>Constraint<a class="headerlink" href="#constraint" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="amplpy.Constraint">
-<em class="property">class </em><code class="descclassname">amplpy.</code><code class="descname">Constraint</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amplpy.</code><code class="sig-name descname">Constraint</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="entity.html#amplpy.Entity" title="amplpy.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a>.</p>
 <p>This class represents an algebraic or logical constraint. In case the
 constraint is scalar, its values can be accessed via functions like
@@ -95,13 +91,13 @@ suffixes for that entities), see <a class="reference internal" href="entity.html
 the <a class="reference internal" href="dataframe.html#amplpy.DataFrame" title="amplpy.DataFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> class.</p>
 <dl class="method">
 <dt id="amplpy.Constraint.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__init__(…) initializes x; see help(type(x)) for signature</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">_impl</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.isLogical">
-<code class="descname">isLogical</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.isLogical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isLogical</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.isLogical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the constraint is a logical constraint. Returns True if
 logical. The available suffixes differ between logical and non logical
 constraints. See <a class="reference external" href="http://www.ampl.com/NEW/suffbuiltin.html">http://www.ampl.com/NEW/suffbuiltin.html</a> for a list of
@@ -112,52 +108,52 @@ by “Valid only for logical constraints”.</p>
 
 <dl class="method">
 <dt id="amplpy.Constraint.drop">
-<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Drop all instances in this constraint entity, corresponding to the AMPL
 code: <cite>drop constraintname;</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.restore" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.restore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore all instances in this constraint entity, corresponding to the
 AMPL code: <cite>restore constraintname;</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.body">
-<code class="descname">body</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.body" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">body</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.body" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current value of the constraint’s body.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.astatus">
-<code class="descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.astatus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">astatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.astatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current AMPL status (dropped, presolved, or substituted out).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.defvar">
-<code class="descname">defvar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.defvar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">defvar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.defvar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the index in <cite>_var</cite> of “defined variable” substituted out by the
 constraint.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.dinit">
-<code class="descname">dinit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dinit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dinit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dinit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current initial guess for the constraint’s dual variable.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.dinit0">
-<code class="descname">dinit0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dinit0" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dinit0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dinit0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the original initial guess for the constraint’s dual variable.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.dual">
-<code class="descname">dual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dual" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.dual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current value of the constraint’s dual variable.</p>
 <p>Note that dual values are often reset by the underlying AMPL
 interpreter by the presolve functionalities triggered by some methods.
@@ -167,76 +163,76 @@ A possible workaround is to set the option <cite>presolve</cite> to <cite>false<
 
 <dl class="method">
 <dt id="amplpy.Constraint.lb">
-<code class="descname">lb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current value of the constraint’s lower bound.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.ub">
-<code class="descname">ub</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ub" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ub</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ub" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current value of the constraint’s upper bound.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.lbs">
-<code class="descname">lbs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lbs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lbs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lbs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the constraint lower bound sent to the solver (reflecting
 adjustment for fixed variables).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.ubs">
-<code class="descname">ubs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ubs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ubs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ubs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the constraint upper bound sent to the solver (reflecting
 adjustment for fixed variables).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.ldual">
-<code class="descname">ldual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ldual" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ldual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.ldual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current dual value associated with the lower bound.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.udual">
-<code class="descname">udual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.udual" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">udual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.udual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current dual value associated with the upper bounds.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.lslack">
-<code class="descname">lslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lslack" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.lslack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the slack at lower bound <cite>body - lb</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.uslack">
-<code class="descname">uslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.uslack" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">uslack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.uslack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the slack at upper bound <cite>ub - body</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.slack">
-<code class="descname">slack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.slack" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">slack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.slack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constraint slack (the lesser of lslack and uslack).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.sstatus">
-<code class="descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.sstatus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sstatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.sstatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the solver status (basis status of constraint’s slack or artificial
 variable).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.status">
-<code class="descname">status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the AMPL status if not <cite>in</cite>, otherwise solver status.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.setDual">
-<code class="descname">setDual</code><span class="sig-paren">(</span><em>dual</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.setDual" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setDual</code><span class="sig-paren">(</span><em class="sig-param">dual</em><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.setDual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value of the dual variable associated to this constraint (valid
 only if the constraint is scalar). Equivalent to the AMPL statement:</p>
 <p><cite>let c := dual;</cite></p>
@@ -244,21 +240,21 @@ only if the constraint is scalar). Equivalent to the AMPL statement:</p>
 interpreter by the presolve functionalities triggered by some methods.
 A possible workaround is to set the option <cite>presolve</cite> to <cite>False</cite>
 (see <a class="reference internal" href="ampl.html#amplpy.AMPL.setOption" title="amplpy.AMPL.setOption"><code class="xref py py-func docutils literal notranslate"><span class="pre">setOption()</span></code></a>).</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>dual: The value to be assigned to the dual variable.</dd>
+<dl class="simple">
+<dt>Args:</dt><dd><p>dual: The value to be assigned to the dual variable.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="amplpy.Constraint.val">
-<code class="descname">val</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.val" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">val</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amplpy.Constraint.val" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the AMPL val suffix. Valid only for logical constraints.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="amplpy.Constraint.__module__">
-<code class="descname">__module__</code><em class="property"> = 'amplpy.constraint'</em><a class="headerlink" href="#amplpy.Constraint.__module__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__module__</code><em class="property"> = 'amplpy.constraint'</em><a class="headerlink" href="#amplpy.Constraint.__module__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -283,13 +279,13 @@ A possible workaround is to set the option <cite>presolve</cite> to <cite>False<
         <li class="right" >
           <a href="variable.html" title="Variable"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.10) documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">AMPL API 2.0 (amplpy-0.6.11) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Python API reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, AMPL Inc.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
     </div>
   </body>
 </html>
