@@ -112,6 +112,8 @@ class Parameter(Entity):
             TypeError: If called on a scalar parameter.
         """
         if isinstance(values, dict):
+            if not values:
+                return
             indices, values = list(zip(*values.items()))
             indices = Utils.toTupleArray(indices)
             if any(isinstance(value, basestring) for value in values):
