@@ -186,9 +186,13 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(st.arity(), int))
         ampl.eval('model; set T{1..2}; set T2{1..2};')
         ampl.getSet('T')[1].setValues([1, 2])
+        self.assertEqual(ampl.getSet('T')[1].getValues().toList(), [1, 2])
         ampl.getSet('T')[2].setValues(['1', 2])
+        self.assertEqual(ampl.getSet('T')[2].getValues().toList(), ['1', 2])
         ampl.getSet('T2')[1].setValues(ampl.getSet('T')[1].getValues())
+        self.assertEqual(ampl.getSet('T2')[1].getValues().toList(), [1, 2])
         ampl.getSet('T2')[2].setValues(ampl.getSet('T')[2].getValues())
+        self.assertEqual(ampl.getSet('T2')[2].getValues().toList(), ['1', 2])
         ampl.eval('set T3 dimen 2; set T4 dimen 2;')
         ampl.getSet('T3').setValues([(1, 2)])
 

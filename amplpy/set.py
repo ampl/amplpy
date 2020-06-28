@@ -106,16 +106,14 @@ class Set(Entity):
             AA.setValues(A.getValues())  # AA has now the members {1, 2}
         """
         if isinstance(values, (list, set)):
-            if any(isinstance(value, basestring) for value in values):
+            if all(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
-            elif all(isinstance(value, tuple) for value in values):
-                self._impl.setValues(Utils.toTupleArray(values), len(values))
             else:
-                raise TypeError
+                self._impl.setValues(Utils.toTupleArray(values), len(values))
         else:
             if np is not None and isinstance(values, np.ndarray):
                 self.setValues(DataFrame.fromNumpy(values).toList())
