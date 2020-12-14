@@ -8,9 +8,9 @@ import shutil
 import tempfile
 
 VERSION = 'nightly'
-API_URL = 'http://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
+API_URL = 'https://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
 
-def updatelib(archs):
+def updatelib(package, archs):
     from zipfile import ZipFile
     try:
         from urllib import urlretrieve
@@ -20,23 +20,31 @@ def updatelib(archs):
     os.chdir(os.path.dirname(__file__) or os.curdir)
 
     tmpfile = tempfile.mktemp('.zip')
-    tmpdir = os.path.join(os.curdir, 'tmp', 'libampl')
+    tmpdir = os.path.join(os.curdir, 'tmp')
+    libampldir = os.path.join(tmpdir, 'libampl')
     try:
         shutil.rmtree(tmpdir)
     except Exception:
         pass
 
-    print("Downloading:", API_URL)
-    urlretrieve(API_URL, tmpfile)
-    with ZipFile(tmpfile) as zp:
-        zp.extractall(tmpdir)
-    try:
-        os.remove(tmpfile)
-    except Exception:
-        pass
+    if package.startswith('http'):
+        # Disable SSL verification
+        import ssl
+        ssl._create_default_https_context = ssl._create_unverified_context
+        print("Downloading:", API_URL)
+        urlretrieve(API_URL, tmpfile)
+        with ZipFile(tmpfile) as zp:
+            zp.extractall(tmpdir)
+        try:
+            os.remove(tmpfile)
+        except Exception:
+            pass
+    else:
+        with ZipFile(package) as zp:
+            zp.extractall(tmpdir)
 
-    include_dir = os.path.join(tmpdir, 'include', 'ampl')
-    wrapper_dir = os.path.join(tmpdir, 'python')
+    include_dir = os.path.join(libampldir, 'include', 'ampl')
+    wrapper_dir = os.path.join(libampldir, 'python')
 
     amplpy_include = os.path.join('amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
     try:
@@ -69,17 +77,11 @@ def updatelib(archs):
     )
 
     for libname in archs:
-        srcdir = os.path.join(tmpdir, libname)
+        srcdir = os.path.join(libampldir, libname)
         dstdir = os.path.join(dstbase, libname)
         os.mkdir(dstdir)
         print('{}:'.format(libname))
         for filename in os.listdir(srcdir):
-            if filename.endswith('.jar'):
-                continue
-            if 'java' in filename:
-                continue
-            if 'csharp' in filename:
-                continue
             print('\t{}'.format(filename))
             shutil.copyfile(
                 os.path.join(srcdir, filename),
@@ -89,6 +91,6 @@ def updatelib(archs):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        updatelib(sys.argv[1:])
+        updatelib(API_URL, sys.argv[1:])
     else:
-        updatelib(['intel32', 'amd64', 'ppc64le'])
+        updatelib(API_URL, ['intel32', 'amd64', 'ppc64le', 'aarch64'])

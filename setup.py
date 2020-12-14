@@ -45,7 +45,9 @@ x64 = platform.architecture()[0] == '64bit'
 
 if ARCH == 'ppc64le':
     LIBRARY = 'ppc64le'
-else:
+elif ARCH == 'aarch64':
+    LIBRARY = 'aarch64'
+else:  # 'AMD64', 'x86_64', 'i686', 'i386'
     LIBRARY = 'amd64' if x64 else 'intel32'
 
 if OSTYPE == 'Darwin':
@@ -101,13 +103,19 @@ def make_relative_rpath(path):
 
 def compile_args():
     if OSTYPE == 'Windows':
-        return ['/TP /EHsc']
+        return ['/TP', '/EHsc']
     elif OSTYPE == 'Linux':
-        ignore_gcc8_warnings = [
+        ignore_warnings = [
             '-Wno-stringop-truncation', 
-            '-Wno-catch-value'
+            '-Wno-catch-value',
+            '-Wno-unused-variable',
         ]
-        return ['-std=c++11'] + ignore_gcc8_warnings
+        return ['-std=c++11'] + ignore_warnings
+    elif OSTYPE == 'Darwin':
+        ignore_warnings = [
+            '-Wno-unused-variable',
+        ]
+        return ['-std=c++11', '-mmacosx-version-min=10.9'] + ignore_warnings
     else:
         return []
 
@@ -144,6 +152,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
     packages=['amplpy'],
