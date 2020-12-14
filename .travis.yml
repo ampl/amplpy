@@ -20,10 +20,11 @@ jobs:
     - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
     - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 install:
-- python3 updatelib.py
 - python3 -m pip install cibuildwheel==1.7.1
 script:
+- python3 updatelib.py
 - python3 -m cibuildwheel --output-dir wheelhouse
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python3 setup.py sdist -d wheelhouse; fi
 deploy:
 - provider: s3
   access_key_id: AKIA2AIKE4MIYLK7KWVS

@@ -21,6 +21,7 @@ jobs:
         python -m pip install cibuildwheel==1.7.1
         python updatelib.py
         cibuildwheel --platform linux --output-dir wheelhouse .
+        python3 setup.py sdist -d wheelhouse
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
