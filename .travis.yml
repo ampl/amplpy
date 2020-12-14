@@ -1,0 +1,51 @@
+language: python
+jobs:
+  include:
+  - services: docker
+    env: CIBW_SKIP=pp*
+  - services: docker
+    arch: arm64
+    env: CIBW_BUILD=cp*-manylinux_aarch64
+  - services: docker
+    arch: ppc64le
+    env: CIBW_BUILD=cp*-manylinux_ppc64le
+  - os: osx
+    env: CIBW_SKIP=pp*
+    language: shell
+  - os: windows
+    env: CIBW_SKIP='pp* cp39-*'
+    language: shell
+    before_install:
+    - choco install python --version 3.8.0
+    - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+    - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+install:
+- python3 updatelib.py
+- python3 -m pip install cibuildwheel==1.7.1
+script:
+- python3 -m cibuildwheel --output-dir wheelhouse
+deploy:
+- provider: s3
+  access_key_id: AKIA2AIKE4MIYLK7KWVS
+  secret_access_key:
+    secure: NaMOFnCNEL2kywX4EvOI2Hi+17gaq1Ey8XB+NRh1QZxaG8tVz4mllznRDCu7k/NA9tuq55fuuzsw1LpdjpVbEsJAinQcJVrk22TTws19ncl3qZSK7z85L+4o0Ni3WJUXssTJznclaAeRWlwiuko3YXtfuaQQQy5KkCxecSfs8G6rqAHgQPeUn3bzrF9VCxDOEbCOMUkwTxr8lNA8Aqd0TBY7JSD2/92s458qu2L+MzL2zRa87ogvCVPQhHAB4hOvDB+pckTcbg6zW/ub4LU0sBwzEgGJY75tL2Ev8MemnCmVzFd81dnBgmgmskOVX93zDlRQjd0HjNZp2a25jHonH+/UFVhQf75uXrwQJUzi/nhRJ46o3VVg38034eHlh/MNJS6jsY/6YGEN8jCeZMIA+h4Orxcvl+vF12QqIhmJ+o02PgoEWt7sANDnRFLgnIpktWvWs4boUymXP+q5iCDDK3JvBPnfPkyNQ2GDRNmhRrivN5r4mBObTjM/IAj0CUtjvdFaNlIdeHfJAKGUsqbBedY66lcW7OeWq8REAZKSORVZ3e4sUz8/HgZ7UDXytWsPcI/5xfDIuhWrCAenPS/wphuXHuAn8QLRVQY7Nq+0TZm7118OGcRZEfuScqc4OWN/KWwqcYK8nHY/2N/rkb52UkFiw8cDnUrKC7adz8CVFLE=
+  bucket: travis-amplpy
+  local-dir: wheelhouse
+  upload-dir: amplpy-cibuildwheel
+  acl: private
+  on:
+    repo: ampl/amplpy
+    branch: cibuildwheel
+  skip_cleanup: 'true'
+- provider: s3
+  access_key_id: AKIA2AIKE4MIYLK7KWVS
+  secret_access_key:
+    secure: NaMOFnCNEL2kywX4EvOI2Hi+17gaq1Ey8XB+NRh1QZxaG8tVz4mllznRDCu7k/NA9tuq55fuuzsw1LpdjpVbEsJAinQcJVrk22TTws19ncl3qZSK7z85L+4o0Ni3WJUXssTJznclaAeRWlwiuko3YXtfuaQQQy5KkCxecSfs8G6rqAHgQPeUn3bzrF9VCxDOEbCOMUkwTxr8lNA8Aqd0TBY7JSD2/92s458qu2L+MzL2zRa87ogvCVPQhHAB4hOvDB+pckTcbg6zW/ub4LU0sBwzEgGJY75tL2Ev8MemnCmVzFd81dnBgmgmskOVX93zDlRQjd0HjNZp2a25jHonH+/UFVhQf75uXrwQJUzi/nhRJ46o3VVg38034eHlh/MNJS6jsY/6YGEN8jCeZMIA+h4Orxcvl+vF12QqIhmJ+o02PgoEWt7sANDnRFLgnIpktWvWs4boUymXP+q5iCDDK3JvBPnfPkyNQ2GDRNmhRrivN5r4mBObTjM/IAj0CUtjvdFaNlIdeHfJAKGUsqbBedY66lcW7OeWq8REAZKSORVZ3e4sUz8/HgZ7UDXytWsPcI/5xfDIuhWrCAenPS/wphuXHuAn8QLRVQY7Nq+0TZm7118OGcRZEfuScqc4OWN/KWwqcYK8nHY/2N/rkb52UkFiw8cDnUrKC7adz8CVFLE=
+  bucket: travis-amplpy
+  local-dir: wheelhouse
+  upload-dir: amplpy-master
+  acl: private
+  on:
+    repo: ampl/amplpy
+    branch: master
+  skip_cleanup: 'true'
