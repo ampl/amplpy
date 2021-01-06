@@ -1,8 +1,20 @@
 language: python
+env:
+  global:
+    - CIBW_TEST_REQUIRES='pandas'
 jobs:
   include:
   - services: docker
-    env: CIBW_SKIP=pp*
+    env:
+      - CIBW_BUILD='*-manylinux*_i686'
+      - CIBW_SKIP='pp*'
+      - AMPL_URL='https://ampl.com/demo/ampl.linux32.tgz'
+      - CIBW_TEST_COMMAND='PATH="/project/ampl:$PATH" python -m amplpy.tests'
+  - services: docker
+    env:
+      - CIBW_SKIP='pp* *-manylinux*_i686'
+      - AMPL_URL='https://ampl.com/demo/ampl.linux64.tgz'
+      - CIBW_TEST_COMMAND='PATH="/project/ampl:$PATH" python -m amplpy.tests'
   - services: docker
     arch: arm64
     env: CIBW_BUILD=cp*-manylinux_aarch64
@@ -10,18 +22,26 @@ jobs:
     arch: ppc64le
     env: CIBW_BUILD=cp*-manylinux_ppc64le
   - os: osx
-    env: CIBW_SKIP=pp*
+    env:
+      - CIBW_SKIP='pp*'
+      - AMPL_URL='https://ampl.com/demo/ampl.macos64.tgz'
+      - CIBW_TEST_COMMAND='PATH="/Users/travis/build/ampl/amplpy/ampl:$PATH" python -m amplpy.tests'
     language: shell
   - os: windows
-    env: CIBW_SKIP='pp* cp39-*'
+    env:
+      - CIBW_SKIP='pp* cp39-*'
+      - AMPL_URL='https://ampl.com/demo/ampl.mswin64.zip'
+      - CIBW_TEST_COMMAND='python -m amplpy.tests'
     language: shell
     before_install:
     - choco install python --version 3.8.0
     - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+    - export PATH="/c/Users/travis/build/ampl/amplpy/ampl:$PATH"
     - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 install:
-- python3 -m pip install cibuildwheel==1.7.1
+- python3 -m pip install cibuildwheel==1.7.4
 script:
+- if [[ "$AMPL_URL" != "" ]]; then bash download-ampl.sh $AMPL_URL; fi
 - python3 updatelib.py
 - python3 -m cibuildwheel --output-dir wheelhouse
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python3 setup.py sdist -d wheelhouse; fi

@@ -1,61 +1,53 @@
+variables:
+  BUNDLES_URL: 'https://ampl.com/demo/'
+  LINUX32_BUNDLE_NAME: 'ampl.linux32.tgz'
+  LINUX64_BUNDLE_NAME: 'ampl.linux64.tgz'
+  MACOS64_BUNDLE_NAME: 'ampl.macos64.tgz'
+  MSWIN64_BUNDLE_NAME: 'ampl.mswin64.zip'
+
 jobs:
-- job: manylinux_x86
+- job: manylinux
   pool: {vmImage: 'Ubuntu-16.04'}
+  variables:
+    CIBW_TEST_COMMAND: 'PATH="/project/ampl:$PATH" python -m amplpy.tests'
+    CIBW_TEST_REQUIRES: pandas
   strategy:
     matrix:
       x86:
-        CIBW_MANYLINUX_X86_64_IMAGE: manylinux2010
-        CIBW_MANYLINUX_I686_IMAGE: manylinux2010
         CIBW_SKIP: 'pp*'
-      # ppc64le:
-      #   CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_ppc64le
-      #   CIBW_SKIP: 'cp27-manylinux* pp*'
-      # aarch64:
-      #   CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_aarch64
-      #   CIBW_SKIP: 'cp27-manylinux* pp*'
+        CIBW_BUILD: '*-manylinux*_i686'
+        AMPL_URL: '$(BUNDLES_URL)/$(LINUX32_BUNDLE_NAME)'
+      x64:
+        CIBW_SKIP: 'pp* *-manylinux*_i686'
+        AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
+    - bash: bash download-ampl.sh $AMPL_URL
+      displayName: Install AMPL
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.1
+        python -m pip install cibuildwheel==1.7.4
         python updatelib.py
         cibuildwheel --platform linux --output-dir wheelhouse .
         python3 setup.py sdist -d wheelhouse
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
-# - job: manylinux_qemu
-#   pool: {vmImage: 'Ubuntu-16.04'}
-#   strategy:
-#     matrix:
-#       ppc64le:
-#         CIBW_BUILD: 'cp*-manylinux_ppc64le'
-#       aarch64:
-#         CIBW_BUILD: 'cp*-manylinux_aarch64'
-#   steps:
-#     - task: UsePythonVersion@0
-#     - bash: |
-#         docker run --rm --privileged multiarch/qemu-user-static --persistent yes
-#       displayName: Configure qemu
-#     - bash: |
-#         set -ex
-#         python -m pip install --upgrade pip
-#         python -m pip install cibuildwheel==1.7.1
-#         python updatelib.py
-#         echo $CIBW_SKIP
-#         cibuildwheel --platform linux --output-dir wheelhouse .
-#       displayName: Build wheels
-#     - task: PublishBuildArtifacts@1
-#       inputs: {pathtoPublish: 'wheelhouse'}
 - job: macos
   pool: {vmImage: 'macOS-10.15'}
+  variables:
+    CIBW_TEST_COMMAND: 'PATH="/Users/runner/work/1/s/ampl:$PATH" python -m amplpy.tests'
+    CIBW_TEST_REQUIRES: pandas
+    AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
+    - bash: bash download-ampl.sh $AMPL_URL
+      displayName: Install AMPL
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.1
+        python -m pip install cibuildwheel==1.7.4
         python updatelib.py
         CIBW_SKIP='pp*' cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
@@ -63,15 +55,22 @@ jobs:
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: windows
   pool: {vmImage: 'vs2017-win2016'}
+  variables:
+    CIBW_TEST_COMMAND: 'python -m amplpy.tests'
+    CIBW_TEST_REQUIRES: pandas
+    AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
     - script: choco install vcpython27 -f -y
       displayName: Install Visual C++ for Python 2.7
+    - bash: bash download-ampl.sh $AMPL_URL
+      displayName: Install AMPL
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.1
+        python -m pip install cibuildwheel==1.7.4
         python updatelib.py
+        export PATH="/d/a/1/s/ampl:$PATH"
         # Skipping python 3.9 (linking error)
         CIBW_SKIP='pp* cp39-*' cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels

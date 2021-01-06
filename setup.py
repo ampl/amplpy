@@ -83,7 +83,7 @@ def package_content():
         library_only = [
             fpath for fpath in all_files
             if fpath.startswith(LIBRARY_DIR)
-            if LIBRARY_EXT in fpath[fpath.rfind('/'):]
+            if fpath.endswith(LIBRARY_EXT)
         ]
         lst = source_only + library_only
     return [
