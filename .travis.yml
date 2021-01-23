@@ -2,6 +2,7 @@ language: python
 env:
   global:
     - CIBW_TEST_REQUIRES='pandas'
+    - CIBW_BUILD_VERBOSITY=0
 jobs:
   include:
   - services: docker
@@ -17,10 +18,18 @@ jobs:
       - CIBW_TEST_COMMAND='PATH="/project/ampl:$PATH" python -m amplpy.tests'
   - services: docker
     arch: arm64
-    env: CIBW_BUILD=cp*-manylinux_aarch64
+    env:
+      - CIBW_BUILD=cp*-manylinux_aarch64
+      - AMPL_URL='https://ampl.com/demo/ampl.linux-arm64.tgz'
+      - CIBW_TEST_COMMAND='PATH="/project/ampl:$PATH" python -m amplpy.tests'
+      - CIBW_TEST_REQUIRES='' # do not install additional dependencies such as pandas
   - services: docker
     arch: ppc64le
-    env: CIBW_BUILD=cp*-manylinux_ppc64le
+    env:
+      - CIBW_BUILD=cp*-manylinux_ppc64le
+      - AMPL_URL='https://ampl.com/demo/ampl.linux-ppcle64.tgz'
+      - CIBW_TEST_COMMAND='PATH="/project/ampl:$PATH" python -m amplpy.tests'
+      - CIBW_TEST_REQUIRES='' # do not install additional dependencies such as pandas
   - os: osx
     env:
       - CIBW_SKIP='pp*'
