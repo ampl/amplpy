@@ -315,7 +315,7 @@ class AMPL(object):
         """
         self._impl.solve()
 
-    def readAsync(self, fileName, callback=None, **kwargs):
+    def readAsync(self, filename, callback=None, **kwargs):
         """
         Interprets the specified file asynchronously, interpreting it as a
         model or a script file. As a side effect, it invalidates all entities
@@ -323,23 +323,24 @@ class AMPL(object):
         entities will be re-populated lazily (at first access).
 
         Args:
-            fileName: Path to the file (Relative to the current working
+            filename: Path to the file (Relative to the current working
             directory or absolute).
 
             callback: Callback to be executed when the file has been
             interpreted.
         """
+        filename = str(filename)
         if self._langext is not None:
-            with open(fileName, 'r') as fin:
+            with open(filename, 'r') as fin:
                 newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(fileName+'.translated', 'w') as fout:
+                with open(filename+'.translated', 'w') as fout:
                     fout.write(newmodel)
-                    fileName += '.translated'
+                    filename += '.translated'
 
         def async_call():
             self._lock.acquire()
             try:
-                self._impl.read(fileName)
+                self._impl.read(filename)
                 self._errorhandler_wrapper.check()
             except Exception:
                 self._lock.release()
@@ -350,7 +351,7 @@ class AMPL(object):
                     callback.run()
         Thread(target=async_call).start()
 
-    def readDataAsync(self, fileName, callback=None):
+    def readDataAsync(self, filename, callback=None):
         """
         Interprets the specified data file asynchronously. When interpreting is
         over, the specified callback is called. The file is interpreted as
@@ -359,15 +360,16 @@ class AMPL(object):
         re-populated lazily (at first access)
 
         Args:
-            fileName: Full path to the file.
+            filename: Full path to the file.
 
             callback: Callback to be executed when the file has been
             interpreted.
         """
+        filename = str(filename)
         def async_call():
             self._lock.acquire()
             try:
-                self._impl.readData(fileName)
+                self._impl.readData(filename)
                 self._errorhandler_wrapper.check()
             except Exception:
                 self._lock.release()
@@ -516,7 +518,7 @@ class AMPL(object):
                 except ValueError:
                     return value
 
-    def read(self, fileName, **kwargs):
+    def read(self, filename, **kwargs):
         """
         Interprets the specified file (script or model or mixed) As a side
         effect, it invalidates all entities (as the passed file can contain any
@@ -524,21 +526,22 @@ class AMPL(object):
         (at first access).
 
         Args:
-            fileName: Full path to the file.
+            filename: Full path to the file.
 
         Raises:
             RuntimeError: in case the file does not exist.
         """
+        filename = str(filename)
         if self._langext is not None:
-            with open(fileName, 'r') as fin:
+            with open(filename, 'r') as fin:
                 newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(fileName+'.translated', 'w') as fout:
+                with open(filename+'.translated', 'w') as fout:
                     fout.write(newmodel)
-                    fileName += '.translated'
-        self._impl.read(fileName)
+                    filename += '.translated'
+        self._impl.read(filename)
         self._errorhandler_wrapper.check()
 
-    def readData(self, fileName):
+    def readData(self, filename):
         """
         Interprets the specified file as an AMPL data file. As a side effect,
         it invalidates all entities (as the passed file can contain any
@@ -547,12 +550,13 @@ class AMPL(object):
         to "model" mode.
 
         Args:
-            fileName: Full path to the file.
+            filename: Full path to the file.
 
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        self._impl.readData(fileName)
+        filename = str(filename)
+        self._impl.readData(filename)
         self._errorhandler_wrapper.check()
 
     def getValue(self, scalarExpression):
@@ -969,6 +973,7 @@ class AMPL(object):
         """
         Start recording the session to a file for debug purposes.
         """
+        filename = str(filename)
         self.setOption('_log_file_name', filename)
         self.setOption('_log_input_only', True)
         self.setOption('_log', True)
@@ -983,6 +988,7 @@ class AMPL(object):
         """
         Load a recorded session.
         """
+        filename = str(filename)
         try:
             self.eval(open(filename).read())
         except RuntimeError as e:

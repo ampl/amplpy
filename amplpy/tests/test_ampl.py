@@ -318,6 +318,17 @@ class TestAMPL(TestBase.TestBase):
             ['Montoro'])
         self.assertEqual(ampl.set['A'].getValues().toList(), [1, 2, 3, 4])
 
+    def testPath(self):
+        ampl = self.ampl
+        try:
+            from pathlib import Path
+        except ImportError:
+            return
+        model = self.str2file('model.mod', 'set A := 1..10;')
+        p = Path(model)
+        ampl.read(p)
+        ampl.display('A')
+
 
 if __name__ == '__main__':
     unittest.main()

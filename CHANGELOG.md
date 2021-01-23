@@ -2,8 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.6.12 - 2020-XX-XX
+## 0.6.12 - 2021-XX-XX
 - Fix bug when assigning sets with mixed types.
+- Add support for pathlib.Path.
 
 ## 0.6.11 - 2020-02-28
 - Add support for ppc64le.
