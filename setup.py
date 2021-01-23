@@ -122,7 +122,7 @@ def compile_args():
 
 setup(
     name='amplpy',
-    version='0.6.11',
+    version='0.6.12rc1',
     description='Python API for AMPL',
     long_description=__doc__,
     license='BSD-3',
