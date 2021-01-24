@@ -4,7 +4,7 @@ import sys
 import ctypes
 import platform
 
-if platform.system() == 'Windows':
+if platform.system().startswith(('Windows', 'MSYS', 'CYGWIN', 'MINGW')):
     libbase = os.path.join(os.path.dirname(__file__), 'cppinterface', 'lib')
     lib32 = os.path.join(libbase, 'intel32')
     lib64 = os.path.join(libbase, 'amd64')
