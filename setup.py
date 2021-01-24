@@ -92,15 +92,6 @@ def package_content():
     ]
 
 
-def make_relative_rpath(path):
-    if OSTYPE == 'Darwin':
-        return '-Wl,-rpath,@loader_path/' + path
-    elif OSTYPE == 'Linux':
-        return '-Wl,-rpath,$ORIGIN/' + path
-    else:
-        return ''
-
-
 def compile_args():
     if OSTYPE == 'Windows':
         return ['/TP', '/EHsc']
@@ -117,6 +108,19 @@ def compile_args():
         ]
         return ['-std=c++11', '-mmacosx-version-min=10.9'] + ignore_warnings
     else:
+        return []
+
+
+def link_args():
+    rpath = os.path.join(LIBRARY_BASE, LIBRARY)
+    if OSTYPE == 'Darwin':
+        return ['-Wl,-rpath,@loader_path/' + rpath]
+    elif OSTYPE == 'Linux':
+        return ['-Wl,-rpath,$ORIGIN/' + rpath]
+    else:
+        # Return [] instead of [''] for Windows in order to avoid:
+        #  cannot open input file '.obj' in build on distutils from Python 3.9
+        # https://github.com/pypa/setuptools/issues/2417
         return []
 
 
@@ -162,12 +166,8 @@ setup(
         library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
         include_dirs=[os.path.join(CPP_BASE, 'include')],
         extra_compile_args=compile_args(),
-        extra_link_args=[
-            make_relative_rpath(os.path.join(LIBRARY_BASE, LIBRARY))
-        ],
-        sources=[
-            os.path.join(CPP_BASE, 'amplpythonPYTHON_wrap.cxx')
-        ],
+        extra_link_args=link_args(),
+        sources=[os.path.join(CPP_BASE, 'amplpythonPYTHON_wrap.cxx')],
     )],
     package_data={'': package_content()},
     install_requires=['future >= 0.15.0']

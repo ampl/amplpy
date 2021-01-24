@@ -38,7 +38,7 @@ jobs:
     language: shell
   - os: windows
     env:
-      - CIBW_SKIP='pp* cp39-*'
+      - CIBW_SKIP='pp*'
       - AMPL_URL='https://ampl.com/demo/ampl.mswin64.zip'
       - CIBW_TEST_COMMAND='python -m amplpy.tests'
     language: shell
