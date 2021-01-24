@@ -2,7 +2,7 @@
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
-[![Build Status](https://dev.azure.com/fdabrandao/amplpy/_apis/build/status/ampl.amplpy?branchName=master)](https://dev.azure.com/fdabrandao/amplpy/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://dev.azure.com/ampldev/amplpy/_apis/build/status/ampl.amplpy?branchName=test)](https://dev.azure.com/ampldev/amplpy/_build/latest?definitionId=9&branchName=test)
 
 
 AMPL API is an interface that allows developers to access the features of the
@@ -56,7 +56,7 @@ Or:
 $ python -m pip install amplpy
 ```
 
-Note: For Windows, Linux, and macOS, the `amplpy` package comes with 33 binary wheels for Python 2.7, 3.5, 3.6, 3.7, and 3.8. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
+Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary wheels for Python 2.7, 3.5, 3.6, 3.7, 3.8, and 3.9. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
 
 ### Conda
 
@@ -81,4 +81,4 @@ $ pip install . --upgrade
 BSD-3
 
 ***
-Copyright © 2017-2019 AMPL Optimization inc. All rights reserved.
+Copyright © 2017-2021 AMPL Optimization inc. All rights reserved.

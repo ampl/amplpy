@@ -6,6 +6,23 @@ variables:
   MSWIN64_BUNDLE_NAME: 'ampl.mswin64.zip'
 
 jobs:
+- job: docs
+  pool: {vmImage: 'Ubuntu-16.04'}
+  steps:
+    - task: UsePythonVersion@0
+    - bash: |
+        set -ex
+        python updatelib.py
+        pip install .
+        cd docs
+        pip install -r requirements-dev.txt
+        make html
+        cd ..
+        mkdir -p upload/doc
+        cp -r docs/build/html upload/doc/python
+      displayName: Build documentation
+    - task: PublishBuildArtifacts@1
+      inputs: {pathtoPublish: 'upload'}
 - job: manylinux
   pool: {vmImage: 'Ubuntu-16.04'}
   variables:

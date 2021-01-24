@@ -96,11 +96,7 @@ ENV/
 #*
 
 /workspace_private
-/bumpversion.sh
 /register.sh
 /clear.sh
-/test.sh
-/test2.sh
-/test3.sh
 /test.py
 /tmp
