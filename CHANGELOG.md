@@ -2,11 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.7.0 - 2021-01-24
+## 0.7.0 - 2021-01-25
 - Fix bug when assigning sets with mixed types.
 - Add support for pathlib.Path paths.
-- Add basic support for MSYS, CYGWIN, and MINGW.
-- Complete support for ppc64le and aarch64.
+- Basic support for MSYS, CYGWIN, and MINGW.
+- Support for linux-ppc64le and linux-aarch64.
 - Update libampl to 2.0.4-0.
 
 ## 0.6.11 - 2020-02-28
