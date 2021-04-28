@@ -79,8 +79,6 @@ jobs:
     AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
-    - script: choco install vcpython27 -f -y
-      displayName: Install Visual C++ for Python 2.7
     - bash: bash download-ampl.sh $AMPL_URL
       displayName: Install AMPL
     - bash: |
@@ -89,7 +87,7 @@ jobs:
         python -m pip install cibuildwheel==1.7.4
         python updatelib.py
         export PATH="/d/a/1/s/ampl:$PATH"
-        CIBW_SKIP='pp*' cibuildwheel --platform windows --output-dir wheelhouse .
+        CIBW_SKIP='pp* cp27-*' cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
