@@ -60,7 +60,7 @@ def main(argc, argv):
         toHold = []
         # For each asset, if it was held by more than the highcutoff,
         # forces it in the model, if less than lowcutoff, forces it out
-        for value in holdvalues.getColumn('hold'):
+        for value in holdvalues.getColumn('hold.val'):
             if value < lowcutoff:
                 toHold.append(0)
             elif value > highcutoff:

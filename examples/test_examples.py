@@ -42,6 +42,10 @@ class TestExamples(unittest.TestCase):
         import trackingmodel
         trackingmodel.main(1, [None])
 
+    def testLocationTransportation(self):
+        import locationtransportation
+        locationtransportation.main(1, [None])
+
 
 if __name__ == '__main__':
     unittest.main()
