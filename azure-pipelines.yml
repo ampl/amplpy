@@ -7,7 +7,7 @@ variables:
 
 jobs:
 - job: docs
-  pool: {vmImage: 'Ubuntu-16.04'}
+  pool: {vmImage: 'Ubuntu-20.04'}
   steps:
     - task: UsePythonVersion@0
     - bash: |
@@ -26,7 +26,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'upload'}
 - job: manylinux
-  pool: {vmImage: 'Ubuntu-16.04'}
+  pool: {vmImage: 'Ubuntu-20.04'}
   variables:
     CIBW_TEST_COMMAND: 'PATH="/project/ampl:$PATH" python -m amplpy.tests'
     CIBW_TEST_REQUIRES: pandas
@@ -46,7 +46,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.4
+        python -m pip install cibuildwheel==1.11.1
         python updatelib.py
         cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
@@ -65,7 +65,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.4
+        python -m pip install cibuildwheel==1.11.1
         python updatelib.py
         CIBW_SKIP='pp*' cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
@@ -84,7 +84,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.7.4
+        python -m pip install cibuildwheel==1.11.1
         python updatelib.py
         export PATH="/d/a/1/s/ampl:$PATH"
         CIBW_SKIP='pp* cp27-*' cibuildwheel --platform windows --output-dir wheelhouse .

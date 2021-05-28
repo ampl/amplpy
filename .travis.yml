@@ -48,7 +48,7 @@ jobs:
     - export PATH="/c/Users/travis/build/ampl/amplpy/ampl:$PATH"
     - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 install:
-- python3 -m pip install cibuildwheel==1.7.4
+- python3 -m pip install cibuildwheel==1.11.1
 script:
 - if [[ "$AMPL_URL" != "" ]]; then bash download-ampl.sh $AMPL_URL; fi
 - python3 updatelib.py
