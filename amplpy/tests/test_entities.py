@@ -228,6 +228,7 @@ class TestEntities(TestBase.TestBase):
         cost = ampl.getParameter('cost')
         self.assertEqual(cost.indexarity(), 1)
         self.assertEqual(cost.getIndexingSets(), ['FOOD'])
+        self.assertEqual(cost.xref(), ['total_cost'])
         for i, food in enumerate(ampl.getSet('FOOD').members()):
             cost[food] = i+1
             self.assertEqual(cost[food], i+1)

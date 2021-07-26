@@ -9,6 +9,8 @@ import tempfile
 
 VERSION = 'nightly'
 API_URL = 'https://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
+ARCHS = ['intel32', 'amd64', 'ppc64le', 'aarch64']
+
 
 def updatelib(package, archs):
     from zipfile import ZipFile
@@ -46,7 +48,8 @@ def updatelib(package, archs):
     include_dir = os.path.join(libampldir, 'include', 'ampl')
     wrapper_dir = os.path.join(libampldir, 'python')
 
-    amplpy_include = os.path.join('amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
+    amplpy_include = os.path.join(
+        'amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
     try:
         shutil.rmtree(amplpy_include)
     except Exception:
@@ -90,7 +93,11 @@ def updatelib(package, archs):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        updatelib(API_URL, sys.argv[1:])
+    # if len(sys.argv) > 1:
+    #     updatelib(API_URL, sys.argv[1:])
+    # else:
+    #     updatelib(API_URL, ['intel32', 'amd64', 'ppc64le', 'aarch64'])
+    if len(sys.argv) == 2:
+        updatelib(sys.argv[1], ARCHS)
     else:
-        updatelib(API_URL, ['intel32', 'amd64', 'ppc64le', 'aarch64'])
+        updatelib(API_URL, ARCHS)

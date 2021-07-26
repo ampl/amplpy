@@ -149,6 +149,15 @@ class Entity(BaseClass):
         """
         return Utils.castStringArray(self._impl.getIndexingSets())
 
+    def xref(self):
+        """
+        Get the names of all entities which depend on this one.
+
+        Returns:
+            A list with the names of all entities which depend on this one.
+        """
+        return Utils.castStringArray(self._impl.xref())
+
     def getValues(self, suffixes=None):
         """
         If a list of suffixes is provided, get the specified suffixes value for
