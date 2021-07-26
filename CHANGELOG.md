@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.1 - 2021-07-26
+- Update libampl to 2.0.6-0.
+- Add Entity.xref.
+- Include complete license error message in license error exceptions.
+
 ## 0.7.0 - 2021-01-25
 - Fix bug when assigning sets with mixed types.
 - Add support for pathlib.Path paths.
