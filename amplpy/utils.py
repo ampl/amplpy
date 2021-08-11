@@ -16,7 +16,7 @@ def register_magics(store_name='_ampl_cells', ampl_object=None):
         store_name: Name of the store where ``%%ampl cells`` will be stored.
         ampl_object: Object used to evaluate ``%%ampl_eval`` cells.
     """
-    from IPython.core.magic import  (
+    from IPython.core.magic import (
         Magics, magics_class, cell_magic, line_magic
     )
 
@@ -100,12 +100,15 @@ class Utils(object):
             return variant.str()
 
     @staticmethod
-    def castStringArray(sarray):
-        return [sarray.getIndex(i) for i in range(sarray.size())]
+    def castVariantRef(variantref):
+        if variantref.type() == amplpython.NUMERIC:
+            return variantref.dbl()
+        elif variantref.type() == amplpython.STRING:
+            return variantref.str()
 
     @staticmethod
-    def castVariantRef(variantref):
-        return Utils.castVariant(amplpython.Variant(variantref))
+    def castStringArray(sarray):
+        return [sarray.getIndex(i) for i in range(sarray.size())]
 
     @staticmethod
     def convToList(value):
