@@ -17,6 +17,7 @@ REAL_ROOT = os.environ.get('REAL_ROOT', None)
 
 class TestBase(unittest.TestCase):
     def setUp(self):
+        print("Method:", self._testMethodName)
         self.ampl = amplpy.AMPL()
         self.dirpath = tempfile.mkdtemp()
 

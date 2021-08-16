@@ -94,17 +94,11 @@ class Utils(object):
 
     @staticmethod
     def castVariant(variant):
-        if variant.type() == amplpython.NUMERIC:
-            return variant.dbl()
-        elif variant.type() == amplpython.STRING:
-            return variant.str()
+        return variant.toPyObject()
 
     @staticmethod
     def castVariantRef(variantref):
-        if variantref.type() == amplpython.NUMERIC:
-            return variantref.dbl()
-        elif variantref.type() == amplpython.STRING:
-            return variantref.str()
+        return variantref.toPyObject()
 
     @staticmethod
     def castStringArray(sarray):

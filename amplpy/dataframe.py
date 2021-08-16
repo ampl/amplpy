@@ -50,6 +50,9 @@ class Column(BaseClass):
     def toString(self):
         return str(list(self))
 
+    def toList(self):
+        return self._impl.toPyList()
+
 
 class DataFrame(BaseClass):
     """
@@ -209,15 +212,17 @@ class DataFrame(BaseClass):
 
             values: The values to set.
         """
-        if any(isinstance(value, basestring) for value in values):
-            values = list(map(str, values))
-            self._impl.setColumnStr(header, values, len(values))
-        elif all(isinstance(value, Real) for value in values):
-            values = list(map(float, values))
-            self._impl.setColumnDbl(header, values, len(values))
-        else:
-            print(values)
+        res = self._impl.setColumnPyList(header, list(values))
+        if res != 0:
             raise NotImplementedError
+        # if any(isinstance(value, basestring) for value in values):
+        #     values = list(map(str, values))
+        #     self._impl.setColumnStr(header, values, len(values))
+        # elif all(isinstance(value, Real) for value in values):
+        #     values = list(map(float, values))
+        #     self._impl.setColumnDbl(header, values, len(values))
+        # else:
+        #     raise NotImplementedError
 
     def getRow(self, key):
         """
@@ -279,8 +284,11 @@ class DataFrame(BaseClass):
         """
         d = {}
         nindices = self.getNumIndices()
-        for i in range(self.getNumRows()):
-            row = list(self.getRowByIndex(i))
+        data = zip(*[
+            self.getColumn(header).toList()
+            for header in self.getHeaders()
+        ])
+        for row in data:
             if nindices > 1:
                 key = tuple(row[:nindices])
             elif nindices == 1:
@@ -318,11 +326,11 @@ class DataFrame(BaseClass):
         nindices = self.getNumIndices()
         headers = self.getHeaders()
         columns = {
-            header: list(self.getColumn(header))
+            header: self.getColumn(header).toList()
             for header in headers[nindices:]
         }
         index = zip(*[
-            list(self.getColumn(header))
+            self.getColumn(header).toList()
             for header in headers[:nindices]
         ])
         index = [key if len(key) > 1 else key[0] for key in index]
