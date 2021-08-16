@@ -62,7 +62,7 @@
       if (item == NULL) {
         return -2;
       }
-      if (PyFloat_Check(item) || PyInt_Check(item)) {
+      if (PyFloat_Check(item) || PyInt_Check(item) || PyLong_Check(item)) {
         has_numbers = true;
         if (has_strings) return -3;
       } else if (PyUnicode_Check(item) || PyString_Check(item)) {
@@ -81,7 +81,13 @@
       std::vector<double> values(size);
       for (std::size_t i = 0; i < size; i++) {
         PyObject *item = PyList_GetItem(list, i);
-        values[i] = PyFloat_AsDouble(item);
+        if (PyInt_Check(item)) {
+          values[i] = PyInt_AsLong(item);
+        } else if (PyLong_Check(item)) {
+          values[i] = PyLong_AsLong(item);
+        } else {
+          values[i] = PyFloat_AsDouble(item);
+        }
       }
       self->setColumn(header, ampl::internal::Args(values.data()), size);
     }
