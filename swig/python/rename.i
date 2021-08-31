@@ -1,6 +1,8 @@
 %rename(RowIterator) ampl::internal::Slice<true>::iterator;
 %rename(ColIterator) ampl::internal::Slice<false>::iterator;
 
+%rename(getRowTpl) ampl::DataFrame::getRow(ampl::Tuple);
+
 %rename(addColumn) ampl::DataFrame::addColumnSWIG(fmt::CStringRef);
 %rename(addColumnDbl) ampl::DataFrame::addColumnSWIG(fmt::CStringRef, double*);
 %rename(addColumnStr) ampl::DataFrame::addColumnSWIG(fmt::CStringRef, const char*[]);
@@ -23,13 +25,16 @@
 %rename(setMatrixStrDblStr) ampl::DataFrame::setMatrixSWIG(const char*[], std::size_t, double*, std::size_t, const char*[]);
 %rename(setMatrixStrStrStr) ampl::DataFrame::setMatrixSWIG(const char*[], std::size_t, const char*[], std::size_t, const char*[]);
 
-%rename(setValuesTaDbl) ampl::Parameter::setValues(TupleArray &indices, double* values, std::size_t nvalues);
-%rename(setValuesTaStr) ampl::Parameter::setValues(TupleArray &indices, const char* args[], std::size_t nvalues);
+%rename(setValuesTaDbl) ampl::Parameter::setValues(const ampl::Tuple *indices, const double *values, std::size_t nvalues);
+%rename(setValuesTaStr) ampl::Parameter::setValues(const ampl::Tuple *indices, const char* args[], std::size_t nvalues);
+%rename(setValuesTupleArrayDbl) ampl::Parameter::setValues(TupleArray &indices, double* values, std::size_t nvalues);
+%rename(setValuesTupleArrayStr) ampl::Parameter::setValues(TupleArray &indices, const char* args[], std::size_t nvalues);
 %rename(setValuesDbl) ampl::Parameter::setValues(double* values, std::size_t n);
 %rename(setValuesStr) ampl::Parameter::setValues(const char* args[], std::size_t n);
 %rename(setValuesDbl) ampl::Set::setValues(double *,std::size_t);
 %rename(setValuesStr) ampl::Set::setValues(char const *[],std::size_t);
 
+%rename(setValuesTuples) ampl::SetInstance::setValues(const ampl::Tuple *indices, std::size_t nvalues);
 %rename(setValuesDbl) ampl::SetInstance::setValues(double *,std::size_t);
 %rename(setValuesStr) ampl::SetInstance::setValues(char const *[],std::size_t);
 %rename(setValuesDf) ampl::SetInstance::setValues(ampl::DataFrame);

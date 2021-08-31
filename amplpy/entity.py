@@ -4,7 +4,6 @@ from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
 
 from .base import BaseClass
-from .utils import Utils, Tuple
 from .dataframe import DataFrame
 from .iterators import InstanceIterator
 try:
@@ -70,7 +69,7 @@ class Entity(BaseClass):
         if len(index) == 0:
             return self.wrapFunction(self._impl.get())
         else:
-            return self.wrapFunction(self._impl.get(Tuple(index)._impl))
+            return self.wrapFunction(self._impl.get(index))
 
     def find(self, *index):
         """
@@ -82,11 +81,11 @@ class Entity(BaseClass):
         assert self.wrapFunction is not None
         if len(index) == 1 and isinstance(index[0], (tuple, list)):
             index = index[0]
-        it = self._impl.find(Tuple(index)._impl)
+        it = self._impl.find(index)
         if it == self._impl.end():
             return None
         else:
-            return self.wrapFunction(it)
+            return self.wrapFunction(it.second())
 
     def instances(self):
         """
@@ -147,7 +146,7 @@ class Entity(BaseClass):
             The string representation of the indexing sets for this entity or
             an empty array if the entity is scalar.
         """
-        return Utils.castStringArray(self._impl.getIndexingSets())
+        return self._impl.getIndexingSets()
 
     def xref(self):
         """
@@ -156,7 +155,7 @@ class Entity(BaseClass):
         Returns:
             A list with the names of all entities which depend on this one.
         """
-        return Utils.castStringArray(self._impl.xref())
+        return self._impl.xref()
 
     def getValues(self, suffixes=None):
         """

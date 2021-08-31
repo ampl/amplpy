@@ -41,6 +41,10 @@ public:
   {
     return self->contains(ampl::TupleRef(t));
   }
+  void setValues(const ampl::Tuple *t, std::size_t n)
+  {
+    return self->setValues(t, n);
+  }
   void setValues(TupleArray &t, std::size_t n)
 
   {

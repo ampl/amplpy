@@ -15,7 +15,6 @@ from .dataframe import DataFrame
 from .iterators import EntityMap
 from .exceptions import AMPLException
 from .entity import Entity
-from .utils import Utils
 from . import amplpython
 try:
     import pandas as pd
@@ -571,7 +570,7 @@ class AMPL(object):
         Returns:
             The value of the expression.
         """
-        return Utils.castVariant(self._impl.getValue(scalarExpression))
+        return self._impl.getValue(scalarExpression)
 
     def setData(self, data, setName=None):
         """

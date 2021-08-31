@@ -5,7 +5,6 @@ from past.builtins import basestring
 from numbers import Real
 
 from .entity import Entity
-from .utils import Utils, Tuple
 from .dataframe import DataFrame
 try:
     import numpy as np
@@ -28,7 +27,7 @@ class Parameter(Entity):
         Entity.__init__(
             self,
             _impl,
-            lambda it: Utils.castVariantRef(it)
+            lambda it: it
         )
 
     def __setitem__(self, index, value):
@@ -89,9 +88,9 @@ class Parameter(Entity):
         else:
             index, value = args
             if isinstance(value, Real):
-                self._impl.setTplDbl(Tuple(index)._impl, value)
+                self._impl.setTplDbl(index, value)
             elif isinstance(value, basestring):
-                self._impl.setTplStr(Tuple(index)._impl, value)
+                self._impl.setTplStr(index, value)
             else:
                 raise TypeError
 
@@ -114,16 +113,17 @@ class Parameter(Entity):
         if isinstance(values, dict):
             if not values:
                 return
-            indices, values = list(zip(*values.items()))
-            indices = Utils.toTupleArray(indices)
-            if any(isinstance(value, basestring) for value in values):
-                values = list(map(str, values))
-                self._impl.setValuesTaStr(indices, values, len(values))
-            elif all(isinstance(value, Real) for value in values):
-                values = list(map(float, values))
-                self._impl.setValuesTaDbl(indices, values, len(values))
-            else:
+            if self._impl.setValuesPyDict(values) != 0:
                 raise TypeError
+            # indices, values = list(values.keys()), values.values()
+            # if any(isinstance(value, basestring) for value in values):
+            #     values = list(map(str, values))
+            #     self._impl.setValuesTaStr(indices, values, len(values))
+            # elif all(isinstance(value, Real) for value in values):
+            #     values = list(map(float, values))
+            #     self._impl.setValuesTaDbl(indices, values, len(values))
+            # else:
+            #     raise TypeError
         elif isinstance(values, (list, tuple)):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))

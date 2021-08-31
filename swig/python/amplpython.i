@@ -18,9 +18,11 @@
   #define _PyString_Check(obj) PyString_Check(obj)
 #endif
 %}
-
 // ********* Common declarations *********
 %include "../common/common.i"
+
+// Utility functions for type conversions
+%include "utils.i"
 
 // ************* Exception handling *************
 %include "std_except.i" // Fix: Warning 401: Nothing known about base class 'std::runtime_error'.
@@ -43,9 +45,11 @@
 
 // Variant code
 %include "../common/common_variant.i"
+%include "variant.i"
 
 // Tuples
 %include "../common/common_tuple.i"
+%include "tuple.i"
 
 // Rename overloaded methods
 %include "rename.i"
@@ -54,6 +58,7 @@
 // The following renames methods which are not supported by
 // Python
 %include "../common/common_dataframe.i"
+%include "dataframe.i"
 
 // Instance classes
 %include "../common/common_instance.i"
@@ -71,6 +76,9 @@
 %rename(EntityMapParameterIterator)ampl::EntityMap<ampl::Parameter>::iterator;
 %rename(EntityMapTableIterator)ampl::EntityMap<ampl::Table>::iterator;
 %include "../common/common_entitymap.i"
+
+// Parameter
+%include "parameter.i"
 
 // AMPL Exception
 %include "ampl/amplexception.h"
@@ -106,5 +114,3 @@ ampl::DataFrame getData(const char* args[], int count)
   return self->getData(s);
 }
 }
-
-%include "extensions.i"

@@ -145,6 +145,7 @@ namespace ampl
 		void restore();
 		bool minimization();
 	};
+
   class Set  : public ampl::BasicEntity<ampl::SetInstance>
 	{
 		public:
@@ -158,15 +159,19 @@ namespace ampl
       {
         return self->contains(ampl::TupleRef(t));
       }
+      void setValuesTuples(const ampl::Tuple *t, std::size_t n)
+      {
+        return self->setValues(t, n);
+      }
       void setValues(TupleArray &t, std::size_t n)
       {
         return self->setValues(TupleArray_cast(&t), n);
       }
-      void setValues(double *values, std::size_t n)
+      void setValuesDbl(double *values, std::size_t n)
       {
         return self->setValues(ampl::internal::Args(values), n);
       }
-      void setValues(const char* args[], std::size_t n)
+      void setValuesStr(const char* args[], std::size_t n)
       {
         return self->setValues(ampl::internal::Args(args), n);
       }
@@ -207,9 +212,17 @@ namespace ampl
     {
       self->set(ampl::TupleRef(index), ampl::VariantRef(value));
     }
+    void setValues(const ampl::Tuple *indices, const double* values, std::size_t nvalues)
+      {
+        self->setValues(indices, ampl::internal::Args(values), nvalues);
+      }
       void setValues(TupleArray &indices, double* values, std::size_t nvalues)
       {
         self->setValues(TupleArray_cast(&indices), ampl::internal::Args(values), nvalues);
+      }
+      void setValues(const ampl::Tuple *indices, const char* args[], std::size_t nvalues)
+      {
+        self->setValues(indices, ampl::internal::Args(args), nvalues);
       }
       void setValues(TupleArray &indices, const char* args[], std::size_t nvalues)
       {

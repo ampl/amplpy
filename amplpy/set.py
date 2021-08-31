@@ -5,7 +5,6 @@ from past.builtins import basestring
 from numbers import Real
 
 from .entity import Entity
-from .utils import Utils, Tuple
 from .dataframe import DataFrame
 from .iterators import MemberRangeIterator
 try:
@@ -75,7 +74,7 @@ class Set(Entity):
         Args:
             t: Tuple to be found.
         """
-        return self._impl.contains(Tuple(t)._impl)
+        return self._impl.contains(t)
 
     def setValues(self, values):
         """
@@ -113,7 +112,9 @@ class Set(Entity):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             else:
-                self._impl.setValues(Utils.toTupleArray(values), len(values))
+                if not isinstance(values, list):
+                    values = list(values)
+                self._impl.setValuesTuples(values, len(values))
         else:
             if np is not None and isinstance(values, np.ndarray):
                 self.setValues(DataFrame.fromNumpy(values).toList())

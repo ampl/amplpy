@@ -60,13 +60,13 @@ def updatelib(package, archs):
         file=open(os.path.join(amplpy_include, '.gitignore'), 'w')
     )
 
-    print('wrapper:')
-    for filename in os.listdir(wrapper_dir):
-        print('\t{}'.format(filename))
-        shutil.copyfile(
-            os.path.join(wrapper_dir, filename),
-            os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
-        )
+    # print('wrapper:')
+    # for filename in os.listdir(wrapper_dir):
+    #     print('\t{}'.format(filename))
+    #     shutil.copyfile(
+    #         os.path.join(wrapper_dir, filename),
+    #         os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
+    #     )
 
     dstbase = os.path.join('amplpy', 'amplpython', 'cppinterface', 'lib')
     try:

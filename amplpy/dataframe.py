@@ -5,7 +5,6 @@ from past.builtins import basestring
 from numbers import Real
 
 from .base import BaseClass
-from .utils import Utils, Tuple
 from .iterators import RowIterator, ColIterator
 from . import amplpython
 try:
@@ -30,7 +29,7 @@ class Row(BaseClass):
         return RowIterator(self._impl)
 
     def __getitem__(self, key):
-        return Utils.castVariantRef(self._impl.getIndex(key))
+        return self._impl.getIndex(key)
 
     def toString(self):
         return str(list(self))
@@ -48,7 +47,7 @@ class Column(BaseClass):
         return ColIterator(self._impl)
 
     def toString(self):
-        return str(list(self))
+        return str(self.toList())
 
     def toList(self):
         return self._impl.toPyList()
@@ -168,7 +167,7 @@ class DataFrame(BaseClass):
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
         assert len(value) == self.getNumCols()
-        self._impl.addRow(Tuple(value)._impl)
+        self._impl.addRow(tuple(value))
 
     def addColumn(self, header, values=[]):
         """
@@ -235,7 +234,7 @@ class DataFrame(BaseClass):
         Returns:
             The row.
         """
-        return Row(self._impl.getRow(Tuple(key)._impl))
+        return Row(self._impl.getRowTpl(key))
 
     def getRowByIndex(self, index):
         """
@@ -247,7 +246,6 @@ class DataFrame(BaseClass):
         Returns:
             The corresponding row.
         """
-        assert isinstance(index, int)
         return Row(self._impl.getRowByIndex(index))
 
     def getHeaders(self):
@@ -257,10 +255,7 @@ class DataFrame(BaseClass):
          Returns:
             The headers of this DataFrame.
         """
-        headers = self._impl.getHeaders()
-        return tuple(
-            headers.getIndex(i) for i in range(self._impl.getNumCols())
-        )
+        return tuple(self._impl.getHeaders())
 
     def setValues(self, values):
         """

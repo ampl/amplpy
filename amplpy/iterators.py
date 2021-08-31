@@ -3,8 +3,6 @@ from __future__ import print_function, absolute_import, division
 from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
 
-from .utils import Utils, Tuple
-
 
 class Iterator(object):
     def __init__(self, obj, function):
@@ -50,7 +48,7 @@ class InstanceIterator(Iterator):
         Iterator.__init__(
             self, obj,
             lambda it: (
-                Tuple.fromTupleRef(it.first()).toPyObj(),
+                it.first(),
                 instanceClass(it.second())
             ),
         )
@@ -67,7 +65,7 @@ class MemberRangeIterator(Iterator):
     def __init__(self, obj, sizeFunction):
         Iterator.__init__(
             self, obj,
-            lambda it: Tuple.fromTupleRef(it.__ref__()).toPyObj()
+            lambda it: it.__ref__()
         )
         # FIXME: MemberRange does not implemet size()
         self.sizeFunction = sizeFunction
@@ -90,12 +88,12 @@ def EnvIterator(obj):
 def ColIterator(obj):
     return Iterator(
         obj,
-        lambda it: Utils.castVariantRef(it.__ref__())
+        lambda it: it.__ref__()
     )
 
 
 def RowIterator(obj):
     return Iterator(
         obj,
-        lambda it: Utils.castVariantRef(it.__ref__())
+        lambda it: it.__ref__()
     )
