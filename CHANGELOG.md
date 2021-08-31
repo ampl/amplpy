@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.2 - 2021-10-XX
+- Improve performance of many operations by moving code to the C++ layer.
+
 ## 0.7.1 - 2021-07-26
 - Update libampl to 2.0.6-0.
 - Add Entity.xref.
