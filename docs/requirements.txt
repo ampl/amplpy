@@ -1,2 +1,3 @@
 amplpy==0.7.2b2
 pydata-sphinx-theme
+sphinx==4.2.0
