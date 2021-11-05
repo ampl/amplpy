@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import amplpy
+import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -14,7 +15,8 @@ needs_sphinx = '1.3'
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.ifconfig', 'sphinx.ext.mathjax', 'sphinx.ext.autodoc']
+extensions = ['sphinx.ext.ifconfig',
+              'sphinx.ext.mathjax', 'sphinx.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -30,11 +32,12 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'AMPL API'
-copyright = u'2013-2019, AMPL Inc'
+copyright = u'2017-{}, AMPL Optimization Inc'.format(
+    datetime.date.today().year)
 
 # Version numbers to be  defined at command line
 # The short X.Y version.
-version =  '2.0'
+version = '2.0'
 # The full version, including alpha/beta/rc tags.
 release = '2.0 (amplpy-{})'.format(amplpy.__version__)
 
@@ -77,7 +80,33 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinxdoc'
+#html_theme = 'sphinxdoc'
+#html_theme = 'alabaster'
+html_theme = 'pydata_sphinx_theme'
+html_theme_options = {
+    "logo_link": "index",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/ampl/amplpy",
+            "icon": "fab fa-github"
+        },
+        {
+            "name": "AMPL",
+            "url": "https://ampl.github.io",
+            "icon": "fa fa-code"
+        },
+        {
+            "name": "AMPL",
+            "url": "https://ampl.com",
+            "icon": "fa fa-home"
+        },
+    ],
+    "collapse_navigation": True,
+    "external_links": [
+        # {"name": "ampl.github.io", "url": "https://ampl.github.io"},
+    ]
+}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -97,11 +126,13 @@ html_theme = 'sphinxdoc'
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #html_logo = None
+html_logo = "_static/logo-inline-web-amplpy.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
 #html_favicon = None
+html_favicon = "_static/cropped-favicon-raw-192x192.png"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -156,21 +187,21 @@ htmlhelp_basename = 'formatdoc'
 # -- Options for LaTeX output --------------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    # 'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    # 'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    # 'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'AMPLAPI.tex', u'AMPL API Documentation',
-   u'Filipe Brandão', 'manual'),
+    ('index', 'AMPLAPI.tex', u'AMPL API Documentation',
+     u'Filipe Brandão', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -213,9 +244,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'AMPL API', u'AMPL API Documentation',
-   u'Filipe Brandão', 'AMPL API', 'Python API for AMPL',
-   'Miscellaneous'),
+    ('index', 'AMPL API', u'AMPL API Documentation',
+     u'Filipe Brandão', 'AMPL API', 'Python API for AMPL',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
