@@ -266,10 +266,17 @@ class DataFrame(BaseClass):
         """
         ncols = self.getNumCols()
         nindices = self.getNumIndices()
+        def convToList(value):
+            if isinstance(value, list):
+                return value
+            elif isinstance(value, tuple):
+                return list(value)
+            else:
+                return [value]
         for key, value in values.items():
-            key = Utils.convToList(key)
+            key = convToList(key)
             assert len(key) == nindices
-            value = Utils.convToList(value)
+            value = convToList(value)
             assert len(value) == ncols-nindices
             self.addRow(key + value)
 
