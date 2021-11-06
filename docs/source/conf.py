@@ -83,6 +83,11 @@ pygments_style = 'sphinx'
 #html_theme = 'sphinxdoc'
 #html_theme = 'alabaster'
 html_theme = 'pydata_sphinx_theme'
+
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+#html_theme_options = {}
 html_theme_options = {
     "logo_link": "index",
     "icon_links": [
@@ -92,12 +97,13 @@ html_theme_options = {
             "icon": "fab fa-github"
         },
         {
-            "name": "AMPL",
+            "name": "ampl.github.io",
             "url": "https://ampl.github.io",
-            "icon": "fa fa-code"
+            "icon": "fa fa-code",
+            "target": "_self",
         },
         {
-            "name": "AMPL",
+            "name": "ampl.com",
             "url": "https://ampl.com",
             "icon": "fa fa-home"
         },
@@ -107,11 +113,10 @@ html_theme_options = {
         # {"name": "ampl.github.io", "url": "https://ampl.github.io"},
     ]
 }
+html_context = {
+    "theme_logo_text": "Python API",
+}
 
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -126,7 +131,7 @@ html_theme_options = {
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #html_logo = None
-html_logo = "_static/logo-inline-web-amplpy.png"
+html_logo = "_static/logo-inline-web-v4.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -138,6 +143,11 @@ html_favicon = "_static/cropped-favicon-raw-192x192.png"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Add custom css file
+html_css_files = [
+    'css/custom.css',
+]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
