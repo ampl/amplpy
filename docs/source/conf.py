@@ -99,19 +99,19 @@ html_theme_options = {
         {
             "name": "AMPL Dev",
             "url": "https://ampl.github.io",
-            "icon": "fa fa-project-diagram fa-fw",
+            "icon": "fas fa-project-diagram fa-fw",
             "target": "_self",
         },
         {
             "name": "AMPL Portal",
             "url": "https://portal.ampl.com",
-            "icon": "fa fa-sign-in-alt fa-fw",
+            "icon": "fas fa-sign-in-alt fa-fw",
             "target": "_self",
         },
         {
             "name": "AMPL.com",
             "url": "https://ampl.com",
-            "icon": "fa fa-home fa-fw",
+            "icon": "fas fa-home fa-fw",
             "target": "_self",
         },
     ],
