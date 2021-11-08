@@ -94,18 +94,25 @@ html_theme_options = {
         {
             "name": "GitHub",
             "url": "https://github.com/ampl/amplpy",
-            "icon": "fab fa-github"
+            "icon": "fab fa-github fa-fw"
         },
         {
-            "name": "ampl.github.io",
+            "name": "AMPL Dev",
             "url": "https://ampl.github.io",
-            "icon": "fa fa-code",
+            "icon": "fa fa-project-diagram fa-fw",
             "target": "_self",
         },
         {
-            "name": "ampl.com",
+            "name": "AMPL Portal",
+            "url": "https://portal.ampl.com",
+            "icon": "fa fa-sign-in-alt fa-fw",
+            "target": "_self",
+        },
+        {
+            "name": "AMPL.com",
             "url": "https://ampl.com",
-            "icon": "fa fa-home"
+            "icon": "fa fa-home fa-fw",
+            "target": "_self",
         },
     ],
     "collapse_navigation": True,
