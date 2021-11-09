@@ -40,10 +40,10 @@ In general, a valid AMPL setup and Python 2.7 or 3.x are necessary and sufficien
 The officially supported platforms are all Windows flavours, various Linux 32/64 bits and OSX.
 Ports to any other platform supported by AMPL can be easily obtained.
 
-For Windows only, please make sure that the Microsoft Visual C++ 2010 Redistributable Package (32 or 64 bits, depending on the architecture of 
+For Windows only, please make sure that the Microsoft Visual C++ Redistributable Package (32 or 64 bits, depending on the architecture of 
 the AMPL API you downloaded) is installed. It often comes preinstalled or as part of other software; it can also be downloaded from Microsoft
-download center. Click `here <https://www.microsoft.com/en-us/download/details.aspx?id=5555>`_ for the 32 bits or 
-`here <https://www.microsoft.com/en-us/download/details.aspx?id=14632>`_ for the 64 bits version.
+download center. Click `here <https://aka.ms/vs/16/release/vc_redist.x86.exe>`_ for the 32 bits or
+`here <https://aka.ms/vs/16/release/vc_redist.x64.exe>`_ for the 64 bits version.
 
 
 About this manual
