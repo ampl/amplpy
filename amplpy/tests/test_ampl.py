@@ -6,6 +6,7 @@ from past.builtins import basestring
 
 from . import TestBase
 import unittest
+from amplpy import DataFrame
 import amplpy
 import os
 

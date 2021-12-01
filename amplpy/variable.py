@@ -55,6 +55,13 @@ class Variable(Entity):
         """
         self._impl.unfix()
 
+    def __setitem__(self, index, value):
+        item = self.__getitem__(index)
+        if isinstance(value, (float, int, basestring)):
+            item.setValue(value)
+        else:
+            item.setValues(value)
+
     def setValue(self, value):
         """
         Set the current value of this variable (does not fix it),

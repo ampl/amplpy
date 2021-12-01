@@ -6,6 +6,8 @@ from builtins import map, range, object, zip, sorted
 from . import TestBase
 import unittest
 from amplpy import DataFrame
+import string
+import random
 import amplpy
 import os
 
@@ -30,12 +32,21 @@ class TestDataFrame(TestBase.TestBase):
         df2 = DataFrame('FOOD')
         foods = ['BEEF', 'CHK', 'FISH', 'HAM', 'MCH', 'MTL', 'SPG', 'TUR']
         df2.setColumn('FOOD', foods)
+        self.assertEqual(list(df2.getColumn('FOOD')), foods)
         contents = [2] * 8
         df2.addColumn('f_min', contents)
+        self.assertEqual(list(df2.getColumn('f_min')), contents)
         contents = [10] * 8
         df2.addColumn('f_max', contents)
+        self.assertEqual(list(df2.getColumn('f_max')), contents)
         costs = [3.19, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
         df2.addColumn('cost', costs)
+        self.assertEqual(list(df2.getColumn('cost')), costs)
+        labels = [random.choice(string.ascii_letters)] * 8
+        df2.addColumn('labels', labels)
+        self.assertEqual(list(df2.getColumn('labels')), labels)
+        df2.addColumn('empty', [])
+        self.assertEqual(list(df2.getColumn('empty')), [None] * 8)
 
         print(df2.getColumn('FOOD'))
         for index in df2.getColumn('FOOD'):
@@ -86,7 +97,8 @@ class TestDataFrame(TestBase.TestBase):
         ampl.setData(df, 'S')
         self.assertEqual(list(ampl.set['S'].members()), ['x', 'y'])
         self.assertEqual(ampl.param['a']['x'], 1)
-        self.assertEqual(ampl.param['a']['y'], 2)
+        self.assertEqual(ampl.param['b']['y'], 4)
+
         df2 = pd.DataFrame({
             'a': [10, 20, 30],
         },
@@ -239,6 +251,36 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         dic = {(2.0, 'c'): ('a', 'b'), (3, 'a'): ('1', '2')}
         self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
+        df = DataFrame('x', 'y')
+        dic = {1: 12, 2: 23}
+        df.setValues(dic)
+        self.assertEqual(dic, df.toDict())
+        df = DataFrame('x', ['y', 'z'])
+        dic = {1: (12, 2), 2: (23, -1)}
+        df.setValues(dic)
+        self.assertEqual(dic, df.toDict())
+        df = DataFrame('x', ['y', 'z'])
+        df.setValues({1: [1, 2]})
+        self.assertEqual({1: (1, 2)}, df.toDict())
+
+    def testNoIndex(self):
+        df = DataFrame([], ['x', 'y'])
+        x = [1, 2, 3]
+        y = [4, 5, 6]
+        df.setColumn('x', x)
+        df.setColumn('y', y)
+        with self.assertRaises(ValueError):
+            df.toDict()
+        pd_df = df.toPandas()
+        self.assertEqual(list(pd_df['x']), x)
+        self.assertEqual(list(pd_df['y']), y)
+
+    def testIter(self):
+        df = DataFrame('x', 'y')
+        dic = {1: 12, 2: 23}
+        df.setValues(dic)
+        for row in df:
+            self.assertTrue(tuple(row) in [(1, 12), (2, 23)])
 
 
 if __name__ == '__main__':

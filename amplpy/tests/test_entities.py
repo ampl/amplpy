@@ -75,6 +75,8 @@ class TestEntities(TestBase.TestBase):
         f_min = ampl.getParameter('f_min')
         f_max = ampl.getParameter('f_max')
         Buy = ampl.getVariable('Buy')
+        Buy['BEEF'] = 10
+        self.assertEqual(Buy['BEEF'].value(), 10)
         self.assertTrue(isinstance(Buy.getValues(), amplpy.DataFrame))
         self.assertTrue(isinstance(Buy.getValues(['val']), amplpy.DataFrame))
         for index, var in ampl.getVariable('Buy'):
@@ -163,6 +165,8 @@ class TestEntities(TestBase.TestBase):
     def testSet(self):
         loadDietModel(self.ampl)
         ampl = self.ampl
+        self.assertEqual(ampl.getSet('FOOD').toString(), 'set FOOD;')
+        self.assertEqual(str(ampl.getSet('FOOD')), 'set FOOD;')
         self.assertEqual(
             ampl.getSet('NUTR').size(),
             len(ampl.getSet('NUTR').members()),
@@ -185,6 +189,10 @@ class TestEntities(TestBase.TestBase):
             )
             self.assertTrue(isinstance(st.arity(), int))
         ampl.eval('model; set T{1..2}; set T2{1..2};')
+        ampl.getSet('T')[1] = [-1, -2]
+        self.assertEqual(ampl.getSet('T').get((1,)).getValues().toList(), [-1, -2])
+        self.assertEqual(ampl.getSet('T').find((3,)), None)
+        self.assertIsInstance(ampl.getSet('T').find(1), amplpy.Set)
         ampl.getSet('T')[1].setValues([1, 2])
         self.assertEqual(ampl.getSet('T')[1].getValues().toList(), [1, 2])
         ampl.getSet('T')[2].setValues(['1', 2])
@@ -195,6 +203,12 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.getSet('T2')[2].getValues().toList(), ['1', 2])
         ampl.eval('set T3 dimen 2; set T4 dimen 2;')
         ampl.getSet('T3').setValues([(1, 2)])
+        self.assertEqual(ampl.getSet('T3').getValues().toList(), [(1, 2)])
+        ampl.getSet('T3').setValues(set([('b', 1), ('a', 2)]))
+        self.assertEqual(sorted(ampl.getSet('T3').getValues().toList()), [('a', 2), ('b', 1)])
+        ampl.eval('set T5;')
+        ampl.set['T5'] = set(['a', 'b', 'c'])
+        self.assertEqual(sorted(ampl.getSet('T5').getValues().toList()), ['a', 'b', 'c'])
 
         try:
             import numpy as np
@@ -250,6 +264,8 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(d.isScalar(), False)
         d.set(1, 'a')
         self.assertEqual(d[1], 'a')
+        d[1] = 'aa'
+        self.assertEqual(d[1], 'aa')
         d.set(2, 'b')
         self.assertEqual(d[2], 'b')
         d.setValues({1: 'x', 2: 'y'})

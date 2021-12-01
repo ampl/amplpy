@@ -50,11 +50,7 @@ class Entity(BaseClass):
         return self.get(*index)
 
     def __setitem__(self, index, value):
-        item = self.__getitem__(index)
-        if isinstance(value, (float, int, basestring)):
-            item.set(value)
-        else:
-            item.setValues(value)
+        self.__getitem__(index).setValues(value)
 
     def get(self, *index):
         """

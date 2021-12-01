@@ -286,17 +286,17 @@ class DataFrame(BaseClass):
         """
         d = {}
         nindices = self.getNumIndices()
+        if nindices == 0:
+            raise ValueError('cannot convert to dictionary without an index')
         data = zip(*[
             self.getColumn(header).toList()
             for header in self.getHeaders()
         ])
         for row in data:
-            if nindices > 1:
-                key = tuple(row[:nindices])
-            elif nindices == 1:
+            if nindices == 1:
                 key = row[0]
             else:
-                key = None
+                key = tuple(row[:nindices])
             if len(row) - nindices == 0:
                 d[key] = None
             elif len(row) - nindices == 1:
