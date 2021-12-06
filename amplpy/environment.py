@@ -14,7 +14,7 @@ class Environment(BaseClass):
     facilities to specify where to load the underlying AMPL interpreter.
     """
 
-    def __init__(self, binaryDirectory=None):
+    def __init__(self, binaryDirectory=None, binaryName=None):
         """
         Constructor with ability to select the location of the AMPL binary.
         Note that if binaryDirectory is set, the automatic lookup for an AMPL
@@ -24,9 +24,10 @@ class Environment(BaseClass):
             binaryDirectory: The directory in which look for the AMPL Binary.
         """
         if binaryDirectory is None:
-            self._impl = amplpython.Environment()
-        else:
-            self._impl = amplpython.Environment(binaryDirectory)
+            binaryDirectory = ""
+        if binaryName is None:
+            binaryName = ""
+        self._impl = amplpython.Environment(binaryDirectory, binaryName)
 
     def __iter__(self):
         return EnvIterator(self._impl)
@@ -68,3 +69,18 @@ class Environment(BaseClass):
         Get the location where AMPL API will search for the AMPL executable.
         """
         return self._impl.getBinDir()
+
+    def setBinName(self, binaryName):
+        """
+        Set the name of the AMPL executable.
+
+        Args:
+            binaryName: The name of the AMPL binary.
+        """
+        self._impl.setBinName(binaryName)
+
+    def getBinName(self):
+        """
+        Get the name of the AMPL executable.
+        """
+        return self._impl.getBinName()

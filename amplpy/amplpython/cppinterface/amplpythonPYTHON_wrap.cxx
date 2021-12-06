@@ -41756,6 +41756,62 @@ fail:
 SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   fmt::CStringRef arg1 ;
+  fmt::CStringRef arg2 ;
+  ampl::Environment *result = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  
+  arg1 = _PyString_AsString(swig_obj[0]);
+  
+  
+  arg2 = _PyString_AsString(swig_obj[1]);
+  
+  {
+    try {
+      result = (ampl::Environment *)new ampl::Environment(arg1,arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::invalid_argument e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ampl__Environment, SWIG_BUILTIN_INIT |  0 );
+  return resultobj == Py_None ? -1 : 0;
+fail:
+  return -1;
+}
+
+
+SWIGINTERN int _wrap_new_Environment__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  fmt::CStringRef arg1 ;
   ampl::Environment *result = 0 ;
   
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
@@ -41807,12 +41863,12 @@ fail:
 
 SWIGINTERN int _wrap_new_Environment(PyObject *self, PyObject *args, PyObject *kwargs) {
   Py_ssize_t argc;
-  PyObject *argv[2] = {
+  PyObject *argv[3] = {
     0
   };
   
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_Environment")) SWIG_fail;
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Environment", 0, 1, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Environment", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
     return _wrap_new_Environment__SWIG_0(self, argc, argv);
@@ -41830,7 +41886,19 @@ SWIGINTERN int _wrap_new_Environment(PyObject *self, PyObject *args, PyObject *k
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_Environment__SWIG_2(self, argc, argv);
+      return _wrap_new_Environment__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_Environment__SWIG_2(self, argc, argv);
+      }
     }
   }
   
@@ -41839,6 +41907,7 @@ fail:
     "  Possible C/C++ prototypes are:\n"
     "    ampl::Environment::Environment()\n"
     "    ampl::Environment::Environment(ampl::Environment const &)\n"
+    "    ampl::Environment::Environment(fmt::CStringRef,fmt::CStringRef)\n"
     "    ampl::Environment::Environment(fmt::CStringRef)\n");
   return -1;
 }
@@ -42042,6 +42111,124 @@ SWIGINTERN PyObject *_wrap_Environment_getBinDir(PyObject *self, PyObject *args)
   {
     try {
       result = ((ampl::Environment const *)arg1)->getBinDir();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::invalid_argument e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Environment_setBinName(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Environment *arg1 = (ampl::Environment *) 0 ;
+  fmt::CStringRef arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_setBinName" "', argument " "1"" of type '" "ampl::Environment *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Environment * >(argp1);
+  
+  arg2 = _PyString_AsString(swig_obj[0]);
+  
+  {
+    try {
+      (arg1)->setBinName(arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::invalid_argument e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Environment_getBinName(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Environment *arg1 = (ampl::Environment *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Environment_getBinName", 0, 0, 0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Environment, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Environment_getBinName" "', argument " "1"" of type '" "ampl::Environment const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Environment * >(argp1);
+  {
+    try {
+      result = ((ampl::Environment const *)arg1)->getBinName();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -63669,6 +63856,8 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Environment_methods[] = {
   { "put", _wrap_Environment_put, METH_VARARGS, "" },
   { "setBinDir", _wrap_Environment_setBinDir, METH_O, "" },
   { "getBinDir", _wrap_Environment_getBinDir, METH_NOARGS, "" },
+  { "setBinName", _wrap_Environment_setBinName, METH_O, "" },
+  { "getBinName", _wrap_Environment_getBinName, METH_NOARGS, "" },
   { "toString", _wrap_Environment_toString, METH_NOARGS, "" },
   { "begin", _wrap_Environment_begin, METH_NOARGS, "" },
   { "end", _wrap_Environment_end, METH_NOARGS, "" },

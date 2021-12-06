@@ -11,6 +11,18 @@ import os
 class TestEnvironment(unittest.TestCase):
     """Test Environment."""
 
+    def testEnvironmentInitialization(self):
+        from amplpy import Environment
+        env = Environment('binary_directory')
+        self.assertEqual('binary_directory', env.getBinDir())
+        env = Environment('binary_directory', 'binary_name')
+        self.assertEqual('binary_directory', env.getBinDir())
+        self.assertEqual('binary_name', env.getBinName())
+        env.setBinDir('binary_directory_2')
+        self.assertEqual('binary_directory_2', env.getBinDir())
+        env.setBinName('binary_name_2')
+        self.assertEqual('binary_name_2', env.getBinName())
+
     def testEnvironment(self):
         from amplpy import Environment, AMPL
         env1 = Environment()
