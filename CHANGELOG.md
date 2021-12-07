@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0 - 2021-12-XX
+- Update libampl to 2.0.7-0.
+- Allow users to specify the name of the AMPL executable
+
 ## 0.7.2 - 2021-12-01
 - Improve performance of many operations by moving code to the C++ layer.
 
