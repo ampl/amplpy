@@ -15,7 +15,7 @@ from .dataframe import DataFrame
 from .utils import multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
-__version__ = '0.8.0b0'
+__version__ = '0.8.0b1'
 
 import inflection
 for cls in [
