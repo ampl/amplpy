@@ -106,8 +106,8 @@ class AMPL(object):
                 raise
         else:
             self._impl = amplpython.AMPL(environment._impl)
-        self._errorhandler = None
-        self._outputhandler = None
+        self._error_handler = None
+        self._output_handler = None
         self._lock = Lock()
         self._langext = langext
         self.set_output_handler(OutputHandler())
@@ -232,7 +232,7 @@ class AMPL(object):
         """
         return Parameter(self._impl.getParameter(name))
 
-    def eval(self, amplstatements, **kwargs):
+    def eval(self, statements, **kwargs):
         """
         Parses AMPL code and evaluates it as a possibly empty sequence of AMPL
         declarations and statements.
@@ -250,7 +250,7 @@ class AMPL(object):
         using setErrorHandler.
 
         Args:
-          amplstatements: A collection of AMPL statements and declarations to
+          statements: A collection of AMPL statements and declarations to
           be passed to the interpreter.
 
         Raises:
@@ -259,23 +259,23 @@ class AMPL(object):
           interpreter is not running.
         """
         if self._langext is not None:
-            amplstatements = self._langext.translate(amplstatements, **kwargs)
-        self._impl.eval(amplstatements)
-        self._errorhandler_wrapper.check()
+            statements = self._langext.translate(statements, **kwargs)
+        self._impl.eval(statements)
+        self._error_handler_wrapper.check()
 
-    def get_output(self, amplstatements):
+    def get_output(self, statements):
         """
         Equivalent to :func:`~amplpy.AMPL.eval` but returns the output as a
         string.
 
         Args:
-          amplstatements: A collection of AMPL statements and declarations to
+          statements: A collection of AMPL statements and declarations to
           be passed to the interpreter.
 
         Returns:
           A string with the output.
         """
-        return self._impl.getOutput(amplstatements)
+        return self._impl.getOutput(statements)
 
     def reset(self):
         """
@@ -346,7 +346,7 @@ class AMPL(object):
             self._lock.acquire()
             try:
                 self._impl.read(filename)
-                self._errorhandler_wrapper.check()
+                self._error_handler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -376,7 +376,7 @@ class AMPL(object):
             self._lock.acquire()
             try:
                 self._impl.readData(filename)
-                self._errorhandler_wrapper.check()
+                self._error_handler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -386,12 +386,12 @@ class AMPL(object):
                     callback.run()
         Thread(target=async_call).start()
 
-    def eval_async(self, amplstatements, callback=None, **kwargs):
+    def eval_async(self, statements, callback=None, **kwargs):
         """
         Interpret the given AMPL statement asynchronously.
 
         Args:
-          amplstatements: A collection of AMPL statements and declarations to
+          statements: A collection of AMPL statements and declarations to
           be passed to the interpreter.
 
           callback: Callback to be executed when the statement has been
@@ -403,13 +403,14 @@ class AMPL(object):
           interpreter is not running.
         """
         if self._langext is not None:
-            amplstatements = self._langext.translate(amplstatements, **kwargs)
+            statements = self._langext.translate(
+                statements, **kwargs)
 
         def async_call():
             self._lock.acquire()
             try:
-                self._impl.eval(amplstatements)
-                self._errorhandler_wrapper.check()
+                self._impl.eval(statements)
+                self._error_handler_wrapper.check()
             except Exception:
                 self._lock.release()
                 raise
@@ -544,7 +545,7 @@ class AMPL(object):
                     fout.write(newmodel)
                     filename += '.translated'
         self._impl.read(filename)
-        self._errorhandler_wrapper.check()
+        self._error_handler_wrapper.check()
 
     def read_data(self, filename):
         """
@@ -562,7 +563,7 @@ class AMPL(object):
         """
         filename = str(filename)
         self._impl.readData(filename)
-        self._errorhandler_wrapper.check()
+        self._error_handler_wrapper.check()
 
     def get_value(self, scalar_expression):
         """
@@ -570,7 +571,7 @@ class AMPL(object):
         a string.
 
         Args:
-            scalarExpression: An AMPL expression which evaluates to a scalar
+            scalar_expression: An AMPL expression which evaluates to a scalar
             value.
 
         Returns:
@@ -586,7 +587,7 @@ class AMPL(object):
         Args:
             data: The dataframe containing the data to be assigned.
 
-            setName: The name of the set to which the indices values of the
+            set_name: The name of the set to which the indices values of the
             DataFrame are to be assigned.
 
         Raises:
@@ -607,10 +608,10 @@ class AMPL(object):
 
         .. code-block:: ampl
 
-            read table tableName;
+            read table table_name;
 
         Args:
-            tableName: Name of the table to be read.
+            table_name: Name of the table to be read.
         """
         self._impl.readTable(table_name)
 
@@ -621,10 +622,10 @@ class AMPL(object):
 
         .. code-block:: ampl
 
-            write table tableName;
+            write table table_name;
 
         Args:
-            tableName: Name of the table to be written.
+            table_name: Name of the table to be written.
         """
         self._impl.writeTable(table_name)
 
@@ -639,46 +640,46 @@ class AMPL(object):
         where e1, ..., en are the strings passed to the procedure.
 
         Args:
-            amplExpressions: Expressions to be evaluated.
+            ampl_expressions: Expressions to be evaluated.
         """
         exprs = list(map(str, ampl_expressions))
         self._impl.displayLst(exprs, len(exprs))
 
-    def set_output_handler(self, outputhandler):
+    def set_output_handler(self, output_handler):
         """
         Sets a new output handler.
 
         Args:
-            outputhandler: The function handling the AMPL output derived from
+            output_handler: The function handling the AMPL output derived from
             interpreting user commands.
         """
         class OutputHandlerInternal(amplpython.OutputHandler):
             def output(self, kind, msg):
-                outputhandler.output(kind, msg)
+                output_handler.output(kind, msg)
 
-        self._outputhandler = outputhandler
-        self._outputhandler_internal = OutputHandlerInternal()
+        self._output_handler = output_handler
+        self._output_handler_internal = OutputHandlerInternal()
         self._impl.setOutputHandler(
-            self._outputhandler_internal
+            self._output_handler_internal
         )
 
-    def set_error_handler(self, errorhandler):
+    def set_error_handler(self, error_handler):
         """
         Sets a new error handler.
 
         Args:
-            errorhandler: The object handling AMPL errors and warnings.
+            error_handler: The object handling AMPL errors and warnings.
         """
         class ErrorHandlerWrapper(ErrorHandler):
-            def __init__(self, errorhandler):
-                self.errorhandler = errorhandler
+            def __init__(self, error_handler):
+                self.error_handler = error_handler
                 self.last_exception = None
 
             def error(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
                     exception = AMPLException(exception)
                 try:
-                    self.errorhandler.error(exception)
+                    self.error_handler.error(exception)
                 except Exception as exp:
                     self.last_exception = exp
 
@@ -686,7 +687,7 @@ class AMPL(object):
                 if isinstance(exception, amplpython.AMPLException):
                     exception = AMPLException(exception)
                 try:
-                    self.errorhandler.warning(exception)
+                    self.error_handler.warning(exception)
                 except Exception as exp:
                     self.last_exception = exp
 
@@ -696,19 +697,19 @@ class AMPL(object):
                     self.last_exception = None
                     raise exp
 
-        errorhandler_wrapper = ErrorHandlerWrapper(errorhandler)
+        error_handler_wrapper = ErrorHandlerWrapper(error_handler)
 
         class InnerErrorHandler(amplpython.ErrorHandler):
             def error(self, exception):
-                errorhandler_wrapper.error(exception)
+                error_handler_wrapper.error(exception)
 
             def warning(self, exception):
-                errorhandler_wrapper.warning(exception)
+                error_handler_wrapper.warning(exception)
 
-        self._errorhandler = errorhandler
-        self._errorhandler_inner = InnerErrorHandler()
-        self._errorhandler_wrapper = errorhandler_wrapper
-        self._impl.setErrorHandler(self._errorhandler_inner)
+        self._error_handler = error_handler
+        self._error_handler_inner = InnerErrorHandler()
+        self._error_handler_wrapper = error_handler_wrapper
+        self._impl.setErrorHandler(self._error_handler_inner)
 
     def get_output_handler(self):
         """
@@ -717,7 +718,7 @@ class AMPL(object):
         Returns:
             The current output handler.
         """
-        return self._outputhandler
+        return self._output_handler
 
     def get_error_handler(self):
         """
@@ -726,7 +727,7 @@ class AMPL(object):
         Returns:
             The current error handler.
         """
-        return self._errorhandler
+        return self._error_handler
 
     def get_variables(self):
         """
