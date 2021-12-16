@@ -939,4 +939,40 @@ class AMPL(object):
         except RuntimeError as exp:
             print(exp)
 
-    getXData = get_data
+    # Aliases
+    _loadSession = _load_session
+    _startRecording = _start_recording
+    _stopRecording = _stop_recording
+    evalAsync = eval_async
+    exportData = export_data
+    exportModel = export_model
+    getConstraint = get_constraint
+    getConstraints = get_constraints
+    getCurrentObjective = get_current_objective
+    getData = get_data
+    getEntity = get_entity
+    getErrorHandler = get_error_handler
+    getObjective = get_objective
+    getObjectives = get_objectives
+    getOption = get_option
+    getOutput = get_output
+    getOutputHandler = get_output_handler
+    getParameter = get_parameter
+    getParameters = get_parameters
+    getSet = get_set
+    getSets = get_sets
+    getValue = get_value
+    getVariable = get_variable
+    getVariables = get_variables
+    isBusy = is_busy
+    isRunning = is_running
+    readAsync = read_async
+    readData = read_data
+    readDataAsync = read_data_async
+    readTable = read_table
+    setData = set_data
+    setErrorHandler = set_error_handler
+    setOption = set_option
+    setOutputHandler = set_output_handler
+    solveAsync = solve_async
+    writeTable = write_table

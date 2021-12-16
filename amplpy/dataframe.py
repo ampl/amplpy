@@ -33,6 +33,9 @@ class Row(BaseClass):
     def to_string(self):
         return str(list(self))
 
+    # Aliases
+    toString = to_string
+
 
 class Column(BaseClass):
     """
@@ -47,6 +50,10 @@ class Column(BaseClass):
 
     def to_list(self):
         return self._impl.toPyList()
+
+    # Aliases
+    toString = to_string
+    toList = to_list
 
 
 class DataFrame(BaseClass):
@@ -444,3 +451,22 @@ class DataFrame(BaseClass):
     @classmethod
     def _from_data_frame_ref(cls, df_ref):
         return cls(None, None, _impl=df_ref)
+
+    # Aliases
+    addColumn = add_column
+    addRow = add_row
+    fromDict = from_dict
+    fromNumpy = from_numpy
+    fromPandas = from_pandas
+    getColumn = get_column
+    getHeaders = get_headers
+    getNumCols = get_num_cols
+    getNumIndices = get_num_indices
+    getNumRows = get_num_rows
+    getRow = get_row
+    getRowByIndex = get_row_by_index
+    setColumn = set_column
+    setValues = set_values
+    toDict = to_dict
+    toList = to_list
+    toPandas = to_pandas

@@ -140,3 +140,8 @@ class Parameter(Entity):
                 self.set_values(DataFrame.from_numpy(values).to_list())
                 return
             Entity.set_values(self, values)
+
+    # Aliases
+    hasDefault = has_default
+    isSymbolic = is_symbolic
+    setValues = set_values

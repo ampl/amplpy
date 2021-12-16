@@ -204,3 +204,6 @@ class Variable(Entity):
         AMPL status if not `in`, otherwise solver status.
         """
         return self._impl.status()
+
+    # Aliases
+    setValue = set_value

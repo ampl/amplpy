@@ -200,3 +200,7 @@ class Constraint(Entity):
             return self._impl.val()
         else:
             return None
+
+    # Aliases
+    isLogical = is_logical
+    setDual = set_dual

@@ -86,3 +86,9 @@ class Environment(BaseClass):
         Get the name of the AMPL executable.
         """
         return self._impl.getBinName()
+
+    # Aliases
+    getBinDir = get_bin_dir
+    getBinName = get_bin_name
+    setBinDir = set_bin_dir
+    setBinName = set_bin_name

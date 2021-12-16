@@ -45,3 +45,9 @@ class AMPLException(Exception):
 
     def __str__(self):
         return self.what.lstrip('file: -').strip('\n')
+
+    # Aliases
+    getLineNumber = get_line_number
+    getMessage = get_message
+    getOffset = get_offset
+    getSourceName = get_source_name

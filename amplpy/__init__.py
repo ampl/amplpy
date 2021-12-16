@@ -20,16 +20,19 @@ from .environment import Environment
 from .ampl import AMPL
 __version__ = 'v0.8.0b2'
 
-for cls in [
+
+def _list_aliases():
+    classes = [
         BaseClass, OutputHandler, ErrorHandler,
         AMPLException, EntityMap, Runnable,
         Entity, Objective, Variable, Constraint, Set, Parameter,
-        Row, Column, DataFrame, Environment, AMPL]:
-    methods = list(dir(cls))
-    for method in methods:
-        if method.startswith('__'):
-            continue
-        cammel_method = inflection.camelize(method, False)
-        if cammel_method != method:
-            # print(cls, cammel_method, method)
-            setattr(cls, cammel_method, getattr(cls, method))
+        Row, Column, DataFrame, Environment, AMPL]
+    for cls in classes:
+        print(cls)
+        for method in list(dir(cls)):
+            if method.startswith('__'):
+                continue
+            cammel_method = inflection.camelize(method, False)
+            if cammel_method != method:
+                print('\t{} = {}'.format(cammel_method, method))
+                # setattr(cls, cammel_method, getattr(cls, method))

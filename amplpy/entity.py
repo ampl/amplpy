@@ -211,3 +211,10 @@ class Entity(BaseClass):
                 self._impl.setValuesDf(df._impl)
                 return
             raise TypeError
+
+    # Aliases
+    getIndexingSets = get_indexing_sets
+    getValues = get_values
+    isScalar = is_scalar
+    numInstances = num_instances
+    setValues = set_values
