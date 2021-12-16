@@ -116,7 +116,7 @@ class DataFrame(BaseClass):
                 list(index_names) + list(column_names),
                 len(index_names) + len(column_names)
             )
-            super().__init__(impl)
+            super(DataFrame, self).__init__(impl)
             for col in index:
                 if isinstance(col, tuple):
                     self.set_column(col[0], col[1])
@@ -125,7 +125,7 @@ class DataFrame(BaseClass):
                     self.set_column(col[0], col[1])
         else:
             impl = kwargs.get('_impl', None)
-            super().__init__(impl)
+            super(DataFrame, self).__init__(impl)
 
     def __iter__(self):
         # FIXME: C++ iterators for dataframes not working with SWIG.

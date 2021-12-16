@@ -29,7 +29,8 @@ class Environment(BaseClass):
             binary_directory = ""
         if binary_name is None:
             binary_name = ""
-        super().__init__(amplpython.Environment(binary_directory, binary_name))
+        super(Environment, self).__init__(
+            amplpython.Environment(binary_directory, binary_name))
 
     def __iter__(self):
         return EnvIterator(self._impl)

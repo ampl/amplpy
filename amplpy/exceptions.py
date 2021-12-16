@@ -11,7 +11,7 @@ class AMPLException(Exception):
     """
 
     def __init__(self, _impl):
-        super().__init__()
+        super(AMPLException, self).__init__()
         self._impl = _impl
         self.what = self._impl.what()
         self.source_name = _impl.getSourceName()
