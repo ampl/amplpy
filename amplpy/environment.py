@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+# from past.builtins import basestring
 
 from .iterators import EnvIterator
 from .base import BaseClass
@@ -14,20 +15,21 @@ class Environment(BaseClass):
     facilities to specify where to load the underlying AMPL interpreter.
     """
 
-    def __init__(self, binaryDirectory=None, binaryName=None):
+    def __init__(self, binary_directory=None, binary_name=None):
         """
         Constructor with ability to select the location of the AMPL binary.
         Note that if binaryDirectory is set, the automatic lookup for an AMPL
         executable will not be executed.
 
         Args:
-            binaryDirectory: The directory in which look for the AMPL Binary.
+            binary_directory: The directory in which look for the AMPL executable.
+            binary_name: The name of the AMPL executable.
         """
-        if binaryDirectory is None:
-            binaryDirectory = ""
-        if binaryName is None:
-            binaryName = ""
-        self._impl = amplpython.Environment(binaryDirectory, binaryName)
+        if binary_directory is None:
+            binary_directory = ""
+        if binary_name is None:
+            binary_name = ""
+        super().__init__(amplpython.Environment(binary_directory, binary_name))
 
     def __iter__(self):
         return EnvIterator(self._impl)
@@ -49,37 +51,37 @@ class Environment(BaseClass):
         Searches the current object for an environment variable called name and
         returns an iterator to it if found, otherwise it returns `None`.
         """
-        it = self._impl.find(name)
-        if it == self._impl.end():
+        iterator = self._impl.find(name)
+        if iterator == self._impl.end():
             return None
         else:
-            return it.second()
+            return iterator.second()
 
-    def setBinDir(self, binaryDirectory):
+    def set_bin_dir(self, binary_directory):
         """
         Set the location where AMPL API will search for the AMPL executable.
 
         Args:
-            binaryDirectory: The directory in which look for the AMPL Binary.
+            binary_directory: The directory in which look for the AMPL executable.
         """
-        self._impl.setBinDir(binaryDirectory)
+        self._impl.setBinDir(binary_directory)
 
-    def getBinDir(self):
+    def get_bin_dir(self):
         """
         Get the location where AMPL API will search for the AMPL executable.
         """
         return self._impl.getBinDir()
 
-    def setBinName(self, binaryName):
+    def set_bin_name(self, binary_name):
         """
         Set the name of the AMPL executable.
 
         Args:
-            binaryName: The name of the AMPL binary.
+            binary_name: The name of the AMPL executable.
         """
-        self._impl.setBinName(binaryName)
+        self._impl.setBinName(binary_name)
 
-    def getBinName(self):
+    def get_bin_name(self):
         """
         Get the name of the AMPL executable.
         """

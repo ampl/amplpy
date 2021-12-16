@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+from builtins import map
 from numbers import Real
+from past.builtins import basestring
 
 from .entity import Entity
 from .dataframe import DataFrame
@@ -33,14 +35,14 @@ class Parameter(Entity):
     def __setitem__(self, index, value):
         self.set(index, value)
 
-    def isSymbolic(self):
+    def is_symbolic(self):
         """
         Returns True if the parameter is declared as symbolic (can store both
         numerical and string values).
         """
         return self._impl.isSymbolic()
 
-    def hasDefault(self):
+    def has_default(self):
         """
         Check if the parameter has a default initial value. In case of the
         following AMPL code:
@@ -94,7 +96,7 @@ class Parameter(Entity):
             else:
                 raise TypeError
 
-    def setValues(self, values):
+    def set_values(self, values):
         """
         Assign the values (string or float) to the parameter instances with the
         specified indices, equivalent to the AMPL code:
@@ -135,6 +137,6 @@ class Parameter(Entity):
                 raise TypeError
         else:
             if np is not None and isinstance(values, np.ndarray):
-                self.setValues(DataFrame.fromNumpy(values).toList())
+                self.set_values(DataFrame.from_numpy(values).to_list())
                 return
-            Entity.setValues(self, values)
+            Entity.set_values(self, values)

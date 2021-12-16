@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+# from past.builtins import basestring
 
 from .entity import Entity
 
@@ -28,14 +29,14 @@ class Constraint(Entity):
     deleted from the underlying interpreter is accessed.
 
     To gain access to all the values in an entity (for all instances and all
-    suffixes for that entities), see :func:`~amplpy.Entity.getValues` and
+    suffixes for that entities), see :func:`~amplpy.Entity.get_values`/:func:`~amplpy.Entity.getValues` and
     the :class:`~amplpy.DataFrame` class.
     """
 
     def __init__(self, _impl):
         Entity.__init__(self, _impl, Constraint)
 
-    def isLogical(self):
+    def is_logical(self):
         """
         Check if the constraint is a logical constraint. Returns True if
         logical. The available suffixes differ between logical and non logical
@@ -174,7 +175,7 @@ class Constraint(Entity):
         """
         return self._impl.status()
 
-    def setDual(self, dual):
+    def set_dual(self, dual):
         """
         Set the value of the dual variable associated to this constraint (valid
         only if the constraint is scalar). Equivalent to the AMPL statement:
@@ -195,7 +196,7 @@ class Constraint(Entity):
         """
         Get the AMPL val suffix. Valid only for logical constraints.
         """
-        if self.isLogical():
+        if self.is_logical():
             return self._impl.val()
         else:
             return None

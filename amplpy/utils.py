@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring, unicode
-from sys import version_info
 
-from . import amplpython
-from .base import BaseClass
+# from builtins import map, range, object, zip, sorted
+from builtins import range
+# from past.builtins import basestring, unicode
 
 
 def register_magics(store_name='_ampl_cells', ampl_object=None):
@@ -46,8 +44,5 @@ def register_magics(store_name='_ampl_cells', ampl_object=None):
 
 
 def multidict(d):
-    try:
-        ncols = min(len(d[k]) for k in d)
-    except TypeError:
-        raise TypeError
+    ncols = min(len(d[k]) for k in d)
     return [list(d.keys())] + [{k: d[k][i] for k in d} for i in range(ncols)]

@@ -15,9 +15,12 @@ if platform.system().startswith(('Windows', 'MSYS', 'CYGWIN', 'MINGW')):
         else:
             dllfile = glob(lib64 + '/*.dll')[0]
         ctypes.CDLL(dllfile)
-    except:
-        pass
+    except Exception as exp:
+        raise exp
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'cppinterface'))
-from amplpython import *
-from amplpython import _READTABLE, _WRITETABLE
+try:
+    from amplpython import _READTABLE, _WRITETABLE
+    from amplpython import *
+except Exception as exp:
+    raise exp

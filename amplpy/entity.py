@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+from builtins import map
+# from past.builtins import basestring
 
 from .base import BaseClass
 from .dataframe import DataFrame
@@ -36,13 +38,13 @@ class Entity(BaseClass):
     - Parameters (see :class:`~amplpy.Parameter`)
     """
 
-    def __init__(self, _impl, wrapFunction=None):
+    def __init__(self, _impl, wrap_function=None):
         BaseClass.__init__(self, _impl)
-        self.wrapFunction = wrapFunction
+        self.wrap_function = wrap_function
 
     def __iter__(self):
-        assert self.wrapFunction is not None
-        return InstanceIterator(self._impl, self.wrapFunction)
+        assert self.wrap_function is not None
+        return InstanceIterator(self._impl, self.wrap_function)
 
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
@@ -50,7 +52,7 @@ class Entity(BaseClass):
         return self.get(*index)
 
     def __setitem__(self, index, value):
-        self.__getitem__(index).setValues(value)
+        self.__getitem__(index).set_values(value)
 
     def get(self, *index):
         """
@@ -59,13 +61,13 @@ class Entity(BaseClass):
         Returns:
             The corresponding instance.
         """
-        assert self.wrapFunction is not None
+        assert self.wrap_function is not None
         if len(index) == 1 and isinstance(index[0], (tuple, list)):
             index = index[0]
         if len(index) == 0:
-            return self.wrapFunction(self._impl.get())
+            return self.wrap_function(self._impl.get())
         else:
-            return self.wrapFunction(self._impl.get(index))
+            return self.wrap_function(self._impl.get(index))
 
     def find(self, *index):
         """
@@ -74,20 +76,20 @@ class Entity(BaseClass):
         Returns:
             The wanted instance if found, otherwise it returns `None`.
         """
-        assert self.wrapFunction is not None
+        assert self.wrap_function is not None
         if len(index) == 1 and isinstance(index[0], (tuple, list)):
             index = index[0]
-        it = self._impl.find(index)
-        if it == self._impl.end():
+        iterator = self._impl.find(index)
+        if iterator == self._impl.end():
             return None
         else:
-            return self.wrapFunction(it.second())
+            return self.wrap_function(iterator.second())
 
     def instances(self):
         """
         Get all the instances in this entity..
         """
-        return InstanceIterator(self._impl, self.wrapFunction)
+        return InstanceIterator(self._impl, self.wrap_function)
 
     def name(self):
         """
@@ -116,7 +118,7 @@ class Entity(BaseClass):
         """
         return self._impl.indexarity()
 
-    def isScalar(self):
+    def is_scalar(self):
         """
         Check whether this entity is scalar. Equivalent to testing whether
         :func:`~amplpy.Entity.indexarity` is equal to zero.
@@ -126,13 +128,13 @@ class Entity(BaseClass):
         """
         return self._impl.isScalar()
 
-    def numInstances(self):
+    def num_instances(self):
         """
         Get the number of instances in this entity.
         """
         return self._impl.numInstances()
 
-    def getIndexingSets(self):
+    def get_indexing_sets(self):
         """
         Get the AMPL string representation of the sets on which this entity is
         indexed. The obtained vector can be modified without any effect to the
@@ -153,7 +155,7 @@ class Entity(BaseClass):
         """
         return self._impl.xref()
 
-    def getValues(self, suffixes=None):
+    def get_values(self, suffixes=None):
         """
         If a list of suffixes is provided, get the specified suffixes value for
         all instances. Otherwise, get all the principal values of this entity.
@@ -171,14 +173,14 @@ class Entity(BaseClass):
             instances.
         """
         if suffixes is None:
-            return DataFrame._fromDataFrameRef(self._impl.getValues())
+            return DataFrame._from_data_frame_ref(self._impl.getValues())
         else:
             suffixes = list(map(str, suffixes))
-            return DataFrame._fromDataFrameRef(
+            return DataFrame._from_data_frame_ref(
                 self._impl.getValuesLst(suffixes, len(suffixes))
             )
 
-    def setValues(self, data):
+    def set_values(self, data):
         """
         Set the values of this entiy to the correponding values of a
         DataFrame indexed over the same sets (or a subset).
@@ -202,10 +204,10 @@ class Entity(BaseClass):
         if isinstance(data, DataFrame):
             self._impl.setValuesDf(data._impl)
         elif isinstance(data, dict):
-            self._impl.setValuesDf(DataFrame.fromDict(data)._impl)
+            self._impl.setValuesDf(DataFrame.from_dict(data)._impl)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                df = DataFrame.fromPandas(data)
+                df = DataFrame.from_pandas(data)
                 self._impl.setValuesDf(df._impl)
                 return
             raise TypeError

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
+
+# from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
 
 from .entity import Entity
@@ -62,7 +63,7 @@ class Variable(Entity):
         else:
             item.setValues(value)
 
-    def setValue(self, value):
+    def set_value(self, value):
         """
         Set the current value of this variable (does not fix it),
         equivalent to the AMPL command `let`.

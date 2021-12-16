@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
 
-from . import amplpython
+# from builtins import map, range, object, zip, sorted
+# from past.builtins import basestring
 
 
 class ErrorHandler:
@@ -15,17 +14,18 @@ class ErrorHandler:
     interpreter will then report all errors and warnings through this
     interface as :class:`~amplpy.AMPLException` objects.
     """
-    def error(self, amplexception):
+
+    def error(self, exception):
         """
         Receives notification of an error.
         """
-        msg = '\t'+str(amplexception).replace('\n', '\n\t')
+        msg = '\t'+str(exception).replace('\n', '\n\t')
         print('Error:\n{:s}'.format(msg))
-        raise amplexception
+        raise exception
 
-    def warning(self, amplexception):
+    def warning(self, exception):
         """
         Receives notification of a warning.
         """
-        msg = '\t'+str(amplexception).replace('\n', '\n\t')
+        msg = '\t'+str(exception).replace('\n', '\n\t')
         print('Warning:\n{:s}'.format(msg))

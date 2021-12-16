@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
+import sys
+from threading import Thread, Lock
+
+# from builtins import map, range, object, zip, sorted
+from builtins import map, object
 from past.builtins import basestring
 
-from threading import Thread, Lock
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
 from .objective import Objective
@@ -29,28 +32,33 @@ class AMPL(object):
     An object of this class can be used to do the following tasks:
 
     - Run AMPL code. See :func:`~amplpy.AMPL.eval` and
-      :func:`~amplpy.AMPL.evalAsync`.
+      :func:`~amplpy.AMPL.eval_async` / :func:`~amplpy.AMPL.evalAsync`.
     - Read models and data from files. See :func:`~amplpy.AMPL.read`,
-      :func:`~amplpy.AMPL.readData`, :func:`~amplpy.AMPL.readAsync`, and
-      :func:`~amplpy.AMPL.readDataAsync`.
+      :func:`~amplpy.AMPL.read_data` / :func:`~amplpy.AMPL.readData`,
+      :func:`~amplpy.AMPL.read_async` / :func:`~amplpy.AMPL.readAsync`, and
+      :func:`~amplpy.AMPL.read_data_async` / :func:`~amplpy.AMPL.readDataAsync`.
     - Solve optimization problems constructed from model and data (see
-      :func:`~amplpy.AMPL.solve` and :func:`~amplpy.AMPL.solveAsync`).
+      :func:`~amplpy.AMPL.solve` and :func:`~amplpy.AMPL.solve_async` / :func:`~amplpy.AMPL.solveAsync`).
     - Access single Elements of an optimization problem. See
-      :func:`~amplpy.AMPL.getVariable`, :func:`~amplpy.AMPL.getConstraint`,
-      :func:`~amplpy.AMPL.getObjective`, :func:`~amplpy.AMPL.getSet`,
-      and :func:`~amplpy.AMPL.getParameter`.
+      :func:`~amplpy.AMPL.get_variable` / :func:`~amplpy.AMPL.getVariable`,
+      :func:`~amplpy.AMPL.get_constraint` / :func:`~amplpy.AMPL.getConstraint`,
+      :func:`~amplpy.AMPL.get_objective` / :func:`~amplpy.AMPL.getObjective`,
+      :func:`~amplpy.AMPL.get_set` / :func:`~amplpy.AMPL.getSet`,
+      and :func:`~amplpy.AMPL.get_parameter` / :func:`~amplpy.AMPL.getParameter`.
     - Access lists of available entities of an optimization problem. See
-      :func:`~amplpy.AMPL.getVariables`, :func:`~amplpy.AMPL.getConstraints`,
-      :func:`~amplpy.AMPL.getObjectives`, :func:`~amplpy.AMPL.getSets`,
-      and :func:`~amplpy.AMPL.getParameters`.
+      :func:`~amplpy.AMPL.get_variables` / :func:`~amplpy.AMPL.getVariables`,
+      :func:`~amplpy.AMPL.get_constraints` / :func:`~amplpy.AMPL.getConstraints`,
+      :func:`~amplpy.AMPL.get_objectives` / :func:`~amplpy.AMPL.getObjectives`,
+      :func:`~amplpy.AMPL.get_sets` / :func:`~amplpy.AMPL.getSets`,
+      and :func:`~amplpy.AMPL.get_parameters` / :func:`~amplpy.AMPL.getParameters`.
 
     Error handling is two-faced:
 
     - Errors coming from the underlying AMPL translator (e.g. syntax errors and
       warnings obtained calling the eval method) are handled by
       the :class:`~amplpy.ErrorHandler` which can be set and get via
-      :func:`~amplpy.AMPL.getErrorHandler` and
-      :func:`~amplpy.AMPL.setErrorHandler`.
+      :func:`~amplpy.AMPL.get_error_handler` / :func:`~amplpy.AMPL.getErrorHandler` and
+      :func:`~amplpy.AMPL.set_error_handler` / :func:`~amplpy.AMPL.setErrorHandler`.
     - Generic errors coming from misusing the API, which are detected in
       Python, are thrown as exceptions.
 
@@ -61,8 +69,8 @@ class AMPL(object):
     handled implementing the abstract class :class:`~amplpy.OutputHandler`.
     The (only) method is called at each block of output from the translator.
     The current output handler can be accessed and set via
-    :func:`~amplpy.AMPL.getOutputHandler` and
-    :func:`~amplpy.AMPL.setOutputHandler`.
+    :func:`~amplpy.AMPL.get_output_handler` / :func:`~amplpy.AMPL.getOutputHandler` and
+    :func:`~amplpy.AMPL.set_output_handler` / :func:`~amplpy.AMPL.setOutputHandler`.
     """
 
     def __init__(self, environment=None, langext=None):
@@ -82,9 +90,8 @@ class AMPL(object):
         if environment is None:
             try:
                 self._impl = amplpython.AMPL()
-            except RuntimeError as e:
-                from sys import stderr
-                if str(e).startswith('AMPL could not be started'):
+            except RuntimeError as exp:
+                if str(exp).startswith('AMPL could not be started'):
                     message = (
                         '''Please make sure that the AMPL folder is in '''
                         '''the system search path, or\n'''
@@ -92,10 +99,10 @@ class AMPL(object):
                         '''    AMPL(Environment('full path to the AMPL '''
                         '''installation directory'))'''
                     )
-                    print('*' * 79, file=stderr)
+                    print('*' * 79, file=sys.stderr)
                     for line in message.split('\n'):
-                        print('* {:75} *'.format(line), file=stderr)
-                    print('*' * 79, file=stderr)
+                        print('* {:75} *'.format(line), file=sys.stderr)
+                    print('*' * 79, file=sys.stderr)
                 raise
         else:
             self._impl = amplpython.AMPL(environment._impl)
@@ -103,8 +110,8 @@ class AMPL(object):
         self._outputhandler = None
         self._lock = Lock()
         self._langext = langext
-        self.setOutputHandler(OutputHandler())
-        self.setErrorHandler(ErrorHandler())
+        self.set_output_handler(OutputHandler())
+        self.set_error_handler(ErrorHandler())
 
     def __del__(self):
         """
@@ -114,7 +121,7 @@ class AMPL(object):
         """
         self.close()
 
-    def getData(self, *statements):
+    def get_data(self, *statements):
         """
         Get the data corresponding to the display statements. The statements
         can be AMPL expressions, or entities. It captures the equivalent of the
@@ -145,11 +152,11 @@ class AMPL(object):
             command in tabular form.
         """
         # FIXME: only works for the first statement.
-        return DataFrame._fromDataFrameRef(
+        return DataFrame._from_data_frame_ref(
             self._impl.getData(list(statements), len(statements))
         )
 
-    def getEntity(self, name):
+    def get_entity(self, name):
         """
         Get entity corresponding to the specified name (looks for it in all
         types of entities).
@@ -165,7 +172,7 @@ class AMPL(object):
         """
         return Entity(self._impl.getEntity(name))
 
-    def getVariable(self, name):
+    def get_variable(self, name):
         """
         Get the variable with the corresponding name.
 
@@ -177,7 +184,7 @@ class AMPL(object):
         """
         return Variable(self._impl.getVariable(name))
 
-    def getConstraint(self, name):
+    def get_constraint(self, name):
         """
         Get the constraint with the corresponding name.
 
@@ -189,7 +196,7 @@ class AMPL(object):
         """
         return Constraint(self._impl.getConstraint(name))
 
-    def getObjective(self, name):
+    def get_objective(self, name):
         """
          Get the objective with the corresponding name.
 
@@ -201,7 +208,7 @@ class AMPL(object):
         """
         return Objective(self._impl.getObjective(name))
 
-    def getSet(self, name):
+    def get_set(self, name):
         """
         Get the set with the corresponding name.
 
@@ -213,7 +220,7 @@ class AMPL(object):
         """
         return Set(self._impl.getSet(name))
 
-    def getParameter(self, name):
+    def get_parameter(self, name):
         """
         Get the parameter with the corresponding name.
 
@@ -256,7 +263,7 @@ class AMPL(object):
         self._impl.eval(amplstatements)
         self._errorhandler_wrapper.check()
 
-    def getOutput(self, amplstatements):
+    def get_output(self, amplstatements):
         """
         Equivalent to :func:`~amplpy.AMPL.eval` but returns the output as a
         string.
@@ -288,13 +295,13 @@ class AMPL(object):
         except AttributeError:
             pass
 
-    def isRunning(self):
+    def is_running(self):
         """
         Returns true if the underlying engine is running.
         """
         return self._impl.isRunning()
 
-    def isBusy(self):
+    def is_busy(self):
         """
         Returns true if the underlying engine is doing an async operation.
         """
@@ -302,8 +309,7 @@ class AMPL(object):
         if self._lock.acquire(False):
             self._lock.release()
             return False
-        else:
-            return True
+        return True
 
     def solve(self):
         """
@@ -314,7 +320,7 @@ class AMPL(object):
         """
         self._impl.solve()
 
-    def readAsync(self, filename, callback=None, **kwargs):
+    def read_async(self, filename, callback=None, **kwargs):
         """
         Interprets the specified file asynchronously, interpreting it as a
         model or a script file. As a side effect, it invalidates all entities
@@ -350,7 +356,7 @@ class AMPL(object):
                     callback.run()
         Thread(target=async_call).start()
 
-    def readDataAsync(self, filename, callback=None):
+    def read_data_async(self, filename, callback=None):
         """
         Interprets the specified data file asynchronously. When interpreting is
         over, the specified callback is called. The file is interpreted as
@@ -365,6 +371,7 @@ class AMPL(object):
             interpreted.
         """
         filename = str(filename)
+
         def async_call():
             self._lock.acquire()
             try:
@@ -379,7 +386,7 @@ class AMPL(object):
                     callback.run()
         Thread(target=async_call).start()
 
-    def evalAsync(self, amplstatements, callback=None, **kwargs):
+    def eval_async(self, amplstatements, callback=None, **kwargs):
         """
         Interpret the given AMPL statement asynchronously.
 
@@ -412,7 +419,7 @@ class AMPL(object):
                     callback.run()
         Thread(target=async_call).start()
 
-    def solveAsync(self, callback=None):
+    def solve_async(self, callback=None):
         """
         Solve the current model asynchronously.
 
@@ -462,10 +469,9 @@ class AMPL(object):
         """
         if path is None:
             return self._impl.cd()
-        else:
-            return self._impl.cd(path)
+        return self._impl.cd(path)
 
-    def setOption(self, name, value):
+    def set_option(self, name, value):
         """
         Set an AMPL option to a specified value.
 
@@ -490,7 +496,7 @@ class AMPL(object):
         else:
             raise TypeError
 
-    def getOption(self, name):
+    def get_option(self, name):
         """
          Get the current value of the specified option. If the option does not
          exist, returns None.
@@ -540,7 +546,7 @@ class AMPL(object):
         self._impl.read(filename)
         self._errorhandler_wrapper.check()
 
-    def readData(self, filename):
+    def read_data(self, filename):
         """
         Interprets the specified file as an AMPL data file. As a side effect,
         it invalidates all entities (as the passed file can contain any
@@ -558,7 +564,7 @@ class AMPL(object):
         self._impl.readData(filename)
         self._errorhandler_wrapper.check()
 
-    def getValue(self, scalarExpression):
+    def get_value(self, scalar_expression):
         """
         Get a scalar value from the underlying AMPL interpreter, as a double or
         a string.
@@ -570,9 +576,9 @@ class AMPL(object):
         Returns:
             The value of the expression.
         """
-        return self._impl.getValue(scalarExpression)
+        return self._impl.getValue(scalar_expression)
 
-    def setData(self, data, setName=None):
+    def set_data(self, data, set_name=None):
         """
         Assign the data in the dataframe to the AMPL entities with the names
         corresponding to the column names.
@@ -588,13 +594,13 @@ class AMPL(object):
         """
         if not isinstance(data, DataFrame):
             if pd is not None and isinstance(data, pd.DataFrame):
-                data = DataFrame.fromPandas(data)
-        if setName is None:
+                data = DataFrame.from_pandas(data)
+        if set_name is None:
             self._impl.setData(data._impl)
         else:
-            self._impl.setData(data._impl, setName)
+            self._impl.setData(data._impl, set_name)
 
-    def readTable(self, tableName):
+    def read_table(self, table_name):
         """
         Read the table corresponding to the specified name, equivalent to the
         AMPL statement:
@@ -606,9 +612,9 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be read.
         """
-        self._impl.readTable(tableName)
+        self._impl.readTable(table_name)
 
-    def writeTable(self, tableName):
+    def write_table(self, table_name):
         """
         Write the table corresponding to the specified name, equivalent to the
         AMPL statement
@@ -620,9 +626,9 @@ class AMPL(object):
         Args:
             tableName: Name of the table to be written.
         """
-        self._impl.writeTable(tableName)
+        self._impl.writeTable(table_name)
 
-    def display(self, *amplExpressions):
+    def display(self, *ampl_expressions):
         """
         Writes on the current OutputHandler the outcome of the AMPL statement.
 
@@ -635,10 +641,10 @@ class AMPL(object):
         Args:
             amplExpressions: Expressions to be evaluated.
         """
-        exprs = list(map(str, amplExpressions))
+        exprs = list(map(str, ampl_expressions))
         self._impl.displayLst(exprs, len(exprs))
 
-    def setOutputHandler(self, outputhandler):
+    def set_output_handler(self, outputhandler):
         """
         Sets a new output handler.
 
@@ -656,7 +662,7 @@ class AMPL(object):
             self._outputhandler_internal
         )
 
-    def setErrorHandler(self, errorhandler):
+    def set_error_handler(self, errorhandler):
         """
         Sets a new error handler.
 
@@ -673,21 +679,22 @@ class AMPL(object):
                     exception = AMPLException(exception)
                 try:
                     self.errorhandler.error(exception)
-                except Exception as e:
-                    self.last_exception = e
+                except Exception as exp:
+                    self.last_exception = exp
 
             def warning(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
                     exception = AMPLException(exception)
                 try:
                     self.errorhandler.warning(exception)
-                except Exception as e:
-                    self.last_exception = e
+                except Exception as exp:
+                    self.last_exception = exp
 
             def check(self):
-                if self.last_exception is not None:
-                    e, self.last_exception = self.last_exception, None
-                    raise e
+                if isinstance(self.last_exception, Exception):
+                    exp = self.last_exception
+                    self.last_exception = None
+                    raise exp
 
         errorhandler_wrapper = ErrorHandlerWrapper(errorhandler)
 
@@ -703,7 +710,7 @@ class AMPL(object):
         self._errorhandler_wrapper = errorhandler_wrapper
         self._impl.setErrorHandler(self._errorhandler_inner)
 
-    def getOutputHandler(self):
+    def get_output_handler(self):
         """
         Get the current output handler.
 
@@ -712,7 +719,7 @@ class AMPL(object):
         """
         return self._outputhandler
 
-    def getErrorHandler(self):
+    def get_error_handler(self):
         """
         Get the current error handler.
 
@@ -721,42 +728,42 @@ class AMPL(object):
         """
         return self._errorhandler
 
-    def getVariables(self):
+    def get_variables(self):
         """
         Get all the variables declared.
         """
         variables = self._impl.getVariables()
         return EntityMap(variables, Variable)
 
-    def getConstraints(self):
+    def get_constraints(self):
         """
         Get all the constraints declared.
         """
         constraints = self._impl.getConstraints()
         return EntityMap(constraints, Constraint)
 
-    def getObjectives(self):
+    def get_objectives(self):
         """
         Get all the objectives declared.
         """
         objectives = self._impl.getObjectives()
         return EntityMap(objectives, Objective)
 
-    def getSets(self):
+    def get_sets(self):
         """
         Get all the sets declared.
         """
         sets = self._impl.getSets()
         return EntityMap(sets, Set)
 
-    def getParameters(self):
+    def get_parameters(self):
         """
         Get all the parameters declared.
         """
         parameters = self._impl.getParameters()
         return EntityMap(parameters, Parameter)
 
-    def getCurrentObjective(self):
+    def get_current_objective(self):
         """
         Get the the current objective. Returns `None` if no objective is set.
         """
@@ -764,103 +771,121 @@ class AMPL(object):
         if name == '':
             return None
         else:
-            return self.getObjective(name)
+            return self.get_objective(name)
 
     def _var(self):
         """
         Get/Set a variable.
         """
         class Variables(object):
-            def __getitem__(_self, name):
-                return self.getVariable(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __setitem__(_self, name, value):
+            def __getitem__(self, name):
+                return self.ampl.get_variable(name)
+
+            def __setitem__(self, name, value):
                 if isinstance(value, (float, int, basestring)):
-                    self.getVariable(name).setValue(value)
+                    self.ampl.get_variable(name).set_value(value)
                 else:
-                    self.getVariable(name).setValues(value)
+                    self.ampl.get_variable(name).set_values(value)
 
-            def __iter__(_self):
-                return self.getVariables()
+            def __iter__(self):
+                return self.ampl.get_variables()
 
-        return Variables()
+        return Variables(self)
 
     def _con(self):
         """
         Get/Set a constraint.
         """
         class Constraints(object):
-            def __getitem__(_self, name):
-                return self.getConstraint(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __setitem__(_self, name, value):
-                self.getConstraint(name).setDual(value)
+            def __getitem__(self, name):
+                return self.ampl.get_constraint(name)
 
-            def __iter__(_self):
-                return self.getConstraints()
+            def __setitem__(self, name, value):
+                self.ampl.get_constraint(name).set_dual(value)
 
-        return Constraints()
+            def __iter__(self):
+                return self.ampl.get_constraints()
+
+        return Constraints(self)
 
     def _obj(self):
         """
         Get an objective.
         """
         class Objectives(object):
-            def __getitem__(_self, name):
-                return self.getObjective(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __iter__(_self):
-                return self.getObjectives()
+            def __getitem__(self, name):
+                return self.ampl.get_objective(name)
 
-        return Objectives()
+            def __iter__(self):
+                return self.ampl.get_objectives()
+
+        return Objectives(self)
 
     def _set(self):
         """
         Get/Set a set.
         """
         class Sets(object):
-            def __getitem__(_self, name):
-                return self.getSet(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __setitem__(_self, name, values):
-                self.getSet(name).setValues(values)
+            def __getitem__(self, name):
+                return self.ampl.get_set(name)
 
-            def __iter__(_self):
-                return self.getSets()
+            def __setitem__(self, name, values):
+                self.ampl.get_set(name).set_values(values)
 
-        return Sets()
+            def __iter__(self):
+                return self.ampl.get_sets()
+
+        return Sets(self)
 
     def _param(self):
         """
         Get/Set a parameter.
         """
         class Parameters(object):
-            def __getitem__(_self, name):
-                return self.getParameter(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __setitem__(_self, name, value):
+            def __getitem__(self, name):
+                return self.ampl.get_parameter(name)
+
+            def __setitem__(self, name, value):
                 if isinstance(value, (float, int, basestring)):
-                    self.getParameter(name).set(value)
+                    self.ampl.get_parameter(name).set(value)
                 else:
-                    self.getParameter(name).setValues(value)
+                    self.ampl.get_parameter(name).set_values(value)
 
-            def __iter__(_self):
-                return self.getParameters()
+            def __iter__(self):
+                return self.ampl.get_parameters()
 
-        return Parameters()
+        return Parameters(self)
 
     def _option(self):
         """
         Get/Set an option.
         """
         class Options(object):
-            def __getitem__(_self, name):
-                return self.getOption(name)
+            def __init__(self, ampl):
+                self.ampl = ampl
 
-            def __setitem__(_self, name, value):
-                self.setOption(name, value)
+            def __getitem__(self, name):
+                return self.ampl.get_option(name)
 
-        return Options()
+            def __setitem__(self, name, value):
+                self.ampl.set_option(name, value)
+
+        return Options(self)
 
     var = property(_var)
     con = property(_con)
@@ -869,7 +894,7 @@ class AMPL(object):
     param = property(_param)
     option = property(_option)
 
-    def exportModel(self, modfile):
+    def export_model(self, modfile):
         """
         Create a .mod file with the model that has been loaded.
 
@@ -879,7 +904,7 @@ class AMPL(object):
         """
         self._impl.exportModel(modfile)
 
-    def exportData(self, datfile):
+    def export_data(self, datfile):
         """
         Create a .dat file with the data that has been loaded.
 
@@ -889,106 +914,29 @@ class AMPL(object):
         """
         self._impl.exportData(datfile)
 
-    def exportGurobiModel(self, gurobiDriver='gurobi', verbose=False):
-        """
-        Export the model to Gurobi as a gurobipy.Model object.
-
-        Args:
-            gurobiDriver: The name or the path of the Gurobi solver driver.
-            verbose: Whether should generate verbose output.
-
-        Returns:
-            A :class:`gurobipy.Model` object with the model loaded.
-        """
-        from gurobipy import GRB, read
-        from tempfile import mkdtemp
-        from shutil import rmtree
-        from os import path
-        import sys
-        if (sys.version_info > (3, 0)):
-            from io import StringIO
-        else:
-            from io import BytesIO as StringIO
-        tmp_dir = mkdtemp()
-        model_file = path.join(tmp_dir, 'model.mps')
-
-        previous = {
-            'solver': self.getOption('solver') or '',
-            'gurobi_auxfiles': self.getOption('auxfiles') or '',
-            'gurobi_options': self.getOption('gurobi_options') or '',
-        }
-        temporary = {
-            'solver': gurobiDriver,
-            'gurobi_auxfiles': 'rc',
-            'gurobi_options': '''
-                writeprob={}
-                timelim=0
-                presolve=0
-                heurfrac=0
-                outlev=0
-            '''.format(model_file)
-        }
-
-        for option in temporary:
-            self.setOption(option, temporary[option])
-
-        output = self.getOutput('solve;')
-        if not path.isfile(model_file):
-            raise RuntimeError(output)
-
-        for option in previous:
-            self.setOption(option, previous[option])
-
-        text_trap = StringIO()
-        stdout = sys.stdout
-        sys.stdout = text_trap
-        model = read(model_file)
-        sys.stdout = stdout
-        if verbose:
-            print(text_trap.getvalue())
-        if model_file.endswith('.mps'):
-            if not self.getCurrentObjective().minimization():
-                model.ModelSense = GRB.MAXIMIZE
-                model.setObjective(- model.getObjective())
-        model.update()
-        rmtree(tmp_dir)
-        return model
-
-    def importGurobiSolution(self, grbmodel):
-        """
-        Import the solution from a gurobipy.Model object.
-
-        Args:
-            grbmodel: A :class:`gurobipy.Model` object with the model solved.
-        """
-        self.eval(''.join(
-            'let {} := {};'.format(var.VarName, var.X)
-            for var in grbmodel.getVars()
-            if '$' not in var.VarName
-        ))
-        # FIXME: retrieve other attributes as well
-
-    def _startRecording(self, filename):
+    def _start_recording(self, filename):
         """
         Start recording the session to a file for debug purposes.
         """
         filename = str(filename)
-        self.setOption('_log_file_name', filename)
-        self.setOption('_log_input_only', True)
-        self.setOption('_log', True)
+        self.set_option('_log_file_name', filename)
+        self.set_option('_log_input_only', True)
+        self.set_option('_log', True)
 
-    def _stopRecording(self):
+    def _stop_recording(self):
         """
         Stop recording the session.
         """
-        self.setOption('_log', False)
+        self.set_option('_log', False)
 
-    def _loadSession(self, filename):
+    def _load_session(self, filename):
         """
         Load a recorded session.
         """
         filename = str(filename)
         try:
             self.eval(open(filename).read())
-        except RuntimeError as e:
-            print(e)
+        except RuntimeError as exp:
+            print(exp)
+
+    getXData = get_data

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+from builtins import map, range, zip
 from numbers import Real
+from past.builtins import basestring
 
 from .base import BaseClass
 from .iterators import RowIterator, ColIterator
@@ -22,16 +24,13 @@ class Row(BaseClass):
     Represents a row in a :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, _impl):
-        self._impl = _impl
-
     def __iter__(self):
         return RowIterator(self._impl)
 
     def __getitem__(self, key):
         return self._impl.getIndex(key)
 
-    def toString(self):
+    def to_string(self):
         return str(list(self))
 
 
@@ -40,16 +39,13 @@ class Column(BaseClass):
     Represents a column in a :class:`~amplpy.DataFrame`.
     """
 
-    def __init__(self, _impl):
-        self._impl = _impl
-
     def __iter__(self):
         return ColIterator(self._impl)
 
-    def toString(self):
-        return str(self.toList())
+    def to_string(self):
+        return str(self.to_list())
 
-    def toList(self):
+    def to_list(self):
         return self._impl.toPyList()
 
 
@@ -108,25 +104,27 @@ class DataFrame(BaseClass):
                 col[0] if isinstance(col, tuple) else col
                 for col in columns
             ]
-            self._impl = amplpython.DataFrame.factory(
+            impl = amplpython.DataFrame.factory(
                 len(index_names),
                 list(index_names) + list(column_names),
                 len(index_names) + len(column_names)
             )
+            super().__init__(impl)
             for col in index:
                 if isinstance(col, tuple):
-                    self.setColumn(col[0], col[1])
+                    self.set_column(col[0], col[1])
             for col in columns:
                 if isinstance(col, tuple):
-                    self.setColumn(col[0], col[1])
+                    self.set_column(col[0], col[1])
         else:
-            self._impl = kwargs.get('_impl', None)
+            impl = kwargs.get('_impl', None)
+            super().__init__(impl)
 
     def __iter__(self):
         # FIXME: C++ iterators for dataframes not working with SWIG.
-        return (self.getRowByIndex(i) for i in range(self.getNumRows()))
+        return (self.get_row_by_index(i) for i in range(self.get_num_rows()))
 
-    def getNumCols(self):
+    def get_num_cols(self):
         """
         Get the total number of columns in this dataframe (indexarity + number
         of values).
@@ -136,7 +134,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumCols()
 
-    def getNumRows(self):
+    def get_num_rows(self):
         """
         Get the number of data rows in this dataframe.
 
@@ -145,7 +143,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumRows()
 
-    def getNumIndices(self):
+    def get_num_indices(self):
         """
         Get the number of indices (the indexarity) of this dataframe.
 
@@ -154,7 +152,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumIndices()
 
-    def addRow(self, *value):
+    def add_row(self, *value):
         """
          Add a row to the DataFrame. The size of the tuple must be equal to the
          total number of columns in the dataframe.
@@ -166,10 +164,10 @@ class DataFrame(BaseClass):
         """
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
-        assert len(value) == self.getNumCols()
+        assert len(value) == self.get_num_cols()
         self._impl.addRow(tuple(value))
 
-    def addColumn(self, header, values=[]):
+    def add_column(self, header, values=None):
         """
         Add a new column with the corresponding header and values to the
         dataframe.
@@ -180,10 +178,12 @@ class DataFrame(BaseClass):
             values: A list of size :func:`~amplpy.DataFrame.getNumRows` with
             all the values of the new column.
         """
+        if values is None:
+            values = []
         if len(values) == 0:
             self._impl.addColumn(header)
         else:
-            assert len(values) == self.getNumRows()
+            assert len(values) == self.get_num_rows()
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))
                 self._impl.addColumnStr(header, values)
@@ -193,7 +193,7 @@ class DataFrame(BaseClass):
             else:
                 raise NotImplementedError
 
-    def getColumn(self, header):
+    def get_column(self, header):
         """
         Get the specified column as a view object.
 
@@ -202,7 +202,7 @@ class DataFrame(BaseClass):
         """
         return Column(self._impl.getColumn(header))
 
-    def setColumn(self, header, values):
+    def set_column(self, header, values):
         """
         Set the values of a column.
 
@@ -223,7 +223,7 @@ class DataFrame(BaseClass):
         # else:
         #     raise NotImplementedError
 
-    def getRow(self, key):
+    def get_row(self, key):
         """
         Get a row by value of the indexing columns. If the index is not
         specified, gets the only row of a dataframe with no indexing columns.
@@ -236,7 +236,7 @@ class DataFrame(BaseClass):
         """
         return Row(self._impl.getRowTpl(key))
 
-    def getRowByIndex(self, index):
+    def get_row_by_index(self, index):
         """
         Get row by numeric index.
 
@@ -248,7 +248,7 @@ class DataFrame(BaseClass):
         """
         return Row(self._impl.getRowByIndex(index))
 
-    def getHeaders(self):
+    def get_headers(self):
         """
          Get the headers of this DataFrame.
 
@@ -257,16 +257,17 @@ class DataFrame(BaseClass):
         """
         return tuple(self._impl.getHeaders())
 
-    def setValues(self, values):
+    def set_values(self, values):
         """
         Set the values of a DataFrame from a dictionary.
 
         Args:
             values: Dictionary with the values to set.
         """
-        ncols = self.getNumCols()
-        nindices = self.getNumIndices()
-        def convToList(value):
+        ncols = self.get_num_cols()
+        nindices = self.get_num_indices()
+
+        def conv_to_list(value):
             if isinstance(value, list):
                 return value
             elif isinstance(value, tuple):
@@ -274,23 +275,23 @@ class DataFrame(BaseClass):
             else:
                 return [value]
         for key, value in values.items():
-            key = convToList(key)
+            key = conv_to_list(key)
             assert len(key) == nindices
-            value = convToList(value)
+            value = conv_to_list(value)
             assert len(value) == ncols-nindices
-            self.addRow(key + value)
+            self.add_row(key + value)
 
-    def toDict(self):
+    def to_dict(self):
         """
         Return a dictionary with the DataFrame data.
         """
         d = {}
-        nindices = self.getNumIndices()
+        nindices = self.get_num_indices()
         if nindices == 0:
             raise ValueError('cannot convert to dictionary without an index')
         data = zip(*[
-            self.getColumn(header).toList()
-            for header in self.getHeaders()
+            self.get_column(header).to_list()
+            for header in self.get_headers()
         ])
         for row in data:
             if nindices == 1:
@@ -305,34 +306,34 @@ class DataFrame(BaseClass):
                 d[key] = tuple(row[nindices:])
         return d
 
-    def toList(self):
+    def to_list(self):
         """
         Return a list with the DataFrame data.
         """
-        if self.getNumCols() > 1:
+        if self.get_num_cols() > 1:
             return [
-                tuple(self.getRowByIndex(i))
-                for i in range(self.getNumRows())
+                tuple(self.get_row_by_index(i))
+                for i in range(self.get_num_rows())
             ]
         else:
             return [
-                self.getRowByIndex(i)[0]
-                for i in range(self.getNumRows())
+                self.get_row_by_index(i)[0]
+                for i in range(self.get_num_rows())
             ]
 
-    def toPandas(self):
+    def to_pandas(self):
         """
         Return a pandas DataFrame with the DataFrame data.
         """
         assert pd is not None
-        nindices = self.getNumIndices()
-        headers = self.getHeaders()
+        nindices = self.get_num_indices()
+        headers = self.get_headers()
         columns = {
-            header: self.getColumn(header).toList()
+            header: self.get_column(header).to_list()
             for header in headers[nindices:]
         }
         index = zip(*[
-            self.getColumn(header).toList()
+            self.get_column(header).to_list()
             for header in headers[:nindices]
         ])
         index = [key if len(key) > 1 else key[0] for key in index]
@@ -342,7 +343,7 @@ class DataFrame(BaseClass):
             return pd.DataFrame(columns, index=index)
 
     @classmethod
-    def fromDict(cls, dic, index_names=None, column_names=None):
+    def from_dict(cls, dic, index_names=None, column_names=None):
         """
         Create a :class:`~amplpy.DataFrame` from a dictionary.
 
@@ -388,7 +389,7 @@ class DataFrame(BaseClass):
         return cls(index=index, columns=columns)
 
     @classmethod
-    def fromPandas(cls, df, index_names=None):
+    def from_pandas(cls, df, index_names=None):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
 
@@ -420,7 +421,7 @@ class DataFrame(BaseClass):
         return cls(index=index, columns=columns)
 
     @classmethod
-    def fromNumpy(cls, data):
+    def from_numpy(cls, data):
         """
         Create a :class:`~amplpy.DataFrame` from a numpy array or matrix.
         """
@@ -441,5 +442,5 @@ class DataFrame(BaseClass):
         return cls(index=index, columns=columns)
 
     @classmethod
-    def _fromDataFrameRef(cls, dfRef):
-        return cls(None, None, _impl=dfRef)
+    def _from_data_frame_ref(cls, df_ref):
+        return cls(None, None, _impl=df_ref)

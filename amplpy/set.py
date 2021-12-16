@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
+
+# from builtins import map, range, object, zip, sorted
+from builtins import map
 from numbers import Real
+from past.builtins import basestring
 
 from .entity import Entity
 from .dataframe import DataFrame
@@ -47,11 +49,11 @@ class Set(Entity):
         """
         return int(self._impl.arity())
 
-    def getValues(self):
+    def get_values(self):
         """
         Get values of this set in a DataFrame. Valid only for non-indexed sets.
         """
-        return Entity.getValues(self)
+        return Entity.get_values(self)
 
     def members(self):
         """
@@ -76,7 +78,7 @@ class Set(Entity):
         """
         return self._impl.contains(t)
 
-    def setValues(self, values):
+    def set_values(self, values):
         """
         Set the tuples in this set. Valid only for non-indexed sets.
 
@@ -117,6 +119,6 @@ class Set(Entity):
                 self._impl.setValuesTuples(values, len(values))
         else:
             if np is not None and isinstance(values, np.ndarray):
-                self.setValues(DataFrame.fromNumpy(values).toList())
+                self.set_values(DataFrame.from_numpy(values).to_list())
                 return
-            Entity.setValues(self, values)
+            Entity.set_values(self, values)
