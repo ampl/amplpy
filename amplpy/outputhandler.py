@@ -10,8 +10,13 @@ from . import amplpython
 
 class OutputHandler(amplpython.OutputHandler):
     """
-    Implement this interface to handle the outputs from the calls to any
+    Interface to handle the outputs from the calls to any
     function that causes the underlying AMPL interpreter to display a message.
+    If an application needs to
+    implement customised output handling, it must implement this interface and
+    then register an instance with the AMPL API using the
+    :func:`~amplpy.AMPL.set_output_handler` / :func:`~amplpy.AMPL.setOutputHandler`
+    method.
 
     Note that errors and warnings are not passed through this interface,
     see :class:`~amplpy.ErrorHandler` for more information.

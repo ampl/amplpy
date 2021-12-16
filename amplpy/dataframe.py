@@ -62,31 +62,36 @@ class DataFrame(BaseClass):
 
     An object of this class can be used to do the following tasks:
     - Assign values to AMPL entities (once the DataFrame is populated, use
-    :func:`~amplpy.AMPL.setData` to assign its values to the modelling entities
-    in its columns)
+    :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData` to assign its
+    values to the modelling entities in its columns)
     - Get values from AMPL, decoupling the values from the AMPL entities they
-    originate via :func:`~amplpy.Entity.getValues`.
+    originate via
+    :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`.
 
     A DataFrame object can be created in various ways.
 
     - Create a skeleton by specifiying manually the indexing columns and the
       column headers.
     - Get values from AMPL, decoupling the values from the AMPL entities they
-      originate from (via :func:`~amplpy.Entity.getValues`).
+      originate from
+      (via :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`).
 
     Populating a DataFrame object can be done adding row by row to a
     pre-existing skeleton via :func:`~amplpy.DataFrame.addRow`, setting whole
-    columns of a pre-existing skeleton via :func:`~amplpy.DataFrame.setColumn`
+    columns of a pre-existing skeleton via
+    :func:`~amplpy.DataFrame.set_column` / :func:`~amplpy.DataFrame.setColumn`
     or adding columns (including indexing columns) via
-    :func:`~amplpy.DataFrame.addColumn`.
+    :func:`~amplpy.DataFrame.add_column` / :func:`~amplpy.DataFrame.addColumn`.
 
     Modifying a DataFrame object can be done via
-    :func:`~amplpy.DataFrame.setColumn` or, item by item, via
-    :func:`~amplpy.DataFrame.setValue`.
+    :func:`~amplpy.DataFrame.set_column` / :func:`~amplpy.DataFrame.setColumn`
+    or, item by item, via
+    :func:`~amplpy.DataFrame.set_values` / :func:`~amplpy.DataFrame.setValues`.
 
     Accessing data in a DataFrame can be done row by row using
-    :func:`~amplpy.DataFrame.getRow` or by column via
-    :func:`~amplpy.DataFrame.getColumn`.
+    :func:`~amplpy.DataFrame.get_row` / :func:`~amplpy.DataFrame.getRow`
+    or by column via
+    :func:`~amplpy.DataFrame.get_column` / :func:`~amplpy.DataFrame.getColumn`.
     """
 
     def __init__(self, index, columns=tuple(), **kwargs):

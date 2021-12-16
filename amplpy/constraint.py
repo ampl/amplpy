@@ -29,8 +29,9 @@ class Constraint(Entity):
     deleted from the underlying interpreter is accessed.
 
     To gain access to all the values in an entity (for all instances and all
-    suffixes for that entities), see :func:`~amplpy.Entity.get_values`/:func:`~amplpy.Entity.getValues` and
-    the :class:`~amplpy.DataFrame` class.
+    suffixes for that entities), see
+    :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`
+    and the :class:`~amplpy.DataFrame` class.
     """
 
     def __init__(self, _impl):
