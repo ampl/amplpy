@@ -9,78 +9,76 @@ import os
 def main(argc, argv):
     from amplpy import AMPL
     os.chdir(os.path.dirname(__file__) or os.curdir)
-    try:
-        # Create an AMPL instance
-        ampl = AMPL()
+    # Create an AMPL instance
+    ampl = AMPL()
+    '''
+    # If the AMPL installation directory is not in the system search path:
+    from amplpy import Environment
+    ampl = AMPL(
+        Environment('full path to the AMPL installation directory'))
+    '''
 
-        """
-        # If the AMPL installation directory is not in the system search path:
-        from amplpy import Environment
-        ampl = AMPL(
-            Environment('full path to the AMPL installation directory'))
-        """
+    if argc > 1:
+        ampl.set_option('solver', argv[1])
 
-        if argc > 1:
-            ampl.setOption('solver', argv[1])
+    model_directory = os.path.join(
+        argv[2] if argc == 3 else os.path.join('..', 'models'),
+        'tracking'
+    )
 
-        modelDirectory = os.path.join(
-            argv[2] if argc == 3 else os.path.join('..', 'models'),
-            'tracking'
-        )
+    # Load the AMPL model from file
+    ampl.read(os.path.join(model_directory, 'tracking.mod'))
+    # Read data
+    ampl.read_data(os.path.join(model_directory, 'tracking.dat'))
+    # Read table declarations
+    ampl.read(os.path.join(model_directory, 'trackingbit.run'))
+    # Set tables directory (parameter used in the script above)
+    ampl.get_parameter('data_dir').set(model_directory)
+    # Read tables
+    ampl.read_table('assets')
+    ampl.read_table('indret')
+    ampl.read_table('returns')
 
-        # Load the AMPL model from file
-        ampl.read(os.path.join(modelDirectory, 'tracking.mod'))
-        # Read data
-        ampl.readData(os.path.join(modelDirectory, 'tracking.dat'))
-        # Read table declarations
-        ampl.read(os.path.join(modelDirectory, 'trackingbit.run'))
-        # Set tables directory (parameter used in the script above)
-        ampl.getParameter('data_dir').set(modelDirectory)
-        # Read tables
-        ampl.readTable('assets')
-        ampl.readTable('indret')
-        ampl.readTable('returns')
+    hold = ampl.get_variable('hold')
+    ifinuniverse = ampl.get_parameter('ifinuniverse')
 
-        hold = ampl.getVariable('hold')
-        ifinuniverse = ampl.getParameter('ifinuniverse')
+    # Relax the integrality
+    ampl.set_option('relax_integrality', True)
+    # Solve the problem
+    ampl.solve()
+    objectives = list(obj for name, obj in ampl.get_objectives())
+    assert objectives[0].value() == ampl.get_objective('cst').value()
+    print('QP objective value', ampl.get_objective('cst').value())
 
-        # Relax the integrality
-        ampl.setOption('relax_integrality', True)
-        # Solve the problem
-        ampl.solve()
-        objectives = list(obj for name, obj in ampl.getObjectives())
-        assert objectives[0].value() == ampl.getObjective('cst').value()
-        print("QP objective value", ampl.getObjective('cst').value())
+    lowcutoff = 0.04
+    highcutoff = 0.1
 
-        lowcutoff = 0.04
-        highcutoff = 0.1
+    # Get the variable representing the (relaxed) solution vector
+    holdvalues = hold.get_values()
+    to_hold = []
+    # For each asset, if it was held by more than the highcutoff,
+    # forces it in the model, if less than lowcutoff, forces it out
+    for value in holdvalues.get_column('hold.val'):
+        if value < lowcutoff:
+            to_hold.append(0)
+        elif value > highcutoff:
+            to_hold.append(2)
+        else:
+            to_hold.append(1)
+    # uses those values for the parameter ifinuniverse, which controls
+    # which stock is included or not in the solution
+    ifinuniverse.set_values(to_hold)
 
-        # Get the variable representing the (relaxed) solution vector
-        holdvalues = hold.getValues()
-        toHold = []
-        # For each asset, if it was held by more than the highcutoff,
-        # forces it in the model, if less than lowcutoff, forces it out
-        for value in holdvalues.getColumn('hold.val'):
-            if value < lowcutoff:
-                toHold.append(0)
-            elif value > highcutoff:
-                toHold.append(2)
-            else:
-                toHold.append(1)
-        # uses those values for the parameter ifinuniverse, which controls
-        # which
-        # stock is included or not in the solution
-        ifinuniverse.setValues(toHold)
-
-        # Get back to the integer problem
-        ampl.setOption('relax_integrality', False)
-        # Solve the (integer) problem
-        ampl.solve()
-        print("QMIP objective value", ampl.getObjective('cst').value())
-    except Exception as e:
-        print(e)
-        raise
+    # Get back to the integer problem
+    ampl.set_option('relax_integrality', False)
+    # Solve the (integer) problem
+    ampl.solve()
+    print('QMIP objective value', ampl.get_objective('cst').value())
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    try:
+        main(len(sys.argv), sys.argv)
+    except Exception as e:
+        print(e)
+        raise

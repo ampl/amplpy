@@ -8,41 +8,41 @@ import amplpy
 
 
 class TestExamples(unittest.TestCase):
-    """Test examples."""
+    '''Test examples.'''
 
-    def testFirstExample(self):
+    def test_first_example(self):
         import firstexample
         firstexample.main(1, [None])
 
-    def testOptionsExample(self):
+    def test_options_example(self):
         import optionsexample
         optionsexample.main(1, [None])
 
-    def testAsyncExample(self):
+    def test_async_example(self):
         import asyncexample
         asyncexample.main(1, [None])
 
-    def testDataFrameExample(self):
+    def test_dataframe_example(self):
         import dataframeexample
         dataframeexample.main(1, [None])
 
-    def testMultidimensionalExample(self):
+    def test_multidimensional_example(self):
         import multidimensionalexample
         multidimensionalexample.main(1, [None])
 
-    def testDietModelExample(self):
+    def test_dietmodel_example(self):
         import dietmodel
         dietmodel.main(1, [None])
 
-    def testEfficientFrontierExample(self):
+    def test_efficient_frontier_example(self):
         import efficientfrontier
         efficientfrontier.main(1, [None])
 
-    def testTrackingModelExample(self):
+    def test_trackingmodel_example(self):
         import trackingmodel
         trackingmodel.main(1, [None])
 
-    def testLocationTransportation(self):
+    def test_location_transportation(self):
         import locationtransportation
         locationtransportation.main(1, [None])
 
