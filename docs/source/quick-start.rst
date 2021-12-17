@@ -31,19 +31,19 @@ all the code in the examples below does not include exception handling.
 
   # Interpret the two files
   ampl.read('models/diet.mod')
-  ampl.readData('models/diet.dat')
+  ampl.read_data('models/diet.dat')
 
   # Solve
   ampl.solve()
 
   # Get objective entity by AMPL name
-  totalcost = ampl.getObjective('Total_Cost')
+  totalcost = ampl.get_objective('Total_Cost')
   # Print it
   print("Objective is:", totalcost.value())
 
   # Reassign data - specific instances
-  cost = ampl.getParameter('cost')
-  cost.setValues({'BEEF': 5.01, 'HAM': 4.55})
+  cost = ampl.get_parameter('cost')
+  cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
   print("Increased costs of beef and ham.")
 
   # Resolve and display objective
@@ -51,7 +51,7 @@ all the code in the examples below does not include exception handling.
   print("New objective value:", totalcost.value())
 
   # Reassign data - all instances
-  cost.setValues([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+  cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
 
   print("Updated all costs.")
 
@@ -60,13 +60,13 @@ all the code in the examples below does not include exception handling.
   print("New objective value:", totalcost.value())
 
   # Get the values of the variable Buy in a dataframe object
-  buy = ampl.getVariable('Buy')
-  df = buy.getValues()
+  buy = ampl.get_variable('Buy')
+  df = buy.get_values()
   # Print them
   print(df)
 
   # Get the values of an expression into a DataFrame object
-  df2 = ampl.getData('{j in FOOD} 100*Buy[j]/Buy[j].ub')
+  df2 = ampl.get_data('{j in FOOD} 100*Buy[j]/Buy[j].ub')
   # Print them
   print(df2)
 
@@ -86,7 +86,7 @@ on the console.
 .. code-block:: python
 
    ampl = AMPL()
-   print(ampl.getOption('version'))
+   print(ampl.get_option('version'))
 
 
 The first line creates a new AMPL object with all default settings, incapsulated in a smart pointer to ensure resource deletion.
@@ -114,7 +114,7 @@ If the files are not found, an IOError is thrown.
 .. code-block:: python
 
    ampl.read('models/diet/diet.mod')
-   ampl.readData('models/diet/diet.dat')
+   ampl.read_data('models/diet/diet.dat')
 
 Once these commands are executed, the AMPL interpreter will have interpreted the content of the two files.
 No further communication is made between the AMPL interpreter and the Python object, as every entity is created lazily (as needed).
@@ -137,14 +137,16 @@ of interest for the programmer. The generic procedure is:
 
 1. Identify the entities that need interaction (either data read or modification)
 2. For each of these entities, get the entity through the AMPL API using one of the
-   following functions: :func:`amplpy.AMPL.getVariable()`,
-   :func:`amplpy.AMPL.getConstraint()`, :func:`amplpy.AMPL.getObjective()`,
-   :func:`amplpy.AMPL.getParameter()` and :func:`amplpy.AMPL.getSet()`.
+   following functions: :func:`amplpy.AMPL.get_variable()` / :func:`~amplpy.AMPL.getVariable()`,
+   :func:`amplpy.AMPL.get_constraint()` / :func:`~amplpy.AMPL.getConstraint()`,
+   :func:`amplpy.AMPL.get_objective()` / :func:`~amplpy.AMPL.getObjective()`,
+   :func:`amplpy.AMPL.get_parameter()` / :func:`~amplpy.AMPL.getParameter()`
+   and :func:`amplpy.AMPL.get_set()` / :func:`~amplpy.AMPL.getSet()`.
 
 
 .. code-block:: python
 
-    totalcost = ampl.getObjective('Total_Cost')
+    totalcost = ampl.get_objective('Total_Cost')
     print("Objective is:", totalcost.get().value())
 
 It can be noted that we access an Objective to interrogate AMPL API about the objective function.
@@ -171,12 +173,12 @@ The input data of an optimization model is stored in its parameters; these can b
 Two ways are provided to change the value of vectorial parameter: change specific values or change all values at
 once. The example shows an example of both ways, reassigning the values of the parameter costs firstly specifically,
 then altogether. Each time, it then solves the model and get the objective function. The function used to change the
-values is overloaded, and is in both cases :func:`amplpy.Parameter.setValues()`.
+values is overloaded, and is in both cases :func:`amplpy.Parameter.set_values()` / :func:`~amplpy.Parameter.setValues()`.
 
 .. code-block:: python
 
-   cost = ampl.getParameter('cost')
-   cost.setValues({'BEEF': 5.01, 'HAM': 4.55})
+   cost = ampl.get_parameter('cost')
+   cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
    print("Increased costs of beef and ham.")
    ampl.solve();
    print("New objective value:", totalcost.value())
@@ -187,7 +189,7 @@ both the index and the value. A collection of values is assigned to each of the 
 
 .. code-block:: python
 
-   cost.setValues([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+   cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
    print("Updated all costs.")
    ampl.solve()
    print("New objective value:", totalcost.value())
@@ -204,13 +206,13 @@ Get numeric values from variables
 ---------------------------------
 
 To access all the numeric values contained in a Variable or any other entity, use a :class:`amplpy.DataFrame` object. Doing so, the data is detached from
-the entity, and there is a considerable performance gain. To do so, we first get the Variable object from AMPL, then we get its data with the function :func:`amplpy.Entity.getValues()`.
+the entity, and there is a considerable performance gain. To do so, we first get the Variable object from AMPL, then we get its data with the function :func:`amplpy.Entity.get_values()` / :func:`~amplpy.Entity.getValues()`.
 
 .. code-block:: python
 
    # Get the values of the variable Buy in a dataframe object
-   buy = ampl.getVariable('Buy')
-   df = buy.getValues()
+   buy = ampl.get_variable('Buy')
+   df = buy.get_values()
    # Print them
    print(df)
 
@@ -221,12 +223,12 @@ Get arbitrary values via ampl expressions
 Often we are interested in very specific values coming out of the optimization session. To make use of the power of AMPL expressions and avoiding
 cluttering up the environment by creating entities, fetching data through arbitrary AMPL expressions is possible. For this model, we are interested
 in knowing how close each decision variable is to its upper bound, in percentage.
-We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.getData()` with the code :
+We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.get_data()` / :func:`~amplpy.AMPL.getData()` with the code :
 
 .. code-block:: python
 
   # Get the values of an expression into a DataFrame object
-  df2 = ampl.getData("{j in FOOD} 100*Buy[j]/Buy[j].ub")
+  df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub")
   # Print them
   print(df2)
 
@@ -235,5 +237,4 @@ Delete the AMPL object to free the resources
 -----------------------------------------------------
 
 It is good practice to make sure that the AMPL object is closed and all its resources released when it is not needed any more.
-All the internal resources are automatically deallocated by the destructor of the AMPL object, so it is suggested to keep it stored
-by value.
+All the internal resources are automatically deallocated by the destructor of the AMPL object.

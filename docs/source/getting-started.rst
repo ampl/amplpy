@@ -17,16 +17,10 @@ In order to install the Python API you just need to run
 
 .. code-block:: bash
 
-    pip install amplpy
-
-Or alternatively:
-
-.. code-block:: bash
-
     python -m pip install amplpy
 
-Note: For Windows, Linux, and macOS, the ``amplpy`` package comes with 26 binary
-wheels for Python 2.7, 3.3, 3.4, 3.5, and 3.6. Please make sure that you are
+Note: For Windows, Linux, and macOS, the ``amplpy`` package comes with binary
+wheels for Python 2.7 and 3.x. Please make sure that you are
 using the latest version of ``pip`` before installing ``amplpy`` (upgrade using
 ``pip install pip --upgrade`` or ``python -m pip install pip --upgrade``).
 If a binary wheel for your platform is not available,
