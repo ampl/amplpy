@@ -61,8 +61,7 @@ class Set(Entity):
         """
         Get members (tuples) of this Set. Valid only for non-indexed sets.
         """
-        # FIXME: _impl.members() is missing
-        return MemberRangeIterator(self._impl.get().members(), self.size)
+        return MemberRangeIterator(self._impl.members(), self.size)
 
     def size(self):
         """

@@ -19,7 +19,6 @@ class TestAMPL(TestBase.TestBase):
         ampl = self.ampl
         self.assertEqual(ampl.get_data('1..3').get_num_rows(), 3)
         self.assertEqual(ampl.get_data('1..3').get_num_cols(), 1)
-        # self.assertEqual(ampl.get_data('1..3', '1..3').get_num_cols(), 2)  # FIXME
         ampl.eval('set X := 1..10;')
         self.assertTrue(isinstance(ampl.get_entity('X'), amplpy.Entity))
         self.assertEqual(ampl.get_entity('X').get_values().get_num_rows(), 10)
@@ -48,7 +47,6 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(isinstance(ampl.get_variable('_v'), Variable))
         self.assertTrue(isinstance(ampl.get_constraint('_c'), Constraint))
         self.assertTrue(isinstance(ampl.get_objective('_o'), Objective))
-        print(list(ampl.get_sets()))
         self.assertEqual(len(ampl.get_sets()), 1)
         self.assertEqual(len(ampl.get_parameters()), 1)
         self.assertEqual(len(ampl.get_variables()), 1)

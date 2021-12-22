@@ -28516,6 +28516,63 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Set_members(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Set *arg1 = (ampl::Set *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  SwigValueWrapper< ampl::SetInstance::MemberRange > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "Set_members", 0, 0, 0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_members" "', argument " "1"" of type '" "ampl::Set const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Set * >(argp1);
+  {
+    try {
+      result = ((ampl::Set const *)arg1)->members();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::invalid_argument e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj((new ampl::SetInstance::MemberRange(static_cast< const ampl::SetInstance::MemberRange& >(result))), SWIGTYPE_p_ampl__SetInstance__MemberRange, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Set_setValuesDf(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Set *arg1 = (ampl::Set *) 0 ;
@@ -55597,6 +55654,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Set_methods[] = {
   { "arity", _wrap_Set_arity, METH_NOARGS, "" },
   { "getValues", _wrap_Set_getValues, METH_NOARGS, "" },
   { "size", _wrap_Set_size, METH_NOARGS, "" },
+  { "members", _wrap_Set_members, METH_NOARGS, "" },
   { "setValuesDf", _wrap_Set_setValuesDf, METH_O, "" },
   { "contains", _wrap_Set_contains, METH_O, "" },
   { "setValuesTuples", _wrap_Set_setValuesTuples, METH_VARARGS, "" },

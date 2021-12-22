@@ -152,6 +152,7 @@ namespace ampl
       std::size_t arity() const;
       DataFrame getValues() const;
       std::size_t size() const;
+      ampl::SetInstance::MemberRange members() const;
 
       void setValues(ampl::DataFrame data);
       %extend{
