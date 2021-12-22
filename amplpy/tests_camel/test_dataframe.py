@@ -1,72 +1,72 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
 
-# from builtins import map, range, object, zip, sorted
-from builtins import range
-
+from . import TestBase
 import unittest
+from amplpy import DataFrame
 import string
 import random
+import amplpy
 import os
-from amplpy import DataFrame
-from . import TestBase
 
 
 class TestDataFrame(TestBase.TestBase):
     """Test DataFrame."""
 
-    def test_dataframe(self):
+    def testDataFrame(self):
+        ampl = self.ampl
         # Create first dataframe (for data indexed over NUTR)
         # Add data row by row
         df1 = DataFrame('NUTR', ('n_min', 'n_max'))
-        df1.add_row(('A', 700, 20000))
-        df1.add_row(('B1', 700, 20000))
-        df1.add_row(('B2', 700, 20000))
-        df1.add_row(('C', 700, 20000))
-        df1.add_row(('CAL', 16000, 24000))
-        df1.add_row(('NA', 0.0, 50000))
+        df1.addRow(('A', 700, 20000))
+        df1.addRow(('B1', 700, 20000))
+        df1.addRow(('B2', 700, 20000))
+        df1.addRow(('C', 700, 20000))
+        df1.addRow(('CAL', 16000, 24000))
+        df1.addRow(('NA', 0.0, 50000))
 
         # Create second dataframe (for data indexed over FOOD)
         # Add column by column
         df2 = DataFrame('FOOD')
         foods = ['BEEF', 'CHK', 'FISH', 'HAM', 'MCH', 'MTL', 'SPG', 'TUR']
-        df2.set_column('FOOD', foods)
-        self.assertEqual(list(df2.get_column('FOOD')), foods)
+        df2.setColumn('FOOD', foods)
+        self.assertEqual(list(df2.getColumn('FOOD')), foods)
         contents = [2] * 8
-        df2.add_column('f_min', contents)
-        self.assertEqual(list(df2.get_column('f_min')), contents)
+        df2.addColumn('f_min', contents)
+        self.assertEqual(list(df2.getColumn('f_min')), contents)
         contents = [10] * 8
-        df2.add_column('f_max', contents)
-        self.assertEqual(list(df2.get_column('f_max')), contents)
+        df2.addColumn('f_max', contents)
+        self.assertEqual(list(df2.getColumn('f_max')), contents)
         costs = [3.19, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
-        df2.add_column('cost', costs)
-        self.assertEqual(list(df2.get_column('cost')), costs)
+        df2.addColumn('cost', costs)
+        self.assertEqual(list(df2.getColumn('cost')), costs)
         labels = [random.choice(string.ascii_letters)] * 8
-        df2.add_column('labels', labels)
-        self.assertEqual(list(df2.get_column('labels')), labels)
-        df2.add_column('empty', [])
-        self.assertEqual(list(df2.get_column('empty')), [None] * 8)
+        df2.addColumn('labels', labels)
+        self.assertEqual(list(df2.getColumn('labels')), labels)
+        df2.addColumn('empty', [])
+        self.assertEqual(list(df2.getColumn('empty')), [None] * 8)
 
-        print(df2.get_column('FOOD'))
-        for index in df2.get_column('FOOD'):
-            print(df2.get_row(index))
+        print(df2.getColumn('FOOD'))
+        for index in df2.getColumn('FOOD'):
+            print(df2.getRow(index))
 
         # Create third dataframe, to assign data to the AMPL entity
         # param amt{NUTR, FOOD};
         df3 = DataFrame(('NUTR', 'FOOD'))
         # Populate the set columns
-        nutr_with_multiplicity = ['']*48
-        food_with_multiplicity = ['']*48
+        nutrWithMultiplicity = ['']*48
+        foodWithMultiplicity = ['']*48
         i = 0
         for n in range(6):
             for f in range(8):
-                print(df1.get_row_by_index(n)[0])
-                nutr_with_multiplicity[i] = df1.get_row_by_index(n)[0]
-                food_with_multiplicity[i] = foods[f]
+                print(df1.getRowByIndex(n)[0])
+                nutrWithMultiplicity[i] = df1.getRowByIndex(n)[0]
+                foodWithMultiplicity[i] = foods[f]
                 i += 1
-        df3.set_column('NUTR', nutr_with_multiplicity)
-        df3.set_column('FOOD', food_with_multiplicity)
+        df3.setColumn('NUTR', nutrWithMultiplicity)
+        df3.setColumn('FOOD', foodWithMultiplicity)
 
         # Populate with all these values
         values = [
@@ -75,9 +75,9 @@ class TestDataFrame(TestBase.TestBase):
             770, 440, 430, 315, 400, 370, 450, 968, 2180, 945, 278, 1182, 896,
             1329, 1397
         ]
-        df3.add_column('amt', values)
+        df3.addColumn('amt', values)
 
-    def test_pandas(self):
+    def testPandas(self):
         ampl = self.ampl
         try:
             import pandas as pd
@@ -94,7 +94,7 @@ class TestDataFrame(TestBase.TestBase):
             param a{S};
             param b{S};
         ''')
-        ampl.set_data(df, 'S')
+        ampl.setData(df, 'S')
         self.assertEqual(list(ampl.set['S'].members()), ['x', 'y'])
         self.assertEqual(ampl.param['a']['x'], 1)
         self.assertEqual(ampl.param['b']['y'], 4)
@@ -105,35 +105,35 @@ class TestDataFrame(TestBase.TestBase):
             index=['x', 'y', 'z']
         )
         df3 = pd.DataFrame({}, index=['xx', 'yy'])
-        df = DataFrame.from_pandas(df)
-        df2 = DataFrame.from_pandas(df2)
-        df3 = DataFrame.from_pandas(df3)
-        self.assertTrue(isinstance(df.to_dict(), dict))
-        self.assertTrue(isinstance(df.to_list(), list))
-        self.assertTrue(isinstance(df.to_pandas(), pd.DataFrame))
+        df = DataFrame.fromPandas(df)
+        df2 = DataFrame.fromPandas(df2)
+        df3 = DataFrame.fromPandas(df3)
+        self.assertTrue(isinstance(df.toDict(), dict))
+        self.assertTrue(isinstance(df.toList(), list))
+        self.assertTrue(isinstance(df.toPandas(), pd.DataFrame))
 
-        self.assertEqual(df.to_list()[0][1:], (1, 3.5))
-        self.assertEqual(df2.to_list()[0], ('x', 10))
-        self.assertEqual(df3.to_list()[0], 'xx')
+        self.assertEqual(df.toList()[0][1:], (1, 3.5))
+        self.assertEqual(df2.toList()[0], ('x', 10))
+        self.assertEqual(df3.toList()[0], 'xx')
 
-        self.assertEqual(set(df.to_dict().keys()), set(['x', 'y']))
-        self.assertEqual(set(df2.to_dict().keys()), set(['x', 'y', 'z']))
-        self.assertEqual(set(df3.to_dict().keys()), set(['xx', 'yy']))
+        self.assertEqual(set(df.toDict().keys()), set(['x', 'y']))
+        self.assertEqual(set(df2.toDict().keys()), set(['x', 'y', 'z']))
+        self.assertEqual(set(df3.toDict().keys()), set(['xx', 'yy']))
 
-        self.assertEqual(df.to_dict()['x'], (1, 3.5))
-        self.assertEqual(df2.to_dict()['x'], 10)
-        self.assertEqual(df3.to_dict()['xx'], None)
+        self.assertEqual(df.toDict()['x'], (1, 3.5))
+        self.assertEqual(df2.toDict()['x'], 10)
+        self.assertEqual(df3.toDict()['xx'], None)
 
         csv_file = os.path.join(os.path.dirname(__file__), 'data.csv')
         p_df = pd.read_csv(csv_file, sep=';', index_col=0)
-        df = DataFrame.from_pandas(p_df)
-        self.assertTrue(isinstance(df.to_dict(), dict))
-        self.assertEqual(set(df.to_dict().keys()), set([1.0, 2.0, 3.0]))
-        self.assertEqual(set(df.to_list()[0]), set([1.0, 0.01]))
-        self.assertEqual(set(df.to_list()[1]), set([2.0, 0.02]))
-        self.assertEqual(set(df.to_list()[2]), set([3.0, 0.03]))
+        df = DataFrame.fromPandas(p_df)
+        self.assertTrue(isinstance(df.toDict(), dict))
+        self.assertEqual(set(df.toDict().keys()), set([1.0, 2.0, 3.0]))
+        self.assertEqual(set(df.toList()[0]), set([1.0, 0.01]))
+        self.assertEqual(set(df.toList()[1]), set([2.0, 0.02]))
+        self.assertEqual(set(df.toList()[2]), set([3.0, 0.03]))
 
-    def test_pandas_advanced(self):
+    def testPandasAdvanced(self):
         ampl = self.ampl
         try:
             import pandas as pd
@@ -163,15 +163,16 @@ class TestDataFrame(TestBase.TestBase):
         ampl.param['x2'] = pd.DataFrame(df.stack())
         ampl.param['x3'] = df.stack().to_dict()
         ampl.param['x4'] = df.stack()
-        d1 = ampl.param['x1'].get_values().to_dict()
-        d2 = ampl.param['x2'].get_values().to_dict()
-        d3 = ampl.param['x3'].get_values().to_dict()
-        d4 = ampl.param['x4'].get_values().to_dict()
+        d1 = ampl.param['x1'].getValues().toDict()
+        d2 = ampl.param['x2'].getValues().toDict()
+        d3 = ampl.param['x3'].getValues().toDict()
+        d4 = ampl.param['x4'].getValues().toDict()
         self.assertEqual(d1, d2)
         self.assertEqual(d2, d3)
         self.assertEqual(d3, d4)
 
-    def test_pandas_named_columns(self):
+    def testPandasNamedColumns(self):
+        ampl = self.ampl
         try:
             import pandas as pd
         except ImportError:
@@ -186,15 +187,15 @@ class TestDataFrame(TestBase.TestBase):
             columns=['Fruit', 'Color', 'Count', 'Price']
         )
         # RangeIndex
-        self.assertEqual(DataFrame.from_pandas(
-            df_unindexed).get_headers(),
+        self.assertEqual(DataFrame.fromPandas(
+            df_unindexed).getHeaders(),
             ('index0', 'Fruit', 'Color', 'Count', 'Price'))
 
         # MultiIndex
         df_indexed = df_unindexed.set_index(['Fruit', 'Color'])
         self.assertEqual(
-            DataFrame.from_pandas(df_indexed,
-                                  index_names=['Fruit', 'Color']).get_headers(),
+            DataFrame.fromPandas(df_indexed,
+                                 index_names=['Fruit', 'Color']).getHeaders(),
             ('Fruit', 'Color', 'Count', 'Price'))
 
         # Index without name
@@ -205,10 +206,10 @@ class TestDataFrame(TestBase.TestBase):
             index=['First', 'Second'],
             columns=[1, 2, 3, 4, 5]
         )
-        self.assertEqual(DataFrame.from_pandas(
-            df.stack()).get_headers(), ('index0', 'index1', '0'))
+        self.assertEqual(DataFrame.fromPandas(
+            df.stack()).getHeaders(), ('index0', 'index1', '0'))
 
-    def test_numpy(self):
+    def testNumpy(self):
         ampl = self.ampl
         try:
             import numpy as np
@@ -222,62 +223,62 @@ class TestDataFrame(TestBase.TestBase):
         ampl.param['p'] = arr
         self.assertEqual(ampl.param['p'][2], 2)
         self.assertEqual(
-            DataFrame.from_numpy(arr).to_list(),
+            DataFrame.fromNumpy(arr).toList(),
             [1, 2, 3]
         )
         mat = np.array([[1, 2], [3, 4], [5, 6]])
         self.assertEqual(
-            DataFrame.from_numpy(mat).to_list(),
+            DataFrame.fromNumpy(mat).toList(),
             [(1, 2), (3, 4), (5, 6)]
         )
         self.assertEqual(
-            DataFrame.from_numpy(mat[:, 0]).to_list(),
+            DataFrame.fromNumpy(mat[:, 0]).toList(),
             [1, 3, 5]
         )
         self.assertEqual(
-            DataFrame.from_numpy(mat[:, 1]).to_list(),
+            DataFrame.fromNumpy(mat[:, 1]).toList(),
             [2, 4, 6]
         )
 
-    def test_dict(self):
+    def testDict(self):
         dic = {'aa': 'bb', 'c': 'a'}
-        self.assertEqual(dic, DataFrame.from_dict(dic).to_dict())
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         dic = {1: 2}
-        self.assertEqual(dic, DataFrame.from_dict(dic).to_dict())
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         dic = {1: 2, 3: 4}
-        self.assertEqual(dic, DataFrame.from_dict(dic).to_dict())
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         dic = {2.0: ('a', 'b'), 3: ('1', '2')}
-        self.assertEqual(dic, DataFrame.from_dict(dic).to_dict())
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         dic = {(2.0, 'c'): ('a', 'b'), (3, 'a'): ('1', '2')}
-        self.assertEqual(dic, DataFrame.from_dict(dic).to_dict())
+        self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         df = DataFrame('x', 'y')
         dic = {1: 12, 2: 23}
-        df.set_values(dic)
-        self.assertEqual(dic, df.to_dict())
+        df.setValues(dic)
+        self.assertEqual(dic, df.toDict())
         df = DataFrame('x', ['y', 'z'])
         dic = {1: (12, 2), 2: (23, -1)}
-        df.set_values(dic)
-        self.assertEqual(dic, df.to_dict())
+        df.setValues(dic)
+        self.assertEqual(dic, df.toDict())
         df = DataFrame('x', ['y', 'z'])
-        df.set_values({1: [1, 2]})
-        self.assertEqual({1: (1, 2)}, df.to_dict())
+        df.setValues({1: [1, 2]})
+        self.assertEqual({1: (1, 2)}, df.toDict())
 
-    def test_no_index(self):
+    def testNoIndex(self):
         df = DataFrame([], ['x', 'y'])
         x = [1, 2, 3]
         y = [4, 5, 6]
-        df.set_column('x', x)
-        df.set_column('y', y)
+        df.setColumn('x', x)
+        df.setColumn('y', y)
         with self.assertRaises(ValueError):
-            df.to_dict()
-        pd_df = df.to_pandas()
+            df.toDict()
+        pd_df = df.toPandas()
         self.assertEqual(list(pd_df['x']), x)
         self.assertEqual(list(pd_df['y']), y)
 
-    def test_iter(self):
+    def testIter(self):
         df = DataFrame('x', 'y')
         dic = {1: 12, 2: 23}
-        df.set_values(dic)
+        df.setValues(dic)
         for row in df:
             self.assertTrue(tuple(row) in [(1, 12), (2, 23)])
 

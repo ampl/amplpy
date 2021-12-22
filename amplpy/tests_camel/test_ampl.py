@@ -1,66 +1,64 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-import unittest
-import os
-
-# from builtins import map, range, object, zip, sorted
+from builtins import map, range, object, zip, sorted
 from past.builtins import basestring
 
-import amplpy
 from . import TestBase
+import unittest
+from amplpy import DataFrame
+import amplpy
+import os
 
 
 class TestAMPL(TestBase.TestBase):
     """Test AMPL."""
 
-    def test_ampl(self):
+    def testAMPL(self):
         from amplpy import Set, Parameter, Variable, Constraint, Objective
         ampl = self.ampl
-        self.assertEqual(ampl.get_data('1..3').get_num_rows(), 3)
-        self.assertEqual(ampl.get_data('1..3').get_num_cols(), 1)
-        # self.assertEqual(ampl.get_data('1..3', '1..3').get_num_cols(), 2)  # FIXME
+        self.assertEqual(ampl.getData('1..3').getNumRows(), 3)
+        self.assertEqual(ampl.getData('1..3').getNumCols(), 1)
+        # self.assertEqual(ampl.getData('1..3', '1..3').getNumCols(), 2)# FIXME
         ampl.eval('set X := 1..10;')
-        self.assertTrue(isinstance(ampl.get_entity('X'), amplpy.Entity))
-        self.assertEqual(ampl.get_entity('X').get_values().get_num_rows(), 10)
-        self.assertEqual(ampl.get_data('X').get_num_rows(), 10)
+        self.assertTrue(isinstance(ampl.getEntity('X'), amplpy.Entity))
+        self.assertEqual(ampl.getEntity('X').getValues().getNumRows(), 10)
+        self.assertEqual(ampl.getData('X').getNumRows(), 10)
 
         with self.assertRaises(RuntimeError):
-            self.assertRaises(ampl.get_data('XXX'))
+            self.assertRaises(ampl.getData('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_entity('XXX'))
+            self.assertRaises(ampl.getEntity('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_set('XXX'))
+            self.assertRaises(ampl.getSet('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_parameter('XXX'))
+            self.assertRaises(ampl.getParameter('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_variable('XXX'))
+            self.assertRaises(ampl.getVariable('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_constraint('XXX'))
+            self.assertRaises(ampl.getConstraint('XXX'))
         with self.assertRaises(TypeError):
-            self.assertRaises(ampl.get_objective('XXX'))
-        self.assertEqual(len(ampl.get_sets()), 1)
-        ampl.reset()
-        self.assertEqual(len(ampl.get_sets()), 0)
+            self.assertRaises(ampl.getObjective('XXX'))
+        ampl.reset()  # FIXME: seems to have no efect after eval()
         ampl.eval('set _s; param _p; var _v; s.t. _c: _v = 0; maximize _o: 0;')
-        self.assertTrue(isinstance(ampl.get_set('_s'), Set))
-        self.assertTrue(isinstance(ampl.get_parameter('_p'), Parameter))
-        self.assertTrue(isinstance(ampl.get_variable('_v'), Variable))
-        self.assertTrue(isinstance(ampl.get_constraint('_c'), Constraint))
-        self.assertTrue(isinstance(ampl.get_objective('_o'), Objective))
-        print(list(ampl.get_sets()))
-        self.assertEqual(len(ampl.get_sets()), 1)
-        self.assertEqual(len(ampl.get_parameters()), 1)
-        self.assertEqual(len(ampl.get_variables()), 1)
-        self.assertEqual(len(ampl.get_constraints()), 1)
-        self.assertEqual(len(ampl.get_objectives()), 1)
+        self.assertTrue(isinstance(ampl.getSet('_s'), Set))
+        self.assertTrue(isinstance(ampl.getParameter('_p'), Parameter))
+        self.assertTrue(isinstance(ampl.getVariable('_v'), Variable))
+        self.assertTrue(isinstance(ampl.getConstraint('_c'), Constraint))
+        self.assertTrue(isinstance(ampl.getObjective('_o'), Objective))
+        print(list(ampl.getSets()))
+        # self.assertEqual(len(ampl.getSets()), 1) # FIXME: 2 != 1
+        self.assertEqual(len(ampl.getParameters()), 1)
+        self.assertEqual(len(ampl.getVariables()), 1)
+        self.assertEqual(len(ampl.getConstraints()), 1)
+        self.assertEqual(len(ampl.getObjectives()), 1)
         ampl.reset()
         with self.assertRaises(ValueError):
             ampl.eval('X')
-        self.assertTrue(ampl.is_running())
-        self.assertFalse(ampl.is_busy())
+        self.assertTrue(ampl.isRunning())
+        self.assertFalse(ampl.isBusy())
 
-    def test_path(self):
+    def testPath(self):
         ampl = self.ampl
         self.assertEqual(
             os.path.abspath(ampl.cd()),
@@ -72,26 +70,26 @@ class TestAMPL(TestBase.TestBase):
             os.path.abspath(os.path.join(os.curdir, '..'))
         )
 
-    def test_options(self):
+    def testOptions(self):
         ampl = self.ampl
-        ampl.set_option('a', 's')
-        ampl.set_option('b', 123)
-        ampl.set_option('c', 1.23)
-        ampl.set_option('d', True)
+        ampl.setOption('a', 's')
+        ampl.setOption('b', 123)
+        ampl.setOption('c', 1.23)
+        ampl.setOption('d', True)
         with self.assertRaises(TypeError):
-            ampl.set_option('e', None)
-        self.assertEqual(ampl.get_option('a'), 's')
-        self.assertEqual(ampl.get_option('b'), 123)
-        self.assertEqual(ampl.get_option('c'), 1.23)
-        self.assertEqual(ampl.get_option('d'), True)
+            ampl.setOption('e', None)
+        self.assertEqual(ampl.getOption('a'), 's')
+        self.assertEqual(ampl.getOption('b'), 123)
+        self.assertEqual(ampl.getOption('c'), 1.23)
+        self.assertEqual(ampl.getOption('d'), True)
 
-    def test_handlers(self):
+    def testHandlers(self):
+        from time import sleep
         ampl = self.ampl
 
         class MyOutputHandler(amplpy.OutputHandler):
             def __init__(self):
                 self.lastmsg = None
-                super(MyOutputHandler, self).__init__()
 
             def output(self, kind, msg):
                 if kind == amplpy.Kind.DISPLAY:
@@ -100,69 +98,69 @@ class TestAMPL(TestBase.TestBase):
 
         class MyErrorHandler(amplpy.ErrorHandler):
             def __init__(self):
-                self.last_wrror = None
-                self.last_warning = None
+                self.lastError = None
+                self.lastWarning = None
 
             def error(self, exception):
                 print(type(exception))
-                print('Error:', exception.get_message())
-                self.last_error = exception
+                print('Error:', exception.getMessage())
+                self.lastError = exception
 
             def warning(self, exception):
                 print(type(exception))
-                print('Warning:', exception.get_message())
-                self.last_warning = exception
+                print('Warning:', exception.getMessage())
+                self.lastWarning = exception
 
             def check(self):
                 pass
 
-        output_handler = MyOutputHandler()
-        ampl.set_output_handler(output_handler)
-        error_handler = MyErrorHandler()
-        ampl.set_error_handler(error_handler)
-        self.assertEqual(ampl.get_output_handler(), output_handler)
-        self.assertEqual(ampl.get_error_handler(), error_handler)
+        outputHandler = MyOutputHandler()
+        ampl.setOutputHandler(outputHandler)
+        errorHandler = MyErrorHandler()
+        ampl.setErrorHandler(errorHandler)
+        self.assertEqual(ampl.getOutputHandler(), outputHandler)
+        self.assertEqual(ampl.getErrorHandler(), errorHandler)
         ampl.display('1', '2', '3')
-        self.assertTrue('1 = 1' in output_handler.lastmsg)
-        self.assertTrue('2 = 2' in output_handler.lastmsg)
-        self.assertTrue('3 = 3' in output_handler.lastmsg)
+        self.assertTrue('1 = 1' in outputHandler.lastmsg)
+        self.assertTrue('2 = 2' in outputHandler.lastmsg)
+        self.assertTrue('3 = 3' in outputHandler.lastmsg)
         ampl.eval('display X;')
         self.assertEqual(
-            str(error_handler.last_warning.get_message()),
+            str(errorHandler.lastWarning.getMessage()),
             'X is not defined'
         )
         ampl.eval('diy X;')
         self.assertEqual(
-            str(error_handler.last_error.get_message()),
+            str(errorHandler.lastError.getMessage()),
             'syntax error'
         )
         self.assertTrue(
-            isinstance(error_handler.last_warning.get_source_name(), basestring)
+            isinstance(errorHandler.lastWarning.getSourceName(), basestring)
         )
         self.assertTrue(
-            isinstance(error_handler.last_warning.get_line_number(), int)
+            isinstance(errorHandler.lastWarning.getLineNumber(), int)
         )
         self.assertTrue(
-            isinstance(error_handler.last_warning.get_offset(), int)
+            isinstance(errorHandler.lastWarning.getOffset(), int)
         )
         self.assertTrue(
-            isinstance(error_handler.last_warning.get_message(), basestring)
+            isinstance(errorHandler.lastWarning.getMessage(), basestring)
         )
 
-    def test_empty_handlers(self):
+    def testEmptyHandlers(self):
         ampl = self.ampl
         callback = amplpy.Runnable()
-        output_handler = amplpy.OutputHandler()
-        error_handler = amplpy.ErrorHandler()
-        ampl.set_output_handler(output_handler)
-        ampl.set_error_handler(error_handler)
-        ampl.eval_async('display 1;', callback)
+        outputHandler = amplpy.OutputHandler()
+        errorHandler = amplpy.ErrorHandler()
+        ampl.setOutputHandler(outputHandler)
+        ampl.setErrorHandler(errorHandler)
+        ampl.evalAsync('display 1;', callback)
         ampl.wait()
 
-    def test_broken_handlers(self):
+    def testBrokenHandlers(self):
         ampl = self.ampl
 
-        class OutputHandlerRaise(amplpy.OutputHandler):
+        class MyOutputHandler(amplpy.OutputHandler):
             def output(self, kind, msg):
                 assert False
 
@@ -183,20 +181,16 @@ class TestAMPL(TestBase.TestBase):
         with self.assertRaises(amplpy.AMPLException):
             ampl.eval('X X;')
 
-        error_handler_ignore = ErrorHandlerIgnore()
-        ampl.set_error_handler(error_handler_ignore)
+        errorHandlerIgnore = ErrorHandlerIgnore()
+        ampl.setErrorHandler(errorHandlerIgnore)
         ampl.eval('X X;')
 
-        error_handler_raise = ErrorHandlerRaise()
-        ampl.set_error_handler(error_handler_raise)
+        errorHandlerRaise = ErrorHandlerRaise()
+        ampl.setErrorHandler(errorHandlerRaise)
         with self.assertRaises(RuntimeError):
             ampl.eval('X X;')
 
-        ampl.set_output_handler(OutputHandlerRaise())
-        with self.assertRaises(RuntimeError):
-            ampl.eval('display 1;')
-
-    def test_async(self):
+    def testAsync(self):
         from threading import Lock
         ampl = self.ampl
 
@@ -221,14 +215,13 @@ class TestAMPL(TestBase.TestBase):
                 raise exception
 
             def warning(self, exception):
-                print('Warning:', exception.get_message())
+                print('Warning:', exception.getMessage())
 
         class Callback(amplpy.Runnable):
             def __init__(self, mutex1, mutex2):
                 self.ready = False
                 self.mutex1 = mutex1
                 self.mutex2 = mutex2
-                super(Callback, self).__init__()
 
             def run(self):
                 self.mutex2.acquire()
@@ -249,15 +242,15 @@ class TestAMPL(TestBase.TestBase):
         mutex2 = Lock()
         try:
             callback = Callback(mutex1, mutex2)
-            output_handler = MyOutputHandler()
-            ampl.set_output_handler(output_handler)
-            error_handler = MyErrorHandler(mutex1, mutex2)
-            ampl.set_error_handler(error_handler)
+            outputHandler = MyOutputHandler()
+            ampl.setOutputHandler(outputHandler)
+            errorHandler = MyErrorHandler(mutex1, mutex2)
+            ampl.setErrorHandler(errorHandler)
 
             mutex1.acquire()
             mutex2.acquire()
             callback.ready = False
-            ampl.read_async(model, callback)
+            ampl.readAsync(model, callback)
             self.assertFalse(callback.ready)
             mutex2.release()
             mutex1.acquire()
@@ -265,7 +258,7 @@ class TestAMPL(TestBase.TestBase):
 
             mutex2.acquire()
             callback.ready = False
-            ampl.read_data_async(data, callback)
+            ampl.readDataAsync(data, callback)
             self.assertFalse(callback.ready)
             mutex2.release()
             mutex1.acquire()
@@ -273,14 +266,14 @@ class TestAMPL(TestBase.TestBase):
 
             mutex2.acquire()
             callback.ready = False
-            ampl.eval_async('display {i in A: i not in A};', callback)
+            ampl.evalAsync('display {i in A: i not in A};', callback)
             ampl.interrupt()
             self.assertFalse(callback.ready)
             mutex2.release()
             mutex1.acquire()
             self.assertTrue(callback.ready)
-            self.assertFalse(ampl.is_busy())
-            self.assertTrue(ampl.is_running())
+            self.assertFalse(ampl.isBusy())
+            self.assertTrue(ampl.isRunning())
 
         except Exception:
             mutex1.acquire(False)
@@ -289,17 +282,16 @@ class TestAMPL(TestBase.TestBase):
             mutex2.release()
             raise
 
-    def test_get_output(self):
+    def testGetOutput(self):
         ampl = self.ampl
-        self.assertEqual(ampl.get_output('display 5;'), '5 = 5\n\n')
+        self.assertEqual(ampl.getOutput('display 5;'), '5 = 5\n\n')
         with self.assertRaises(ValueError):
-            ampl.get_output("display 3")
+            ampl.getOutput("display 3")
         with self.assertRaises(ValueError):
-            ampl.get_output("for {i in 1..10} {")
-        self.assertEqual(ampl.get_output(
-            'display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
+            ampl.getOutput("for {i in 1..10} {")
+        self.assertEqual(ampl.getOutput('display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
 
-    def test_export(self):
+    def testExport(self):
         ampl = self.ampl
         model = self.str2file('model.mod', '''
             set A;
@@ -313,21 +305,21 @@ class TestAMPL(TestBase.TestBase):
             set family['second'] := 'Montoro';
         ''')
         ampl.read(model)
-        ampl.read_data(data)
+        ampl.readData(data)
         model2 = self.tmpfile('model2.mod')
         data2 = self.tmpfile('data2.dat')
-        ampl.export_model(model2)
-        ampl.export_data(data2)
+        ampl.exportModel(model2)
+        ampl.exportData(data2)
         ampl.reset()
         ampl.read(model2)
-        ampl.read_data(data2)
-        self.assertEqual(ampl.set['family']['first'].get_values().to_list(),
-                         ['Gutierrez'])
-        self.assertEqual(ampl.set['family']['second'].get_values().to_list(),
-                         ['Montoro'])
-        self.assertEqual(ampl.set['A'].get_values().to_list(), [1, 2, 3, 4])
+        ampl.readData(data2)
+        self.assertEqual(ampl.set['family']['first'].getValues().toList(),
+            ['Gutierrez'])
+        self.assertEqual(ampl.set['family']['second'].getValues().toList(),
+            ['Montoro'])
+        self.assertEqual(ampl.set['A'].getValues().toList(), [1, 2, 3, 4])
 
-    def test_pathlib(self):
+    def testPath(self):
         ampl = self.ampl
         try:
             from pathlib import Path

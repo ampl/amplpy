@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
+from builtins import map, range, object, zip, sorted
 
-# from builtins import map, range, object, zip, sorted
-
+from .context import amplpy
 import unittest
 import tempfile
 import shutil
 import os
-from .context import amplpy
 
 
 # For MSYS2, MINGW, etc., run with:
@@ -33,8 +32,8 @@ class TestBase(unittest.TestCase):
 
     def str2file(self, filename, content):
         fullpath = self._tmpfile(filename)
-        with open(fullpath, 'w') as file:
-            print(content, file=file)
+        with open(fullpath, 'w') as f:
+            print(content, file=f)
         return self._real_filename(fullpath)
 
     def tmpfile(self, filename):

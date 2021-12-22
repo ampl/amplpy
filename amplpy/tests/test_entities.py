@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
+import unittest
+
+# from builtins import map, range, object, zip, sorted
+from builtins import range, sorted
 from past.builtins import basestring
 
-from . import TestBase
-import unittest
 import amplpy
+from . import TestBase
 
 
-def loadDietModel(ampl):
+def load_diet_model(ampl):
     ampl.eval('''
         set FOOD ;
         set NUTR ;
@@ -64,24 +66,24 @@ def loadDietModel(ampl):
 class TestEntities(TestBase.TestBase):
     """Test entities."""
 
-    def testVariable(self):
-        loadDietModel(self.ampl)
+    def test_variable(self):
+        load_diet_model(self.ampl)
         ampl = self.ampl
         # ampl.solve()
         self.assertEqual(
-            ampl.getVariable('Buy').numInstances(),
-            ampl.getSet('FOOD').size()
+            ampl.get_variable('Buy').num_instances(),
+            ampl.get_set('FOOD').size()
         )
-        f_min = ampl.getParameter('f_min')
-        f_max = ampl.getParameter('f_max')
-        Buy = ampl.getVariable('Buy')
-        Buy['BEEF'] = 10
-        self.assertEqual(Buy['BEEF'].value(), 10)
-        self.assertTrue(isinstance(Buy.getValues(), amplpy.DataFrame))
-        self.assertTrue(isinstance(Buy.getValues(['val']), amplpy.DataFrame))
-        for index, var in ampl.getVariable('Buy'):
+        f_min = ampl.get_parameter('f_min')
+        f_max = ampl.get_parameter('f_max')
+        buy = ampl.get_variable('Buy')
+        buy['BEEF'] = 10
+        self.assertEqual(buy['BEEF'].value(), 10)
+        self.assertTrue(isinstance(buy.get_values(), amplpy.DataFrame))
+        self.assertTrue(isinstance(buy.get_values(['val']), amplpy.DataFrame))
+        for index, var in ampl.get_variable('Buy'):
             self.assertTrue(isinstance(var.value(), float))
-            var.setValue(f_min[index])
+            var.set_value(f_min[index])
             self.assertEqual(var.value(), f_min[index])
             var.fix()
             self.assertEqual(var.astatus(), 'fix')
@@ -118,16 +120,16 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(var.sstatus(), basestring))
             self.assertTrue(isinstance(var.status(), basestring))
 
-    def testConstraint(self):
-        loadDietModel(self.ampl)
+    def test_constraint(self):
+        load_diet_model(self.ampl)
         ampl = self.ampl
         # ampl.solve()
         self.assertEqual(
-            ampl.getConstraint('diet').numInstances(),
-            ampl.getSet('NUTR').size()
+            ampl.get_constraint('diet').num_instances(),
+            ampl.get_set('NUTR').size()
         )
-        for index, con in ampl.getConstraint('diet'):
-            self.assertTrue(isinstance(con.isLogical(), bool))
+        for _, con in ampl.get_constraint('diet'):
+            self.assertTrue(isinstance(con.is_logical(), bool))
             con.drop()
             con.restore()
             self.assertTrue(isinstance(con.body(), float))
@@ -159,26 +161,26 @@ class TestEntities(TestBase.TestBase):
             var y;
             s.t. xy: x <==> y;
         ''')
-        self.assertTrue(ampl.getConstraint('xy').isLogical())
-        self.assertTrue(isinstance(ampl.getConstraint('xy').val(), float))
+        self.assertTrue(ampl.get_constraint('xy').is_logical())
+        self.assertTrue(isinstance(ampl.get_constraint('xy').val(), float))
 
-    def testSet(self):
-        loadDietModel(self.ampl)
+    def test_set(self):
+        load_diet_model(self.ampl)
         ampl = self.ampl
-        self.assertEqual(ampl.getSet('FOOD').toString(), 'set FOOD;')
-        self.assertEqual(str(ampl.getSet('FOOD')), 'set FOOD;')
+        self.assertEqual(ampl.get_set('FOOD').to_string(), 'set FOOD;')
+        self.assertEqual(str(ampl.get_set('FOOD')), 'set FOOD;')
         self.assertEqual(
-            ampl.getSet('NUTR').size(),
-            len(ampl.getSet('NUTR').members()),
+            ampl.get_set('NUTR').size(),
+            len(ampl.get_set('NUTR').members()),
         )
         self.assertEqual(
-            len(ampl.getSet('NUTR').members()),
-            len(list(ampl.getSet('NUTR').members()))
+            len(ampl.get_set('NUTR').members()),
+            len(list(ampl.get_set('NUTR').members()))
         )
-        self.assertTrue(ampl.getSet('NUTR').contains('A'))
-        self.assertTrue(ampl.getSet('NUTR').contains(('B1',)))
-        self.assertFalse(ampl.getSet('NUTR').contains('X'))
-        for name, st in ampl.getSets():
+        self.assertTrue(ampl.get_set('NUTR').contains('A'))
+        self.assertTrue(ampl.get_set('NUTR').contains(('B1',)))
+        self.assertFalse(ampl.get_set('NUTR').contains('X'))
+        for _, st in ampl.get_sets():
             self.assertTrue(isinstance(st.arity(), int))
             self.assertEqual(st.arity(), 1)
             self.assertTrue(isinstance(st.size(), int))
@@ -189,43 +191,47 @@ class TestEntities(TestBase.TestBase):
             )
             self.assertTrue(isinstance(st.arity(), int))
         ampl.eval('model; set T{1..2}; set T2{1..2};')
-        ampl.getSet('T')[1] = [-1, -2]
-        self.assertEqual(ampl.getSet('T').get((1,)).getValues().toList(), [-1, -2])
-        self.assertEqual(ampl.getSet('T').find((3,)), None)
-        self.assertIsInstance(ampl.getSet('T').find(1), amplpy.Set)
-        ampl.getSet('T')[1].setValues([1, 2])
-        self.assertEqual(ampl.getSet('T')[1].getValues().toList(), [1, 2])
-        ampl.getSet('T')[2].setValues(['1', 2])
-        self.assertEqual(ampl.getSet('T')[2].getValues().toList(), ['1', 2])
-        ampl.getSet('T2')[1].setValues(ampl.getSet('T')[1].getValues())
-        self.assertEqual(ampl.getSet('T2')[1].getValues().toList(), [1, 2])
-        ampl.getSet('T2')[2].setValues(ampl.getSet('T')[2].getValues())
-        self.assertEqual(ampl.getSet('T2')[2].getValues().toList(), ['1', 2])
+        ampl.get_set('T')[1] = [-1, -2]
+        self.assertEqual(ampl.get_set('T').get(
+            (1,)).get_values().to_list(), [-1, -2])
+        self.assertEqual(ampl.get_set('T').find((3,)), None)
+        self.assertIsInstance(ampl.get_set('T').find(1), amplpy.Set)
+        ampl.get_set('T')[1].set_values([1, 2])
+        self.assertEqual(ampl.get_set('T')[1].get_values().to_list(), [1, 2])
+        ampl.get_set('T')[2].set_values(['1', 2])
+        self.assertEqual(ampl.get_set('T')[2].get_values().to_list(), ['1', 2])
+        ampl.get_set('T2')[1].set_values(ampl.get_set('T')[1].get_values())
+        self.assertEqual(ampl.get_set('T2')[1].get_values().to_list(), [1, 2])
+        ampl.get_set('T2')[2].set_values(ampl.get_set('T')[2].get_values())
+        self.assertEqual(ampl.get_set(
+            'T2')[2].get_values().to_list(), ['1', 2])
         ampl.eval('set T3 dimen 2; set T4 dimen 2;')
-        ampl.getSet('T3').setValues([(1, 2)])
-        self.assertEqual(ampl.getSet('T3').getValues().toList(), [(1, 2)])
-        ampl.getSet('T3').setValues(set([('b', 1), ('a', 2)]))
-        self.assertEqual(sorted(ampl.getSet('T3').getValues().toList()), [('a', 2), ('b', 1)])
+        ampl.get_set('T3').set_values([(1, 2)])
+        self.assertEqual(ampl.get_set('T3').get_values().to_list(), [(1, 2)])
+        ampl.get_set('T3').set_values(set([('b', 1), ('a', 2)]))
+        self.assertEqual(sorted(ampl.get_set('T3').get_values().to_list()), [
+                         ('a', 2), ('b', 1)])
         ampl.eval('set T5;')
         ampl.set['T5'] = set(['a', 'b', 'c'])
-        self.assertEqual(sorted(ampl.getSet('T5').getValues().toList()), ['a', 'b', 'c'])
+        self.assertEqual(
+            sorted(ampl.get_set('T5').get_values().to_list()), ['a', 'b', 'c'])
 
         try:
             import numpy as np
         except ImportError:
             pass
         else:
-            ampl.getSet('T')[1].setValues(np.array([1, 2]))
-            self.assertEqual(ampl.getSet('T')[1].size(), 2)
-            ampl.getSet('T3').setValues(np.array([[1, 2], [3, 4]]))
-            self.assertEqual(ampl.getSet('T3').size(), 2)
+            ampl.get_set('T')[1].set_values(np.array([1, 2]))
+            self.assertEqual(ampl.get_set('T')[1].size(), 2)
+            ampl.get_set('T3').set_values(np.array([[1, 2], [3, 4]]))
+            self.assertEqual(ampl.get_set('T3').size(), 2)
 
-    def testParameter(self):
-        loadDietModel(self.ampl)
+    def test_parameter(self):
+        load_diet_model(self.ampl)
         ampl = self.ampl
         self.assertEqual(
-            ampl.getSet('FOOD').size(),
-            ampl.getParameter('cost').numInstances()
+            ampl.get_set('FOOD').size(),
+            ampl.get_parameter('cost').num_instances()
         )
         ampl.eval('''
             param a;
@@ -234,56 +240,56 @@ class TestEntities(TestBase.TestBase):
             param d{1..2} symbolic;
             param d2{1..2} symbolic;
         ''')
-        self.assertFalse(ampl.getParameter('a').hasDefault())
-        self.assertTrue(ampl.getParameter('b').hasDefault())
-        self.assertFalse(ampl.getParameter('a').isSymbolic())
-        self.assertFalse(ampl.getParameter('b').isSymbolic())
-        self.assertTrue(ampl.getParameter('c').isSymbolic())
-        cost = ampl.getParameter('cost')
+        self.assertFalse(ampl.get_parameter('a').has_default())
+        self.assertTrue(ampl.get_parameter('b').has_default())
+        self.assertFalse(ampl.get_parameter('a').is_symbolic())
+        self.assertFalse(ampl.get_parameter('b').is_symbolic())
+        self.assertTrue(ampl.get_parameter('c').is_symbolic())
+        cost = ampl.get_parameter('cost')
         self.assertEqual(cost.indexarity(), 1)
-        self.assertEqual(cost.getIndexingSets(), ['FOOD'])
+        self.assertEqual(cost.get_indexing_sets(), ['FOOD'])
         self.assertEqual(cost.xref(), ['total_cost'])
-        for i, food in enumerate(ampl.getSet('FOOD').members()):
+        for i, food in enumerate(ampl.get_set('FOOD').members()):
             cost[food] = i+1
             self.assertEqual(cost[food], i+1)
             cost.set(food, i+2)
             self.assertEqual(cost[food], i+2)
-        a = ampl.getParameter('a')
+        a = ampl.get_parameter('a')
         a.set(10)
         self.assertEqual(a.value(), 10)
-        c = ampl.getParameter('c')
-        b = ampl.getParameter('c')
+        c = ampl.get_parameter('c')
+        b = ampl.get_parameter('c')
         c.set('a')
         self.assertEqual(c.value(), 'a')
         self.assertEqual(b.value(), 'a')
         self.assertEqual(b.indexarity(), 0)
-        self.assertEqual(a.isScalar(), True)
-        self.assertEqual(b.isScalar(), True)
-        self.assertEqual(c.isScalar(), True)
-        d = ampl.getParameter('d')
-        self.assertEqual(d.isScalar(), False)
+        self.assertEqual(a.is_scalar(), True)
+        self.assertEqual(b.is_scalar(), True)
+        self.assertEqual(c.is_scalar(), True)
+        d = ampl.get_parameter('d')
+        self.assertEqual(d.is_scalar(), False)
         d.set(1, 'a')
         self.assertEqual(d[1], 'a')
         d[1] = 'aa'
         self.assertEqual(d[1], 'aa')
         d.set(2, 'b')
         self.assertEqual(d[2], 'b')
-        d.setValues({1: 'x', 2: 'y'})
+        d.set_values({1: 'x', 2: 'y'})
         self.assertEqual(d[1], 'x')
         self.assertEqual(d[2], 'y')
-        d.setValues(['xx', 'yy'])
+        d.set_values(['xx', 'yy'])
         self.assertEqual(d[1], 'xx')
         self.assertEqual(d[2], 'yy')
-        d2 = ampl.getParameter('d2')
-        d2.setValues(d.getValues())
+        d2 = ampl.get_parameter('d2')
+        d2.set_values(d.get_values())
         self.assertEqual(d2[1], 'xx')
         self.assertEqual(d2[2], 'yy')
-        self.assertEqual(cost.isScalar(), False)
+        self.assertEqual(cost.is_scalar(), False)
         ampl.eval('param cost2{FOOD};')
-        self.assertTrue(isinstance(cost.getValues(), amplpy.DataFrame))
-        cost2 = ampl.getParameter('cost2')
-        cost2.setValues(cost.getValues())
-        for food in ampl.getSet('FOOD').members():
+        self.assertTrue(isinstance(cost.get_values(), amplpy.DataFrame))
+        cost2 = ampl.get_parameter('cost2')
+        cost2.set_values(cost.get_values())
+        for food in ampl.get_set('FOOD').members():
             self.assertEqual(cost2[food], cost[food])
 
         try:
@@ -292,35 +298,35 @@ class TestEntities(TestBase.TestBase):
             pass
         else:
             ampl.eval('param lst{1..3};')
-            ampl.getParameter('lst').setValues(np.array([1, 2, 3]))
+            ampl.get_parameter('lst').set_values(np.array([1, 2, 3]))
 
-    def testPrecision(self):
-        PI = 3.1415926535897932384626433832795028841971
+    def test_precision(self):
+        pi = 3.1415926535897932384626433832795028841971
         ampl = self.ampl
         ampl.eval('param x;')
-        ampl.getParameter('x').set(PI)
+        ampl.get_parameter('x').set(pi)
         ampl.eval("display x;")  # invalidate cache
-        self.assertEqual(ampl.param['x'].value(), PI)
+        self.assertEqual(ampl.param['x'].value(), pi)
 
-    def testInfinity(self):
+    def test_infinity(self):
         inf = float('inf')
         ampl = self.ampl
         ampl.eval('param x;')
-        ampl.getParameter('x').set(inf)
-        self.assertEqual(ampl.getValue('x'), inf)
+        ampl.get_parameter('x').set(inf)
+        self.assertEqual(ampl.get_value('x'), inf)
         ampl.eval('param y{1..3};')
-        ampl.getParameter('y').setValues([inf]*3)
+        ampl.get_parameter('y').set_values([inf]*3)
         for i in range(3):
-            self.assertEqual(ampl.getValue('y[{}]'.format(i+1)), inf)
+            self.assertEqual(ampl.get_value('y[{}]'.format(i+1)), inf)
 
-    def testObjective(self):
-        loadDietModel(self.ampl)
+    def test_objective(self):
+        load_diet_model(self.ampl)
         ampl = self.ampl
-        obj = ampl.getObjective('total_cost')
-        self.assertEqual(ampl.getCurrentObjective().name(), 'total_cost')
+        obj = ampl.get_objective('total_cost')
+        self.assertEqual(ampl.get_current_objective().name(), 'total_cost')
         self.assertEqual(
             len(dict(obj)),
-            obj.numInstances()
+            obj.num_instances()
         )
         self.assertTrue(isinstance(obj.value(), float))
         self.assertTrue(isinstance(obj.astatus(), basestring))
@@ -338,30 +344,30 @@ class TestEntities(TestBase.TestBase):
             minimize B: 1;
             maximize C: 1;
         ''')
-        self.assertEqual(ampl.getCurrentObjective(), None)
+        self.assertEqual(ampl.get_current_objective(), None)
         ampl.eval('objective A;')
-        self.assertEqual(ampl.getCurrentObjective().name(), 'A')
-        self.assertFalse(ampl.getCurrentObjective().minimization())
+        self.assertEqual(ampl.get_current_objective().name(), 'A')
+        self.assertFalse(ampl.get_current_objective().minimization())
         ampl.eval('objective B;')
-        self.assertEqual(ampl.getCurrentObjective().name(), 'B')
-        self.assertTrue(ampl.getCurrentObjective().minimization())
+        self.assertEqual(ampl.get_current_objective().name(), 'B')
+        self.assertTrue(ampl.get_current_objective().minimization())
         ampl.eval('objective C;')
-        self.assertEqual(ampl.getCurrentObjective().name(), 'C')
-        self.assertFalse(ampl.getCurrentObjective().minimization())
+        self.assertEqual(ampl.get_current_objective().name(), 'C')
+        self.assertFalse(ampl.get_current_objective().minimization())
         ampl.eval('objective A;')
-        self.assertEqual(ampl.getCurrentObjective().name(), 'A')
-        self.assertFalse(ampl.getCurrentObjective().minimization())
+        self.assertEqual(ampl.get_current_objective().name(), 'A')
+        self.assertFalse(ampl.get_current_objective().minimization())
 
-    def testSetValues(self):
+    def test_set_values(self):
         ampl = self.ampl
         ampl.eval('var x{1..3};')
         d = {1: 2, 2: 5, 3: 9}
-        ampl.var['x'].setValues(d)
-        self.assertEqual(d, ampl.var['x'].getValues().toDict())
+        ampl.var['x'].set_values(d)
+        self.assertEqual(d, ampl.var['x'].get_values().to_dict())
 
         d = {1: 11, 2: 55, 3: 99}
         ampl.var['x'] = d
-        self.assertEqual(d, ampl.var['x'].getValues().toDict())
+        self.assertEqual(d, ampl.var['x'].get_values().to_dict())
 
 
 if __name__ == '__main__':
