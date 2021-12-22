@@ -60,6 +60,36 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(ampl.is_running())
         self.assertFalse(ampl.is_busy())
 
+    def test_getdata_multi(self):
+        ampl = self.ampl
+        ampl.eval('''
+        param p1{i in 1..10} := 1*i;
+        param p2{i in 1..10} := 2*i;
+        param p3{i in 0..10: i >= 1} := 3*i;
+        ''')
+        df = ampl.get_data("p1", "p2", "p3")
+        df = ampl.get_data("p1", "p2", "p3")
+        self.assertEqual(list(df.get_column("p1")), [
+                         i for i in range(1, 10+1)])
+        self.assertEqual(list(df.get_column("p2")), [
+                         2*i for i in range(1, 10+1)])
+        self.assertEqual(list(df.get_column("p3")), [
+                         3*i for i in range(1, 10+1)])
+        self.assertEqual(df.get_headers(), ('index0', 'p1', 'p2', 'p3'))
+        df = ampl.get_data("1..10", "p1", "p2", "p3")
+        self.assertEqual(
+            list(df.get_column("p1")),
+            [i for i in range(1, 10+1)])
+        self.assertEqual(
+            list(df.get_column("p2")),
+            [2*i for i in range(1, 10+1)])
+        self.assertEqual(
+            list(df.get_column("p3")),
+            [3*i for i in range(1, 10+1)])
+        self.assertEqual(df.get_headers(), ('1 .. 10', 'p1', 'p2', 'p3'))
+        with self.assertRaises(TypeError):
+            ampl.get_data("1..11", "p1", "p2", "p3")
+
     def test_path(self):
         ampl = self.ampl
         self.assertEqual(

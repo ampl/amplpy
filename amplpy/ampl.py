@@ -144,14 +144,13 @@ class AMPL(object):
             statements: The display statements to be fetched.
 
         Raises:
-            RuntimeError: if the AMPL visualization command does not succeed
+            TypeError: if the AMPL visualization command does not succeed
             for one of the reasons listed above.
 
         Returns:
             DataFrame capturing the output of the display
             command in tabular form.
         """
-        # FIXME: only works for the first statement.
         return DataFrame._from_data_frame_ref(
             self._impl.getData(list(statements), len(statements))
         )
