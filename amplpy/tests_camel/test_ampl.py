@@ -19,7 +19,6 @@ class TestAMPL(TestBase.TestBase):
         ampl = self.ampl
         self.assertEqual(ampl.getData('1..3').getNumRows(), 3)
         self.assertEqual(ampl.getData('1..3').getNumCols(), 1)
-        # self.assertEqual(ampl.getData('1..3', '1..3').getNumCols(), 2)# FIXME
         ampl.eval('set X := 1..10;')
         self.assertTrue(isinstance(ampl.getEntity('X'), amplpy.Entity))
         self.assertEqual(ampl.getEntity('X').getValues().getNumRows(), 10)
@@ -39,7 +38,7 @@ class TestAMPL(TestBase.TestBase):
             self.assertRaises(ampl.getConstraint('XXX'))
         with self.assertRaises(TypeError):
             self.assertRaises(ampl.getObjective('XXX'))
-        ampl.reset()  # FIXME: seems to have no efect after eval()
+        ampl.reset()
         ampl.eval('set _s; param _p; var _v; s.t. _c: _v = 0; maximize _o: 0;')
         self.assertTrue(isinstance(ampl.getSet('_s'), Set))
         self.assertTrue(isinstance(ampl.getParameter('_p'), Parameter))
@@ -47,7 +46,7 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(isinstance(ampl.getConstraint('_c'), Constraint))
         self.assertTrue(isinstance(ampl.getObjective('_o'), Objective))
         print(list(ampl.getSets()))
-        # self.assertEqual(len(ampl.getSets()), 1) # FIXME: 2 != 1
+        self.assertEqual(len(ampl.getSets()), 1)
         self.assertEqual(len(ampl.getParameters()), 1)
         self.assertEqual(len(ampl.getVariables()), 1)
         self.assertEqual(len(ampl.getConstraints()), 1)
@@ -289,7 +288,8 @@ class TestAMPL(TestBase.TestBase):
             ampl.getOutput("display 3")
         with self.assertRaises(ValueError):
             ampl.getOutput("for {i in 1..10} {")
-        self.assertEqual(ampl.getOutput('display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
+        self.assertEqual(ampl.getOutput(
+            'display 5; display 1;'), '5 = 5\n\n1 = 1\n\n')
 
     def testExport(self):
         ampl = self.ampl
@@ -314,9 +314,9 @@ class TestAMPL(TestBase.TestBase):
         ampl.read(model2)
         ampl.readData(data2)
         self.assertEqual(ampl.set['family']['first'].getValues().toList(),
-            ['Gutierrez'])
+                         ['Gutierrez'])
         self.assertEqual(ampl.set['family']['second'].getValues().toList(),
-            ['Montoro'])
+                         ['Montoro'])
         self.assertEqual(ampl.set['A'].getValues().toList(), [1, 2, 3, 4])
 
     def testPath(self):
