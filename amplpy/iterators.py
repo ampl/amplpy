@@ -65,16 +65,14 @@ class InstanceIterator(Iterator):
 class MemberRangeIterator(Iterator):
     """Iterator for set members."""
 
-    def __init__(self, obj, size_function):
+    def __init__(self, obj):
         Iterator.__init__(
             self, obj,
             lambda it: it.__ref__()
         )
-        # FIXME: MemberRange does not implemet size()
-        self.size_function = size_function
 
     def size(self):
-        return int(self.size_function())
+        return int(self.obj.size())
 
     def __len__(self):
         return self.size()

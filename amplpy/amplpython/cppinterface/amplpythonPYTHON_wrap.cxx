@@ -17207,6 +17207,63 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_MemberRange_size(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::SetInstance::MemberRange *arg1 = (ampl::SetInstance::MemberRange *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  size_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "MemberRange_size", 0, 0, 0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance__MemberRange, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MemberRange_size" "', argument " "1"" of type '" "ampl::SetInstance::MemberRange const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::SetInstance::MemberRange * >(argp1);
+  {
+    try {
+      result = ((ampl::SetInstance::MemberRange const *)arg1)->size();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (ampl::AMPLException e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::invalid_argument e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (std::logic_error e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::UnsupportedOperationException e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (ampl::LicenseException e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (ampl::FileIOException e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (std::runtime_error e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (std::exception e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_delete_MemberRange(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::SetInstance::MemberRange *arg1 = (ampl::SetInstance::MemberRange *) 0 ;
@@ -51673,6 +51730,7 @@ SwigPyBuiltin__ampl__SetInstance__MemberRange_richcompare(PyObject *self, PyObje
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__SetInstance__MemberRange_methods[] = {
   { "begin", _wrap_MemberRange_begin, METH_NOARGS, "" },
   { "end", _wrap_MemberRange_end, METH_NOARGS, "" },
+  { "size", _wrap_MemberRange_size, METH_NOARGS, "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 

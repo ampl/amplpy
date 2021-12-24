@@ -33,6 +33,7 @@ public:
     };
     iterator begin() const;
     iterator end() const;
+    size_t size() const;
   };
   MemberRange members() const;
 
