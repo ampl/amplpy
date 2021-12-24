@@ -2,9 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.8.0 - 2021-12-XX
-- Update libampl to 2.0.7-0.
-- Allow users to specify the name of the AMPL executable
+## 0.8.0 - 2021-12-24
+- Update libampl to 2.0.8-2.
+- Allow users to specify the name of the AMPL executable.
+- Allow users to choose between using camelCase and snake_case methods.
+- Drop AMPL.exportGurobi model. It is now part of amplpy_gurobi.
 
 ## 0.7.2 - 2021-12-01
 - Improve performance of many operations by moving code to the C++ layer.

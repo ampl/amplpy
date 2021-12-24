@@ -49,10 +49,6 @@ to download a working version that can be installed quickly.
 
 Install from the [PyPI repository](https://pypi.python.org/pypi/amplpy):
 ```
-$ pip install amplpy
-```
-Or:
-```
 $ python -m pip install amplpy
 ```
 
