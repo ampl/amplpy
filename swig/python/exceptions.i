@@ -12,6 +12,10 @@ catch (ampl::AMPLException e) {
 catch (std::invalid_argument e) {
   SWIG_exception(SWIG_ValueError, e.what());
 }
+catch (std::out_of_range e) {
+  // SWIG_KeyError does not exist
+  SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+}
 catch (std::logic_error e) {
   SWIG_exception(SWIG_TypeError, e.what());
 }

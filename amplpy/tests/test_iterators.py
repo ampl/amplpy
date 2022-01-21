@@ -54,6 +54,10 @@ class TestIterators(TestBase.TestBase):
             ampl.get_set('x').name(),
             ampl.get_sets()['x'].name()
         )
+        with self.assertRaises(KeyError):
+            ampl.get_set('notfound')
+        with self.assertRaises(KeyError):
+            ampl.get_sets()['notfound']
 
     def test_parameter_iterators(self):
         ampl = self.ampl
@@ -98,6 +102,10 @@ class TestIterators(TestBase.TestBase):
             ampl.get_parameter('x').name(),
             ampl.get_parameters()['x'].name()
         )
+        with self.assertRaises(KeyError):
+            ampl.get_parameter('notfound')
+        with self.assertRaises(KeyError):
+            ampl.get_parameters()['notfound']
 
     def test_variable_iterators(self):
         ampl = self.ampl
@@ -142,6 +150,10 @@ class TestIterators(TestBase.TestBase):
             ampl.get_variable('x').name(),
             ampl.get_variables()['x'].name()
         )
+        with self.assertRaises(KeyError):
+            ampl.get_variable('notfound')
+        with self.assertRaises(KeyError):
+            ampl.get_variables()['notfound']
 
     def test_constraint_iterators(self):
         ampl = self.ampl
@@ -185,6 +197,10 @@ class TestIterators(TestBase.TestBase):
             ampl.get_constraint('c_x').name(),
             ampl.get_constraints()['c_x'].name()
         )
+        with self.assertRaises(KeyError):
+            ampl.get_constraint('notfound')
+        with self.assertRaises(KeyError):
+            ampl.get_constraints()['notfound']
 
     def test_objective_iterators(self):
         ampl = self.ampl
@@ -228,6 +244,10 @@ class TestIterators(TestBase.TestBase):
             ampl.get_objective('c_x').name(),
             ampl.get_objectives()['c_x'].name()
         )
+        with self.assertRaises(KeyError):
+            ampl.get_objective('notfound')
+        with self.assertRaises(KeyError):
+            ampl.get_objectives()['notfound']
 
 
 if __name__ == '__main__':

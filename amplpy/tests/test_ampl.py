@@ -26,17 +26,17 @@ class TestAMPL(TestBase.TestBase):
 
         with self.assertRaises(RuntimeError):
             self.assertRaises(ampl.get_data('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_entity('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_set('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_parameter('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_variable('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_constraint('XXX'))
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             self.assertRaises(ampl.get_objective('XXX'))
         self.assertEqual(len(ampl.get_sets()), 1)
         ampl.reset()

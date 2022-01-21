@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.1 - 2021-01-21
+- [BREAKING] Raise KeyError exceptions instead of TypeError exceptions when accessing entities that do not exist.
+
 ## 0.8.0 - 2021-12-24
 - Update libampl to 2.0.8-2.
 - Allow users to specify the name of the AMPL executable.
