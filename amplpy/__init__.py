@@ -17,7 +17,7 @@ from .dataframe import DataFrame, Row, Column
 from .utils import multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
-__version__ = '0.8.1b0'
+__version__ = '0.8.1'
 
 
 def _list_aliases():
