@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-import inflection
 
 from .base import BaseClass
 from .outputhandler import OutputHandler, Kind
@@ -22,6 +21,7 @@ __version__ = '0.8.1b0'
 
 
 def _list_aliases():
+    from inflection import camelize
     classes = [
         BaseClass, OutputHandler, ErrorHandler,
         AMPLException, EntityMap, Runnable,
@@ -32,7 +32,7 @@ def _list_aliases():
         for method in list(dir(cls)):
             if method.startswith('__'):
                 continue
-            cammel_method = inflection.camelize(method, False)
+            cammel_method = camelize(method, False)
             if cammel_method != method:
                 print('\t{} = {}'.format(cammel_method, method))
                 # setattr(cls, cammel_method, getattr(cls, method))
