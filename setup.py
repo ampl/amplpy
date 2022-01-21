@@ -94,10 +94,10 @@ def package_content():
 
 def compile_args():
     if OSTYPE == 'Windows':
-        return ['/TP', '/EHsc']
+        return ['/TP', '/EHa']
     elif OSTYPE == 'Linux':
         ignore_warnings = [
-            '-Wno-stringop-truncation', 
+            '-Wno-stringop-truncation',
             '-Wno-catch-value',
             '-Wno-unused-variable',
         ]

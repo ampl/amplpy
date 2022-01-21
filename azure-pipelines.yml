@@ -72,7 +72,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: windows
-  pool: {vmImage: 'vs2017-win2016'}
+  pool: {vmImage: 'windows-2022'}
   variables:
     CIBW_TEST_COMMAND: 'python -m amplpy.tests'
     CIBW_TEST_REQUIRES: pandas
