@@ -1,5 +1,9 @@
 # Jupyter Notebooks
 
+- Google Colab Template [(quickstart.ipynb)](notebooks/colab.ipynb)
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/colab.ipynb)
+
 - Setup & Quick Start [(quickstart.ipynb)](notebooks/quickstart.ipynb)
     
     [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/quickstart.ipynb)
