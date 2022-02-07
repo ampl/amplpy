@@ -1,6 +1,6 @@
 # Jupyter Notebooks
 
-- Google Colab Template [(colab.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/colab.ipynb)
+- Google Colab & Kaggle Template [(colab.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/colab.ipynb)
 
     [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/colab.ipynb)
     
@@ -60,3 +60,6 @@
     
     [![Open In SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/ampl/amplpy/blob/master/notebooks/pattern_tradeoff.ipynb)
 
+- Initial Google Colab Template using bash [(colab_bash.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/colab_bash.ipynb)
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/colab_bash.ipynb)
