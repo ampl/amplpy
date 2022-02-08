@@ -30,7 +30,8 @@ def move_contents(src, dst, verbose=False):
         move(os.path.join(src, fname), dst, verbose)
 
 
-def ampl_installer(url, destination, verbose=False):
+def module_installer(url, destination, verbose=False):
+    """Installs AMPL modules."""
     dst_basename = os.path.basename(destination)
     if not dst_basename.startswith('ampl.'):
         raise Exception(
@@ -90,3 +91,27 @@ def ampl_installer(url, destination, verbose=False):
     except:
         cleanup()
         raise
+
+
+def ampl_installer(ampl_dir, modules=None, license_uuid=None, run_once=True, verbose=False):
+    """Installs AMPL bundle or individual modules."""
+    demo_lic_backup = os.path.join(ampl_dir, 'ampl.lic_demo')
+    if run_once and os.path.isfile(demo_lic_backup):
+        print('Already installed. Skipping.')
+    elif modules is not None:
+        for module in modules:
+            module_installer(f'https://portal.ampl.com/dl/modules/{module}-module.linux64.tgz',
+                             ampl_dir, verbose=verbose)
+        shutil.copy(os.path.join(ampl_dir, 'ampl.lic'), demo_lic_backup)
+    else:
+        module_installer('https://portal.ampl.com/dl/amplce/ampl.linux64.tgz',
+                         ampl_dir, verbose=verbose)
+        shutil.copy(os.path.join(ampl_dir, 'ampl.lic'), demo_lic_backup)
+    if license_uuid is not None:
+        print(f'Activating license {license_uuid}')
+        module_installer(f'https://portal.ampl.com/download/license/{license_uuid}/ampl.lic',
+                         ampl_dir, verbose=verbose)
+    else:
+        print('Activating demo license.')
+        shutil.copy(demo_lic_backup, os.path.join(ampl_dir, 'ampl.lic'))
+    return ampl_dir
