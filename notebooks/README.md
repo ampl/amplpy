@@ -10,6 +10,10 @@
     
     [![Open In SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/ampl/amplpy/blob/master/notebooks/colab.ipynb)
 
+- Using Google Sheets [(gspread.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/gspread.ipynb)
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/gspread.ipynb)
+
 - Setup & Quick Start [(quickstart.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/quickstart.ipynb)
     
     [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/quickstart.ipynb)
