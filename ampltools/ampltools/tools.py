@@ -115,3 +115,18 @@ def ampl_installer(ampl_dir, modules=None, license_uuid=None, run_once=True, ver
         print('Activating demo license.')
         shutil.copy(demo_lic_backup, os.path.join(ampl_dir, 'ampl.lic'))
     return ampl_dir
+
+
+def cloud_platform_name():
+    """Guesses the name of cloud platform currently running on."""
+    import os
+    envkeys = dict(os.environ).keys()
+    if any(key.startswith('COLAB_') for key in envkeys):
+        return 'colab'
+    if any(key.startswith('KAGGLE_') for key in envkeys):
+        return 'kaggle'
+    if any(key.startswith('PAPERSPACE_') for key in envkeys):
+        return 'paperspace'
+    if 'SM_CURRENT_HOST' in envkeys:
+        return 'sagemaker'
+    return None
