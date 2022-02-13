@@ -57,7 +57,7 @@ you can add it passing a new :class:`~amplpy.Environment` to :class:`~amplpy.AMP
    from amplpy import AMPL, Environment
    ampl = AMPL(Environment('full path to the AMPL installation directory'))
 
-Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if the path includes backslashes.
+Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if the path includes backslashes.
 
 Development
 -----------
