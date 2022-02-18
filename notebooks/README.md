@@ -43,6 +43,10 @@
     [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/ampl/amplpy/blob/master/notebooks/pattern_enumeration.ipynb)
     
     [![Open In SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/ampl/amplpy/blob/master/notebooks/pattern_enumeration.ipynb)
+    
+- Calculate efficient frontier (uses Google Sheets) [(efficient_frontier.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/efficient_frontier.ipynb)
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplpy/blob/master/notebooks/efficient_frontier.ipynb)
 
 - Pattern Generation [(pattern_generation.ipynb)](https://github.com/ampl/amplpy/blob/master/notebooks/pattern_generation.ipynb)
 
