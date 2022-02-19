@@ -1,0 +1,14 @@
+param total_customers := 5 ;
+set Likes[1] := akuof byyii ;
+set Dislikes[1] :=  ;
+set Likes[2] := dlust luncl ;
+set Dislikes[2] :=  ;
+set Likes[3] := akuof luncl ;
+set Dislikes[3] :=  ;
+set Likes[4] := dlust vxglq ;
+set Dislikes[4] :=  ;
+set Likes[5] := dlust xveqd ;
+set Dislikes[5] :=  ;
+set INGR :=
+akuof byyii dlust luncl vxglq xveqd
+;
