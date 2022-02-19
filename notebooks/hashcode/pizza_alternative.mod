@@ -2,7 +2,9 @@
 # PARAMETERS AND SETS
 param total_customers;
 
+# Set of ingredients
 set INGR;
+# Customers lists of preferences
 set Likes{1..total_customers};
 set Dislikes{1..total_customers};
 
