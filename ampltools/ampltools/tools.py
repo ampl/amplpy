@@ -127,6 +127,6 @@ def cloud_platform_name():
         return 'kaggle'
     if any(key.startswith('PAPERSPACE_') for key in envkeys):
         return 'paperspace'
-    if 'SM_CURRENT_HOST' in envkeys:
-        return 'sagemaker'
+    if os.path.isdir('/home/studio-lab-user'):
+        return 'sagemaker-studio-lab'
     return None
