@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.2 - 2022-02-25
+- Add ampl_license_cell and ampl_installer_cell for jupyter notebooks.
+
 ## 0.2.1 - 2022-02-21
 - Fix SageMaker Studio Lab detection in cloud_platform_name().
 
