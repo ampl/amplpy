@@ -91,21 +91,22 @@ def module_installer(url, destination, verbose=False):
 
 
 def activate_ampl_license(uuid):
+    uuid = uuid.strip()
     url = f'https://portal.ampl.com/download/license/{uuid}/ampl.lic'
     tmpfile = tempfile.mktemp('.lic')
     urlretrieve(url, tmpfile)
     os.environ["AMPL_LICFILE"] = tmpfile
 
 
-def ampl_installer(ampl_dir, modules=None, license_uuid=None, run_once=True, verbose=False):
+def ampl_installer(ampl_dir, modules=None, license_uuid=None, reinstall=False, verbose=False):
     """Installs AMPL bundle or individual modules."""
     ampl_lic = os.path.join(ampl_dir, 'ampl.lic')
-    if run_once and os.path.isfile(ampl_lic):
+    if reinstall is False and os.path.isfile(ampl_lic):
         print(
-            'Already installed. Skipping. Set run_once=False if you want to install again.')
+            'Already installed. Skipping. Set reinstall=True if you want to reinstall.')
     elif modules is not None:
         if 'ampl' not in modules:
-            modules.append('ampl')
+            modules.insert(0, 'ampl')
         for module in modules:
             module_installer(
                 f'https://portal.ampl.com/dl/modules/{module}-module.linux64.tgz',
@@ -138,31 +139,47 @@ def cloud_platform_name():
     return None
 
 
-def ampl_license_cell():
+def check_ampl_version():
+    try:
+        print(subprocess.getoutput("ampl -vvq"))
+    except:
+        print('Failed to invoke "ampl -vvq".')
+
+
+def ampl_license_cell(check_callback):
     import ipywidgets as widgets
     from IPython.display import display
 
-    out = widgets.Output()
-    with out:
+    print('AMPL License:')
+    message = widgets.Output()
+    version = widgets.Output()
+    with message:
         ampl_lic = os.environ.get('AMPL_LICFILE', None)
         if ampl_lic is not None:
             print(f'License license at {ampl_lic}.')
         else:
             print('Using demo license.')
-    demo_btn = widgets.Button(description='Use demo license')
-    activate_btn = widgets.Button(description='Activate')
-    uuid_input = widgets.Password(description='UUID:')
+    with version:
+        if check_callback:
+            print()
+            check_callback()
 
-    def activate(btn):
-        uuid = uuid_input.value
-        out.clear_output(wait=False)
-        with out:
-            if btn == demo_btn:
+    demo_btn = widgets.Button(description='Use demo license')
+    uuid_input = widgets.Text(description='UUID:')
+
+    def activate(where):
+        uuid = uuid_input.value.strip()
+        if where == 'uuid' and len(uuid) == 0:
+            return
+        message.clear_output(wait=False)
+        with message:
+            if where == 'demo':
                 print('Activate demo license.')
                 if 'AMPL_LICFILE' in os.environ:
                     del os.environ['AMPL_LICFILE']
-            else:
-                if uuid != '':
+            elif where == 'uuid':
+                if len(uuid) == 36:
+                    uuid_input.value = ''  # clear the input
                     try:
                         activate_ampl_license(uuid)
                         print('License activated.')
@@ -171,31 +188,51 @@ def ampl_license_cell():
                         if 'AMPL_LICFILE' in os.environ:
                             del os.environ['AMPL_LICFILE']
                 else:
-                    print('Please provide the license UUID or use a demo license.')
-            try:
-                print('\n' + subprocess.getoutput("ampl -vvq"))
-            except:
-                pass
+                    print('Please provide a license UUID or use a demo license.')
+                    return
 
-    demo_btn.on_click(activate, False)
-    activate_btn.on_click(activate, False)
+        version.clear_output(wait=False)
+        with version:
+            if check_callback:
+                print()
+                check_callback()
+
+    demo_btn.on_click(lambda b: activate('demo'), False)
+    uuid_input.observe(lambda d: activate('uuid'), 'value')
     display(widgets.VBox(
-        [widgets.HBox([demo_btn, uuid_input, activate_btn]), out]))
+        [widgets.HBox([demo_btn, uuid_input]), message, version]))
 
 
-def ampl_installer_cell(license_uuid=None, modules=None, run_once=True):
+def ampl_installer_cell(license_uuid=None, modules=None, reinstall=False, check_callback=None):
     if cloud_platform_name() is not None:
         ampl_dir = os.path.abspath(
             os.path.join(os.curdir, 'ampl.linux-intel64'))
         ampl_installer(ampl_dir, modules=modules,
-                       license_uuid=license_uuid, run_once=run_once, verbose=True)
-        os.environ['PATH'] += os.pathsep + ampl_dir
+                       license_uuid=license_uuid,
+                       reinstall=reinstall, verbose=True)
+        os.environ['PATH'] = ampl_dir + os.pathsep + os.environ['PATH']
     else:
         print('Not running in a known cloud platform. Skipping.')
+        return
     if license_uuid is None:
-        ampl_license_cell()
+        ampl_license_cell(check_callback=check_callback)
     else:
-        try:
-            print('\n' + subprocess.getoutput("ampl -vvq"))
-        except:
-            pass
+        print()
+        if check_callback:
+            check_callback()
+        else:
+            check_ampl_version()
+
+
+def ampl_notebook(license_uuid=None, modules=None, reinstall=False):
+    vars = {}
+
+    def instantiate_ampl():
+        from amplpy import AMPL
+        ampl = AMPL()
+        print(ampl.option['version'])
+        vars['ampl'] = ampl
+
+    ampl_installer_cell(license_uuid, modules, reinstall,
+                        check_callback=instantiate_ampl)
+    return vars.get('ampl', None)
