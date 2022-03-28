@@ -1,3 +1,5 @@
 amplpy==0.8.1
-pydata-sphinx-theme==0.7.1
+#pydata-sphinx-theme==0.7.1
+ampl-sphinx-theme
 sphinx==4.2.0
+myst_parser>=0.17.0

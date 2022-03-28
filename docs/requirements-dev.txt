@@ -1,2 +1,4 @@
+#pydata-sphinx-theme==0.7.1
+ampl-sphinx-theme
 sphinx==4.2.0
-pydata-sphinx-theme==0.7.1
+myst_parser>=0.17.0
