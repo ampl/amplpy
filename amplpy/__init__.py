@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 
 from sys import version_info
-if sys.version_info[:2] >= (3, 6):
+if version_info[:2] >= (3, 6):
     from ampltools import *
 
 from .base import BaseClass
