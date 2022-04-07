@@ -369,6 +369,23 @@ class TestEntities(TestBase.TestBase):
         ampl.var['x'] = d
         self.assertEqual(d, ampl.var['x'].get_values().to_dict())
 
+    def testValidData(self):
+        ampl = self.ampl
+        ampl.eval("set I ordered; param P{I};")
+        ampl.eval("data; set I := 1 2; param P := 2 1 1 3;")
+        self.assertEqual(ampl.get_parameter("P").get_values().to_list(), [(1, 3), (2, 1)])
+        self.assertEqual(ampl.get_data("P").to_list(), [(1, 3), (2, 1)])
+
+    def testInvalidData(self):
+        ampl = self.ampl
+        ampl.eval("set I ordered; param P{I};")
+        ampl.eval("data; set I := 1 2; param P := 2 1 1 3 3 0;")
+        with self.assertRaises(RuntimeError):
+            print(ampl.get_parameter("P").get_values())
+        ampl.eval("reset data; data; set I := 1 2; param P := 2 1 1 3 3 0;")
+        with self.assertRaises(RuntimeError):
+            print(ampl.get_data("P"))
+
 
 if __name__ == '__main__':
     unittest.main()
