@@ -46,7 +46,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.11.1
+        python -m pip install cibuildwheel==2.4.0
         python updatelib.py
         cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
@@ -65,7 +65,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.11.1
+        python -m pip install cibuildwheel==2.4.0
         python updatelib.py
         CIBW_SKIP='pp*' cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
@@ -84,7 +84,7 @@ jobs:
     - bash: |
         set -ex
         python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.11.1
+        python -m pip install cibuildwheel==2.4.0
         python updatelib.py
         export PATH="/d/a/1/s/ampl:$PATH"
         CIBW_SKIP='pp* cp27-*' cibuildwheel --platform windows --output-dir wheelhouse .
