@@ -170,5 +170,5 @@ setup(
         sources=[os.path.join(CPP_BASE, 'amplpythonPYTHON_wrap.cxx')],
     )],
     package_data={'': package_content()},
-    install_requires=['future >= 0.15.0']
+    install_requires=['future >= 0.15.0', 'ampltools']
 )
