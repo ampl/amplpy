@@ -166,7 +166,7 @@ def ampl_license_cell(check_callback):
     with message:
         ampl_lic = os.environ.get("AMPL_LICFILE", None)
         if ampl_lic is not None:
-            print(f"License license at {ampl_lic}.")
+            print("License license at {}.".format(ampl_lic))
         else:
             print("Using demo license.")
     with version:
