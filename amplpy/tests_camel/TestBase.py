@@ -12,7 +12,7 @@ import os
 
 # For MSYS2, MINGW, etc., run with:
 # $ REAL_ROOT=`cygpath -w /` python -m amplpy.tests
-REAL_ROOT = os.environ.get('REAL_ROOT', None)
+REAL_ROOT = os.environ.get("REAL_ROOT", None)
 
 
 class TestBase(unittest.TestCase):
@@ -26,13 +26,13 @@ class TestBase(unittest.TestCase):
 
     def _real_filename(self, filename):
         # Workaround for MSYS2, MINGW paths
-        if REAL_ROOT is not None and filename.startswith('/'):
-            filename = filename.replace('/', REAL_ROOT, 1)
+        if REAL_ROOT is not None and filename.startswith("/"):
+            filename = filename.replace("/", REAL_ROOT, 1)
         return filename
 
     def str2file(self, filename, content):
         fullpath = self._tmpfile(filename)
-        with open(fullpath, 'w') as f:
+        with open(fullpath, "w") as f:
             print(content, file=f)
         return self._real_filename(fullpath)
 
@@ -44,5 +44,5 @@ class TestBase(unittest.TestCase):
         shutil.rmtree(self.dirpath)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

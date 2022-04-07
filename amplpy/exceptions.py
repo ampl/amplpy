@@ -44,7 +44,7 @@ class AMPLException(Exception):
         return self.message
 
     def __str__(self):
-        return self.what.lstrip('file: -').strip('\n')
+        return self.what.lstrip("file: -").strip("\n")
 
     # Aliases
     getLineNumber = get_line_number

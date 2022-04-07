@@ -8,6 +8,7 @@ from past.builtins import basestring
 
 from .entity import Entity
 from .dataframe import DataFrame
+
 try:
     import numpy as np
 except ImportError:
@@ -28,11 +29,7 @@ class Parameter(Entity):
     """
 
     def __init__(self, _impl):
-        Entity.__init__(
-            self,
-            _impl,
-            lambda it: it
-        )
+        Entity.__init__(self, _impl, lambda it: it)
 
     def __setitem__(self, index, value):
         self.set(index, value)

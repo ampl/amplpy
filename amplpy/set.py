@@ -9,6 +9,7 @@ from past.builtins import basestring
 from .entity import Entity
 from .dataframe import DataFrame
 from .iterators import MemberRangeIterator
+
 try:
     import numpy as np
 except ImportError:

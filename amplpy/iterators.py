@@ -48,11 +48,9 @@ class EntityMap(Iterator):
 class InstanceIterator(Iterator):
     def __init__(self, obj, instanceClass):
         Iterator.__init__(
-            self, obj,
-            lambda it: (
-                it.first(),
-                instanceClass(it.second())
-            ),
+            self,
+            obj,
+            lambda it: (it.first(), instanceClass(it.second())),
         )
 
     def size(self):
@@ -66,10 +64,7 @@ class MemberRangeIterator(Iterator):
     """Iterator for set members."""
 
     def __init__(self, obj):
-        Iterator.__init__(
-            self, obj,
-            lambda it: it.__ref__()
-        )
+        Iterator.__init__(self, obj, lambda it: it.__ref__())
 
     def size(self):
         return int(self.obj.size())
@@ -80,21 +75,12 @@ class MemberRangeIterator(Iterator):
 
 def EnvIterator(obj):
     """Iterator for environment classes."""
-    return Iterator(
-        obj,
-        lambda it: (it.first(), it.second())
-    )
+    return Iterator(obj, lambda it: (it.first(), it.second()))
 
 
 def ColIterator(obj):
-    return Iterator(
-        obj,
-        lambda it: it.__ref__()
-    )
+    return Iterator(obj, lambda it: it.__ref__())
 
 
 def RowIterator(obj):
-    return Iterator(
-        obj,
-        lambda it: it.__ref__()
-    )
+    return Iterator(obj, lambda it: it.__ref__())

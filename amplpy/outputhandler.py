@@ -3,6 +3,7 @@ from __future__ import print_function, absolute_import, division
 
 # from builtins import map, range, object, zip, sorted
 from builtins import object
+
 # from past.builtins import basestring
 
 from . import amplpython
@@ -24,15 +25,15 @@ class OutputHandler(amplpython.OutputHandler):
 
     def output(self, kind, msg):
         """
-         This method is called when AMPL sends some output derived from
-         executing a statement.
+        This method is called when AMPL sends some output derived from
+        executing a statement.
 
-         Args:
-            kind: kind of the output of the AMPL interpreter.
+        Args:
+           kind: kind of the output of the AMPL interpreter.
 
-            msg: text of the output by the AMPL interpreter.
+           msg: text of the output by the AMPL interpreter.
         """
-        print(msg, end='')
+        print(msg, end="")
 
 
 class Kind(object):

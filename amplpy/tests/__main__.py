@@ -11,5 +11,5 @@ from .test_environment import TestEnvironment
 from .test_properties import TestProperties
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

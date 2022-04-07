@@ -9,6 +9,7 @@ from past.builtins import basestring
 from .base import BaseClass
 from .iterators import RowIterator, ColIterator
 from . import amplpython
+
 try:
     import pandas as pd
 except ImportError:
@@ -108,18 +109,14 @@ class DataFrame(BaseClass):
                 index = (index,)
             if isinstance(columns, basestring):
                 columns = (columns,)
-            index_names = [
-                col[0] if isinstance(col, tuple) else col
-                for col in index
-            ]
+            index_names = [col[0] if isinstance(col, tuple) else col for col in index]
             column_names = [
-                col[0] if isinstance(col, tuple) else col
-                for col in columns
+                col[0] if isinstance(col, tuple) else col for col in columns
             ]
             impl = amplpython.DataFrame.factory(
                 len(index_names),
                 list(index_names) + list(column_names),
-                len(index_names) + len(column_names)
+                len(index_names) + len(column_names),
             )
             super(DataFrame, self).__init__(impl)
             for col in index:
@@ -129,7 +126,7 @@ class DataFrame(BaseClass):
                 if isinstance(col, tuple):
                     self.set_column(col[0], col[1])
         else:
-            impl = kwargs.get('_impl', None)
+            impl = kwargs.get("_impl", None)
             super(DataFrame, self).__init__(impl)
 
     def __iter__(self):
@@ -166,13 +163,13 @@ class DataFrame(BaseClass):
 
     def add_row(self, *value):
         """
-         Add a row to the DataFrame. The size of the tuple must be equal to the
-         total number of columns in the dataframe.
+        Add a row to the DataFrame. The size of the tuple must be equal to the
+        total number of columns in the dataframe.
 
-         Args:
-            value: A single argument with a tuple containing all the values
-            for the row to be added, or multiple arguments with the values for
-            each column.
+        Args:
+           value: A single argument with a tuple containing all the values
+           for the row to be added, or multiple arguments with the values for
+           each column.
         """
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
@@ -262,10 +259,10 @@ class DataFrame(BaseClass):
 
     def get_headers(self):
         """
-         Get the headers of this DataFrame.
+        Get the headers of this DataFrame.
 
-         Returns:
-            The headers of this DataFrame.
+        Returns:
+           The headers of this DataFrame.
         """
         return tuple(self._impl.getHeaders())
 
@@ -286,11 +283,12 @@ class DataFrame(BaseClass):
                 return list(value)
             else:
                 return [value]
+
         for key, value in values.items():
             key = conv_to_list(key)
             assert len(key) == nindices
             value = conv_to_list(value)
-            assert len(value) == ncols-nindices
+            assert len(value) == ncols - nindices
             self.add_row(key + value)
 
     def to_dict(self):
@@ -300,11 +298,10 @@ class DataFrame(BaseClass):
         d = {}
         nindices = self.get_num_indices()
         if nindices == 0:
-            raise ValueError('cannot convert to dictionary without an index')
-        data = zip(*[
-            self.get_column(header).to_list()
-            for header in self.get_headers()
-        ])
+            raise ValueError("cannot convert to dictionary without an index")
+        data = zip(
+            *[self.get_column(header).to_list() for header in self.get_headers()]
+        )
         for row in data:
             if nindices == 1:
                 key = row[0]
@@ -323,15 +320,9 @@ class DataFrame(BaseClass):
         Return a list with the DataFrame data.
         """
         if self.get_num_cols() > 1:
-            return [
-                tuple(self.get_row_by_index(i))
-                for i in range(self.get_num_rows())
-            ]
+            return [tuple(self.get_row_by_index(i)) for i in range(self.get_num_rows())]
         else:
-            return [
-                self.get_row_by_index(i)[0]
-                for i in range(self.get_num_rows())
-            ]
+            return [self.get_row_by_index(i)[0] for i in range(self.get_num_rows())]
 
     def to_pandas(self):
         """
@@ -341,13 +332,11 @@ class DataFrame(BaseClass):
         nindices = self.get_num_indices()
         headers = self.get_headers()
         columns = {
-            header: self.get_column(header).to_list()
-            for header in headers[nindices:]
+            header: self.get_column(header).to_list() for header in headers[nindices:]
         }
-        index = zip(*[
-            self.get_column(header).to_list()
-            for header in headers[:nindices]
-        ])
+        index = zip(
+            *[self.get_column(header).to_list() for header in headers[:nindices]]
+        )
         index = [key if len(key) > 1 else key[0] for key in index]
         if index == []:
             return pd.DataFrame(columns, index=None)
@@ -385,18 +374,14 @@ class DataFrame(BaseClass):
         columns = zip(*lst_columns)
 
         if index_names is None:
-            index_names = ['index{}'.format(i) for i in range(nindices)]
+            index_names = ["index{}".format(i) for i in range(nindices)]
 
         if column_names is None:
-            column_names = ['value{}'.format(i) for i in range(ncolumns)]
+            column_names = ["value{}".format(i) for i in range(ncolumns)]
 
-        index = [
-            (index_names[i], cindex)
-            for i, cindex in enumerate(zip(*lst_index))
-        ]
+        index = [(index_names[i], cindex) for i, cindex in enumerate(zip(*lst_index))]
         columns = [
-            (column_names[i], column)
-            for i, column in enumerate(zip(*lst_columns))
+            (column_names[i], column) for i, column in enumerate(zip(*lst_columns))
         ]
         return cls(index=index, columns=columns)
 
@@ -414,22 +399,13 @@ class DataFrame(BaseClass):
             df = pd.DataFrame(df)
         else:
             assert isinstance(df, pd.DataFrame)
-        keys = [
-            key if isinstance(key, tuple) else (key,)
-            for key in df.index.tolist()
-        ]
-        index = [
-            ('index{}'.format(i), cindex)
-            for i, cindex in enumerate(zip(*keys))
-        ]
+        keys = [key if isinstance(key, tuple) else (key,) for key in df.index.tolist()]
+        index = [("index{}".format(i), cindex) for i, cindex in enumerate(zip(*keys))]
         if index_names is not None:
             assert len(index) == len(index_names)
             for i in range(len(index)):
                 index[i] = (index_names[i], index[i][1])
-        columns = [
-            (str(cname), df[cname].tolist())
-            for cname in df.columns.tolist()
-        ]
+        columns = [(str(cname), df[cname].tolist()) for cname in df.columns.tolist()]
         return cls(index=index, columns=columns)
 
     @classmethod
@@ -441,11 +417,10 @@ class DataFrame(BaseClass):
         if isinstance(data, np.ndarray):
             index = []
             if len(data.shape) == 1:
-                columns = [('value', data.tolist())]
+                columns = [("value", data.tolist())]
             elif len(data.shape) == 2:
                 columns = [
-                    ('c{}'.format(i), col)
-                    for i, col in enumerate(zip(*data.tolist()))
+                    ("c{}".format(i), col) for i, col in enumerate(zip(*data.tolist()))
                 ]
             else:
                 raise TypeError

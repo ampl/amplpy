@@ -19,11 +19,12 @@ from .iterators import EntityMap
 from .exceptions import AMPLException
 from .entity import Entity
 from . import amplpython
+
 try:
     import pandas as pd
 except ImportError:
     pd = None
-inf = float('inf')
+inf = float("inf")
 
 
 class AMPL(object):
@@ -91,18 +92,18 @@ class AMPL(object):
             try:
                 self._impl = amplpython.AMPL()
             except RuntimeError as exp:
-                if str(exp).startswith('AMPL could not be started'):
+                if str(exp).startswith("AMPL could not be started"):
                     message = (
-                        '''Please make sure that the AMPL folder is in '''
-                        '''the system search path, or\n'''
-                        '''specify the path via:\n'''
-                        '''    AMPL(Environment('full path to the AMPL '''
-                        '''installation directory'))'''
+                        """Please make sure that the AMPL folder is in """
+                        """the system search path, or\n"""
+                        """specify the path via:\n"""
+                        """    AMPL(Environment('full path to the AMPL """
+                        """installation directory'))"""
                     )
-                    print('*' * 79, file=sys.stderr)
-                    for line in message.split('\n'):
-                        print('* {:75} *'.format(line), file=sys.stderr)
-                    print('*' * 79, file=sys.stderr)
+                    print("*" * 79, file=sys.stderr)
+                    for line in message.split("\n"):
+                        print("* {:75} *".format(line), file=sys.stderr)
+                    print("*" * 79, file=sys.stderr)
                 raise
         else:
             self._impl = amplpython.AMPL(environment._impl)
@@ -337,11 +338,11 @@ class AMPL(object):
         """
         filename = str(filename)
         if self._langext is not None:
-            with open(filename, 'r') as fin:
+            with open(filename, "r") as fin:
                 newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(filename+'.translated', 'w') as fout:
+                with open(filename + ".translated", "w") as fout:
                     fout.write(newmodel)
-                    filename += '.translated'
+                    filename += ".translated"
 
         def async_call():
             self._lock.acquire()
@@ -355,6 +356,7 @@ class AMPL(object):
                 self._lock.release()
                 if callback is not None:
                     callback.run()
+
         Thread(target=async_call).start()
 
     def read_data_async(self, filename, callback=None):
@@ -385,6 +387,7 @@ class AMPL(object):
                 self._lock.release()
                 if callback is not None:
                     callback.run()
+
         Thread(target=async_call).start()
 
     def eval_async(self, statements, callback=None, **kwargs):
@@ -404,8 +407,7 @@ class AMPL(object):
           interpreter is not running.
         """
         if self._langext is not None:
-            statements = self._langext.translate(
-                statements, **kwargs)
+            statements = self._langext.translate(statements, **kwargs)
 
         def async_call():
             self._lock.acquire()
@@ -419,6 +421,7 @@ class AMPL(object):
                 self._lock.release()
                 if callback is not None:
                     callback.run()
+
         Thread(target=async_call).start()
 
     def solve_async(self, callback=None):
@@ -428,6 +431,7 @@ class AMPL(object):
         Args:
           callback: Callback to be executed when the solver is done.
         """
+
         def async_call():
             self._lock.acquire()
             try:
@@ -439,6 +443,7 @@ class AMPL(object):
                 self._lock.release()
                 if callback is not None:
                     callback.run()
+
         Thread(target=async_call).start()
 
     def wait(self):
@@ -540,11 +545,11 @@ class AMPL(object):
         """
         filename = str(filename)
         if self._langext is not None:
-            with open(filename, 'r') as fin:
+            with open(filename, "r") as fin:
                 newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(filename+'.translated', 'w') as fout:
+                with open(filename + ".translated", "w") as fout:
                     fout.write(newmodel)
-                    filename += '.translated'
+                    filename += ".translated"
         self._impl.read(filename)
         self._error_handler_wrapper.check()
 
@@ -654,15 +659,14 @@ class AMPL(object):
             output_handler: The function handling the AMPL output derived from
             interpreting user commands.
         """
+
         class OutputHandlerInternal(amplpython.OutputHandler):
             def output(self, kind, msg):
                 output_handler.output(kind, msg)
 
         self._output_handler = output_handler
         self._output_handler_internal = OutputHandlerInternal()
-        self._impl.setOutputHandler(
-            self._output_handler_internal
-        )
+        self._impl.setOutputHandler(self._output_handler_internal)
 
     def set_error_handler(self, error_handler):
         """
@@ -671,6 +675,7 @@ class AMPL(object):
         Args:
             error_handler: The object handling AMPL errors and warnings.
         """
+
         class ErrorHandlerWrapper(ErrorHandler):
             def __init__(self, error_handler):
                 self.error_handler = error_handler
@@ -770,7 +775,7 @@ class AMPL(object):
         Get the the current objective. Returns `None` if no objective is set.
         """
         name = self._impl.getCurrentObjectiveName()
-        if name == '':
+        if name == "":
             return None
         else:
             return self.get_objective(name)
@@ -779,6 +784,7 @@ class AMPL(object):
         """
         Get/Set a variable.
         """
+
         class Variables(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -801,6 +807,7 @@ class AMPL(object):
         """
         Get/Set a constraint.
         """
+
         class Constraints(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -820,6 +827,7 @@ class AMPL(object):
         """
         Get an objective.
         """
+
         class Objectives(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -836,6 +844,7 @@ class AMPL(object):
         """
         Get/Set a set.
         """
+
         class Sets(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -855,6 +864,7 @@ class AMPL(object):
         """
         Get/Set a parameter.
         """
+
         class Parameters(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -877,6 +887,7 @@ class AMPL(object):
         """
         Get/Set an option.
         """
+
         class Options(object):
             def __init__(self, ampl):
                 self.ampl = ampl
@@ -921,15 +932,15 @@ class AMPL(object):
         Start recording the session to a file for debug purposes.
         """
         filename = str(filename)
-        self.set_option('_log_file_name', filename)
-        self.set_option('_log_input_only', True)
-        self.set_option('_log', True)
+        self.set_option("_log_file_name", filename)
+        self.set_option("_log_input_only", True)
+        self.set_option("_log", True)
 
     def _stop_recording(self):
         """
         Stop recording the session.
         """
-        self.set_option('_log', False)
+        self.set_option("_log", False)
 
     def _load_session(self, filename):
         """

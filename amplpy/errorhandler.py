@@ -20,13 +20,13 @@ class ErrorHandler:
         """
         Receives notification of an error.
         """
-        msg = '\t'+str(exception).replace('\n', '\n\t')
-        print('Error:\n{:s}'.format(msg))
+        msg = "\t" + str(exception).replace("\n", "\n\t")
+        print("Error:\n{:s}".format(msg))
         raise exception
 
     def warning(self, exception):
         """
         Receives notification of a warning.
         """
-        msg = '\t'+str(exception).replace('\n', '\n\t')
-        print('Warning:\n{:s}'.format(msg))
+        msg = "\t" + str(exception).replace("\n", "\n\t")
+        print("Warning:\n{:s}".format(msg))

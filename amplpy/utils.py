@@ -3,10 +3,11 @@ from __future__ import print_function, absolute_import, division
 
 # from builtins import map, range, object, zip, sorted
 from builtins import range
+
 # from past.builtins import basestring, unicode
 
 
-def register_magics(store_name='_ampl_cells', ampl_object=None):
+def register_magics(store_name="_ampl_cells", ampl_object=None):
     """
     Register jupyter notebook magics ``%%ampl`` and ``%%ampl_eval``.
 
@@ -14,13 +15,11 @@ def register_magics(store_name='_ampl_cells', ampl_object=None):
         store_name: Name of the store where ``%%ampl cells`` will be stored.
         ampl_object: Object used to evaluate ``%%ampl_eval`` cells.
     """
-    from IPython.core.magic import (
-        Magics, magics_class, cell_magic, line_magic
-    )
+    from IPython.core.magic import Magics, magics_class, cell_magic, line_magic
 
     @magics_class
     class StoreAMPL(Magics):
-        def __init__(self, shell=None,  **kwargs):
+        def __init__(self, shell=None, **kwargs):
             Magics.__init__(self, shell=shell, **kwargs)
             self._store = []
             shell.user_ns[store_name] = self._store
