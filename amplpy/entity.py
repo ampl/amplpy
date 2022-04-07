@@ -168,6 +168,9 @@ class Entity(BaseClass):
         - Sets it returns all the members of the set. Note that it does not
           apply to indexed sets. See :func:`~amplpy.Set.getValues`.
 
+        Raises:
+            RuntimeError: if there are issues with the data.
+
         Retruns:
             A :class:`~amplpy.DataFrame` containing the values for all
             instances.

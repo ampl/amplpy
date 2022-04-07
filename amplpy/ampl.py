@@ -147,6 +147,8 @@ class AMPL(object):
             TypeError: if the AMPL visualization command does not succeed
             for one of the reasons listed above.
 
+            RuntimeError: if there are issues with the data.
+
         Returns:
             DataFrame capturing the output of the display
             command in tabular form.
