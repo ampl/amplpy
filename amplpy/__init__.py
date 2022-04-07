@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from ampltools import *
+
+from sys import version_info
+if version_info[0] >= 3:
+    from ampltools import *
 
 from .base import BaseClass
 from .outputhandler import OutputHandler, Kind
