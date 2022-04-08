@@ -29,7 +29,7 @@ jobs:
   pool: {vmImage: 'Ubuntu-20.04'}
   variables:
     CIBW_TEST_COMMAND: 'PATH="/project/ampl:$PATH" python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas
+    CIBW_TEST_REQUIRES: pandas numpy
   strategy:
     matrix:
       x86:
@@ -50,7 +50,7 @@ jobs:
         python -m pip install --upgrade cibuildwheel==1.12.0
         CIBW_BUILD='cp35-*' cibuildwheel --platform linux --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
-        CIBW_SKIP='*musllinux*' cibuildwheel --platform linux --output-dir wheelhouse .
+        CIBW_TEST_REQUIRES='' CIBW_SKIP='pp* *musllinux*' cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
@@ -58,7 +58,7 @@ jobs:
   pool: {vmImage: 'macOS-10.15'}
   variables:
     CIBW_TEST_COMMAND: 'PATH="/Users/runner/work/1/s/ampl:$PATH" python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas
+    CIBW_TEST_REQUIRES: pandas numpy
     AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
@@ -69,9 +69,9 @@ jobs:
         python updatelib.py
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
-        CIBW_BUILD='cp35-*' cibuildwheel --platform windows --output-dir wheelhouse .
+        CIBW_BUILD='cp35-*' cibuildwheel --platform macos --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
-        CIBW_SKIP='pp*' cibuildwheel --platform windows --output-dir wheelhouse .
+        CIBW_TEST_REQUIRES='' CIBW_SKIP='pp*' cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
@@ -79,7 +79,7 @@ jobs:
   pool: {vmImage: 'windows-2022'}
   variables:
     CIBW_TEST_COMMAND: 'python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas
+    CIBW_TEST_REQUIRES: pandas numpy
     AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
