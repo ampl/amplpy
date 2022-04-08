@@ -12,6 +12,15 @@ import os
 from amplpy import DataFrame
 from . import TestBase
 
+try:
+    import numpy as np
+except ImportError:
+    np = None
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
+
 
 class TestDataFrame(TestBase.TestBase):
     """Test DataFrame."""
@@ -123,10 +132,8 @@ class TestDataFrame(TestBase.TestBase):
 
     def test_pandas(self):
         ampl = self.ampl
-        try:
-            import pandas as pd
-        except ImportError:
-            return
+        if pd is None:
+            self.skipTest("pandas not available")
         df = pd.DataFrame({"a": [1, 2], "b": [3.5, 4]}, index=["x", "y"])
         ampl.eval(
             """
@@ -177,10 +184,8 @@ class TestDataFrame(TestBase.TestBase):
 
     def test_pandas_advanced(self):
         ampl = self.ampl
-        try:
-            import pandas as pd
-        except ImportError:
-            return
+        if pd is None:
+            self.skipTest("pandas not available")
         ampl.eval(
             """
             set someSet := {"First", "Second"};
@@ -212,10 +217,8 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(d3, d4)
 
     def test_pandas_named_columns(self):
-        try:
-            import pandas as pd
-        except ImportError:
-            return
+        if pd is None:
+            self.skipTest("pandas not available")
         df_unindexed = pd.DataFrame(
             [
                 ["Apple", "Red", 3, 1.29],
@@ -253,10 +256,8 @@ class TestDataFrame(TestBase.TestBase):
 
     def test_numpy(self):
         ampl = self.ampl
-        try:
-            import numpy as np
-        except ImportError:
-            return
+        if np is None:
+            self.skipTest("numpy not available")
         ampl.eval("set X;")
         arr = np.array([1, 2, 3])
         ampl.set["X"] = arr
@@ -294,6 +295,8 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual({1: (1, 2)}, df.to_dict())
 
     def test_no_index(self):
+        if pd is None:
+            self.skipTest("pandas not available")
         df = DataFrame([], ["x", "y"])
         x = [1, 2, 3]
         y = [4, 5, 6]
