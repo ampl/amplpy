@@ -48,9 +48,9 @@ jobs:
         python updatelib.py
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
-        CIBW_BUILD='cp35-*' cibuildwheel --platform linux --output-dir wheelhouse .
+        CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
-        CIBW_TEST_REQUIRES='' CIBW_SKIP='pp* *musllinux*' cibuildwheel --platform linux --output-dir wheelhouse .
+        CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* *musllinux* $CIBW_SKIP" cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
@@ -69,9 +69,9 @@ jobs:
         python updatelib.py
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
-        CIBW_BUILD='cp35-*' cibuildwheel --platform macos --output-dir wheelhouse .
+        CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
-        CIBW_TEST_REQUIRES='' CIBW_SKIP='pp*' cibuildwheel --platform macos --output-dir wheelhouse .
+        CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
@@ -91,10 +91,9 @@ jobs:
         export PATH="/d/a/1/s/ampl:$PATH"
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
-        CIBW_BUILD='cp35-*' cibuildwheel --platform windows --output-dir wheelhouse .
+        CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
-        CIBW_TEST_REQUIRES='' CIBW_SKIP='pp* cp27-*' cibuildwheel --platform windows --output-dir wheelhouse . 
-        # CIBW_TEST_REQUIRES='' since there is no pandas for python3.10 yet
+        CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* cp27-* $CIBW_SKIP" cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
