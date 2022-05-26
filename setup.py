@@ -40,7 +40,7 @@ import sys
 import os
 
 OSTYPE = platform.system()
-ARCH = platform.processor()
+ARCH = platform.processor() or platform.machine()
 x64 = platform.architecture()[0] == '64bit'
 
 if ARCH == 'ppc64le':

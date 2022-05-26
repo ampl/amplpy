@@ -65,7 +65,7 @@ $ conda install -c conda-forge amplpy
 
 You can build and install the package locally as follows:
 ```
-$ git clone git@github.com:ampl/amplpy.git
+$ git clone https://github.com/ampl/amplpy.git 
 $ cd amplpy
 $ python updatelib.py
 $ python setup.py build
