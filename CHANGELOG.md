@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed hanging when license check fails on Windows.
 - Allow '-' in option names.
 - Update libampl to 2.0.9.20220527.
+- Drop 32-bit support.
 
 ## 0.8.1 - 2022-01-21
 - [BREAKING] Raise KeyError exceptions instead of TypeError exceptions when accessing entities that do not exist.

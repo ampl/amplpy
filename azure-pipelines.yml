@@ -32,10 +32,10 @@ jobs:
     CIBW_TEST_REQUIRES: pandas numpy
   strategy:
     matrix:
-      x86:
-        CIBW_SKIP: 'pp*'
-        CIBW_BUILD: '*-manylinux*_i686'
-        AMPL_URL: '$(BUNDLES_URL)/$(LINUX32_BUNDLE_NAME)'
+      # x86:
+      #   CIBW_SKIP: 'pp*'
+      #   CIBW_BUILD: '*-manylinux*_i686'
+      #   AMPL_URL: '$(BUNDLES_URL)/$(LINUX32_BUNDLE_NAME)'
       x64:
         CIBW_SKIP: 'pp* *-manylinux*_i686'
         AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'
@@ -81,6 +81,7 @@ jobs:
     CIBW_TEST_COMMAND: 'python -m amplpy.tests'
     CIBW_TEST_REQUIRES: pandas numpy
     AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'
+    CIBW_SKIP: '*-win32'
   steps:
     - task: UsePythonVersion@0
     - bash: bash download-ampl.sh $AMPL_URL
