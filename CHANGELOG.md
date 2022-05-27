@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.8.2 - 2022-04-##
 - [BREAKING] Raise RuntimeError in Entity.get_values if there are any issues with the data.
 - Add ampltools as dependency as import everything.
+- Fixed hanging when license check fails on Windows.
+- Allow '-' in option names.
+- Update libampl to 2.0.9.20220527.
 
 ## 0.8.1 - 2022-01-21
 - [BREAKING] Raise KeyError exceptions instead of TypeError exceptions when accessing entities that do not exist.

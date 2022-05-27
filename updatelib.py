@@ -7,13 +7,14 @@ import sys
 import shutil
 import tempfile
 
-VERSION = 'nightly'
-API_URL = 'https://ampl.com/dl/API/future/{}/libampl.zip'.format(VERSION)
-ARCHS = ['intel32', 'amd64', 'ppc64le', 'aarch64']
+VERSION = "nightly"
+API_URL = "https://ampl.com/dl/API/future/{}/libampl.zip".format(VERSION)
+ARCHS = ["amd64", "ppc64le", "aarch64"]
 
 
 def updatelib(package, archs):
     from zipfile import ZipFile
+
     try:
         from urllib import urlretrieve
     except Exception:
@@ -21,17 +22,18 @@ def updatelib(package, archs):
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
 
-    tmpfile = tempfile.mktemp('.zip')
-    tmpdir = os.path.join(os.curdir, 'tmp')
-    libampldir = os.path.join(tmpdir, 'libampl')
+    tmpfile = tempfile.mktemp(".zip")
+    tmpdir = os.path.join(os.curdir, "tmp")
+    libampldir = os.path.join(tmpdir, "libampl")
     try:
         shutil.rmtree(tmpdir)
     except Exception:
         pass
 
-    if package.startswith('http'):
+    if package.startswith("http"):
         # Disable SSL verification
         import ssl
+
         ssl._create_default_https_context = ssl._create_unverified_context
         print("Downloading:", API_URL)
         urlretrieve(API_URL, tmpfile)
@@ -45,19 +47,19 @@ def updatelib(package, archs):
         with ZipFile(package) as zp:
             zp.extractall(tmpdir)
 
-    include_dir = os.path.join(libampldir, 'include', 'ampl')
-    wrapper_dir = os.path.join(libampldir, 'python')
+    include_dir = os.path.join(libampldir, "include", "ampl")
+    wrapper_dir = os.path.join(libampldir, "python")
 
     amplpy_include = os.path.join(
-        'amplpy', 'amplpython', 'cppinterface', 'include', 'ampl')
+        "amplpy", "amplpython", "cppinterface", "include", "ampl"
+    )
     try:
         shutil.rmtree(amplpy_include)
     except Exception:
         pass
     shutil.copytree(include_dir, amplpy_include)
     print(
-        '*\n!.gitignore\n',
-        file=open(os.path.join(amplpy_include, '.gitignore'), 'w')
+        "*\n!.gitignore\n", file=open(os.path.join(amplpy_include, ".gitignore"), "w")
     )
 
     # print('wrapper:')
@@ -68,31 +70,27 @@ def updatelib(package, archs):
     #         os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
     #     )
 
-    dstbase = os.path.join('amplpy', 'amplpython', 'cppinterface', 'lib')
+    dstbase = os.path.join("amplpy", "amplpython", "cppinterface", "lib")
     try:
         shutil.rmtree(dstbase)
         os.mkdir(dstbase)
     except Exception:
         pass
-    print(
-        '*\n!.gitignore\n',
-        file=open(os.path.join(dstbase, '.gitignore'), 'w')
-    )
+    print("*\n!.gitignore\n", file=open(os.path.join(dstbase, ".gitignore"), "w"))
 
     for libname in archs:
         srcdir = os.path.join(libampldir, libname)
         dstdir = os.path.join(dstbase, libname)
         os.mkdir(dstdir)
-        print('{}:'.format(libname))
+        print("{}:".format(libname))
         for filename in os.listdir(srcdir):
-            print('\t{}'.format(filename))
+            print("\t{}".format(filename))
             shutil.copyfile(
-                os.path.join(srcdir, filename),
-                os.path.join(dstdir, filename)
+                os.path.join(srcdir, filename), os.path.join(dstdir, filename)
             )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # if len(sys.argv) > 1:
     #     updatelib(API_URL, sys.argv[1:])
     # else:

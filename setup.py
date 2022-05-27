@@ -41,24 +41,24 @@ import os
 
 OSTYPE = platform.system()
 ARCH = platform.processor() or platform.machine()
-x64 = platform.architecture()[0] == '64bit'
+x64 = platform.architecture()[0] == "64bit"
 
-if ARCH == 'ppc64le':
-    LIBRARY = 'ppc64le'
-elif ARCH == 'aarch64':
-    LIBRARY = 'aarch64'
+if ARCH == "ppc64le":
+    LIBRARY = "ppc64le"
+elif ARCH == "aarch64":
+    LIBRARY = "aarch64"
 else:  # 'AMD64', 'x86_64', 'i686', 'i386'
-    LIBRARY = 'amd64' if x64 else 'intel32'
+    LIBRARY = "amd64" if x64 else "intel32"
 
-if OSTYPE == 'Darwin':
-    LIBRARY_EXT = '.dylib'
-elif OSTYPE == 'Linux':
-    LIBRARY_EXT = '.so'
+if OSTYPE == "Darwin":
+    LIBRARY_EXT = ".dylib"
+elif OSTYPE == "Linux":
+    LIBRARY_EXT = ".so"
 else:
-    LIBRARY_EXT = '.dll'
+    LIBRARY_EXT = ".dll"
 
-CPP_BASE = os.path.join('amplpy', 'amplpython', 'cppinterface')
-LIBRARY_BASE = os.path.join(CPP_BASE, 'lib')
+CPP_BASE = os.path.join("amplpy", "amplpython", "cppinterface")
+LIBRARY_BASE = os.path.join(CPP_BASE, "lib")
 LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
 
 
@@ -72,51 +72,48 @@ def ls_dir(base_dir):
 
 
 def package_content():
-    all_files = ls_dir('amplpy/')
-    if 'sdist' in sys.argv:
+    all_files = ls_dir("amplpy/")
+    if "sdist" in sys.argv:
         lst = all_files
     else:
         source_only = [
-            fpath for fpath in all_files
-            if not fpath.startswith(LIBRARY_BASE)
+            fpath for fpath in all_files if not fpath.startswith(LIBRARY_BASE)
         ]
         library_only = [
-            fpath for fpath in all_files
+            fpath
+            for fpath in all_files
             if fpath.startswith(LIBRARY_DIR)
             if fpath.endswith(LIBRARY_EXT)
         ]
         lst = source_only + library_only
-    return [
-        fpath.replace('amplpy/', '', 1)
-        for fpath in lst
-    ]
+    return [fpath.replace("amplpy/", "", 1) for fpath in lst]
 
 
 def compile_args():
-    if OSTYPE == 'Windows':
-        return ['/TP', '/EHa']
-    elif OSTYPE == 'Linux':
+    if OSTYPE == "Windows":
+        return ["/TP", "/EHa"]
+    elif OSTYPE == "Linux":
         ignore_warnings = [
-            '-Wno-stringop-truncation',
-            '-Wno-catch-value',
-            '-Wno-unused-variable',
+            "-Wno-stringop-truncation",
+            "-Wno-catch-value",
+            "-Wno-unused-variable",
         ]
-        return ['-std=c++11'] + ignore_warnings
-    elif OSTYPE == 'Darwin':
+        return ["-std=c++11"] + ignore_warnings
+    elif OSTYPE == "Darwin":
         ignore_warnings = [
-            '-Wno-unused-variable',
+            "-Wno-unused-variable",
         ]
-        return ['-std=c++11', '-mmacosx-version-min=10.9'] + ignore_warnings
+        return ["-std=c++11", "-mmacosx-version-min=10.9"] + ignore_warnings
     else:
         return []
 
 
 def link_args():
     rpath = os.path.join(LIBRARY_BASE, LIBRARY)
-    if OSTYPE == 'Darwin':
-        return ['-Wl,-rpath,@loader_path/' + rpath]
-    elif OSTYPE == 'Linux':
-        return ['-Wl,-rpath,$ORIGIN/' + rpath]
+    if OSTYPE == "Darwin":
+        return ["-Wl,-rpath,@loader_path/" + rpath]
+    elif OSTYPE == "Linux":
+        return ["-Wl,-rpath,$ORIGIN/" + rpath]
     else:
         # Return [] instead of [''] for Windows in order to avoid:
         #  cannot open input file '.obj' in build on distutils from Python 3.9
@@ -125,50 +122,52 @@ def link_args():
 
 
 setup(
-    name='amplpy',
-    version='0.8.2b1',
-    description='Python API for AMPL',
+    name="amplpy",
+    version="0.8.2b2",
+    description="Python API for AMPL",
     long_description=__doc__,
-    license='BSD-3',
-    platforms='any',
-    author='Filipe Brandão',
-    author_email='fdabrandao@ampl.com',
-    url='http://ampl.com/',
-    download_url='https://github.com/ampl/amplpy',
+    license="BSD-3",
+    platforms="any",
+    author="Filipe Brandão",
+    author_email="fdabrandao@ampl.com",
+    url="http://ampl.com/",
+    download_url="https://github.com/ampl/amplpy",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Environment :: Console',
-        'Topic :: Software Development',
-        'Topic :: Scientific/Engineering',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: POSIX',
-        'Operating System :: Unix',
-        'Operating System :: MacOS',
-        'Operating System :: Microsoft :: Windows',
-        'Programming Language :: C++',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: Implementation :: CPython',
+        "Development Status :: 4 - Beta",
+        "Environment :: Console",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft :: Windows",
+        "Programming Language :: C++",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: CPython",
     ],
-    packages=['amplpy'],
-    ext_modules=[Extension(
-        '_amplpython',
-        libraries=['ampl'],
-        library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
-        include_dirs=[os.path.join(CPP_BASE, 'include')],
-        extra_compile_args=compile_args(),
-        extra_link_args=link_args(),
-        sources=[os.path.join(CPP_BASE, 'amplpythonPYTHON_wrap.cxx')],
-    )],
-    package_data={'': package_content()},
-    install_requires=['future >= 0.15.0', 'ampltools']
+    packages=["amplpy"],
+    ext_modules=[
+        Extension(
+            "_amplpython",
+            libraries=["ampl"],
+            library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
+            include_dirs=[os.path.join(CPP_BASE, "include")],
+            extra_compile_args=compile_args(),
+            extra_link_args=link_args(),
+            sources=[os.path.join(CPP_BASE, "amplpythonPYTHON_wrap.cxx")],
+        )
+    ],
+    package_data={"": package_content()},
+    install_requires=["future >= 0.15.0", "ampltools"],
 )
