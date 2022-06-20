@@ -4,7 +4,10 @@ from __future__ import absolute_import
 from sys import version_info
 
 if version_info[:2] >= (3, 0):
-    import ampltools as tools
+    try:
+        import ampltools as tools
+    except:
+        tools = None
 
 from .base import BaseClass
 from .outputhandler import OutputHandler, Kind
@@ -23,7 +26,7 @@ from .utils import multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
 
-__version__ = "0.8.2"
+__version__ = "0.8.3b0"
 
 
 def _list_aliases():
