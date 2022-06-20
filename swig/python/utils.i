@@ -14,13 +14,7 @@ ampl::Variant VariantFromPyObject(PyObject *obj) {
         PyErr_Clear();
         double value = PyFloat_AsDouble(obj);
         if (PyErr_Occurred() != NULL) {
-            value =  PyLong_AsLong(obj);
-            if (PyErr_Occurred() != NULL) {
-                value = PyInt_AsLong(obj);
-            }
-        }
-        if (PyErr_Occurred() != NULL) {
-            throw std::logic_error("Failed to cast value to int/float/string");
+            throw std::logic_error("Failed to cast value to int/float/double/string");
         }
         return ampl::Variant(value);
     }

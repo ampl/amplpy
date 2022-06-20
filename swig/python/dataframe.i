@@ -59,7 +59,11 @@
                 } else if (PyLong_Check(item)) {
                     values[i] = PyLong_AsLong(item);
                 } else {
+                    PyErr_Clear();
                     values[i] = PyFloat_AsDouble(item);
+                    if (PyErr_Occurred() != NULL) {
+                        throw std::logic_error("Failed to cast value to int/float/double");
+                    }
                 }
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
