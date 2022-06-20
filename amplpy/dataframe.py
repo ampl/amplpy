@@ -220,9 +220,7 @@ class DataFrame(BaseClass):
 
             values: The values to set.
         """
-        res = self._impl.setColumnPyList(header, list(values))
-        if res != 0:
-            raise NotImplementedError
+        self._impl.setColumnPyList(header, list(values))
         # if any(isinstance(value, basestring) for value in values):
         #     values = list(map(str, values))
         #     self._impl.setColumnStr(header, values, len(values))

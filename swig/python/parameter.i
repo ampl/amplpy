@@ -1,7 +1,7 @@
 %extend ampl::Parameter{
-    int setValuesPyDict(PyObject *dict) {
+    void setValuesPyDict(PyObject *dict) {
         if (!PyDict_Check(dict)) {
-            return -1;
+            throw std::logic_error("Expected a dictionary");
         }
         PyObject *d_keys = PyDict_Keys(dict);
         PyObject *d_values = PyDict_Values(dict);
@@ -10,14 +10,15 @@
         for (std::size_t i = 0; i < size; i++) {
             PyObject *item = PyList_GetItem(d_values, i);
             if (item == NULL) {
-                return -2;
+                throw std::logic_error("Failed to access value");
             }
-            if (PyFloat_Check(item) || PyInt_Check(item) || PyLong_Check(item)) {
-                has_numbers = true;
-                if (has_strings) return -3;
-            } else if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item) || PyString_Check(item)) {
                 has_strings = true;
-                if (has_numbers) return -4;
+            } else {
+                has_numbers = true;
+            }
+            if (has_numbers && has_strings) {
+                throw std::logic_error("All values must be either numbers or strings");
             }
         }
         if (has_strings && !has_numbers) {
@@ -26,9 +27,7 @@
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(d_values, i);
                 values[i] = _PyString_AsString(item);
-                if (!SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i])) {
-                    return -5;
-                }
+                SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i]);
             }
             self->setValues(keys.data(), values.data(), size);
         } else if (has_numbers && !has_strings) {
@@ -43,12 +42,9 @@
                 } else {
                     values[i] = PyFloat_AsDouble(item);
                 }
-                if (!SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i])) {
-                    return -6;
-                }
+                SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i]);
             }
             self->setValues(keys.data(), values.data(), size);
         }
-        return 0;
     }
 }

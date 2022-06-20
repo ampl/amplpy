@@ -114,17 +114,7 @@ class Parameter(Entity):
         if isinstance(values, dict):
             if not values:
                 return
-            if self._impl.setValuesPyDict(values) != 0:
-                raise TypeError
-            # indices, values = list(values.keys()), values.values()
-            # if any(isinstance(value, basestring) for value in values):
-            #     values = list(map(str, values))
-            #     self._impl.setValuesTaStr(indices, values, len(values))
-            # elif all(isinstance(value, Real) for value in values):
-            #     values = list(map(float, values))
-            #     self._impl.setValuesTaDbl(indices, values, len(values))
-            # else:
-            #     raise TypeError
+            self._impl.setValuesPyDict(values)
         elif isinstance(values, (list, tuple)):
             if any(isinstance(value, basestring) for value in values):
                 values = list(map(str, values))

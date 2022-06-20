@@ -23,33 +23,34 @@
 }
 
 %extend ampl::DataFrame{
-    int setColumnPyList(fmt::CStringRef header, PyObject *list) {
+    void setColumnPyList(fmt::CStringRef header, PyObject *list) {
         if (!PyList_Check(list)) {
-            return -1;
+            throw std::logic_error("Expected a list");
         }
         std::size_t size = Py_SIZE(list);
         bool has_numbers = false, has_strings = false;
         for (std::size_t i = 0; i < size; i++) {
             PyObject *item = PyList_GetItem(list, i);
             if (item == NULL) {
-                return -2;
+                throw std::logic_error("Failed to access value");
             }
-            if (PyFloat_Check(item) || PyInt_Check(item) || PyLong_Check(item)) {
-                has_numbers = true;
-                if (has_strings) return -3;
-            } else if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item) || PyString_Check(item)) {
                 has_strings = true;
-                if (has_numbers) return -4;
+            } else {
+                has_numbers = true;
+            }
+            if (has_numbers && has_strings) {
+                throw std::logic_error("All values must be either numbers or strings");
             }
         }
-        if (has_strings && !has_numbers) {
+        if (has_strings) {
             std::vector<const char *> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
                 values[i] = _PyString_AsString(item);
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
-        } else if (has_numbers && !has_strings) {
+        } else if (has_numbers) {
             std::vector<double> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
@@ -63,6 +64,5 @@
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
         }
-        return 0;
     }
 }

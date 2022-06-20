@@ -31,9 +31,7 @@
 
 /* Convert from Python --> C */
 %typemap(in) ampl::Tuple {
-    if(!SetTupleFromPyObject($input, &$1)) {
-        SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject($input, &$1);
 }
 
 %typemap(typecheck, precedence=0) ampl::Tuple {
@@ -50,18 +48,14 @@
         memset($1, 0, size * sizeof(ampl::Tuple));
         for (i = 0; i < size; i++) {
             PyObject *obj = PyList_GetItem($input, i);
-            if(!SetTupleFromPyObject(obj, &t)) {
-                SWIG_exception(SWIG_TypeError, "tuple expected");
-            }
+            SetTupleFromPyObject(obj, &t);
             $1[i] = t;
         }
-    } else if(SetTupleFromPyObject($input, &t)) {
+    } else {
+        SetTupleFromPyObject($input, &t);
         $1 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
         memset($1, 0, 1 * sizeof(ampl::Tuple));
         $1[0] = t;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "not a list");
-        return NULL;
     }
 }
 

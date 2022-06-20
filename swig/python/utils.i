@@ -1,6 +1,8 @@
 %inline %{
 ampl::Variant VariantFromPyObject(PyObject *obj) {
-    if (PyInt_Check(obj)) {
+    if (obj == Py_None) {
+        return ampl::Variant();
+    } else if (PyInt_Check(obj)) {
         return ampl::Variant(PyInt_AsLong(obj));
     } else if (PyLong_Check(obj)) {
         return ampl::Variant(PyLong_AsLong(obj));
@@ -9,16 +11,22 @@ ampl::Variant VariantFromPyObject(PyObject *obj) {
     } else if (PyUnicode_Check(obj) || PyString_Check(obj)) {
         return ampl::Variant(std::string(_PyString_AsString(obj)));
     } else {
-        return ampl::Variant();
+        PyErr_Clear();
+        double value = PyFloat_AsDouble(obj);
+        if (PyErr_Occurred() != NULL) {
+            value =  PyLong_AsLong(obj);
+            if (PyErr_Occurred() != NULL) {
+                value = PyInt_AsLong(obj);
+            }
+        }
+        if (PyErr_Occurred() != NULL) {
+            throw std::logic_error("Failed to cast value to int/float/string");
+        }
+        return ampl::Variant(value);
     }
 }
 
-bool SetVariantFromPyObject(PyObject *obj, ampl::Variant *v) {
-    *v = VariantFromPyObject(obj);
-    return v->type() != ampl::EMPTY;
-}
-
-bool SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
+void SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
     bool is_tuple = PyTuple_Check(obj);
     bool is_list = !is_tuple && PyList_Check(obj);
     std::size_t size = 1;
@@ -35,11 +43,8 @@ bool SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
         } else {
             item = obj;
         }
-        if (!SetVariantFromPyObject(item, &args[i])) {
-            return false;
-        }
+        args[i] = VariantFromPyObject(item);
     }
     *t = ampl::Tuple(args.data(), args.size());
-    return true;
 }
 %}

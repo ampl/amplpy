@@ -4358,7 +4358,9 @@ SWIG_FromCharPtr(const char *cptr)
 
 
 ampl::Variant VariantFromPyObject(PyObject *obj) {
-    if (PyInt_Check(obj)) {
+    if (obj == Py_None) {
+        return ampl::Variant();
+    } else if (PyInt_Check(obj)) {
         return ampl::Variant(PyInt_AsLong(obj));
     } else if (PyLong_Check(obj)) {
         return ampl::Variant(PyLong_AsLong(obj));
@@ -4367,16 +4369,22 @@ ampl::Variant VariantFromPyObject(PyObject *obj) {
     } else if (PyUnicode_Check(obj) || PyString_Check(obj)) {
         return ampl::Variant(std::string(_PyString_AsString(obj)));
     } else {
-        return ampl::Variant();
+        PyErr_Clear();
+        double value = PyFloat_AsDouble(obj);
+        if (PyErr_Occurred() != NULL) {
+            value =  PyLong_AsLong(obj);
+            if (PyErr_Occurred() != NULL) {
+                value = PyInt_AsLong(obj);
+            }
+        }
+        if (PyErr_Occurred() != NULL) {
+            throw std::logic_error("Failed to cast value to int/float/string");
+        }
+        return ampl::Variant(value);
     }
 }
 
-bool SetVariantFromPyObject(PyObject *obj, ampl::Variant *v) {
-    *v = VariantFromPyObject(obj);
-    return v->type() != ampl::EMPTY;
-}
-
-bool SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
+void SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
     bool is_tuple = PyTuple_Check(obj);
     bool is_list = !is_tuple && PyList_Check(obj);
     std::size_t size = 1;
@@ -4393,19 +4401,9 @@ bool SetTupleFromPyObject(PyObject *obj, ampl::Tuple *t) {
         } else {
             item = obj;
         }
-        if (!SetVariantFromPyObject(item, &args[i])) {
-            return false;
-        }
+        args[i] = VariantFromPyObject(item);
     }
     *t = ampl::Tuple(args.data(), args.size());
-    return true;
-}
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_bool  (bool value)
-{
-  return PyBool_FromLong(value ? 1 : 0);
 }
 
 
@@ -4511,6 +4509,13 @@ SWIG_AsVal_int (PyObject * obj, int *val)
     }
   }  
   return res;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_bool  (bool value)
+{
+  return PyBool_FromLong(value ? 1 : 0);
 }
 
 
@@ -4783,33 +4788,34 @@ SWIGINTERN ampl::DataFrame ampl_DataFrame_factory(int numberOfIndexColumns,char 
     ampl::StringArgs s(args, count);
     return ampl::DataFrame(numberOfIndexColumns, s);
   }
-SWIGINTERN int ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CStringRef header,PyObject *list){
+SWIGINTERN void ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CStringRef header,PyObject *list){
         if (!PyList_Check(list)) {
-            return -1;
+            throw std::logic_error("Expected a list");
         }
         std::size_t size = Py_SIZE(list);
         bool has_numbers = false, has_strings = false;
         for (std::size_t i = 0; i < size; i++) {
             PyObject *item = PyList_GetItem(list, i);
             if (item == NULL) {
-                return -2;
+                throw std::logic_error("Failed to access value");
             }
-            if (PyFloat_Check(item) || PyInt_Check(item) || PyLong_Check(item)) {
-                has_numbers = true;
-                if (has_strings) return -3;
-            } else if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item) || PyString_Check(item)) {
                 has_strings = true;
-                if (has_numbers) return -4;
+            } else {
+                has_numbers = true;
+            }
+            if (has_numbers && has_strings) {
+                throw std::logic_error("All values must be either numbers or strings");
             }
         }
-        if (has_strings && !has_numbers) {
+        if (has_strings) {
             std::vector<const char *> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
                 values[i] = _PyString_AsString(item);
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
-        } else if (has_numbers && !has_strings) {
+        } else if (has_numbers) {
             std::vector<double> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
@@ -4823,7 +4829,6 @@ SWIGINTERN int ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CString
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
         }
-        return 0;
     }
 SWIGINTERN PyObject *ampl_internal_Slice_Sl_false_Sg__toPyList(ampl::internal::Slice< false > *self){
         std::size_t size = self->size();
@@ -4948,9 +4953,9 @@ SWIGINTERN void ampl_Parameter_setValues__SWIG_1(ampl::Parameter *self,std::size
         self->setValues(num_rows, ampl::internal::Args(row_indices),
           num_cols,ampl::internal::Args(col_indices), values, transpose);
       }
-SWIGINTERN int ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *dict){
+SWIGINTERN void ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *dict){
         if (!PyDict_Check(dict)) {
-            return -1;
+            throw std::logic_error("Expected a dictionary");
         }
         PyObject *d_keys = PyDict_Keys(dict);
         PyObject *d_values = PyDict_Values(dict);
@@ -4959,14 +4964,15 @@ SWIGINTERN int ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *di
         for (std::size_t i = 0; i < size; i++) {
             PyObject *item = PyList_GetItem(d_values, i);
             if (item == NULL) {
-                return -2;
+                throw std::logic_error("Failed to access value");
             }
-            if (PyFloat_Check(item) || PyInt_Check(item) || PyLong_Check(item)) {
-                has_numbers = true;
-                if (has_strings) return -3;
-            } else if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item) || PyString_Check(item)) {
                 has_strings = true;
-                if (has_numbers) return -4;
+            } else {
+                has_numbers = true;
+            }
+            if (has_numbers && has_strings) {
+                throw std::logic_error("All values must be either numbers or strings");
             }
         }
         if (has_strings && !has_numbers) {
@@ -4975,9 +4981,7 @@ SWIGINTERN int ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *di
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(d_values, i);
                 values[i] = _PyString_AsString(item);
-                if (!SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i])) {
-                    return -5;
-                }
+                SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i]);
             }
             self->setValues(keys.data(), values.data(), size);
         } else if (has_numbers && !has_strings) {
@@ -4992,13 +4996,10 @@ SWIGINTERN int ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *di
                 } else {
                     values[i] = PyFloat_AsDouble(item);
                 }
-                if (!SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i])) {
-                    return -6;
-                }
+                SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i]);
             }
             self->setValues(keys.data(), values.data(), size);
         }
-        return 0;
     }
 SWIGINTERN ampl::internal::EntityWrapper< ampl::VariableInstance >::KeyType ampl_internal_CountedIterator_Sl_ampl_internal_EntityWrapper_Sl_ampl_VariableInstance_Sg__Sg__first(ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariableInstance > > *self){
         return self->operator*().first;
@@ -5290,7 +5291,7 @@ SWIGINTERN PyObject *_wrap_delete_StringArray(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5405,7 +5406,7 @@ SWIGINTERN PyObject *_wrap_delete_StringRefArray(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5489,7 +5490,7 @@ SWIGINTERN PyObject *_wrap_delete_runtime_error(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5540,30 +5541,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetVariantFromPyObject(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  PyObject *arg1 = (PyObject *) 0 ;
-  ampl::Variant *arg2 = (ampl::Variant *) 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  bool result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "SetVariantFromPyObject", 2, 2, swig_obj)) SWIG_fail;
-  arg1 = swig_obj[0];
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_ampl__Variant, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetVariantFromPyObject" "', argument " "2"" of type '" "ampl::Variant *""'"); 
-  }
-  arg2 = reinterpret_cast< ampl::Variant * >(argp2);
-  result = (bool)SetVariantFromPyObject(arg1,arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_SetTupleFromPyObject(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   PyObject *arg1 = (PyObject *) 0 ;
@@ -5571,7 +5548,6 @@ SWIGINTERN PyObject *_wrap_SetTupleFromPyObject(PyObject *self, PyObject *args) 
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  bool result;
   
   if (!SWIG_Python_UnpackTuple(args, "SetTupleFromPyObject", 2, 2, swig_obj)) SWIG_fail;
   arg1 = swig_obj[0];
@@ -5580,8 +5556,8 @@ SWIGINTERN PyObject *_wrap_SetTupleFromPyObject(PyObject *self, PyObject *args) 
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetTupleFromPyObject" "', argument " "2"" of type '" "ampl::Tuple *""'"); 
   }
   arg2 = reinterpret_cast< ampl::Tuple * >(argp2);
-  result = (bool)SetTupleFromPyObject(arg1,arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  SetTupleFromPyObject(arg1,arg2);
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -5618,7 +5594,7 @@ SWIGINTERN int _wrap_new_VariantArray(PyObject *self, PyObject *args, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5678,7 +5654,7 @@ SWIGINTERN PyObject *_wrap_delete_VariantArray(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5748,7 +5724,7 @@ SWIGINTERN PyObject *_wrap_VariantArray___getitem__(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5832,7 +5808,7 @@ SWIGINTERN PyObject *_wrap_VariantArray___setitem__(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5893,7 +5869,7 @@ SWIGINTERN PyObject *_wrap_VariantArray_cast(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -5955,7 +5931,7 @@ SWIGINTERN PyObject *_wrap_VariantArray_frompointer(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6023,7 +5999,7 @@ SWIGINTERN int _wrap_new_TupleArray(PyObject *self, PyObject *args, PyObject *kw
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6083,7 +6059,7 @@ SWIGINTERN PyObject *_wrap_delete_TupleArray(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6153,7 +6129,7 @@ SWIGINTERN PyObject *_wrap_TupleArray___getitem__(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6237,7 +6213,7 @@ SWIGINTERN PyObject *_wrap_TupleArray___setitem__(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6298,7 +6274,7 @@ SWIGINTERN PyObject *_wrap_TupleArray_cast(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6360,7 +6336,7 @@ SWIGINTERN PyObject *_wrap_TupleArray_frompointer(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6418,7 +6394,7 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_0(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6480,7 +6456,7 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_1(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6573,7 +6549,7 @@ SWIGINTERN PyObject *_wrap_OptionalInt_hasValue(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6636,7 +6612,7 @@ SWIGINTERN PyObject *_wrap_OptionalInt_value(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6696,7 +6672,7 @@ SWIGINTERN PyObject *_wrap_delete_OptionalInt(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6752,7 +6728,7 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_0(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6817,7 +6793,7 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_1(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6910,7 +6886,7 @@ SWIGINTERN PyObject *_wrap_OptionalString_hasValue(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -6973,7 +6949,7 @@ SWIGINTERN PyObject *_wrap_OptionalString_value(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7033,7 +7009,7 @@ SWIGINTERN PyObject *_wrap_delete_OptionalString(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7089,7 +7065,7 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_0(PyObject *self, Py_ssize_t nobjs, 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7151,7 +7127,7 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_1(PyObject *self, Py_ssize_t nobjs, 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7244,7 +7220,7 @@ SWIGINTERN PyObject *_wrap_OptionalBool_hasValue(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7307,7 +7283,7 @@ SWIGINTERN PyObject *_wrap_OptionalBool_value(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7367,7 +7343,7 @@ SWIGINTERN PyObject *_wrap_delete_OptionalBool(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7423,7 +7399,7 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_0(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7485,7 +7461,7 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_1(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7578,7 +7554,7 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_hasValue(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7641,7 +7617,7 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_value(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7701,7 +7677,7 @@ SWIGINTERN PyObject *_wrap_delete_OptionalDouble(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7767,7 +7743,7 @@ SWIGINTERN int _wrap_new_Variant__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7827,7 +7803,7 @@ SWIGINTERN int _wrap_new_Variant__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7890,7 +7866,7 @@ SWIGINTERN int _wrap_new_Variant__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -7997,7 +7973,7 @@ SWIGINTERN PyObject *_wrap_Variant_str(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8058,7 +8034,7 @@ SWIGINTERN PyObject *_wrap_Variant_dbl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8119,7 +8095,7 @@ SWIGINTERN PyObject *_wrap_Variant_type(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8180,7 +8156,7 @@ SWIGINTERN PyObject *_wrap_Variant_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8253,7 +8229,7 @@ SWIGINTERN PyObject *_wrap_Variant_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8326,7 +8302,7 @@ SWIGINTERN PyObject *_wrap_Variant_compare(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8386,7 +8362,7 @@ SWIGINTERN PyObject *_wrap_delete_Variant(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8450,7 +8426,7 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_0(PyObject *self, Py_ssize_t nobjs, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8510,7 +8486,7 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_1(PyObject *self, Py_ssize_t nobjs, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8573,7 +8549,7 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_2(PyObject *self, Py_ssize_t nobjs, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8680,7 +8656,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_str(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8741,7 +8717,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_dbl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8802,7 +8778,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_type(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8863,7 +8839,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -8936,7 +8912,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9009,7 +8985,7 @@ SWIGINTERN PyObject *_wrap_VariantRef_compare(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9069,7 +9045,7 @@ SWIGINTERN PyObject *_wrap_delete_VariantRef(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9141,7 +9117,7 @@ SWIGINTERN int _wrap_new_TupleRef(PyObject *self, PyObject *args, PyObject *kwar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9202,7 +9178,7 @@ SWIGINTERN PyObject *_wrap_TupleRef_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9263,7 +9239,7 @@ SWIGINTERN PyObject *_wrap_TupleRef_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9333,7 +9309,7 @@ SWIGINTERN PyObject *_wrap_TupleRef_getIndex(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9404,7 +9380,7 @@ SWIGINTERN PyObject *_wrap_delete_TupleRef(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9458,7 +9434,7 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9518,7 +9494,7 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9579,7 +9555,7 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9683,7 +9659,7 @@ SWIGINTERN PyObject *_wrap_Tuple_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9744,7 +9720,7 @@ SWIGINTERN PyObject *_wrap_Tuple_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9814,7 +9790,7 @@ SWIGINTERN PyObject *_wrap_Tuple_getIndex(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9898,7 +9874,7 @@ SWIGINTERN PyObject *_wrap_Tuple_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -9971,7 +9947,7 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_0(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10039,7 +10015,7 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_1(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10140,7 +10116,7 @@ SWIGINTERN PyObject *_wrap_delete_Tuple(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10202,7 +10178,7 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10262,7 +10238,7 @@ SWIGINTERN PyObject *_wrap_delete_DataFrame(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10325,7 +10301,7 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10388,7 +10364,7 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10507,7 +10483,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10580,7 +10556,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10655,7 +10631,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_differs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10718,7 +10694,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumCols(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10779,7 +10755,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumRows(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10840,7 +10816,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumIndices(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10915,7 +10891,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_0(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -10990,7 +10966,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_1(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11081,7 +11057,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_2(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11188,7 +11164,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11311,7 +11287,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11380,7 +11356,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_reserve(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11441,7 +11417,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11507,7 +11483,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11577,7 +11553,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowByIndex(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11653,7 +11629,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_0(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11729,7 +11705,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_1(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11789,7 +11765,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_2(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11904,7 +11880,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getHeaders(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -11972,7 +11948,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_impl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12022,9 +11998,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, Py_ssi
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   
   arg3 = _PyString_AsString(swig_obj[2]);
@@ -12057,7 +12031,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, Py_ssi
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12148,7 +12122,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_1(PyObject *self, Py_ssi
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12278,7 +12252,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12368,7 +12342,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12461,7 +12435,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12513,9 +12487,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, Py_ssize_t n
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -12532,7 +12504,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12706,9 +12678,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowTpl(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -12725,7 +12695,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowTpl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12823,7 +12793,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -12924,7 +12894,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13044,7 +13014,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblDbl(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13173,7 +13143,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13302,7 +13272,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13434,7 +13404,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13591,7 +13561,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13724,7 +13694,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrDbl(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -13860,7 +13830,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrDbl(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14002,7 +13972,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblDbl(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14162,7 +14132,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14313,7 +14283,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14458,7 +14428,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14588,7 +14558,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14689,7 +14659,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14735,7 +14705,6 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[3] ;
-  int result;
   
   if (!SWIG_Python_UnpackTuple(args, "DataFrame_setColumnPyList", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__DataFrame, 0 |  0 );
@@ -14749,7 +14718,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
   arg3 = swig_obj[1];
   {
     try {
-      result = (int)ampl_DataFrame_setColumnPyList(arg1,arg2,arg3);
+      ampl_DataFrame_setColumnPyList(arg1,arg2,arg3);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -14762,7 +14731,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14787,7 +14756,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
       SWIG_exception(SWIG_UnknownError,"Unknown exception");
     }
   }
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -14825,7 +14794,7 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_size(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14886,7 +14855,7 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_begin(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -14947,7 +14916,7 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15017,7 +14986,7 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_getIndex(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15089,7 +15058,7 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_toPyList(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15149,7 +15118,7 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameColumn(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15224,7 +15193,7 @@ SWIGINTERN PyObject *_wrap_ColIterator_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15299,7 +15268,7 @@ SWIGINTERN PyObject *_wrap_ColIterator_differs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15362,7 +15331,7 @@ SWIGINTERN PyObject *_wrap_ColIterator___ref__(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15448,7 +15417,7 @@ SWIGINTERN PyObject *_wrap_ColIterator_clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15509,7 +15478,7 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrement(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15579,7 +15548,7 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrementBy(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15639,7 +15608,7 @@ SWIGINTERN PyObject *_wrap_delete_ColIterator(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15702,7 +15671,7 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15763,7 +15732,7 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_begin(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15824,7 +15793,7 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15894,7 +15863,7 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_getIndex(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -15965,7 +15934,7 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameRow(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16040,7 +16009,7 @@ SWIGINTERN PyObject *_wrap_RowIterator_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16115,7 +16084,7 @@ SWIGINTERN PyObject *_wrap_RowIterator_differs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16178,7 +16147,7 @@ SWIGINTERN PyObject *_wrap_RowIterator___ref__(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16264,7 +16233,7 @@ SWIGINTERN PyObject *_wrap_RowIterator_clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16325,7 +16294,7 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrement(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16395,7 +16364,7 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrementBy(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16455,7 +16424,7 @@ SWIGINTERN PyObject *_wrap_delete_RowIterator(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16518,7 +16487,7 @@ SWIGINTERN PyObject *_wrap_Instance_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16579,7 +16548,7 @@ SWIGINTERN PyObject *_wrap_Instance_name(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16640,7 +16609,7 @@ SWIGINTERN PyObject *_wrap_Instance_entity(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16701,7 +16670,7 @@ SWIGINTERN PyObject *_wrap_Instance_key(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16787,7 +16756,7 @@ SWIGINTERN PyObject *_wrap_delete_Instance(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16850,7 +16819,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16928,7 +16897,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_contains(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -16989,7 +16958,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_getValues(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17066,7 +17035,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDf(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17127,7 +17096,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_members(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17176,9 +17145,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -17195,7 +17162,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17257,18 +17224,14 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesTuples(PyObject *self, PyObject 
       memset(arg2, 0, size * sizeof(ampl::Tuple));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        if(!SetTupleFromPyObject(obj, &t)) {
-          SWIG_exception(SWIG_TypeError, "tuple expected");
-        }
+        SetTupleFromPyObject(obj, &t);
         arg2[i] = t;
       }
-    } else if(SetTupleFromPyObject(swig_obj[0], &t)) {
+    } else {
+      SetTupleFromPyObject(swig_obj[0], &t);
       arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
       memset(arg2, 0, 1 * sizeof(ampl::Tuple));
       arg2[0] = t;
-    } else {
-      PyErr_SetString(PyExc_TypeError, "not a list");
-      return NULL;
     }
   }
   ecode3 = SWIG_AsVal_size_t(swig_obj[1], &val3);
@@ -17291,7 +17254,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesTuples(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17376,7 +17339,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValues(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17467,7 +17430,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17567,7 +17530,7 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17633,7 +17596,7 @@ SWIGINTERN PyObject *_wrap_delete_SetInstance(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17697,7 +17660,7 @@ SWIGINTERN int _wrap_new_MemberRange(PyObject *self, PyObject *args, PyObject *k
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17758,7 +17721,7 @@ SWIGINTERN PyObject *_wrap_MemberRange_begin(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17819,7 +17782,7 @@ SWIGINTERN PyObject *_wrap_MemberRange_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17880,7 +17843,7 @@ SWIGINTERN PyObject *_wrap_MemberRange_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -17940,7 +17903,7 @@ SWIGINTERN PyObject *_wrap_delete_MemberRange(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18003,7 +17966,7 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18092,7 +18055,7 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrement(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18162,7 +18125,7 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrementBy(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18235,7 +18198,7 @@ SWIGINTERN PyObject *_wrap_iterator_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18310,7 +18273,7 @@ SWIGINTERN PyObject *_wrap_iterator_differs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18372,7 +18335,7 @@ SWIGINTERN PyObject *_wrap_delete_iterator(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18435,7 +18398,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_value(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18496,7 +18459,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_astatus(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18557,7 +18520,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_sstatus(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18618,7 +18581,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_exitcode(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18679,7 +18642,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_message(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18740,7 +18703,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_result(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18800,7 +18763,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_drop(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18860,7 +18823,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_restore(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18921,7 +18884,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_minimization(PyObject *self, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -18981,7 +18944,7 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveInstance(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19042,7 +19005,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_0(PyObject *self, Py_ssize
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19109,7 +19072,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_1(PyObject *self, Py_ssize
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19211,7 +19174,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_unfix(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19280,7 +19243,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_setValue(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19341,7 +19304,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_value(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19402,7 +19365,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_defeqn(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19463,7 +19426,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_dual(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19524,7 +19487,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19585,7 +19548,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init0(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19646,7 +19609,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19707,7 +19670,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19768,7 +19731,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb0(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19829,7 +19792,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub0(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19890,7 +19853,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb1(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -19951,7 +19914,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub1(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20012,7 +19975,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb2(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20073,7 +20036,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub2(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20134,7 +20097,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lrc(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20195,7 +20158,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_urc(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20256,7 +20219,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lslack(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20317,7 +20280,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_uslack(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20378,7 +20341,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_rc(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20439,7 +20402,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_slack(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20500,7 +20463,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_astatus(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20561,7 +20524,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_sstatus(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20622,7 +20585,7 @@ SWIGINTERN PyObject *_wrap_VariableInstance_status(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20682,7 +20645,7 @@ SWIGINTERN PyObject *_wrap_delete_VariableInstance(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20744,7 +20707,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_drop(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20804,7 +20767,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_restore(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20865,7 +20828,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_body(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20926,7 +20889,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_astatus(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -20987,7 +20950,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_defvar(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21048,7 +21011,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21109,7 +21072,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit0(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21170,7 +21133,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dual(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21231,7 +21194,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lb(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21292,7 +21255,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ub(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21353,7 +21316,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lbs(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21414,7 +21377,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ubs(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21475,7 +21438,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ldual(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21536,7 +21499,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_udual(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21597,7 +21560,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lslack(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21658,7 +21621,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_uslack(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21719,7 +21682,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_slack(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21780,7 +21743,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_sstatus(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21841,7 +21804,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_status(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21910,7 +21873,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_setDual(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -21971,7 +21934,7 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_val(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22031,7 +21994,7 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintInstance(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22093,7 +22056,7 @@ SWIGINTERN PyObject *_wrap_delete_TableInstance(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22157,7 +22120,7 @@ SWIGINTERN int _wrap_new_EntityArray(PyObject *self, PyObject *args, PyObject *k
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22217,7 +22180,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityArray(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22287,7 +22250,7 @@ SWIGINTERN PyObject *_wrap_EntityArray___getitem__(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22371,7 +22334,7 @@ SWIGINTERN PyObject *_wrap_EntityArray___setitem__(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22432,7 +22395,7 @@ SWIGINTERN PyObject *_wrap_EntityArray_cast(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22494,7 +22457,7 @@ SWIGINTERN PyObject *_wrap_EntityArray_frompointer(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22561,7 +22524,7 @@ SWIGINTERN PyObject *_wrap_Entity_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22622,7 +22585,7 @@ SWIGINTERN PyObject *_wrap_Entity_name(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22683,7 +22646,7 @@ SWIGINTERN PyObject *_wrap_Entity_type(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22744,7 +22707,7 @@ SWIGINTERN PyObject *_wrap_Entity_indexarity(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22805,7 +22768,7 @@ SWIGINTERN PyObject *_wrap_Entity_isScalar(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22866,7 +22829,7 @@ SWIGINTERN PyObject *_wrap_Entity_numInstances(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22927,7 +22890,7 @@ SWIGINTERN PyObject *_wrap_Entity_getIndexingSets(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -22995,7 +22958,7 @@ SWIGINTERN PyObject *_wrap_Entity_xref(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23063,7 +23026,7 @@ SWIGINTERN PyObject *_wrap_Entity_getValues(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23140,7 +23103,7 @@ SWIGINTERN PyObject *_wrap_Entity_setValuesDf(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23235,7 +23198,7 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23301,7 +23264,7 @@ SWIGINTERN PyObject *_wrap_delete_Entity(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23375,7 +23338,7 @@ SWIGINTERN PyObject *_wrap_EntityArgs_Factory(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23435,7 +23398,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityArgs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23498,7 +23461,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_begin(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23559,7 +23522,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_end(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23608,9 +23571,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -23627,7 +23588,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23687,7 +23648,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_0(PyObject *self, Py_ss
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23734,9 +23695,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, Py_ss
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -23753,7 +23712,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, Py_ss
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23854,7 +23813,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityVariable(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23917,7 +23876,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_begin(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -23978,7 +23937,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_end(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24027,9 +23986,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -24046,7 +24003,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24106,7 +24063,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_0(PyObject *self, Py_
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24153,9 +24110,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, Py_
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -24172,7 +24127,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, Py_
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24273,7 +24228,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityConstraint(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24336,7 +24291,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_begin(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24397,7 +24352,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24446,9 +24401,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -24465,7 +24418,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24525,7 +24478,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_0(PyObject *self, Py_ssize_t
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24572,9 +24525,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, Py_ssize_t
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -24591,7 +24542,7 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, Py_ssize_t
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24692,7 +24643,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntitySet(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24755,7 +24706,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_begin(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24816,7 +24767,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_end(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24865,9 +24816,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -24884,7 +24833,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24944,7 +24893,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_0(PyObject *self, Py_s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -24991,9 +24940,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, Py_s
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -25010,7 +24957,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, Py_s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25111,7 +25058,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityObjective(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25174,7 +25121,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_begin(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25235,7 +25182,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_end(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25284,9 +25231,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -25303,7 +25248,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25363,7 +25308,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_0(PyObject *self, Py_s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25421,9 +25366,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, Py_s
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -25440,7 +25383,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, Py_s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25552,7 +25495,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityParameter(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25615,7 +25558,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_begin(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25676,7 +25619,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_end(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25725,9 +25668,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_find(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::TableInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -25744,7 +25685,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_find(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25804,7 +25745,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_0(PyObject *self, Py_ssize
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25851,9 +25792,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_1(PyObject *self, Py_ssize
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::TableInstance > * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     try {
@@ -25870,7 +25809,7 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_1(PyObject *self, Py_ssize
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -25971,7 +25910,7 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityTable(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26034,7 +25973,7 @@ SWIGINTERN PyObject *_wrap_Constraint_isLogical(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26094,7 +26033,7 @@ SWIGINTERN PyObject *_wrap_Constraint_drop(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26154,7 +26093,7 @@ SWIGINTERN PyObject *_wrap_Constraint_restore(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26215,7 +26154,7 @@ SWIGINTERN PyObject *_wrap_Constraint_body(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26276,7 +26215,7 @@ SWIGINTERN PyObject *_wrap_Constraint_astatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26337,7 +26276,7 @@ SWIGINTERN PyObject *_wrap_Constraint_defvar(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26398,7 +26337,7 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26459,7 +26398,7 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit0(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26520,7 +26459,7 @@ SWIGINTERN PyObject *_wrap_Constraint_dual(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26581,7 +26520,7 @@ SWIGINTERN PyObject *_wrap_Constraint_lb(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26642,7 +26581,7 @@ SWIGINTERN PyObject *_wrap_Constraint_ub(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26703,7 +26642,7 @@ SWIGINTERN PyObject *_wrap_Constraint_lbs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26764,7 +26703,7 @@ SWIGINTERN PyObject *_wrap_Constraint_ubs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26825,7 +26764,7 @@ SWIGINTERN PyObject *_wrap_Constraint_ldual(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26886,7 +26825,7 @@ SWIGINTERN PyObject *_wrap_Constraint_udual(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -26947,7 +26886,7 @@ SWIGINTERN PyObject *_wrap_Constraint_lslack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27008,7 +26947,7 @@ SWIGINTERN PyObject *_wrap_Constraint_uslack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27069,7 +27008,7 @@ SWIGINTERN PyObject *_wrap_Constraint_slack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27130,7 +27069,7 @@ SWIGINTERN PyObject *_wrap_Constraint_sstatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27191,7 +27130,7 @@ SWIGINTERN PyObject *_wrap_Constraint_status(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27260,7 +27199,7 @@ SWIGINTERN PyObject *_wrap_Constraint_setDual(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27321,7 +27260,7 @@ SWIGINTERN PyObject *_wrap_Constraint_val(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27381,7 +27320,7 @@ SWIGINTERN PyObject *_wrap_delete_Constraint(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27444,7 +27383,7 @@ SWIGINTERN PyObject *_wrap_Variable_integrality(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27503,7 +27442,7 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_0(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27570,7 +27509,7 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_1(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27672,7 +27611,7 @@ SWIGINTERN PyObject *_wrap_Variable_unfix(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27741,7 +27680,7 @@ SWIGINTERN PyObject *_wrap_Variable_setValue(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27802,7 +27741,7 @@ SWIGINTERN PyObject *_wrap_Variable_value(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27863,7 +27802,7 @@ SWIGINTERN PyObject *_wrap_Variable_astatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27924,7 +27863,7 @@ SWIGINTERN PyObject *_wrap_Variable_defeqn(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -27985,7 +27924,7 @@ SWIGINTERN PyObject *_wrap_Variable_dual(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28046,7 +27985,7 @@ SWIGINTERN PyObject *_wrap_Variable_init(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28107,7 +28046,7 @@ SWIGINTERN PyObject *_wrap_Variable_init0(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28168,7 +28107,7 @@ SWIGINTERN PyObject *_wrap_Variable_lb(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28229,7 +28168,7 @@ SWIGINTERN PyObject *_wrap_Variable_ub(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28290,7 +28229,7 @@ SWIGINTERN PyObject *_wrap_Variable_lb0(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28351,7 +28290,7 @@ SWIGINTERN PyObject *_wrap_Variable_ub0(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28412,7 +28351,7 @@ SWIGINTERN PyObject *_wrap_Variable_lb1(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28473,7 +28412,7 @@ SWIGINTERN PyObject *_wrap_Variable_ub1(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28534,7 +28473,7 @@ SWIGINTERN PyObject *_wrap_Variable_lb2(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28595,7 +28534,7 @@ SWIGINTERN PyObject *_wrap_Variable_ub2(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28656,7 +28595,7 @@ SWIGINTERN PyObject *_wrap_Variable_lrc(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28717,7 +28656,7 @@ SWIGINTERN PyObject *_wrap_Variable_urc(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28778,7 +28717,7 @@ SWIGINTERN PyObject *_wrap_Variable_lslack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28839,7 +28778,7 @@ SWIGINTERN PyObject *_wrap_Variable_uslack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28900,7 +28839,7 @@ SWIGINTERN PyObject *_wrap_Variable_rc(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -28961,7 +28900,7 @@ SWIGINTERN PyObject *_wrap_Variable_slack(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29022,7 +28961,7 @@ SWIGINTERN PyObject *_wrap_Variable_sstatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29083,7 +29022,7 @@ SWIGINTERN PyObject *_wrap_Variable_status(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29143,7 +29082,7 @@ SWIGINTERN PyObject *_wrap_delete_Variable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29206,7 +29145,7 @@ SWIGINTERN PyObject *_wrap_Objective_value(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29267,7 +29206,7 @@ SWIGINTERN PyObject *_wrap_Objective_astatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29328,7 +29267,7 @@ SWIGINTERN PyObject *_wrap_Objective_sstatus(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29389,7 +29328,7 @@ SWIGINTERN PyObject *_wrap_Objective_exitcode(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29450,7 +29389,7 @@ SWIGINTERN PyObject *_wrap_Objective_message(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29511,7 +29450,7 @@ SWIGINTERN PyObject *_wrap_Objective_result(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29571,7 +29510,7 @@ SWIGINTERN PyObject *_wrap_Objective_drop(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29631,7 +29570,7 @@ SWIGINTERN PyObject *_wrap_Objective_restore(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29692,7 +29631,7 @@ SWIGINTERN PyObject *_wrap_Objective_minimization(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29752,7 +29691,7 @@ SWIGINTERN PyObject *_wrap_delete_Objective(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29815,7 +29754,7 @@ SWIGINTERN PyObject *_wrap_Set_arity(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29876,7 +29815,7 @@ SWIGINTERN PyObject *_wrap_Set_getValues(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29937,7 +29876,7 @@ SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -29998,7 +29937,7 @@ SWIGINTERN PyObject *_wrap_Set_members(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30075,7 +30014,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDf(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30124,9 +30063,7 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   {
     try {
@@ -30143,7 +30080,7 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30205,18 +30142,14 @@ SWIGINTERN PyObject *_wrap_Set_setValuesTuples(PyObject *self, PyObject *args) {
       memset(arg2, 0, size * sizeof(ampl::Tuple));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        if(!SetTupleFromPyObject(obj, &t)) {
-          SWIG_exception(SWIG_TypeError, "tuple expected");
-        }
+        SetTupleFromPyObject(obj, &t);
         arg2[i] = t;
       }
-    } else if(SetTupleFromPyObject(swig_obj[0], &t)) {
+    } else {
+      SetTupleFromPyObject(swig_obj[0], &t);
       arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
       memset(arg2, 0, 1 * sizeof(ampl::Tuple));
       arg2[0] = t;
-    } else {
-      PyErr_SetString(PyExc_TypeError, "not a list");
-      return NULL;
     }
   }
   ecode3 = SWIG_AsVal_size_t(swig_obj[1], &val3);
@@ -30239,7 +30172,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesTuples(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30324,7 +30257,7 @@ SWIGINTERN PyObject *_wrap_Set_setValues(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30415,7 +30348,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDbl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30515,7 +30448,7 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30581,7 +30514,7 @@ SWIGINTERN PyObject *_wrap_delete_Set(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30643,7 +30576,7 @@ SWIGINTERN PyObject *_wrap_delete_Table(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30706,7 +30639,7 @@ SWIGINTERN PyObject *_wrap_Parameter_isSymbolic(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30767,7 +30700,7 @@ SWIGINTERN PyObject *_wrap_Parameter_hasDefault(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30842,7 +30775,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_0(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30909,7 +30842,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_1(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -30977,7 +30910,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_2(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31028,9 +30961,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, Py_ssize_t nobj
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[1], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   {
     res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_ampl__Variant,  0  | 0);
@@ -31060,7 +30991,7 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, Py_ssize_t nobj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31189,9 +31120,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   ecode3 = SWIG_AsVal_double(swig_obj[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -31213,7 +31142,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31264,9 +31193,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    if(!SetTupleFromPyObject(swig_obj[0], &arg2)) {
-      SWIG_exception(SWIG_TypeError, "tuple expected");
-    }
+    SetTupleFromPyObject(swig_obj[0], &arg2);
   }
   res3 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
@@ -31288,7 +31215,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31353,18 +31280,14 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
       memset(arg2, 0, size * sizeof(ampl::Tuple));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        if(!SetTupleFromPyObject(obj, &t)) {
-          SWIG_exception(SWIG_TypeError, "tuple expected");
-        }
+        SetTupleFromPyObject(obj, &t);
         arg2[i] = t;
       }
-    } else if(SetTupleFromPyObject(swig_obj[0], &t)) {
+    } else {
+      SetTupleFromPyObject(swig_obj[0], &t);
       arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
       memset(arg2, 0, 1 * sizeof(ampl::Tuple));
       arg2[0] = t;
-    } else {
-      PyErr_SetString(PyExc_TypeError, "not a list");
-      return NULL;
     }
   }
   {
@@ -31409,7 +31332,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31523,7 +31446,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTupleArrayDbl(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31595,18 +31518,14 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
       memset(arg2, 0, size * sizeof(ampl::Tuple));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        if(!SetTupleFromPyObject(obj, &t)) {
-          SWIG_exception(SWIG_TypeError, "tuple expected");
-        }
+        SetTupleFromPyObject(obj, &t);
         arg2[i] = t;
       }
-    } else if(SetTupleFromPyObject(swig_obj[0], &t)) {
+    } else {
+      SetTupleFromPyObject(swig_obj[0], &t);
       arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
       memset(arg2, 0, 1 * sizeof(ampl::Tuple));
       arg2[0] = t;
-    } else {
-      PyErr_SetString(PyExc_TypeError, "not a list");
-      return NULL;
     }
   }
   {
@@ -31651,7 +31570,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31768,7 +31687,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTupleArrayStr(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31865,7 +31784,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesDbl(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -31965,7 +31884,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32093,7 +32012,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_0(PyObject *self, Py_ssize_
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32251,7 +32170,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, Py_ssize_
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32410,7 +32329,6 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesPyDict(PyObject *self, PyObject *a
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[2] ;
-  int result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -32422,7 +32340,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesPyDict(PyObject *self, PyObject *a
   arg2 = swig_obj[0];
   {
     try {
-      result = (int)ampl_Parameter_setValuesPyDict(arg1,arg2);
+      ampl_Parameter_setValuesPyDict(arg1,arg2);
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
@@ -32435,7 +32353,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesPyDict(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32460,7 +32378,7 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesPyDict(PyObject *self, PyObject *a
       SWIG_exception(SWIG_UnknownError,"Unknown exception");
     }
   }
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -32495,7 +32413,7 @@ SWIGINTERN PyObject *_wrap_delete_Parameter(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32557,7 +32475,7 @@ SWIGINTERN PyObject *_wrap_delete_VariableIteratorWrapper(PyObject *self, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32632,7 +32550,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_equals(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32707,7 +32625,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_differs(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32782,7 +32700,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_clone(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32843,7 +32761,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrement(PyObject *self, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32913,7 +32831,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrementBy(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -32974,7 +32892,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33061,7 +32979,7 @@ SWIGINTERN PyObject *_wrap_VariableIterator_second(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33121,7 +33039,7 @@ SWIGINTERN PyObject *_wrap_delete_VariableIterator(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33183,7 +33101,7 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIteratorWrapper(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33258,7 +33176,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_equals(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33333,7 +33251,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_differs(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33408,7 +33326,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_clone(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33469,7 +33387,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrement(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33539,7 +33457,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrementBy(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33600,7 +33518,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33687,7 +33605,7 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_second(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33747,7 +33665,7 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIterator(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33809,7 +33727,7 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIteratorWrapper(PyObject *self, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33884,7 +33802,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_equals(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -33959,7 +33877,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_differs(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34034,7 +33952,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_clone(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34095,7 +34013,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrement(PyObject *self, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34165,7 +34083,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrementBy(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34226,7 +34144,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34313,7 +34231,7 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_second(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34373,7 +34291,7 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIterator(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34435,7 +34353,7 @@ SWIGINTERN PyObject *_wrap_delete_SetIteratorWrapper(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34510,7 +34428,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_equals(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34585,7 +34503,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_differs(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34660,7 +34578,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34721,7 +34639,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrement(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34791,7 +34709,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrementBy(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34852,7 +34770,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34939,7 +34857,7 @@ SWIGINTERN PyObject *_wrap_SetIterator_second(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -34999,7 +34917,7 @@ SWIGINTERN PyObject *_wrap_delete_SetIterator(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35061,7 +34979,7 @@ SWIGINTERN PyObject *_wrap_delete_TableIteratorWrapper(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35136,7 +35054,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_equals(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35211,7 +35129,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_differs(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35286,7 +35204,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35347,7 +35265,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_postIncrement(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35417,7 +35335,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_postIncrementBy(PyObject *self, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35478,7 +35396,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_first(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35565,7 +35483,7 @@ SWIGINTERN PyObject *_wrap_TableIterator_second(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35625,7 +35543,7 @@ SWIGINTERN PyObject *_wrap_delete_TableIterator(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35687,7 +35605,7 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIteratorWrapper(PyObject *self, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35762,7 +35680,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_equals(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35837,7 +35755,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_differs(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35912,7 +35830,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_clone(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -35973,7 +35891,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrement(PyObject *self, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36043,7 +35961,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrementBy(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36104,7 +36022,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36191,7 +36109,7 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_second(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36262,7 +36180,7 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIterator(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36325,7 +36243,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_begin(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36386,7 +36304,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_end(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36457,7 +36375,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_find(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36520,7 +36438,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_size(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36586,7 +36504,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36646,7 +36564,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariable(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36721,7 +36639,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_equals(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36796,7 +36714,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_differs(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36859,7 +36777,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator___ref__(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36934,7 +36852,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_clone(PyObject *self, PyObj
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -36995,7 +36913,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrement(PyObject *sel
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37065,7 +36983,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrementBy(PyObject *s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37125,7 +37043,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariableIterator(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37188,7 +37106,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_begin(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37249,7 +37167,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_end(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37320,7 +37238,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_find(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37383,7 +37301,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_size(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37449,7 +37367,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37509,7 +37427,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraint(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37584,7 +37502,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_equals(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37659,7 +37577,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_differs(PyObject *self, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37722,7 +37640,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator___ref__(PyObject *self, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37797,7 +37715,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_clone(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37858,7 +37776,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrement(PyObject *s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37928,7 +37846,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrementBy(PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -37988,7 +37906,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraintIterator(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38051,7 +37969,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_begin(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38112,7 +38030,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_end(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38183,7 +38101,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_find(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38246,7 +38164,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_size(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38312,7 +38230,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38372,7 +38290,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjective(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38447,7 +38365,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_equals(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38522,7 +38440,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_differs(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38585,7 +38503,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator___ref__(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38660,7 +38578,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_clone(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38721,7 +38639,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrement(PyObject *se
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38791,7 +38709,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrementBy(PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38851,7 +38769,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjectiveIterator(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38914,7 +38832,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_begin(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -38975,7 +38893,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39046,7 +38964,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_find(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39109,7 +39027,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39175,7 +39093,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39235,7 +39153,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSet(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39310,7 +39228,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_equals(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39385,7 +39303,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_differs(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39448,7 +39366,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator___ref__(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39523,7 +39441,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_clone(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39584,7 +39502,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrement(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39654,7 +39572,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrementBy(PyObject *self, 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39714,7 +39632,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSetIterator(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39777,7 +39695,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_begin(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39838,7 +39756,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39909,7 +39827,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_find(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -39972,7 +39890,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40038,7 +39956,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_getIndex(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40098,7 +40016,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapTable(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40173,7 +40091,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_equals(PyObject *self, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40248,7 +40166,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_differs(PyObject *self, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40311,7 +40229,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator___ref__(PyObject *self, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40386,7 +40304,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_clone(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40447,7 +40365,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_postIncrement(PyObject *self, 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40517,7 +40435,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_postIncrementBy(PyObject *self
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40577,7 +40495,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapTableIterator(PyObject *self, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40640,7 +40558,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_begin(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40701,7 +40619,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_end(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40772,7 +40690,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_find(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40835,7 +40753,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_size(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40901,7 +40819,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -40961,7 +40879,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameter(PyObject *self, PyObject *a
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41036,7 +40954,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_equals(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41111,7 +41029,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_differs(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41174,7 +41092,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator___ref__(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41249,7 +41167,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_clone(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41310,7 +41228,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrement(PyObject *se
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41380,7 +41298,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrementBy(PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41440,7 +41358,7 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameterIterator(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41505,7 +41423,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_0(PyObject *self, Py_ssize_t nobjs,
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41561,7 +41479,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, Py_ssize_t nobjs,
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41613,7 +41531,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, Py_ssize_t nobjs,
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41689,7 +41607,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, Py_ssize_t nobjs,
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41813,7 +41731,7 @@ SWIGINTERN PyObject *_wrap_delete_AMPLException(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41874,7 +41792,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41935,7 +41853,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getLineNumber(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -41996,7 +41914,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getOffset(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42057,7 +41975,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42131,7 +42049,7 @@ SWIGINTERN PyObject *_wrap_AMPLException_setSourceName(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42202,7 +42120,7 @@ SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args, PyObje
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42264,7 +42182,7 @@ SWIGINTERN PyObject *_wrap_delete_LicenseException(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42333,7 +42251,7 @@ SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42395,7 +42313,7 @@ SWIGINTERN PyObject *_wrap_delete_FileIOException(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42464,7 +42382,7 @@ SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42526,7 +42444,7 @@ SWIGINTERN PyObject *_wrap_delete_UnsupportedOperationException(PyObject *self, 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42606,7 +42524,7 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42666,7 +42584,7 @@ SWIGINTERN PyObject *_wrap_delete_InvalidSubscriptException(PyObject *self, PyOb
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42746,7 +42664,7 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42806,7 +42724,7 @@ SWIGINTERN PyObject *_wrap_delete_SyntaxErrorException(PyObject *self, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42866,7 +42784,7 @@ SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args, PyObjec
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42926,7 +42844,7 @@ SWIGINTERN PyObject *_wrap_delete_NoDataException(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -42991,7 +42909,7 @@ SWIGINTERN int _wrap_new_ErrorHandler(PyObject *self, PyObject *args, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43051,7 +42969,7 @@ SWIGINTERN PyObject *_wrap_delete_ErrorHandler(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43132,7 +43050,7 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_error(PyObject *self, PyObject *args) {
       }
       catch (std::out_of_range e) {
         // SWIG_KeyError does not exist
-        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
       }
       catch (std::logic_error e) {
         SWIG_exception(SWIG_TypeError, e.what());
@@ -43216,7 +43134,7 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_warning(PyObject *self, PyObject *args) 
       }
       catch (std::out_of_range e) {
         // SWIG_KeyError does not exist
-        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
       }
       catch (std::logic_error e) {
         SWIG_exception(SWIG_TypeError, e.what());
@@ -43307,7 +43225,7 @@ SWIGINTERN PyObject *_wrap_delete_Runnable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43376,7 +43294,7 @@ SWIGINTERN PyObject *_wrap_Runnable_run(PyObject *self, PyObject *args) {
       }
       catch (std::out_of_range e) {
         // SWIG_KeyError does not exist
-        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
       }
       catch (std::logic_error e) {
         SWIG_exception(SWIG_TypeError, e.what());
@@ -43442,7 +43360,7 @@ SWIGINTERN int _wrap_new_Runnable(PyObject *self, PyObject *args, PyObject *kwar
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43530,7 +43448,7 @@ SWIGINTERN PyObject *_wrap_delete_OutputHandler(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43616,7 +43534,7 @@ SWIGINTERN PyObject *_wrap_OutputHandler_output(PyObject *self, PyObject *args) 
       }
       catch (std::out_of_range e) {
         // SWIG_KeyError does not exist
-        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+        SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
       }
       catch (std::logic_error e) {
         SWIG_exception(SWIG_TypeError, e.what());
@@ -43684,7 +43602,7 @@ SWIGINTERN int _wrap_new_OutputHandler(PyObject *self, PyObject *args, PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43765,7 +43683,7 @@ SWIGINTERN int _wrap_new_EnvironmentIterator(PyObject *self, PyObject *args, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43825,7 +43743,7 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIterator(PyObject *self, PyObject *
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43879,7 +43797,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_0(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -43942,7 +43860,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_1(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44015,7 +43933,7 @@ SWIGINTERN PyObject *_wrap_Environment_Clone(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44075,7 +43993,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44131,7 +44049,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_3(PyObject *self, Py_ssize_t nobjs, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44243,7 +44161,7 @@ SWIGINTERN PyObject *_wrap_delete_Environment(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44311,7 +44229,7 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44376,7 +44294,7 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44437,7 +44355,7 @@ SWIGINTERN PyObject *_wrap_Environment_getBinDir(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44502,7 +44420,7 @@ SWIGINTERN PyObject *_wrap_Environment_setBinName(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44563,7 +44481,7 @@ SWIGINTERN PyObject *_wrap_Environment_getBinName(PyObject *self, PyObject *args
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44624,7 +44542,7 @@ SWIGINTERN PyObject *_wrap_Environment_toString(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44685,7 +44603,7 @@ SWIGINTERN PyObject *_wrap_Environment_begin(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44746,7 +44664,7 @@ SWIGINTERN PyObject *_wrap_Environment_end(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44812,7 +44730,7 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44873,7 +44791,7 @@ SWIGINTERN PyObject *_wrap_Environment_size(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -44948,7 +44866,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_equals(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45023,7 +44941,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_differs(PyObject *self, P
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45098,7 +45016,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_Clone(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45159,7 +45077,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrement(PyObject *s
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45229,7 +45147,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrementBy(PyObject 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45290,7 +45208,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_first(PyObject *self, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45351,7 +45269,7 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_second(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45411,7 +45329,7 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIteratorTemplate(PyObject *self, Py
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45465,7 +45383,7 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45528,7 +45446,7 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45618,7 +45536,7 @@ SWIGINTERN PyObject *_wrap_delete_AMPL(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45686,7 +45604,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_0(PyObject *self, Py_ssize_t no
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45746,7 +45664,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_1(PyObject *self, Py_ssize_t no
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45817,7 +45735,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_2(PyObject *self, Py_ssize_t no
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -45880,7 +45798,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_3(PyObject *self, Py_ssize_t no
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46016,7 +45934,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_0(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46079,7 +45997,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_1(PyObject *self, Py_ssize_t n
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46185,7 +46103,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46251,7 +46169,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46317,7 +46235,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46383,7 +46301,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46449,7 +46367,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46515,7 +46433,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46581,7 +46499,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getTable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46646,7 +46564,7 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46706,7 +46624,7 @@ SWIGINTERN PyObject *_wrap_AMPL_reset(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46766,7 +46684,7 @@ SWIGINTERN PyObject *_wrap_AMPL_close(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46827,7 +46745,7 @@ SWIGINTERN PyObject *_wrap_AMPL_isRunning(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46888,7 +46806,7 @@ SWIGINTERN PyObject *_wrap_AMPL_isBusy(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -46948,7 +46866,7 @@ SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47020,7 +46938,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47092,7 +47010,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47164,7 +47082,7 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47233,7 +47151,7 @@ SWIGINTERN PyObject *_wrap_AMPL_solveAsync(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47293,7 +47211,7 @@ SWIGINTERN PyObject *_wrap_AMPL_interrupt(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47353,7 +47271,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47417,7 +47335,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyO
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47525,7 +47443,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47591,7 +47509,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47657,7 +47575,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47729,7 +47647,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47795,7 +47713,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47867,7 +47785,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47933,7 +47851,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -47994,7 +47912,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getCurrentObjectiveName(PyObject *self, PyObject
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48066,7 +47984,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48131,7 +48049,7 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48196,7 +48114,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48262,7 +48180,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48339,7 +48257,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutput(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48413,7 +48331,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48483,7 +48401,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_1(PyObject *self, Py_ssize_t nobjs
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48592,7 +48510,7 @@ SWIGINTERN PyObject *_wrap_AMPL_toString(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48657,7 +48575,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48722,7 +48640,7 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48799,7 +48717,7 @@ SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48876,7 +48794,7 @@ SWIGINTERN PyObject *_wrap_AMPL_show(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -48953,7 +48871,7 @@ SWIGINTERN PyObject *_wrap_AMPL_expand(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49022,7 +48940,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setOutputHandler(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49091,7 +49009,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setErrorHandler(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49153,7 +49071,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutputHandler(PyObject *self, PyObject *args)
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49221,7 +49139,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getErrorHandler(PyObject *self, PyObject *args) 
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49288,7 +49206,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariables(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49349,7 +49267,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraints(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49410,7 +49328,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjectives(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49471,7 +49389,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getSets(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49532,7 +49450,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameters(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49593,7 +49511,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getTables(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49687,7 +49605,7 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49788,7 +49706,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
     }
     catch (std::out_of_range e) {
       // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what());  SWIG_fail;
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
     }
     catch (std::logic_error e) {
       SWIG_exception(SWIG_TypeError, e.what());
@@ -49831,7 +49749,6 @@ SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_AMPL) /* defines _wrap_delete_AMPL_destru
 static PyMethodDef SwigMethods[] = {
 	 { "SWIG_PyInstanceMethod_New", SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { "VariantFromPyObject", _wrap_VariantFromPyObject, METH_O, NULL},
-	 { "SetVariantFromPyObject", _wrap_SetVariantFromPyObject, METH_VARARGS, NULL},
 	 { "SetTupleFromPyObject", _wrap_SetTupleFromPyObject, METH_VARARGS, NULL},
 	 { "VariantArray_frompointer", _wrap_VariantArray_frompointer, METH_O, NULL},
 	 { "TupleArray_frompointer", _wrap_TupleArray_frompointer, METH_O, NULL},
