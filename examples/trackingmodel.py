@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
@@ -44,8 +43,13 @@ def main(argc, argv):
 
     # Relax the integrality
     ampl.set_option("relax_integrality", True)
+
     # Solve the problem
     ampl.solve()
+    solve_result = ampl.get_value("solve_result")
+    if solve_result != "solved":
+        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
+
     objectives = list(obj for name, obj in ampl.get_objectives())
     assert objectives[0].value() == ampl.get_objective("cst").value()
     print("QP objective value", ampl.get_objective("cst").value())
@@ -71,8 +75,13 @@ def main(argc, argv):
 
     # Get back to the integer problem
     ampl.set_option("relax_integrality", False)
+
     # Solve the (integer) problem
     ampl.solve()
+    solve_result = ampl.get_value("solve_result")
+    if solve_result != "solved":
+        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
+
     print("QMIP objective value", ampl.get_objective("cst").value())
 
 

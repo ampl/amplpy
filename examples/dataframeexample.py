@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL, DataFrame
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
+
+    # Note: If you want to perform data transformations use pandas dataframes.
+    # amplpy dataframes are simple dataframes for data communication only.
 
     # Create first dataframe (for data indexed over NUTR)
     # Add data row by row

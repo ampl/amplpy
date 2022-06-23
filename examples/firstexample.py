@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
 
     # Create an AMPL instance
     ampl = AMPL()
-
     """
     # If the AMPL installation directory is not in the system search path:
     from amplpy import Environment
@@ -31,6 +29,9 @@ def main(argc, argv):
 
     # Solve
     ampl.solve()
+    solve_result = ampl.get_value("solve_result")
+    if solve_result != "solved":
+        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
 
     # Get objective entity by AMPL name
     totalcost = ampl.get_objective("Total_Cost")
@@ -44,6 +45,9 @@ def main(argc, argv):
 
     # Resolve and display objective
     ampl.solve()
+    solve_result = ampl.get_value("solve_result")
+    if solve_result != "solved":
+        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
@@ -53,18 +57,21 @@ def main(argc, argv):
 
     # Resolve and display objective
     ampl.solve()
+    solve_result = ampl.get_value("solve_result")
+    if solve_result != "solved":
+        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
     print("New objective value:", totalcost.value())
 
     # Get the values of the variable Buy in a dataframe object
     buy = ampl.get_variable("Buy")
     df = buy.get_values()
-    # Print them
-    print(df)
+    # Print as pandas dataframe
+    print(df.to_pandas())
 
     # Get the values of an expression into a DataFrame object
     df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub")
-    # Print them
-    print(df2)
+    # Print as pandas dataframe
+    print(df2.to_pandas())
 
 
 if __name__ == "__main__":

@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
@@ -62,7 +61,7 @@ def main(argc, argv):
         # Solve the subproblem.
         ampl.eval("solve Sub;")
         result = ship_cost.result()
-        if result.find("infeasible") != -1:
+        if result == "infeasible":
             # Add a feasibility cut.
             num_cut_param.set(num_cuts)
             cut_type.set(num_cuts, "ray")
@@ -85,6 +84,9 @@ def main(argc, argv):
         # Re-solve the master problem.
         print("RE-SOLVING MASTER PROBLEM")
         ampl.eval("solve Master;")
+        solve_result = ampl.get_value("solve_result")
+        if solve_result != "solved":
+            raise Exception("Failed to solve (solve_result: {})".format(solve_result))
         # Copy the data from the Build variable used in the master problem
         # to the build parameter used in the subproblem.
         build_param.set_values(build_var.get_values())

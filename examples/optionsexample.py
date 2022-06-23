@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
 
     # Create an AMPL instance
     ampl = AMPL()
-
     """
     # If the AMPL installation directory is not in the system search path:
     from amplpy import Environment

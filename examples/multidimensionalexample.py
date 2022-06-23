@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
+import pandas as pd
 
 
 def main(argc, argv):
@@ -29,6 +28,7 @@ def main(argc, argv):
     links_from = ["PITT", "PITT", "NE", "NE", "NE", "SE", "SE", "SE", "SE"]
     links_to = ["NE", "SE", "BOS", "EWR", "BWI", "EWR", "BWI", "ATL", "MCO"]
 
+    # Using amplpy.DataFrame
     df = DataFrame(("LINKSFrom", "LINKSTo"), ("cost", "capacity"))
     df.set_column("LINKSFrom", links_from)
     df.set_column("LINKSTo", links_to)
@@ -37,6 +37,18 @@ def main(argc, argv):
     print(df)
 
     ampl.set_data(df, "LINKS")
+    ampl.display("LINKS")
+
+    # Using pandas.DataFrame (recommended)
+    df = pd.DataFrame(
+        list(zip(links_from, links_to, cost, capacity)),
+        columns=["LINKSFrom", "LINKSTo", "cost", "capacity"],
+    ).set_index(["LINKSFrom", "LINKSTo"])
+    print(df)
+
+    ampl.eval("reset data LINKS;")
+    ampl.set_data(df, "LINKS")
+    ampl.display("LINKS")
 
 
 if __name__ == "__main__":

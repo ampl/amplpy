@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
-    from amplpy import AMPL, DataFrame
+    # You can install amplpy with "python -m pip install amplpy"
+    from amplpy import AMPL
     import amplpy
     from time import time
 

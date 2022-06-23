@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
 import sys
 import os
 
 
 def main(argc, argv):
+    # You can install amplpy with "python -m pip install amplpy"
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
@@ -16,7 +15,6 @@ def main(argc, argv):
 
     # Create an AMPL instance
     ampl = AMPL()
-
     """
     # If the AMPL installation directory is not in the system search path:
     from amplpy import Environment
@@ -62,9 +60,9 @@ def main(argc, argv):
     returns = [None] * steps
     variances = [None] * steps
     for i in range(steps):
-        print("Solving for return = {:g}".format(maxret - (i - 1) * stepsize))
+        print("Solving for return = {:g}".format(maxret - i * stepsize))
         # Set target return to the desired point
-        target_return.set(maxret - (i - 1) * stepsize)
+        target_return.set(maxret - i * stepsize)
         ampl.eval("let stockopall:={};let stockrun:=stockall;")
         # Relax integrality
         ampl.set_option("relax_integrality", True)
@@ -75,7 +73,12 @@ def main(argc, argv):
         ampl.eval("let stockopall:={i in stockrun:weights[i]>0.5};")
         # Set integrality back
         ampl.set_option("relax_integrality", False)
+        # Solve the problem
         ampl.solve()
+        # Check if the problem was solved successfully
+        solve_result = ampl.get_value("solve_result")
+        if solve_result != "solved":
+            raise Exception("Failed to solve (solve_result: {})".format(solve_result))
         print("QMIP result = {:g}".format(variance.value()))
         # Store data of corrent frontier point
         returns[i] = maxret - (i - 1) * stepsize
