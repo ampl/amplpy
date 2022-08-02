@@ -1,4 +1,4 @@
-amplpy==0.8.4b0
+amplpy==0.8.4
 #pydata-sphinx-theme==0.7.1
 ampl-sphinx-theme
 sphinx==4.2.0

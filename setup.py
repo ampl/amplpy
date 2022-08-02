@@ -123,7 +123,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.8.4b0",
+    version="0.8.4",
     description="Python API for AMPL",
     long_description=__doc__,
     license="BSD-3",
