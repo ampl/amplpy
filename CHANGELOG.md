@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.5 - 2022-08-23
+- Update libampl to 2.0.11-20220823.
+- Ensure times and gentimes default to disabled.
+
 ## 0.8.4 - 2022-08-02
 - Update libampl to 2.0.10-20220627.
 - Disable options times and gentimes during internal operations.
