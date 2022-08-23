@@ -26,7 +26,7 @@ from .utils import multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
 
-__version__ = "0.8.4"
+__version__ = "0.8.5b0"
 
 
 def _list_aliases():
