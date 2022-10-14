@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.6 - 2022-10-14
+- Add simplified option for ampl_notebook cell.
+
 ## 0.2.5 - 2022-04-07
 - Remove one last f-string present in the code.
 
