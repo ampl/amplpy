@@ -55,7 +55,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: macos
-  pool: {vmImage: 'macos-10.15'}
+  pool: {vmImage: 'macos-latest'}
   variables:
     CIBW_TEST_COMMAND: 'PATH="/Users/runner/work/1/s/ampl:$PATH" python -m amplpy.tests'
     CIBW_TEST_REQUIRES: pandas numpy
