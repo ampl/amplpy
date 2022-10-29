@@ -136,9 +136,10 @@ def ampl_installer(
 def cloud_platform_name():
     """Guesses the name of cloud platform currently running on."""
     import os
-
     envkeys = dict(os.environ).keys()
     if any(key.startswith("COLAB_") for key in envkeys):
+        return "colab"
+    if os.path.isdir("/content/"):
         return "colab"
     if any(key.startswith("KAGGLE_") for key in envkeys):
         return "kaggle"
