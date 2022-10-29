@@ -8,7 +8,7 @@ import shutil
 import tempfile
 
 VERSION = "nightly"
-API_URL = "https://ampl.com/dl/API/future/{}/libampl.zip".format(VERSION)
+API_URL = "https://portal.ampl.com/dl/API/future/{}/libampl.zip".format(VERSION)
 ARCHS = ["amd64", "ppc64le", "aarch64"]
 
 

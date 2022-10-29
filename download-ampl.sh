@@ -9,7 +9,7 @@ set -ex
 
 URL=$1
 PACKAGE=`basename $URL`
-curl -k -O $URL
+curl -k -L -O $URL
 if [[ $PACKAGE == *.zip ]]; then
     unzip $PACKAGE
 else
