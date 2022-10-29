@@ -68,8 +68,8 @@ jobs:
         set -ex
         python updatelib.py
         python -m pip install --upgrade pip
-        python -m pip install --upgrade cibuildwheel==1.12.0
-        CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
+        # python -m pip install --upgrade cibuildwheel==1.12.0
+        # CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.4.0
         CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
