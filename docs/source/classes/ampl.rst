@@ -8,6 +8,8 @@ AMPL
   :members:
   :undoc-members:
   :special-members:
+  :exclude-members: __dict__,__weakref__
+
 
 
 .. autoclass:: amplpy.EntityMap
@@ -15,3 +17,4 @@ AMPL
   :members:
   :undoc-members:
   :special-members:
+  :exclude-members: __dict__,__weakref__
