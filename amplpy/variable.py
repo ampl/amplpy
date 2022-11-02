@@ -108,13 +108,13 @@ class Variable(Entity):
 
     def lb(self):
         """
-        Returns the current lower bound. See :ref:`secVariableSuffixesNotes`.
+        Returns the current lower bound.
         """
         return self._impl.lb()
 
     def ub(self):
         """
-        Returns the current upper bound. See :ref:`secVariableSuffixesNotes`.
+        Returns the current upper bound.
         """
         return self._impl.ub()
 
@@ -168,15 +168,13 @@ class Variable(Entity):
 
     def lslack(self):
         """
-        Return the slack at lower bound (``val - lb``). See
-        :ref:`secVariableSuffixesNotes`.
+        Return the slack at lower bound (``val - lb``).
         """
         return self._impl.lslack()
 
     def uslack(self):
         """
-        Return the slack at upper bound (``ub - val``). See
-        :ref:`secVariableSuffixesNotes`.
+        Return the slack at upper bound (``ub - val``).
         """
         return self._impl.uslack()
 
@@ -190,7 +188,6 @@ class Variable(Entity):
         """
         Returns the bound slack which is the lesser of
         :func:`~amplpy.Variable.lslack` and :func:`~amplpy.Variable.uslack`.
-        See :ref:`secVariableSuffixesNotes`.
         """
         return self._impl.slack()
 
