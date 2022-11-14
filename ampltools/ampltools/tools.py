@@ -5,6 +5,9 @@ import tempfile
 import zipfile
 import tarfile
 import shutil
+import platform
+import requests
+import json
 import os
 
 
@@ -97,6 +100,18 @@ def activate_ampl_license(uuid):
     os.environ["AMPL_LICFILE"] = tmpfile
 
 
+def activate_default_license(ampl_dir, platform):
+    url = 'https://portal.ampl.com/v1/amplkey'
+    cmd = os.path.join(ampl_dir, "leasefingerprint") + " -s"
+    fp = subprocess.getoutput(cmd)
+    response = requests.post(url, data={'uuid': platform, 'fingerprint': fp})
+    if response.status_code != 200:
+        raise Exception("Failed to retrieve default license")
+    tmpfile = tempfile.mktemp(".lic")
+    open(tmpfile, 'w').write(json.loads(response.text)["license"])
+    os.environ["AMPL_LICFILE"] = tmpfile
+
+
 def ampl_installer(
     ampl_dir, modules=None, license_uuid=None, reinstall=False, verbose=False
 ):
@@ -130,12 +145,20 @@ def ampl_installer(
             print("License activated.")
         except:
             print("Failed to activate license.")
+    elif cloud_platform_name() == "colab":
+        print("Activating default license.")
+        try:
+            activate_default_license(ampl_dir, "colab")
+            print("Default license activated.")
+        except:
+            print("Failed to activate default license.")
     return ampl_dir
 
 
 def cloud_platform_name():
     """Guesses the name of cloud platform currently running on."""
-    import os
+    if platform.system() != 'Linux':
+        return None
     envkeys = dict(os.environ).keys()
     if any(key.startswith("COLAB_") for key in envkeys):
         return "colab"

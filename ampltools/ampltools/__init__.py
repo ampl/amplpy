@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.2.7"
+__version__ = "0.2.8"
 from .tools import (
     module_installer,
     ampl_installer,
