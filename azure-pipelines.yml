@@ -49,7 +49,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
         CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
-        python -m pip install --upgrade cibuildwheel==2.4.0
+        python -m pip install --upgrade cibuildwheel==2.11.3
         CIBW_TEST_REQUIRES="" CIBW_SKIP="*musllinux* $CIBW_SKIP" cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
@@ -70,7 +70,7 @@ jobs:
         python -m pip install --upgrade pip
         # python -m pip install --upgrade cibuildwheel==1.12.0
         # CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
-        python -m pip install --upgrade cibuildwheel==2.4.0
+        python -m pip install --upgrade cibuildwheel==2.11.3
         CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
@@ -93,7 +93,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
         CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
-        python -m pip install --upgrade cibuildwheel==2.4.0
+        python -m pip install --upgrade cibuildwheel==2.11.3
         CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* cp27-* $CIBW_SKIP" cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
