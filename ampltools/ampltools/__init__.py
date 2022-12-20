@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.2.8"
-from .tools import (
-    module_installer,
-    ampl_installer,
-    cloud_platform_name,
-    ampl_license_cell,
-    ampl_installer_cell,
+__version__ = "0.3.0"
+from .notebooks import (
     ampl_notebook,
+)
+
+from .pymodules import (
+    install_modules,
+    load_modules,
+)
+
+from .licenses import (
+    activate_license,
+)
+
+from .installer import (
+    ampl_installer,
+)
+
+from .utils import (
+    cloud_platform_name,
 )
