@@ -33,7 +33,6 @@ def ampl_license_cell(check_callback):
             print("Using existing license.")
     with version:
         if check_callback:
-            print()
             check_callback()
 
     existing_btn = widgets.Button(description="Use existing license")
@@ -70,7 +69,6 @@ def ampl_license_cell(check_callback):
         version.clear_output(wait=False)
         with version:
             if check_callback:
-                print()
                 check_callback()
 
     existing_btn.on_click(lambda b: activate("existing"), False)
@@ -107,7 +105,6 @@ def ampl_notebook(
     if license_uuid is None:
         ampl_license_cell(check_callback=instantiate_ampl)
     else:
-        print()
         instantiate_ampl()
 
     if register_magics:
