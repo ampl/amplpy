@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.2 - 2022-12-21
+- Fixed typo.
+
+## 0.3.1 - 2022-12-21
+- Simplify output of ampl_notebook.
+
 ## 0.3.0 - 2022-12-20
 - Add support for AMPL modules as python packages.
 

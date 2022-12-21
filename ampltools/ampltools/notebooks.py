@@ -18,12 +18,16 @@ def ampl_license_cell(check_callback):
         except:
             print("Failed to activate default license.")
 
-    print("AMPL License:")
+    platform = cloud_platform_name()
+    if platform is not None:
+        print("AMPL License (you can use a free https://ampl.com/ce license):")
+    else:
+        print("AMPL License:")
     message = widgets.Output()
     version = widgets.Output()
     with message:
         ampl_lic = os.environ.get("AMPL_LICFILE", None)
-        if ampl_lic is not None:
+        if ampl_lic is not None and platform is None:
             print("License license at {}.".format(ampl_lic))
         else:
             print("Using existing license.")
@@ -89,7 +93,13 @@ def ampl_notebook(
         from amplpy import AMPL
 
         ampl = AMPL()
-        print(ampl.option["version"])
+        version = ampl.option["version"]
+        for row in version.split("\n"):
+            if row.startswith("Licensed to "):
+                print(row)
+                break
+        else:
+            print(version)
         globals_["ampl"] = ampl
 
     install_modules(modules, reinstall=reinstall, verbose=verbose)
