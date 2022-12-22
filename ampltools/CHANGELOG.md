@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.4 - 2022-12-22
+- Make ampl_notebook output even more compact.
+
 ## 0.3.3 - 2022-12-21
 - Make ampl_notebook output more compact.
 

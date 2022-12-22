@@ -29,8 +29,6 @@ def ampl_license_cell(check_callback):
         ampl_lic = os.environ.get("AMPL_LICFILE", None)
         if ampl_lic is not None and platform is None:
             print("License license at {}.".format(ampl_lic))
-        else:
-            print("Using existing license.")
     with version:
         if check_callback:
             check_callback()
