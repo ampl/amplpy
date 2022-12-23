@@ -140,7 +140,7 @@ def register_magics_global(store_name="_ampl_cells", ampl_object=None, globals_=
                     ampl = globals_[ampl_object]
                 else:
                     ampl = ampl_object
-            ampl.eval(cell)
+            ampl.eval("\n" + cell)
 
         @line_magic
         def get_ampl(self, line):
