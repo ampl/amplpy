@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.6 - 2022-12-26
+- Use x-ampl by default on Google Colab.
+
 ## 0.3.5 - 2022-12-23
 - Fix line number offset in ampl_eval cells.
 

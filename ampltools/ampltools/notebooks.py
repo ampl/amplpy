@@ -86,9 +86,17 @@ def ampl_notebook(
         globals_ = {}
 
     def instantiate_ampl():
-        from amplpy import AMPL
+        from amplpy import AMPL, Environment
 
-        ampl = AMPL()
+        if cloud_platform_name() == "colab":
+            try:
+                ampl = AMPL(Environment("", "x-ampl"))
+                ampl.option["show_context"] = 1
+            except Exception:
+                print("Failed to start x-ampl session. Using regular ampl instead.")
+                ampl = AMPL()
+        else:
+            ampl = AMPL()
         version = ampl.option["version"]
         for row in version.split("\n"):
             if row.startswith("Licensed to "):
