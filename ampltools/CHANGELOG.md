@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.7 - 2022-12-28
+- Fix license activation in ampl_notebook when using license_uuid.
+
 ## 0.3.6 - 2022-12-26
 - Use x-ampl by default on Google Colab.
 

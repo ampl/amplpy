@@ -6,6 +6,13 @@ from .pymodules import install_modules, load_modules
 from .utils import cloud_platform_name
 
 
+def deactivate_license():
+    if "AMPL_LICFILE_DEFAULT" in os.environ:
+        os.environ["AMPL_LICFILE"] = os.environ["AMPL_LICFILE_DEFAULT"]
+    elif "AMPL_LICFILE" in os.environ:
+        del os.environ["AMPL_LICFILE"]
+
+
 def ampl_license_cell(check_callback):
     import ipywidgets as widgets
     from IPython.display import display
@@ -20,9 +27,9 @@ def ampl_license_cell(check_callback):
 
     platform = cloud_platform_name()
     if platform is not None:
-        print("AMPL License (you can use a free https://ampl.com/ce license):")
+        print("AMPL License UUID (you can use a free https://ampl.com/ce license):")
     else:
-        print("AMPL License:")
+        print("AMPL License UUID:")
     message = widgets.Output()
     version = widgets.Output()
     with message:
@@ -36,12 +43,6 @@ def ampl_license_cell(check_callback):
     existing_btn = widgets.Button(description="Use existing license")
     uuid_input = widgets.Text(description="UUID:")
 
-    def deactivate():
-        if "AMPL_LICFILE_DEFAULT" in os.environ:
-            os.environ["AMPL_LICFILE"] = os.environ["AMPL_LICFILE_DEFAULT"]
-        elif "AMPL_LICFILE" in os.environ:
-            del os.environ["AMPL_LICFILE"]
-
     def activate(where):
         uuid = uuid_input.value.strip()
         if where == "uuid" and len(uuid) == 0:
@@ -50,7 +51,7 @@ def ampl_license_cell(check_callback):
         with message:
             if where == "existing":
                 print("Switch to existing license.")
-                deactivate()
+                deactivate_license()
             elif where == "uuid":
                 if len(uuid) == 36:
                     uuid_input.value = ""  # clear the input
@@ -59,7 +60,7 @@ def ampl_license_cell(check_callback):
                         print("License activated.")
                     except:
                         print("Failed to activate license.")
-                        deactivate()
+                        deactivate_license()
                 else:
                     print("Please provide a license UUID or use an existing license.")
                     return
@@ -111,7 +112,14 @@ def ampl_notebook(
     if license_uuid is None:
         ampl_license_cell(check_callback=instantiate_ampl)
     else:
-        instantiate_ampl()
+        try:
+            _activate_ampl_license(license_uuid)
+        except:
+            print("Failed to activate license.")
+            deactivate_license()
+            ampl_license_cell(check_callback=instantiate_ampl)
+        else:
+            instantiate_ampl()
 
     if register_magics:
         register_magics_global(ampl_object="ampl", globals_=globals_)
