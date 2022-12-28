@@ -6,24 +6,16 @@ from .pymodules import install_modules, load_modules
 from .utils import cloud_platform_name
 
 
-def deactivate_license():
+def _deactivate_license():
     if "AMPL_LICFILE_DEFAULT" in os.environ:
         os.environ["AMPL_LICFILE"] = os.environ["AMPL_LICFILE_DEFAULT"]
     elif "AMPL_LICFILE" in os.environ:
         del os.environ["AMPL_LICFILE"]
 
 
-def ampl_license_cell(check_callback):
+def _ampl_license_cell(check_callback):
     import ipywidgets as widgets
     from IPython.display import display
-
-    if "AMPL_LICFILE" not in os.environ and cloud_platform_name() == "colab":
-        try:
-            from ampl_module_base import bin_dir
-
-            _activate_default_license(bin_dir, "colab")
-        except:
-            print("Failed to activate default license.")
 
     platform = cloud_platform_name()
     if platform is not None:
@@ -51,7 +43,7 @@ def ampl_license_cell(check_callback):
         with message:
             if where == "existing":
                 print("Switch to existing license.")
-                deactivate_license()
+                _deactivate_license()
             elif where == "uuid":
                 if len(uuid) == 36:
                     uuid_input.value = ""  # clear the input
@@ -60,7 +52,7 @@ def ampl_license_cell(check_callback):
                         print("License activated.")
                     except:
                         print("Failed to activate license.")
-                        deactivate_license()
+                        _deactivate_license()
                 else:
                     print("Please provide a license UUID or use an existing license.")
                     return
@@ -73,6 +65,16 @@ def ampl_license_cell(check_callback):
     existing_btn.on_click(lambda b: activate("existing"), False)
     uuid_input.observe(lambda d: activate("uuid"), "value")
     display(widgets.VBox([widgets.HBox([existing_btn, uuid_input]), message, version]))
+
+
+def _handle_default_uuid():
+    if "AMPL_LICFILE" not in os.environ and cloud_platform_name() == "colab":
+        try:
+            from ampl_module_base import bin_dir
+
+            _activate_default_license(bin_dir, "colab")
+        except:
+            print("Failed to activate default license.")
 
 
 def ampl_notebook(
@@ -107,17 +109,22 @@ def ampl_notebook(
             print(version)
         globals_["ampl"] = ampl
 
+    if license_uuid is None or license_uuid == "default":
+        _handle_default_uuid()
+
     install_modules(modules, reinstall=reinstall, verbose=verbose)
     load_modules(verbose=verbose)
     if license_uuid is None:
-        ampl_license_cell(check_callback=instantiate_ampl)
+        _ampl_license_cell(check_callback=instantiate_ampl)
+    elif license_uuid == "default":
+        instantiate_ampl()
     else:
         try:
             _activate_ampl_license(license_uuid)
         except:
             print("Failed to activate license.")
-            deactivate_license()
-            ampl_license_cell(check_callback=instantiate_ampl)
+            _deactivate_license()
+            _ampl_license_cell(check_callback=instantiate_ampl)
         else:
             instantiate_ampl()
 
