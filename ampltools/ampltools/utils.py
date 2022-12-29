@@ -19,3 +19,16 @@ def cloud_platform_name():
     if os.path.isdir("/home/studio-lab-user"):
         return "sagemaker-studio-lab"
     return None
+
+
+def is_valid_uuid(uuid):
+    from uuid import UUID
+
+    if uuid in (None, ""):
+        return False
+    try:
+        UUID(str(uuid))
+    except ValueError:
+        return False
+
+    return True

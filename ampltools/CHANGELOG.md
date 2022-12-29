@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.9 - 2022-12-29
+- Allow simplified ampl_notebook invocation with modules and license_uuid only.
+
 ## 0.3.8 - 2022-12-28
 - Handle license_uuid="default".
 

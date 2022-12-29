@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 import os
-from .licenses import _activate_ampl_license, _activate_default_license
+from .licenses import is_valid_uuid, activate_license, _activate_default_license
 from .pymodules import install_modules, load_modules
 from .utils import cloud_platform_name
 
@@ -48,7 +48,7 @@ def _ampl_license_cell(check_callback):
                 if len(uuid) == 36:
                     uuid_input.value = ""  # clear the input
                     try:
-                        _activate_ampl_license(uuid)
+                        activate_license(uuid)
                         print("License activated.")
                     except:
                         print("Failed to activate license.")
@@ -78,17 +78,21 @@ def _handle_default_uuid():
 
 
 def ampl_notebook(
-    license_uuid=None,
     modules=None,
+    license_uuid=None,
     reinstall=False,
-    register_magics=True,
     globals_=None,
     verbose=False,
+    register_magics=True,
+    show_license=None,
 ):
+    show_prompt = globals_ is not None
+    if show_license is None:
+        show_license = show_prompt
     if globals_ is None:
         globals_ = {}
 
-    def instantiate_ampl():
+    def instantiate_ampl(print_license=True):
         from amplpy import AMPL, Environment
 
         if cloud_platform_name() == "colab":
@@ -100,33 +104,46 @@ def ampl_notebook(
                 ampl = AMPL()
         else:
             ampl = AMPL()
-        version = ampl.option["version"]
-        for row in version.split("\n"):
-            if row.startswith("Licensed to "):
-                print(row)
-                break
-        else:
-            print(version)
+        if print_license:
+            version = ampl.option["version"]
+            for row in version.split("\n"):
+                if row.startswith("Licensed to "):
+                    print(row)
+                    break
+            else:
+                print(version)
         globals_["ampl"] = ampl
+
+    install_modules(modules, reinstall=reinstall, verbose=verbose)
+    load_modules(modules, verbose=verbose)
 
     if license_uuid is None or license_uuid == "default":
         _handle_default_uuid()
 
-    install_modules(modules, reinstall=reinstall, verbose=verbose)
-    load_modules(verbose=verbose)
-    if license_uuid is None:
-        _ampl_license_cell(check_callback=instantiate_ampl)
-    elif license_uuid == "default":
-        instantiate_ampl()
+    if license_uuid == "default":
+        instantiate_ampl(print_license=show_license)
+    elif not is_valid_uuid(license_uuid):
+        if license_uuid not in (None, ""):
+            print(
+                "Please provide a valid license UUID. "
+                "You can use a free https://ampl.com/ce license."
+            )
+            _deactivate_license()
+        if show_prompt:
+            _ampl_license_cell(check_callback=instantiate_ampl)
+        else:
+            instantiate_ampl(print_license=True)
     else:
         try:
-            _activate_ampl_license(license_uuid)
+            activate_license(license_uuid)
+            instantiate_ampl(print_license=show_license)
         except:
             print("Failed to activate license.")
             _deactivate_license()
-            _ampl_license_cell(check_callback=instantiate_ampl)
-        else:
-            instantiate_ampl()
+            if show_prompt:
+                _ampl_license_cell(check_callback=instantiate_ampl)
+            else:
+                instantiate_ampl(print_license=True)
 
     if register_magics:
         register_magics_global(ampl_object="ampl", globals_=globals_)

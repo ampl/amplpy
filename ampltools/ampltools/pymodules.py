@@ -19,6 +19,7 @@ def install_modules(modules=None, reinstall=False, verbose=False):
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
     if reinstall:
         pip_cmd.append("--upgrade")
+        pip_cmd.append("--no-cache")
     try:
         output = check_output(pip_cmd + modules, stderr=STDOUT).decode("utf-8")
         if verbose:
