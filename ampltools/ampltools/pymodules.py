@@ -2,7 +2,7 @@
 import sys
 
 
-def install_modules(modules=None, reinstall=False, verbose=False):
+def install_modules(modules=[], reinstall=False, verbose=False):
     """
     Install AMPL modules for Python.
     Args:
@@ -29,7 +29,7 @@ def install_modules(modules=None, reinstall=False, verbose=False):
         raise Exception("Failed to install modules") from None
 
 
-def load_modules(modules=None, verbose=False):
+def load_modules(modules=[], verbose=False):
     """
     Load AMPL modules.
     Args:
@@ -45,10 +45,9 @@ def load_modules(modules=None, verbose=False):
         norm = name.replace("-", "_")
         if norm.startswith(prefix):
             clean = norm.replace(prefix, "")
-            if modules is not None:
-                if norm in modules and clean not in modules:
-                    # Skip any module not listed
-                    continue
+            if norm in modules and clean not in modules:
+                # Skip any module not listed
+                continue
             if clean in ("base", "ampl"):
                 # Skip base module
                 continue
