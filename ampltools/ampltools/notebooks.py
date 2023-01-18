@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-import subprocess
 import os
 from .licenses import is_valid_uuid, activate_license, _activate_default_license
-from .pymodules import install_modules, load_modules
+from .amplpypi import install_modules, load_modules
 from .utils import cloud_platform_name
 
 
