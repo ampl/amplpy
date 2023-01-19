@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
-from .licenses import is_valid_uuid, activate_license, _activate_default_license
-from .amplpypi import install_modules, load_modules
+from .licenses import _is_valid_uuid, activate_license, _activate_default_license
+from .modules import install_modules, load_modules
 from .utils import cloud_platform_name
 
 
@@ -153,7 +153,7 @@ def ampl_notebook(
             _ampl_license_cell(check_callback=instantiate_ampl)
         else:
             instantiate_ampl(print_license=show_license)
-    elif not is_valid_uuid(license_uuid):
+    elif not _is_valid_uuid(license_uuid):
         if license_uuid not in (None, ""):
             print(
                 "Please provide a valid license UUID. "
@@ -177,11 +177,11 @@ def ampl_notebook(
                 instantiate_ampl(print_license=True)
 
     if register_magics:
-        register_magics_global(ampl_object="ampl", globals_=globals_)
+        _register_magics_global(ampl_object="ampl", globals_=globals_)
     return globals_.get("ampl", None)
 
 
-def register_magics_global(store_name="_ampl_cells", ampl_object=None, globals_=None):
+def _register_magics_global(store_name="_ampl_cells", ampl_object=None, globals_=None):
     """
     Register jupyter notebook magics ``%%ampl`` and ``%%ampl_eval``.
     Args:

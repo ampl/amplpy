@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.1 - 2023-01-19
+- Move modules code to its own submodule.
+
 ## 0.4.0 - 2023-01-18
 - Add command line actions to manage modules.
 

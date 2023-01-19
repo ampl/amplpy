@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import platform
 import os
+from uuid import UUID
 
 
 def cloud_platform_name():
@@ -21,9 +22,7 @@ def cloud_platform_name():
     return None
 
 
-def is_valid_uuid(uuid):
-    from uuid import UUID
-
+def _is_valid_uuid(uuid):
     if uuid in (None, ""):
         return False
     try:

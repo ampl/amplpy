@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 from .notebooks import (
     ampl_notebook,
 )
 
-from .amplpypi import (
+from .modules import (
+    add_to_path,
     install_modules,
+    uninstall_modules,
+    installed_modules,
     load_modules,
-    list_modules,
-    list_modules_available,
+    available_modules,
 )
 
 from .licenses import (
@@ -17,8 +19,4 @@ from .licenses import (
 
 from .utils import (
     cloud_platform_name,
-)
-
-from .commands import (
-    ampltools_main,
 )

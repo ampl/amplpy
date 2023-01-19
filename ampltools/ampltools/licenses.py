@@ -6,11 +6,11 @@ import requests
 import json
 import time
 import os
-from .utils import is_valid_uuid
+from .utils import _is_valid_uuid
 
 
 def _activate_ampl_license(uuid, retry=3):
-    if not is_valid_uuid(uuid):
+    if not _is_valid_uuid(uuid):
         raise ValueError("Invalid license UUID")
     uuid = uuid.strip()
     url = "https://portal.ampl.com/download/license/{}/ampl.lic".format(uuid)
@@ -55,7 +55,7 @@ def activate_license(license_uuid=None, verbose=False):
         uuid: license UUID.
         verbose: show verbose output if True.
     """
-    if not is_valid_uuid(license_uuid):
+    if not _is_valid_uuid(license_uuid):
         raise ValueError("Invalid license UUID.")
 
     if verbose:
