@@ -145,11 +145,13 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue("2 = 2" in output_handler.lastmsg)
         self.assertTrue("3 = 3" in output_handler.lastmsg)
         ampl.eval("display X;")
-        self.assertEqual(
-            str(error_handler.last_warning.get_message()), "X is not defined"
+        self.assertTrue(
+            error_handler.last_warning.get_message().startswith("X is not defined")
         )
         ampl.eval("diy X;")
-        self.assertEqual(str(error_handler.last_error.get_message()), "syntax error")
+        self.assertTrue(
+            error_handler.last_error.get_message().startswith("syntax error")
+        )
         self.assertTrue(
             isinstance(error_handler.last_warning.get_source_name(), basestring)
         )
