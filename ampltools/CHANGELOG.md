@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.3 - 2023-01-19
+- Fix bug in tools.modules.uninstall.
+
 ## 0.4.2 - 2023-01-19
 - Do not specify the version of the dependency 'requests'.
 - Reduce number of symbols exported.

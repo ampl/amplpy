@@ -100,11 +100,14 @@ def uninstall_modules(modules=[], options=[], verbose=False):
     if modules == ["all"]:
         skip_base = False
         modules = installed
-    if skip_base and "base" in modules and set(modules) != set(installed_modules):
-        raise Exception(
-            "Base module cannot be uninstalled alone. "
-            "You need to uninstall all modules."
-        )
+    if skip_base and "base" in modules:
+        if set(modules) != set(installed):
+            raise Exception(
+                "Base module cannot be uninstalled alone. "
+                "You need to uninstall all modules."
+            )
+        else:
+            skip_base = False
 
     modules = _normalize_modules(modules=modules, skip_base=skip_base)
     pip_cmd = [sys.executable, "-m", "pip", "uninstall", "-y"]
