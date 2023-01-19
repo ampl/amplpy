@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 from .amplpypi import (
     install_modules,
     uninstall_modules,
@@ -8,8 +7,8 @@ from .amplpypi import (
 )
 
 
-def main():
-    args = sys.argv
+def _main(args):
+    assert len(args) >= 2
     if args[1] == "install":
         modules = [m for m in args[2:] if not m.startswith("-")]
         options = [o for o in args[2:] if o.startswith("-")]

@@ -63,6 +63,8 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
         modules: list of modules to be installed.
         verbose: show verbose output if True.
     """
+    if isinstance(modules, str):
+        modules = [modules]
     available = None
     try:
         available = set(available_modules())
@@ -91,6 +93,8 @@ def uninstall_modules(modules=[], options=[], verbose=False):
         modules: list of modules to be installed.
         verbose: show verbose output if True.
     """
+    if isinstance(modules, str):
+        modules = [modules]
     skip_base = True
     installed = installed_modules()
     if modules == ["all"]:
@@ -117,6 +121,8 @@ def load_modules(modules=[], head=True, verbose=False):
     """
     from importlib import import_module
 
+    if isinstance(modules, str):
+        modules = [modules]
     prefix = "ampl_module_"
     lst = [module for module in modules if module not in ("ampl", "base")]
     installed = installed_modules()

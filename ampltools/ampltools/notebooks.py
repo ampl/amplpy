@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from .licenses import _is_valid_uuid, activate_license, _activate_default_license
-from .modules import install_modules, load_modules
+from .modules import install as install_modules, load as load_modules
 from .utils import cloud_platform_name
 
 

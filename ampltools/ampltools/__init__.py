@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 from .notebooks import (
     ampl_notebook,
 )
 
 from .modules import (
     add_to_path,
-    install_modules,
-    uninstall_modules,
-    installed_modules,
-    load_modules,
-    available_modules,
+    install as install_modules,
+    load as load_modules,
 )
 
 from .licenses import (
