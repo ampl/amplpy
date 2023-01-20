@@ -15,11 +15,20 @@ from .set import Set
 from .parameter import Parameter
 from .entity import Entity
 from .dataframe import DataFrame, Row, Column
-from .utils import multidict, register_magics
+from .utils import add_to_path, multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
 
-__version__ = "0.8.6b1"
+try:
+    from ampltools import register_magics
+except Exception:
+    pass
+try:
+    from ampltools import add_to_path
+except Exception:
+    pass
+
+__version__ = "0.8.6b2"
 
 
 def _list_aliases():

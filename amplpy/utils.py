@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
 from builtins import range
+import os
 
-# from past.builtins import basestring, unicode
+
+def add_to_path(path, head=True):
+    if head:
+        os.environ["PATH"] = path + os.pathsep + os.environ["PATH"]
+    else:
+        os.environ["PATH"] = os.environ["PATH"] + os.pathsep + path
 
 
 def register_magics(store_name="_ampl_cells", ampl_object=None):
