@@ -3,13 +3,6 @@ import sys
 import os
 
 
-def add_to_path(path, head=True):
-    if head:
-        os.environ["PATH"] = path + os.pathsep + os.environ["PATH"]
-    else:
-        os.environ["PATH"] = os.environ["PATH"] + os.pathsep + path
-
-
 def _normalize_modules(modules=[], add_base=False, skip_base=False):
     prefix = "ampl_module_"
     names = [module.replace("-", "_").replace(prefix, "") for module in modules]
@@ -47,6 +40,8 @@ def _run_command(cmd, verbose=False):
     from subprocess import check_output, STDOUT, CalledProcessError
 
     try:
+        if verbose:
+            print("$ " + " ".join(cmd))
         output = check_output(cmd, stderr=STDOUT).decode("utf-8")
         if verbose:
             print(output)
@@ -61,6 +56,8 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
     Install AMPL modules for Python.
     Args:
         modules: list of modules to be installed.
+        reinstall: reinstall modules if True.
+        options: list of options for pip.
         verbose: show verbose output if True.
     """
     if isinstance(modules, str):
@@ -80,8 +77,7 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
     modules = _normalize_modules(modules=modules, add_base=True)
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
     if reinstall:
-        pip_cmd.append("--upgrade")
-        pip_cmd.append("--no-cache")
+        pip_cmd += ["--force-reinstall", "--upgrade", "--no-cache"]
     if not _run_command(pip_cmd + modules + options, verbose=verbose):
         raise Exception("Failed to install modules.")
 
@@ -91,6 +87,7 @@ def uninstall_modules(modules=[], options=[], verbose=False):
     Uninstall AMPL modules for Python.
     Args:
         modules: list of modules to be installed.
+        options: list of options for pip.
         verbose: show verbose output if True.
     """
     if isinstance(modules, str):
@@ -115,25 +112,61 @@ def uninstall_modules(modules=[], options=[], verbose=False):
         raise Exception("Failed to uninstall modules.")
 
 
+def _load_ampl_module(module_name):
+    from importlib import import_module
+
+    prefix = "ampl_module_"
+    if not module_name.startswith(prefix):
+        module_name = prefix + module_name
+    module = import_module(module_name)
+    return module.bin_dir, module.__version__
+
+
+def _locate_modules(modules, verbose=False):
+    path_modules = []
+    for name in modules:
+        module_name = "ampl_module_" + name
+        bin_dir, _ = _load_ampl_module(module_name)
+        if bin_dir not in path_modules:
+            path_modules.append(bin_dir)
+        if verbose:
+            print(f"Imported {module_name}.")
+
+    return path_modules
+
+
+def _sort_modules_for_loading(modules=[]):
+    if isinstance(modules, str):
+        modules = [modules]
+    if modules == [] or "all" in modules:
+        modules = installed_modules()
+    return ["base"] + [module for module in modules if module not in ("ampl", "base")]
+
+
+def generate_requirements(modules=[]):
+    """
+    Generate requirements.txt content.
+    Args:
+        modules: list of modules.
+        verbose: show verbose output if True.
+    """
+    modules = _sort_modules_for_loading(modules)
+    requirements = "--index-url https://pypi.ampl.com\n"
+    requirements += "--extra-index-url https://pypi.org/simple\n"
+    for m in modules:
+        _, version = _load_ampl_module(m)
+        requirements += f"ampl_module_{m}=={version}\n"
+    return requirements
+
+
 def load_modules(modules=[], head=True, verbose=False):
     """
     Load AMPL modules.
     Args:
         modules: list of modules to be loaded.
+        head: add to the head of PATH if True.
         verbose: show verbose output if True.
     """
-    from importlib import import_module
-
-    if isinstance(modules, str):
-        modules = [modules]
-    prefix = "ampl_module_"
-    lst = [module for module in modules if module not in ("ampl", "base")]
-    installed = installed_modules()
-    for module in lst:
-        if module not in installed:
-            raise Exception(f"Module {module} is missing.")
-    plugins = [prefix + module for module in lst]
-
     path_modules = []
     path_others = []
     for path in os.environ["PATH"].split(os.pathsep):
@@ -142,27 +175,23 @@ def load_modules(modules=[], head=True, verbose=False):
         else:
             path_others.append(path)
 
-    def load_module(name):
-        module = import_module(name)
-        bin_dir = getattr(module, "bin_dir")
-        if bin_dir not in path_modules:
-            path_modules.append(bin_dir)
-
-    try:
-        load_module(prefix + "base")
-        if verbose:
-            print(f"Imported {prefix}base.")
-    except Exception:
-        print(f"Failed to import {prefix}base.")
-    for plugin in plugins:
-        try:
-            load_module(plugin)
-            if verbose:
-                print(f"Imported {plugin}.")
-        except Exception:
-            print(f"Failed to import {plugin}.")
+    modules = _sort_modules_for_loading(modules)
+    for path in _locate_modules(modules, verbose=verbose):
+        if path not in path_modules:
+            path_modules.append(path)
 
     if head:
         os.environ["PATH"] = os.pathsep.join(path_modules + path_others)
     else:
         os.environ["PATH"] = os.pathsep.join(path_others + path_modules)
+
+
+def path(modules=[]):
+    """
+    Return PATH for AMPL modules.
+    Args:
+        modules: list of modules to be included.
+        verbose: show verbose output if True.
+    """
+    modules = _sort_modules_for_loading(modules)
+    return os.pathsep.join(_locate_modules(modules, verbose=False))

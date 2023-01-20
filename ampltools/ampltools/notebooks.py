@@ -2,7 +2,7 @@
 import os
 from .licenses import _is_valid_uuid, activate_license, _activate_default_license
 from .modules import install as install_modules, load as load_modules
-from .utils import cloud_platform_name
+from .utils import cloud_platform_name, register_magics
 
 
 def _deactivate_license():
@@ -96,7 +96,6 @@ def ampl_notebook(
     reinstall=False,
     g=None,
     verbose=False,
-    register_magics=True,
     show_license=None,
     globals_=None,
 ):
@@ -176,46 +175,5 @@ def ampl_notebook(
             else:
                 instantiate_ampl(print_license=True)
 
-    if register_magics:
-        _register_magics_global(ampl_object="ampl", globals_=globals_)
+    register_magics(ampl_object="ampl", globals_=globals_)
     return globals_.get("ampl", None)
-
-
-def _register_magics_global(store_name="_ampl_cells", ampl_object=None, globals_=None):
-    """
-    Register jupyter notebook magics ``%%ampl`` and ``%%ampl_eval``.
-    Args:
-        store_name: Name of the store where ``%%ampl cells`` will be stored.
-        ampl_object: Object used to evaluate ``%%ampl_eval`` cells.
-    """
-    from IPython.core.magic import Magics, magics_class, cell_magic, line_magic
-    from IPython import get_ipython
-
-    @magics_class
-    class StoreAMPL(Magics):
-        def __init__(self, shell=None, **kwargs):
-            Magics.__init__(self, shell=shell, **kwargs)
-            self._store = []
-            shell.user_ns[store_name] = self._store
-
-        @cell_magic
-        def ampl(self, line, cell):
-            """Store the cell in the store"""
-            self._store.append(cell)
-
-        @cell_magic
-        def ampl_eval(self, line, cell):
-            """Evaluate the cell"""
-            if globals_ is not None:
-                if isinstance(ampl_object, str):
-                    ampl = globals_[ampl_object]
-                else:
-                    ampl = ampl_object
-            ampl.eval("\n" + cell)
-
-        @line_magic
-        def get_ampl(self, line):
-            """Retrieve the store"""
-            return self._store
-
-    get_ipython().register_magics(StoreAMPL)
