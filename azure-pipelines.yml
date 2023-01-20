@@ -71,7 +71,7 @@ jobs:
         # python -m pip install --upgrade cibuildwheel==1.12.0
         # CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
-        CIBW_ARCHS="x86_64 arm64" CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
+        CIBW_ARCHS="x86_64 universal2" CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
