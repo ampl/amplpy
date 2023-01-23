@@ -7,11 +7,8 @@ if __name__ == "__main__":
     except ImportError:
         print(
             "Failed to import 'ampltools.modules'. Install or upgrade with:\n"
-            "   $ python -m pip install ampltools --upgrade"
+            "   $ python -m pip install ampltools --upgrade",
+            file=sys.stderr,
         )
         sys.exit(1)
-    try:
-        _main(sys.argv)
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
+    _main()
