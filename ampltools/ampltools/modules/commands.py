@@ -9,12 +9,55 @@ from .amplpypi import (
     path,
 )
 import subprocess
+import sys
+
+ERROR = """
+Invalid command.
+Valid commands: install, uninstall, list/installed, available, path, requirements, run.
+"""
+USAGE = """Usage:
+- Install modules:
+    $ python -m $PACKAGE.modules install <solver 1> <solver 2> ...
+    Example: $ python -m $PACKAGE.modules install highs gurobi
+
+- Uninstall modules:
+    $ python -m $PACKAGE.modules uninstall <solver 1> <solver 2> ...
+    Example: $ python -m $PACKAGE.modules uninstall highs gurobi
+
+- List installed modules:
+    $ python -m $PACKAGE.modules installed
+
+- List modules available to be installed:
+    $ python -m $PACKAGE.modules available
+
+- Value to append to the environment variable PATH to access modules
+    $ python -m $PACKAGE.modules path
+
+- Generate requirements.txt for the modules currently installed
+    $ python -m $PACKAGE.modules requirements
+
+- Run command in the same environment as the modules:
+    $ python -m $PACKAGE.modules run <command>
+    Example: $ python -m $PACKAGE.modules run ampl -v
+"""
 
 
-def _main(args):
-    assert len(args) >= 2
+def _main():
+    try:
+        _commands(sys.argv)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def _commands(args):
+    usage = USAGE.replace("$PACKAGE", "amplpy" if "amplpy" in args[0] else "ampltools")
+    if len(args) < 2:
+        raise Exception(ERROR + usage)
     command, args = args[1].lower(), args[2:]
-    if command == "install":
+    if command == "usage":
+        print(usage)
+    elif command == "install":
         modules = [m for m in args if not m.startswith("-")]
         options = [o for o in args if o.startswith("-")]
         install_modules(modules=modules, options=options, verbose=True)
@@ -46,6 +89,4 @@ def _main(args):
         modules = [m for m in args if not m.startswith("-")]
         print(generate_requirements(modules))
     else:
-        raise Exception(
-            "Invalid command! Valid commands: install, uninstall, list/installed, available, path, requirements, run."
-        )
+        raise Exception(ERROR + usage)

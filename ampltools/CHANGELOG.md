@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.5 - 2023-01-23
+- Show usage message with any errors in main.
+
 ## 0.4.4 - 2023-01-20
 - Remove install_modules from ampltools.
 - Move add_to_path to ampltools.

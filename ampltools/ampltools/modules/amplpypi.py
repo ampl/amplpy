@@ -107,6 +107,8 @@ def uninstall_modules(modules=[], options=[], verbose=False):
             skip_base = False
 
     modules = _normalize_modules(modules=modules, skip_base=skip_base)
+    if len(modules) == 0:
+        raise Exception("There are no modules to uninstall.")
     pip_cmd = [sys.executable, "-m", "pip", "uninstall", "-y"]
     if not _run_command(pip_cmd + modules + options, verbose=verbose):
         raise Exception("Failed to uninstall modules.")

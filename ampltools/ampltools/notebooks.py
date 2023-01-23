@@ -129,8 +129,11 @@ def ampl_notebook(
                 print(version)
         globals_["ampl"] = ampl
 
-    install_modules(modules, reinstall=reinstall, verbose=verbose)
-    load_modules(modules, verbose=verbose)
+    if modules not in (None, []):
+        install_modules(modules, reinstall=reinstall, verbose=verbose)
+        load_modules(modules, verbose=verbose)
+    else:
+        modules = []
 
     using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
     open_modules = ["highs", "cbc", "coin", "open", "plugins", "ampl"]
