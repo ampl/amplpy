@@ -37,7 +37,7 @@ System requirements
 As AMPL API uses AMPL for model generation, the AMPL executable is needed and is generally provided. The solution is then obtained through external solvers.
 In general, a valid AMPL setup and Python 2.7 or 3.x are necessary and sufficient conditions for the correct execution of AMPL API.
 
-The officially supported platforms are all Windows flavours, various Linux 32/64 bits and OSX.
+The officially supported platforms are all Windows flavours, various Linux 32/64 bits and macOS.
 Ports to any other platform supported by AMPL can be easily obtained.
 
 For Windows only, please make sure that the Microsoft Visual C++ Redistributable Package (32 or 64 bits, depending on the architecture of 

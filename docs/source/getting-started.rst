@@ -20,11 +20,29 @@ In order to install the Python API you just need to run
     python -m pip install amplpy
 
 Note: For Windows, Linux, and macOS, the ``amplpy`` package comes with binary
-wheels for Python 2.7 and 3.x. Please make sure that you are
+wheels. Please make sure that you are
 using the latest version of ``pip`` before installing ``amplpy`` (upgrade using
 ``pip install pip --upgrade`` or ``python -m pip install pip --upgrade``).
 If a binary wheel for your platform is not available,
 a C++ compiler and python development libraries will be required.
+
+amplpy.modules
+--------------
+.. _amplpyModules:
+
+AMPL and all solvers are now available as python packages for Windows, Linux, and macOS. For instance, to install AMPL with HiGHS and Gurobi,
+you just need the following:
+
+.. code-block:: bash
+
+   $ python -m pip install amplpy --upgrade
+   $ python -m amplpy.modules install highs gurobi
+   $ python
+   >>> from amplpy import AMPL, tools
+   >>> tools.modules.load()
+   >>> ampl = AMPL()
+
+For Apple M1, please make sure your have Rosetta 2 installed since not all modules are available for M1, or install it with: ``softwareupdate --install-rosetta``.
 
 Initial test
 ------------
@@ -74,22 +92,6 @@ You can also specify an :class:`amplpy.Environment`
 
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if the path includes backslashes.
 
-amplpy.modules
---------------
-.. _amplpyModules:
-
-AMPL and all solvers are now available as python packages. For instance, to install AMPL with HiGHS and Gurobi,
-you just need the following:
-
-.. code-block:: bash
-
-   $ python -m pip install amplpy
-   $ python -m amplpy.modules install highs gurobi
-   $ python
-   >>> from amplpy import AMPL, tools
-   >>> tools.modules.load()
-   >>> ampl = AMPL()
-
 Development
 -----------
 
@@ -106,7 +108,5 @@ folder containing the AMPL executable is in the system search path.
 Deployment
 ----------
 
-To deploy AMPL API applications to users who do not have their own AMPL installations,
-include with your application the AMPL executable (``ampl`` or ``ampl.exe``), and the ``amplpy`` package.
-Note that the folder containing the AMPL executable should be in the system search path,
-or use :ref:`amplpy.modules <amplpyModules>` instead.
+To deploy AMPL API applications we recommend the use of :ref:`amplpy.modules <amplpyModules>`.
+Alternatively, make sure that AMPL is installed and that its directly is in the environment variable PATH.
