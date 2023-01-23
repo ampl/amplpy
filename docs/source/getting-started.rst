@@ -47,22 +47,53 @@ several small diet problems and then display the optimal amounts of the foods
 from the last solution. Alternatively, you can download the examples directly from
 `<https://github.com/ampl/amplpy/tree/master/examples>`_.
 
-Note that the folder containing the AMPL executable should be in the system search path.
 Otherwise, the error message "AMPL could not be started" will be shown.
 If the AMPL installation directory is not in the system search path,
-you can add it passing a new :class:`~amplpy.Environment` to :class:`~amplpy.AMPL` as follows:
+you can add it using :func:`~amplpy.add_to_path` as follows:
+
+.. code-block:: python
+
+    from amplpy import AMPL, add_to_path
+    add_to_path(r"full path to the AMPL installation directory")
+    ampl = AMPL()
+
+Or, if you are using :ref:`amplpy.modules <amplpyModules>`, do the following:
+
+.. code-block:: python
+
+    from amplpy import AMPL, tools
+    tools.modules.load()
+    ampl = AMPL()
+
+You can also specify an :class:`amplpy.Environment`
 
 .. code-block:: python
 
    from amplpy import AMPL, Environment
-   ampl = AMPL(Environment('full path to the AMPL installation directory'))
+   ampl = AMPL(Environment(r"full path to the AMPL installation directory"))
 
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if the path includes backslashes.
+
+amplpy.modules
+--------------
+.. _amplpyModules:
+
+AMPL and all solvers are now available as python packages. For instance, to install AMPL with HiGHS and Gurobi,
+you just need the following:
+
+.. code-block:: bash
+
+   $ python -m pip install amplpy
+   $ python -m amplpy.modules install highs gurobi
+   $ python
+   >>> from amplpy import AMPL, tools
+   >>> tools.modules.load()
+   >>> ampl = AMPL()
 
 Development
 -----------
 
-Import the ``amplpy`` modude with
+Import the ``amplpy`` module with
 
 .. code-block:: python
 
@@ -77,4 +108,5 @@ Deployment
 
 To deploy AMPL API applications to users who do not have their own AMPL installations,
 include with your application the AMPL executable (``ampl`` or ``ampl.exe``), and the ``amplpy`` package.
-Note that the folder containing the AMPL executable should be in the system search path.
+Note that the folder containing the AMPL executable should be in the system search path,
+or use :ref:`amplpy.modules <amplpyModules>` instead.

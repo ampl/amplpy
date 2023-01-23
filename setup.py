@@ -16,17 +16,13 @@ from C++, Java, C#, MATLAB, R and Python.
 
 The AMPL API can function as an add-on to any existing AMPL installation. If
 you do not yet have an AMPL installation on the computer where you will be
-working with the API, see our
-`demo page <http://ampl.com/try-ampl/download-a-free-demo/>`_
-or
-`trial page <http://ampl.com/try-ampl/request-a-full-trial/>`_
+working with the API. Use our `Community Edition <http://ampl.com/ce>`_ 
 to download a working version that can be installed quickly.
 
 Documentation:
 ``````````````
 
 * http://amplpy.readthedocs.io
-* http://ampl.com/api/nightly/python/
 
 Repositories:
 `````````````

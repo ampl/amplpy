@@ -24,9 +24,12 @@ all the code in the examples below does not include exception handling.
 
   """
   # If the AMPL installation directory is not in the system search path:
-  from amplpy import Environment
-  ampl = AMPL(
-      Environment('full path to the AMPL installation directory'))
+  from amplpy import add_to_path
+  add_to_path(r"full path to the AMPL installation directory")
+
+  # Alternatively, load modules if you are using amplpy.modules:
+  from amplpy import tools
+  tools.modules.load()
   """
 
   # Interpret the two files
@@ -94,16 +97,15 @@ The second, which is the preferred way to access AMPL options, gets the value of
 `version` from AMPL as a string and prints the result on the active console.
 
 
-If the AMPL installation directory is not in the system search path, you should create
-the AMPL object as follows instead:
+If you are not using :ref:`amplpy.modules <amplpyModules>`, and your AMPL installation directory is not in the system search path, add it as follows:
 
 .. code-block:: python
 
-   from amplpy import AMPL, Environment
-   ampl = AMPL(Environment('full path to the AMPL installation directory'))
+   from amplpy import AMPL, add_to_path
+   add_to_path(r"full path to the AMPL installation directory")
+   ampl = AMPL()
 
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if the path includes backslashes.
-
 
 Load a model from file
 ----------------------
@@ -231,10 +233,3 @@ We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.g
   df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub")
   # Print them
   print(df2)
-
-
-Delete the AMPL object to free the resources
------------------------------------------------------
-
-It is good practice to make sure that the AMPL object is closed and all its resources released when it is not needed any more.
-All the internal resources are automatically deallocated by the destructor of the AMPL object.

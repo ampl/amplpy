@@ -31,38 +31,7 @@ This example shows how to:
 * get and set AMPL options
 
 
-Example 3: Use AMPL asynchronously
-----------------------------------
-
-:download:`asyncexample.py <../../examples/asyncexample.py>`
-
-This example shows how to:
-
-* start an AMPL async operation
-
-
-Example 4: Get and set data through DataFrames
-----------------------------------------------
-
-:download:`dataframeexample.py <../../examples/dataframeexample.py>`
-
-This example shows how to:
-
-* Use :class:`amplpy.DataFrame` objects to assign values to sets and parameters
-* Use an :class:`amplpy.DataFrame` object to fetch and decouple values from a variable
-
-
-Example 5: Operate with multidimensional data
----------------------------------------------
-
-:download:`multidimensionalexample.py <../../examples/multidimensionalexample.py>`
-
-This example shows how to:
-
-* Use a :class:`amplpy.DataFrame` to assign values to multidimensional parameters
-
-
-Example 6: Assign all data to a model and solve it
+Example 3: Assign all data to a model and solve it
 --------------------------------------------------
 
 :download:`dietmodel.py <../../examples/dietmodel.py>`
@@ -71,8 +40,7 @@ This example shows how to:
 
 * Assign all the data necessary to generate a model instance programmatically
 
-
-Example 7: Build an efficient frontier
+Example 4: Build an efficient frontier
 --------------------------------------
 
 :download:`efficientfrontier.py <../../examples/efficientfrontier.py>`
@@ -82,7 +50,7 @@ This example shows how to:
 * build an efficient frontier by repeteatly solve a portfolio problem in AMPL
 
 
-Example 8: Simple heuristic
+Example 5: Simple heuristic
 ---------------------------
 
 :download:`trackingmodel.py <../../examples/trackingmodel.py>`

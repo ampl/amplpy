@@ -12,14 +12,18 @@ def main(argc, argv):
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
 
-    # Create an AMPL instance
-    ampl = AMPL()
     """
     # If the AMPL installation directory is not in the system search path:
-    from amplpy import Environment
-    ampl = AMPL(
-        Environment('full path to the AMPL installation directory'))
+    from amplpy import add_to_path
+    add_to_path(r"full path to the AMPL installation directory")
+
+    # Alternatively, load modules if you are using amplpy.modules:
+    from amplpy import tools
+    tools.modules.load()
     """
+
+    # Create an AMPL instance
+    ampl = AMPL()
 
     ampl.set_option("reset_initial_guesses", True)
     ampl.set_option("send_statuses", False)

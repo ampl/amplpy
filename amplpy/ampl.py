@@ -35,7 +35,7 @@ add it before instantiating the AMPL object with:
     add_to_path(r"full path to the AMPL installation directory")
     ampl = AMPL()
 
-Or if you are using amplpy.modules do the following:
+Or, if you are using amplpy.modules, do the following:
 
     from amplpy import AMPL, tools
     tools.modules.load()
