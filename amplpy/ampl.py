@@ -27,6 +27,22 @@ except ImportError:
 inf = float("inf")
 
 
+AMPL_NOT_FOUND_MESSAGE = """
+Please make sure that the AMPL directory is in the system search path, or
+add it before instantiating the AMPL object with:
+
+    from amplpy import AMPL, add_to_path
+    add_to_path(r"full path to the AMPL installation directory")
+    ampl = AMPL()
+
+Or if you are using amplpy.modules do the following:
+
+    from amplpy import AMPL, tools
+    tools.modules.load()
+    ampl = AMPL()
+"""
+
+
 class AMPL(object):
     """An AMPL translator.
 
@@ -88,25 +104,18 @@ class AMPL(object):
             RuntimeError: If no valid AMPL license has been found or if the
             translator cannot be started for any other reason.
         """
-        if environment is None:
-            try:
+        try:
+            if environment is None:
                 self._impl = amplpython.AMPL()
-            except RuntimeError as exp:
-                if str(exp).startswith("AMPL could not be started"):
-                    message = (
-                        """Please make sure that the AMPL folder is in """
-                        """the system search path, or\n"""
-                        """specify the path via:\n"""
-                        """    AMPL(Environment('full path to the AMPL """
-                        """installation directory'))"""
-                    )
-                    print("*" * 79, file=sys.stderr)
-                    for line in message.split("\n"):
-                        print("* {:75} *".format(line), file=sys.stderr)
-                    print("*" * 79, file=sys.stderr)
-                raise
-        else:
-            self._impl = amplpython.AMPL(environment._impl)
+            else:
+                self._impl = amplpython.AMPL(environment._impl)
+        except RuntimeError as exp:
+            if str(exp).startswith("AMPL could not be started"):
+                print("*" * 79, file=sys.stderr)
+                for line in AMPL_NOT_FOUND_MESSAGE.split("\n"):
+                    print("* {:75} *".format(line), file=sys.stderr)
+                print("*" * 79, file=sys.stderr)
+            raise
         self._error_handler = None
         self._output_handler = None
         self._lock = Lock()
@@ -200,9 +209,9 @@ class AMPL(object):
 
     def get_objective(self, name):
         """
-         Get the objective with the corresponding name.
+        Get the objective with the corresponding name.
 
-         Args:
+        Args:
             name: Name of the objective to be found.
 
         Raises:
@@ -505,10 +514,10 @@ class AMPL(object):
 
     def get_option(self, name):
         """
-         Get the current value of the specified option. If the option does not
-         exist, returns None.
+        Get the current value of the specified option. If the option does not
+        exist, returns None.
 
-         Args:
+        Args:
             name: Option name.
 
         Returns:

@@ -61,38 +61,33 @@ class DataFrame(BaseClass):
     """
     A DataFrame object, used to communicate data to and from the AMPL entities.
 
+    .. warning::
+        DataFrame objects should not be instantiated manually. For best performance
+        using Python native types or Pandas Dataframes. The API takes care of the conversion
+        for you in the most efficient way it finds.
+
     An object of this class can be used to do the following tasks:
+
     - Assign values to AMPL entities (once the DataFrame is populated, use
-    :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData` to assign its
-    values to the modelling entities in its columns)
+      :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData` to assign its
+      values to the modelling entities in its columns)
     - Get values from AMPL, decoupling the values from the AMPL entities they
-    originate via
-    :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`.
+      originate via
+      :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`.
 
-    A DataFrame object can be created in various ways.
+    A DataFrame object can be created in various ways:
 
-    - Create a skeleton by specifiying manually the indexing columns and the
-      column headers.
-    - Get values from AMPL, decoupling the values from the AMPL entities they
-      originate from
-      (via :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`).
+    - Get values from AMPL, decoupling the values from the AMPL entities they originate from
+      (via :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`)
+    - From Pandas dataframes with :func:`~amplpy.DataFrame.from_pandas` / :func:`~amplpy.DataFrame.fromPandas`
+    - From Numpy matrices with :func:`~amplpy.DataFrame.from_numpy` / :func:`~amplpy.DataFrame.fromNumpy`
+    - From Python dictionaries with :func:`~amplpy.DataFrame.from_dict` / :func:`~amplpy.DataFrame.fromDict`
 
-    Populating a DataFrame object can be done adding row by row to a
-    pre-existing skeleton via :func:`~amplpy.DataFrame.addRow`, setting whole
-    columns of a pre-existing skeleton via
-    :func:`~amplpy.DataFrame.set_column` / :func:`~amplpy.DataFrame.setColumn`
-    or adding columns (including indexing columns) via
-    :func:`~amplpy.DataFrame.add_column` / :func:`~amplpy.DataFrame.addColumn`.
+    and can be converted to various object types:
 
-    Modifying a DataFrame object can be done via
-    :func:`~amplpy.DataFrame.set_column` / :func:`~amplpy.DataFrame.setColumn`
-    or, item by item, via
-    :func:`~amplpy.DataFrame.set_values` / :func:`~amplpy.DataFrame.setValues`.
-
-    Accessing data in a DataFrame can be done row by row using
-    :func:`~amplpy.DataFrame.get_row` / :func:`~amplpy.DataFrame.getRow`
-    or by column via
-    :func:`~amplpy.DataFrame.get_column` / :func:`~amplpy.DataFrame.getColumn`.
+    - Pandas dataframes with :func:`~amplpy.DataFrame.to_pandas` / :func:`~amplpy.DataFrame.toPandas`
+    - Python dictionary with :func:`~amplpy.DataFrame.to_dict` / :func:`~amplpy.DataFrame.toDict`
+    - Python list with :func:`~amplpy.DataFrame.to_list` / :func:`~amplpy.DataFrame.toList`
     """
 
     def __init__(self, index, columns=tuple(), **kwargs):
