@@ -36,13 +36,15 @@ you just need the following:
 .. code-block:: bash
 
    $ python -m pip install amplpy --upgrade
-   $ python -m amplpy.modules install highs gurobi
+   $ python -m amplpy.modules install highs gurobi # install HiGHS and Gurobi
+   $ python -m amplpy.modules run amplkey activate --uuid <license-uuid> # activate your license
+   $ python -m amplpy.modules run ampl -vvq # confirm that the license is active
    $ python
    >>> from amplpy import AMPL, modules
-   >>> modules.load()
+   >>> modules.load() # load all modules
    >>> ampl = AMPL()
 
-For Apple M1, please make sure your have Rosetta 2 installed since not all modules are available for M1, or install it with: ``softwareupdate --install-rosetta``.
+For Apple M1, please make sure your have Rosetta 2 installed since not all modules are available for M1. You can install it with: ``softwareupdate --install-rosetta``.
 
 Initial test
 ------------
