@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.6 - 2023-01-24
+- Ignore ampl module since it is installed by default.
+- Drop tools.load_modules.
+
 ## 0.4.5 - 2023-01-23
 - Show usage message with any errors in main.
 

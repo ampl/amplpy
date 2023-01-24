@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.4.5"
+__version__ = "0.4.6"
 from .notebooks import (
     ampl_notebook,
-)
-
-from .modules import (
-    load as load_modules,
 )
 
 from .licenses import (

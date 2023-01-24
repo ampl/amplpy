@@ -71,6 +71,8 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
         for module in modules:
             if "=" in module:
                 module = module[: module.find("=")]
+            if module == "ampl":
+                continue
             if module not in available:
                 raise Exception(f"AMPL module '{module}' is not available.")
 

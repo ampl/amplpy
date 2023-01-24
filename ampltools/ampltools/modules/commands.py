@@ -53,7 +53,8 @@ def _main():
 def _commands(args):
     usage = USAGE.replace("$PACKAGE", "amplpy" if "amplpy" in args[0] else "ampltools")
     if len(args) < 2:
-        raise Exception(ERROR + usage)
+        print(usage)
+        return
     command, args = args[1].lower(), args[2:]
     if command == "usage":
         print(usage)
