@@ -16,8 +16,8 @@ def main(argc, argv):
     add_to_path(r"full path to the AMPL installation directory")
 
     # Alternatively, load modules if you are using amplpy.modules:
-    from amplpy import tools
-    tools.modules.load()
+    from amplpy import modules
+    modules.load()
     """
 
     # Create an AMPL instance

@@ -38,8 +38,8 @@ you just need the following:
    $ python -m pip install amplpy --upgrade
    $ python -m amplpy.modules install highs gurobi
    $ python
-   >>> from amplpy import AMPL, tools
-   >>> tools.modules.load()
+   >>> from amplpy import AMPL, modules
+   >>> modules.load()
    >>> ampl = AMPL()
 
 For Apple M1, please make sure your have Rosetta 2 installed since not all modules are available for M1, or install it with: ``softwareupdate --install-rosetta``.
@@ -79,8 +79,8 @@ Or, if you are using :ref:`amplpy.modules <amplpyModules>`, do the following:
 
 .. code-block:: python
 
-    from amplpy import AMPL, tools
-    tools.modules.load()
+    from amplpy import AMPL, modules
+    modules.load()
     ampl = AMPL()
 
 You can also specify an :class:`amplpy.Environment`
