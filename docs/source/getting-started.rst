@@ -30,7 +30,7 @@ amplpy.modules
 --------------
 .. _amplpyModules:
 
-AMPL and all solvers are now available as python packages for Windows, Linux, and macOS. For instance, to install AMPL with HiGHS and Gurobi,
+`AMPL and all solvers are now available as python packages <https://dev.ampl.com/ampl/python/modules.html>`_ for Windows, Linux, and macOS. For instance, to install AMPL with HiGHS and Gurobi,
 you just need the following:
 
 .. code-block:: bash
@@ -44,7 +44,9 @@ you just need the following:
    >>> modules.load() # load all modules
    >>> ampl = AMPL()
 
-For Apple M1, please make sure your have Rosetta 2 installed since not all modules are available for M1. You can install it with: ``softwareupdate --install-rosetta``.
+For Apple M1/M2, please make sure your have Rosetta 2 installed since not all modules are available for M1. You can install it with: ``softwareupdate --install-rosetta``.
+
+Full documentation for ``amplpy.modules``: https://dev.ampl.com/ampl/python/modules.html
 
 Initial test
 ------------
