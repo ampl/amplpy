@@ -80,7 +80,7 @@ For a simple hello world program, first import the needed classes from the `ampl
 
 .. code-block:: python
 
-  from amplpy import AMPL, DataFrame
+  from amplpy import AMPL
 
 Then copy the following statements to have a hello world application which gets the value
 of the option `version` as defined in the underlying AMPL executable and prints the result

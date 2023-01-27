@@ -9,9 +9,9 @@ Installation
 The AMPL API can function as an add-on to any existing AMPL installation.
 If you do not yet have an AMPL installation on the computer where you will
 be working with the API, see our
-`demo page <http://ampl.com/try-ampl/download-a-free-demo/>`_ or
-`trial page <http://ampl.com/try-ampl/request-a-full-trial/>`_ to download a
-working version that can be installed quickly.
+`AMPL Community Edition page <http://ampl.com/ce/>`_ to download a
+working version that can be installed quickly. Alternatively,
+you can use :ref:`amplpy.modules <amplpyModules>` if you only intend to access AMPL from the Python environment.
 
 In order to install the Python API you just need to run
 
@@ -26,25 +26,35 @@ using the latest version of ``pip`` before installing ``amplpy`` (upgrade using
 If a binary wheel for your platform is not available,
 a C++ compiler and python development libraries will be required.
 
+.. _amplpyModules:
+
 amplpy.modules
 --------------
-.. _amplpyModules:
 
 `AMPL and all solvers are now available as python packages <https://dev.ampl.com/ampl/python/modules.html>`_ for Windows, Linux, and macOS. For instance, to install AMPL with HiGHS and Gurobi,
 you just need the following:
 
 .. code-block:: bash
 
+   # Install Python API for AMPL
    $ python -m pip install amplpy --upgrade
-   $ python -m amplpy.modules install highs gurobi # install HiGHS and Gurobi
-   $ python -m amplpy.modules run amplkey activate --uuid <license-uuid> # activate your license
-   $ python -m amplpy.modules run ampl -vvq # confirm that the license is active
+
+   # Install HiGHS and Gurobi (AMPL is installed automatically with any solver)
+   $ python -m amplpy.modules install highs gurobi
+
+   # Activate your license (e.g., free https://ampl.com/ce license)
+   $ python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+
+   # Confirm that the license is active
+   $ python -m amplpy.modules run ampl -vvq
+
+   # Import in Python
    $ python
    >>> from amplpy import AMPL, modules
    >>> modules.load() # load all modules
-   >>> ampl = AMPL()
+   >>> ampl = AMPL() # instantiate AMPL object
 
-For Apple M1/M2, please make sure your have Rosetta 2 installed since not all modules are available for M1. You can install it with: ``softwareupdate --install-rosetta``.
+For Apple M1/M2, please make sure your have Rosetta 2 installed since not all modules are available for M1/M2. You can install it with: ``softwareupdate --install-rosetta``.
 
 Full documentation for ``amplpy.modules``: https://dev.ampl.com/ampl/python/modules.html
 
@@ -87,30 +97,38 @@ Or, if you are using :ref:`amplpy.modules <amplpyModules>`, do the following:
     modules.load()
     ampl = AMPL()
 
-You can also specify an :class:`amplpy.Environment`
-
-.. code-block:: python
-
-   from amplpy import AMPL, Environment
-   ampl = AMPL(Environment(r"full path to the AMPL installation directory"))
-
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if the path includes backslashes.
 
 Development
 -----------
 
-Import the ``amplpy`` module with
+If you have an existing AMPL installation in the system search path:
 
 .. code-block:: python
 
-   import amplpy
+   from amplpy import AMPL
+   ampl = AMPL()
+   ampl.eval("option version;")
 
-Together with your existing AMPL implementation, this will provide the full
-object library and access to all AMPL functions. Please make sure that the
-folder containing the AMPL executable is in the system search path.
+If you have an existing AMPL installation, but not in the system search path:
+
+.. code-block:: python
+
+    from amplpy import AMPL, add_to_path
+    add_to_path(r"full path to the AMPL installation directory")
+    ampl.eval("option version;")
+
+If you are using :ref:`amplpy.modules <amplpyModules>`:
+
+.. code-block:: python
+
+    from amplpy import AMPL, modules
+    modules.load()
+    ampl = AMPL()
+    ampl.eval("option version;")
 
 Deployment
 ----------
 
 To deploy AMPL API applications we recommend the use of :ref:`amplpy.modules <amplpyModules>`.
-Alternatively, make sure that AMPL is installed and that its directly is in the environment variable PATH.
+Alternatively, make sure that AMPL is installed and that its directory is in the environment variable PATH.

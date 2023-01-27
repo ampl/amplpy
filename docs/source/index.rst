@@ -13,7 +13,7 @@ Contents
 
    intro
    getting-started
-   class-structure
    quick-start
+   class-structure
    reference
    examples
