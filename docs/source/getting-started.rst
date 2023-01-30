@@ -56,7 +56,7 @@ you just need the following:
 
 For Apple M1/M2, please make sure your have Rosetta 2 installed since not all modules are available for M1/M2. You can install it with: ``softwareupdate --install-rosetta``.
 
-Full documentation for ``amplpy.modules``: https://dev.ampl.com/ampl/python/modules.html
+Complete documentation for ``amplpy.modules``: `AMPL Modules for Python <https://dev.ampl.com/ampl/python/modules.html>`_
 
 Initial test
 ------------
@@ -132,3 +132,38 @@ Deployment
 
 To deploy AMPL API applications we recommend the use of :ref:`amplpy.modules <amplpyModules>`.
 Alternatively, make sure that AMPL is installed and that its directory is in the environment variable PATH.
+
+For a list of common deployment options available for Python see `AMPL integration with Python <https://dev.ampl.com/ampl/python/index.html>`_.
+
+Docker deployment
+^^^^^^^^^^^^^^^^^
+
+`Docker containers <https://www.docker.com/>`_ are very popular for cloud deployments.
+Since AMPL and all Solvers are now available as  :ref:`Python Packages <amplpyModules>`,
+it is really simple to deploy with Docker:
+
+.. code-block:: Dockerfile
+
+    # Use any image as base image
+    FROM python:3.9-slim-bullseye
+    RUN python -m pip install amplpy # Install amplpy
+    RUN python -m amplpy.modules install highs gurobi  # Install modules
+
+
+You can build and run the container as follows:
+
+.. code-block:: bash
+
+    $ docker build . --tag ampl-container
+    $ docker run --rm -it ampl-container bash
+    root@c240a014dd67:/# python
+    Python 3.9.16 (main, Jan 23 2023, 23:42:27)
+    [GCC 10.2.1 20210110] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> from amplpy import AMPL, modules
+    >>> modules.load()
+    >>> ampl = AMPL()
+    >>>
+    ```
+
+Other cloud deployment options such as cloud functions (e.g. `AWS Lambda <https://aws.amazon.com/lambda/>`_ and `Azure Functions <https://azure.microsoft.com/en-us/products/functions/>`_) are just as easy.

@@ -102,6 +102,8 @@ such generic statements cannot be predicted.
 Refreshing is transparent to the user, but must be taken into account when implementing functions
 which access data or modify entities frequently.
 
+.. _secAlternativeMethodToAccessEntities:
+
 Alternative method to access entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

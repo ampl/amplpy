@@ -1,82 +1,210 @@
 .. _secPythonQuickStart:
 
-Python quick start
-==================
+Quick start
+===========
 
 This section will show a simple example to illustrate various functionalities of the AMPL Python interface.
 The full example prints the version of the AMPL interpreter used, loads a model from file and the corresponding
-data file, solves it, gets some of the AMPL entities in Python and uses them to get the results and to assign data
-programmatically. This section assumes that you are already familiar with the Python language.
+data from ``pandas.DataFrame`` objects, solves it, gets some of the AMPL entities in Python and uses them to get the results and to assign data
+programmatically.
+
+This section assumes that you are already familiar with the Python language and
+the `Pandas library <https://pandas.pydata.org/>`_. Note that data can be loaded from various sources such as table handlers, data files, and other Python native data structures such as ``list`` and ``dict``. 
 Full class reference is given in :ref:`secReferencePython`.
 
+.. grid:: 1 1 2 2
+    :gutter: 0
+    :margin: 0
+    :padding: 0
+
+    .. grid-item-card::
+        :margin: 0
+        :padding: 0
+
+        Quick Start using Pandas dataframes
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        Data can be loaded in various forms, one of which is ``pandas.DataFrame`` objects.
+
+        .. image:: https://colab.research.google.com/assets/colab-badge.svg
+            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
+            :alt: Open In Colab
+
+        .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
+            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
+            :alt: Kaggle
+
+        .. image:: https://assets.paperspace.io/img/gradient-badge.svg
+            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
+            :alt: Gradient
+
+        .. image:: https://studiolab.sagemaker.aws/studiolab.svg
+            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
+            :alt: Open In SageMaker Studio Lab
+
+    .. grid-item-card::
+        :margin: 0
+        :padding: 0
+
+        Quick Start using lists and dictionaries
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        Data can be loaded in various forms, including Python lists and dictionaries.
+
+        .. image:: https://colab.research.google.com/assets/colab-badge.svg
+            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :alt: Open In Colab
+
+        .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
+            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :alt: Kaggle
+
+        .. image:: https://assets.paperspace.io/img/gradient-badge.svg
+            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :alt: Gradient
+
+        .. image:: https://studiolab.sagemaker.aws/studiolab.svg
+            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :alt: Open In SageMaker Studio Lab
+
+There are many more notebooks with examples available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_.
 
 Complete listing
 ----------------
 
-This is the complete listing of the example. Please note that, for clarity of presentation,
+This is the complete listing of the example. You can download it from: :download:`dietmodel.py <../../examples/dietmodel.py>`. A simplified version using a data file instead of Pandas can be download from: :download:`firstexample.py <../../examples/firstexample.py>`. Please note that, for clarity of presentation,
 all the code in the examples below does not include exception handling.
 
 .. code-block:: python
 
-  from amplpy import AMPL
-  # Create an AMPL instance
-  ampl = AMPL()
+    from amplpy import AMPL
+    import pandas as pd # for pandas.DataFrame objects (https://pandas.pydata.org/)
+    import numpy as np # for numpy.matrix objects (https://numpy.org/)
 
-  """
-  # If the AMPL installation directory is not in the system search path:
-  from amplpy import add_to_path
-  add_to_path(r"full path to the AMPL installation directory")
+    # Create an AMPL instance
+    ampl = AMPL()
 
-  # Alternatively, load modules if you are using amplpy.modules:
-  from amplpy import modules
-  modules.load()
-  """
+    """
+        # If the AMPL installation directory is not in the system search path:
+        from amplpy import add_to_path
+        add_to_path(r"full path to the AMPL installation directory")
 
-  # Interpret the two files
-  ampl.read('models/diet.mod')
-  ampl.read_data('models/diet.dat')
+        # Alternatively, load modules if you are using amplpy.modules:
+        from amplpy import modules
+        modules.load()
+    """
 
-  # Solve
-  ampl.solve()
+    # Load the model (alternatively, you can use ampl.eval("""...""") to define the model)
+    ampl.read("diet.mod")
 
-  # Get objective entity by AMPL name
-  totalcost = ampl.get_objective('Total_Cost')
-  # Print it
-  print("Objective is:", totalcost.value())
+    # Load the data from pandas.DataFrame objects:
+    food_df, nutr_df, amt_df = prepare_data()
+    # 1. Send the data from "amt_df" to AMPL and initialize the indexing set "FOOD"
+    ampl.set_data(food_df, "FOOD")
+    # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
+    ampl.set_data(nutr_df, "NUTR")
+    # 3. Set the values for the parameter "amt" using "amt_df"
+    ampl.get_parameter("amt").set_values(amt_df.unstack())
 
-  # Reassign data - specific instances
-  cost = ampl.get_parameter('cost')
-  cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
-  print("Increased costs of beef and ham.")
+    # Specify the solver to use (e.g., HiGHS)
+    ampl.option["solver"] = "highs"
+    # Solve
+    ampl.solve()
+    assert ampl.get_value("solve_result") == "solved"
 
-  # Resolve and display objective
-  ampl.solve()
-  print("New objective value:", totalcost.value())
+    # Get objective entity by AMPL name
+    totalcost = ampl.get_objective('Total_Cost')
+    # Print it
+    print("Objective is:", totalcost.value())
 
-  # Reassign data - all instances
-  cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+    # Reassign data - specific instances
+    cost = ampl.get_parameter('cost')
+    cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
+    print("Increased costs of beef and ham.")
 
-  print("Updated all costs.")
+    # Resolve and display objective
+    ampl.solve()
+    assert ampl.get_value("solve_result") == "solved"
+    print("New objective value:", totalcost.value())
 
-  # Resolve and display objective
-  ampl.solve()
-  print("New objective value:", totalcost.value())
+    # Reassign data - all instances
+    cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
 
-  # Get the values of the variable Buy in a dataframe object
-  buy = ampl.get_variable('Buy')
-  df = buy.get_values()
-  # Print them
-  print(df)
+    print("Updated all costs.")
 
-  # Get the values of an expression into a DataFrame object
-  df2 = ampl.get_data('{j in FOOD} 100*Buy[j]/Buy[j].ub')
-  # Print them
-  print(df2)
+    # Resolve and display objective
+    ampl.solve()
+    assert ampl.get_value("solve_result") == "solved"
+    print("New objective value:", totalcost.value())
+
+    # Get the values of the variable Buy in a pandas.DataFrame object
+    df = ampl.get_variable('Buy').get_values().to_pandas()
+    # Print them
+    print(df)
+
+    # Get the values of an expression into a pandas.DataFrame object
+    df2 = ampl.get_data('{j in FOOD} 100*Buy[j]/Buy[j].ub').to_pandas()
+    # Print them
+    print(df2)
+
+Where ``prepare_data`` is the following function that returns three ``pandas.DataFrame`` objects:
+
+.. code-block:: python
+
+    def prepare_data():
+        food_df = pd.DataFrame(
+            [
+                ("BEEF", 3.59, 2, 10),
+                ("CHK", 2.59, 2, 10),
+                ("FISH", 2.29, 2, 10),
+                ("HAM", 2.89, 2, 10),
+                ("MCH", 1.89, 2, 10),
+                ("MTL", 1.99, 2, 10),
+                ("SPG", 1.99, 2, 10),
+                ("TUR", 2.49, 2, 10),
+            ],
+            columns=["FOOD", "cost", "f_min", "f_max"],
+        ).set_index("FOOD")
+
+        # Create a pandas.DataFrame with data for n_min, n_max
+        nutr_df = pd.DataFrame(
+            [
+                ("A", 700, 20000),
+                ("C", 700, 20000),
+                ("B1", 700, 20000),
+                ("B2", 700, 20000),
+                ("NA", 0, 50000),
+                ("CAL", 16000, 24000),
+            ],
+            columns=["NUTR", "n_min", "n_max"],
+        ).set_index("NUTR")
+
+        amt_df = pd.DataFrame(
+            np.matrix(
+                [
+                    [60, 8, 8, 40, 15, 70, 25, 60],
+                    [20, 0, 10, 40, 35, 30, 50, 20],
+                    [10, 20, 15, 35, 15, 15, 25, 15],
+                    [15, 20, 10, 10, 15, 15, 15, 10],
+                    [928, 2180, 945, 278, 1182, 896, 1329, 1397],
+                    [295, 770, 440, 430, 315, 400, 379, 450],
+                ]
+            ),
+            columns=food_df.index.tolist(),
+            index=nutr_df.index.tolist(),
+        ).transpose()
+        return food_df, nutr_df, amt_df
+
+You can also load the data using table handlers such as
+`amplcsv <https://amplplugins.readthedocs.io/en/latest/rst/amplcsv.html>`_ (CSV files),
+`amplxl <https://amplplugins.readthedocs.io/en/latest/rst/amplxl.html>`_ (XLSX files), and
+`eodbc <https://amplplugins.readthedocs.io/en/latest/rst/eodbc.html>`_ (Databases such as MySQL and PostgreSQL via ODBC).
+By using table handlers you may in some cases achieve substantial performance improvements since the data will go directly into AMPL without having to pass through Python. 
 
 Needed modules and AMPL environment creation
 --------------------------------------------
 
-For a simple hello world program, first import the needed classes from the `amplpy` package.
+For a simple hello world program, first import the needed classes from the ``amplpy`` package.
 
 .. code-block:: python
 
@@ -92,7 +220,7 @@ on the console.
    print(ampl.get_option('version'))
 
 
-The first line creates a new AMPL object with all default settings, incapsulated in a smart pointer to ensure resource deletion.
+The first line creates a new AMPL object with all default settings.
 The second, which is the preferred way to access AMPL options, gets the value of the option
 `version` from AMPL as a string and prints the result on the active console.
 
@@ -107,10 +235,10 @@ If you are not using :ref:`amplpy.modules <amplpyModules>`, and your AMPL instal
 
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if the path includes backslashes.
 
-Load a model from file
-----------------------
+Load model and data from files
+------------------------------
 
-The following lines use the method :func:`amplpy.AMPL.read` to load a model and data stored in external (AMPL) files.
+The following lines use the method :func:`amplpy.AMPL.read` and :func:`amplpy.AMPL.read_data` to load a model and data stored in external (AMPL) files.
 If the files are not found, an IOError is thrown.
 
 .. code-block:: python
@@ -121,15 +249,51 @@ If the files are not found, an IOError is thrown.
 Once these commands are executed, the AMPL interpreter will have interpreted the content of the two files.
 No further communication is made between the AMPL interpreter and the Python object, as every entity is created lazily (as needed).
 
-Solve a problem
----------------
+Load model using eval
+---------------------
 
-To solve the currently loaded problem instance, it is sufficient to issue the command:
+The following lines use the method :func:`amplpy.AMPL.eval` to load a model directly from a string.
 
 .. code-block:: python
 
+    ampl.read(r"""
+        set NUTR;
+        set FOOD;
+
+        param cost {FOOD} > 0;
+        param f_min {FOOD} >= 0;
+        param f_max {j in FOOD} >= f_min[j];
+
+        param n_min {NUTR} >= 0;
+        param n_max {i in NUTR} >= n_min[i];
+
+        param amt {NUTR,FOOD} >= 0;
+
+        var Buy {j in FOOD} >= f_min[j], <= f_max[j];
+
+        minimize Total_Cost:  sum {j in FOOD} cost[j] * Buy[j];
+
+        subject to Diet {i in NUTR}:
+        n_min[i] <= sum {j in FOOD} amt[i,j] * Buy[j] <= n_max[i];
+    """)
+
+Using :func:`amplpy.AMPL.eval` or :func:`amplpy.AMPL.read` to load a model are a matter of preference.
+
+Solve a problem
+---------------
+
+To solve the currently loaded problem instance, it is sufficient to issue the following commands:
+
+.. code-block:: python
+
+   # Specify the solver to use (e.g., HiGHS)
+   ampl.option["solver"] = "highs"
+   
+   # Solve the problem
    ampl.solve()
 
+   # Stop if the model was not solved
+   assert ampl.get_value("solve_result") == "solved"
 
 Get an AMPL entity in the programming environment (get objective value)
 -----------------------------------------------------------------------
@@ -139,11 +303,11 @@ of interest for the programmer. The generic procedure is:
 
 1. Identify the entities that need interaction (either data read or modification)
 2. For each of these entities, get the entity through the AMPL API using one of the
-   following functions: :func:`amplpy.AMPL.get_variable()` / :func:`~amplpy.AMPL.getVariable()`,
-   :func:`amplpy.AMPL.get_constraint()` / :func:`~amplpy.AMPL.getConstraint()`,
-   :func:`amplpy.AMPL.get_objective()` / :func:`~amplpy.AMPL.getObjective()`,
-   :func:`amplpy.AMPL.get_parameter()` / :func:`~amplpy.AMPL.getParameter()`
-   and :func:`amplpy.AMPL.get_set()` / :func:`~amplpy.AMPL.getSet()`.
+   following functions: :func:`amplpy.AMPL.get_variable()`,
+   :func:`amplpy.AMPL.get_constraint()`,
+   :func:`amplpy.AMPL.get_objective()`,
+   :func:`amplpy.AMPL.get_parameter()`
+   and :func:`amplpy.AMPL.get_set()`.
 
 
 .. code-block:: python
@@ -175,7 +339,7 @@ The input data of an optimization model is stored in its parameters; these can b
 Two ways are provided to change the value of vectorial parameter: change specific values or change all values at
 once. The example shows an example of both ways, reassigning the values of the parameter costs firstly specifically,
 then altogether. Each time, it then solves the model and get the objective function. The function used to change the
-values is overloaded, and is in both cases :func:`amplpy.Parameter.set_values()` / :func:`~amplpy.Parameter.setValues()`.
+values is overloaded, and is in both cases :func:`amplpy.Parameter.set_values()`.
 
 .. code-block:: python
 
@@ -207,15 +371,14 @@ The statements above produce the following output::
 Get numeric values from variables
 ---------------------------------
 
-To access all the numeric values contained in a Variable or any other entity, use a :class:`amplpy.DataFrame` object. Doing so, the data is detached from
-the entity, and there is a considerable performance gain. To do so, we first get the Variable object from AMPL, then we get its data with the function :func:`amplpy.Entity.get_values()` / :func:`~amplpy.Entity.getValues()`.
+To access all the numeric values contained in a Variable or any other entity, use a :class:`amplpy.DataFrame` object, which can be converted into other objects such as ``pandas.DataFrame`` using :func:`amplpy.DataFrame.to_pandas()`. Doing so, the data is detached from
+the entity, and there is a considerable performance gain. To do so, we first get the Variable object from AMPL, then we get its data with the function :func:`amplpy.Entity.get_values()`.
 
 .. code-block:: python
 
-   # Get the values of the variable Buy in a dataframe object
+   # Get the values of the variable Buy in a pandas.DataFrame object
    buy = ampl.get_variable('Buy')
-   df = buy.get_values()
-   # Print them
+   df = buy.get_values().to_pandas()
    print(df)
 
 
@@ -225,11 +388,44 @@ Get arbitrary values via ampl expressions
 Often we are interested in very specific values coming out of the optimization session. To make use of the power of AMPL expressions and avoiding
 cluttering up the environment by creating entities, fetching data through arbitrary AMPL expressions is possible. For this model, we are interested
 in knowing how close each decision variable is to its upper bound, in percentage.
-We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.get_data()` / :func:`~amplpy.AMPL.getData()` with the code :
+We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.get_data()` with the code :
 
 .. code-block:: python
 
-  # Get the values of an expression into a DataFrame object
-  df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub")
-  # Print them
+  # Get the values of an expression into a pandas.DataFrame object
+  df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub").to_pandas()
   print(df2)
+
+
+Load the data using lists and dictionaries
+------------------------------------------
+
+For the same model, all data could also have been loaded using native Python lists and dictionaries:
+
+.. code-block:: python
+
+    foods = ["BEEF", "CHK", "FISH", "HAM", "MCH", "MTL", "SPG", "TUR"]
+    nutrients = ["A", "C", "B1", "B2", "NA", "CAL"]
+    ampl.set["FOOD"] = foods
+    ampl.param["cost"] = [3.59, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
+    ampl.param["f_min"] = [2, 2, 2, 2, 2, 2, 2, 2]
+    ampl.param["f_max"] = [10, 10, 10, 10, 10, 10, 10, 10]
+    ampl.set["NUTR"] = nutrients
+    ampl.param["n_min"] = [700, 700, 700, 700, 0, 16000]
+    ampl.param["n_max"] = [20000, 20000, 20000, 20000, 50000, 24000]
+    amounts = [
+        [60, 8, 8, 40, 15, 70, 25, 60],
+        [20, 0, 10, 40, 35, 30, 50, 20],
+        [10, 20, 15, 35, 15, 15, 25, 15],
+        [15, 20, 10, 10, 15, 15, 15, 10],
+        [928, 2180, 945, 278, 1182, 896, 1329, 1397],
+        [295, 770, 440, 430, 315, 400, 379, 450],
+    ]
+    ampl.param["amt"] = {
+        (nutrient, food): amounts[i][j]
+        for i, nutrient in enumerate(nutrients)
+        for j, food in enumerate(foods)
+    }
+
+In this example we used the :ref:`secAlternativeMethodToAccessEntities` as it is more compact.
+To use ``pandas.DataFrame`` objects or native ``list`` and ``dict`` objects are a matter of preference.

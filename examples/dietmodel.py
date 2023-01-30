@@ -2,7 +2,53 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-import pandas as pd
+import pandas as pd  # for pandas.DataFrame objects (https://pandas.pydata.org/)
+import numpy as np  # for numpy.matrix objects (https://numpy.org/)
+
+
+def prepare_data():
+    food_df = pd.DataFrame(
+        [
+            ("BEEF", 3.59, 2, 10),
+            ("CHK", 2.59, 2, 10),
+            ("FISH", 2.29, 2, 10),
+            ("HAM", 2.89, 2, 10),
+            ("MCH", 1.89, 2, 10),
+            ("MTL", 1.99, 2, 10),
+            ("SPG", 1.99, 2, 10),
+            ("TUR", 2.49, 2, 10),
+        ],
+        columns=["FOOD", "cost", "f_min", "f_max"],
+    ).set_index("FOOD")
+
+    # Create a pandas.DataFrame with data for n_min, n_max
+    nutr_df = pd.DataFrame(
+        [
+            ("A", 700, 20000),
+            ("C", 700, 20000),
+            ("B1", 700, 20000),
+            ("B2", 700, 20000),
+            ("NA", 0, 50000),
+            ("CAL", 16000, 24000),
+        ],
+        columns=["NUTR", "n_min", "n_max"],
+    ).set_index("NUTR")
+
+    amt_df = pd.DataFrame(
+        np.matrix(
+            [
+                [60, 8, 8, 40, 15, 70, 25, 60],
+                [20, 0, 10, 40, 35, 30, 50, 20],
+                [10, 20, 15, 35, 15, 15, 25, 15],
+                [15, 20, 10, 10, 15, 15, 15, 10],
+                [928, 2180, 945, 278, 1182, 896, 1329, 1397],
+                [295, 770, 440, 430, 315, 400, 379, 450],
+            ]
+        ),
+        columns=food_df.index.tolist(),
+        index=nutr_df.index.tolist(),
+    ).transpose()
+    return food_df, nutr_df, amt_df
 
 
 def main(argc, argv):
@@ -24,65 +70,81 @@ def main(argc, argv):
     # Create an AMPL instance
     ampl = AMPL()
 
+    solver = "highs"
     if argc > 1:
-        ampl.set_option("solver", argv[1])
+        solver = argv[1]
+    ampl.set_option("solver", solver)
 
-    # Read the model file
-    model_directory = argv[2] if argc == 3 else os.path.join("..", "models")
-    ampl.read(os.path.join(model_directory, "diet/diet.mod"))
+    ampl.eval(
+        r"""
+        set NUTR;
+        set FOOD;
 
-    # Create a pandas dataframe with data for cost, f_min, f_max
-    foods = ["BEEF", "CHK", "FISH", "HAM", "MCH", "MTL", "SPG", "TUR"]
-    costs = [3.59, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
-    fmin = [2, 2, 2, 2, 2, 2, 2, 2]
-    fmax = [10, 10, 10, 10, 10, 10, 10, 10]
+        param cost {FOOD} > 0;
+        param f_min {FOOD} >= 0;
+        param f_max {j in FOOD} >= f_min[j];
 
-    df = pd.DataFrame(
-        list(zip(foods, costs, fmin, fmax)),
-        columns=["FOOD", "cost", "f_min", "f_max"],
-    ).set_index("FOOD")
+        param n_min {NUTR} >= 0;
+        param n_max {i in NUTR} >= n_min[i];
 
-    # Send the data to AMPL and initialize the indexing set "FOOD"
-    ampl.set_data(df, "FOOD")
+        param amt {NUTR,FOOD} >= 0;
 
-    # Create a pandas dataframe with data for n_min, n_max
-    nutrients = ["A", "C", "B1", "B2", "NA", "CAL"]
-    nmin = [700, 700, 700, 700, 0, 16000]
-    nmax = [20000, 20000, 20000, 20000, 50000, 24000]
+        var Buy {j in FOOD} >= f_min[j], <= f_max[j];
 
-    df = pd.DataFrame(
-        list(zip(nutrients, nmin, nmax)),
-        columns=["NUTR", "n_min", "n_max"],
-    ).set_index("NUTR")
+        minimize Total_Cost:
+            sum {j in FOOD} cost[j] * Buy[j];
 
-    # Send the data to AMPL and initialize the indexing set "NUTR"
-    ampl.set_data(df, "NUTR")
+        subject to Diet {i in NUTR}:
+            n_min[i] <= sum {j in FOOD} amt[i,j] * Buy[j] <= n_max[i];
+    """
+    )
 
-    amounts = [
-        [60, 8, 8, 40, 15, 70, 25, 60],
-        [20, 0, 10, 40, 35, 30, 50, 20],
-        [10, 20, 15, 35, 15, 15, 25, 15],
-        [15, 20, 10, 10, 15, 15, 15, 10],
-        [928, 2180, 945, 278, 1182, 896, 1329, 1397],
-        [295, 770, 440, 430, 315, 400, 379, 450],
-    ]
+    # Load the data from pandas.DataFrame objects:
+    food_df, nutr_df, amt_df = prepare_data()
+    # 1. Send the data from "amt_df" to AMPL and initialize the indexing set "FOOD"
+    ampl.set_data(food_df, "FOOD")
+    # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
+    ampl.set_data(nutr_df, "NUTR")
+    # 3. Set the values for the parameter "amt" using "amt_df"
+    ampl.get_parameter("amt").set_values(amt_df.unstack())
 
-    # Set the values for the parameter "amt"
-    ampl.param["amt"] = {
-        (nutrient, food): amounts[i][j]
-        for i, nutrient in enumerate(nutrients)
-        for j, food in enumerate(foods)
-    }
-
-    # Solve the problem
+    # Solve
     ampl.solve()
 
-    # Check if the problem was solved successfully
-    solve_result = ampl.get_value("solve_result")
-    if solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(solve_result))
+    # Get objective entity by AMPL name
+    totalcost = ampl.get_objective("Total_Cost")
+    # Print it
+    print("Objective is:", totalcost.value())
 
-    print("Objective: {}".format(ampl.obj["Total_Cost"].value()))
+    # Reassign data - specific instances
+    cost = ampl.get_parameter("cost")
+    cost.set_values({"BEEF": 5.01, "HAM": 4.55})
+    print("Increased costs of beef and ham.")
+
+    # Resolve and display objective
+    ampl.solve()
+    assert ampl.get_value("solve_result") == "solved"
+    print("New objective value:", totalcost.value())
+
+    # Reassign data - all instances
+    cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+
+    print("Updated all costs.")
+
+    # Resolve and display objective
+    ampl.solve()
+    assert ampl.get_value("solve_result") == "solved"
+    print("New objective value:", totalcost.value())
+
+    # Get the values of the variable Buy in a pandas.DataFrame object
+    df = ampl.get_variable("Buy").get_values().to_pandas()
+    # Print them
+    print(df)
+
+    # Get the values of an expression into a pandas.DataFrame object
+    df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub").to_pandas()
+    # Print them
+    print(df2)
 
 
 if __name__ == "__main__":
