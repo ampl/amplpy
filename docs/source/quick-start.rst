@@ -52,19 +52,19 @@ Full class reference is given in :ref:`secReferencePython`.
         Data can be loaded in various forms, including Python lists and dictionaries.
 
         .. image:: https://colab.research.google.com/assets/colab-badge.svg
-            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Open In Colab
 
         .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
-            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Kaggle
 
         .. image:: https://assets.paperspace.io/img/gradient-badge.svg
-            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Gradient
 
         .. image:: https://studiolab.sagemaker.aws/studiolab.svg
-            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasnative.ipynb
+            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Open In SageMaker Studio Lab
 
 There are many more notebooks with examples available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_.
