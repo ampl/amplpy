@@ -5,7 +5,7 @@ Class structure
 
 AMPL API library consists of a collection of classes to interact with the underlying AMPL interpreter and to access
 its inputs and outputs. It uses generic collections to represent the various entities which comprise a mathematical
-model. The structure of these entities is explained in this section.
+model. The structure of these entities is explained in this section.  For a quick introduction to AMPL Entities see `Quick Introduction to AMPL <https://dev.ampl.com/ampl/introduction.html>`_.
 
 The main class used to interact with AMPL, instantiate and interrogate the models is :class:`amplpy.AMPL`.
 One object of this class represents an execution of an AMPL translator, and is the first class that has to be instantiated when
