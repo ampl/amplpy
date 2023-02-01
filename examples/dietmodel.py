@@ -127,7 +127,18 @@ def main(argc, argv):
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
-    cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+    cost.set_values(
+        {
+            "BEEF": 3,
+            "CHK": 5,
+            "FISH": 5,
+            "HAM": 6,
+            "MCH": 1,
+            "MTL": 2,
+            "SPG": 5.01,
+            "TUR": 4.55,
+        }
+    )
 
     print("Updated all costs.")
 

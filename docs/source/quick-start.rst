@@ -110,6 +110,7 @@ all the code in the examples below does not include exception handling.
     ampl.option["solver"] = "highs"
     # Solve
     ampl.solve()
+    # Stop if the model was not solved
     assert ampl.get_value("solve_result") == "solved"
 
     # Get objective entity by AMPL name
@@ -124,16 +125,29 @@ all the code in the examples below does not include exception handling.
 
     # Resolve and display objective
     ampl.solve()
+    # Stop if the model was not solved
     assert ampl.get_value("solve_result") == "solved"
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
-    cost.set_values([3, 5, 5, 6, 1, 2, 5.01, 4.55])
+    cost.set_values(
+        {
+            "BEEF": 3,
+            "CHK": 5,
+            "FISH": 5,
+            "HAM": 6,
+            "MCH": 1,
+            "MTL": 2,
+            "SPG": 5.01,
+            "TUR": 4.55,
+        }
+    )
 
     print("Updated all costs.")
 
     # Resolve and display objective
     ampl.solve()
+    # Stop if the model was not solved
     assert ampl.get_value("solve_result") == "solved"
     print("New objective value:", totalcost.value())
 
@@ -195,11 +209,17 @@ Where ``prepare_data`` is the following function that returns three ``pandas.Dat
         ).transpose()
         return food_df, nutr_df, amt_df
 
-You can also load the data using table handlers such as
-`amplcsv <https://amplplugins.readthedocs.io/en/latest/rst/amplcsv.html>`_ (CSV files),
-`amplxl <https://amplplugins.readthedocs.io/en/latest/rst/amplxl.html>`_ (XLSX files), and
-`eodbc <https://amplplugins.readthedocs.io/en/latest/rst/eodbc.html>`_ (Databases such as MySQL and PostgreSQL via ODBC).
-By using table handlers you may in some cases achieve substantial performance improvements since the data will go directly into AMPL without having to pass through Python. 
+.. note::
+
+    ``amplpy`` should be able to load ``pandas.DataFrame`` objects with millions of rows
+    in a couple of seconds, but if you are dealing with such large amounts of data (e.g., over 10 millions of rows), you may
+    consider using a table handler to transfer the data directly into AMPL from its source without
+    having to pass it though Python, as Python may sometimes be the performance bottleneck. We have table handlers such as
+    `amplcsv <https://amplplugins.readthedocs.io/en/latest/rst/amplcsv.html>`_ (CSV files),
+    `amplxl <https://amplplugins.readthedocs.io/en/latest/rst/amplxl.html>`_ (XLSX files), and
+    `eodbc <https://amplplugins.readthedocs.io/en/latest/rst/eodbc.html>`_ (Databases such as MySQL and PostgreSQL via ODBC).
+    You can still use the API to update the data and retrieve solutions, but you may gain substantial performance by
+    passing the initial values directly into AMPL.
 
 Needed modules and AMPL environment creation
 --------------------------------------------
@@ -238,8 +258,9 @@ Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or
 Load model and data from files
 ------------------------------
 
-The following lines use the method :func:`amplpy.AMPL.read` and :func:`amplpy.AMPL.read_data` to load a model and data stored in external (AMPL) files.
-If the files are not found, an IOError is thrown.
+If you have AMPL model and data files, you can use
+the method :func:`amplpy.AMPL.read` to load model files and :func:`amplpy.AMPL.read_data` to load data files.
+If the files are not found, an IOError is raised.
 
 .. code-block:: python
 
@@ -252,7 +273,8 @@ No further communication is made between the AMPL interpreter and the Python obj
 Load model using eval
 ---------------------
 
-The following lines use the method :func:`amplpy.AMPL.eval` to load a model directly from a string.
+An alternative to :func:`amplpy.AMPL.read` for loading models, is the method
+:func:`amplpy.AMPL.eval` to load a model directly from a string as follows:
 
 .. code-block:: python
 
@@ -278,6 +300,79 @@ The following lines use the method :func:`amplpy.AMPL.eval` to load a model dire
     """)
 
 Using :func:`amplpy.AMPL.eval` or :func:`amplpy.AMPL.read` to load a model are a matter of preference.
+
+Load the data using Pandas objects
+----------------------------------
+
+Data can be loaded in various ways, one of them is ``pandas.DataFrame`` objects.
+In the snippet below, :func:`amplpy.AMPL.set_data` is used to load data from
+the ``pandas.DataFrame`` objects ``food_df`` and ``nutr_df``,
+and :func:`amplpy.Parameter.set_values` is used to load data in ``amt_df`` into the AMPL parameter ``amt``.
+
+.. code-block:: python
+
+    # the function prepare_data returns three pandas.DataFrame objects
+    food_df, nutr_df, amt_df = prepare_data()
+    # 1. Send the data from "amt_df" to AMPL and initialize the indexing set "FOOD"
+    ampl.set_data(food_df, "FOOD")
+    # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
+    ampl.set_data(nutr_df, "NUTR")
+    # 3. Set the values for the parameter "amt" using "amt_df"
+    ampl.get_parameter("amt").set_values(amt_df.unstack())
+
+
+Load the data using lists and dictionaries
+------------------------------------------
+
+AMPL parameters are very similar to Python dictionaries and AMPL sets are very similar to Python lists and sets.
+For the same model, all data could also have been loaded using native Python lists and dictionaries.
+
+.. code-block:: python
+
+    # foods[food] = (cost, f_min, f_max)
+    foods = {
+        "BEEF": (3.59, 2, 10),
+        "CHK": (2.59, 2, 10),
+        "FISH": (2.29, 2, 10),
+        "HAM": (2.89, 2, 10),
+        "MCH": (1.89, 2, 10),
+        "MTL": (1.99, 2, 10),
+        "SPG": (1.99, 2, 10),
+        "TUR": (2.49, 2, 10),
+    }
+    # nutrients[nutr] = (n_min, n_max)
+    nutrients = {
+        "A": (700, 20000),
+        "C": (700, 20000),
+        "B1": (700, 20000),
+        "B2": (700, 20000),
+        "NA": (0, 50000),
+        "CAL": (16000, 24000),
+    }
+    ampl.set["FOOD"] = list(foods.keys())
+    ampl.param["cost"] = {food: cost for food, (cost, _, _) in foods.items()}
+    ampl.param["f_min"] = {food: f_min for food, (_, f_min, _) in foods.items()}
+    ampl.param["f_max"] = {food: f_max for food, (_, _, f_max) in foods.items()}
+    ampl.set["NUTR"] = list(nutrients.keys())
+    ampl.param["n_min"] = {nutr: n_min for nutr, (n_min, _) in nutrients.items()}
+    ampl.param["n_max"] = {nutr: n_max for nutr, (_, n_max) in nutrients.items()}
+    amounts = [
+        [60, 8, 8, 40, 15, 70, 25, 60],
+        [20, 0, 10, 40, 35, 30, 50, 20],
+        [10, 20, 15, 35, 15, 15, 25, 15],
+        [15, 20, 10, 10, 15, 15, 15, 10],
+        [928, 2180, 945, 278, 1182, 896, 1329, 1397],
+        [295, 770, 440, 430, 315, 400, 379, 450],
+    ]
+    ampl.param["amt"] = {
+        (nutrient, food): amounts[i][j]
+        for i, nutrient in enumerate(nutrients)
+        for j, food in enumerate(foods)
+    }
+
+In this example we used the :ref:`secAlternativeMethodToAccessEntities` as it is more compact.
+To use ``pandas.DataFrame`` objects or native ``list`` and ``dict`` objects are a matter of preference.
+
 
 Solve a problem
 ---------------
@@ -395,37 +490,3 @@ We can obtain this data into a dataframe using the function :func:`amplpy.AMPL.g
   # Get the values of an expression into a pandas.DataFrame object
   df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub").to_pandas()
   print(df2)
-
-
-Load the data using lists and dictionaries
-------------------------------------------
-
-For the same model, all data could also have been loaded using native Python lists and dictionaries:
-
-.. code-block:: python
-
-    foods = ["BEEF", "CHK", "FISH", "HAM", "MCH", "MTL", "SPG", "TUR"]
-    nutrients = ["A", "C", "B1", "B2", "NA", "CAL"]
-    ampl.set["FOOD"] = foods
-    ampl.param["cost"] = [3.59, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
-    ampl.param["f_min"] = [2, 2, 2, 2, 2, 2, 2, 2]
-    ampl.param["f_max"] = [10, 10, 10, 10, 10, 10, 10, 10]
-    ampl.set["NUTR"] = nutrients
-    ampl.param["n_min"] = [700, 700, 700, 700, 0, 16000]
-    ampl.param["n_max"] = [20000, 20000, 20000, 20000, 50000, 24000]
-    amounts = [
-        [60, 8, 8, 40, 15, 70, 25, 60],
-        [20, 0, 10, 40, 35, 30, 50, 20],
-        [10, 20, 15, 35, 15, 15, 25, 15],
-        [15, 20, 10, 10, 15, 15, 15, 10],
-        [928, 2180, 945, 278, 1182, 896, 1329, 1397],
-        [295, 770, 440, 430, 315, 400, 379, 450],
-    ]
-    ampl.param["amt"] = {
-        (nutrient, food): amounts[i][j]
-        for i, nutrient in enumerate(nutrients)
-        for j, food in enumerate(foods)
-    }
-
-In this example we used the :ref:`secAlternativeMethodToAccessEntities` as it is more compact.
-To use ``pandas.DataFrame`` objects or native ``list`` and ``dict`` objects are a matter of preference.
