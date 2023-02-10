@@ -9,7 +9,8 @@ programming language. For a quick introduction to AMPL see `Quick Introduction t
 
 All model generation and solver interaction is handled directly by AMPL, which leads to
 great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and
-CPU usage) depends mostly on how much data is read back from AMPL, the size of the model as such is irrelevant.
+CPU usage) depends mostly on how much data is send and read back from AMPL, the size of the expanded model as such is irrelevant.
+With ``amplpy`` you can solve large scale optimization problems in Python with the performance of heavily optimized C code.
 
 This documentation refers to the Python API, but APIs for other languages such as C++, Java, MATLAB, C#, and R are also avaialble.
 
