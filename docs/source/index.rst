@@ -14,8 +14,10 @@ the input and output data matches naturally Python lists, sets, dictionaries, ``
 All model generation and solver interaction is handled directly by AMPL, which leads to
 great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and
 CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
+
 With ``amplpy`` you can model and solve large scale optimization problems in Python with the performance of heavily optimized C code
-without losing model readability.
+without losing model readability. The same model can be deployed on applications
+built on different languages by just switching the API used.
 
 .. grid:: 1 1 2 2
     :gutter: 0

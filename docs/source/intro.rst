@@ -4,15 +4,13 @@ Introduction
 What is AMPL API?
 -----------------
 
-AMPL API is an interface that allows developers to access the features of `AMPL <https://ampl.com>`_ from within a
-programming language. For a quick introduction to AMPL see `Quick Introduction to AMPL <https://dev.ampl.com/ampl/introduction.html>`_.
-
-All model generation and solver interaction is handled directly by AMPL, which leads to
+AMPL API is an interface that allows developers to access the features of the AMPL interpreter from within a
+programming language. All model generation and solver interaction is handled directly by AMPL, which leads to
 great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and
-CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
-With ``amplpy`` you can solve large scale optimization problems in Python with the performance of heavily optimized C code.
-
-This documentation refers to the Python API, but APIs for other languages such as C++, Java, MATLAB, C#, and R are also avaialble.
+CPU usage) depends mostly on how much data is read back from AMPL, the size of the model as such is irrelevant.
+Functions for directly assigning data to AMPL parameters and sets are provided, which can be used instead of the
+normal AMPL data reading procedures. AMPL API has been written with usability in mind, and it is easy to access
+its functionalities from C++, Java, C#, MATLAB, Python and R.
 
 Who can use AMPL API
 --------------------

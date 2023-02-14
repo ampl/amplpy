@@ -20,8 +20,7 @@ AMPL class
 For all calculations, AMPL API uses an underlying AMPL execution engine, which is wrapped by the class :class:`amplpy.AMPL`.
 Thus, one instance of this class is the first object to be created when writing a program which uses the AMPL API
 library. The object is quite resource-heavy, therefore it should be explicitly closed as soon as it is not needed anymore,
-with a call to :func:`amplpy.AMPL.close()`
-.
+with a call to :func:`amplpy.AMPL.close()`.
 
 All the model creation and structural alteration operations are to be expressed in AMPL language through the
 AMPL main object; moreover, the class provides access to the current state represented via the classes derived
