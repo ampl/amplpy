@@ -1,7 +1,7 @@
 .. _secExamplesPython:
 
-Examples
-========
+Python API Examples
+===================
 
 This section lists a few examples in Python.
 These are the same files that can be found in the *examples* directory of the
