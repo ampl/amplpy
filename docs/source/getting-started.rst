@@ -1,7 +1,7 @@
 .. lblGettingStarted:
 
-Getting started
-===============
+Initial Setup
+=============
 
 Installation
 ------------
