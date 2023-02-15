@@ -103,20 +103,8 @@ html_theme_options = {
         },
         {
             "name": "AMPL Resources",
-            "url": "https://developers.ampl.com",
+            "url": "https://dev.ampl.com",
             "icon": "fas fa-book fa-fw",
-            "target": "_self",
-        },
-        {
-            "name": "AMPL Portal",
-            "url": "https://portal.ampl.com",
-            "icon": "fas fa-sign-in-alt fa-fw",
-            "target": "_self",
-        },
-        {
-            "name": "AMPL.com",
-            "url": "https://ampl.com",
-            "icon": "fas fa-home fa-fw",
             "target": "_self",
         },
     ],
