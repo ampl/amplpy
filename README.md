@@ -1,20 +1,16 @@
-# AMPLPY
+# AMPLPY: Python API for AMPL
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
 [![Build Status](https://dev.azure.com/ampldev/amplpy/_apis/build/status/ampl.amplpy?branchName=master)](https://dev.azure.com/ampldev/amplpy/_build/latest?definitionId=9&branchName=test)
 
+`amplpy` is an interface that allows developers to access the features of [AMPL](https://ampl.com) from within Python. For a quick introduction to AMPL see [Quick Introduction to AMPL](https://dev.ampl.com/ampl/introduction.html).
 
-AMPL API is an interface that allows developers to access the features of the
-AMPL interpreter from within a programming language. All model generation and
-solver interaction is handled directly by AMPL, which leads to great stability
-and speed; the library just acts as an intermediary, and the added overhead
-(in terms of memory and CPU usage) depends mostly on how much data is read
-back from AMPL, the size of the model as such is irrelevant. Functions for
-directly assigning data to AMPL parameters and sets are provided, which can
-be used instead of the normal AMPL data reading procedures.  AMPL API has been
-written with usability in mind, and it is easy to access its functionalities
-from C++, Java, C#, MATLAB, R and Python.
+In the same way that AMPL’s syntax matches naturally the mathematical description of the model, the input and output data matches naturally Python lists, sets, dictionaries, `pandas` and `numpy` objects.
+
+All model generation and solver interaction is handled directly by AMPL, which leads to great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
+
+With `amplpy` you can model and solve large scale optimization problems in Python with the performance of heavily optimized C code without losing model readability. The same model can be deployed on applications built on different languages by just switching the API used.
 
 The AMPL API can function as an add-on to any existing AMPL installation. If
 you do not yet have an AMPL installation on the computer where you will be
@@ -27,11 +23,15 @@ to download a working version that can be installed quickly.
 
 ## Examples
 
-- Quick start: [Introductory Tutorial](notebooks/quickstart.ipynb)
+Data can be loaded in various forms:
+- One of which is ``pandas.DataFrame`` objects:
 
-- More examples:
-  - [examples/](examples/)
-  - [notebooks/](notebooks/)
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb)
+- Python lists and dictionaries:
+     
+     [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb)
+
+More notebooks with examples available on the [AMPL Model Colaboratory](https://colab.ampl.com/).
 
 ## Repositories
 
@@ -48,7 +48,28 @@ Install from the [PyPI repository](https://pypi.python.org/pypi/amplpy):
 $ python -m pip install amplpy
 ```
 
-Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary wheels for Python 2.7, 3.5, 3.6, 3.7, 3.8, and 3.9. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
+Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary wheels for most Python versions. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
+
+### AMPL Modules for Python
+
+[AMPL and all Solvers are now available as Python Packages](https://dev.ampl.com/ampl/python/modules.html):
+
+```
+# Install Python API for AMPL:
+$ python -m pip install amplpy --upgrade
+
+# Install solver modules (e.g., HiGHS and Gurobi):
+$ python -m amplpy.modules install highs gurobi
+
+# Activate your AMPL CE license:
+$ python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+
+# Import, load, and instantiate in Python:
+$ python
+>>> from amplpy import AMPL, modules
+>>> modules.load() # load all AMPL modules
+>>> ampl = AMPL() # instantiate AMPL object
+```
 
 ### Conda
 
@@ -73,4 +94,4 @@ $ pip install . --upgrade
 BSD-3
 
 ***
-Copyright © 2017-2021 AMPL Optimization inc. All rights reserved.
+Copyright © 2017-2023 AMPL Optimization inc. All rights reserved.
