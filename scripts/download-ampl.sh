@@ -1,6 +1,7 @@
 #!/bin/bash
-cd `dirname $0`
-BASEDIR=`pwd`
+cd "`dirname "$0"`"
+cd ..
+
 if [ "$#" -ne 1 ]; then
   	echo "Usage: $0 <URL>"
     exit 1

@@ -41,7 +41,7 @@ jobs:
         AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash download-ampl.sh $AMPL_URL
+    - bash: bash scripts/download-ampl.sh $AMPL_URL
       displayName: Install AMPL
     - bash: |
         set -ex
@@ -62,7 +62,7 @@ jobs:
     AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash download-ampl.sh $AMPL_URL
+    - bash: bash scripts/download-ampl.sh $AMPL_URL
       displayName: Install AMPL
     - bash: |
         set -ex
@@ -84,7 +84,7 @@ jobs:
     CIBW_SKIP: '*-win32'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash download-ampl.sh $AMPL_URL
+    - bash: bash scripts/download-ampl.sh $AMPL_URL
       displayName: Install AMPL
     - bash: |
         set -ex
