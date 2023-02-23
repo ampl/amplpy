@@ -84,7 +84,7 @@ You can build and install the package locally as follows:
 ```
 $ git clone https://github.com/ampl/amplpy.git 
 $ cd amplpy
-$ python updatelib.py
+$ python scripts/updatelib.py
 $ python setup.py build
 $ pip install . --upgrade
 ```
