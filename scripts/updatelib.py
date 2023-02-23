@@ -20,7 +20,7 @@ def updatelib(package, archs):
     except Exception:
         from urllib.request import urlretrieve
 
-    os.chdir(os.path.dirname(__file__) or os.curdir)
+    os.chdir(os.path.join(os.path.dirname(__file__), "..") or os.curdir)
 
     tmpfile = tempfile.mktemp(".zip")
     tmpdir = os.path.join(os.curdir, "tmp")
