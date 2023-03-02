@@ -1,4 +1,4 @@
-amplpy==0.8.6
+amplpy==0.8.7b0
 ampl-sphinx-theme
 sphinx==4.2.0
 myst_parser>=0.17.0

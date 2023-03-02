@@ -27,8 +27,14 @@ try:
     from ampltools import add_to_path
 except Exception:
     pass
+try:
+    from . import modules
 
-__version__ = "0.8.6"
+    modules.preload()
+except Exception:
+    pass
+
+__version__ = "0.8.7b0"
 
 
 def _list_aliases():
