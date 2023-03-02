@@ -167,5 +167,5 @@ setup(
         )
     ],
     package_data={"": package_content()},
-    install_requires=["future >= 0.15.0", "ampltools >= 0.4.7"],
+    install_requires=["future >= 0.15.0", "ampltools >= 0.5.0"],
 )
