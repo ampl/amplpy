@@ -7,7 +7,7 @@ from .amplpypi import (
     generate_requirements,
     load_modules,
     path,
-    activate,
+    activate_license,
 )
 import subprocess
 import sys
@@ -96,13 +96,17 @@ def _commands(args):
         modules = [m for m in args if not m.startswith("-")]
         print(path(modules))
     elif command == "run":
+        if len(args) == 0:
+            raise Exception(ERROR + usage)
         load_modules()
-        subprocess.run(" ".join(args), shell=True)
+        p = subprocess.run(" ".join(args), shell=True)
+        if p.returncode != 0:
+            raise Exception(f"Exit code {p.returncode}")
     elif command == "activate":
         if len(args) != 1:
-            print(usage)
+            raise Exception(ERROR + usage)
         uuid = args[0]
-        activate(uuid)
+        activate_license(uuid, verbose=True)
     elif command == "requirements":
         modules = [m for m in args if not m.startswith("-")]
         print(generate_requirements(modules))
