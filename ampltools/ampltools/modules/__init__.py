@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.4.7b0"
+__version__ = "0.4.7b1"
 
 from .amplpypi import (
     path,
@@ -8,6 +8,7 @@ from .amplpypi import (
     install_modules as install,
     uninstall_modules as uninstall,
     load_modules as load,
+    unload_modules as unload,
     preload_modules as preload,
     installed_modules as installed,
     available_modules as available,

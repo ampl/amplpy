@@ -147,11 +147,13 @@ def _locate_modules(modules, verbose=False):
     return path_modules
 
 
-def _sort_modules_for_loading(modules=[]):
+def _sort_modules_for_loading(modules=[], add_base=True):
     if isinstance(modules, str):
         modules = [modules]
-    if modules == [] or "all" in modules:
+    if len(modules) == 0 or "all" in modules:
         modules = installed_modules()
+    if not add_base:
+        return modules
     return ["base"] + [module for module in modules if module not in ("ampl", "base")]
 
 
@@ -196,6 +198,19 @@ def load_modules(modules=[], head=True, verbose=False):
         os.environ["PATH"] = os.pathsep.join(path_modules + path_others)
     else:
         os.environ["PATH"] = os.pathsep.join(path_others + path_modules)
+
+
+def unload_modules(modules=[]):
+    """
+    Unload AMPL modules.
+    Args:
+        modules: list of modules to be unloaded.
+    """
+    modules = _sort_modules_for_loading(modules, add_base=False)
+    to_remove = set(_locate_modules(modules, verbose=verbose))
+    os.environ["PATH"] = os.pathsep.join(
+        [path for path in os.environ["PATH"].split(os.pathsep) if path not in to_remove]
+    )
 
 
 def preload_modules(silently=True, verbose=False):
