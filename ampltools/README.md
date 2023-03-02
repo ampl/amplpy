@@ -19,4 +19,4 @@ $ python -m pip install ampltools
 BSD-3
 
 ***
-Copyright © 2022 AMPL Optimization inc. All rights reserved.
+Copyright © 2023 AMPL Optimization inc. All rights reserved.
