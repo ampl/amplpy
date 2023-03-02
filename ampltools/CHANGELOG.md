@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.7 - 2023-03-02
+- Add modules.activate and activate command.
+- Add modules.preload to load modules silently.
+- Add modules.run.
+
 ## 0.4.6 - 2023-01-24
 - Ignore ampl module since it is installed by default.
 - Drop tools.load_modules.

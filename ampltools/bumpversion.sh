@@ -5,4 +5,5 @@ else
   version=$1
   sed -i~ "s/version=\"[^']*\"/version=\"$version\"/" setup.py
   sed -i~ "s/__version__ = \"[^']*\"/__version__ = \"$version\"/" ampltools/__init__.py
+  sed -i~ "s/__version__ = \"[^']*\"/__version__ = \"$version\"/" ampltools/modules/__init__.py
 fi

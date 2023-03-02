@@ -7,22 +7,28 @@ from .amplpypi import (
     generate_requirements,
     load_modules,
     path,
+    activate,
 )
 import subprocess
 import sys
 
 ERROR = """
 Invalid command.
-Valid commands: install, uninstall, list/installed, available, path, requirements, run.
+Valid commands:
+    install, uninstall, list/installed, available, requirements, path,
+    run, and activate.
 """
 USAGE = """Usage:
 - Install modules:
     $ python -m $PACKAGE.modules install <solver 1> <solver 2> ...
-    Example: $ python -m $PACKAGE.modules install highs gurobi
+    Example:
+        $ python -m $PACKAGE.modules install highs gurobi
 
 - Uninstall modules:
     $ python -m $PACKAGE.modules uninstall <solver 1> <solver 2> ...
-    Example: $ python -m $PACKAGE.modules uninstall highs gurobi
+    Example:
+        $ python -m $PACKAGE.modules uninstall highs gurobi
+        $ python -m $PACKAGE.modules uninstall # uninstall all modules
 
 - List installed modules:
     $ python -m $PACKAGE.modules installed
@@ -32,13 +38,19 @@ USAGE = """Usage:
 
 - Value to append to the environment variable PATH to access modules
     $ python -m $PACKAGE.modules path
+    Example:
+        $ export PATH=$PATH:`python -m amplpy.modules path`
 
 - Generate requirements.txt for the modules currently installed
     $ python -m $PACKAGE.modules requirements
 
 - Run command in the same environment as the modules:
     $ python -m $PACKAGE.modules run <command>
-    Example: $ python -m $PACKAGE.modules run ampl -v
+    Example:
+        $ python -m $PACKAGE.modules run ampl -v
+
+- Activate a license using amplkey:
+    $ python -m $PACKAGE.modules activate <license-uuid>
 """
 
 
@@ -86,6 +98,11 @@ def _commands(args):
     elif command == "run":
         load_modules()
         subprocess.run(" ".join(args), shell=True)
+    elif command == "activate":
+        if len(args) != 1:
+            print(usage)
+        uuid = args[0]
+        activate(uuid)
     elif command == "requirements":
         modules = [m for m in args if not m.startswith("-")]
         print(generate_requirements(modules))

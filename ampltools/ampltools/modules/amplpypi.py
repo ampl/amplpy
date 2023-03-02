@@ -36,19 +36,27 @@ def available_modules():
     ]
 
 
-def _run_command(cmd, verbose=False):
+def _run_command(cmd, show_output=None, verbose=False):
     from subprocess import check_output, STDOUT, CalledProcessError
 
+    if isinstance(cmd, str):
+        shell = True
+        cmd_str = cmd
+    else:
+        shell = False
+        cmd_str = " ".join(cmd)
+    if verbose:
+        print("$ " + cmd_str)
     try:
-        if verbose:
-            print("$ " + " ".join(cmd))
-        output = check_output(cmd, stderr=STDOUT).decode("utf-8")
-        if verbose:
-            print(output)
-        return True
+        output = check_output(cmd, stderr=STDOUT, shell=shell).decode("utf-8")
+        if show_output or verbose:
+            print(output.rstrip("\n"))
+        return 0
     except CalledProcessError as e:
-        print(e.output.decode("utf-8"))
-        return False
+        if not verbose:
+            print("$ " + cmd_str)
+        print(e.output.decode("utf-8").rstrip("\n"))
+        return e.returncode
 
 
 def install_modules(modules=[], reinstall=False, options=[], verbose=False):
@@ -80,7 +88,7 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
     if reinstall:
         pip_cmd += ["--force-reinstall", "--upgrade", "--no-cache"]
-    if not _run_command(pip_cmd + modules + options, verbose=verbose):
+    if _run_command(pip_cmd + modules + options, verbose=verbose) != 0:
         raise Exception("Failed to install modules.")
 
 
@@ -96,7 +104,7 @@ def uninstall_modules(modules=[], options=[], verbose=False):
         modules = [modules]
     skip_base = True
     installed = installed_modules()
-    if modules == ["all"]:
+    if modules == [] or "all" in modules:
         skip_base = False
         modules = installed
     if skip_base and "base" in modules:
@@ -112,7 +120,7 @@ def uninstall_modules(modules=[], options=[], verbose=False):
     if len(modules) == 0:
         raise Exception("There are no modules to uninstall.")
     pip_cmd = [sys.executable, "-m", "pip", "uninstall", "-y"]
-    if not _run_command(pip_cmd + modules + options, verbose=verbose):
+    if _run_command(pip_cmd + modules + options, verbose=verbose) != 0:
         raise Exception("Failed to uninstall modules.")
 
 
@@ -190,12 +198,46 @@ def load_modules(modules=[], head=True, verbose=False):
         os.environ["PATH"] = os.pathsep.join(path_others + path_modules)
 
 
+def preload_modules(silently=True, verbose=False):
+    """
+    Load all modules to the end of environment variable PATH.
+    Args:
+        silently: ignore any errors and just return False
+        verbose: show verbose output if True.
+    """
+    try:
+        load_modules(head=False, verbose=verbose)
+        return True
+    except:
+        if not silently:
+            raise
+        return False
+
+
 def path(modules=[]):
     """
     Return PATH for AMPL modules.
     Args:
         modules: list of modules to be included.
-        verbose: show verbose output if True.
     """
     modules = _sort_modules_for_loading(modules)
     return os.pathsep.join(_locate_modules(modules, verbose=False))
+
+
+def run(cmd):
+    """
+    Run a system command.
+    Args:
+        cmd: command to run.
+    """
+    _run_command(cmd, show_output=True, verbose=False)
+
+
+def activate(uuid):
+    """
+    Activate an AMPL license using the UUID.
+    Args:
+        uuid: license uuid.
+    """
+    load_modules()
+    return run(["amplkey", "activate", "--uuid", uuid]) == 0
