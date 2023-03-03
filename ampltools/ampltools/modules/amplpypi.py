@@ -36,6 +36,14 @@ def available_modules():
     ]
 
 
+def _available_bundles():
+    from requests import get
+    from json import loads
+
+    url = "https://pypi.ampl.com/bundles.json"
+    return loads(get(url).text)["bundles"]
+
+
 def run_command(cmd, show_output=None, return_output=False, verbose=False):
     """
     Run a system command.
@@ -70,6 +78,16 @@ def run_command(cmd, show_output=None, return_output=False, verbose=False):
         return e.returncode
 
 
+def _parse_module(module):
+    if "=" not in module:
+        return module, ""
+    name, version = (
+        module[: module.find("=")].strip(" ="),
+        "==" + module[module.find("=") + 1 :].strip(" ="),
+    )
+    return name, version
+
+
 def install_modules(modules=[], reinstall=False, options=[], verbose=False):
     """
     Install AMPL modules for Python.
@@ -86,16 +104,43 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
         available = set(available_modules())
     except Exception:
         pass
+    bundles = None
+    try:
+        bundles = _available_bundles()
+    except Exception:
+        pass
+    requirements = modules
     if available:
+        requirements = []
         for module in modules:
+            version = ""
             if "=" in module:
-                module = module[: module.find("=")]
-            if module == "ampl":
+                module, version = _parse_module(module)
+            requirement = module + version
+            if requirement in requirements or module == "ampl":
                 continue
-            if module not in available:
-                raise Exception(f"AMPL module '{module}' is not available.")
+            elif module in available:
+                requirements.append(requirement)
+            elif not isinstance(bundles, list):
+                requirements.append(requirement)
+            else:
+                for entry in bundles:
+                    bundle, includes = None, []
+                    try:
+                        bundle = entry["module"]
+                        includes = entry["includes"]
+                    except:
+                        pass
+                    if module in includes:
+                        raise Exception(
+                            f"AMPL module '{module}' "
+                            f"is not available. It is "
+                            f"included in module '{bundle}'."
+                        )
+                else:
+                    raise Exception(f"AMPL module '{module}' is not available.")
 
-    modules = _normalize_modules(modules=modules, add_base=True)
+    modules = _normalize_modules(modules=requirements, add_base=True)
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
     if reinstall:
         pip_cmd += ["--force-reinstall", "--upgrade", "--no-cache"]
@@ -163,6 +208,7 @@ def _sort_modules_for_loading(modules=[], add_base=True):
         modules = [modules]
     if len(modules) == 0 or "all" in modules:
         modules = installed_modules()
+    modules = [_parse_module(module)[0] for module in modules]
     if not add_base:
         return modules
     return ["base"] + [module for module in modules if module not in ("ampl", "base")]
