@@ -1,15 +1,13 @@
 # AMPLPY: Python API for AMPL
 
-Install Python API for AMPL:
-```
-$ python -m pip install amplpy --upgrade
-```
-Install solver modules (e.g., HiGHS, CBC, Gurobi):
-```
-$ python -m amplpy.modules install highs cbc gurobi
-```
-New: [AMPL and all Solvers are now available as Python Packages.](https://dev.ampl.com/ampl/python/modules.html)
-
+- Install Python API for AMPL:
+    ```
+    python -m pip install amplpy --upgrade
+    ``` 
+- [AMPL and all Solvers are now available as Python Packages.](https://dev.ampl.com/ampl/python/modules.html). Install solver modules (e.g., HiGHS, CBC, Gurobi):
+    ```
+    python -m amplpy.modules install highs cbc gurobi
+    ```
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
@@ -56,9 +54,9 @@ More notebooks with examples available on the [AMPL Model Colaboratory](https://
 ### PyPI
 
 Install from the [PyPI repository](https://pypi.python.org/pypi/amplpy):
-```
-$ python -m pip install amplpy
-```
+    ```
+    python -m pip install amplpy
+    ```
 
 Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary wheels for most Python versions. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
 
@@ -66,35 +64,41 @@ Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary whee
 
 [AMPL and all Solvers are now available as Python Packages](https://dev.ampl.com/ampl/python/modules.html):
 
-```
-# Install Python API for AMPL:
-$ python -m pip install amplpy --upgrade
+- Install Python API for AMPL:
+    ```
+    python -m pip install amplpy --upgrade
+    ```
 
-# Install solver modules (e.g., HiGHS and Gurobi):
-$ python -m amplpy.modules install highs gurobi
+- Install solver modules (e.g., HiGHS and Gurobi):
+    ```
+    python -m amplpy.modules install highs gurobi
+    ```
 
-# Activate your AMPL CE license:
-$ python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+- Activate your AMPL CE license:
+    ```
+    python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+    ```
 
-# Import, load, and instantiate in Python:
-$ python
->>> from amplpy import AMPL, modules
->>> modules.load() # load all AMPL modules
->>> ampl = AMPL() # instantiate AMPL object
-```
+- Import, load, and instantiate in Python:
+    ```
+    $ python
+    >>> from amplpy import AMPL, modules
+    >>> modules.load() # load all AMPL modules
+    >>> ampl = AMPL() # instantiate AMPL object
+    ```
 
 ### Conda
 
 Install from the [Conda repository](https://anaconda.org/conda-forge/amplpy):
-```
-$ conda install -c conda-forge amplpy
-```
+    ```
+    conda install -c conda-forge amplpy
+    ```
 
 ### Air-gapped installation
 
 For air-gapped installations we recomend the following:
-- Download the `.whl` file for the corresponding platform and python version from [pypi](https://pypi.org/project/amplpy/#files).
-- Install with: `python -m pip install amplpy-version-python_version-*-platform.whl`
+- Download on another machine the `.whl` file for the corresponding platform and python version from [pypi](https://pypi.org/project/amplpy/#files).
+- Install on the target machine with: `python -m pip install amplpy-version-python_version-*-platform.whl --no-deps`
 
 ### Build locally
 
