@@ -278,7 +278,7 @@ An alternative to :func:`amplpy.AMPL.read` for loading models, is the method
 
 .. code-block:: python
 
-    ampl.read(r"""
+    ampl.eval(r"""
         set NUTR;
         set FOOD;
 
