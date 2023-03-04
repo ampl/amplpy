@@ -1,5 +1,16 @@
 # AMPLPY: Python API for AMPL
 
+Install Python API for AMPL:
+```
+$ python -m pip install amplpy --upgrade
+```
+Install solver modules (e.g., HiGHS, CBC, Gurobi):
+```
+$ python -m amplpy.modules install highs cbc gurobi
+```
+New: [AMPL and all Solvers are now available as Python Packages.](https://dev.ampl.com/ampl/python/modules.html)
+
+
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
 [![Build Status](https://dev.azure.com/ampldev/amplpy/_apis/build/status/ampl.amplpy?branchName=master)](https://dev.azure.com/ampldev/amplpy/_build/latest?definitionId=9&branchName=test)
@@ -79,6 +90,12 @@ Install from the [Conda repository](https://anaconda.org/conda-forge/amplpy):
 $ conda install -c conda-forge amplpy
 ```
 
+### Air-gapped installation
+
+For air-gapped installations we recomend the following:
+- Download the `.whl` file for the corresponding platform and python version from [pypi](https://pypi.org/project/amplpy/#files).
+- Install with: `python -m pip install amplpy-version-python_version-*-platform.whl`
+
 ### Build locally
 
 You can build and install the package locally as follows:
@@ -95,4 +112,4 @@ $ pip install . --upgrade
 BSD-3
 
 ***
-Copyright © 2017-2023 AMPL Optimization inc. All rights reserved.
+Copyright © 2023 AMPL Optimization inc. All rights reserved.
