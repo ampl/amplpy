@@ -299,7 +299,7 @@ An alternative to :func:`amplpy.AMPL.read` for loading models, is the method
         n_min[i] <= sum {j in FOOD} amt[i,j] * Buy[j] <= n_max[i];
     """)
 
-Using :func:`amplpy.AMPL.eval` or :func:`amplpy.AMPL.read` to load a model are a matter of preference.
+Using :func:`amplpy.AMPL.eval` or :func:`amplpy.AMPL.read` to load a model is a matter of preference.
 
 Load the data using Pandas objects
 ----------------------------------
