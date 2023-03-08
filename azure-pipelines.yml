@@ -1,9 +1,8 @@
 variables:
-  BUNDLES_URL: 'https://portal.ampl.com/dl/amplce/'
-  LINUX32_BUNDLE_NAME: 'ampl.linux32.tgz'
-  LINUX64_BUNDLE_NAME: 'ampl.linux64.tgz'
-  MACOS64_BUNDLE_NAME: 'ampl.macos64.tgz'
-  MSWIN64_BUNDLE_NAME: 'ampl.mswin64.zip'
+  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
+  CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux*
+  CIBW_ARCHS_MACOS: x86_64 universal2
+  CIBW_TEST_COMMAND: python -m amplpy.tests
 
 jobs:
 - job: docs
@@ -27,22 +26,8 @@ jobs:
       inputs: {pathtoPublish: 'upload'}
 - job: manylinux
   pool: {vmImage: 'Ubuntu-20.04'}
-  variables:
-    CIBW_TEST_COMMAND: 'PATH="/project/ampl:$PATH" python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas numpy
-  strategy:
-    matrix:
-      # x86:
-      #   CIBW_SKIP: 'pp*'
-      #   CIBW_BUILD: '*-manylinux*_i686'
-      #   AMPL_URL: '$(BUNDLES_URL)/$(LINUX32_BUNDLE_NAME)'
-      x64:
-        CIBW_SKIP: 'pp* *-manylinux*_i686'
-        AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash scripts/download-ampl.sh $AMPL_URL
-      displayName: Install AMPL
     - bash: |
         set -ex
         python scripts/updatelib.py
@@ -50,20 +35,14 @@ jobs:
         python -m pip install --upgrade cibuildwheel==1.12.0
         CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
-        CIBW_TEST_REQUIRES="" CIBW_SKIP="*musllinux* $CIBW_SKIP" cibuildwheel --platform linux --output-dir wheelhouse .
+        cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: macos
   pool: {vmImage: 'macos-latest'}
-  variables:
-    CIBW_TEST_COMMAND: 'PATH="/Users/runner/work/1/s/ampl:$PATH" python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas numpy
-    AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash scripts/download-ampl.sh $AMPL_URL
-      displayName: Install AMPL
     - bash: |
         set -ex
         python scripts/updatelib.py
@@ -71,30 +50,22 @@ jobs:
         # python -m pip install --upgrade cibuildwheel==1.12.0
         # CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
-        CIBW_ARCHS="x86_64 universal2" CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* $CIBW_SKIP" cibuildwheel --platform macos --output-dir wheelhouse .
+        cibuildwheel --platform macos --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
 - job: windows
   pool: {vmImage: 'windows-2022'}
-  variables:
-    CIBW_TEST_COMMAND: 'python -m amplpy.tests'
-    CIBW_TEST_REQUIRES: pandas numpy
-    AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'
-    CIBW_SKIP: '*-win32'
   steps:
     - task: UsePythonVersion@0
-    - bash: bash scripts/download-ampl.sh $AMPL_URL
-      displayName: Install AMPL
     - bash: |
         set -ex
         python scripts/updatelib.py
-        export PATH="/d/a/1/s/ampl:$PATH"
         python -m pip install --upgrade pip
         python -m pip install --upgrade cibuildwheel==1.12.0
         CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
-        CIBW_TEST_REQUIRES="" CIBW_SKIP="pp* cp27-* $CIBW_SKIP" cibuildwheel --platform windows --output-dir wheelhouse .
+        cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels
     - task: PublishBuildArtifacts@1
       inputs: {pathtoPublish: 'wheelhouse'}
