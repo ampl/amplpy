@@ -172,9 +172,10 @@ def uninstall_modules(modules=[], options=[], verbose=False):
         else:
             skip_base = False
 
+    unload_modules(modules)
     modules = _normalize_modules(modules=modules, skip_base=skip_base)
     if len(modules) == 0:
-        raise Exception("There are no modules to uninstall.")
+        return
     pip_cmd = [sys.executable, "-m", "pip", "uninstall", "-y"]
     if run_command(pip_cmd + modules + options, verbose=verbose) != 0:
         raise Exception("Failed to uninstall modules.")
@@ -187,14 +188,29 @@ def _load_ampl_module(module_name):
     if not module_name.startswith(prefix):
         module_name = prefix + module_name
     module = import_module(module_name)
-    return module.bin_dir, module.__version__
+    try:
+        from importlib import reload
+
+        reload(module)
+    except:
+        pass
+    if module.__file__ is None or not os.path.isfile(module.__file__):
+        raise Exception(f"Module {module_name} needs to be reinstalled.")
+    bin_dir, version = module.bin_dir, module.__version__
+    return bin_dir, version
 
 
 def _locate_modules(modules, verbose=False):
     path_modules = []
     for name in modules:
         module_name = "ampl_module_" + name
-        bin_dir, _ = _load_ampl_module(module_name)
+        bin_dir = None
+        try:
+            bin_dir, _ = _load_ampl_module(module_name)
+        except:
+            if verbose:
+                print(f"Failed to import {module_name}.")
+            continue
         if bin_dir not in path_modules:
             path_modules.append(bin_dir)
         if verbose:
@@ -225,8 +241,11 @@ def generate_requirements(modules=[]):
     requirements = "--index-url https://pypi.ampl.com\n"
     requirements += "--extra-index-url https://pypi.org/simple\n"
     for m in modules:
-        _, version = _load_ampl_module(m)
-        requirements += f"ampl_module_{m}=={version}\n"
+        try:
+            _, version = _load_ampl_module(m)
+            requirements += f"ampl_module_{m}=={version}\n"
+        except:
+            pass
     return requirements
 
 

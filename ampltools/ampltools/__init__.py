@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.5.1b9"
+__version__ = "0.5.1b10"
 from .notebooks import (
     ampl_notebook,
 )
