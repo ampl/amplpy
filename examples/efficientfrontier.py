@@ -9,9 +9,7 @@ def main(argc, argv):
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
-    model_directory = os.path.join(
-        argv[2] if argc == 3 else os.path.join("..", "models"), "qpmv"
-    )
+    model_directory = os.path.join(os.curdir, "models", "qpmv")
 
     """
     # If the AMPL installation directory is not in the system search path:
@@ -28,9 +26,6 @@ def main(argc, argv):
 
     # Number of steps of the efficient frontier
     steps = 10
-
-    if argc > 1:
-        ampl.set_option("solver", argv[1])
 
     ampl.set_option("reset_initial_guesses", True)
     ampl.set_option("send_statuses", False)

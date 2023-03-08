@@ -9,6 +9,7 @@ def main(argc, argv):
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
+    model_directory = os.path.join(os.curdir, "models", "locationtransportation")
 
     """
     # If the AMPL installation directory is not in the system search path:
@@ -23,18 +24,10 @@ def main(argc, argv):
     # Create an AMPL instance
     ampl = AMPL()
 
-    if argc > 1:
-        # ampl.set_option('solver', argv[1])
-        pass
-
     # Must be solved with a solver supporting the suffix dunbdd
     ampl.set_option("solver", "cplex")
     ampl.set_option("presolve", False)
     ampl.set_option("omit_zero_rows", False)
-
-    model_directory = os.path.join(
-        argv[2] if argc == 3 else os.path.join("..", "models"), "locationtransportation"
-    )
 
     # Load the AMPL model from file
     ampl.read(os.path.join(model_directory, "trnloc2.mod"))

@@ -11,6 +11,7 @@ def main(argc, argv):
     from time import time
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
+    model_directory = os.path.join(os.curdir, "models", "qpmv")
 
     """
     # If the AMPL installation directory is not in the system search path:
@@ -28,16 +29,17 @@ def main(argc, argv):
     ampl.set_option("reset_initial_guesses", True)
     ampl.set_option("send_statuses", False)
     ampl.set_option("relax_integrality", True)
-    if argc > 1:
-        ampl.set_option("solver", argv[1])
+
+    # Set the solver to use
+    solver = argv[1] if argc > 1 else "highs"
+    ampl.set_option("solver", solver)
 
     # Load the AMPL model from file
-    model_directory = argv[2] if argc == 3 else os.path.join("..", "models")
-    ampl.read(os.path.join(model_directory, "qpmv/qpmv.mod"))
-    ampl.read(os.path.join(model_directory, "qpmv/qpmvbit.run"))
+    ampl.read(os.path.join(model_directory, "qpmv.mod"))
+    ampl.read(os.path.join(model_directory, "qpmvbit.run"))
 
     # Set tables directory (parameter used in the script above)
-    ampl.get_parameter("data_dir").set(os.path.join(model_directory, "qpmv"))
+    ampl.get_parameter("data_dir").set(model_directory)
     # Read tables
     ampl.read_table("assetstable")
     ampl.read_table("astrets")

@@ -9,6 +9,7 @@ def main(argc, argv):
     from amplpy import AMPL
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
+    model_directory = os.path.join(os.curdir, "models", "tracking")
 
     """
     # If the AMPL installation directory is not in the system search path:
@@ -23,12 +24,9 @@ def main(argc, argv):
     # Create an AMPL instance
     ampl = AMPL()
 
-    if argc > 1:
-        ampl.set_option("solver", argv[1])
-
-    model_directory = os.path.join(
-        argv[2] if argc == 3 else os.path.join("..", "models"), "tracking"
-    )
+    # Set the solver to use
+    solver = argv[1] if argc > 1 else "highs"
+    ampl.set_option("solver", solver)
 
     # Load the AMPL model from file
     ampl.read(os.path.join(model_directory, "tracking.mod"))

@@ -114,13 +114,13 @@ all the code in the examples below does not include exception handling.
     assert ampl.get_value("solve_result") == "solved"
 
     # Get objective entity by AMPL name
-    totalcost = ampl.get_objective('Total_Cost')
+    totalcost = ampl.get_objective("Total_Cost")
     # Print it
     print("Objective is:", totalcost.value())
 
     # Reassign data - specific instances
-    cost = ampl.get_parameter('cost')
-    cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
+    cost = ampl.get_parameter("cost")
+    cost.set_values({"BEEF": 5.01, "HAM": 4.55})
     print("Increased costs of beef and ham.")
 
     # Resolve and display objective
@@ -152,12 +152,12 @@ all the code in the examples below does not include exception handling.
     print("New objective value:", totalcost.value())
 
     # Get the values of the variable Buy in a pandas.DataFrame object
-    df = ampl.get_variable('Buy').get_values().to_pandas()
+    df = ampl.get_variable("Buy").get_values().to_pandas()
     # Print them
     print(df)
 
     # Get the values of an expression into a pandas.DataFrame object
-    df2 = ampl.get_data('{j in FOOD} 100*Buy[j]/Buy[j].ub').to_pandas()
+    df2 = ampl.get_data("{j in FOOD} 100*Buy[j]/Buy[j].ub").to_pandas()
     # Print them
     print(df2)
 
@@ -237,7 +237,7 @@ on the console.
 .. code-block:: python
 
    ampl = AMPL()
-   print(ampl.get_option('version'))
+   print(ampl.get_option("version"))
 
 
 The first line creates a new AMPL object with all default settings.
@@ -253,7 +253,7 @@ If you are not using :ref:`amplpy.modules <amplpyModules>`, and your AMPL instal
    add_to_path(r"full path to the AMPL installation directory")
    ampl = AMPL()
 
-Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if the path includes backslashes.
+Note that you may need to use raw strings (e.g., `r"C:\\ampl\\ampl.mswin64"`) or escape the slashes (e.g., `"C:\\\\\\ampl\\\\\\ampl.mswin64"`) if the path includes backslashes.
 
 Load model and data from files
 ------------------------------
@@ -264,8 +264,8 @@ If the files are not found, an IOError is raised.
 
 .. code-block:: python
 
-   ampl.read('models/diet/diet.mod')
-   ampl.read_data('models/diet/diet.dat')
+   ampl.read("models/diet.mod")
+   ampl.read_data("models/diet.dat")
 
 Once these commands are executed, the AMPL interpreter will have interpreted the content of the two files.
 No further communication is made between the AMPL interpreter and the Python object, as every entity is created lazily (as needed).
@@ -407,7 +407,7 @@ of interest for the programmer. The generic procedure is:
 
 .. code-block:: python
 
-    totalcost = ampl.get_objective('Total_Cost')
+    totalcost = ampl.get_objective("Total_Cost")
     print("Objective is:", totalcost.get().value())
 
 It can be noted that we access an Objective to interrogate AMPL API about the objective function.
@@ -438,10 +438,10 @@ values is overloaded, and is in both cases :func:`amplpy.Parameter.set_values()`
 
 .. code-block:: python
 
-   cost = ampl.get_parameter('cost')
-   cost.set_values({'BEEF': 5.01, 'HAM': 4.55})
+   cost = ampl.get_parameter("cost")
+   cost.set_values({"BEEF": 5.01, "HAM": 4.55})
    print("Increased costs of beef and ham.")
-   ampl.solve();
+   ampl.solve()
    print("New objective value:", totalcost.value())
 
 The code above assigns the values 5.01 and 4.55 to the parameter cost for the objects beef and ham respectively.
@@ -472,7 +472,7 @@ the entity, and there is a considerable performance gain. To do so, we first get
 .. code-block:: python
 
    # Get the values of the variable Buy in a pandas.DataFrame object
-   buy = ampl.get_variable('Buy')
+   buy = ampl.get_variable("Buy")
    df = buy.get_values().to_pandas()
    print(df)
 

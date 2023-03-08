@@ -9,6 +9,7 @@ def main(argc, argv):
     from amplpy import AMPL, DataFrame
 
     os.chdir(os.path.dirname(__file__) or os.curdir)
+    model_directory = os.path.join(os.curdir, "models", "diet")
 
     # Note: If you want to perform data transformations use pandas dataframes.
     # amplpy dataframes are simple dataframes for data communication only.
@@ -106,12 +107,12 @@ def main(argc, argv):
     # Create an AMPL instance
     ampl = AMPL()
 
-    if argc > 1:
-        ampl.set_option("solver", argv[1])
+    # Set the solver to use
+    solver = argv[1] if argc > 1 else "highs"
+    ampl.set_option("solver", solver)
 
     # Read the model file
-    model_directory = argv[2] if argc == 3 else os.path.join("..", "models")
-    ampl.read(os.path.join(model_directory, "diet/diet.mod"))
+    ampl.read(os.path.join(model_directory, "diet.mod"))
 
     # Assign data to NUTR, n_min and n_max
     ampl.set_data(df1, "NUTR")

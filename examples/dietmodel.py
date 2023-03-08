@@ -70,9 +70,8 @@ def main(argc, argv):
     # Create an AMPL instance
     ampl = AMPL()
 
-    solver = "highs"
-    if argc > 1:
-        solver = argv[1]
+    # Set the solver to use
+    solver = argv[1] if argc > 1 else "highs"
     ampl.set_option("solver", solver)
 
     ampl.eval(
