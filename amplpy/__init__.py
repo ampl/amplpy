@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-
+import sys
+import os
 
 from .base import BaseClass
 from .outputhandler import OutputHandler, Kind
@@ -18,6 +19,11 @@ from .dataframe import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
+
+parent_dir = os.path.abspath(os.path.dirname(__file__))
+vendor_dir = os.path.join(parent_dir, "vendor")
+if vendor_dir not in sys.path:
+    sys.path.append(vendor_dir)
 
 try:
     from ampltools import register_magics
