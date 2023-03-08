@@ -36,7 +36,7 @@ except Exception:
 try:
     from . import modules
 
-    modules.preload()
+    modules.preload(verbose=True)
 except Exception:
     pass
 
