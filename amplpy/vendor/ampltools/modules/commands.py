@@ -58,7 +58,7 @@ def _main():
     try:
         _commands(sys.argv)
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print("Error: {}".format(e), file=sys.stderr)
         sys.exit(1)
 
 
@@ -84,14 +84,14 @@ def _commands(args):
             raise Exception("Could not find any modules installed.")
         print("You have the following modules installed:")
         for name in sorted(set(names)):
-            print(f"\t{name}")
+            print("\t" + name)
     elif command == "available":
         names = available_modules()
         if names == []:
             raise Exception("Could not find any modules for download.")
         print("You can install any of the following modules:")
         for name in sorted(set(names)):
-            print(f"\t{name}")
+            print("\t" + name)
     elif command == "path":
         modules = [m for m in args if not m.startswith("-")]
         print(path(modules))
@@ -101,7 +101,7 @@ def _commands(args):
         load_modules()
         p = subprocess.run(" ".join(args), shell=True)
         if p.returncode != 0:
-            raise Exception(f"Exit code {p.returncode}")
+            raise Exception("Exit code {}".format(p.returncode))
     elif command == "activate":
         if len(args) != 1:
             raise Exception(ERROR + usage)

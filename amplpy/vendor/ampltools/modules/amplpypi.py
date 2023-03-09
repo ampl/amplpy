@@ -133,12 +133,12 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
                         pass
                     if module in includes:
                         raise Exception(
-                            f"AMPL module '{module}' "
-                            f"is not available. It is "
-                            f"included in module '{bundle}'."
+                            "AMPL module '{}' is not available. It is included in module '{}'.".format(
+                                module, bundle
+                            )
                         )
                 else:
-                    raise Exception(f"AMPL module '{module}' is not available.")
+                    raise Exception("AMPL module '{}' is not available.".format(module))
 
     modules = _normalize_modules(modules=requirements, add_base=True)
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
@@ -195,7 +195,7 @@ def _load_ampl_module(module_name):
     except:
         pass
     if module.__file__ is None or not os.path.isfile(module.__file__):
-        raise Exception(f"Module {module_name} needs to be reinstalled.")
+        raise Exception("Module {} needs to be reinstalled.".format(module_name))
     bin_dir, version = module.bin_dir, module.__version__
     return bin_dir, version
 
@@ -209,12 +209,12 @@ def _locate_modules(modules, verbose=False):
             bin_dir, _ = _load_ampl_module(module_name)
         except:
             if verbose:
-                print(f"Failed to import {module_name}.")
+                print("Failed to import {}.".format(module_name))
             continue
         if bin_dir not in path_modules:
             path_modules.append(bin_dir)
         if verbose:
-            print(f"Imported {module_name}.")
+            print("Imported {}.".format(module_name))
 
     return path_modules
 
@@ -243,7 +243,7 @@ def generate_requirements(modules=[]):
     for m in modules:
         try:
             _, version = _load_ampl_module(m)
-            requirements += f"ampl_module_{m}=={version}\n"
+            requirements += "ampl_module_{}=={}\n".format(m, version)
         except:
             pass
     return requirements
