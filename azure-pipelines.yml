@@ -32,8 +32,8 @@ jobs:
         set -ex
         python scripts/updatelib.py
         python -m pip install --upgrade pip
-        # python -m pip install --upgrade cibuildwheel==1.12.0
-        # CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
+        python -m pip install --upgrade cibuildwheel==1.12.0
+        CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
         cibuildwheel --platform linux --output-dir wheelhouse .
       displayName: Build wheels
@@ -62,8 +62,8 @@ jobs:
         set -ex
         python scripts/updatelib.py
         python -m pip install --upgrade pip
-        # python -m pip install --upgrade cibuildwheel==1.12.0
-        # CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
+        python -m pip install --upgrade cibuildwheel==1.12.0
+        CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
         python -m pip install --upgrade cibuildwheel==2.12.0
         cibuildwheel --platform windows --output-dir wheelhouse .
       displayName: Build wheels
