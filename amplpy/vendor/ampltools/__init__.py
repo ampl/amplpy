@@ -4,8 +4,8 @@ from .notebooks import (
     ampl_notebook,
 )
 
-from .licenses import (
-    activate_license,
+from .modules import (
+    activate as activate_license,
 )
 
 from .utils import (

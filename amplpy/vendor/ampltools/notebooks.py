@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
-from .licenses import _is_valid_uuid, activate_license, _activate_default_license
-from .modules import install as install_modules, load as load_modules
-from .utils import cloud_platform_name, register_magics
+from .modules import activate as activate_license
+from .modules import install as install_modules
+from .modules import load as load_modules
+from .utils import (
+    cloud_platform_name,
+    register_magics,
+    _is_valid_uuid,
+    _activate_default_license,
+)
 
 
 def _deactivate_license():
