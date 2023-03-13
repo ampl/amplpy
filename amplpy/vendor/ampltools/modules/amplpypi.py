@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import tempfile
 
 
 def _normalize_modules(modules=[], add_base=False, skip_base=False):
@@ -249,6 +250,64 @@ def generate_requirements(modules=[]):
     return requirements
 
 
+def _find_ampl_lic():
+    for path in os.environ["PATH"].split(os.pathsep):
+        ampl_lic = os.path.abspath(os.path.join(path, "ampl.lic"))
+        if os.path.isfile(ampl_lic):
+            return ampl_lic
+    return None
+
+
+def _prepare_amplkey_env(verbose=False):
+    VAR_AMPL_LICFILE = "AMPL_LICFILE"
+    VAR_AMPLKEY_RUNTIME_DIR = "AMPLKEY_RUNTIME_DIR"
+    if VAR_AMPL_LICFILE in os.environ and VAR_AMPLKEY_RUNTIME_DIR in os.environ:
+        # do nothing if all environment variables are set
+        return
+
+    bin_dir, _ = _load_ampl_module("base")
+    base_ampl_lic = os.path.abspath(os.path.join(bin_dir, "ampl.lic"))
+    if os.access(base_ampl_lic, os.W_OK):
+        # do nothing if ampl.lic is writable
+        return
+
+    if _find_ampl_lic() != base_ampl_lic:
+        # do nothing if ampl.lic is somewhere else
+        return
+
+    def set_ampl_lic(ampl_lic):
+        if verbose:
+            print('Setting {}="{}".'.format(VAR_AMPL_LICFILE, ampl_lic))
+        os.environ[VAR_AMPL_LICFILE] = ampl_lic
+
+    def set_amplkey_runtime(amplkey_runtime):
+        if verbose:
+            print('Setting {}="{}".'.format(VAR_AMPLKEY_RUNTIME_DIR, amplkey_runtime))
+        os.environ[VAR_AMPLKEY_RUNTIME_DIR] = amplkey_runtime
+
+    if verbose and VAR_AMPL_LICFILE not in os.environ:
+        print('Found ampl.lic ("{}") but it is not writable.'.format(ampl_lic))
+    if VAR_AMPLKEY_RUNTIME_DIR in os.environ:
+        amplkey_dir = os.environ[VAR_AMPLKEY_RUNTIME_DIR]
+    else:
+        try:
+            amplkey_dir = os.path.join(os.path.expanduser("~"), ".amplkey")
+            if not os.path.isdir(amplkey_dir):
+                os.makedirs(amplkey_dir)
+        except:
+            amplkey_dir = os.path.join(tempfile.gettempdir(), ".amplkey")
+            if not os.path.isdir(amplkey_dir):
+                os.makedirs(amplkey_dir)
+
+    if VAR_AMPL_LICFILE not in os.environ:
+        ampl_lic = os.path.join(amplkey_dir, "ampl.lic")
+        if not os.path.isfile(ampl_lic):
+            open(ampl_lic, "w").write(open(base_ampl_lic, "r").read())
+        set_ampl_lic(ampl_lic)
+    if VAR_AMPLKEY_RUNTIME_DIR not in os.environ:
+        set_amplkey_runtime(amplkey_dir)
+
+
 def load_modules(modules=[], head=True, verbose=False):
     """
     Load AMPL modules.
@@ -275,6 +334,8 @@ def load_modules(modules=[], head=True, verbose=False):
     else:
         os.environ["PATH"] = os.pathsep.join(path_others + path_modules)
 
+    _prepare_amplkey_env()
+
 
 def unload_modules(modules=[]):
     """
@@ -297,7 +358,8 @@ def preload_modules(silently=True, verbose=False):
         verbose: show verbose output if True.
     """
     try:
-        load_modules(head=False, verbose=verbose)
+        head = False if _find_ampl_lic() else True
+        load_modules(head=head, verbose=verbose)
         return True
     except:
         if not silently:
