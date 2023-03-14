@@ -4,7 +4,7 @@
     ```
     python -m pip install amplpy --upgrade
     ``` 
-- [AMPL and all Solvers are now available as Python Packages.](https://dev.ampl.com/ampl/python/modules.html). Install solver modules (e.g., HiGHS, CBC, Gurobi):
+- [AMPL and all Solvers are now available as Python Packages](https://dev.ampl.com/ampl/python/modules.html). Install solver modules (e.g., HiGHS, CBC, Gurobi):
     ```
     python -m amplpy.modules install highs cbc gurobi
     ```
@@ -58,8 +58,6 @@ Install from the [PyPI repository](https://pypi.python.org/pypi/amplpy):
     python -m pip install amplpy
     ```
 
-Note: For Windows, Linux, and macOS, the `amplpy` package comes with binary wheels for most Python versions. Please make sure that you are using the latest version of `pip` before installing `amplpy` (upgrade using `pip install pip --upgrade` or `python -m pip install pip --upgrade`). If a binary wheel for your platform is not available, a C++ compiler and python development libraries will be required.
-
 ### AMPL Modules for Python
 
 [AMPL and all Solvers are now available as Python Packages](https://dev.ampl.com/ampl/python/modules.html):
@@ -106,7 +104,7 @@ You can build and install the package locally as follows:
 ```
 $ git clone https://github.com/ampl/amplpy.git 
 $ cd amplpy
-$ python scripts/updatelib.py
+$ python dev/updatelib.py
 $ python setup.py build
 $ pip install . --upgrade
 ```

@@ -20,7 +20,7 @@ jobs:
           platforms: all
 
       - name: Download libampl
-        run: python scripts/updatelib.py
+        run: python dev/updatelib.py
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
