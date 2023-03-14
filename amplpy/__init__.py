@@ -36,11 +36,11 @@ except Exception:
 try:
     from . import modules
 
-    modules.preload(verbose=True)
+    modules.preload()
 except Exception:
     pass
 
-__version__ = "0.8.7b1"
+__version__ = "0.8.7b2"
 
 
 def _list_aliases():

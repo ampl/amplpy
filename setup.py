@@ -119,7 +119,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.8.7b1",
+    version="0.8.7b2",
     description="Python API for AMPL",
     long_description=__doc__,
     license="BSD-3",
@@ -167,5 +167,5 @@ setup(
         )
     ],
     package_data={"": package_content()},
-    install_requires=["future >= 0.15.0", "ampltools >= 0.5.1b11"],
+    install_requires=["future >= 0.15.0", "ampltools >= 0.5.1"],
 )
