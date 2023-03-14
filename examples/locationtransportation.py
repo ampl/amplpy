@@ -12,13 +12,10 @@ def main(argc, argv):
     model_directory = os.path.join(os.curdir, "models", "locationtransportation")
 
     """
-    # If the AMPL installation directory is not in the system search path:
+    # If you are not using amplpy.modules, and the AMPL installation directory
+    # is not in the system search path, add it as follows:
     from amplpy import add_to_path
     add_to_path(r"full path to the AMPL installation directory")
-
-    # Alternatively, load modules if you are using amplpy.modules:
-    from amplpy import modules
-    modules.load()
     """
 
     # Create an AMPL instance

@@ -43,15 +43,14 @@ you just need the following:
    $ python -m amplpy.modules install highs gurobi
 
    # Activate your license (e.g., free https://ampl.com/ce license)
-   $ python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+   $ python -m amplpy.modules activate <license-uuid>
 
    # Confirm that the license is active
    $ python -m amplpy.modules run ampl -vvq
 
    # Import in Python
    $ python
-   >>> from amplpy import AMPL, modules
-   >>> modules.load() # load all modules
+   >>> from amplpy import AMPL
    >>> ampl = AMPL() # instantiate AMPL object
 
 For Apple M1/M2, please make sure your have Rosetta 2 installed since not all modules are available for M1/M2. You can install it with: ``softwareupdate --install-rosetta``.
@@ -132,8 +131,7 @@ Or, if you are using :ref:`amplpy.modules <amplpyModules>`, do the following:
 
 .. code-block:: python
 
-    from amplpy import AMPL, modules
-    modules.load()
+    from amplpy import AMPL
     ampl = AMPL()
 
 Note that you may need to use raw strings (e.g., `r'C:\\ampl\\ampl.mswin64'`) or escape the slashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if the path includes backslashes.
@@ -161,8 +159,7 @@ If you are using :ref:`amplpy.modules <amplpyModules>`:
 
 .. code-block:: python
 
-    from amplpy import AMPL, modules
-    modules.load()
+    from amplpy import AMPL
     ampl = AMPL()
     ampl.eval("option version;")
 
@@ -199,8 +196,7 @@ You can build and run the container as follows:
     Python 3.9.16 (main, Jan 23 2023, 23:42:27)
     [GCC 10.2.1 20210110] on linux
     Type "help", "copyright", "credits" or "license" for more information.
-    >>> from amplpy import AMPL, modules
-    >>> modules.load()
+    >>> from amplpy import AMPL
     >>> ampl = AMPL()
     >>>
     ```
