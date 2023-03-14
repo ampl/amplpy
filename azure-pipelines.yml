@@ -16,7 +16,7 @@ jobs:
         python setup.py sdist -d upload
         pip install .
         cd docs
-        pip install -r dev/requirements.txt
+        pip install -r requirements-dev.txt
         make html
         cd ..
         mkdir -p upload/doc
