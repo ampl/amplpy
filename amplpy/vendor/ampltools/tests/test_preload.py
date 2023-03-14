@@ -26,9 +26,10 @@ class TestPreload(TestBase.TestBase):
         requirements = modules.requirements().strip().split("\n")
         self.assertEqual(len(requirements), 2)
 
-        modules.load("cbc")
-        self.assertFalse(
-            any("ampl_module_cbc" in path for path in self.get_env_path_list())
+        with self.assertRaises(Exception) as context:
+            modules.load("cbc", verbose=verbose)
+        self.assertTrue(
+            "Module ampl_module_base needs to be reinstalled." in str(context.exception)
         )
 
         modules.install(["cbc"], verbose=verbose)

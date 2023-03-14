@@ -2,10 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.5.1 - 2023-03-03
+## 0.5.1 - 2023-03-14
 - When a module is not available, try to indicate a bundle with it.
 - Add unit tests for modules.
 - Make it compatible with Python 3.5.
+- Handle read-only filesystems.
 
 ## 0.5.0 - 2023-03-02
 - Add modules.activate and activate command.
