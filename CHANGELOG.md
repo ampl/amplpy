@@ -2,8 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.8.7 - 2023-03-##
+## 0.9.0 - 2023-03-14
 - Preload amplpy.modules if found (reduces need for modules.load()).
+- Vendor ampltools.
 
 ## 0.8.6 - 2023-01-23
 - Add amplpy.modules.
