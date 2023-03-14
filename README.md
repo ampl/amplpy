@@ -1,13 +1,22 @@
 # AMPLPY: Python API for AMPL
 
-- Install Python API for AMPL:
-    ```
-    python -m pip install amplpy --upgrade
-    ``` 
-- [AMPL and all Solvers are now available as Python Packages](https://dev.ampl.com/ampl/python/modules.html). Install solver modules (e.g., HiGHS, CBC, Gurobi):
-    ```
-    python -m amplpy.modules install highs cbc gurobi
-    ```
+```python
+# Install Python API for AMPL
+$ python -m pip install amplpy --upgrade
+
+# Install solver modules (e.g., HiGHS, CBC, Gurobi)
+$ python -m amplpy.modules install highs cbc gurobi
+
+# Activate your license (e.g., free https://ampl.com/ce license)
+$ python -m amplpy.modules activate <license-uuid>
+
+# Import in Python
+$ python
+>>> from amplpy import AMPL
+>>> ampl = AMPL() # instantiate AMPL object
+```
+
+[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)]
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
@@ -72,16 +81,15 @@ Install from the [PyPI repository](https://pypi.python.org/pypi/amplpy):
     python -m amplpy.modules install highs gurobi
     ```
 
-- Activate your AMPL CE license:
+- Activate your license (e.g., free [AMPL Community Edition](https://ampl.com/ce) license):
     ```
-    python -m amplpy.modules run amplkey activate --uuid <license-uuid>
+    python -m amplpy.modules activate <license-uuid>
     ```
 
-- Import, load, and instantiate in Python:
+- Import and instantiate in Python:
     ```
     $ python
-    >>> from amplpy import AMPL, modules
-    >>> modules.load() # load all AMPL modules
+    >>> from amplpy import AMPL
     >>> ampl = AMPL() # instantiate AMPL object
     ```
 
