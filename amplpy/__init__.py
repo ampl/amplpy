@@ -30,6 +30,10 @@ try:
 except Exception:
     pass
 try:
+    from ampltools import ampl_notebook
+except Exception:
+    pass
+try:
     from ampltools import add_to_path
 except Exception:
     pass
