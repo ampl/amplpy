@@ -95,10 +95,6 @@ ENV/
 *~
 #*
 
-/workspace_private
-/register.sh
-/clear.sh
-/test.py
 /tmp
+/debug
 /notes.txt
-
