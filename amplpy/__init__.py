@@ -20,10 +20,10 @@ from .utils import add_to_path, multidict, register_magics
 from .environment import Environment
 from .ampl import AMPL
 
-parent_dir = os.path.abspath(os.path.dirname(__file__))
-vendor_dir = os.path.join(parent_dir, "vendor")
-if vendor_dir not in sys.path:
-    sys.path.append(vendor_dir)
+_parent_dir = os.path.abspath(os.path.dirname(__file__))
+_vendor_dir = os.path.join(_parent_dir, "vendor")
+if _vendor_dir not in sys.path:
+    sys.path.append(_vendor_dir)
 
 try:
     from ampltools import register_magics
@@ -44,7 +44,7 @@ try:
 except Exception:
     pass
 
-__version__ = "0.9.1b0"
+__version__ = "0.9.1b1"
 
 
 def _list_aliases():
