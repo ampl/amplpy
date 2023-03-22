@@ -126,7 +126,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.9.1b1",
+    version="0.9.1",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type='text/markdown',

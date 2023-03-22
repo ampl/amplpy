@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.9.1 - 2023-03-22
+- Simplify ampl_notebook import: "from amplpy import ampl_notebook".
+
 ## 0.9.0 - 2023-03-14
 - Preload amplpy.modules if found (reduces need for modules.load()).
 - Vendor ampltools.
