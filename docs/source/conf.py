@@ -206,7 +206,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "AMPLAPI.tex", "AMPL API Documentation", "Filipe Brandão", "manual"),
+    ("index", "AMPLAPI.tex", "AMPL API Documentation", "AMPL Optimization Inc.", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -234,7 +234,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [("index", "AMPL API", "AMPL API Documentation", ["Filipe Brandão"], 1)]
+man_pages = [("index", "AMPL API", "AMPL API Documentation", ["AMPL Optimization Inc."], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -250,7 +250,7 @@ texinfo_documents = [
         "index",
         "AMPL API",
         "AMPL API Documentation",
-        "Filipe Brandão",
+        "AMPL Optimization Inc.",
         "AMPL API",
         "Python API for AMPL",
         "Miscellaneous",

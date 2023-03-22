@@ -1,31 +1,43 @@
 # -*- coding: utf-8 -*-
 """
-AMPLPY
-------
+# AMPLPY: Python API for AMPL
 
-AMPL API is an interface that allows developers to access the features of the
-AMPL interpreter from within a programming language. All model generation and
-solver interaction is handled directly by AMPL, which leads to great stability
-and speed; the library just acts as an intermediary, and the added overhead
-(in terms of memory and CPU usage) depends mostly on how much data is read
-back from AMPL, the size of the model as such is irrelevant. Functions for
-directly assigning data to AMPL parameters and sets are provided, which can
-be used instead of the normal AMPL data reading procedures.  AMPL API has been
-written with usability in mind, and it is easy to access its functionalities
-from C++, Java, C#, MATLAB, R and Python.
+```python
+# Install Python API for AMPL
+$ python -m pip install amplpy --upgrade
+
+# Install solver modules (e.g., HiGHS, CBC, Gurobi)
+$ python -m amplpy.modules install highs cbc gurobi
+
+# Activate your license (e.g., free https://ampl.com/ce license)
+$ python -m amplpy.modules activate <license-uuid>
+
+# Import in Python
+$ python
+>>> from amplpy import AMPL
+>>> ampl = AMPL() # instantiate AMPL object
+```
+
+[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)]
+
+`amplpy` is an interface that allows developers to access the features of [AMPL](https://ampl.com) from within Python. For a quick introduction to AMPL see [Quick Introduction to AMPL](https://dev.ampl.com/ampl/introduction.html).
+
+In the same way that AMPL’s syntax matches naturally the mathematical description of the model, the input and output data matches naturally Python lists, sets, dictionaries, `pandas` and `numpy` objects.
+
+All model generation and solver interaction is handled directly by AMPL, which leads to great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
+
+With `amplpy` you can model and solve large scale optimization problems in Python with the performance of heavily optimized C code without losing model readability. The same model can be deployed on applications built on different languages by just switching the API used.
 
 The AMPL API can function as an add-on to any existing AMPL installation. If
 you do not yet have an AMPL installation on the computer where you will be
-working with the API. Use our `Community Edition <http://ampl.com/ce>`_ 
+working with the API. Use our [Community Edition](http://ampl.com/ce)
 to download a working version that can be installed quickly.
 
-Documentation:
-``````````````
+## Documentation
 
-* http://amplpy.readthedocs.io
+- http://amplpy.readthedocs.io
 
-Repositories:
-`````````````
+## Repositories:
 
 * GitHub Repository: https://github.com/ampl/amplpy
 * PyPI Repository: https://pypi.python.org/pypi/amplpy
@@ -119,13 +131,14 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.9.0",
+    version="0.9.1b0",
     description="Python API for AMPL",
     long_description=__doc__,
+    long_description_content_type='text/markdown',
     license="BSD-3",
     platforms="any",
-    author="Filipe Brandão",
-    author_email="fdabrandao@ampl.com",
+    author="AMPL Optimization Inc.",
+    author_email="devteam@ampl.com",
     url="http://ampl.com/",
     download_url="https://github.com/ampl/amplpy",
     classifiers=[
