@@ -18,7 +18,7 @@ $ python
 >>> ampl = AMPL() # instantiate AMPL object
 ```
 
-[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)]
+[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)] [[AMPL Community Edition](http://ampl.com/ce)]
 
 `amplpy` is an interface that allows developers to access the features of [AMPL](https://ampl.com) from within Python. For a quick introduction to AMPL see [Quick Introduction to AMPL](https://dev.ampl.com/ampl/introduction.html).
 
@@ -27,11 +27,6 @@ In the same way that AMPL’s syntax matches naturally the mathematical descript
 All model generation and solver interaction is handled directly by AMPL, which leads to great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
 
 With `amplpy` you can model and solve large scale optimization problems in Python with the performance of heavily optimized C code without losing model readability. The same model can be deployed on applications built on different languages by just switching the API used.
-
-The AMPL API can function as an add-on to any existing AMPL installation. If
-you do not yet have an AMPL installation on the computer where you will be
-working with the API. Use our [Community Edition](http://ampl.com/ce)
-to download a working version that can be installed quickly.
 
 ## Documentation
 
@@ -131,7 +126,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.9.1b0",
+    version="0.9.1b1",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type='text/markdown',

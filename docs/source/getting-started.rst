@@ -199,6 +199,5 @@ You can build and run the container as follows:
     >>> from amplpy import AMPL
     >>> ampl = AMPL()
     >>>
-    ```
 
 Other cloud deployment options such as cloud functions (e.g. `AWS Lambda <https://aws.amazon.com/lambda/>`_ and `Azure Functions <https://azure.microsoft.com/en-us/products/functions/>`_) are just as easy.
