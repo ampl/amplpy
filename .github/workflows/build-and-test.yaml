@@ -2,8 +2,15 @@ name:  build-and-test
 run-name: ${{ github.actor }} is building "${{ github.ref_name }}"
 on: [push]
 
+env:
+  CIBW_ARCHS_LINUX: auto
+  CIBW_ARCHS_MACOS: x86_64 universal2
+  CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux*
+  CIBW_TEST_COMMAND: python -m amplpy.tests
+  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
+
 jobs:
-  build_wheels:
+  build_native:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,11 +32,43 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
         env:
-          CIBW_ARCHS_LINUX: auto aarch64 ppc64le
-          CIBW_ARCHS_MACOS: x86_64 universal2
-          CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux*
-          CIBW_TEST_COMMAND: python -m amplpy.tests
-          CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
+          CIBW_ARCHS_LINUX: ${{ env.CIBW_ARCHS_LINUX }}
+          CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
+          CIBW_SKIP: ${{ env.CIBW_SKIP }}
+          CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
+          CIBW_TEST_REQUIRES: ${{ env.CIBW_TEST_REQUIRES }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  build_with_qemu:
+    needs: build_native
+    name: Build wheels using QEMU for ${{ matrix.arch }}
+    strategy:
+      matrix:
+        arch: [aarch64, ppc64le]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: Download libampl
+        run: python dev/updatelib.py
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.12.0
+        env:
+          CIBW_ARCHS_LINUX: ${{ matrix.arch }}
+          CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
+          CIBW_SKIP: ${{ env.CIBW_SKIP }}
+          CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
+          CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
       - uses: actions/upload-artifact@v3
         with:
