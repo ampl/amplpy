@@ -14,7 +14,6 @@ stages:
       - task: UsePythonVersion@0
       - bash: |
           set -ex
-          python -m pip install --upgrade pip
           python dev/updatelib.py
           python setup.py sdist -d upload
           pip install .
@@ -34,7 +33,6 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade pip
           python -m pip install --upgrade cibuildwheel==1.12.0
           CIBW_BUILD="cp35-*" cibuildwheel --platform linux --output-dir wheelhouse .
           python -m pip install --upgrade cibuildwheel==2.12.0
@@ -49,7 +47,6 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade pip
           # python -m pip install --upgrade cibuildwheel==1.12.0
           # CIBW_BUILD="cp35-*" cibuildwheel --platform macos --output-dir wheelhouse .
           python -m pip install --upgrade cibuildwheel==2.12.0
@@ -64,7 +61,6 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade pip
           python -m pip install --upgrade cibuildwheel==1.12.0
           CIBW_BUILD="cp35-*" cibuildwheel --platform windows --output-dir wheelhouse .
           python -m pip install --upgrade cibuildwheel==2.12.0
@@ -80,12 +76,43 @@ stages:
     pool: {vmImage: 'Ubuntu-20.04'}
     strategy:
       matrix:
-        aarch64:
-          ARCH: aarch64
-        ppc64le:
-          ARCH: ppc64le
+        aarch64 cp36:
+          CIBW_BUILD: cp36-*
+          CIBW_ARCHS_LINUX: aarch64
+        aarch64 cp37:
+          CIBW_BUILD: cp37-*
+          CIBW_ARCHS_LINUX: aarch64
+        aarch64 cp38:
+          CIBW_BUILD: cp38-*
+          CIBW_ARCHS_LINUX: aarch64
+        aarch64 cp39:
+          CIBW_BUILD: cp39-*
+          CIBW_ARCHS_LINUX: aarch64
+        aarch64 cp310:
+          CIBW_BUILD: cp310-*
+          CIBW_ARCHS_LINUX: aarch64
+        aarch64 cp311:
+          CIBW_BUILD: cp311-*
+          CIBW_ARCHS_LINUX: aarch64
+        ppc64le cp36:
+          CIBW_BUILD: cp36-*
+          CIBW_ARCHS_LINUX: ppc64le
+        ppc64le cp37:
+          CIBW_BUILD: cp37-*
+          CIBW_ARCHS_LINUX: ppc64le
+        ppc64le cp38:
+          CIBW_BUILD: cp38-*
+          CIBW_ARCHS_LINUX: ppc64le
+        ppc64le cp39:
+          CIBW_BUILD: cp39-*
+          CIBW_ARCHS_LINUX: ppc64le
+        ppc64le cp310:
+          CIBW_BUILD: cp310-*
+          CIBW_ARCHS_LINUX: ppc64le
+        ppc64le cp311:
+          CIBW_BUILD: cp311-*
+          CIBW_ARCHS_LINUX: ppc64le
     variables:
-      CIBW_ARCHS_LINUX: $(ARCH)
       CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
     steps:
       - task: UsePythonVersion@0
@@ -94,7 +121,6 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade pip
           python -m pip install --upgrade cibuildwheel==2.12.0
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
