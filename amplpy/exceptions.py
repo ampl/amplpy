@@ -4,6 +4,11 @@ from __future__ import print_function, absolute_import, division
 # from builtins import map, range, object, zip, sorted
 # from past.builtins import basestring
 
+try:
+    from .tools import _SUPPORT_MESSAGE
+except Exception:
+    _SUPPORT_MESSAGE = ""
+
 
 class AMPLException(Exception):
     """
@@ -44,7 +49,7 @@ class AMPLException(Exception):
         return self.message
 
     def __str__(self):
-        return self.what.lstrip("file: -").strip("\n")
+        return self.what.lstrip("file: -").strip("\n") + _SUPPORT_MESSAGE
 
     # Aliases
     getLineNumber = get_line_number

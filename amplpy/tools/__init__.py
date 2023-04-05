@@ -16,3 +16,8 @@ except ImportError:
         "   $ python -m pip install ampltools --upgrade\n"
     )
     raise
+
+try:
+    from ampltools import _SUPPORT_MESSAGE
+except Exception:
+    pass
