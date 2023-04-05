@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.2 - 2023-04-05
+- Add message to append to AMPLException messages.
+
 ## 0.5.1 - 2023-03-14
 - When a module is not available, try to indicate a bundle with it.
 - Add unit tests for modules.
