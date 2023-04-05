@@ -37,6 +37,7 @@ add it before instantiating the AMPL object with:
 
 Or, if you are using amplpy.modules, do the following:
 
+    # More info at https://ampl.com/python
     from amplpy import AMPL, modules
     modules.load()
     ampl = AMPL()
