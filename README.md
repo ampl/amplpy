@@ -14,7 +14,35 @@ $ python -m amplpy.modules activate <license-uuid>
 $ python
 >>> from amplpy import AMPL
 >>> ampl = AMPL() # instantiate AMPL object
+... 
+# Minimal example:
+>>> import pandas as pd
+>>> ampl.eval(r"""
+        set A ordered;
+        param S{A, A};
+        param lb default 0;
+        param ub default 1;
+        var w{A} >= lb <= ub;
+        minimize portfolio_variance:
+            sum {i in A, j in A} w[i] * S[i, j] * w[j];
+        s.t. portfolio_weights:
+            sum {i in A} w[i] = 1;
+    """)
+>>> ampl.set["A"] = tickers
+>>> ampl.param["S"] = pd.DataFrame(
+        cov_matrix, index=tickers, columns=tickers
+    ).unstack()
+>>> ampl.option["solver"] = "gurobi"
+>>> ampl.solve()
+Gurobi 10.0.1: optimal solution; objective 0.0152123974
+0 simplex iterations
+12 barrier iterations
+>>> sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
+>>> print(f"volatility: {sigma*100:.1f}%")
+volatility: 12.3%
 ```
+
+
 
 [[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)]
 
