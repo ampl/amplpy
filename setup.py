@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+'''
 # AMPLPY: Python API for AMPL
 
 ```python
@@ -66,7 +66,7 @@ With `amplpy` you can model and solve large scale optimization problems in Pytho
 
 * GitHub Repository: https://github.com/ampl/amplpy
 * PyPI Repository: https://pypi.python.org/pypi/amplpy
-"""
+'''
 from setuptools import setup, Extension
 import platform
 import sys
@@ -159,7 +159,7 @@ setup(
     version="0.9.3b0",
     description="Python API for AMPL",
     long_description=__doc__,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     license="BSD-3",
     platforms="any",
     author="AMPL Optimization Inc.",
