@@ -31,7 +31,7 @@ ampl.eval(r"""
     s.t. portfolio_weights:
         sum {i in A} w[i] = 1;
 """)
-tickers, cov_matrix = ...
+tickers, cov_matrix = # ... pre-process data in Python
 ampl.set["A"] = tickers
 ampl.param["S"] = pd.DataFrame(
     cov_matrix, index=tickers, columns=tickers
@@ -39,9 +39,10 @@ ampl.param["S"] = pd.DataFrame(
 ampl.option["solver"] = "gurobi"
 ampl.option["gurobi_options"] = "outlev=1"
 ampl.solve()
-assert ampl.get_value("solve_result") == "solved" 
+assert ampl.get_value("solve_result") == "solved"
 sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
 print(f"Volatility: {sigma*100:.1f}%")
+# ... post-process solution in Python
 ```
 
 
