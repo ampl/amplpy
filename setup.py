@@ -18,6 +18,36 @@ $ python
 >>> ampl = AMPL() # instantiate AMPL object
 ```
 
+```python
+# Minimal example:
+from amplpy import AMPL
+import pandas as pd
+ampl = AMPL()
+ampl.eval(r"""
+    set A ordered;
+    param S{A, A};
+    param lb default 0;
+    param ub default 1;
+    var w{A} >= lb <= ub;
+    minimize portfolio_variance:
+        sum {i in A, j in A} w[i] * S[i, j] * w[j];
+    s.t. portfolio_weights:
+        sum {i in A} w[i] = 1;
+""")
+tickers, cov_matrix = # ... pre-process data in Python
+ampl.set["A"] = tickers
+ampl.param["S"] = pd.DataFrame(
+    cov_matrix, index=tickers, columns=tickers
+).unstack()
+ampl.option["solver"] = "gurobi"
+ampl.option["gurobi_options"] = "outlev=1"
+ampl.solve()
+assert ampl.get_value("solve_result") == "solved"
+sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
+print(f"Volatility: {sigma*100:.1f}%")
+# ... post-process solution in Python
+```
+
 [[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[Available on Google Colab](https://colab.ampl.com/)] [[AMPL Community Edition](http://ampl.com/ce)]
 
 `amplpy` is an interface that allows developers to access the features of [AMPL](https://ampl.com) from within Python. For a quick introduction to AMPL see [Quick Introduction to AMPL](https://dev.ampl.com/ampl/introduction.html).
@@ -126,7 +156,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.9.2",
+    version="0.9.3b0",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type='text/markdown',
