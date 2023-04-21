@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-# from past.builtins import basestring
+from __future__ import print_function
 
 
 def display_error_message(exception, error=True):
@@ -16,12 +13,11 @@ def display_error_message(exception, error=True):
 class ErrorHandler:
     """
     A basic interface for AMPL error handlers. If an application needs to
-    implement customised error handling, it must implement this interface and
+    implement customized error handling, it must implement this interface and
     then register an instance with the AMPL API using the
     :func:`~amplpy.AMPL.set_error_handler` method.
-    The underlying AMPL
-    interpreter will then report all errors and warnings through this
-    interface as :class:`~amplpy.AMPLException` objects.
+    The underlying AMPL interpreter will then report all errors and warnings
+    through this interface as :class:`~amplpy.AMPLException` objects.
     """
 
     def error(self, exception):
