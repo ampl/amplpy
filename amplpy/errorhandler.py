@@ -5,6 +5,14 @@ from __future__ import print_function, absolute_import, division
 # from past.builtins import basestring
 
 
+def display_error_message(exception, error=True):
+    msg = "\t" + str(exception).replace("\n", "\n\t")
+    if error:
+        print("Error:\n{:s}".format(msg))
+    else:
+        print("Warning:\n{:s}".format(msg))
+
+
 class ErrorHandler:
     """
     A basic interface for AMPL error handlers. If an application needs to
@@ -20,13 +28,11 @@ class ErrorHandler:
         """
         Receives notification of an error.
         """
-        msg = "\t" + str(exception).replace("\n", "\n\t")
-        print("Error:\n{:s}".format(msg))
+        display_error_message(exception)
         raise exception
 
     def warning(self, exception):
         """
         Receives notification of a warning.
         """
-        msg = "\t" + str(exception).replace("\n", "\n\t")
-        print("Warning:\n{:s}".format(msg))
+        display_error_message(exception, error=False)
