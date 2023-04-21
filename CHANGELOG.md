@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.9.3 - 2023-04-21
+- Removed CamelCase from docstrings.
+
 ## 0.9.2 - 2023-04-05
 - Add message to append to AMPLException messages.
 
