@@ -16,7 +16,7 @@ class OutputHandler(amplpython.OutputHandler):
     If an application needs to
     implement customised output handling, it must implement this interface and
     then register an instance with the AMPL API using the
-    :func:`~amplpy.AMPL.set_output_handler` / :func:`~amplpy.AMPL.setOutputHandler`
+    :func:`~amplpy.AMPL.set_output_handler`
     method.
 
     Note that errors and warnings are not passed through this interface,

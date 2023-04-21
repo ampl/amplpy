@@ -28,9 +28,9 @@ class Entity(BaseClass):
 
     To gain access to all the values in an entity (for all instances and all
     suffixes for that entities), use the function
-    :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`.
+    :func:`~amplpy.Entity.get_values`.
 
-    The algebraic entities which currenty have an equivalent class in the API
+    The algebraic entities which currently have an equivalent class in the API
     are:
 
     - Variables (see :class:`~amplpy.Variable`)

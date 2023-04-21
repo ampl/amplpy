@@ -24,7 +24,7 @@ class Variable(Entity):
 
     To gain access to all the values in an entity (for all instances and all
     suffixes for that entities), see
-    :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`
+    :func:`~amplpy.Entity.get_values`
     and the :class:`~amplpy.DataFrame` class.
     """
 

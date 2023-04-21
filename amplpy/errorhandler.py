@@ -18,7 +18,7 @@ class ErrorHandler:
     A basic interface for AMPL error handlers. If an application needs to
     implement customised error handling, it must implement this interface and
     then register an instance with the AMPL API using the
-    :func:`~amplpy.AMPL.set_error_handler` / :func:`~amplpy.AMPL.setErrorHandler` method.
+    :func:`~amplpy.AMPL.set_error_handler` method.
     The underlying AMPL
     interpreter will then report all errors and warnings through this
     interface as :class:`~amplpy.AMPLException` objects.

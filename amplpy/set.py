@@ -29,9 +29,9 @@ class Set(Entity):
     been deleted in the underlying AMPL interpreter.
 
     Data can be assigned to the set using the methods
-    :func:`~amplpy.Set.set_values` / :func:`~amplpy.Set.setValues`
+    :func:`~amplpy.Set.set_values`
     (for non-indexed sets only) or using
-    :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData`
+    :func:`~amplpy.AMPL.set_data`
     and an object of class
     :class:`~amplpy.DataFrame`.
     """

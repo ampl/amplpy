@@ -49,34 +49,31 @@ class AMPL(object):
 
     An object of this class can be used to do the following tasks:
 
-    - Run AMPL code. See :func:`~amplpy.AMPL.eval` and
-      :func:`~amplpy.AMPL.eval_async` / :func:`~amplpy.AMPL.evalAsync`.
+    - Run AMPL code. See :func:`~amplpy.AMPL.eval`.
     - Read models and data from files. See :func:`~amplpy.AMPL.read`,
-      :func:`~amplpy.AMPL.read_data` / :func:`~amplpy.AMPL.readData`,
-      :func:`~amplpy.AMPL.read_async` / :func:`~amplpy.AMPL.readAsync`, and
-      :func:`~amplpy.AMPL.read_data_async` / :func:`~amplpy.AMPL.readDataAsync`.
+      :func:`~amplpy.AMPL.read_data`.
     - Solve optimization problems constructed from model and data (see
-      :func:`~amplpy.AMPL.solve` and :func:`~amplpy.AMPL.solve_async` / :func:`~amplpy.AMPL.solveAsync`).
+      :func:`~amplpy.AMPL.solve`).
     - Access single Elements of an optimization problem. See
-      :func:`~amplpy.AMPL.get_variable` / :func:`~amplpy.AMPL.getVariable`,
-      :func:`~amplpy.AMPL.get_constraint` / :func:`~amplpy.AMPL.getConstraint`,
-      :func:`~amplpy.AMPL.get_objective` / :func:`~amplpy.AMPL.getObjective`,
-      :func:`~amplpy.AMPL.get_set` / :func:`~amplpy.AMPL.getSet`,
-      and :func:`~amplpy.AMPL.get_parameter` / :func:`~amplpy.AMPL.getParameter`.
+      :func:`~amplpy.AMPL.get_variable`,
+      :func:`~amplpy.AMPL.get_constraint`,
+      :func:`~amplpy.AMPL.get_objective`,
+      :func:`~amplpy.AMPL.get_set`,
+      and :func:`~amplpy.AMPL.get_parameter`.
     - Access lists of available entities of an optimization problem. See
-      :func:`~amplpy.AMPL.get_variables` / :func:`~amplpy.AMPL.getVariables`,
-      :func:`~amplpy.AMPL.get_constraints` / :func:`~amplpy.AMPL.getConstraints`,
-      :func:`~amplpy.AMPL.get_objectives` / :func:`~amplpy.AMPL.getObjectives`,
-      :func:`~amplpy.AMPL.get_sets` / :func:`~amplpy.AMPL.getSets`,
-      and :func:`~amplpy.AMPL.get_parameters` / :func:`~amplpy.AMPL.getParameters`.
+      :func:`~amplpy.AMPL.get_variables`,
+      :func:`~amplpy.AMPL.get_constraints`,
+      :func:`~amplpy.AMPL.get_objectives`,
+      :func:`~amplpy.AMPL.get_sets`,
+      and :func:`~amplpy.AMPL.get_parameters`.
 
     Error handling is two-faced:
 
     - Errors coming from the underlying AMPL translator (e.g. syntax errors and
       warnings obtained calling the eval method) are handled by
       the :class:`~amplpy.ErrorHandler` which can be set and get via
-      :func:`~amplpy.AMPL.get_error_handler` / :func:`~amplpy.AMPL.getErrorHandler` and
-      :func:`~amplpy.AMPL.set_error_handler` / :func:`~amplpy.AMPL.setErrorHandler`.
+      :func:`~amplpy.AMPL.get_error_handler` and
+      :func:`~amplpy.AMPL.set_error_handler`.
     - Generic errors coming from misusing the API, which are detected in
       Python, are thrown as exceptions.
 
@@ -87,8 +84,8 @@ class AMPL(object):
     handled implementing the abstract class :class:`~amplpy.OutputHandler`.
     The (only) method is called at each block of output from the translator.
     The current output handler can be accessed and set via
-    :func:`~amplpy.AMPL.get_output_handler` / :func:`~amplpy.AMPL.getOutputHandler` and
-    :func:`~amplpy.AMPL.set_output_handler` / :func:`~amplpy.AMPL.setOutputHandler`.
+    :func:`~amplpy.AMPL.get_output_handler` and
+    :func:`~amplpy.AMPL.set_output_handler`.
     """
 
     def __init__(self, environment=None, langext=None):

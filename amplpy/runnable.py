@@ -12,10 +12,10 @@ class Runnable(amplpython.Runnable):
     Represent an object with only one function, which is called as a callback
     after an async execution has finished. Inherit from this class and use an
     instance in
-    :func:`~amplpy.AMPL.eval_async` / :func:`~amplpy.AMPL.evalAsync`,
-    :func:`~amplpy.AMPL.read_async` / :func:`~amplpy.AMPL.readAsync`,
-    :func:`~amplpy.AMPL.read_data_async` / :func:`~amplpy.AMPL.readDataAsync`,
-    :func:`~amplpy.AMPL.solve_async` / :func:`~amplpy.AMPL.solveAsync`.
+    :func:`~amplpy.AMPL.eval_async`,
+    :func:`~amplpy.AMPL.read_async`,
+    :func:`~amplpy.AMPL.read_data_async`,
+    :func:`~amplpy.AMPL.solve_async`.
     """
 
     def run(self):

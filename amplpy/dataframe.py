@@ -69,25 +69,25 @@ class DataFrame(BaseClass):
     An object of this class can be used to do the following tasks:
 
     - Assign values to AMPL entities (once the DataFrame is populated, use
-      :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData` to assign its
+      :func:`~amplpy.AMPL.set_data` to assign its
       values to the modelling entities in its columns)
     - Get values from AMPL, decoupling the values from the AMPL entities they
       originate via
-      :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`.
+      :func:`~amplpy.Entity.get_values`.
 
     A DataFrame object can be created in various ways:
 
     - Get values from AMPL, decoupling the values from the AMPL entities they originate from
-      (via :func:`~amplpy.Entity.get_values` / :func:`~amplpy.Entity.getValues`)
-    - From Pandas dataframes with :func:`~amplpy.DataFrame.from_pandas` / :func:`~amplpy.DataFrame.fromPandas`
-    - From Numpy matrices with :func:`~amplpy.DataFrame.from_numpy` / :func:`~amplpy.DataFrame.fromNumpy`
-    - From Python dictionaries with :func:`~amplpy.DataFrame.from_dict` / :func:`~amplpy.DataFrame.fromDict`
+      (via :func:`~amplpy.Entity.get_values`)
+    - From Pandas dataframes with :func:`~amplpy.DataFrame.from_pandas`
+    - From Numpy matrices with :func:`~amplpy.DataFrame.from_numpy`
+    - From Python dictionaries with :func:`~amplpy.DataFrame.from_dict`
 
     and can be converted to various object types:
 
-    - Pandas dataframes with :func:`~amplpy.DataFrame.to_pandas` / :func:`~amplpy.DataFrame.toPandas`
-    - Python dictionary with :func:`~amplpy.DataFrame.to_dict` / :func:`~amplpy.DataFrame.toDict`
-    - Python list with :func:`~amplpy.DataFrame.to_list` / :func:`~amplpy.DataFrame.toList`
+    - Pandas dataframes with :func:`~amplpy.DataFrame.to_pandas`
+    - Python dictionary with :func:`~amplpy.DataFrame.to_dict`
+    - Python list with :func:`~amplpy.DataFrame.to_list`
     """
 
     def __init__(self, index, columns=tuple(), **kwargs):

@@ -22,9 +22,9 @@ class Parameter(Entity):
 
     Data can be assigned to the set using the methods
     :func:`~amplpy.Parameter.set` and
-    :func:`~amplpy.Parameter.set_values` / :func:`~amplpy.Parameter.setValues`
+    :func:`~amplpy.Parameter.set_values`
     or using
-    :func:`~amplpy.AMPL.set_data` / :func:`~amplpy.AMPL.setData`
+    :func:`~amplpy.AMPL.set_data`
     and an object of class :class:`~amplpy.DataFrame`.
     """
 
