@@ -47,7 +47,7 @@ print(f"Volatility: {sigma*100:.1f}%")
 
 
 
-[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[AMPL on Streamlit](https://ampl.com/streamlit)] [[Available on Google Colab](https://colab.ampl.com/)]
+[[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[AMPL on Streamlit](https://ampl.com/streamlit)] [[AMPL on Google Colab](https://colab.ampl.com/)] [[Community Edition](https://ampl.com/ce)]
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
 [![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
@@ -61,11 +61,6 @@ In the same way that AMPL’s syntax matches naturally the mathematical descript
 All model generation and solver interaction is handled directly by AMPL, which leads to great stability and speed; the library just acts as an intermediary, and the added overhead (in terms of memory and CPU usage) depends mostly on how much data is sent and read back from AMPL, the size of the expanded model as such is irrelevant.
 
 With `amplpy` you can model and solve large scale optimization problems in Python with the performance of heavily optimized C code without losing model readability. The same model can be deployed on applications built on different languages by just switching the API used.
-
-The AMPL API can function as an add-on to any existing AMPL installation. If
-you do not yet have an AMPL installation on the computer where you will be
-working with the API. Use our [Community Edition](http://ampl.com/ce) 
-to download a working version that can be installed quickly.
 
 ## Documentation
 
