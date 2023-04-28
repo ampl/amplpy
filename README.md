@@ -1,5 +1,10 @@
 # AMPLPY: Python API for AMPL
 
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
+[![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
+[![Build Status](https://dev.azure.com/ampldev/amplpy/_apis/build/status/ampl.amplpy?branchName=master)](https://dev.azure.com/ampldev/amplpy/_build/latest?definitionId=9&branchName=test)
+[![build-and-test](https://github.com/ampl/amplpy/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/ampl/amplpy/actions/workflows/build-and-test.yaml)
+
 ```python
 # Install Python API for AMPL
 $ python -m pip install amplpy --upgrade
@@ -46,13 +51,7 @@ print(f"Volatility: {sigma*100:.1f}%")
 ```
 
 
-
 [[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[AMPL on Streamlit](https://ampl.com/streamlit)] [[AMPL on Google Colab](https://colab.ampl.com/)] [[Community Edition](https://ampl.com/ce)]
-
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/amplpy?label=PyPI%20downloads)](https://pypistats.org/packages/amplpy)
-[![Conda](https://img.shields.io/conda/dn/conda-forge/amplpy?label=Conda%20downloads)](https://anaconda.org/conda-forge/amplpy)
-[![Build Status](https://dev.azure.com/ampldev/amplpy/_apis/build/status/ampl.amplpy?branchName=master)](https://dev.azure.com/ampldev/amplpy/_build/latest?definitionId=9&branchName=test)
-[![build-and-test](https://github.com/ampl/amplpy/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/ampl/amplpy/actions/workflows/build-and-test.yaml)
 
 `amplpy` is an interface that allows developers to access the features of [AMPL](https://ampl.com) from within Python. For a quick introduction to AMPL see [Quick Introduction to AMPL](https://dev.ampl.com/ampl/introduction.html).
 
