@@ -336,6 +336,15 @@ def load_modules(modules=[], head=True, verbose=False):
 
     _prepare_amplkey_env()
 
+    # Add all modules to ampl_libpath (necessary for plugins)
+    ampl_libpath = os.environ.get("ampl_libpath", "").split("\n")
+    for path in path_modules:
+        if path not in ampl_libpath:
+            ampl_libpath.append(path)
+    if ampl_libpath:
+        ampl_libpath = [path for path in ampl_libpath if path]
+        os.environ["ampl_libpath"] = "\n".join(ampl_libpath)
+
 
 def unload_modules(modules=[]):
     """

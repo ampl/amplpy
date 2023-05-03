@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-AMPL Python Tools
------------------
+# AMPL Python Tools
 
-This package includes tools to use with AMPL and amplpy.
+This package includes tools to use with [AMPL](https://ampl.com) and [amplpy](https://amplpy.readthedocs.io).
 
-Links
-`````
+## Links
 
-* GitHub Repository: https://github.com/ampl/amplpy/tree/master/ampltools
+* GitHub Repository: https://github.com/ampl/amplpy/
 * PyPI Repository: https://pypi.python.org/pypi/ampltools
 """
 from setuptools import setup
@@ -26,9 +24,10 @@ def ls_dir(base_dir):
 
 setup(
     name="ampltools",
-    version="0.5.2",
+    version="0.5.3",
     description="AMPL Python Tools",
     long_description=__doc__,
+    long_description_content_type="text/markdown",
     license="BSD-3",
     platforms="any",
     author="Filipe Brandão",

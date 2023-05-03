@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.3 - 2023-05-03
+- Set ampl_libpath when loading modules.
+
 ## 0.5.2 - 2023-04-05
 - Add message to append to AMPLException messages.
 
