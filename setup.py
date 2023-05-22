@@ -156,7 +156,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.9.3",
+    version="0.10.0b0",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",
@@ -180,8 +180,6 @@ setup(
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: C++",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
@@ -205,5 +203,5 @@ setup(
         )
     ],
     package_data={"": package_content()},
-    install_requires=["future >= 0.15.0", "ampltools >= 0.5.1"],
+    install_requires=["future >= 0.15.0", "ampltools >= 0.5.3"],
 )
