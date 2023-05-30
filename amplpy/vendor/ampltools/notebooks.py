@@ -105,11 +105,13 @@ def ampl_notebook(
     show_license=None,
     globals_=None,
 ):
+    from IPython import get_ipython
+
     if globals_ is None:
         globals_ = g
-    show_prompt = globals_ is not None
     if globals_ is None:
-        globals_ = {}
+        globals_ = get_ipython().user_global_ns
+    show_prompt = globals_ is not None
     if show_license is None:
         show_license = True
 
