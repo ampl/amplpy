@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.4 - 2023-05-30
+- ampl_notebook: Drop g/globals_ argument.
+- ampl_notebook: Remove button to use existing license.
+
 ## 0.5.3 - 2023-05-03
 - Set ampl_libpath when loading modules.
 

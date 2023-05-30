@@ -28,10 +28,7 @@ def _ampl_license_cell(check_callback):
 
     platform = cloud_platform_name()
     with header:
-        if platform is not None:
-            print("AMPL License UUID (you can use a free https://ampl.com/ce license):")
-        else:
-            print("AMPL License UUID:")
+        print("AMPL License UUID (you can use a free https://ampl.com/ce license):")
     with message:
         ampl_lic = os.environ.get("AMPL_LICFILE", None)
         if ampl_lic is not None and platform is None:
@@ -40,8 +37,9 @@ def _ampl_license_cell(check_callback):
         if check_callback:
             check_callback()
 
-    existing_btn = widgets.Button(description="Use existing license")
-    uuid_input = widgets.Text(description="UUID:")
+    uuid_input = widgets.Text(
+        description="License UUID:", style={"description_width": "initial"}
+    )
 
     def activate(where):
         uuid = uuid_input.value.strip()
@@ -49,10 +47,7 @@ def _ampl_license_cell(check_callback):
             return
         message.clear_output(wait=False)
         with message:
-            if where == "existing":
-                print("Switch to existing license.")
-                _deactivate_license()
-            elif where == "uuid":
+            if where == "uuid":
                 if len(uuid) == 36:
                     uuid_input.value = ""  # clear the input
                     try:
@@ -70,13 +65,8 @@ def _ampl_license_cell(check_callback):
             if check_callback:
                 check_callback()
 
-    existing_btn.on_click(lambda b: activate("existing"), False)
     uuid_input.observe(lambda d: activate("uuid"), "value")
-    display(
-        widgets.VBox(
-            [header, widgets.HBox([existing_btn, uuid_input]), message, version]
-        )
-    )
+    display(widgets.VBox([header, widgets.HBox([uuid_input]), message, version]))
 
 
 def _handle_default_uuid():
@@ -100,15 +90,13 @@ def ampl_notebook(
     modules=[],
     license_uuid=None,
     reinstall=False,
-    g=None,
     verbose=False,
     show_license=None,
-    globals_=None,
+    **kwargs
 ):
     from IPython import get_ipython
 
-    if globals_ is None:
-        globals_ = g
+    globals_ = kwargs.get("globals_", kwargs.get("g", None))
     if globals_ is None:
         globals_ = get_ipython().user_global_ns
     show_prompt = globals_ is not None
@@ -144,7 +132,17 @@ def ampl_notebook(
         modules = []
 
     using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
-    open_modules = ["highs", "cbc", "coin", "open", "plugins", "ampl"]
+    open_modules = [
+        "highs",
+        "cbc",
+        "coin",
+        "gecode",
+        "scip",
+        "gcg",
+        "open",
+        "plugins",
+        "ampl",
+    ]
     open_source_only = len(set(modules) - set(open_modules)) == 0
 
     if using_default_license:
