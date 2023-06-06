@@ -16,8 +16,8 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityMap
-from .exceptions import AMPLException
 from .entity import Entity
+from . import exceptions
 from . import amplpython
 
 try:
@@ -690,7 +690,7 @@ class AMPL(object):
 
             def error(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
-                    exception = AMPLException(exception)
+                    exception = exceptions.AMPLException(exception)
                 try:
                     self.error_handler.error(exception)
                 except Exception as exp:
@@ -698,7 +698,7 @@ class AMPL(object):
 
             def warning(self, exception):
                 if isinstance(exception, amplpython.AMPLException):
-                    exception = AMPLException(exception)
+                    exception = exceptions.AMPLException(exception)
                 try:
                     self.error_handler.warning(exception)
                 except Exception as exp:
@@ -933,6 +933,17 @@ class AMPL(object):
             directory or absolute).
         """
         self._impl.exportData(datfile)
+
+    def write(self, filename, auxfiles=""):
+        """
+        Invoke write command with filename as argument and
+        set auxfiles if non-empty.
+
+        Args:
+            filename: outuput filename.
+            auxfiles: auxfiles to export.
+        """
+        self._impl.write(filename)
 
     def _start_recording(self, filename):
         """
