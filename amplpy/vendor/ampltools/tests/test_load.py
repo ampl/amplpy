@@ -27,12 +27,14 @@ class TestLoad(TestBase.TestBase):
 
         modules.install("highs", verbose=verbose)
         self.assertEqual(initial_path, self.get_env_path_list())
+        self.assertTrue(os.path.isfile(modules.find("highs")))
 
         modules.load("highs", verbose=verbose)
         self.assertNotEqual(initial_path, self.get_env_path_list())
         expected = modules.path().split(os.pathsep) + initial_path
         self.assertEqual(expected, self.get_env_path_list())
         self.assertEqual(len(initial_path) + 2, len(self.get_env_path_list()))
+        self.assertIn(modules.path("highs", add_base=False), self.get_env_path_list())
 
         modules.install(["cbc"], verbose=verbose)
         modules.unload(["base", "highs"])

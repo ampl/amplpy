@@ -16,7 +16,7 @@ from .set import Set
 from .parameter import Parameter
 from .dataframe import DataFrame
 from .iterators import EntityMap
-from .exceptions import AMPLException
+from . import exceptions
 from .entity import Entity
 from . import amplpython
 
@@ -604,7 +604,7 @@ class AMPL(object):
             DataFrame are to be assigned.
 
         Raises:
-            AMPLException: if the data assignment procedure was not successful.
+            exceptions.AMPLException: if the data assignment procedure was not successful.
         """
         if not isinstance(data, DataFrame):
             if pd is not None and isinstance(data, pd.DataFrame):
@@ -689,16 +689,16 @@ class AMPL(object):
                 self.last_exception = None
 
             def error(self, exception):
-                if isinstance(exception, amplpython.AMPLException):
-                    exception = AMPLException(exception)
+                if isinstance(exception, amplpython.exceptions.AMPLException):
+                    exception = exceptions.AMPLException(exception)
                 try:
                     self.error_handler.error(exception)
                 except Exception as exp:
                     self.last_exception = exp
 
             def warning(self, exception):
-                if isinstance(exception, amplpython.AMPLException):
-                    exception = AMPLException(exception)
+                if isinstance(exception, amplpython.exceptions.AMPLException):
+                    exception = exceptions.AMPLException(exception)
                 try:
                     self.error_handler.warning(exception)
                 except Exception as exp:
@@ -933,6 +933,17 @@ class AMPL(object):
             directory or absolute).
         """
         self._impl.exportData(datfile)
+
+    def write(self, filename, auxfiles=""):
+        """
+        Invoke write command with filename as argument and
+        set auxfiles if non-empty.
+
+        Args:
+            filename: outuput filename.
+            auxfiles: auxfiles to export.
+        """
+        self._impl.write(filename)
 
     def _start_recording(self, filename):
         """

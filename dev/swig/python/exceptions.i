@@ -1,4 +1,20 @@
 %include "exception.i"
+
+%exceptionclass PresolveException;
+%exceptionclass InfeasibilityException;
+
+%extend ampl::PresolveException {
+    const char* _str_() const {
+            return $self->what();
+    }
+}
+
+%extend ampl::InfeasibilityException {
+    const char* _str_() const {
+            return $self->what();
+    }
+}
+
 %exception{
   try {
   $action
@@ -6,33 +22,45 @@
 catch (std::range_error) {
   SWIG_exception(SWIG_ValueError, "Range Error");
 }
-catch (ampl::AMPLException e) {
+catch (const ampl::AMPLException &e) {
   SWIG_exception(SWIG_RuntimeError, e.what());
 }
-catch (std::invalid_argument e) {
+catch (const ampl::PresolveException &e) {
+  ampl::PresolveException *ecopy = new ampl::PresolveException(e);
+  PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
+  PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
+  SWIG_fail;
+}
+catch (const ampl::InfeasibilityException &e) {
+  ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
+  PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
+  PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
+  SWIG_fail;
+}
+catch (const std::invalid_argument &e) {
   SWIG_exception(SWIG_ValueError, e.what());
 }
-catch (std::out_of_range e) {
+catch (const std::out_of_range &e) {
   // SWIG_KeyError does not exist
   SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
 }
-catch (std::logic_error e) {
+catch (const std::logic_error &e) {
   SWIG_exception(SWIG_TypeError, e.what());
 }
-catch (ampl::UnsupportedOperationException e)
+catch (const ampl::UnsupportedOperationException &e)
 {
 	SWIG_exception(SWIG_TypeError, e.what());
 }
-catch (ampl::LicenseException e) {
+catch (const ampl::LicenseException &e) {
 	SWIG_exception(SWIG_SystemError, e.what());
 }
-catch (ampl::FileIOException e) {
+catch (const ampl::FileIOException &e) {
 	SWIG_exception(SWIG_IOError, e.what());
 }
-catch (std::runtime_error e) {
+catch (const std::runtime_error &e) {
   SWIG_exception(SWIG_RuntimeError, e.what());
 }
-catch (std::exception e) {
+catch (const std::exception &e) {
   SWIG_exception(SWIG_UnknownError, e.what());
 }
 catch (...) {
