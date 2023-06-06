@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.5.6"
+__version__ = "0.5.4"
 
 from .amplpypi import (
     path,
-    find,
     run_command as run,
     activate_license as activate,
     install_modules as install,

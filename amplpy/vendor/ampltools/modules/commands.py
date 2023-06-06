@@ -7,7 +7,6 @@ from .amplpypi import (
     generate_requirements,
     load_modules,
     path,
-    find,
     activate_license,
 )
 import subprocess
@@ -41,11 +40,6 @@ USAGE = """Usage:
     $ python -m $PACKAGE.modules path
     Example:
         $ export PATH=$PATH:`python -m amplpy.modules path`
-
-- Find the path to a file in any module
-    $ python -m $PACKAGE.modules find <file name>
-    Example:
-        $ python -m amplpy.modules find gurobi
 
 - Generate requirements.txt for the modules currently installed
     $ python -m $PACKAGE.modules requirements
@@ -101,11 +95,6 @@ def _commands(args):
     elif command == "path":
         modules = [m for m in args if not m.startswith("-")]
         print(path(modules))
-    elif command == "find":
-        if len(args) != 1:
-            raise Exception(ERROR + usage)
-        filename = args[0]
-        print(find(filename))
     elif command == "run":
         if len(args) == 0:
             raise Exception(ERROR + usage)

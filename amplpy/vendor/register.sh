@@ -9,5 +9,5 @@ rm -rf build *.egg-info
 #python setup.py register
 #python setup.py build
 python setup.py sdist bdist_wheel
-twine upload dist/*.tar.gz dist/*.whl --skip-existing
+twine upload dist/*.tar.gz dist/*.whl
 #python setup.py sdist bdist_wheel upload
