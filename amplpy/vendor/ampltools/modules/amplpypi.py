@@ -18,7 +18,7 @@ def installed_modules():
 
     prefix = "ampl_module_"
     installed = []
-    for (_, name, _) in iter_modules():
+    for _, name, _ in iter_modules():
         norm = name.replace("-", "_")
         if norm.startswith(prefix):
             installed.append(norm.replace(prefix, ""))
@@ -376,14 +376,31 @@ def preload_modules(silently=True, verbose=False):
         return False
 
 
-def path(modules=[]):
+def path(modules=[], add_base=True):
     """
     Return PATH for AMPL modules.
     Args:
         modules: list of modules to be included.
     """
-    modules = _sort_modules_for_loading(modules)
+    modules = _sort_modules_for_loading(modules, add_base=add_base)
     return os.pathsep.join(_locate_modules(modules, verbose=False))
+
+
+def find(filename):
+    """
+    Find a file in AMPL modules.
+    Args:
+        filename: name of the file to locate.
+    """
+    paths = path().split(os.pathsep)
+    for p in paths:
+        full_path = os.path.join(p, filename)
+        if os.path.isfile(full_path):
+            return full_path
+        full_path = os.path.join(p, filename + ".exe")
+        if os.path.isfile(full_path):
+            return full_path
+    raise FileNotFoundError("Could not find {} in any AMPL module.".format(filename))
 
 
 def activate_license(uuid, verbose=False):
