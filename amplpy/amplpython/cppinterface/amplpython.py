@@ -5,8 +5,2439 @@
 # the SWIG interface file instead.
 
 from sys import version_info as _swig_python_version_info
-# Pull in all the attributes from the low-level C/C++ module
+# Import the low-level C/C++ module
 if __package__ or "." in __name__:
-    from ._amplpython import *
+    from . import _amplpython
 else:
-    from _amplpython import *
+    import _amplpython
+
+try:
+    import builtins as __builtin__
+except ImportError:
+    import __builtin__
+
+def _swig_repr(self):
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except __builtin__.Exception:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+
+
+def _swig_setattr_nondynamic_instance_variable(set):
+    def set_instance_attr(self, name, value):
+        if name == "this":
+            set(self, name, value)
+        elif name == "thisown":
+            self.this.own(value)
+        elif hasattr(self, name) and isinstance(getattr(type(self), name), property):
+            set(self, name, value)
+        else:
+            raise AttributeError("You cannot add instance attributes to %s" % self)
+    return set_instance_attr
+
+
+def _swig_setattr_nondynamic_class_variable(set):
+    def set_class_attr(cls, name, value):
+        if hasattr(cls, name) and not isinstance(getattr(cls, name), property):
+            set(cls, name, value)
+        else:
+            raise AttributeError("You cannot add class attributes to %s" % cls)
+    return set_class_attr
+
+
+def _swig_add_metaclass(metaclass):
+    """Class decorator for adding a metaclass to a SWIG wrapped class - a slimmed down version of six.add_metaclass"""
+    def wrapper(cls):
+        return metaclass(cls.__name__, cls.__bases__, cls.__dict__.copy())
+    return wrapper
+
+
+class _SwigNonDynamicMeta(type):
+    """Meta class to enforce nondynamic attributes (no new attributes) for a class"""
+    __setattr__ = _swig_setattr_nondynamic_class_variable(type.__setattr__)
+
+
+import weakref
+
+class StringArray(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def size(self):
+        return _amplpython.StringArray_size(self)
+
+    def getIndex(self, index):
+        return _amplpython.StringArray_getIndex(self, index)
+    __swig_destroy__ = _amplpython.delete_StringArray
+
+# Register StringArray in _amplpython:
+_amplpython.StringArray_swigregister(StringArray)
+class StringRefArray(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def size(self):
+        return _amplpython.StringRefArray_size(self)
+
+    def getIndex(self, index):
+        return _amplpython.StringRefArray_getIndex(self, index)
+    __swig_destroy__ = _amplpython.delete_StringRefArray
+
+# Register StringRefArray in _amplpython:
+_amplpython.StringRefArray_swigregister(StringRefArray)
+class runtime_error(Exception):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def what(self):
+        return _amplpython.runtime_error_what(self)
+    __swig_destroy__ = _amplpython.delete_runtime_error
+
+# Register runtime_error in _amplpython:
+_amplpython.runtime_error_swigregister(runtime_error)
+
+def VariantFromPyObject(obj):
+    return _amplpython.VariantFromPyObject(obj)
+
+def SetTupleFromPyObject(obj, t):
+    return _amplpython.SetTupleFromPyObject(obj, t)
+class VariantArray(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, nelements):
+        _amplpython.VariantArray_swiginit(self, _amplpython.new_VariantArray(nelements))
+    __swig_destroy__ = _amplpython.delete_VariantArray
+
+    def __getitem__(self, index):
+        return _amplpython.VariantArray___getitem__(self, index)
+
+    def __setitem__(self, index, value):
+        return _amplpython.VariantArray___setitem__(self, index, value)
+
+    def cast(self):
+        return _amplpython.VariantArray_cast(self)
+
+    @staticmethod
+    def frompointer(t):
+        return _amplpython.VariantArray_frompointer(t)
+
+# Register VariantArray in _amplpython:
+_amplpython.VariantArray_swigregister(VariantArray)
+class TupleArray(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, nelements):
+        _amplpython.TupleArray_swiginit(self, _amplpython.new_TupleArray(nelements))
+    __swig_destroy__ = _amplpython.delete_TupleArray
+
+    def __getitem__(self, index):
+        return _amplpython.TupleArray___getitem__(self, index)
+
+    def __setitem__(self, index, value):
+        return _amplpython.TupleArray___setitem__(self, index, value)
+
+    def cast(self):
+        return _amplpython.TupleArray_cast(self)
+
+    @staticmethod
+    def frompointer(t):
+        return _amplpython.TupleArray_frompointer(t)
+
+# Register TupleArray in _amplpython:
+_amplpython.TupleArray_swigregister(TupleArray)
+class OptionalInt(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.OptionalInt_swiginit(self, _amplpython.new_OptionalInt(*args))
+
+    def __nonzero__(self):
+        return _amplpython.OptionalInt_hasValue(self)
+    __bool__ = __nonzero__
+
+
+
+    def value(self):
+        return _amplpython.OptionalInt_value(self)
+    __swig_destroy__ = _amplpython.delete_OptionalInt
+
+# Register OptionalInt in _amplpython:
+_amplpython.OptionalInt_swigregister(OptionalInt)
+class OptionalString(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.OptionalString_swiginit(self, _amplpython.new_OptionalString(*args))
+
+    def __nonzero__(self):
+        return _amplpython.OptionalString_hasValue(self)
+    __bool__ = __nonzero__
+
+
+
+    def value(self):
+        return _amplpython.OptionalString_value(self)
+    __swig_destroy__ = _amplpython.delete_OptionalString
+
+# Register OptionalString in _amplpython:
+_amplpython.OptionalString_swigregister(OptionalString)
+class OptionalBool(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.OptionalBool_swiginit(self, _amplpython.new_OptionalBool(*args))
+
+    def __nonzero__(self):
+        return _amplpython.OptionalBool_hasValue(self)
+    __bool__ = __nonzero__
+
+
+
+    def value(self):
+        return _amplpython.OptionalBool_value(self)
+    __swig_destroy__ = _amplpython.delete_OptionalBool
+
+# Register OptionalBool in _amplpython:
+_amplpython.OptionalBool_swigregister(OptionalBool)
+class OptionalDouble(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.OptionalDouble_swiginit(self, _amplpython.new_OptionalDouble(*args))
+
+    def __nonzero__(self):
+        return _amplpython.OptionalDouble_hasValue(self)
+    __bool__ = __nonzero__
+
+
+
+    def value(self):
+        return _amplpython.OptionalDouble_value(self)
+    __swig_destroy__ = _amplpython.delete_OptionalDouble
+
+# Register OptionalDouble in _amplpython:
+_amplpython.OptionalDouble_swigregister(OptionalDouble)
+EMPTY = _amplpython.EMPTY
+NUMERIC = _amplpython.NUMERIC
+STRING = _amplpython.STRING
+class Variant(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.Variant_swiginit(self, _amplpython.new_Variant(*args))
+
+    def str(self):
+        return _amplpython.Variant_str(self)
+
+    def dbl(self):
+        return _amplpython.Variant_dbl(self)
+
+    def type(self):
+        return _amplpython.Variant_type(self)
+
+    def toString(self):
+        return _amplpython.Variant_toString(self)
+
+    def equals(self, b):
+        return _amplpython.Variant_equals(self, b)
+
+    def compare(self, b):
+        return _amplpython.Variant_compare(self, b)
+    __swig_destroy__ = _amplpython.delete_Variant
+
+# Register Variant in _amplpython:
+_amplpython.Variant_swigregister(Variant)
+class VariantRef(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.VariantRef_swiginit(self, _amplpython.new_VariantRef(*args))
+
+    def str(self):
+        return _amplpython.VariantRef_str(self)
+
+    def dbl(self):
+        return _amplpython.VariantRef_dbl(self)
+
+    def type(self):
+        return _amplpython.VariantRef_type(self)
+
+    def toString(self):
+        return _amplpython.VariantRef_toString(self)
+
+    def equals(self, b):
+        return _amplpython.VariantRef_equals(self, b)
+
+    def compare(self, b):
+        return _amplpython.VariantRef_compare(self, b)
+    __swig_destroy__ = _amplpython.delete_VariantRef
+
+# Register VariantRef in _amplpython:
+_amplpython.VariantRef_swigregister(VariantRef)
+class TupleRef(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, t):
+        _amplpython.TupleRef_swiginit(self, _amplpython.new_TupleRef(t))
+
+    def size(self):
+        return _amplpython.TupleRef_size(self)
+
+    def toString(self):
+        return _amplpython.TupleRef_toString(self)
+
+    def getIndex(self, index):
+        return _amplpython.TupleRef_getIndex(self, index)
+    __swig_destroy__ = _amplpython.delete_TupleRef
+
+# Register TupleRef in _amplpython:
+_amplpython.TupleRef_swigregister(TupleRef)
+class Tuple(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.Tuple_swiginit(self, _amplpython.new_Tuple(*args))
+
+    def size(self):
+        return _amplpython.Tuple_size(self)
+
+    def toString(self):
+        return _amplpython.Tuple_toString(self)
+
+    def getIndex(self, index):
+        return _amplpython.Tuple_getIndex(self, index)
+
+    def equals(self, other):
+        return _amplpython.Tuple_equals(self, other)
+
+    @staticmethod
+    def Factory(*args):
+        return _amplpython.Tuple_Factory(*args)
+    __swig_destroy__ = _amplpython.delete_Tuple
+
+# Register Tuple in _amplpython:
+_amplpython.Tuple_swigregister(Tuple)
+class DataFrame(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_DataFrame
+
+    def __init__(self, *args):
+        _amplpython.DataFrame_swiginit(self, _amplpython.new_DataFrame(*args))
+
+    def clone(self, df):
+        return _amplpython.DataFrame_clone(self, df)
+
+    def equals(self, other):
+        return _amplpython.DataFrame_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.DataFrame_differs(self, other)
+
+    def getNumCols(self):
+        return _amplpython.DataFrame_getNumCols(self)
+
+    def getNumRows(self):
+        return _amplpython.DataFrame_getNumRows(self)
+
+    def getNumIndices(self):
+        return _amplpython.DataFrame_getNumIndices(self)
+
+    def reserve(self, numRows):
+        return _amplpython.DataFrame_reserve(self, numRows)
+
+    def toString(self):
+        return _amplpython.DataFrame_toString(self)
+
+    def getColumn(self, header):
+        return _amplpython.DataFrame_getColumn(self, header)
+
+    def getRowByIndex(self, index):
+        return _amplpython.DataFrame_getRowByIndex(self, index)
+
+    def getRow(self, *args):
+        return _amplpython.DataFrame_getRow(self, *args)
+
+    def getHeaders(self):
+        return _amplpython.DataFrame_getHeaders(self)
+
+    def impl(self):
+        return _amplpython.DataFrame_impl(self)
+
+    def setValueSWIG(self, *args):
+        return _amplpython.DataFrame_setValueSWIG(self, *args)
+
+    def addColumn(self, header):
+        return _amplpython.DataFrame_addColumn(self, header)
+
+    def addColumnStr(self, header, args):
+        return _amplpython.DataFrame_addColumnStr(self, header, args)
+
+    def addColumnDbl(self, header, args):
+        return _amplpython.DataFrame_addColumnDbl(self, header, args)
+
+    def addRow(self, *args):
+        return _amplpython.DataFrame_addRow(self, *args)
+
+    def getRowTpl(self, tuple):
+        return _amplpython.DataFrame_getRowTpl(self, tuple)
+
+    def setColumnStr(self, header, args, n):
+        return _amplpython.DataFrame_setColumnStr(self, header, args, n)
+
+    def setColumnDbl(self, header, values, n):
+        return _amplpython.DataFrame_setColumnDbl(self, header, values, n)
+
+    def setArrayDblDbl(self, args, values, n):
+        return _amplpython.DataFrame_setArrayDblDbl(self, args, values, n)
+
+    def setArrayStrDbl(self, args, values, n):
+        return _amplpython.DataFrame_setArrayStrDbl(self, args, values, n)
+
+    def setArrayDblStr(self, args, values, n):
+        return _amplpython.DataFrame_setArrayDblStr(self, args, values, n)
+
+    def setArrayStrStr(self, args, values, n):
+        return _amplpython.DataFrame_setArrayStrStr(self, args, values, n)
+
+    def setMatrixDblDblDbl(self, row_indices, rown, col_indices, coln, values):
+        return _amplpython.DataFrame_setMatrixDblDblDbl(self, row_indices, rown, col_indices, coln, values)
+
+    def setMatrixStrStrDbl(self, row_indices, rown, col_indices, coln, values):
+        return _amplpython.DataFrame_setMatrixStrStrDbl(self, row_indices, rown, col_indices, coln, values)
+
+    def setMatrixDblStrDbl(self, row_indices, rown, col_indices, coln, values):
+        return _amplpython.DataFrame_setMatrixDblStrDbl(self, row_indices, rown, col_indices, coln, values)
+
+    def setMatrixStrDblDbl(self, row_indices, rown, col_indices, coln, values):
+        return _amplpython.DataFrame_setMatrixStrDblDbl(self, row_indices, rown, col_indices, coln, values)
+
+    def setMatrixDblDblStr(self, row_indices, rown, col_indices, coln, args):
+        return _amplpython.DataFrame_setMatrixDblDblStr(self, row_indices, rown, col_indices, coln, args)
+
+    def setMatrixDblStrStr(self, row_indices, rown, col_indices, coln, args):
+        return _amplpython.DataFrame_setMatrixDblStrStr(self, row_indices, rown, col_indices, coln, args)
+
+    def setMatrixStrDblStr(self, row_indices, rown, col_indices, coln, args):
+        return _amplpython.DataFrame_setMatrixStrDblStr(self, row_indices, rown, col_indices, coln, args)
+
+    def setMatrixStrStrStr(self, row_indices, rown, col_indices, coln, args):
+        return _amplpython.DataFrame_setMatrixStrStrStr(self, row_indices, rown, col_indices, coln, args)
+
+    @staticmethod
+    def factory(numberOfIndexColumns, args, count):
+        return _amplpython.DataFrame_factory(numberOfIndexColumns, args, count)
+
+    def setColumnPyList(self, header, list):
+        return _amplpython.DataFrame_setColumnPyList(self, header, list)
+
+# Register DataFrame in _amplpython:
+_amplpython.DataFrame_swigregister(DataFrame)
+class DataFrameColumn(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def size(self):
+        return _amplpython.DataFrameColumn_size(self)
+
+    def begin(self):
+        return _amplpython.DataFrameColumn_begin(self)
+
+    def end(self):
+        return _amplpython.DataFrameColumn_end(self)
+
+    def getIndex(self, index):
+        return _amplpython.DataFrameColumn_getIndex(self, index)
+
+    def toPyList(self):
+        return _amplpython.DataFrameColumn_toPyList(self)
+    __swig_destroy__ = _amplpython.delete_DataFrameColumn
+
+# Register DataFrameColumn in _amplpython:
+_amplpython.DataFrameColumn_swigregister(DataFrameColumn)
+class ColIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.ColIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.ColIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.ColIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.ColIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.ColIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.ColIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_ColIterator
+
+# Register ColIterator in _amplpython:
+_amplpython.ColIterator_swigregister(ColIterator)
+class DataFrameRow(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def size(self):
+        return _amplpython.DataFrameRow_size(self)
+
+    def begin(self):
+        return _amplpython.DataFrameRow_begin(self)
+
+    def end(self):
+        return _amplpython.DataFrameRow_end(self)
+
+    def getIndex(self, index):
+        return _amplpython.DataFrameRow_getIndex(self, index)
+    __swig_destroy__ = _amplpython.delete_DataFrameRow
+
+# Register DataFrameRow in _amplpython:
+_amplpython.DataFrameRow_swigregister(DataFrameRow)
+class RowIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.RowIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.RowIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.RowIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.RowIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.RowIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.RowIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_RowIterator
+
+# Register RowIterator in _amplpython:
+_amplpython.RowIterator_swigregister(RowIterator)
+class Instance(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def toString(self):
+        return _amplpython.Instance_toString(self)
+
+    def name(self):
+        return _amplpython.Instance_name(self)
+
+    def entity(self):
+        return _amplpython.Instance_entity(self)
+
+    def key(self):
+        return _amplpython.Instance_key(self)
+    __swig_destroy__ = _amplpython.delete_Instance
+
+# Register Instance in _amplpython:
+_amplpython.Instance_swigregister(Instance)
+class SetInstance(Instance):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def size(self):
+        return _amplpython.SetInstance_size(self)
+
+    def contains(self, t):
+        return _amplpython.SetInstance_contains(self, t)
+
+    def getValues(self):
+        return _amplpython.SetInstance_getValues(self)
+
+    def setValuesDf(self, data):
+        return _amplpython.SetInstance_setValuesDf(self, data)
+
+    def members(self):
+        return _amplpython.SetInstance_members(self)
+
+    def Contains(self, t):
+        return _amplpython.SetInstance_Contains(self, t)
+
+    def setValuesTuples(self, t, n):
+        return _amplpython.SetInstance_setValuesTuples(self, t, n)
+
+    def setValues(self, t, n):
+        return _amplpython.SetInstance_setValues(self, t, n)
+
+    def setValuesDbl(self, values, n):
+        return _amplpython.SetInstance_setValuesDbl(self, values, n)
+
+    def setValuesStr(self, args, n):
+        return _amplpython.SetInstance_setValuesStr(self, args, n)
+    __swig_destroy__ = _amplpython.delete_SetInstance
+
+# Register SetInstance in _amplpython:
+_amplpython.SetInstance_swigregister(SetInstance)
+class MemberRange(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, impl_):
+        _amplpython.MemberRange_swiginit(self, _amplpython.new_MemberRange(impl_))
+
+    def begin(self):
+        return _amplpython.MemberRange_begin(self)
+
+    def end(self):
+        return _amplpython.MemberRange_end(self)
+
+    def size(self):
+        return _amplpython.MemberRange_size(self)
+    __swig_destroy__ = _amplpython.delete_MemberRange
+
+# Register MemberRange in _amplpython:
+_amplpython.MemberRange_swigregister(MemberRange)
+class iterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def __ref__(self):
+        return _amplpython.iterator___ref__(self)
+
+    def postIncrement(self):
+        return _amplpython.iterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.iterator_postIncrementBy(self, arg2)
+
+    def equals(self, other):
+        return _amplpython.iterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.iterator_differs(self, other)
+    __swig_destroy__ = _amplpython.delete_iterator
+
+# Register iterator in _amplpython:
+_amplpython.iterator_swigregister(iterator)
+class ObjectiveInstance(Instance):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def value(self):
+        return _amplpython.ObjectiveInstance_value(self)
+
+    def astatus(self):
+        return _amplpython.ObjectiveInstance_astatus(self)
+
+    def sstatus(self):
+        return _amplpython.ObjectiveInstance_sstatus(self)
+
+    def exitcode(self):
+        return _amplpython.ObjectiveInstance_exitcode(self)
+
+    def message(self):
+        return _amplpython.ObjectiveInstance_message(self)
+
+    def result(self):
+        return _amplpython.ObjectiveInstance_result(self)
+
+    def drop(self):
+        return _amplpython.ObjectiveInstance_drop(self)
+
+    def restore(self):
+        return _amplpython.ObjectiveInstance_restore(self)
+
+    def minimization(self):
+        return _amplpython.ObjectiveInstance_minimization(self)
+    __swig_destroy__ = _amplpython.delete_ObjectiveInstance
+
+# Register ObjectiveInstance in _amplpython:
+_amplpython.ObjectiveInstance_swigregister(ObjectiveInstance)
+class VariableInstance(Instance):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def fix(self, *args):
+        return _amplpython.VariableInstance_fix(self, *args)
+
+    def unfix(self):
+        return _amplpython.VariableInstance_unfix(self)
+
+    def setValue(self, value):
+        return _amplpython.VariableInstance_setValue(self, value)
+
+    def value(self):
+        return _amplpython.VariableInstance_value(self)
+
+    def defeqn(self):
+        return _amplpython.VariableInstance_defeqn(self)
+
+    def dual(self):
+        return _amplpython.VariableInstance_dual(self)
+
+    def init(self):
+        return _amplpython.VariableInstance_init(self)
+
+    def init0(self):
+        return _amplpython.VariableInstance_init0(self)
+
+    def lb(self):
+        return _amplpython.VariableInstance_lb(self)
+
+    def ub(self):
+        return _amplpython.VariableInstance_ub(self)
+
+    def lb0(self):
+        return _amplpython.VariableInstance_lb0(self)
+
+    def ub0(self):
+        return _amplpython.VariableInstance_ub0(self)
+
+    def lb1(self):
+        return _amplpython.VariableInstance_lb1(self)
+
+    def ub1(self):
+        return _amplpython.VariableInstance_ub1(self)
+
+    def lb2(self):
+        return _amplpython.VariableInstance_lb2(self)
+
+    def ub2(self):
+        return _amplpython.VariableInstance_ub2(self)
+
+    def lrc(self):
+        return _amplpython.VariableInstance_lrc(self)
+
+    def urc(self):
+        return _amplpython.VariableInstance_urc(self)
+
+    def lslack(self):
+        return _amplpython.VariableInstance_lslack(self)
+
+    def uslack(self):
+        return _amplpython.VariableInstance_uslack(self)
+
+    def rc(self):
+        return _amplpython.VariableInstance_rc(self)
+
+    def slack(self):
+        return _amplpython.VariableInstance_slack(self)
+
+    def astatus(self):
+        return _amplpython.VariableInstance_astatus(self)
+
+    def sstatus(self):
+        return _amplpython.VariableInstance_sstatus(self)
+
+    def status(self):
+        return _amplpython.VariableInstance_status(self)
+    __swig_destroy__ = _amplpython.delete_VariableInstance
+
+# Register VariableInstance in _amplpython:
+_amplpython.VariableInstance_swigregister(VariableInstance)
+class ConstraintInstance(Instance):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def drop(self):
+        return _amplpython.ConstraintInstance_drop(self)
+
+    def restore(self):
+        return _amplpython.ConstraintInstance_restore(self)
+
+    def body(self):
+        return _amplpython.ConstraintInstance_body(self)
+
+    def astatus(self):
+        return _amplpython.ConstraintInstance_astatus(self)
+
+    def defvar(self):
+        return _amplpython.ConstraintInstance_defvar(self)
+
+    def dinit(self):
+        return _amplpython.ConstraintInstance_dinit(self)
+
+    def dinit0(self):
+        return _amplpython.ConstraintInstance_dinit0(self)
+
+    def dual(self):
+        return _amplpython.ConstraintInstance_dual(self)
+
+    def lb(self):
+        return _amplpython.ConstraintInstance_lb(self)
+
+    def ub(self):
+        return _amplpython.ConstraintInstance_ub(self)
+
+    def lbs(self):
+        return _amplpython.ConstraintInstance_lbs(self)
+
+    def ubs(self):
+        return _amplpython.ConstraintInstance_ubs(self)
+
+    def ldual(self):
+        return _amplpython.ConstraintInstance_ldual(self)
+
+    def udual(self):
+        return _amplpython.ConstraintInstance_udual(self)
+
+    def lslack(self):
+        return _amplpython.ConstraintInstance_lslack(self)
+
+    def uslack(self):
+        return _amplpython.ConstraintInstance_uslack(self)
+
+    def slack(self):
+        return _amplpython.ConstraintInstance_slack(self)
+
+    def sstatus(self):
+        return _amplpython.ConstraintInstance_sstatus(self)
+
+    def status(self):
+        return _amplpython.ConstraintInstance_status(self)
+
+    def setDual(self, dual):
+        return _amplpython.ConstraintInstance_setDual(self, dual)
+
+    def val(self):
+        return _amplpython.ConstraintInstance_val(self)
+    __swig_destroy__ = _amplpython.delete_ConstraintInstance
+
+# Register ConstraintInstance in _amplpython:
+_amplpython.ConstraintInstance_swigregister(ConstraintInstance)
+class TableInstance(Instance):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_TableInstance
+
+# Register TableInstance in _amplpython:
+_amplpython.TableInstance_swigregister(TableInstance)
+class EntityArray(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, nelements):
+        _amplpython.EntityArray_swiginit(self, _amplpython.new_EntityArray(nelements))
+    __swig_destroy__ = _amplpython.delete_EntityArray
+
+    def __getitem__(self, index):
+        return _amplpython.EntityArray___getitem__(self, index)
+
+    def __setitem__(self, index, value):
+        return _amplpython.EntityArray___setitem__(self, index, value)
+
+    def cast(self):
+        return _amplpython.EntityArray_cast(self)
+
+    @staticmethod
+    def frompointer(t):
+        return _amplpython.EntityArray_frompointer(t)
+
+# Register EntityArray in _amplpython:
+_amplpython.EntityArray_swigregister(EntityArray)
+class Entity(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def toString(self):
+        return _amplpython.Entity_toString(self)
+
+    def name(self):
+        return _amplpython.Entity_name(self)
+
+    def type(self):
+        return _amplpython.Entity_type(self)
+
+    def indexarity(self):
+        return _amplpython.Entity_indexarity(self)
+
+    def isScalar(self):
+        return _amplpython.Entity_isScalar(self)
+
+    def numInstances(self):
+        return _amplpython.Entity_numInstances(self)
+
+    def getIndexingSets(self):
+        return _amplpython.Entity_getIndexingSets(self)
+
+    def xref(self):
+        return _amplpython.Entity_xref(self)
+
+    def getValues(self):
+        return _amplpython.Entity_getValues(self)
+
+    def setValuesDf(self, data):
+        return _amplpython.Entity_setValuesDf(self, data)
+
+    def getValuesLst(self, args, count):
+        return _amplpython.Entity_getValuesLst(self, args, count)
+    __swig_destroy__ = _amplpython.delete_Entity
+
+# Register Entity in _amplpython:
+_amplpython.Entity_swigregister(Entity)
+class EntityArgs(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    @staticmethod
+    def Factory(args, count):
+        return _amplpython.EntityArgs_Factory(args, count)
+    __swig_destroy__ = _amplpython.delete_EntityArgs
+
+# Register EntityArgs in _amplpython:
+_amplpython.EntityArgs_swigregister(EntityArgs)
+class BasicEntityVariable(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntityVariable_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntityVariable_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntityVariable_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntityVariable_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntityVariable
+
+# Register BasicEntityVariable in _amplpython:
+_amplpython.BasicEntityVariable_swigregister(BasicEntityVariable)
+class BasicEntityConstraint(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntityConstraint_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntityConstraint_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntityConstraint_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntityConstraint_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntityConstraint
+
+# Register BasicEntityConstraint in _amplpython:
+_amplpython.BasicEntityConstraint_swigregister(BasicEntityConstraint)
+class BasicEntitySet(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntitySet_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntitySet_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntitySet_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntitySet_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntitySet
+
+# Register BasicEntitySet in _amplpython:
+_amplpython.BasicEntitySet_swigregister(BasicEntitySet)
+class BasicEntityObjective(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntityObjective_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntityObjective_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntityObjective_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntityObjective_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntityObjective
+
+# Register BasicEntityObjective in _amplpython:
+_amplpython.BasicEntityObjective_swigregister(BasicEntityObjective)
+class BasicEntityParameter(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntityParameter_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntityParameter_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntityParameter_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntityParameter_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntityParameter
+
+# Register BasicEntityParameter in _amplpython:
+_amplpython.BasicEntityParameter_swigregister(BasicEntityParameter)
+class BasicEntityTable(Entity):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.BasicEntityTable_begin(self)
+
+    def end(self):
+        return _amplpython.BasicEntityTable_end(self)
+
+    def find(self, t):
+        return _amplpython.BasicEntityTable_find(self, t)
+
+    def get(self, *args):
+        return _amplpython.BasicEntityTable_get(self, *args)
+    __swig_destroy__ = _amplpython.delete_BasicEntityTable
+
+# Register BasicEntityTable in _amplpython:
+_amplpython.BasicEntityTable_swigregister(BasicEntityTable)
+class Constraint(BasicEntityConstraint):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def isLogical(self):
+        return _amplpython.Constraint_isLogical(self)
+
+    def drop(self):
+        return _amplpython.Constraint_drop(self)
+
+    def restore(self):
+        return _amplpython.Constraint_restore(self)
+
+    def body(self):
+        return _amplpython.Constraint_body(self)
+
+    def astatus(self):
+        return _amplpython.Constraint_astatus(self)
+
+    def defvar(self):
+        return _amplpython.Constraint_defvar(self)
+
+    def dinit(self):
+        return _amplpython.Constraint_dinit(self)
+
+    def dinit0(self):
+        return _amplpython.Constraint_dinit0(self)
+
+    def dual(self):
+        return _amplpython.Constraint_dual(self)
+
+    def lb(self):
+        return _amplpython.Constraint_lb(self)
+
+    def ub(self):
+        return _amplpython.Constraint_ub(self)
+
+    def lbs(self):
+        return _amplpython.Constraint_lbs(self)
+
+    def ubs(self):
+        return _amplpython.Constraint_ubs(self)
+
+    def ldual(self):
+        return _amplpython.Constraint_ldual(self)
+
+    def udual(self):
+        return _amplpython.Constraint_udual(self)
+
+    def lslack(self):
+        return _amplpython.Constraint_lslack(self)
+
+    def uslack(self):
+        return _amplpython.Constraint_uslack(self)
+
+    def slack(self):
+        return _amplpython.Constraint_slack(self)
+
+    def sstatus(self):
+        return _amplpython.Constraint_sstatus(self)
+
+    def status(self):
+        return _amplpython.Constraint_status(self)
+
+    def setDual(self, dual):
+        return _amplpython.Constraint_setDual(self, dual)
+
+    def val(self):
+        return _amplpython.Constraint_val(self)
+    __swig_destroy__ = _amplpython.delete_Constraint
+
+# Register Constraint in _amplpython:
+_amplpython.Constraint_swigregister(Constraint)
+CONTINUOUS = _amplpython.CONTINUOUS
+BINARY = _amplpython.BINARY
+INTEGER = _amplpython.INTEGER
+class Variable(BasicEntityVariable):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def integrality(self):
+        return _amplpython.Variable_integrality(self)
+
+    def fix(self, *args):
+        return _amplpython.Variable_fix(self, *args)
+
+    def unfix(self):
+        return _amplpython.Variable_unfix(self)
+
+    def setValue(self, value):
+        return _amplpython.Variable_setValue(self, value)
+
+    def value(self):
+        return _amplpython.Variable_value(self)
+
+    def astatus(self):
+        return _amplpython.Variable_astatus(self)
+
+    def defeqn(self):
+        return _amplpython.Variable_defeqn(self)
+
+    def dual(self):
+        return _amplpython.Variable_dual(self)
+
+    def init(self):
+        return _amplpython.Variable_init(self)
+
+    def init0(self):
+        return _amplpython.Variable_init0(self)
+
+    def lb(self):
+        return _amplpython.Variable_lb(self)
+
+    def ub(self):
+        return _amplpython.Variable_ub(self)
+
+    def lb0(self):
+        return _amplpython.Variable_lb0(self)
+
+    def ub0(self):
+        return _amplpython.Variable_ub0(self)
+
+    def lb1(self):
+        return _amplpython.Variable_lb1(self)
+
+    def ub1(self):
+        return _amplpython.Variable_ub1(self)
+
+    def lb2(self):
+        return _amplpython.Variable_lb2(self)
+
+    def ub2(self):
+        return _amplpython.Variable_ub2(self)
+
+    def lrc(self):
+        return _amplpython.Variable_lrc(self)
+
+    def urc(self):
+        return _amplpython.Variable_urc(self)
+
+    def lslack(self):
+        return _amplpython.Variable_lslack(self)
+
+    def uslack(self):
+        return _amplpython.Variable_uslack(self)
+
+    def rc(self):
+        return _amplpython.Variable_rc(self)
+
+    def slack(self):
+        return _amplpython.Variable_slack(self)
+
+    def sstatus(self):
+        return _amplpython.Variable_sstatus(self)
+
+    def status(self):
+        return _amplpython.Variable_status(self)
+    __swig_destroy__ = _amplpython.delete_Variable
+
+# Register Variable in _amplpython:
+_amplpython.Variable_swigregister(Variable)
+class Objective(BasicEntityObjective):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def value(self):
+        return _amplpython.Objective_value(self)
+
+    def astatus(self):
+        return _amplpython.Objective_astatus(self)
+
+    def sstatus(self):
+        return _amplpython.Objective_sstatus(self)
+
+    def exitcode(self):
+        return _amplpython.Objective_exitcode(self)
+
+    def message(self):
+        return _amplpython.Objective_message(self)
+
+    def result(self):
+        return _amplpython.Objective_result(self)
+
+    def drop(self):
+        return _amplpython.Objective_drop(self)
+
+    def restore(self):
+        return _amplpython.Objective_restore(self)
+
+    def minimization(self):
+        return _amplpython.Objective_minimization(self)
+    __swig_destroy__ = _amplpython.delete_Objective
+
+# Register Objective in _amplpython:
+_amplpython.Objective_swigregister(Objective)
+class Set(BasicEntitySet):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def arity(self):
+        return _amplpython.Set_arity(self)
+
+    def getValues(self):
+        return _amplpython.Set_getValues(self)
+
+    def size(self):
+        return _amplpython.Set_size(self)
+
+    def members(self):
+        return _amplpython.Set_members(self)
+
+    def setValuesDf(self, data):
+        return _amplpython.Set_setValuesDf(self, data)
+
+    def contains(self, t):
+        return _amplpython.Set_contains(self, t)
+
+    def setValuesTuples(self, t, n):
+        return _amplpython.Set_setValuesTuples(self, t, n)
+
+    def setValues(self, t, n):
+        return _amplpython.Set_setValues(self, t, n)
+
+    def setValuesDbl(self, values, n):
+        return _amplpython.Set_setValuesDbl(self, values, n)
+
+    def setValuesStr(self, args, n):
+        return _amplpython.Set_setValuesStr(self, args, n)
+    __swig_destroy__ = _amplpython.delete_Set
+
+# Register Set in _amplpython:
+_amplpython.Set_swigregister(Set)
+class Table(BasicEntityTable):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_Table
+
+# Register Table in _amplpython:
+_amplpython.Table_swigregister(Table)
+class Parameter(BasicEntityParameter):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def isSymbolic(self):
+        return _amplpython.Parameter_isSymbolic(self)
+
+    def hasDefault(self):
+        return _amplpython.Parameter_hasDefault(self)
+
+    def set(self, *args):
+        return _amplpython.Parameter_set(self, *args)
+
+    def setTplDbl(self, index, value):
+        return _amplpython.Parameter_setTplDbl(self, index, value)
+
+    def setTplStr(self, index, value):
+        return _amplpython.Parameter_setTplStr(self, index, value)
+
+    def setValuesTaDbl(self, indices, values, nvalues):
+        return _amplpython.Parameter_setValuesTaDbl(self, indices, values, nvalues)
+
+    def setValuesTupleArrayDbl(self, indices, values, nvalues):
+        return _amplpython.Parameter_setValuesTupleArrayDbl(self, indices, values, nvalues)
+
+    def setValuesTaStr(self, indices, args, nvalues):
+        return _amplpython.Parameter_setValuesTaStr(self, indices, args, nvalues)
+
+    def setValuesTupleArrayStr(self, indices, args, nvalues):
+        return _amplpython.Parameter_setValuesTupleArrayStr(self, indices, args, nvalues)
+
+    def setValuesDbl(self, values, n):
+        return _amplpython.Parameter_setValuesDbl(self, values, n)
+
+    def setValuesStr(self, args, n):
+        return _amplpython.Parameter_setValuesStr(self, args, n)
+
+    def setValues(self, *args):
+        return _amplpython.Parameter_setValues(self, *args)
+
+    def setValuesPyDict(self, dict):
+        return _amplpython.Parameter_setValuesPyDict(self, dict)
+    __swig_destroy__ = _amplpython.delete_Parameter
+
+# Register Parameter in _amplpython:
+_amplpython.Parameter_swigregister(Parameter)
+class VariableIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_VariableIteratorWrapper
+
+# Register VariableIteratorWrapper in _amplpython:
+_amplpython.VariableIteratorWrapper_swigregister(VariableIteratorWrapper)
+class VariableIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.VariableIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.VariableIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.VariableIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.VariableIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.VariableIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.VariableIterator_first(self)
+
+    def second(self):
+        return _amplpython.VariableIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_VariableIterator
+
+# Register VariableIterator in _amplpython:
+_amplpython.VariableIterator_swigregister(VariableIterator)
+class ConstraintIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_ConstraintIteratorWrapper
+
+# Register ConstraintIteratorWrapper in _amplpython:
+_amplpython.ConstraintIteratorWrapper_swigregister(ConstraintIteratorWrapper)
+class ConstraintIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.ConstraintIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.ConstraintIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.ConstraintIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.ConstraintIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.ConstraintIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.ConstraintIterator_first(self)
+
+    def second(self):
+        return _amplpython.ConstraintIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_ConstraintIterator
+
+# Register ConstraintIterator in _amplpython:
+_amplpython.ConstraintIterator_swigregister(ConstraintIterator)
+class ObjectiveIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_ObjectiveIteratorWrapper
+
+# Register ObjectiveIteratorWrapper in _amplpython:
+_amplpython.ObjectiveIteratorWrapper_swigregister(ObjectiveIteratorWrapper)
+class ObjectiveIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.ObjectiveIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.ObjectiveIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.ObjectiveIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.ObjectiveIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.ObjectiveIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.ObjectiveIterator_first(self)
+
+    def second(self):
+        return _amplpython.ObjectiveIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_ObjectiveIterator
+
+# Register ObjectiveIterator in _amplpython:
+_amplpython.ObjectiveIterator_swigregister(ObjectiveIterator)
+class SetIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_SetIteratorWrapper
+
+# Register SetIteratorWrapper in _amplpython:
+_amplpython.SetIteratorWrapper_swigregister(SetIteratorWrapper)
+class SetIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.SetIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.SetIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.SetIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.SetIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.SetIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.SetIterator_first(self)
+
+    def second(self):
+        return _amplpython.SetIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_SetIterator
+
+# Register SetIterator in _amplpython:
+_amplpython.SetIterator_swigregister(SetIterator)
+class TableIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_TableIteratorWrapper
+
+# Register TableIteratorWrapper in _amplpython:
+_amplpython.TableIteratorWrapper_swigregister(TableIteratorWrapper)
+class TableIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.TableIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.TableIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.TableIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.TableIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.TableIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.TableIterator_first(self)
+
+    def second(self):
+        return _amplpython.TableIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_TableIterator
+
+# Register TableIterator in _amplpython:
+_amplpython.TableIterator_swigregister(TableIterator)
+class ParameterIteratorWrapper(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_ParameterIteratorWrapper
+
+# Register ParameterIteratorWrapper in _amplpython:
+_amplpython.ParameterIteratorWrapper_swigregister(ParameterIteratorWrapper)
+class ParameterIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.ParameterIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.ParameterIterator_differs(self, other)
+
+    def clone(self, other):
+        return _amplpython.ParameterIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.ParameterIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.ParameterIterator_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.ParameterIterator_first(self)
+
+    def second(self):
+        return _amplpython.ParameterIterator_second(self)
+    __swig_destroy__ = _amplpython.delete_ParameterIterator
+
+# Register ParameterIterator in _amplpython:
+_amplpython.ParameterIterator_swigregister(ParameterIterator)
+class EntityMapVariable(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapVariable_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapVariable_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapVariable_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapVariable_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapVariable_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapVariable
+
+# Register EntityMapVariable in _amplpython:
+_amplpython.EntityMapVariable_swigregister(EntityMapVariable)
+class EntityMapVariableIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapVariableIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapVariableIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapVariableIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapVariableIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapVariableIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapVariableIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapVariableIterator
+
+# Register EntityMapVariableIterator in _amplpython:
+_amplpython.EntityMapVariableIterator_swigregister(EntityMapVariableIterator)
+class EntityMapConstraint(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapConstraint_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapConstraint_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapConstraint_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapConstraint_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapConstraint_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapConstraint
+
+# Register EntityMapConstraint in _amplpython:
+_amplpython.EntityMapConstraint_swigregister(EntityMapConstraint)
+class EntityMapConstraintIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapConstraintIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapConstraintIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapConstraintIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapConstraintIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapConstraintIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapConstraintIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapConstraintIterator
+
+# Register EntityMapConstraintIterator in _amplpython:
+_amplpython.EntityMapConstraintIterator_swigregister(EntityMapConstraintIterator)
+class EntityMapObjective(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapObjective_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapObjective_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapObjective_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapObjective_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapObjective_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapObjective
+
+# Register EntityMapObjective in _amplpython:
+_amplpython.EntityMapObjective_swigregister(EntityMapObjective)
+class EntityMapObjectiveIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapObjectiveIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapObjectiveIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapObjectiveIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapObjectiveIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapObjectiveIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapObjectiveIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapObjectiveIterator
+
+# Register EntityMapObjectiveIterator in _amplpython:
+_amplpython.EntityMapObjectiveIterator_swigregister(EntityMapObjectiveIterator)
+class EntityMapSet(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapSet_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapSet_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapSet_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapSet_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapSet_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapSet
+
+# Register EntityMapSet in _amplpython:
+_amplpython.EntityMapSet_swigregister(EntityMapSet)
+class EntityMapSetIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapSetIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapSetIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapSetIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapSetIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapSetIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapSetIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapSetIterator
+
+# Register EntityMapSetIterator in _amplpython:
+_amplpython.EntityMapSetIterator_swigregister(EntityMapSetIterator)
+class EntityMapTable(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapTable_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapTable_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapTable_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapTable_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapTable_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapTable
+
+# Register EntityMapTable in _amplpython:
+_amplpython.EntityMapTable_swigregister(EntityMapTable)
+class EntityMapTableIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapTableIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapTableIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapTableIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapTableIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapTableIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapTableIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapTableIterator
+
+# Register EntityMapTableIterator in _amplpython:
+_amplpython.EntityMapTableIterator_swigregister(EntityMapTableIterator)
+class EntityMapParameter(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def begin(self):
+        return _amplpython.EntityMapParameter_begin(self)
+
+    def end(self):
+        return _amplpython.EntityMapParameter_end(self)
+
+    def find(self, name):
+        return _amplpython.EntityMapParameter_find(self, name)
+
+    def size(self):
+        return _amplpython.EntityMapParameter_size(self)
+
+    def getIndex(self, name):
+        return _amplpython.EntityMapParameter_getIndex(self, name)
+    __swig_destroy__ = _amplpython.delete_EntityMapParameter
+
+# Register EntityMapParameter in _amplpython:
+_amplpython.EntityMapParameter_swigregister(EntityMapParameter)
+class EntityMapParameterIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EntityMapParameterIterator_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EntityMapParameterIterator_differs(self, other)
+
+    def __ref__(self):
+        return _amplpython.EntityMapParameterIterator___ref__(self)
+
+    def clone(self, other):
+        return _amplpython.EntityMapParameterIterator_clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EntityMapParameterIterator_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EntityMapParameterIterator_postIncrementBy(self, arg2)
+    __swig_destroy__ = _amplpython.delete_EntityMapParameterIterator
+
+# Register EntityMapParameterIterator in _amplpython:
+_amplpython.EntityMapParameterIterator_swigregister(EntityMapParameterIterator)
+class AMPLException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.AMPLException_swiginit(self, _amplpython.new_AMPLException(*args))
+    __swig_destroy__ = _amplpython.delete_AMPLException
+
+    def getSourceName(self):
+        return _amplpython.AMPLException_getSourceName(self)
+
+    def getLineNumber(self):
+        return _amplpython.AMPLException_getLineNumber(self)
+
+    def getOffset(self):
+        return _amplpython.AMPLException_getOffset(self)
+
+    def getMessage(self):
+        return _amplpython.AMPLException_getMessage(self)
+
+    def setSourceName(self, sourceName):
+        return _amplpython.AMPLException_setSourceName(self, sourceName)
+
+# Register AMPLException in _amplpython:
+_amplpython.AMPLException_swigregister(AMPLException)
+class LicenseException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, cause):
+        _amplpython.LicenseException_swiginit(self, _amplpython.new_LicenseException(cause))
+    __swig_destroy__ = _amplpython.delete_LicenseException
+
+# Register LicenseException in _amplpython:
+_amplpython.LicenseException_swigregister(LicenseException)
+class FileIOException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, cause):
+        _amplpython.FileIOException_swiginit(self, _amplpython.new_FileIOException(cause))
+    __swig_destroy__ = _amplpython.delete_FileIOException
+
+# Register FileIOException in _amplpython:
+_amplpython.FileIOException_swigregister(FileIOException)
+class UnsupportedOperationException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, cause):
+        _amplpython.UnsupportedOperationException_swiginit(self, _amplpython.new_UnsupportedOperationException(cause))
+    __swig_destroy__ = _amplpython.delete_UnsupportedOperationException
+
+# Register UnsupportedOperationException in _amplpython:
+_amplpython.UnsupportedOperationException_swigregister(UnsupportedOperationException)
+class InvalidSubscriptException(AMPLException):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, filename, row, offset, message):
+        _amplpython.InvalidSubscriptException_swiginit(self, _amplpython.new_InvalidSubscriptException(filename, row, offset, message))
+    __swig_destroy__ = _amplpython.delete_InvalidSubscriptException
+
+# Register InvalidSubscriptException in _amplpython:
+_amplpython.InvalidSubscriptException_swigregister(InvalidSubscriptException)
+class SyntaxErrorException(AMPLException):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, filename, row, offset, message):
+        _amplpython.SyntaxErrorException_swiginit(self, _amplpython.new_SyntaxErrorException(filename, row, offset, message))
+    __swig_destroy__ = _amplpython.delete_SyntaxErrorException
+
+# Register SyntaxErrorException in _amplpython:
+_amplpython.SyntaxErrorException_swigregister(SyntaxErrorException)
+class NoDataException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, msg):
+        _amplpython.NoDataException_swiginit(self, _amplpython.new_NoDataException(msg))
+    __swig_destroy__ = _amplpython.delete_NoDataException
+
+# Register NoDataException in _amplpython:
+_amplpython.NoDataException_swigregister(NoDataException)
+class PresolveException(runtime_error):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, msg):
+        _amplpython.PresolveException_swiginit(self, _amplpython.new_PresolveException(msg))
+
+    def _str_(self):
+        return _amplpython.PresolveException__str_(self)
+    __swig_destroy__ = _amplpython.delete_PresolveException
+
+# Register PresolveException in _amplpython:
+_amplpython.PresolveException_swigregister(PresolveException)
+class InfeasibilityException(PresolveException):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, msg):
+        _amplpython.InfeasibilityException_swiginit(self, _amplpython.new_InfeasibilityException(msg))
+
+    def _str_(self):
+        return _amplpython.InfeasibilityException__str_(self)
+    __swig_destroy__ = _amplpython.delete_InfeasibilityException
+
+# Register InfeasibilityException in _amplpython:
+_amplpython.InfeasibilityException_swigregister(InfeasibilityException)
+class ErrorHandler(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        if self.__class__ == ErrorHandler:
+            _self = None
+        else:
+            _self = self
+        _amplpython.ErrorHandler_swiginit(self, _amplpython.new_ErrorHandler(_self, ))
+    __swig_destroy__ = _amplpython.delete_ErrorHandler
+
+    def error(self, arg0):
+        return _amplpython.ErrorHandler_error(self, arg0)
+
+    def warning(self, arg0):
+        return _amplpython.ErrorHandler_warning(self, arg0)
+    def __disown__(self):
+        self.this.disown()
+        _amplpython.disown_ErrorHandler(self)
+        return weakref.proxy(self)
+
+# Register ErrorHandler in _amplpython:
+_amplpython.ErrorHandler_swigregister(ErrorHandler)
+class Runnable(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_Runnable
+
+    def run(self):
+        return _amplpython.Runnable_run(self)
+
+    def __init__(self):
+        if self.__class__ == Runnable:
+            _self = None
+        else:
+            _self = self
+        _amplpython.Runnable_swiginit(self, _amplpython.new_Runnable(_self, ))
+    def __disown__(self):
+        self.this.disown()
+        _amplpython.disown_Runnable(self)
+        return weakref.proxy(self)
+
+# Register Runnable in _amplpython:
+_amplpython.Runnable_swigregister(Runnable)
+WAITING = _amplpython.WAITING
+BREAK = _amplpython.BREAK
+CD = _amplpython.CD
+DISPLAY = _amplpython.DISPLAY
+EXIT = _amplpython.EXIT
+EXPAND = _amplpython.EXPAND
+LOAD = _amplpython.LOAD
+OPTION = _amplpython.OPTION
+PRINT = _amplpython.PRINT
+PROMPT = _amplpython.PROMPT
+SOLUTION = _amplpython.SOLUTION
+SOLVE = _amplpython.SOLVE
+SHOW = _amplpython.SHOW
+XREF = _amplpython.XREF
+SHELL_OUTPUT = _amplpython.SHELL_OUTPUT
+SHELL_MESSAGE = _amplpython.SHELL_MESSAGE
+MISC = _amplpython.MISC
+WRITE_TABLE = _amplpython.WRITE_TABLE
+READ_TABLE = _amplpython.READ_TABLE
+_READTABLE = _amplpython._READTABLE
+_WRITETABLE = _amplpython._WRITETABLE
+BREAKPOINT = _amplpython.BREAKPOINT
+CALL = _amplpython.CALL
+CHECK = _amplpython.CHECK
+CLOSE = _amplpython.CLOSE
+COMMANDS = _amplpython.COMMANDS
+CONTINUE = _amplpython.CONTINUE
+DATA = _amplpython.DATA
+DELETECMD = _amplpython.DELETECMD
+DROP = _amplpython.DROP
+DROP_OR_RESTORE_ALL = _amplpython.DROP_OR_RESTORE_ALL
+ELSE = _amplpython.ELSE
+ELSE_CHECK = _amplpython.ELSE_CHECK
+ENDIF = _amplpython.ENDIF
+ENVIRON = _amplpython.ENVIRON
+FIX = _amplpython.FIX
+FOR = _amplpython.FOR
+IF = _amplpython.IF
+LET = _amplpython.LET
+LOOPEND = _amplpython.LOOPEND
+OBJECTIVE = _amplpython.OBJECTIVE
+OPTION_RESET = _amplpython.OPTION_RESET
+PRINTF = _amplpython.PRINTF
+PROBLEM = _amplpython.PROBLEM
+PURGE = _amplpython.PURGE
+RBRACE = _amplpython.RBRACE
+READ = _amplpython.READ
+RELOAD = _amplpython.RELOAD
+REMOVE = _amplpython.REMOVE
+REPEAT = _amplpython.REPEAT
+REPEAT_END = _amplpython.REPEAT_END
+RESET = _amplpython.RESET
+RESTORE = _amplpython.RESTORE
+RUN_ARGS = _amplpython.RUN_ARGS
+SEMICOLON = _amplpython.SEMICOLON
+SSTEP = _amplpython.SSTEP
+THEN = _amplpython.THEN
+UNFIX = _amplpython.UNFIX
+UNLOAD = _amplpython.UNLOAD
+UPDATE = _amplpython.UPDATE
+WRITE = _amplpython.WRITE
+class OutputHandler(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _amplpython.delete_OutputHandler
+
+    def output(self, kind, msg):
+        return _amplpython.OutputHandler_output(self, kind, msg)
+
+    def __init__(self):
+        if self.__class__ == OutputHandler:
+            _self = None
+        else:
+            _self = self
+        _amplpython.OutputHandler_swiginit(self, _amplpython.new_OutputHandler(_self, ))
+    def __disown__(self):
+        self.this.disown()
+        _amplpython.disown_OutputHandler(self)
+        return weakref.proxy(self)
+
+# Register OutputHandler in _amplpython:
+_amplpython.OutputHandler_swigregister(OutputHandler)
+class EnvironmentIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        _amplpython.EnvironmentIterator_swiginit(self, _amplpython.new_EnvironmentIterator())
+    __swig_destroy__ = _amplpython.delete_EnvironmentIterator
+
+# Register EnvironmentIterator in _amplpython:
+_amplpython.EnvironmentIterator_swigregister(EnvironmentIterator)
+class Environment(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def Clone(self, other):
+        return _amplpython.Environment_Clone(self, other)
+
+    def __init__(self, *args):
+        _amplpython.Environment_swiginit(self, _amplpython.new_Environment(*args))
+    __swig_destroy__ = _amplpython.delete_Environment
+
+    def put(self, name, value):
+        return _amplpython.Environment_put(self, name, value)
+
+    def setBinDir(self, binaryDirectory):
+        return _amplpython.Environment_setBinDir(self, binaryDirectory)
+
+    def getBinDir(self):
+        return _amplpython.Environment_getBinDir(self)
+
+    def setBinName(self, binaryName):
+        return _amplpython.Environment_setBinName(self, binaryName)
+
+    def getBinName(self):
+        return _amplpython.Environment_getBinName(self)
+
+    def toString(self):
+        return _amplpython.Environment_toString(self)
+
+    def begin(self):
+        return _amplpython.Environment_begin(self)
+
+    def end(self):
+        return _amplpython.Environment_end(self)
+
+    def find(self, name):
+        return _amplpython.Environment_find(self, name)
+
+    def size(self):
+        return _amplpython.Environment_size(self)
+
+# Register Environment in _amplpython:
+_amplpython.Environment_swigregister(Environment)
+class EnvironmentIteratorTemplate(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+
+    def equals(self, other):
+        return _amplpython.EnvironmentIteratorTemplate_equals(self, other)
+
+    def differs(self, other):
+        return _amplpython.EnvironmentIteratorTemplate_differs(self, other)
+
+    def Clone(self, other):
+        return _amplpython.EnvironmentIteratorTemplate_Clone(self, other)
+
+    def postIncrement(self):
+        return _amplpython.EnvironmentIteratorTemplate_postIncrement(self)
+
+    def postIncrementBy(self, arg2):
+        return _amplpython.EnvironmentIteratorTemplate_postIncrementBy(self, arg2)
+
+    def first(self):
+        return _amplpython.EnvironmentIteratorTemplate_first(self)
+
+    def second(self):
+        return _amplpython.EnvironmentIteratorTemplate_second(self)
+    __swig_destroy__ = _amplpython.delete_EnvironmentIteratorTemplate
+
+# Register EnvironmentIteratorTemplate in _amplpython:
+_amplpython.EnvironmentIteratorTemplate_swigregister(EnvironmentIteratorTemplate)
+class AMPL(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _amplpython.AMPL_swiginit(self, _amplpython.new_AMPL(*args))
+    __swig_destroy__ = _amplpython.delete_AMPL
+
+    def exportData(self, *args):
+        return _amplpython.AMPL_exportData(self, *args)
+
+    def exportModel(self, *args):
+        return _amplpython.AMPL_exportModel(self, *args)
+
+    def getEntity(self, name):
+        return _amplpython.AMPL_getEntity(self, name)
+
+    def getVariable(self, name):
+        return _amplpython.AMPL_getVariable(self, name)
+
+    def getConstraint(self, name):
+        return _amplpython.AMPL_getConstraint(self, name)
+
+    def getObjective(self, name):
+        return _amplpython.AMPL_getObjective(self, name)
+
+    def getSet(self, name):
+        return _amplpython.AMPL_getSet(self, name)
+
+    def getParameter(self, name):
+        return _amplpython.AMPL_getParameter(self, name)
+
+    def getTable(self, name):
+        return _amplpython.AMPL_getTable(self, name)
+
+    def eval(self, amplstatements):
+        return _amplpython.AMPL_eval(self, amplstatements)
+
+    def reset(self):
+        return _amplpython.AMPL_reset(self)
+
+    def close(self):
+        return _amplpython.AMPL_close(self)
+
+    def isRunning(self):
+        return _amplpython.AMPL_isRunning(self)
+
+    def isBusy(self):
+        return _amplpython.AMPL_isBusy(self)
+
+    def solve(self):
+        return _amplpython.AMPL_solve(self)
+
+    def readAsync(self, filename, cb):
+        return _amplpython.AMPL_readAsync(self, filename, cb)
+
+    def readDataAsync(self, filename, cb):
+        return _amplpython.AMPL_readDataAsync(self, filename, cb)
+
+    def evalAsync(self, amplstatement, cb):
+        return _amplpython.AMPL_evalAsync(self, amplstatement, cb)
+
+    def solveAsync(self, cb):
+        return _amplpython.AMPL_solveAsync(self, cb)
+
+    def interrupt(self):
+        return _amplpython.AMPL_interrupt(self)
+
+    def cd(self, *args):
+        return _amplpython.AMPL_cd(self, *args)
+
+    def setOption(self, name, value):
+        return _amplpython.AMPL_setOption(self, name, value)
+
+    def getOption(self, name):
+        return _amplpython.AMPL_getOption(self, name)
+
+    def getIntOption(self, name):
+        return _amplpython.AMPL_getIntOption(self, name)
+
+    def setIntOption(self, name, value):
+        return _amplpython.AMPL_setIntOption(self, name, value)
+
+    def getDblOption(self, name):
+        return _amplpython.AMPL_getDblOption(self, name)
+
+    def setDblOption(self, name, value):
+        return _amplpython.AMPL_setDblOption(self, name, value)
+
+    def getBoolOption(self, name):
+        return _amplpython.AMPL_getBoolOption(self, name)
+
+    def getCurrentObjectiveName(self):
+        return _amplpython.AMPL_getCurrentObjectiveName(self)
+
+    def setBoolOption(self, name, value):
+        return _amplpython.AMPL_setBoolOption(self, name, value)
+
+    def read(self, fileName):
+        return _amplpython.AMPL_read(self, fileName)
+
+    def readData(self, fileName):
+        return _amplpython.AMPL_readData(self, fileName)
+
+    def getValue(self, scalarExpression):
+        return _amplpython.AMPL_getValue(self, scalarExpression)
+
+    def getOutput(self, amplstatement):
+        return _amplpython.AMPL_getOutput(self, amplstatement)
+
+    def setData(self, *args):
+        return _amplpython.AMPL_setData(self, *args)
+
+    def toString(self):
+        return _amplpython.AMPL_toString(self)
+
+    def readTable(self, tableName):
+        return _amplpython.AMPL_readTable(self, tableName)
+
+    def writeTable(self, tableName):
+        return _amplpython.AMPL_writeTable(self, tableName)
+
+    def write(self, filename, auxfiles=0):
+        return _amplpython.AMPL_write(self, filename, auxfiles)
+
+    def display(self, entities):
+        return _amplpython.AMPL_display(self, entities)
+
+    def show(self, entities):
+        return _amplpython.AMPL_show(self, entities)
+
+    def expand(self, entities):
+        return _amplpython.AMPL_expand(self, entities)
+
+    def setOutputHandler(self, outputhandler):
+        return _amplpython.AMPL_setOutputHandler(self, outputhandler)
+
+    def setErrorHandler(self, errorhandler):
+        return _amplpython.AMPL_setErrorHandler(self, errorhandler)
+
+    def getOutputHandler(self):
+        return _amplpython.AMPL_getOutputHandler(self)
+
+    def getErrorHandler(self):
+        return _amplpython.AMPL_getErrorHandler(self)
+
+    def getVariables(self):
+        return _amplpython.AMPL_getVariables(self)
+
+    def getConstraints(self):
+        return _amplpython.AMPL_getConstraints(self)
+
+    def getObjectives(self):
+        return _amplpython.AMPL_getObjectives(self)
+
+    def getSets(self):
+        return _amplpython.AMPL_getSets(self)
+
+    def getParameters(self):
+        return _amplpython.AMPL_getParameters(self)
+
+    def getTables(self):
+        return _amplpython.AMPL_getTables(self)
+
+    def displayLst(self, args, count):
+        return _amplpython.AMPL_displayLst(self, args, count)
+
+    def getData(self, args, count):
+        return _amplpython.AMPL_getData(self, args, count)
+
+# Register AMPL in _amplpython:
+_amplpython.AMPL_swigregister(AMPL)
+

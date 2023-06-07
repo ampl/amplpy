@@ -1,5 +1,6 @@
 %include "exception.i"
 
+//%exceptionclass runtime_error;
 %exceptionclass PresolveException;
 %exceptionclass InfeasibilityException;
 
