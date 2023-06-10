@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import, division
 import sys
-from threading import Thread, Lock
 
 # from builtins import map, range, object, zip, sorted
 from builtins import map, object
@@ -116,7 +115,6 @@ class AMPL(object):
             raise
         self._error_handler = None
         self._output_handler = None
-        self._lock = Lock()
         self._langext = langext
         self.set_output_handler(OutputHandler())
         self.set_error_handler(ErrorHandler())
@@ -310,16 +308,6 @@ class AMPL(object):
         """
         return self._impl.isRunning()
 
-    def is_busy(self):
-        """
-        Returns true if the underlying engine is doing an async operation.
-        """
-        # return self._impl.isBusy()
-        if self._lock.acquire(False):
-            self._lock.release()
-            return False
-        return True
-
     def solve(self):
         """
         Solve the current model.
@@ -328,146 +316,6 @@ class AMPL(object):
             RuntimeError: if the underlying interpreter is not running.
         """
         self._impl.solve()
-
-    def read_async(self, filename, callback=None, **kwargs):
-        """
-        Interprets the specified file asynchronously, interpreting it as a
-        model or a script file. As a side effect, it invalidates all entities
-        (as the passed file can contain any arbitrary command); the lists of
-        entities will be re-populated lazily (at first access).
-
-        Args:
-            filename: Path to the file (Relative to the current working
-            directory or absolute).
-
-            callback: Callback to be executed when the file has been
-            interpreted.
-        """
-        filename = str(filename)
-        if self._langext is not None:
-            with open(filename, "r") as fin:
-                newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(filename + ".translated", "w") as fout:
-                    fout.write(newmodel)
-                    filename += ".translated"
-
-        def async_call():
-            self._lock.acquire()
-            try:
-                self._impl.read(filename)
-                self._error_handler_wrapper.check()
-            except Exception:
-                self._lock.release()
-                raise
-            else:
-                self._lock.release()
-                if callback is not None:
-                    callback.run()
-
-        Thread(target=async_call).start()
-
-    def read_data_async(self, filename, callback=None):
-        """
-        Interprets the specified data file asynchronously. When interpreting is
-        over, the specified callback is called. The file is interpreted as
-        data. As a side effect, it invalidates all entities (as the passed file
-        can contain any arbitrary command); the lists of entities will be
-        re-populated lazily (at first access)
-
-        Args:
-            filename: Full path to the file.
-
-            callback: Callback to be executed when the file has been
-            interpreted.
-        """
-        filename = str(filename)
-
-        def async_call():
-            self._lock.acquire()
-            try:
-                self._impl.readData(filename)
-                self._error_handler_wrapper.check()
-            except Exception:
-                self._lock.release()
-                raise
-            else:
-                self._lock.release()
-                if callback is not None:
-                    callback.run()
-
-        Thread(target=async_call).start()
-
-    def eval_async(self, statements, callback=None, **kwargs):
-        """
-        Interpret the given AMPL statement asynchronously.
-
-        Args:
-          statements: A collection of AMPL statements and declarations to
-          be passed to the interpreter.
-
-          callback: Callback to be executed when the statement has been
-          interpreted.
-
-        Raises:
-          RuntimeError: if the input is not a complete AMPL statement (e.g.
-          if it does not end with semicolon) or if the underlying
-          interpreter is not running.
-        """
-        if self._langext is not None:
-            statements = self._langext.translate(statements, **kwargs)
-
-        def async_call():
-            self._lock.acquire()
-            try:
-                self._impl.eval(statements)
-                self._error_handler_wrapper.check()
-            except Exception:
-                self._lock.release()
-                raise
-            else:
-                self._lock.release()
-                if callback is not None:
-                    callback.run()
-
-        Thread(target=async_call).start()
-
-    def solve_async(self, callback=None):
-        """
-        Solve the current model asynchronously.
-
-        Args:
-          callback: Callback to be executed when the solver is done.
-        """
-
-        def async_call():
-            self._lock.acquire()
-            try:
-                self._impl.solve()
-            except Exception:
-                self._lock.release()
-                raise
-            else:
-                self._lock.release()
-                if callback is not None:
-                    callback.run()
-
-        Thread(target=async_call).start()
-
-    def wait(self):
-        """
-        Wait for the current async operation to finish.
-        """
-        self._lock.acquire()
-        self._lock.release()
-
-    def interrupt(self):
-        """
-        Interrupt an underlying asynchronous operation (execution of AMPL code
-        by the AMPL interpreter). An asynchronous operation can be started via
-        evalAsync(), solveAsync(), readAsync() and readDataAsync().
-        Does nothing if the engine and the solver are idle.
-        """
-        self._impl.interrupt()
 
     def cd(self, path=None):
         """
@@ -987,7 +835,6 @@ class AMPL(object):
     _loadSession = _load_session
     _startRecording = _start_recording
     _stopRecording = _stop_recording
-    evalAsync = eval_async
     exportData = export_data
     exportModel = export_model
     getConstraint = get_constraint
@@ -1008,15 +855,11 @@ class AMPL(object):
     getValue = get_value
     getVariable = get_variable
     getVariables = get_variables
-    isBusy = is_busy
     isRunning = is_running
-    readAsync = read_async
     readData = read_data
-    readDataAsync = read_data_async
     readTable = read_table
     setData = set_data
     setErrorHandler = set_error_handler
     setOption = set_option
     setOutputHandler = set_output_handler
-    solveAsync = solve_async
     writeTable = write_table

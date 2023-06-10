@@ -20,11 +20,6 @@ class TestExamples(unittest.TestCase):
 
         optionsexample.main(1, [None])
 
-    def test_async_example(self):
-        import asyncexample
-
-        asyncexample.main(1, [None])
-
     def test_dataframe_example(self):
         import dataframeexample
 

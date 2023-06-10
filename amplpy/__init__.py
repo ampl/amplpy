@@ -8,7 +8,6 @@ from .outputhandler import OutputHandler, Kind
 from .errorhandler import ErrorHandler
 from .exceptions import AMPLException, PresolveException, InfeasibilityException
 from .iterators import EntityMap
-from .runnable import Runnable
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint

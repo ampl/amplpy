@@ -57,7 +57,6 @@ class TestAMPL(TestBase.TestBase):
         with self.assertRaises(ValueError):
             ampl.eval("X")
         self.assertTrue(ampl.is_running())
-        self.assertFalse(ampl.is_busy())
 
     def test_getdata_multi(self):
         ampl = self.ampl
@@ -163,13 +162,11 @@ class TestAMPL(TestBase.TestBase):
 
     def test_empty_handlers(self):
         ampl = self.ampl
-        callback = amplpy.Runnable()
         output_handler = amplpy.OutputHandler()
         error_handler = amplpy.ErrorHandler()
         ampl.set_output_handler(output_handler)
         ampl.set_error_handler(error_handler)
-        ampl.eval_async("display 1;", callback)
-        ampl.wait()
+        ampl.eval("display 1;")
 
     def test_broken_handlers(self):
         ampl = self.ampl
@@ -207,106 +204,6 @@ class TestAMPL(TestBase.TestBase):
         ampl.set_output_handler(OutputHandlerRaise())
         with self.assertRaises(RuntimeError):
             ampl.eval("display 1;")
-
-    def test_async(self):
-        from threading import Lock
-
-        ampl = self.ampl
-
-        class MyOutputHandler(amplpy.OutputHandler):
-            def output(self, kind, msg):
-                pass
-
-        class MyErrorHandler(amplpy.ErrorHandler):
-            def __init__(self, mutex1, mutex2):
-                self.mutex1 = mutex1
-                self.mutex2 = mutex2
-
-            def error(self, exception):
-                try:
-                    self.mutex1.release()
-                except Exception:
-                    pass
-                try:
-                    self.mutex2.release()
-                except Exception:
-                    pass
-                raise exception
-
-            def warning(self, exception):
-                print("Warning:", exception.get_message())
-
-        class Callback(amplpy.Runnable):
-            def __init__(self, mutex1, mutex2):
-                self.ready = False
-                self.mutex1 = mutex1
-                self.mutex2 = mutex2
-                super(Callback, self).__init__()
-
-            def run(self):
-                self.mutex2.acquire()
-                self.ready = True
-                self.mutex1.release()
-                self.mutex2.release()
-
-        model = self.str2file(
-            "model.mod",
-            """
-            set X;
-            set A := 1..10000000;
-            param p{i in A} := i;
-        """,
-        )
-        data = self.str2file(
-            "data.dat",
-            """
-            set X := 1, 2, 3;
-        """,
-        )
-
-        mutex1 = Lock()
-        mutex2 = Lock()
-        try:
-            callback = Callback(mutex1, mutex2)
-            output_handler = MyOutputHandler()
-            ampl.set_output_handler(output_handler)
-            error_handler = MyErrorHandler(mutex1, mutex2)
-            ampl.set_error_handler(error_handler)
-
-            mutex1.acquire()
-            mutex2.acquire()
-            callback.ready = False
-            ampl.read_async(model, callback)
-            self.assertFalse(callback.ready)
-            mutex2.release()
-            mutex1.acquire()
-            self.assertTrue(callback.ready)
-
-            mutex2.acquire()
-            callback.ready = False
-            ampl.read_data_async(data, callback)
-            self.assertFalse(callback.ready)
-            mutex2.release()
-            mutex1.acquire()
-            self.assertTrue(callback.ready)
-
-            mutex2.acquire()
-            callback.ready = False
-            ampl.eval_async("display {i in A: i not in A};", callback)
-            ampl.interrupt()
-            self.assertFalse(callback.ready)
-            mutex2.release()
-            mutex1.acquire()
-            self.assertTrue(callback.ready)
-            self.assertFalse(ampl.is_busy())
-            self.assertTrue(ampl.is_running())
-
-        except Exception:
-            mutex1.acquire(False)
-            mutex1.release()
-            mutex2.acquire(False)
-            mutex2.release()
-            raise
 
     def test_get_output(self):
         ampl = self.ampl
