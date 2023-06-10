@@ -100,17 +100,22 @@
 // AMPL
 %ignore ampl::AMPL::getData(StringArgs statements) const;
 %ignore ampl::AMPL::display(StringArgs amplExpressions);
+%ignore ampl::AMPL::write(fmt::CStringRef filename, fmt::CStringRef auxfiles = nullptr);
 %include "ampl/ampl.h"
 %extend ampl::AMPL{
   // The following to avoid the ugly StringArgs and
   void display(const char* args[], int count)
-{
-  ampl::StringArgs s(args, count);
-  self->display(s);
-}
-ampl::DataFrame getData(const char* args[], int count)
-{
-  ampl::StringArgs s(args, count);
-  return self->getData(s);
-}
+  {
+    ampl::StringArgs s(args, count);
+    self->display(s);
+  }
+  void write(const char* filename, const char* auxfiles = nullptr)
+  {
+    self->write(filename, auxfiles);
+  }
+  ampl::DataFrame getData(const char* args[], int count)
+  {
+    ampl::StringArgs s(args, count);
+    return self->getData(s);
+  }
 }

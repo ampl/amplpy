@@ -943,7 +943,20 @@ class AMPL(object):
             filename: outuput filename.
             auxfiles: auxfiles to export.
         """
-        self._impl.write(filename)
+        try:
+            self._impl.write(filename)
+        except RuntimeError as e:
+            message = str(e)
+            if "presolve finds no feasible solution possible" in message:
+                raise exceptions.InfeasibilityException(
+                    message[message.find(":") + 1 :].lstrip()
+                ) from None
+            elif ":" in message:
+                raise exceptions.PresolveException(
+                    message[message.find(":") + 1 :].lstrip()
+                ) from None
+            else:
+                raise
 
     def _start_recording(self, filename):
         """

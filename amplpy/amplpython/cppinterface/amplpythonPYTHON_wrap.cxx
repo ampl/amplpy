@@ -5382,12 +5382,6 @@ SWIGINTERN ampl::internal::EntityWrapper< ampl::VariantRef >::KeyType ampl_inter
 SWIGINTERN ampl::internal::EntityWrapper< ampl::VariantRef >::InstanceType ampl_internal_CountedIterator_Sl_ampl_internal_EntityWrapper_Sl_ampl_VariantRef_Sg__Sg__second(ampl::internal::CountedIterator< ampl::internal::EntityWrapper< ampl::VariantRef > > *self){
         return self->operator*().second;
       }
-SWIGINTERN char const *ampl_PresolveException__str_(ampl::PresolveException const *self){
-            return self->what();
-    }
-SWIGINTERN char const *ampl_InfeasibilityException__str_(ampl::InfeasibilityException const *self){
-            return self->what();
-    }
 
 #if defined(__GNUC__)
 #  if __GNUC__ == 2 && __GNUC_MINOR <= 96
@@ -5408,13 +5402,16 @@ SWIGINTERN ampl::internal::EnvironmentIterator::InstanceType ampl_internal_Count
         return self->operator*().second;
       }
 SWIGINTERN void ampl_AMPL_display(ampl::AMPL *self,char const *args[],int count){
-  ampl::StringArgs s(args, count);
-  self->display(s);
-}
+    ampl::StringArgs s(args, count);
+    self->display(s);
+  }
+SWIGINTERN void ampl_AMPL_write__SWIG_0(ampl::AMPL *self,char const *filename,char const *auxfiles=nullptr){
+    self->write(filename, auxfiles);
+  }
 SWIGINTERN ampl::DataFrame ampl_AMPL_getData(ampl::AMPL *self,char const *args[],int count){
-  ampl::StringArgs s(args, count);
-  return self->getData(s);
-}
+    ampl::StringArgs s(args, count);
+    return self->getData(s);
+  }
 
 
 /* ---------------------------------------------------
@@ -5639,16 +5636,12 @@ SWIGINTERN PyObject *_wrap_delete_StringArray(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -5767,16 +5760,12 @@ SWIGINTERN PyObject *_wrap_delete_StringRefArray(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -5863,16 +5852,12 @@ SWIGINTERN PyObject *_wrap_delete_runtime_error(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -5982,16 +5967,12 @@ SWIGINTERN int _wrap_new_VariantArray(PyObject *self, PyObject *args, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6054,16 +6035,12 @@ SWIGINTERN PyObject *_wrap_delete_VariantArray(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6137,16 +6114,12 @@ SWIGINTERN PyObject *_wrap_VariantArray___getitem__(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6234,16 +6207,12 @@ SWIGINTERN PyObject *_wrap_VariantArray___setitem__(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6307,16 +6276,12 @@ SWIGINTERN PyObject *_wrap_VariantArray_cast(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6382,16 +6347,12 @@ SWIGINTERN PyObject *_wrap_VariantArray_frompointer(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6463,16 +6424,12 @@ SWIGINTERN int _wrap_new_TupleArray(PyObject *self, PyObject *args, PyObject *kw
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6535,16 +6492,12 @@ SWIGINTERN PyObject *_wrap_delete_TupleArray(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6618,16 +6571,12 @@ SWIGINTERN PyObject *_wrap_TupleArray___getitem__(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6715,16 +6664,12 @@ SWIGINTERN PyObject *_wrap_TupleArray___setitem__(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6788,16 +6733,12 @@ SWIGINTERN PyObject *_wrap_TupleArray_cast(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6863,16 +6804,12 @@ SWIGINTERN PyObject *_wrap_TupleArray_frompointer(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -6934,16 +6871,12 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_0(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7009,16 +6942,12 @@ SWIGINTERN int _wrap_new_OptionalInt__SWIG_1(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7115,16 +7044,12 @@ SWIGINTERN PyObject *_wrap_OptionalInt_hasValue(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7190,16 +7115,12 @@ SWIGINTERN PyObject *_wrap_OptionalInt_value(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7262,16 +7183,12 @@ SWIGINTERN PyObject *_wrap_delete_OptionalInt(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7331,16 +7248,12 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_0(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7409,16 +7322,12 @@ SWIGINTERN int _wrap_new_OptionalString__SWIG_1(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7515,16 +7424,12 @@ SWIGINTERN PyObject *_wrap_OptionalString_hasValue(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7590,16 +7495,12 @@ SWIGINTERN PyObject *_wrap_OptionalString_value(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7662,16 +7563,12 @@ SWIGINTERN PyObject *_wrap_delete_OptionalString(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7731,16 +7628,12 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_0(PyObject *self, Py_ssize_t nobjs, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7806,16 +7699,12 @@ SWIGINTERN int _wrap_new_OptionalBool__SWIG_1(PyObject *self, Py_ssize_t nobjs, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7912,16 +7801,12 @@ SWIGINTERN PyObject *_wrap_OptionalBool_hasValue(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -7987,16 +7872,12 @@ SWIGINTERN PyObject *_wrap_OptionalBool_value(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8059,16 +7940,12 @@ SWIGINTERN PyObject *_wrap_delete_OptionalBool(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8128,16 +8005,12 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_0(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8203,16 +8076,12 @@ SWIGINTERN int _wrap_new_OptionalDouble__SWIG_1(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8309,16 +8178,12 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_hasValue(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8384,16 +8249,12 @@ SWIGINTERN PyObject *_wrap_OptionalDouble_value(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8456,16 +8317,12 @@ SWIGINTERN PyObject *_wrap_delete_OptionalDouble(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8535,16 +8392,12 @@ SWIGINTERN int _wrap_new_Variant__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8608,16 +8461,12 @@ SWIGINTERN int _wrap_new_Variant__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8684,16 +8533,12 @@ SWIGINTERN int _wrap_new_Variant__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8804,16 +8649,12 @@ SWIGINTERN PyObject *_wrap_Variant_str(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8877,16 +8718,12 @@ SWIGINTERN PyObject *_wrap_Variant_dbl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -8950,16 +8787,12 @@ SWIGINTERN PyObject *_wrap_Variant_type(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9023,16 +8856,12 @@ SWIGINTERN PyObject *_wrap_Variant_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9109,16 +8938,12 @@ SWIGINTERN PyObject *_wrap_Variant_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9195,16 +9020,12 @@ SWIGINTERN PyObject *_wrap_Variant_compare(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9267,16 +9088,12 @@ SWIGINTERN PyObject *_wrap_delete_Variant(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9344,16 +9161,12 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_0(PyObject *self, Py_ssize_t nobjs, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9417,16 +9230,12 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_1(PyObject *self, Py_ssize_t nobjs, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9493,16 +9302,12 @@ SWIGINTERN int _wrap_new_VariantRef__SWIG_2(PyObject *self, Py_ssize_t nobjs, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9613,16 +9418,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_str(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9686,16 +9487,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_dbl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9759,16 +9556,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_type(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9832,16 +9625,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -9918,16 +9707,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10004,16 +9789,12 @@ SWIGINTERN PyObject *_wrap_VariantRef_compare(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10076,16 +9857,12 @@ SWIGINTERN PyObject *_wrap_delete_VariantRef(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10161,16 +9938,12 @@ SWIGINTERN int _wrap_new_TupleRef(PyObject *self, PyObject *args, PyObject *kwar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10234,16 +10007,12 @@ SWIGINTERN PyObject *_wrap_TupleRef_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10307,16 +10076,12 @@ SWIGINTERN PyObject *_wrap_TupleRef_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10390,16 +10155,12 @@ SWIGINTERN PyObject *_wrap_TupleRef_getIndex(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10473,16 +10234,12 @@ SWIGINTERN PyObject *_wrap_delete_TupleRef(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10540,16 +10297,12 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10613,16 +10366,12 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10687,16 +10436,12 @@ SWIGINTERN int _wrap_new_Tuple__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10804,16 +10549,12 @@ SWIGINTERN PyObject *_wrap_Tuple_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10877,16 +10618,12 @@ SWIGINTERN PyObject *_wrap_Tuple_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -10960,16 +10697,12 @@ SWIGINTERN PyObject *_wrap_Tuple_getIndex(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11057,16 +10790,12 @@ SWIGINTERN PyObject *_wrap_Tuple_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11143,16 +10872,12 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_0(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11224,16 +10949,12 @@ SWIGINTERN PyObject *_wrap_Tuple_Factory__SWIG_1(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11338,16 +11059,12 @@ SWIGINTERN PyObject *_wrap_delete_Tuple(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11413,16 +11130,12 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11485,16 +11198,12 @@ SWIGINTERN PyObject *_wrap_delete_DataFrame(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11561,16 +11270,12 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11637,16 +11342,12 @@ SWIGINTERN int _wrap_new_DataFrame__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11770,16 +11471,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11856,16 +11553,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -11944,16 +11637,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_differs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12019,16 +11708,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumCols(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12092,16 +11777,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumRows(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12165,16 +11846,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getNumIndices(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12253,16 +11930,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_0(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12341,16 +12014,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_1(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12445,16 +12114,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_2(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12565,16 +12230,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_3(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12701,16 +12362,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_4(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12783,16 +12440,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_reserve(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12856,16 +12509,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -12935,16 +12584,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13018,16 +12663,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowByIndex(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13107,16 +12748,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_0(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13196,16 +12833,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_1(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13269,16 +12902,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRow__SWIG_2(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13397,16 +13026,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getHeaders(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13477,16 +13102,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_impl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13573,16 +13194,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, Py_ssi
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13677,16 +13294,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_1(PyObject *self, Py_ssi
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13821,16 +13434,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -13924,16 +13533,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14030,16 +13635,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14112,16 +13713,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14317,16 +13914,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowTpl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14428,16 +14021,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14542,16 +14131,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14675,16 +14260,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblDbl(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14817,16 +14398,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -14959,16 +14536,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15104,16 +14677,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15274,16 +14843,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblDbl(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15420,16 +14985,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrDbl(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15569,16 +15130,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrDbl(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15724,16 +15281,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblDbl(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -15897,16 +15450,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16061,16 +15610,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16219,16 +15764,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16362,16 +15903,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16476,16 +16013,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16561,16 +16094,12 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16636,16 +16165,12 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_size(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16709,16 +16234,12 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_begin(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16782,16 +16303,12 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16865,16 +16382,12 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_getIndex(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -16949,16 +16462,12 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_toPyList(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17021,16 +16530,12 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameColumn(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17109,16 +16614,12 @@ SWIGINTERN PyObject *_wrap_ColIterator_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17197,16 +16698,12 @@ SWIGINTERN PyObject *_wrap_ColIterator_differs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17272,16 +16769,12 @@ SWIGINTERN PyObject *_wrap_ColIterator___ref__(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17371,16 +16864,12 @@ SWIGINTERN PyObject *_wrap_ColIterator_clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17444,16 +16933,12 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrement(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17527,16 +17012,12 @@ SWIGINTERN PyObject *_wrap_ColIterator_postIncrementBy(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17599,16 +17080,12 @@ SWIGINTERN PyObject *_wrap_delete_ColIterator(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17674,16 +17151,12 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17747,16 +17220,12 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_begin(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17820,16 +17289,12 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17903,16 +17368,12 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_getIndex(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -17986,16 +17447,12 @@ SWIGINTERN PyObject *_wrap_delete_DataFrameRow(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18074,16 +17531,12 @@ SWIGINTERN PyObject *_wrap_RowIterator_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18162,16 +17615,12 @@ SWIGINTERN PyObject *_wrap_RowIterator_differs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18237,16 +17686,12 @@ SWIGINTERN PyObject *_wrap_RowIterator___ref__(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18336,16 +17781,12 @@ SWIGINTERN PyObject *_wrap_RowIterator_clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18409,16 +17850,12 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrement(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18492,16 +17929,12 @@ SWIGINTERN PyObject *_wrap_RowIterator_postIncrementBy(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18564,16 +17997,12 @@ SWIGINTERN PyObject *_wrap_delete_RowIterator(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18639,16 +18068,12 @@ SWIGINTERN PyObject *_wrap_Instance_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18712,16 +18137,12 @@ SWIGINTERN PyObject *_wrap_Instance_name(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18785,16 +18206,12 @@ SWIGINTERN PyObject *_wrap_Instance_entity(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18858,16 +18275,12 @@ SWIGINTERN PyObject *_wrap_Instance_key(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -18956,16 +18369,12 @@ SWIGINTERN PyObject *_wrap_delete_Instance(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19031,16 +18440,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19122,16 +18527,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_contains(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19195,16 +18596,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_getValues(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19285,16 +18682,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDf(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19358,16 +18751,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_members(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19437,16 +18826,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19542,16 +18927,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesTuples(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19640,16 +19021,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValues(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19744,16 +19121,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesDbl(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19857,16 +19230,12 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -19935,16 +19304,12 @@ SWIGINTERN PyObject *_wrap_delete_SetInstance(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20012,16 +19377,12 @@ SWIGINTERN int _wrap_new_MemberRange(PyObject *self, PyObject *args, PyObject *k
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20085,16 +19446,12 @@ SWIGINTERN PyObject *_wrap_MemberRange_begin(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20158,16 +19515,12 @@ SWIGINTERN PyObject *_wrap_MemberRange_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20231,16 +19584,12 @@ SWIGINTERN PyObject *_wrap_MemberRange_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20303,16 +19652,12 @@ SWIGINTERN PyObject *_wrap_delete_MemberRange(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20378,16 +19723,12 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20479,16 +19820,12 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrement(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20562,16 +19899,12 @@ SWIGINTERN PyObject *_wrap_iterator_postIncrementBy(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20648,16 +19981,12 @@ SWIGINTERN PyObject *_wrap_iterator_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20736,16 +20065,12 @@ SWIGINTERN PyObject *_wrap_iterator_differs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20810,16 +20135,12 @@ SWIGINTERN PyObject *_wrap_delete_iterator(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20885,16 +20206,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_value(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -20958,16 +20275,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_astatus(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21031,16 +20344,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_sstatus(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21104,16 +20413,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_exitcode(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21177,16 +20482,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_message(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21250,16 +20551,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_result(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21322,16 +20619,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_drop(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21394,16 +20687,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_restore(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21467,16 +20756,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveInstance_minimization(PyObject *self, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21539,16 +20824,12 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveInstance(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21613,16 +20894,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_0(PyObject *self, Py_ssize
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21693,16 +20970,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_fix__SWIG_1(PyObject *self, Py_ssize
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21808,16 +21081,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_unfix(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21890,16 +21159,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_setValue(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -21963,16 +21228,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_value(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22036,16 +21297,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_defeqn(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22109,16 +21366,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_dual(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22182,16 +21435,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22255,16 +21504,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_init0(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22328,16 +21573,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22401,16 +21642,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22474,16 +21711,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb0(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22547,16 +21780,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub0(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22620,16 +21849,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb1(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22693,16 +21918,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub1(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22766,16 +21987,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lb2(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22839,16 +22056,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_ub2(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22912,16 +22125,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lrc(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -22985,16 +22194,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_urc(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23058,16 +22263,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_lslack(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23131,16 +22332,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_uslack(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23204,16 +22401,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_rc(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23277,16 +22470,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_slack(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23350,16 +22539,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_astatus(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23423,16 +22608,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_sstatus(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23496,16 +22677,12 @@ SWIGINTERN PyObject *_wrap_VariableInstance_status(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23568,16 +22745,12 @@ SWIGINTERN PyObject *_wrap_delete_VariableInstance(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23642,16 +22815,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_drop(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23714,16 +22883,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_restore(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23787,16 +22952,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_body(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23860,16 +23021,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_astatus(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -23933,16 +23090,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_defvar(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24006,16 +23159,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24079,16 +23228,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dinit0(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24152,16 +23297,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_dual(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24225,16 +23366,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lb(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24298,16 +23435,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ub(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24371,16 +23504,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lbs(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24444,16 +23573,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ubs(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24517,16 +23642,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_ldual(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24590,16 +23711,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_udual(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24663,16 +23780,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_lslack(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24736,16 +23849,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_uslack(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24809,16 +23918,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_slack(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24882,16 +23987,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_sstatus(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -24955,16 +24056,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_status(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25037,16 +24134,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_setDual(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25110,16 +24203,12 @@ SWIGINTERN PyObject *_wrap_ConstraintInstance_val(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25182,16 +24271,12 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintInstance(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25256,16 +24341,12 @@ SWIGINTERN PyObject *_wrap_delete_TableInstance(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25333,16 +24414,12 @@ SWIGINTERN int _wrap_new_EntityArray(PyObject *self, PyObject *args, PyObject *k
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25405,16 +24482,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityArray(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25488,16 +24561,12 @@ SWIGINTERN PyObject *_wrap_EntityArray___getitem__(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25585,16 +24654,12 @@ SWIGINTERN PyObject *_wrap_EntityArray___setitem__(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25658,16 +24723,12 @@ SWIGINTERN PyObject *_wrap_EntityArray_cast(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25733,16 +24794,12 @@ SWIGINTERN PyObject *_wrap_EntityArray_frompointer(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25812,16 +24869,12 @@ SWIGINTERN PyObject *_wrap_Entity_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25885,16 +24938,12 @@ SWIGINTERN PyObject *_wrap_Entity_name(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -25958,16 +25007,12 @@ SWIGINTERN PyObject *_wrap_Entity_type(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26031,16 +25076,12 @@ SWIGINTERN PyObject *_wrap_Entity_indexarity(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26104,16 +25145,12 @@ SWIGINTERN PyObject *_wrap_Entity_isScalar(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26177,16 +25214,12 @@ SWIGINTERN PyObject *_wrap_Entity_numInstances(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26250,16 +25283,12 @@ SWIGINTERN PyObject *_wrap_Entity_getIndexingSets(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26330,16 +25359,12 @@ SWIGINTERN PyObject *_wrap_Entity_xref(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26410,16 +25435,12 @@ SWIGINTERN PyObject *_wrap_Entity_getValues(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26500,16 +25521,12 @@ SWIGINTERN PyObject *_wrap_Entity_setValuesDf(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26608,16 +25625,12 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26686,16 +25699,12 @@ SWIGINTERN PyObject *_wrap_delete_Entity(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26773,16 +25782,12 @@ SWIGINTERN PyObject *_wrap_EntityArgs_Factory(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26845,16 +25850,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityArgs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26920,16 +25921,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_begin(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -26993,16 +25990,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_end(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27072,16 +26065,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27145,16 +26134,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_0(PyObject *self, Py_ss
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27222,16 +26207,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, Py_ss
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27336,16 +26317,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityVariable(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27411,16 +26388,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_begin(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27484,16 +26457,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_end(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27563,16 +26532,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27636,16 +26601,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_0(PyObject *self, Py_
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27713,16 +26674,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, Py_
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27827,16 +26784,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityConstraint(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27902,16 +26855,12 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_begin(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -27975,16 +26924,12 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28054,16 +26999,12 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28127,16 +27068,12 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_0(PyObject *self, Py_ssize_t
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28204,16 +27141,12 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, Py_ssize_t
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28318,16 +27251,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntitySet(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28393,16 +27322,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_begin(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28466,16 +27391,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_end(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28545,16 +27466,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28618,16 +27535,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_0(PyObject *self, Py_s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28695,16 +27608,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, Py_s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28809,16 +27718,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityObjective(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28884,16 +27789,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_begin(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -28957,16 +27858,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_end(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29036,16 +27933,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29109,16 +28002,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_0(PyObject *self, Py_s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29197,16 +28086,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, Py_s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29322,16 +28207,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityParameter(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29397,16 +28278,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_begin(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29470,16 +28347,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_end(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29549,16 +28422,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_find(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29622,16 +28491,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_0(PyObject *self, Py_ssize
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29699,16 +28564,12 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_1(PyObject *self, Py_ssize
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29813,16 +28674,12 @@ SWIGINTERN PyObject *_wrap_delete_BasicEntityTable(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29888,16 +28745,12 @@ SWIGINTERN PyObject *_wrap_Constraint_isLogical(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -29960,16 +28813,12 @@ SWIGINTERN PyObject *_wrap_Constraint_drop(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30032,16 +28881,12 @@ SWIGINTERN PyObject *_wrap_Constraint_restore(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30105,16 +28950,12 @@ SWIGINTERN PyObject *_wrap_Constraint_body(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30178,16 +29019,12 @@ SWIGINTERN PyObject *_wrap_Constraint_astatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30251,16 +29088,12 @@ SWIGINTERN PyObject *_wrap_Constraint_defvar(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30324,16 +29157,12 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30397,16 +29226,12 @@ SWIGINTERN PyObject *_wrap_Constraint_dinit0(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30470,16 +29295,12 @@ SWIGINTERN PyObject *_wrap_Constraint_dual(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30543,16 +29364,12 @@ SWIGINTERN PyObject *_wrap_Constraint_lb(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30616,16 +29433,12 @@ SWIGINTERN PyObject *_wrap_Constraint_ub(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30689,16 +29502,12 @@ SWIGINTERN PyObject *_wrap_Constraint_lbs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30762,16 +29571,12 @@ SWIGINTERN PyObject *_wrap_Constraint_ubs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30835,16 +29640,12 @@ SWIGINTERN PyObject *_wrap_Constraint_ldual(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30908,16 +29709,12 @@ SWIGINTERN PyObject *_wrap_Constraint_udual(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -30981,16 +29778,12 @@ SWIGINTERN PyObject *_wrap_Constraint_lslack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31054,16 +29847,12 @@ SWIGINTERN PyObject *_wrap_Constraint_uslack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31127,16 +29916,12 @@ SWIGINTERN PyObject *_wrap_Constraint_slack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31200,16 +29985,12 @@ SWIGINTERN PyObject *_wrap_Constraint_sstatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31273,16 +30054,12 @@ SWIGINTERN PyObject *_wrap_Constraint_status(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31355,16 +30132,12 @@ SWIGINTERN PyObject *_wrap_Constraint_setDual(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31428,16 +30201,12 @@ SWIGINTERN PyObject *_wrap_Constraint_val(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31500,16 +30269,12 @@ SWIGINTERN PyObject *_wrap_delete_Constraint(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31575,16 +30340,12 @@ SWIGINTERN PyObject *_wrap_Variable_integrality(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31647,16 +30408,12 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_0(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31727,16 +30484,12 @@ SWIGINTERN PyObject *_wrap_Variable_fix__SWIG_1(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31842,16 +30595,12 @@ SWIGINTERN PyObject *_wrap_Variable_unfix(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31924,16 +30673,12 @@ SWIGINTERN PyObject *_wrap_Variable_setValue(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -31997,16 +30742,12 @@ SWIGINTERN PyObject *_wrap_Variable_value(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32070,16 +30811,12 @@ SWIGINTERN PyObject *_wrap_Variable_astatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32143,16 +30880,12 @@ SWIGINTERN PyObject *_wrap_Variable_defeqn(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32216,16 +30949,12 @@ SWIGINTERN PyObject *_wrap_Variable_dual(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32289,16 +31018,12 @@ SWIGINTERN PyObject *_wrap_Variable_init(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32362,16 +31087,12 @@ SWIGINTERN PyObject *_wrap_Variable_init0(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32435,16 +31156,12 @@ SWIGINTERN PyObject *_wrap_Variable_lb(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32508,16 +31225,12 @@ SWIGINTERN PyObject *_wrap_Variable_ub(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32581,16 +31294,12 @@ SWIGINTERN PyObject *_wrap_Variable_lb0(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32654,16 +31363,12 @@ SWIGINTERN PyObject *_wrap_Variable_ub0(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32727,16 +31432,12 @@ SWIGINTERN PyObject *_wrap_Variable_lb1(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32800,16 +31501,12 @@ SWIGINTERN PyObject *_wrap_Variable_ub1(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32873,16 +31570,12 @@ SWIGINTERN PyObject *_wrap_Variable_lb2(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -32946,16 +31639,12 @@ SWIGINTERN PyObject *_wrap_Variable_ub2(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33019,16 +31708,12 @@ SWIGINTERN PyObject *_wrap_Variable_lrc(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33092,16 +31777,12 @@ SWIGINTERN PyObject *_wrap_Variable_urc(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33165,16 +31846,12 @@ SWIGINTERN PyObject *_wrap_Variable_lslack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33238,16 +31915,12 @@ SWIGINTERN PyObject *_wrap_Variable_uslack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33311,16 +31984,12 @@ SWIGINTERN PyObject *_wrap_Variable_rc(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33384,16 +32053,12 @@ SWIGINTERN PyObject *_wrap_Variable_slack(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33457,16 +32122,12 @@ SWIGINTERN PyObject *_wrap_Variable_sstatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33530,16 +32191,12 @@ SWIGINTERN PyObject *_wrap_Variable_status(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33602,16 +32259,12 @@ SWIGINTERN PyObject *_wrap_delete_Variable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33677,16 +32330,12 @@ SWIGINTERN PyObject *_wrap_Objective_value(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33750,16 +32399,12 @@ SWIGINTERN PyObject *_wrap_Objective_astatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33823,16 +32468,12 @@ SWIGINTERN PyObject *_wrap_Objective_sstatus(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33896,16 +32537,12 @@ SWIGINTERN PyObject *_wrap_Objective_exitcode(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -33969,16 +32606,12 @@ SWIGINTERN PyObject *_wrap_Objective_message(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34042,16 +32675,12 @@ SWIGINTERN PyObject *_wrap_Objective_result(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34114,16 +32743,12 @@ SWIGINTERN PyObject *_wrap_Objective_drop(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34186,16 +32811,12 @@ SWIGINTERN PyObject *_wrap_Objective_restore(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34259,16 +32880,12 @@ SWIGINTERN PyObject *_wrap_Objective_minimization(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34331,16 +32948,12 @@ SWIGINTERN PyObject *_wrap_delete_Objective(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34406,16 +33019,12 @@ SWIGINTERN PyObject *_wrap_Set_arity(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34479,16 +33088,12 @@ SWIGINTERN PyObject *_wrap_Set_getValues(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34552,16 +33157,12 @@ SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34625,16 +33226,12 @@ SWIGINTERN PyObject *_wrap_Set_members(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34715,16 +33312,12 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDf(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34794,16 +33387,12 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34899,16 +33488,12 @@ SWIGINTERN PyObject *_wrap_Set_setValuesTuples(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -34997,16 +33582,12 @@ SWIGINTERN PyObject *_wrap_Set_setValues(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35101,16 +33682,12 @@ SWIGINTERN PyObject *_wrap_Set_setValuesDbl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35214,16 +33791,12 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35292,16 +33865,12 @@ SWIGINTERN PyObject *_wrap_delete_Set(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35366,16 +33935,12 @@ SWIGINTERN PyObject *_wrap_delete_Table(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35441,16 +34006,12 @@ SWIGINTERN PyObject *_wrap_Parameter_isSymbolic(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35514,16 +34075,12 @@ SWIGINTERN PyObject *_wrap_Parameter_hasDefault(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35602,16 +34159,12 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_0(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35682,16 +34235,12 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_1(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35763,16 +34312,12 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_2(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -35857,16 +34402,12 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, Py_ssize_t nobj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36022,16 +34563,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36108,16 +34645,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36238,16 +34771,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36365,16 +34894,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTupleArrayDbl(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36502,16 +35027,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36632,16 +35153,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTupleArrayStr(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36742,16 +35259,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesDbl(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36855,16 +35368,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -36996,16 +35505,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_0(PyObject *self, Py_ssize_
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37167,16 +35672,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValues__SWIG_1(PyObject *self, Py_ssize_
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37364,16 +35865,12 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesPyDict(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37436,16 +35933,12 @@ SWIGINTERN PyObject *_wrap_delete_Parameter(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37510,16 +36003,12 @@ SWIGINTERN PyObject *_wrap_delete_VariableIteratorWrapper(PyObject *self, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37598,16 +36087,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_equals(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37686,16 +36171,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_differs(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37774,16 +36255,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_clone(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37847,16 +36324,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrement(PyObject *self, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -37930,16 +36403,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_postIncrementBy(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38003,16 +36472,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38102,16 +36567,12 @@ SWIGINTERN PyObject *_wrap_VariableIterator_second(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38174,16 +36635,12 @@ SWIGINTERN PyObject *_wrap_delete_VariableIterator(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38248,16 +36705,12 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIteratorWrapper(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38336,16 +36789,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_equals(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38424,16 +36873,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_differs(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38512,16 +36957,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_clone(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38585,16 +37026,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrement(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38668,16 +37105,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_postIncrementBy(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38741,16 +37174,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38840,16 +37269,12 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_second(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38912,16 +37337,12 @@ SWIGINTERN PyObject *_wrap_delete_ConstraintIterator(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -38986,16 +37407,12 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIteratorWrapper(PyObject *self, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39074,16 +37491,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_equals(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39162,16 +37575,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_differs(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39250,16 +37659,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_clone(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39323,16 +37728,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrement(PyObject *self, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39406,16 +37807,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_postIncrementBy(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39479,16 +37876,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39578,16 +37971,12 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_second(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39650,16 +38039,12 @@ SWIGINTERN PyObject *_wrap_delete_ObjectiveIterator(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39724,16 +38109,12 @@ SWIGINTERN PyObject *_wrap_delete_SetIteratorWrapper(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39812,16 +38193,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_equals(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39900,16 +38277,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_differs(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -39988,16 +38361,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40061,16 +38430,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrement(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40144,16 +38509,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_postIncrementBy(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40217,16 +38578,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40316,16 +38673,12 @@ SWIGINTERN PyObject *_wrap_SetIterator_second(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40388,16 +38741,12 @@ SWIGINTERN PyObject *_wrap_delete_SetIterator(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40462,16 +38811,12 @@ SWIGINTERN PyObject *_wrap_delete_TableIteratorWrapper(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40550,16 +38895,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_equals(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40638,16 +38979,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_differs(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40726,16 +39063,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40799,16 +39132,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_postIncrement(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40882,16 +39211,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_postIncrementBy(PyObject *self, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -40955,16 +39280,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_first(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41054,16 +39375,12 @@ SWIGINTERN PyObject *_wrap_TableIterator_second(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41126,16 +39443,12 @@ SWIGINTERN PyObject *_wrap_delete_TableIterator(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41200,16 +39513,12 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIteratorWrapper(PyObject *self, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41288,16 +39597,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_equals(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41376,16 +39681,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_differs(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41464,16 +39765,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_clone(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41537,16 +39834,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrement(PyObject *self, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41620,16 +39913,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_postIncrementBy(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41693,16 +39982,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41792,16 +40077,12 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_second(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41875,16 +40156,12 @@ SWIGINTERN PyObject *_wrap_delete_ParameterIterator(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -41950,16 +40227,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_begin(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42023,16 +40296,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_end(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42107,16 +40376,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_find(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42182,16 +40447,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_size(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42261,16 +40522,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42333,16 +40590,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariable(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42421,16 +40674,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_equals(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42509,16 +40758,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_differs(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42584,16 +40829,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator___ref__(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42672,16 +40913,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_clone(PyObject *self, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42745,16 +40982,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrement(PyObject *sel
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42828,16 +41061,12 @@ SWIGINTERN PyObject *_wrap_EntityMapVariableIterator_postIncrementBy(PyObject *s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42900,16 +41129,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapVariableIterator(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -42975,16 +41200,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_begin(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43048,16 +41269,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_end(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43132,16 +41349,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_find(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43207,16 +41420,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_size(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43286,16 +41495,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43358,16 +41563,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraint(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43446,16 +41647,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_equals(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43534,16 +41731,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_differs(PyObject *self, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43609,16 +41802,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator___ref__(PyObject *self, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43697,16 +41886,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_clone(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43770,16 +41955,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrement(PyObject *s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43853,16 +42034,12 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraintIterator_postIncrementBy(PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -43925,16 +42102,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapConstraintIterator(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44000,16 +42173,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_begin(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44073,16 +42242,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_end(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44157,16 +42322,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_find(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44232,16 +42393,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_size(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44311,16 +42468,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44383,16 +42536,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjective(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44471,16 +42620,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_equals(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44559,16 +42704,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_differs(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44634,16 +42775,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator___ref__(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44722,16 +42859,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_clone(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44795,16 +42928,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrement(PyObject *se
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44878,16 +43007,12 @@ SWIGINTERN PyObject *_wrap_EntityMapObjectiveIterator_postIncrementBy(PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -44950,16 +43075,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapObjectiveIterator(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45025,16 +43146,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_begin(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45098,16 +43215,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45182,16 +43295,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_find(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45257,16 +43366,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45336,16 +43441,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45408,16 +43509,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSet(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45496,16 +43593,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_equals(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45584,16 +43677,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_differs(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45659,16 +43748,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator___ref__(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45747,16 +43832,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_clone(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45820,16 +43901,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrement(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45903,16 +43980,12 @@ SWIGINTERN PyObject *_wrap_EntityMapSetIterator_postIncrementBy(PyObject *self, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -45975,16 +44048,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapSetIterator(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46050,16 +44119,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_begin(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46123,16 +44188,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46207,16 +44268,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_find(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46282,16 +44339,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46361,16 +44414,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_getIndex(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46433,16 +44482,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapTable(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46521,16 +44566,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_equals(PyObject *self, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46609,16 +44650,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_differs(PyObject *self, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46684,16 +44721,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator___ref__(PyObject *self, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46772,16 +44805,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_clone(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46845,16 +44874,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_postIncrement(PyObject *self, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -46928,16 +44953,12 @@ SWIGINTERN PyObject *_wrap_EntityMapTableIterator_postIncrementBy(PyObject *self
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47000,16 +45021,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapTableIterator(PyObject *self, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47075,16 +45092,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_begin(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47148,16 +45161,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_end(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47232,16 +45241,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_find(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47307,16 +45312,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_size(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47386,16 +45387,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47458,16 +45455,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameter(PyObject *self, PyObject *a
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47546,16 +45539,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_equals(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47634,16 +45623,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_differs(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47709,16 +45694,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator___ref__(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47797,16 +45778,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_clone(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47870,16 +45847,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrement(PyObject *se
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -47953,16 +45926,12 @@ SWIGINTERN PyObject *_wrap_EntityMapParameterIterator_postIncrementBy(PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48025,16 +45994,12 @@ SWIGINTERN PyObject *_wrap_delete_EntityMapParameterIterator(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48103,16 +46068,12 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_0(PyObject *self, Py_ssize_t nobjs,
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48172,16 +46133,12 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, Py_ssize_t nobjs,
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48237,16 +46194,12 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_2(PyObject *self, Py_ssize_t nobjs,
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48326,16 +46279,12 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, Py_ssize_t nobjs,
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48463,16 +46412,12 @@ SWIGINTERN PyObject *_wrap_delete_AMPLException(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48536,16 +46481,12 @@ SWIGINTERN PyObject *_wrap_AMPLException_getSourceName(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48609,16 +46550,12 @@ SWIGINTERN PyObject *_wrap_AMPLException_getLineNumber(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48682,16 +46619,12 @@ SWIGINTERN PyObject *_wrap_AMPLException_getOffset(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48755,16 +46688,12 @@ SWIGINTERN PyObject *_wrap_AMPLException_getMessage(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48842,16 +46771,12 @@ SWIGINTERN PyObject *_wrap_AMPLException_setSourceName(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -48926,16 +46851,12 @@ SWIGINTERN int _wrap_new_LicenseException(PyObject *self, PyObject *args, PyObje
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49000,16 +46921,12 @@ SWIGINTERN PyObject *_wrap_delete_LicenseException(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49082,16 +46999,12 @@ SWIGINTERN int _wrap_new_FileIOException(PyObject *self, PyObject *args, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49156,16 +47069,12 @@ SWIGINTERN PyObject *_wrap_delete_FileIOException(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49238,16 +47147,12 @@ SWIGINTERN int _wrap_new_UnsupportedOperationException(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49312,16 +47217,12 @@ SWIGINTERN PyObject *_wrap_delete_UnsupportedOperationException(PyObject *self, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49405,16 +47306,12 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49477,16 +47374,12 @@ SWIGINTERN PyObject *_wrap_delete_InvalidSubscriptException(PyObject *self, PyOb
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49570,16 +47463,12 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49642,16 +47531,12 @@ SWIGINTERN PyObject *_wrap_delete_SyntaxErrorException(PyObject *self, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49715,16 +47600,12 @@ SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49787,16 +47668,12 @@ SWIGINTERN PyObject *_wrap_delete_NoDataException(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49860,16 +47737,12 @@ SWIGINTERN int _wrap_new_PresolveException(PyObject *self, PyObject *args, PyObj
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -49908,28 +47781,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PresolveException__str_(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  ampl::PresolveException *arg1 = (ampl::PresolveException *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  char *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "PresolveException__str_", 0, 0, 0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__PresolveException, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PresolveException__str_" "', argument " "1"" of type '" "ampl::PresolveException const *""'"); 
-  }
-  arg1 = reinterpret_cast< ampl::PresolveException * >(argp1);
-  result = (char *)ampl_PresolveException__str_((ampl::PresolveException const *)arg1);
-  resultobj = SWIG_FromCharPtr((const char *)result);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_delete_PresolveException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::PresolveException *arg1 = (ampl::PresolveException *) 0 ;
@@ -49954,16 +47805,12 @@ SWIGINTERN PyObject *_wrap_delete_PresolveException(PyObject *self, PyObject *ar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50027,16 +47874,12 @@ SWIGINTERN int _wrap_new_InfeasibilityException(PyObject *self, PyObject *args, 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50075,28 +47918,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_InfeasibilityException__str_(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  ampl::InfeasibilityException *arg1 = (ampl::InfeasibilityException *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  char *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "InfeasibilityException__str_", 0, 0, 0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__InfeasibilityException, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InfeasibilityException__str_" "', argument " "1"" of type '" "ampl::InfeasibilityException const *""'"); 
-  }
-  arg1 = reinterpret_cast< ampl::InfeasibilityException * >(argp1);
-  result = (char *)ampl_InfeasibilityException__str_((ampl::InfeasibilityException const *)arg1);
-  resultobj = SWIG_FromCharPtr((const char *)result);
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_delete_InfeasibilityException(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::InfeasibilityException *arg1 = (ampl::InfeasibilityException *) 0 ;
@@ -50121,16 +47942,12 @@ SWIGINTERN PyObject *_wrap_delete_InfeasibilityException(PyObject *self, PyObjec
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50199,16 +48016,12 @@ SWIGINTERN int _wrap_new_ErrorHandler(PyObject *self, PyObject *args, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50271,16 +48084,12 @@ SWIGINTERN PyObject *_wrap_delete_ErrorHandler(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50365,16 +48174,12 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_error(PyObject *self, PyObject *args) {
         SWIG_exception(SWIG_RuntimeError, e.what());
       }
       catch (const ampl::PresolveException &e) {
-        ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-        SWIG_fail;
+        std::string msg = "PresolveException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const ampl::InfeasibilityException &e) {
-        ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-        SWIG_fail;
+        std::string msg = "InfeasibilityException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const std::invalid_argument &e) {
         SWIG_exception(SWIG_ValueError, e.what());
@@ -50462,16 +48267,12 @@ SWIGINTERN PyObject *_wrap_ErrorHandler_warning(PyObject *self, PyObject *args) 
         SWIG_exception(SWIG_RuntimeError, e.what());
       }
       catch (const ampl::PresolveException &e) {
-        ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-        SWIG_fail;
+        std::string msg = "PresolveException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const ampl::InfeasibilityException &e) {
-        ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-        SWIG_fail;
+        std::string msg = "InfeasibilityException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const std::invalid_argument &e) {
         SWIG_exception(SWIG_ValueError, e.what());
@@ -50566,16 +48367,12 @@ SWIGINTERN PyObject *_wrap_delete_Runnable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50647,16 +48444,12 @@ SWIGINTERN PyObject *_wrap_Runnable_run(PyObject *self, PyObject *args) {
         SWIG_exception(SWIG_RuntimeError, e.what());
       }
       catch (const ampl::PresolveException &e) {
-        ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-        SWIG_fail;
+        std::string msg = "PresolveException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const ampl::InfeasibilityException &e) {
-        ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-        SWIG_fail;
+        std::string msg = "InfeasibilityException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const std::invalid_argument &e) {
         SWIG_exception(SWIG_ValueError, e.what());
@@ -50726,16 +48519,12 @@ SWIGINTERN int _wrap_new_Runnable(PyObject *self, PyObject *args, PyObject *kwar
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50827,16 +48616,12 @@ SWIGINTERN PyObject *_wrap_delete_OutputHandler(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -50926,16 +48711,12 @@ SWIGINTERN PyObject *_wrap_OutputHandler_output(PyObject *self, PyObject *args) 
         SWIG_exception(SWIG_RuntimeError, e.what());
       }
       catch (const ampl::PresolveException &e) {
-        ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-        SWIG_fail;
+        std::string msg = "PresolveException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const ampl::InfeasibilityException &e) {
-        ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-        PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-        PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-        SWIG_fail;
+        std::string msg = "InfeasibilityException: " + std::string(e.what());
+        SWIG_exception(SWIG_RuntimeError, msg.c_str());
       }
       catch (const std::invalid_argument &e) {
         SWIG_exception(SWIG_ValueError, e.what());
@@ -51007,16 +48788,12 @@ SWIGINTERN int _wrap_new_OutputHandler(PyObject *self, PyObject *args, PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51102,16 +48879,12 @@ SWIGINTERN int _wrap_new_EnvironmentIterator(PyObject *self, PyObject *args, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51174,16 +48947,12 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIterator(PyObject *self, PyObject *
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51241,16 +49010,12 @@ SWIGINTERN int _wrap_new_Environment__SWIG_0(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51317,16 +49082,12 @@ SWIGINTERN int _wrap_new_Environment__SWIG_1(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51403,16 +49164,12 @@ SWIGINTERN PyObject *_wrap_Environment_Clone(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51476,16 +49233,12 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51545,16 +49298,12 @@ SWIGINTERN int _wrap_new_Environment__SWIG_3(PyObject *self, Py_ssize_t nobjs, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51670,16 +49419,12 @@ SWIGINTERN PyObject *_wrap_delete_Environment(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51751,16 +49496,12 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51829,16 +49570,12 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51902,16 +49639,12 @@ SWIGINTERN PyObject *_wrap_Environment_getBinDir(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -51980,16 +49713,12 @@ SWIGINTERN PyObject *_wrap_Environment_setBinName(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52053,16 +49782,12 @@ SWIGINTERN PyObject *_wrap_Environment_getBinName(PyObject *self, PyObject *args
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52126,16 +49851,12 @@ SWIGINTERN PyObject *_wrap_Environment_toString(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52199,16 +49920,12 @@ SWIGINTERN PyObject *_wrap_Environment_begin(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52272,16 +49989,12 @@ SWIGINTERN PyObject *_wrap_Environment_end(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52351,16 +50064,12 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52424,16 +50133,12 @@ SWIGINTERN PyObject *_wrap_Environment_size(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52512,16 +50217,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_equals(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52600,16 +50301,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_differs(PyObject *self, P
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52688,16 +50385,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_Clone(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52761,16 +50454,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrement(PyObject *s
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52844,16 +50533,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_postIncrementBy(PyObject 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52917,16 +50602,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_first(PyObject *self, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -52990,16 +50671,12 @@ SWIGINTERN PyObject *_wrap_EnvironmentIteratorTemplate_second(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53062,16 +50739,12 @@ SWIGINTERN PyObject *_wrap_delete_EnvironmentIteratorTemplate(PyObject *self, Py
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53129,16 +50802,12 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53205,16 +50874,12 @@ SWIGINTERN int _wrap_new_AMPL__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53308,16 +50973,12 @@ SWIGINTERN PyObject *_wrap_delete_AMPL(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53389,16 +51050,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_0(PyObject *self, Py_ssize_t no
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53462,16 +51119,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_1(PyObject *self, Py_ssize_t no
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53546,16 +51199,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_2(PyObject *self, Py_ssize_t no
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53622,16 +51271,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_3(PyObject *self, Py_ssize_t no
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53772,16 +51417,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_0(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53848,16 +51489,12 @@ SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_1(PyObject *self, Py_ssize_t n
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -53968,16 +51605,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54047,16 +51680,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54126,16 +51755,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54205,16 +51830,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54284,16 +51905,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54363,16 +51980,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54442,16 +52055,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getTable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54520,16 +52129,12 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54592,16 +52197,12 @@ SWIGINTERN PyObject *_wrap_AMPL_reset(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54664,16 +52265,12 @@ SWIGINTERN PyObject *_wrap_AMPL_close(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54737,16 +52334,12 @@ SWIGINTERN PyObject *_wrap_AMPL_isRunning(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54810,16 +52403,12 @@ SWIGINTERN PyObject *_wrap_AMPL_isBusy(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54882,16 +52471,12 @@ SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -54967,16 +52552,12 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55052,16 +52633,12 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55137,16 +52714,12 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55219,16 +52792,12 @@ SWIGINTERN PyObject *_wrap_AMPL_solveAsync(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55291,16 +52860,12 @@ SWIGINTERN PyObject *_wrap_AMPL_interrupt(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55364,16 +52929,12 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55441,16 +53002,12 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyO
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55563,16 +53120,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55642,16 +53195,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55721,16 +53270,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55806,16 +53351,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55885,16 +53426,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -55970,16 +53507,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56049,16 +53582,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56122,16 +53651,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getCurrentObjectiveName(PyObject *self, PyObject
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56207,16 +53732,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56285,16 +53806,12 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56363,16 +53880,12 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56442,16 +53955,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56532,16 +54041,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutput(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56619,16 +54124,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56702,16 +54203,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_1(PyObject *self, Py_ssize_t nobjs
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56824,16 +54321,12 @@ SWIGINTERN PyObject *_wrap_AMPL_toString(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56902,16 +54395,12 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -56980,16 +54469,12 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57025,211 +54510,6 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_AMPL_write__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
-  PyObject *resultobj = 0;
-  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  fmt::CStringRef arg2 ;
-  fmt::CStringRef arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  
-  (void)self;
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_write" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
-  }
-  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  
-  arg2 = _PyString_AsString(swig_obj[1]);
-  
-  
-  arg3 = _PyString_AsString(swig_obj[2]);
-  
-  {
-    try {
-      (arg1)->write(arg2,arg3);
-    }
-    catch (std::range_error) {
-      SWIG_exception(SWIG_ValueError, "Range Error");
-    }
-    catch (const ampl::AMPLException &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
-    }
-    catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
-    }
-    catch (const std::invalid_argument &e) {
-      SWIG_exception(SWIG_ValueError, e.what());
-    }
-    catch (const std::out_of_range &e) {
-      // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
-    }
-    catch (const std::logic_error &e) {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::UnsupportedOperationException &e)
-    {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::LicenseException &e) {
-      SWIG_exception(SWIG_SystemError, e.what());
-    }
-    catch (const ampl::FileIOException &e) {
-      SWIG_exception(SWIG_IOError, e.what());
-    }
-    catch (const std::runtime_error &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const std::exception &e) {
-      SWIG_exception(SWIG_UnknownError, e.what());
-    }
-    catch (...) {
-      SWIG_exception(SWIG_UnknownError,"Unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_AMPL_write__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
-  PyObject *resultobj = 0;
-  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  fmt::CStringRef arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  
-  (void)self;
-  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_write" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
-  }
-  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  
-  arg2 = _PyString_AsString(swig_obj[1]);
-  
-  {
-    try {
-      (arg1)->write(arg2);
-    }
-    catch (std::range_error) {
-      SWIG_exception(SWIG_ValueError, "Range Error");
-    }
-    catch (const ampl::AMPLException &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
-    }
-    catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
-    }
-    catch (const std::invalid_argument &e) {
-      SWIG_exception(SWIG_ValueError, e.what());
-    }
-    catch (const std::out_of_range &e) {
-      // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
-    }
-    catch (const std::logic_error &e) {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::UnsupportedOperationException &e)
-    {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::LicenseException &e) {
-      SWIG_exception(SWIG_SystemError, e.what());
-    }
-    catch (const ampl::FileIOException &e) {
-      SWIG_exception(SWIG_IOError, e.what());
-    }
-    catch (const std::runtime_error &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const std::exception &e) {
-      SWIG_exception(SWIG_UnknownError, e.what());
-    }
-    catch (...) {
-      SWIG_exception(SWIG_UnknownError,"Unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_AMPL_write(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  (void)self;
-  if (!(argc = SWIG_Python_UnpackTuple(args, "AMPL_write", 0, 3, argv+1))) SWIG_fail;
-  argv[0] = self;
-  if (argc == 2) {
-    int _v = 0;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_AMPL_write__SWIG_1(self, argc, argv);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v = 0;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_AMPL_write__SWIG_0(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'AMPL_write'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ampl::AMPL::write(fmt::CStringRef,fmt::CStringRef)\n"
-    "    ampl::AMPL::write(fmt::CStringRef)\n");
-  return 0;
 }
 
 
@@ -57275,16 +54555,12 @@ SWIGINTERN PyObject *_wrap_AMPL_display(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57365,16 +54641,12 @@ SWIGINTERN PyObject *_wrap_AMPL_show(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57455,16 +54727,12 @@ SWIGINTERN PyObject *_wrap_AMPL_expand(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57537,16 +54805,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setOutputHandler(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57619,16 +54883,12 @@ SWIGINTERN PyObject *_wrap_AMPL_setErrorHandler(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57693,16 +54953,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutputHandler(PyObject *self, PyObject *args)
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57773,16 +55029,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getErrorHandler(PyObject *self, PyObject *args) 
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57852,16 +55104,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariables(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57925,16 +55173,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraints(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -57998,16 +55242,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjectives(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -58071,16 +55311,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getSets(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -58144,16 +55380,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameters(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -58217,16 +55449,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getTables(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -58324,16 +55552,12 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -58375,6 +55599,224 @@ fail:
     free((char *)arg2);
   }
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_write__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  
+  (void)self;
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_write" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_write" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AMPL_write" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = reinterpret_cast< char * >(buf3);
+  {
+    try {
+      ampl_AMPL_write__SWIG_0(arg1,(char const *)arg2,(char const *)arg3);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_write__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  (void)self;
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_write" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AMPL_write" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  {
+    try {
+      ampl_AMPL_write__SWIG_0(arg1,(char const *)arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_write(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  (void)self;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "AMPL_write", 0, 3, argv+1))) SWIG_fail;
+  argv[0] = self;
+  if (argc == 2) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_AMPL_write__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_AMPL_write__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'AMPL_write'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ampl::AMPL::write(char const *,char const *)\n"
+    "    ampl::AMPL::write(char const *)\n");
+  return 0;
 }
 
 
@@ -58438,16 +55880,12 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
     catch (const ampl::PresolveException &e) {
-      ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-      SWIG_fail;
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const ampl::InfeasibilityException &e) {
-      ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-      PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-      PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-      SWIG_fail;
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
     }
     catch (const std::invalid_argument &e) {
       SWIG_exception(SWIG_ValueError, e.what());
@@ -75431,7 +72869,6 @@ SwigPyBuiltin__ampl__PresolveException_richcompare(PyObject *self, PyObject *oth
 }
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__PresolveException_methods[] = {
-  { "_str_", _wrap_PresolveException__str_, METH_NOARGS, "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -75660,7 +73097,6 @@ SwigPyBuiltin__ampl__InfeasibilityException_richcompare(PyObject *self, PyObject
 }
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__InfeasibilityException_methods[] = {
-  { "_str_", _wrap_InfeasibilityException__str_, METH_NOARGS, "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };
 
@@ -77325,7 +74761,6 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
   { "toString", _wrap_AMPL_toString, METH_NOARGS, "" },
   { "readTable", _wrap_AMPL_readTable, METH_O, "" },
   { "writeTable", _wrap_AMPL_writeTable, METH_O, "" },
-  { "write", _wrap_AMPL_write, METH_VARARGS, "" },
   { "display", _wrap_AMPL_display, METH_O, "" },
   { "show", _wrap_AMPL_show, METH_O, "" },
   { "expand", _wrap_AMPL_expand, METH_O, "" },
@@ -77340,6 +74775,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
   { "getParameters", _wrap_AMPL_getParameters, METH_NOARGS, "" },
   { "getTables", _wrap_AMPL_getTables, METH_NOARGS, "" },
   { "displayLst", _wrap_AMPL_displayLst, METH_VARARGS, "" },
+  { "write", _wrap_AMPL_write, METH_VARARGS, "" },
   { "getData", _wrap_AMPL_getData, METH_VARARGS, "" },
   { NULL, NULL, 0, NULL } /* Sentinel */
 };

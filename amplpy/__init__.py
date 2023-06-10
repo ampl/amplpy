@@ -6,7 +6,7 @@ import os
 from .base import BaseClass
 from .outputhandler import OutputHandler, Kind
 from .errorhandler import ErrorHandler
-from .exceptions import AMPLException
+from .exceptions import AMPLException, PresolveException, InfeasibilityException
 from .iterators import EntityMap
 from .runnable import Runnable
 from .objective import Objective
@@ -18,7 +18,6 @@ from .entity import Entity
 from .dataframe import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from .environment import Environment
-from .amplpython import PresolveException, InfeasibilityException
 from .ampl import AMPL
 
 _parent_dir = os.path.abspath(os.path.dirname(__file__))

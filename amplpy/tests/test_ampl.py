@@ -26,19 +26,19 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(ampl.get_data("X").get_num_rows(), 10)
 
         with self.assertRaises(RuntimeError):
-            self.assertRaises(ampl.get_data("XXX"))
+            ampl.get_data("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_entity("XXX"))
+            ampl.get_entity("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_set("XXX"))
+            ampl.get_set("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_parameter("XXX"))
+            ampl.get_parameter("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_variable("XXX"))
+            ampl.get_variable("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_constraint("XXX"))
+            ampl.get_constraint("XXX")
         with self.assertRaises(KeyError):
-            self.assertRaises(ampl.get_objective("XXX"))
+            ampl.get_objective("XXX")
         self.assertEqual(len(ampl.get_sets()), 1)
         ampl.reset()
         self.assertEqual(len(ampl.get_sets()), 0)
@@ -363,6 +363,32 @@ class TestAMPL(TestBase.TestBase):
         p = Path(model)
         ampl.read(p)
         ampl.display("A")
+
+    def test_write(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+        var x;
+        var y;
+        maximize obj: x+y;
+        s.t. c1: x <= 0;
+        s.t. c2: x >= 1;
+        """
+        )
+        with self.assertRaises(amplpy.InfeasibilityException):
+            ampl.write("bmod", "rc")
+        ampl.reset()
+        ampl.eval(
+            """
+        var x >= 0;
+        var y >= 0;
+        maximize obj: x+y;
+        s.t. c1: x <= 0;
+        s.t. c2: y <= 0;
+        """
+        )
+        with self.assertRaises(amplpy.PresolveException):
+            ampl.write("bmod", "rc")
 
 
 if __name__ == "__main__":

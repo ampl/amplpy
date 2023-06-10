@@ -56,3 +56,11 @@ class AMPLException(Exception):
     getMessage = get_message
     getOffset = get_offset
     getSourceName = get_source_name
+
+
+class PresolveException(RuntimeError):
+    pass
+
+
+class InfeasibilityException(RuntimeError):
+    pass

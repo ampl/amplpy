@@ -1,21 +1,5 @@
 %include "exception.i"
 
-//%exceptionclass runtime_error;
-%exceptionclass PresolveException;
-%exceptionclass InfeasibilityException;
-
-%extend ampl::PresolveException {
-    const char* _str_() const {
-            return $self->what();
-    }
-}
-
-%extend ampl::InfeasibilityException {
-    const char* _str_() const {
-            return $self->what();
-    }
-}
-
 %exception{
   try {
   $action
@@ -27,16 +11,12 @@ catch (const ampl::AMPLException &e) {
   SWIG_exception(SWIG_RuntimeError, e.what());
 }
 catch (const ampl::PresolveException &e) {
-  ampl::PresolveException *ecopy = new ampl::PresolveException(e);
-  PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__PresolveException, 1);
-  PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__PresolveException), err);
-  SWIG_fail;
+  std::string msg = "PresolveException: " + std::string(e.what());
+  SWIG_exception(SWIG_RuntimeError, msg.c_str());
 }
 catch (const ampl::InfeasibilityException &e) {
-  ampl::InfeasibilityException *ecopy = new ampl::InfeasibilityException(e);
-  PyObject *err = SWIG_NewPointerObj(ecopy, SWIGTYPE_p_ampl__InfeasibilityException, 1);
-  PyErr_SetObject(SWIG_Python_ExceptionType(SWIGTYPE_p_ampl__InfeasibilityException), err);
-  SWIG_fail;
+  std::string msg = "InfeasibilityException: " + std::string(e.what());
+  SWIG_exception(SWIG_RuntimeError, msg.c_str());
 }
 catch (const std::invalid_argument &e) {
   SWIG_exception(SWIG_ValueError, e.what());
