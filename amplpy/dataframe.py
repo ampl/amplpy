@@ -309,7 +309,7 @@ class DataFrame(BaseClass):
         else:
             return [self.get_row_by_index(i)[0] for i in range(self.get_num_rows())]
 
-    def to_pandas(self):
+    def to_pandas(self, multi_index=True):
         """
         Return a pandas DataFrame with the DataFrame data.
         """
@@ -319,14 +319,20 @@ class DataFrame(BaseClass):
         columns = {
             header: self.get_column(header).to_list() for header in headers[nindices:]
         }
-        index = zip(
-            *[self.get_column(header).to_list() for header in headers[:nindices]]
-        )
-        index = [key if len(key) > 1 else key[0] for key in index]
-        if index == []:
-            return pd.DataFrame(columns, index=None)
-        else:
+        index_names = headers[:nindices]
+        if len(index_names) >= 2 and multi_index is True:
+            index = pd.MultiIndex.from_arrays(
+                [self.get_column(header).to_list() for header in index_names],
+                names=index_names,
+            )
             return pd.DataFrame(columns, index=index)
+        else:
+            index = zip(*[self.get_column(header).to_list() for header in index_names])
+            index = [key if len(key) > 1 else key[0] for key in index]
+            if index == []:
+                return pd.DataFrame(columns, index=None)
+            else:
+                return pd.DataFrame(columns, index=index)
 
     @classmethod
     def from_dict(cls, dic, index_names=None, column_names=None):

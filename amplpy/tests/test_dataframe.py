@@ -254,6 +254,17 @@ class TestDataFrame(TestBase.TestBase):
             DataFrame.from_pandas(df.stack()).get_headers(), ("index0", "index1", "0")
         )
 
+    def test_pandas_multi_index(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval("param p{i in 1..100, j in 1..100} := i*j;")
+        df1 = ampl.get_data("p").to_pandas()
+        self.assertEqual(df1.index.nlevels, 2)
+        df2 = ampl.get_data("p").to_pandas(multi_index=False)
+        self.assertEqual(df2.index.nlevels, 1)
+        self.assertEqual(df1.index.to_list(), df2.index.to_list())
+
     def test_numpy(self):
         ampl = self.ampl
         if np is None:
