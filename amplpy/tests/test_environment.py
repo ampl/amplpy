@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from builtins import sorted
-
 import unittest
 import os
 

@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from builtins import map, range, zip
-from numbers import Real
-from past.builtins import basestring
-
 from .base import BaseClass
 from .iterators import RowIterator, ColIterator
 from . import amplpython
+from numbers import Real
 
 try:
     import pandas as pd
@@ -100,9 +94,9 @@ class DataFrame(BaseClass):
             columns: Column headers.
         """
         if index is not None:
-            if isinstance(index, basestring):
+            if isinstance(index, str):
                 index = (index,)
-            if isinstance(columns, basestring):
+            if isinstance(columns, str):
                 columns = (columns,)
             index_names = [col[0] if isinstance(col, tuple) else col for col in index]
             column_names = [
@@ -188,7 +182,7 @@ class DataFrame(BaseClass):
             self._impl.addColumn(header)
         else:
             assert len(values) == self.get_num_rows()
-            if any(isinstance(value, basestring) for value in values):
+            if any(isinstance(value, str) for value in values):
                 values = list(map(str, values))
                 self._impl.addColumnStr(header, values)
             elif all(isinstance(value, Real) for value in values):

@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
-
 from . import TestBase
 import unittest
-from amplpy import DataFrame
 import amplpy
 import os
 
@@ -126,12 +121,10 @@ class TestAMPL(TestBase.TestBase):
         )
         ampl.eval("diy X;")
         self.assertTrue(errorHandler.lastError.getMessage().startswith("syntax error"))
-        self.assertTrue(
-            isinstance(errorHandler.lastWarning.getSourceName(), basestring)
-        )
+        self.assertTrue(isinstance(errorHandler.lastWarning.getSourceName(), str))
         self.assertTrue(isinstance(errorHandler.lastWarning.getLineNumber(), int))
         self.assertTrue(isinstance(errorHandler.lastWarning.getOffset(), int))
-        self.assertTrue(isinstance(errorHandler.lastWarning.getMessage(), basestring))
+        self.assertTrue(isinstance(errorHandler.lastWarning.getMessage(), str))
 
     def testEmptyHandlers(self):
         ampl = self.ampl

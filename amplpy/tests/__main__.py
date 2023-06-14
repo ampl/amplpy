@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
-
 import unittest
 from .test_ampl import TestAMPL
 from .test_entities import TestEntities

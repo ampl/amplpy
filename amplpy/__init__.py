@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
 import sys
 import os
 
@@ -43,7 +42,7 @@ try:
 except Exception:
     pass
 
-__version__ = "0.11.0b0"
+__version__ = "0.11.0b1"
 
 
 def _list_aliases():

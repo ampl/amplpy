@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
 import sys
-
-# from builtins import map, range, object, zip, sorted
-from builtins import map, object
-from past.builtins import basestring
-
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
 from .objective import Objective
@@ -353,7 +347,7 @@ class AMPL(object):
             self._impl.setIntOption(name, value)
         elif isinstance(value, float):
             self._impl.setDblOption(name, value)
-        elif isinstance(value, basestring):
+        elif isinstance(value, str):
             self._impl.setOption(name, value)
         else:
             raise TypeError
@@ -648,7 +642,7 @@ class AMPL(object):
                 return self.ampl.get_variable(name)
 
             def __setitem__(self, name, value):
-                if isinstance(value, (float, int, basestring)):
+                if isinstance(value, (float, int, str)):
                     self.ampl.get_variable(name).set_value(value)
                 else:
                     self.ampl.get_variable(name).set_values(value)
@@ -728,7 +722,7 @@ class AMPL(object):
                 return self.ampl.get_parameter(name)
 
             def __setitem__(self, name, value):
-                if isinstance(value, (float, int, basestring)):
+                if isinstance(value, (float, int, str)):
                     self.ampl.get_parameter(name).set(value)
                 else:
                     self.ampl.get_parameter(name).set_values(value)

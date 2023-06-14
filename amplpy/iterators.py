@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from builtins import object
-from past.builtins import basestring
 
 
 class Iterator(object):
@@ -35,7 +30,7 @@ class EntityMap(Iterator):
         Iterator.__init__(self, obj, pair)
 
     def __getitem__(self, key):
-        assert isinstance(key, basestring)
+        assert isinstance(key, str)
         return self.entity_class(self.obj.getIndex(key))
 
     def size(self):

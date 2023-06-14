@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from builtins import map
 from numbers import Real
-from past.builtins import basestring
 
 from .entity import Entity
 from .dataframe import DataFrame
@@ -109,7 +104,7 @@ class Set(Entity):
             AA.setValues(A.getValues())  # AA has now the members {1, 2}
         """
         if isinstance(values, (list, set)):
-            if all(isinstance(value, basestring) for value in values):
+            if all(isinstance(value, str) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, Real) for value in values):

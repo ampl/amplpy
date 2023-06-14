@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from builtins import map
 from numbers import Real
-from past.builtins import basestring
-
 from .entity import Entity
 from .dataframe import DataFrame
 
@@ -90,7 +84,7 @@ class Parameter(Entity):
             index, value = args
             if isinstance(value, Real):
                 self._impl.setTplDbl(index, value)
-            elif isinstance(value, basestring):
+            elif isinstance(value, str):
                 self._impl.setTplStr(index, value)
             else:
                 raise TypeError
@@ -116,7 +110,7 @@ class Parameter(Entity):
                 return
             self._impl.setValuesPyDict(values)
         elif isinstance(values, (list, tuple)):
-            if any(isinstance(value, basestring) for value in values):
+            if any(isinstance(value, str) for value in values):
                 values = list(map(str, values))
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, Real) for value in values):

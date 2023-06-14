@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
 import unittest
 import os
-
-# from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
 
 import amplpy
 from . import TestBase
@@ -151,14 +147,10 @@ class TestAMPL(TestBase.TestBase):
         self.assertTrue(
             error_handler.last_error.get_message().startswith("syntax error")
         )
-        self.assertTrue(
-            isinstance(error_handler.last_warning.get_source_name(), basestring)
-        )
+        self.assertTrue(isinstance(error_handler.last_warning.get_source_name(), str))
         self.assertTrue(isinstance(error_handler.last_warning.get_line_number(), int))
         self.assertTrue(isinstance(error_handler.last_warning.get_offset(), int))
-        self.assertTrue(
-            isinstance(error_handler.last_warning.get_message(), basestring)
-        )
+        self.assertTrue(isinstance(error_handler.last_warning.get_message(), str))
 
     def test_empty_handlers(self):
         ampl = self.ampl

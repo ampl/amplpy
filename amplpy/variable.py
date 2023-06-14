@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-
-# from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
-
 from .entity import Entity
 
 
@@ -59,7 +54,7 @@ class Variable(Entity):
 
     def __setitem__(self, index, value):
         item = self.__getitem__(index)
-        if isinstance(value, (float, int, basestring)):
+        if isinstance(value, (float, int, str)):
             item.setValue(value)
         else:
             item.setValues(value)

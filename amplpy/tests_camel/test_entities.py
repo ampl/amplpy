@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import, division
-from builtins import map, range, object, zip, sorted
-from past.builtins import basestring
-
 from . import TestBase
 import unittest
 import amplpy
@@ -118,8 +114,8 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(var.uslack(), float))
             self.assertTrue(isinstance(var.rc(), float))
             self.assertTrue(isinstance(var.slack(), float))
-            self.assertTrue(isinstance(var.sstatus(), basestring))
-            self.assertTrue(isinstance(var.status(), basestring))
+            self.assertTrue(isinstance(var.sstatus(), str))
+            self.assertTrue(isinstance(var.status(), str))
 
     def testConstraint(self):
         loadDietModel(self.ampl)
@@ -133,7 +129,7 @@ class TestEntities(TestBase.TestBase):
             con.drop()
             con.restore()
             self.assertTrue(isinstance(con.body(), float))
-            self.assertTrue(isinstance(con.astatus(), basestring))
+            self.assertTrue(isinstance(con.astatus(), str))
             self.assertEqual(con.astatus(), "in")
             con.drop()
             self.assertEqual(con.astatus(), "drop")
@@ -152,8 +148,8 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(con.lslack(), float))
             self.assertTrue(isinstance(con.uslack(), float))
             self.assertTrue(isinstance(con.slack(), float))
-            self.assertTrue(isinstance(con.status(), basestring))
-            self.assertTrue(isinstance(con.sstatus(), basestring))
+            self.assertTrue(isinstance(con.status(), str))
+            self.assertTrue(isinstance(con.sstatus(), str))
             con.setDual(0)
             self.assertEqual(con.val(), None)
         ampl.eval(
@@ -325,11 +321,11 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.getCurrentObjective().name(), "total_cost")
         self.assertEqual(len(dict(obj)), obj.numInstances())
         self.assertTrue(isinstance(obj.value(), float))
-        self.assertTrue(isinstance(obj.astatus(), basestring))
-        self.assertTrue(isinstance(obj.sstatus(), basestring))
+        self.assertTrue(isinstance(obj.astatus(), str))
+        self.assertTrue(isinstance(obj.sstatus(), str))
         self.assertTrue(isinstance(obj.exitcode(), int))
-        self.assertTrue(isinstance(obj.message(), basestring))
-        self.assertTrue(isinstance(obj.result(), basestring))
+        self.assertTrue(isinstance(obj.message(), str))
+        self.assertTrue(isinstance(obj.result(), str))
         obj.drop()
         self.assertEqual(obj.astatus(), "drop")
         obj.restore()
