@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Download libampl
-        run: python dev/updatelib.py
+        run: python3 dev/updatelib.py
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
@@ -54,7 +54,7 @@ jobs:
           platforms: all
 
       - name: Download libampl
-        run: python dev/updatelib.py
+        run: python3 dev/updatelib.py
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
