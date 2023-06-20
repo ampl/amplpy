@@ -8,8 +8,8 @@
         $1 = (char **)malloc((size + 1) * sizeof(char *));
         for (i = 0; i < size; i++) {
             PyObject *obj = PyList_GetItem($input,i);
-            if (_PyString_Check(obj)) {
-                $1[i] = (char *)_PyString_AsString(PyList_GetItem($input,i));
+            if (PyUnicode_Check(obj)) {
+                $1[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem($input,i));
             } else {
                 PyErr_SetString(PyExc_TypeError, "list must contain strings");
                 free($1);

@@ -6,13 +6,13 @@
 //         $1 = ampl::Variant(PyInt_AsLong($input));
 //     } else if (PyLong_Check($input)) {
 //         $1 = ampl::Variant(PyLong_AsLong($input));
-//     } else if (PyUnicode_Check($input) || PyString_Check($input)) {
+//     } else if (PyUnicode_Check($input)) {
 //         $1 = ampl::Variant(_PyString_AsString($input));
 //     }
 // }
 
 // %typemap(typecheck, precedence=200) ampl::VariantRef {
-//     $1 = PyFloat_Check($input) || PyInt_Check($input) || PyLong_Check($input) || PyUnicode_Check($input) || PyString_Check($input);
+//     $1 = PyFloat_Check($input) || PyInt_Check($input) || PyLong_Check($input) || PyUnicode_Check($input);
 // }
 
 /* Convert from C --> Python */

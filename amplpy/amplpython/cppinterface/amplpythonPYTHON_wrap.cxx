@@ -4713,8 +4713,8 @@ ampl::Variant VariantFromPyObject(PyObject *obj) {
         return ampl::Variant(PyLong_AsLong(obj));
     } else if (PyFloat_Check(obj)) {
         return ampl::Variant(PyFloat_AsDouble(obj));
-    } else if (PyUnicode_Check(obj) || PyString_Check(obj)) {
-        return ampl::Variant(std::string(_PyString_AsString(obj)));
+    } else if (PyUnicode_Check(obj)) {
+        return ampl::Variant(PyUnicode_AsUTF8(obj));
     } else {
         PyErr_Clear();
         double value = PyFloat_AsDouble(obj);
@@ -5140,7 +5140,7 @@ SWIGINTERN void ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CStrin
             if (item == NULL) {
                 throw std::logic_error("Failed to access value");
             }
-            if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item)) {
                 has_strings = true;
             } else {
                 has_numbers = true;
@@ -5153,7 +5153,7 @@ SWIGINTERN void ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CStrin
             std::vector<const char *> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
-                values[i] = _PyString_AsString(item);
+                values[i] = PyUnicode_AsUTF8(item);
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
         } else if (has_numbers) {
@@ -5311,7 +5311,7 @@ SWIGINTERN void ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *d
             if (item == NULL) {
                 throw std::logic_error("Failed to access value");
             }
-            if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item)) {
                 has_strings = true;
             } else {
                 has_numbers = true;
@@ -5325,7 +5325,7 @@ SWIGINTERN void ampl_Parameter_setValuesPyDict(ampl::Parameter *self,PyObject *d
             std::vector<const char *> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(d_values, i);
-                values[i] = _PyString_AsString(item);
+                values[i] = PyUnicode_AsUTF8(item);
                 SetTupleFromPyObject(PyList_GetItem(d_keys, i), &keys[i]);
             }
             self->setValues(keys.data(), values.data(), size);
@@ -12571,7 +12571,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_getColumn(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -13168,7 +13168,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, Py_ssi
     SetTupleFromPyObject(swig_obj[1], &arg2);
   }
   
-  arg3 = _PyString_AsString(swig_obj[2]);
+  arg3 = PyUnicode_AsUTF8(swig_obj[2]);
   
   {
     res4 = SWIG_ConvertPtr(swig_obj[3], &argp4, SWIGTYPE_p_ampl__Variant,  0  | 0);
@@ -13421,7 +13421,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumn(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -13498,7 +13498,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     /* Check if is a list */
@@ -13508,8 +13508,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnStr(PyObject *self, PyObject *args
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -13600,7 +13600,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_addColumnDbl(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     /* Check if is a list */
@@ -13981,7 +13981,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     /* Check if is a list */
@@ -13991,8 +13991,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnStr(PyObject *self, PyObject *args
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -14091,7 +14091,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnDbl(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     /* Check if is a list */
@@ -14346,8 +14346,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrDbl(PyObject *self, PyObject *ar
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -14506,8 +14506,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayDblStr(PyObject *self, PyObject *ar
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -14625,8 +14625,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -14647,8 +14647,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setArrayStrStr(PyObject *self, PyObject *ar
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -15425,8 +15425,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblDblStr(PyObject *self, PyObject
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[4],i);
-        if (_PyString_Check(obj)) {
-          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[4],i));
+        if (PyUnicode_Check(obj)) {
+          arg6[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[4],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg6);
@@ -15585,8 +15585,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixDblStrStr(PyObject *self, PyObject
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[4],i);
-        if (_PyString_Check(obj)) {
-          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[4],i));
+        if (PyUnicode_Check(obj)) {
+          arg6[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[4],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg6);
@@ -15739,8 +15739,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrDblStr(PyObject *self, PyObject
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[4],i);
-        if (_PyString_Check(obj)) {
-          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[4],i));
+        if (PyUnicode_Check(obj)) {
+          arg6[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[4],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg6);
@@ -15878,8 +15878,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_setMatrixStrStrStr(PyObject *self, PyObject
       arg6 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[4],i);
-        if (_PyString_Check(obj)) {
-          arg6[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[4],i));
+        if (PyUnicode_Check(obj)) {
+          arg6[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[4],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg6);
@@ -15983,8 +15983,8 @@ SWIGINTERN PyObject *_wrap_DataFrame_factory(PyObject *self, PyObject *args) {
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -16080,7 +16080,7 @@ SWIGINTERN PyObject *_wrap_DataFrame_setColumnPyList(PyObject *self, PyObject *a
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   arg3 = swig_obj[1];
   {
@@ -19269,8 +19269,8 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesStr(PyObject *self, PyObject *ar
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -25664,8 +25664,8 @@ SWIGINTERN PyObject *_wrap_Entity_getValuesLst(PyObject *self, PyObject *args) {
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -33830,8 +33830,8 @@ SWIGINTERN PyObject *_wrap_Set_setValuesStr(PyObject *self, PyObject *args) {
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -35066,8 +35066,8 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -35192,8 +35192,8 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTupleArrayStr(PyObject *self, PyOb
       arg3 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[1],i);
-        if (_PyString_Check(obj)) {
-          arg3[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[1],i));
+        if (PyUnicode_Check(obj)) {
+          arg3[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[1],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg3);
@@ -35407,8 +35407,8 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesStr(PyObject *self, PyObject *args
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -40578,7 +40578,7 @@ SWIGINTERN PyObject *_wrap_EntityMapVariable_getIndex(PyObject *self, PyObject *
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Variable > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -41551,7 +41551,7 @@ SWIGINTERN PyObject *_wrap_EntityMapConstraint_getIndex(PyObject *self, PyObject
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Constraint > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -42524,7 +42524,7 @@ SWIGINTERN PyObject *_wrap_EntityMapObjective_getIndex(PyObject *self, PyObject 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Objective > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -43497,7 +43497,7 @@ SWIGINTERN PyObject *_wrap_EntityMapSet_getIndex(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Set > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -44470,7 +44470,7 @@ SWIGINTERN PyObject *_wrap_EntityMapTable_getIndex(PyObject *self, PyObject *arg
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Table > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -45443,7 +45443,7 @@ SWIGINTERN PyObject *_wrap_EntityMapParameter_getIndex(PyObject *self, PyObject 
   }
   arg1 = reinterpret_cast< ampl::EntityMap< ampl::Parameter > * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -46189,7 +46189,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_1(PyObject *self, Py_ssize_t nobjs,
   (void)self;
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -46322,7 +46322,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, Py_ssize_t nobjs,
   (void)self;
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -46335,7 +46335,7 @@ SWIGINTERN int _wrap_new_AMPLException__SWIG_3(PyObject *self, Py_ssize_t nobjs,
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = _PyString_AsString(swig_obj[3]);
+  arg4 = PyUnicode_AsUTF8(swig_obj[3]);
   
   {
     try {
@@ -47349,7 +47349,7 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_InvalidSubscriptException")) SWIG_fail;
   if (!SWIG_Python_UnpackTuple(args, "new_InvalidSubscriptException", 4, 4, swig_obj)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -47362,7 +47362,7 @@ SWIGINTERN int _wrap_new_InvalidSubscriptException(PyObject *self, PyObject *arg
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = _PyString_AsString(swig_obj[3]);
+  arg4 = PyUnicode_AsUTF8(swig_obj[3]);
   
   {
     try {
@@ -47506,7 +47506,7 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args, Py
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_SyntaxErrorException")) SWIG_fail;
   if (!SWIG_Python_UnpackTuple(args, "new_SyntaxErrorException", 4, 4, swig_obj)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -47519,7 +47519,7 @@ SWIGINTERN int _wrap_new_SyntaxErrorException(PyObject *self, PyObject *args, Py
   } 
   arg3 = static_cast< int >(val3);
   
-  arg4 = _PyString_AsString(swig_obj[3]);
+  arg4 = PyUnicode_AsUTF8(swig_obj[3]);
   
   {
     try {
@@ -47656,7 +47656,7 @@ SWIGINTERN int _wrap_new_NoDataException(PyObject *self, PyObject *args, PyObjec
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_NoDataException")) SWIG_fail;
   if (!SWIG_Python_UnpackTuple(args, "new_NoDataException", 1, 1, swig_obj)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -47793,7 +47793,7 @@ SWIGINTERN int _wrap_new_PresolveException(PyObject *self, PyObject *args, PyObj
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_PresolveException")) SWIG_fail;
   if (!SWIG_Python_UnpackTuple(args, "new_PresolveException", 1, 1, swig_obj)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -47930,7 +47930,7 @@ SWIGINTERN int _wrap_new_InfeasibilityException(PyObject *self, PyObject *args, 
   if (!SWIG_Python_CheckNoKeywords(kwargs, "new_InfeasibilityException")) SWIG_fail;
   if (!SWIG_Python_UnpackTuple(args, "new_InfeasibilityException", 1, 1, swig_obj)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -49286,10 +49286,10 @@ SWIGINTERN int _wrap_new_Environment__SWIG_2(PyObject *self, Py_ssize_t nobjs, P
   (void)self;
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   
-  arg2 = _PyString_AsString(swig_obj[1]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -49354,7 +49354,7 @@ SWIGINTERN int _wrap_new_Environment__SWIG_3(PyObject *self, Py_ssize_t nobjs, P
   (void)self;
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   
-  arg1 = _PyString_AsString(swig_obj[0]);
+  arg1 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -49549,10 +49549,10 @@ SWIGINTERN PyObject *_wrap_Environment_put(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   
-  arg3 = _PyString_AsString(swig_obj[1]);
+  arg3 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -49626,7 +49626,7 @@ SWIGINTERN PyObject *_wrap_Environment_setBinDir(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -49769,7 +49769,7 @@ SWIGINTERN PyObject *_wrap_Environment_setBinName(PyObject *self, PyObject *args
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -50120,7 +50120,7 @@ SWIGINTERN PyObject *_wrap_Environment_find(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Environment * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -51250,7 +51250,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_2(PyObject *self, Py_ssize_t no
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[1]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
   
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -51327,7 +51327,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportData__SWIG_3(PyObject *self, Py_ssize_t no
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[1]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -51545,7 +51545,7 @@ SWIGINTERN PyObject *_wrap_AMPL_exportModel__SWIG_1(PyObject *self, Py_ssize_t n
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[1]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -51661,7 +51661,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getEntity(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -51736,7 +51736,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getVariable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -51811,7 +51811,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getConstraint(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -51886,7 +51886,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getObjective(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -51961,7 +51961,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getSet(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -52036,7 +52036,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getParameter(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -52111,7 +52111,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getTable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -52185,7 +52185,7 @@ SWIGINTERN PyObject *_wrap_AMPL_eval(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -52603,7 +52603,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   res3 = SWIG_ConvertPtr(swig_obj[1], &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -52684,7 +52684,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readDataAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   res3 = SWIG_ConvertPtr(swig_obj[1], &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -52765,7 +52765,7 @@ SWIGINTERN PyObject *_wrap_AMPL_evalAsync(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   res3 = SWIG_ConvertPtr(swig_obj[1], &argp3,SWIGTYPE_p_ampl__Runnable, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
@@ -53058,7 +53058,7 @@ SWIGINTERN PyObject *_wrap_AMPL_cd__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyO
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[1]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -53173,10 +53173,10 @@ SWIGINTERN PyObject *_wrap_AMPL_setOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   
-  arg3 = _PyString_AsString(swig_obj[1]);
+  arg3 = PyUnicode_AsUTF8(swig_obj[1]);
   
   {
     try {
@@ -53251,7 +53251,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -53326,7 +53326,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getIntOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -53402,7 +53402,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setIntOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode3 = SWIG_AsVal_int(swig_obj[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -53482,7 +53482,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getDblOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -53558,7 +53558,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setDblOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode3 = SWIG_AsVal_double(swig_obj[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -53638,7 +53638,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getBoolOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -53783,7 +53783,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setBoolOption(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   ecode3 = SWIG_AsVal_bool(swig_obj[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -53862,7 +53862,7 @@ SWIGINTERN PyObject *_wrap_AMPL_read(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -53936,7 +53936,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readData(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -54011,7 +54011,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -54097,7 +54097,7 @@ SWIGINTERN PyObject *_wrap_AMPL_getOutput(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -54180,7 +54180,7 @@ SWIGINTERN PyObject *_wrap_AMPL_setData__SWIG_0(PyObject *self, Py_ssize_t nobjs
   }
   arg2 = reinterpret_cast< ampl::DataFrame * >(argp2);
   
-  arg3 = _PyString_AsString(swig_obj[2]);
+  arg3 = PyUnicode_AsUTF8(swig_obj[2]);
   
   {
     try {
@@ -54451,7 +54451,7 @@ SWIGINTERN PyObject *_wrap_AMPL_readTable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -54525,7 +54525,7 @@ SWIGINTERN PyObject *_wrap_AMPL_writeTable(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
   
-  arg2 = _PyString_AsString(swig_obj[0]);
+  arg2 = PyUnicode_AsUTF8(swig_obj[0]);
   
   {
     try {
@@ -55591,8 +55591,8 @@ SWIGINTERN PyObject *_wrap_AMPL_displayLst(PyObject *self, PyObject *args) {
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);
@@ -55919,8 +55919,8 @@ SWIGINTERN PyObject *_wrap_AMPL_getData(PyObject *self, PyObject *args) {
       arg2 = (char **)malloc((size + 1) * sizeof(char *));
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem(swig_obj[0],i);
-        if (_PyString_Check(obj)) {
-          arg2[i] = (char *)_PyString_AsString(PyList_GetItem(swig_obj[0],i));
+        if (PyUnicode_Check(obj)) {
+          arg2[i] = (char *)PyUnicode_AsUTF8(PyList_GetItem(swig_obj[0],i));
         } else {
           PyErr_SetString(PyExc_TypeError, "list must contain strings");
           free(arg2);

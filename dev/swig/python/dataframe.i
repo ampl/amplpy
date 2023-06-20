@@ -34,7 +34,7 @@
             if (item == NULL) {
                 throw std::logic_error("Failed to access value");
             }
-            if (PyUnicode_Check(item) || PyString_Check(item)) {
+            if (PyUnicode_Check(item)) {
                 has_strings = true;
             } else {
                 has_numbers = true;
@@ -47,7 +47,7 @@
             std::vector<const char *> values(size);
             for (std::size_t i = 0; i < size; i++) {
                 PyObject *item = PyList_GetItem(list, i);
-                values[i] = _PyString_AsString(item);
+                values[i] = PyUnicode_AsUTF8(item);
             }
             self->setColumn(header, ampl::internal::Args(values.data()), size);
         } else if (has_numbers) {

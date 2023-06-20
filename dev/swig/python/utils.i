@@ -8,8 +8,8 @@ ampl::Variant VariantFromPyObject(PyObject *obj) {
         return ampl::Variant(PyLong_AsLong(obj));
     } else if (PyFloat_Check(obj)) {
         return ampl::Variant(PyFloat_AsDouble(obj));
-    } else if (PyUnicode_Check(obj) || PyString_Check(obj)) {
-        return ampl::Variant(std::string(_PyString_AsString(obj)));
+    } else if (PyUnicode_Check(obj)) {
+        return ampl::Variant(PyUnicode_AsUTF8(obj));
     } else {
         PyErr_Clear();
         double value = PyFloat_AsDouble(obj);
