@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 from numbers import Real
+from collections.abc import Iterable
+
 from .entity import Entity
 from .dataframe import DataFrame
 
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 try:
     import numpy as np
 except ImportError:
@@ -79,11 +85,14 @@ class Parameter(Entity):
         assert len(args) in (1, 2)
         if len(args) == 1:
             value = args[0]
-            self._impl.set(value)
+            if isinstance(value, Real):
+                self._impl.set(float(value))
+            else:
+                self._impl.set(value)
         else:
             index, value = args
             if isinstance(value, Real):
-                self._impl.setTplDbl(index, value)
+                self._impl.setTplDbl(index, float(value))
             elif isinstance(value, str):
                 self._impl.setTplStr(index, value)
             else:
@@ -109,19 +118,21 @@ class Parameter(Entity):
             if not values:
                 return
             self._impl.setValuesPyDict(values)
-        elif isinstance(values, (list, tuple)):
-            if any(isinstance(value, str) for value in values):
-                values = list(map(str, values))
+        elif isinstance(values, DataFrame):
+            Entity.set_values(self, values)
+        elif pd is not None and isinstance(values, pd.DataFrame):
+            Entity.set_values(self, values)
+        elif isinstance(values, Iterable):
+            if all(isinstance(value, str) for value in values):
+                if not isinstance(values, (list, tuple)):
+                    values = list(values)
                 self._impl.setValuesStr(values, len(values))
             elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             else:
-                raise TypeError
+                raise TypeError("Expected list of values.")
         else:
-            if np is not None and isinstance(values, np.ndarray):
-                self.set_values(DataFrame.from_numpy(values).to_list())
-                return
             Entity.set_values(self, values)
 
     # Aliases

@@ -18484,6 +18484,75 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetInstance_arity(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::size_t result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "SetInstance_arity", 0, 0, 0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__SetInstance, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetInstance_arity" "', argument " "1"" of type '" "ampl::SetInstance const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
+  {
+    try {
+      result = ((ampl::SetInstance const *)arg1)->arity();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetInstance_contains(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::SetInstance *arg1 = (ampl::SetInstance *) 0 ;
@@ -32994,6 +33063,75 @@ fail:
 
 SWIGPY_DESTRUCTOR_CLOSURE(_wrap_delete_Objective) /* defines _wrap_delete_Objective_destructor_closure */
 
+SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ampl::Set *arg1 = (ampl::Set *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::size_t result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "Set_size", 0, 0, 0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_size" "', argument " "1"" of type '" "ampl::Set const *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::Set * >(argp1);
+  {
+    try {
+      result = ((ampl::Set const *)arg1)->size();
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e)
+    {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Set_arity(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ampl::Set *arg1 = (ampl::Set *) 0 ;
@@ -33126,75 +33264,6 @@ SWIGINTERN PyObject *_wrap_Set_getValues(PyObject *self, PyObject *args) {
     }
   }
   resultobj = SWIG_NewPointerObj((new ampl::DataFrame(result)), SWIGTYPE_p_ampl__DataFrame, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Set_size(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  ampl::Set *arg1 = (ampl::Set *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  std::size_t result;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "Set_size", 0, 0, 0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Set, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Set_size" "', argument " "1"" of type '" "ampl::Set const *""'"); 
-  }
-  arg1 = reinterpret_cast< ampl::Set * >(argp1);
-  {
-    try {
-      result = ((ampl::Set const *)arg1)->size();
-    }
-    catch (std::range_error) {
-      SWIG_exception(SWIG_ValueError, "Range Error");
-    }
-    catch (const ampl::AMPLException &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const ampl::PresolveException &e) {
-      std::string msg = "PresolveException: " + std::string(e.what());
-      SWIG_exception(SWIG_RuntimeError, msg.c_str());
-    }
-    catch (const ampl::InfeasibilityException &e) {
-      std::string msg = "InfeasibilityException: " + std::string(e.what());
-      SWIG_exception(SWIG_RuntimeError, msg.c_str());
-    }
-    catch (const std::invalid_argument &e) {
-      SWIG_exception(SWIG_ValueError, e.what());
-    }
-    catch (const std::out_of_range &e) {
-      // SWIG_KeyError does not exist
-      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
-    }
-    catch (const std::logic_error &e) {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::UnsupportedOperationException &e)
-    {
-      SWIG_exception(SWIG_TypeError, e.what());
-    }
-    catch (const ampl::LicenseException &e) {
-      SWIG_exception(SWIG_SystemError, e.what());
-    }
-    catch (const ampl::FileIOException &e) {
-      SWIG_exception(SWIG_IOError, e.what());
-    }
-    catch (const std::runtime_error &e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-    catch (const std::exception &e) {
-      SWIG_exception(SWIG_UnknownError, e.what());
-    }
-    catch (...) {
-      SWIG_exception(SWIG_UnknownError,"Unknown exception");
-    }
-  }
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -60415,6 +60484,7 @@ SwigPyBuiltin__ampl__SetInstance_richcompare(PyObject *self, PyObject *other, in
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__SetInstance_methods[] = {
   { "size", _wrap_SetInstance_size, METH_NOARGS, "" },
+  { "arity", _wrap_SetInstance_arity, METH_NOARGS, "" },
   { "contains", _wrap_SetInstance_contains, METH_O, "" },
   { "getValues", _wrap_SetInstance_getValues, METH_NOARGS, "" },
   { "setValuesDf", _wrap_SetInstance_setValuesDf, METH_O, "" },
@@ -64921,9 +64991,9 @@ SwigPyBuiltin__ampl__Set_richcompare(PyObject *self, PyObject *other, int op) {
 }
 
 SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__Set_methods[] = {
+  { "size", _wrap_Set_size, METH_NOARGS, "" },
   { "arity", _wrap_Set_arity, METH_NOARGS, "" },
   { "getValues", _wrap_Set_getValues, METH_NOARGS, "" },
-  { "size", _wrap_Set_size, METH_NOARGS, "" },
   { "members", _wrap_Set_members, METH_NOARGS, "" },
   { "setValuesDf", _wrap_Set_setValuesDf, METH_O, "" },
   { "contains", _wrap_Set_contains, METH_O, "" },

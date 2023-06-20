@@ -183,7 +183,8 @@ class DataFrame(BaseClass):
         else:
             assert len(values) == self.get_num_rows()
             if any(isinstance(value, str) for value in values):
-                values = list(map(str, values))
+                if not isinstance(values, (list, tuple)):
+                    values = list(values)
                 self._impl.addColumnStr(header, values)
             elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))

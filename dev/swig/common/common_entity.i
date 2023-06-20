@@ -149,9 +149,9 @@ namespace ampl
   class Set  : public ampl::BasicEntity<ampl::SetInstance>
 	{
 		public:
+      std::size_t size() const;
       std::size_t arity() const;
       DataFrame getValues() const;
-      std::size_t size() const;
       ampl::SetInstance::MemberRange members() const;
 
       void setValues(ampl::DataFrame data);

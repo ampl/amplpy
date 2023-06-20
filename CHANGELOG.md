@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.0 - 2023-06-XX
+- Upgrade libampl to 2.1.2-20230618.
+- Add AMPL.write, PresolveException, and InfeasibilityException.
+- Improve handling of numpy types.
+- Allow assigning values to sets from iterables.
+- [Breaking] Drop async functionalities.
+- [Breaking] DataFrame.to_pandas: start using multi-index by default.
+- [Breaking] Drop Python 2.7 compatibility.
+
 ## 0.10.0 - 2023-05-22
 - Upgrade libampl to 2.1.0-20230522.
 - Breaking: Entity names do not contain spaces in the indices anymore.

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from numbers import Real
+
 from .entity import Entity
 
 
@@ -54,8 +56,8 @@ class Variable(Entity):
 
     def __setitem__(self, index, value):
         item = self.__getitem__(index)
-        if isinstance(value, (float, int, str)):
-            item.setValue(value)
+        if isinstance(value, Real):
+            item.setValue(float(value))
         else:
             item.setValues(value)
 
@@ -67,7 +69,7 @@ class Variable(Entity):
         Args:
             value: value to be set.
         """
-        self._impl.setValue(value)
+        self._impl.setValue(float(value))
 
     def astatus(self):
         """

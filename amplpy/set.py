@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from numbers import Real
+from collections.abc import Iterable
 
 from .entity import Entity
 from .dataframe import DataFrame
@@ -103,21 +104,56 @@ class Set(Entity):
             A, AA = ampl.getSet('A'), ampl.getSet('AA')
             AA.setValues(A.getValues())  # AA has now the members {1, 2}
         """
-        if isinstance(values, (list, set)):
-            if all(isinstance(value, str) for value in values):
-                values = list(map(str, values))
+        if isinstance(values, DataFrame):
+            Entity.set_values(self, values)
+        elif isinstance(values, Iterable):
+            dimen = self.arity()
+            if dimen == 1 and all(isinstance(value, str) for value in values):
+                if not isinstance(values, (list, tuple)):
+                    values = list(values)
                 self._impl.setValuesStr(values, len(values))
-            elif all(isinstance(value, Real) for value in values):
+            elif dimen == 1 and all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             else:
-                if not isinstance(values, list):
-                    values = list(values)
+
+                def cast_value(value):
+                    if isinstance(value, str):
+                        return value
+                    elif isinstance(value, Real):
+                        return float(value)
+                    else:
+                        raise TypeError("Excepted string or real.")
+
+                def cast_row(row):
+                    if isinstance(row, str):
+                        return row
+                    elif isinstance(row, Real):
+                        return float(row)
+                    elif isinstance(row, Iterable):
+                        return tuple(map(cast_value, row))
+                    else:
+                        if dimen == 1:
+                            raise TypeError("Excepted string or real.")
+                        else:
+                            raise ValueError(
+                                "Excepted tuple of arity {}.".format(dimen)
+                            )
+
+                values = [cast_row(row) for row in values]
+                if dimen == 1:
+                    if any(isinstance(row, tuple) for row in values):
+                        raise ValueError(
+                            "Trying to assign tuples to set of arity {}.".format(dimen)
+                        )
+                else:
+                    if any(
+                        not isinstance(row, tuple) or len(row) != dimen
+                        for row in values
+                    ):
+                        raise ValueError("Expected tuples of arity {}.".format(dimen))
                 self._impl.setValuesTuples(values, len(values))
         else:
-            if np is not None and isinstance(values, np.ndarray):
-                self.set_values(DataFrame.from_numpy(values).to_list())
-                return
             Entity.set_values(self, values)
 
     # Aliases

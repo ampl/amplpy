@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
+from numbers import Real
+
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
 from .objective import Objective
@@ -642,8 +644,8 @@ class AMPL(object):
                 return self.ampl.get_variable(name)
 
             def __setitem__(self, name, value):
-                if isinstance(value, (float, int, str)):
-                    self.ampl.get_variable(name).set_value(value)
+                if isinstance(value, Real):
+                    self.ampl.get_variable(name).set_value(float(value))
                 else:
                     self.ampl.get_variable(name).set_values(value)
 
@@ -665,7 +667,7 @@ class AMPL(object):
                 return self.ampl.get_constraint(name)
 
             def __setitem__(self, name, value):
-                self.ampl.get_constraint(name).set_dual(value)
+                self.ampl.get_constraint(name).set_dual(float(value))
 
             def __iter__(self):
                 return self.ampl.get_constraints()
@@ -722,7 +724,7 @@ class AMPL(object):
                 return self.ampl.get_parameter(name)
 
             def __setitem__(self, name, value):
-                if isinstance(value, (float, int, str)):
+                if isinstance(value, (Real, str)):
                     self.ampl.get_parameter(name).set(value)
                 else:
                     self.ampl.get_parameter(name).set_values(value)

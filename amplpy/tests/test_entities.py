@@ -4,6 +4,15 @@ import unittest
 import amplpy
 from . import TestBase
 
+try:
+    import numpy as np
+except ImportError:
+    np = None
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
+
 
 def load_diet_model(ampl):
     ampl.eval(
@@ -117,6 +126,17 @@ class TestEntities(TestBase.TestBase):
             self.assertTrue(isinstance(var.sstatus(), str))
             self.assertTrue(isinstance(var.status(), str))
 
+    def test_variable_numpy(self):
+        if np is None:
+            self.skipTest("numpy not available")
+        ampl = self.ampl
+        ampl.eval("var v_indexed{1..3};")
+        ampl.var["v_indexed"][2] = np.int64(123)
+        self.assertEqual(ampl.var["v_indexed"][2].value(), 123)
+        ampl.eval("var v_scalar;")
+        ampl.var["v_scalar"] = np.int64(456)
+        self.assertEqual(ampl.var["v_scalar"].value(), 456)
+
     def test_constraint(self):
         load_diet_model(self.ampl)
         ampl = self.ampl
@@ -211,16 +231,6 @@ class TestEntities(TestBase.TestBase):
             sorted(ampl.get_set("T5").get_values().to_list()), ["a", "b", "c"]
         )
 
-        try:
-            import numpy as np
-        except ImportError:
-            pass
-        else:
-            ampl.get_set("T")[1].set_values(np.array([1, 2]))
-            self.assertEqual(ampl.get_set("T")[1].size(), 2)
-            ampl.get_set("T3").set_values(np.array([[1, 2], [3, 4]]))
-            self.assertEqual(ampl.get_set("T3").size(), 2)
-
     def test_parameter(self):
         load_diet_model(self.ampl)
         ampl = self.ampl
@@ -288,13 +298,65 @@ class TestEntities(TestBase.TestBase):
         for food in ampl.get_set("FOOD").members():
             self.assertEqual(cost2[food], cost[food])
 
-        try:
-            import numpy as np
-        except ImportError:
-            pass
-        else:
-            ampl.eval("param lst{1..3};")
-            ampl.get_parameter("lst").set_values(np.array([1, 2, 3]))
+    def test_parameter_numpy(self):
+        if np is None:
+            self.skipTest("numpy not available")
+        ampl = self.ampl
+        ampl.eval("param p_indexed{1..3};")
+        ampl.get_parameter("p_indexed").set_values(np.array([4, 5, 6]))
+        self.assertEqual(
+            ampl.get_parameter("p_indexed").get_values().to_list(),
+            [(1, 4), (2, 5), (3, 6)],
+        )
+        ampl.eval("param p_scalar;")
+        ampl.get_parameter("p_scalar").set(np.int64(123))
+        self.assertEqual(ampl.get_parameter("p_scalar").value(), 123)
+        ampl.get_parameter("p_indexed").set(2, np.int64(456))
+        self.assertEqual(ampl.get_parameter("p_indexed").get(2), 456)
+
+    def test_set_numpy(self):
+        if np is None:
+            self.skipTest("numpy not available")
+        ampl = self.ampl
+        ampl.eval("set A dimen 1;")
+        ampl.get_set("A").set_values(np.array([4, 5, 6]))
+        self.assertEqual(
+            ampl.get_set("A").get_values().to_list(),
+            [4, 5, 6],
+        )
+        ampl.eval("set B dimen 2;")
+        ampl.get_set("B").set_values(np.array([[4, 1], [5, 2], [6, 3]]))
+        self.assertEqual(
+            ampl.get_set("B").get_values().to_list(),
+            [(4, 1), (5, 2), (6, 3)],
+        )
+
+    def test_set_iterable(self):
+        ampl = self.ampl
+        ampl.eval("set A dimen 1;")
+        ampl.get_set("A").set_values([1, 2, "A", "1", "2"])
+        self.assertEqual(
+            ampl.get_set("A").get_values().to_list(),
+            [1, 2, "A", "1", "2"],
+        )
+        self.assertEqual(ampl.get_set("A").size(), 5)
+        self.assertEqual(ampl.get_set("A").arity(), 1)
+        ampl.eval("set B dimen 2;")
+        ampl.get_set("B").set_values([[4, 1], [5, 2], [6, 3]])
+        self.assertEqual(
+            ampl.get_set("B").get_values().to_list(),
+            [(4, 1), (5, 2), (6, 3)],
+        )
+        self.assertEqual(ampl.get_set("B").size(), 3)
+        self.assertEqual(ampl.get_set("B").arity(), 2)
+        with self.assertRaises(ValueError):
+            ampl.get_set("A").set_values([1, (2, 1), "A", "1", "2"])
+        with self.assertRaises(ValueError):
+            ampl.get_set("A").set_values([(2, 1), (3, 4)])
+        with self.assertRaises(ValueError):
+            ampl.get_set("B").set_values([1, "A", "1", "2"])
+        with self.assertRaises(ValueError):
+            ampl.get_set("B").set_values([1, 2])
 
     def test_precision(self):
         pi = 3.1415926535897932384626433832795028841971

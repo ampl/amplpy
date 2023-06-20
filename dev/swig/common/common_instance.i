@@ -16,6 +16,7 @@ class SetInstance : public ampl::Instance
 {
 public:
   std::size_t size() const;
+  std::size_t arity() const;
   bool contains(TupleRef t) const;
   ampl::DataFrame getValues() const;
   void setValues(ampl::DataFrame data);
