@@ -87,6 +87,7 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(buy["BEEF"].value(), 10)
         self.assertTrue(isinstance(buy.get_values(), amplpy.DataFrame))
         self.assertTrue(isinstance(buy.get_values(["val"]), amplpy.DataFrame))
+        self.assertTrue(isinstance(buy.get_values("val"), amplpy.DataFrame))
         for index, var in ampl.get_variable("Buy"):
             self.assertTrue(isinstance(var.value(), float))
             var.set_value(f_min[index])

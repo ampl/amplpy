@@ -173,7 +173,10 @@ class Entity(BaseClass):
         if suffixes is None:
             return DataFrame._from_data_frame_ref(self._impl.getValues())
         else:
-            suffixes = list(map(str, suffixes))
+            if isinstance(suffixes, str):
+                suffixes = [suffixes]
+            else:
+                suffixes = list(map(str, suffixes))
             return DataFrame._from_data_frame_ref(
                 self._impl.getValuesLst(suffixes, len(suffixes))
             )
