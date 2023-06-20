@@ -32,6 +32,9 @@ class Constraint(Entity):
     def __init__(self, _impl):
         Entity.__init__(self, _impl, Constraint)
 
+    def __setitem__(self, index, value):
+        self.__getitem__(index).set_dual(value)
+
     def is_logical(self):
         """
         Check if the constraint is a logical constraint. Returns True if
@@ -186,7 +189,7 @@ class Constraint(Entity):
         Args:
             dual: The value to be assigned to the dual variable.
         """
-        self._impl.setDual(dual)
+        self._impl.setDual(float(dual))
 
     def val(self):
         """

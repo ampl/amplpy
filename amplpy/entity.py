@@ -46,8 +46,8 @@ class Entity(BaseClass):
             index = [index]
         return self.get(*index)
 
-    def __setitem__(self, index, value):
-        self.__getitem__(index).set_values(value)
+    # def __setitem__(self, index, value):
+    #    self.__getitem__(index).set_values(value)
 
     def get(self, *index):
         """

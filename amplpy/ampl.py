@@ -645,7 +645,7 @@ class AMPL(object):
 
             def __setitem__(self, name, value):
                 if isinstance(value, Real):
-                    self.ampl.get_variable(name).set_value(float(value))
+                    self.ampl.get_variable(name).set_value(value)
                 else:
                     self.ampl.get_variable(name).set_values(value)
 
@@ -667,7 +667,11 @@ class AMPL(object):
                 return self.ampl.get_constraint(name)
 
             def __setitem__(self, name, value):
-                self.ampl.get_constraint(name).set_dual(float(value))
+                self.ampl.get_constraint(name).set_dual(value)
+                if isinstance(value, Real):
+                    self.ampl.get_constraint(name).set_dual(value)
+                else:
+                    self.ampl.get_constraint(name).set_values(value)
 
             def __iter__(self):
                 return self.ampl.get_constraints()

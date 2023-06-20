@@ -28,6 +28,9 @@ class Variable(Entity):
     def __init__(self, _impl):
         Entity.__init__(self, _impl, Variable)
 
+    def __setitem__(self, index, value):
+        self.__getitem__(index).set_value(value)
+
     def value(self):
         """
         Get the current value of this variable.
@@ -53,13 +56,6 @@ class Variable(Entity):
         Unfix all instances of this variable.
         """
         self._impl.unfix()
-
-    def __setitem__(self, index, value):
-        item = self.__getitem__(index)
-        if isinstance(value, Real):
-            item.setValue(float(value))
-        else:
-            item.setValues(value)
 
     def set_value(self, value):
         """

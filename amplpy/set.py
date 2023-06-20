@@ -35,6 +35,9 @@ class Set(Entity):
     def __init__(self, _impl):
         Entity.__init__(self, _impl, Set)
 
+    def __setitem__(self, index, value):
+        self.__getitem__(index).set_values(value)
+
     def instances(self):
         """
         Get an iterator to iterate over all the instances in a Set.
