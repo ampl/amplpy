@@ -13165,7 +13165,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_setValueSWIG__SWIG_0(PyObject *self, Py_ssi
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   
   arg3 = PyUnicode_AsUTF8(swig_obj[2]);
@@ -13700,7 +13704,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_addRow__SWIG_5(PyObject *self, Py_ssize_t n
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -13901,7 +13909,11 @@ SWIGINTERN PyObject *_wrap_DataFrame_getRowTpl(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::DataFrame * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -18882,7 +18894,11 @@ SWIGINTERN PyObject *_wrap_SetInstance_Contains(PyObject *self, PyObject *args) 
   }
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -18962,22 +18978,26 @@ SWIGINTERN PyObject *_wrap_SetInstance_setValuesTuples(PyObject *self, PyObject 
   arg1 = reinterpret_cast< ampl::SetInstance * >(argp1);
   {
     /* Check if is a list */
-    ampl::Tuple t;
-    if (PyList_Check(swig_obj[0])) {
-      int size = PyList_Size(swig_obj[0]);
-      int i = 0;
-      arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-      memset(arg2, 0, size * sizeof(ampl::Tuple));
-      for (i = 0; i < size; i++) {
-        PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        SetTupleFromPyObject(obj, &t);
-        arg2[i] = t;
+    try {
+      ampl::Tuple t;
+      if (PyList_Check(swig_obj[0])) {
+        int size = PyList_Size(swig_obj[0]);
+        int i = 0;
+        arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
+        memset(arg2, 0, size * sizeof(ampl::Tuple));
+        for (i = 0; i < size; i++) {
+          PyObject *obj = PyList_GetItem(swig_obj[0], i);
+          SetTupleFromPyObject(obj, &t);
+          arg2[i] = t;
+        }
+      } else {
+        SetTupleFromPyObject(swig_obj[0], &t);
+        arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+        memset(arg2, 0, 1 * sizeof(ampl::Tuple));
+        arg2[0] = t;
       }
-    } else {
-      SetTupleFromPyObject(swig_obj[0], &t);
-      arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
-      memset(arg2, 0, 1 * sizeof(ampl::Tuple));
-      arg2[0] = t;
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
     }
   }
   ecode3 = SWIG_AsVal_size_t(swig_obj[1], &val3);
@@ -26121,7 +26141,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_find(PyObject *self, PyObject *ar
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -26263,7 +26287,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityVariable_get__SWIG_1(PyObject *self, Py_ss
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariableInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -26588,7 +26616,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_find(PyObject *self, PyObject *
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -26730,7 +26762,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityConstraint_get__SWIG_1(PyObject *self, Py_
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ConstraintInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -27055,7 +27091,11 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_find(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -27197,7 +27237,11 @@ SWIGINTERN PyObject *_wrap_BasicEntitySet_get__SWIG_1(PyObject *self, Py_ssize_t
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::SetInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -27522,7 +27566,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_find(PyObject *self, PyObject *a
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -27664,7 +27712,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityObjective_get__SWIG_1(PyObject *self, Py_s
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::ObjectiveInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -27989,7 +28041,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_find(PyObject *self, PyObject *a
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -28142,7 +28198,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, Py_s
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::VariantRef > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -28478,7 +28538,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_find(PyObject *self, PyObject *args)
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::TableInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -28620,7 +28684,11 @@ SWIGINTERN PyObject *_wrap_BasicEntityTable_get__SWIG_1(PyObject *self, Py_ssize
   }
   arg1 = reinterpret_cast< ampl::BasicEntity< ampl::TableInstance > * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -33443,7 +33511,11 @@ SWIGINTERN PyObject *_wrap_Set_contains(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     try {
@@ -33523,22 +33595,26 @@ SWIGINTERN PyObject *_wrap_Set_setValuesTuples(PyObject *self, PyObject *args) {
   arg1 = reinterpret_cast< ampl::Set * >(argp1);
   {
     /* Check if is a list */
-    ampl::Tuple t;
-    if (PyList_Check(swig_obj[0])) {
-      int size = PyList_Size(swig_obj[0]);
-      int i = 0;
-      arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-      memset(arg2, 0, size * sizeof(ampl::Tuple));
-      for (i = 0; i < size; i++) {
-        PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        SetTupleFromPyObject(obj, &t);
-        arg2[i] = t;
+    try {
+      ampl::Tuple t;
+      if (PyList_Check(swig_obj[0])) {
+        int size = PyList_Size(swig_obj[0]);
+        int i = 0;
+        arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
+        memset(arg2, 0, size * sizeof(ampl::Tuple));
+        for (i = 0; i < size; i++) {
+          PyObject *obj = PyList_GetItem(swig_obj[0], i);
+          SetTupleFromPyObject(obj, &t);
+          arg2[i] = t;
+        }
+      } else {
+        SetTupleFromPyObject(swig_obj[0], &t);
+        arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+        memset(arg2, 0, 1 * sizeof(ampl::Tuple));
+        arg2[0] = t;
       }
-    } else {
-      SetTupleFromPyObject(swig_obj[0], &t);
-      arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
-      memset(arg2, 0, 1 * sizeof(ampl::Tuple));
-      arg2[0] = t;
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
     }
   }
   ecode3 = SWIG_AsVal_size_t(swig_obj[1], &val3);
@@ -34445,7 +34521,11 @@ SWIGINTERN PyObject *_wrap_Parameter_set__SWIG_3(PyObject *self, Py_ssize_t nobj
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[1], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[1], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   {
     res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_ampl__Variant,  0  | 0);
@@ -34614,7 +34694,11 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplDbl(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   ecode3 = SWIG_AsVal_double(swig_obj[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -34696,7 +34780,11 @@ SWIGINTERN PyObject *_wrap_Parameter_setTplStr(PyObject *self, PyObject *args) {
   }
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
-    SetTupleFromPyObject(swig_obj[0], &arg2);
+    try {
+      SetTupleFromPyObject(swig_obj[0], &arg2);
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
   }
   res3 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
@@ -34784,22 +34872,26 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaDbl(PyObject *self, PyObject *ar
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     /* Check if is a list */
-    ampl::Tuple t;
-    if (PyList_Check(swig_obj[0])) {
-      int size = PyList_Size(swig_obj[0]);
-      int i = 0;
-      arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-      memset(arg2, 0, size * sizeof(ampl::Tuple));
-      for (i = 0; i < size; i++) {
-        PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        SetTupleFromPyObject(obj, &t);
-        arg2[i] = t;
+    try {
+      ampl::Tuple t;
+      if (PyList_Check(swig_obj[0])) {
+        int size = PyList_Size(swig_obj[0]);
+        int i = 0;
+        arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
+        memset(arg2, 0, size * sizeof(ampl::Tuple));
+        for (i = 0; i < size; i++) {
+          PyObject *obj = PyList_GetItem(swig_obj[0], i);
+          SetTupleFromPyObject(obj, &t);
+          arg2[i] = t;
+        }
+      } else {
+        SetTupleFromPyObject(swig_obj[0], &t);
+        arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+        memset(arg2, 0, 1 * sizeof(ampl::Tuple));
+        arg2[0] = t;
       }
-    } else {
-      SetTupleFromPyObject(swig_obj[0], &t);
-      arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
-      memset(arg2, 0, 1 * sizeof(ampl::Tuple));
-      arg2[0] = t;
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
     }
   }
   {
@@ -35040,22 +35132,26 @@ SWIGINTERN PyObject *_wrap_Parameter_setValuesTaStr(PyObject *self, PyObject *ar
   arg1 = reinterpret_cast< ampl::Parameter * >(argp1);
   {
     /* Check if is a list */
-    ampl::Tuple t;
-    if (PyList_Check(swig_obj[0])) {
-      int size = PyList_Size(swig_obj[0]);
-      int i = 0;
-      arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-      memset(arg2, 0, size * sizeof(ampl::Tuple));
-      for (i = 0; i < size; i++) {
-        PyObject *obj = PyList_GetItem(swig_obj[0], i);
-        SetTupleFromPyObject(obj, &t);
-        arg2[i] = t;
+    try {
+      ampl::Tuple t;
+      if (PyList_Check(swig_obj[0])) {
+        int size = PyList_Size(swig_obj[0]);
+        int i = 0;
+        arg2 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
+        memset(arg2, 0, size * sizeof(ampl::Tuple));
+        for (i = 0; i < size; i++) {
+          PyObject *obj = PyList_GetItem(swig_obj[0], i);
+          SetTupleFromPyObject(obj, &t);
+          arg2[i] = t;
+        }
+      } else {
+        SetTupleFromPyObject(swig_obj[0], &t);
+        arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+        memset(arg2, 0, 1 * sizeof(ampl::Tuple));
+        arg2[0] = t;
       }
-    } else {
-      SetTupleFromPyObject(swig_obj[0], &t);
-      arg2 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
-      memset(arg2, 0, 1 * sizeof(ampl::Tuple));
-      arg2[0] = t;
+    } catch (const std::exception &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
     }
   }
   {

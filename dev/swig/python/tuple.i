@@ -31,7 +31,11 @@
 
 /* Convert from Python --> C */
 %typemap(in) ampl::Tuple {
+  try {
     SetTupleFromPyObject($input, &$1);
+  } catch (const std::exception &e) {
+    SWIG_exception(SWIG_TypeError, e.what());
+  }
 }
 
 %typemap(typecheck, precedence=0) ampl::Tuple {
@@ -40,23 +44,27 @@
 
 %typemap(in) ampl::Tuple *{
   /* Check if is a list */
-  ampl::Tuple t;
-  if (PyList_Check($input)) {
-        int size = PyList_Size($input);
-        int i = 0;
-        $1 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-        memset($1, 0, size * sizeof(ampl::Tuple));
-        for (i = 0; i < size; i++) {
-            PyObject *obj = PyList_GetItem($input, i);
-            SetTupleFromPyObject(obj, &t);
-            $1[i] = t;
-        }
+  try {
+    ampl::Tuple t;
+    if (PyList_Check($input)) {
+      int size = PyList_Size($input);
+      int i = 0;
+      $1 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
+      memset($1, 0, size * sizeof(ampl::Tuple));
+      for (i = 0; i < size; i++) {
+        PyObject *obj = PyList_GetItem($input, i);
+        SetTupleFromPyObject(obj, &t);
+        $1[i] = t;
+      }
     } else {
-        SetTupleFromPyObject($input, &t);
-        $1 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
-        memset($1, 0, 1 * sizeof(ampl::Tuple));
-        $1[0] = t;
+      SetTupleFromPyObject($input, &t);
+      $1 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+      memset($1, 0, 1 * sizeof(ampl::Tuple));
+      $1[0] = t;
     }
+  } catch (const std::exception &e) {
+    SWIG_exception(SWIG_ValueError, e.what());
+  }
 }
 
 // Set argument to NULL before any conversion occurs
