@@ -38,6 +38,12 @@ class Set(Entity):
     def __setitem__(self, index, value):
         self.__getitem__(index).set_values(value)
 
+    def __iter__(self):
+        if self.is_scalar():
+            return self.members()
+        else:
+            return self.instances()
+
     def instances(self):
         """
         Get an iterator to iterate over all the instances in a Set.

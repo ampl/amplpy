@@ -46,9 +46,6 @@ class Entity(BaseClass):
             index = [index]
         return self.get(*index)
 
-    # def __setitem__(self, index, value):
-    #    self.__getitem__(index).set_values(value)
-
     def get(self, *index):
         """
         Get the instance with the specified index.
@@ -121,7 +118,10 @@ class Entity(BaseClass):
         Returns:
             True if the entity is scalar (not indexed over any set).
         """
-        return self._impl.isScalar()
+        try:
+            return self._impl.isScalar()
+        except:
+            return True
 
     def num_instances(self):
         """

@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [Breaking] Drop async functionalities.
 - [Breaking] DataFrame.to_pandas: start using multi-index by default.
 - [Breaking] Drop Python 2.7 compatibility.
+- [Breaking] Iterating over non-indexed sets now iterates over set members.
 
 ## 0.10.0 - 2023-05-22
 - Upgrade libampl to 2.1.0-20230522.

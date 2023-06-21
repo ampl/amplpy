@@ -27,15 +27,26 @@ class TestIterators(TestBase.TestBase):
         self.assertEqual(ampl.get_sets().size(), 5)
         ampl.eval('set zz{1..2,{"a", "b"}, 5..6};')
         self.assertEqual(ampl.get_sets().size(), 6)
-        self.assertEqual(
-            ampl.get_set("x").num_instances(), len(dict(ampl.get_set("x")))
-        )
+        self.assertEqual(list(ampl.get_set("x").members()), list(ampl.get_set("x")))
         self.assertEqual(ampl.get_set("x").num_instances(), 1)
         self.assertEqual(ampl.get_set("y").num_instances(), 2)
+        self.assertEqual(list(ampl.set["y"][1].members()), list(ampl.set["y"][1]))
         self.assertEqual(ampl.get_set("z").num_instances(), 4)
+        self.assertEqual(
+            list(ampl.set["z"][1, "a"].members()), list(ampl.set["z"][1, "a"])
+        )
         self.assertEqual(ampl.get_set("xx").num_instances(), 4)
+        self.assertEqual(
+            list(ampl.set["xx"][1, 4].members()), list(ampl.set["xx"][1, 4])
+        )
         self.assertEqual(ampl.get_set("yy").num_instances(), 8)
+        self.assertEqual(
+            list(ampl.set["yy"][1, 4, 7].members()), list(ampl.set["yy"][1, 4, 7])
+        )
         self.assertEqual(ampl.get_set("zz").num_instances(), 8)
+        self.assertEqual(
+            list(ampl.set["zz"][1, "a", 5].members()), list(ampl.set["zz"][1, "a", 5])
+        )
         self.assertEqual(max(s.num_instances() for name, s in ampl.get_sets()), 8)
         self.assertEqual(ampl.get_set("x").name(), ampl.get_sets()["x"].name())
         with self.assertRaises(KeyError):

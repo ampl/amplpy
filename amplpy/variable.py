@@ -49,7 +49,7 @@ class Variable(Entity):
         if value is None:
             self._impl.fix()
         else:
-            self._impl.fix(value)
+            self._impl.fix(float(value))
 
     def unfix(self):
         """
