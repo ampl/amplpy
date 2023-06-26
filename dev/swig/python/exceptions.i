@@ -10,12 +10,12 @@ catch (std::range_error) {
 catch (const ampl::AMPLException &e) {
   SWIG_exception(SWIG_RuntimeError, e.what());
 }
-catch (const ampl::PresolveException &e) {
-  std::string msg = "PresolveException: " + std::string(e.what());
-  SWIG_exception(SWIG_RuntimeError, msg.c_str());
-}
 catch (const ampl::InfeasibilityException &e) {
   std::string msg = "InfeasibilityException: " + std::string(e.what());
+  SWIG_exception(SWIG_RuntimeError, msg.c_str());
+}
+catch (const ampl::PresolveException &e) {
+  std::string msg = "PresolveException: " + std::string(e.what());
   SWIG_exception(SWIG_RuntimeError, msg.c_str());
 }
 catch (const std::invalid_argument &e) {
@@ -28,8 +28,7 @@ catch (const std::out_of_range &e) {
 catch (const std::logic_error &e) {
   SWIG_exception(SWIG_TypeError, e.what());
 }
-catch (const ampl::UnsupportedOperationException &e)
-{
+catch (const ampl::UnsupportedOperationException &e) {
 	SWIG_exception(SWIG_TypeError, e.what());
 }
 catch (const ampl::LicenseException &e) {
