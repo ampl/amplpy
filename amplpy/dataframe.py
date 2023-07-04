@@ -295,18 +295,30 @@ class DataFrame(BaseClass):
                 d[key] = tuple(row[nindices:])
         return d
 
-    def to_list(self):
+    def to_list(self, skip_index=False):
         """
         Return a list with the DataFrame data.
+
+        Args:
+            skip_index: set to True to retrieve only values.
         """
         if self.get_num_cols() > 1:
-            return [tuple(self.get_row_by_index(i)) for i in range(self.get_num_rows())]
+            lst = [tuple(self.get_row_by_index(i)) for i in range(self.get_num_rows())]
         else:
-            return [self.get_row_by_index(i)[0] for i in range(self.get_num_rows())]
+            lst = [self.get_row_by_index(i)[0] for i in range(self.get_num_rows())]
+        if skip_index:
+            ncols = self.get_num_cols()
+            nindices = self.get_num_indices()
+            if ncols - nindices == 1:
+                return [row[-1] for row in lst]
+            else:
+                return [row[nindices:] for row in lst]
+        else:
+            return lst
 
     def to_pandas(self, multi_index=True):
         """
-        Return a pandas DataFrame with the DataFrame data.
+        Return a pandas.DataFrame with the DataFrame data.
         """
         assert pd is not None
         nindices = self.get_num_indices()

@@ -161,7 +161,7 @@ class Entity(BaseClass):
         - Parameters it returns their values.
         - Constraints it returns the suffix ``dual``.
         - Sets it returns all the members of the set. Note that it does not
-          apply to indexed sets. See :func:`~amplpy.Set.getValues`.
+          apply to indexed sets. See :func:`~amplpy.Set.get_values`.
 
         Raises:
             RuntimeError: if there are issues with the data.
@@ -181,6 +181,24 @@ class Entity(BaseClass):
                 self._impl.getValuesLst(suffixes, len(suffixes))
             )
 
+    def to_pandas(self, **kwargs):
+        """
+        Equivalent to ``Entity.get_values().``:func:`~amplpy.DataFrame.to_pandas`.
+        """
+        return self.get_values().to_pandas(**kwargs)
+
+    def to_dict(self, **kwargs):
+        """
+        Equivalent to ``Entity.get_values().``:func:`~amplpy.DataFrame.to_dict`.
+        """
+        return self.get_values().to_dict(**kwargs)
+
+    def to_list(self, **kwargs):
+        """
+        Equivalent to ``Entity.get_values().``:func:`~amplpy.DataFrame.to_list`.
+        """
+        return self.get_values().to_list(**kwargs)
+
     def set_values(self, data):
         """
         Set the values of this entiy to the correponding values of a
@@ -191,7 +209,7 @@ class Entity(BaseClass):
 
         .. code-block:: python
 
-            x.setValues(y.getValues())
+            x.set_values(y.get_values())
 
         is semantically equivalent to the AMPL statement:
 

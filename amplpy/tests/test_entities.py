@@ -427,7 +427,7 @@ class TestEntities(TestBase.TestBase):
         ampl.var["x"] = d
         self.assertEqual(d, ampl.var["x"].get_values().to_dict())
 
-    def testValidData(self):
+    def test_valid_data(self):
         ampl = self.ampl
         ampl.eval("set I ordered; param P{I};")
         ampl.eval("data; set I := 1 2; param P := 2 1 1 3;")
@@ -436,7 +436,7 @@ class TestEntities(TestBase.TestBase):
         )
         self.assertEqual(ampl.get_data("P").to_list(), [(1, 3), (2, 1)])
 
-    def testInvalidData(self):
+    def test_invalid_data(self):
         ampl = self.ampl
         ampl.eval("set I ordered; param P{I};")
         ampl.eval("data; set I := 1 2; param P := 2 1 1 3 3 0;")
@@ -445,6 +445,36 @@ class TestEntities(TestBase.TestBase):
         ampl.eval("reset data; data; set I := 1 2; param P := 2 1 1 3 3 0;")
         with self.assertRaises(RuntimeError):
             print(ampl.get_data("P"))
+
+    def test_entity_get_values_aliases(self):
+        ampl = self.ampl
+        ampl.eval("param p{i in 1..10, j in 1..10} := i*j;")
+        self.assertTrue(
+            ampl.get_parameter("p")
+            .to_pandas()
+            .equals(ampl.get_parameter("p").get_values().to_pandas())
+        )
+        self.assertTrue(
+            ampl.get_parameter("p")
+            .to_pandas(multi_index=False)
+            .equals(ampl.get_parameter("p").get_values().to_pandas(multi_index=False))
+        )
+        self.assertEqual(
+            ampl.get_parameter("p").to_list(),
+            ampl.get_parameter("p").get_values().to_list(),
+        )
+        self.assertEqual(
+            ampl.get_parameter("p").to_list(skip_index=True),
+            ampl.get_parameter("p").get_values().to_list(skip_index=True),
+        )
+        self.assertEqual(
+            ampl.get_parameter("p").to_list(skip_index=True),
+            [i * j for i in range(1, 10 + 1) for j in range(1, 10 + 1)],
+        )
+        self.assertEqual(
+            ampl.get_parameter("p").to_dict(),
+            ampl.get_parameter("p").get_values().to_dict(),
+        )
 
 
 if __name__ == "__main__":
