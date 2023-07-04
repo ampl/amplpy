@@ -447,6 +447,8 @@ class TestEntities(TestBase.TestBase):
             print(ampl.get_data("P"))
 
     def test_entity_get_values_aliases(self):
+        if pd is None:
+            self.skipTest("pandas not available")
         ampl = self.ampl
         ampl.eval("param p{i in 1..10, j in 1..10} := i*j;")
         self.assertTrue(
@@ -474,6 +476,42 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(
             ampl.get_parameter("p").to_dict(),
             ampl.get_parameter("p").get_values().to_dict(),
+        )
+
+    def test_stack(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval(
+            """
+        set PRODUCTS;
+        set RESOURCES;
+        param need {RESOURCES,PRODUCTS} >= 0;
+        """
+        )
+        need_dict = {
+            "U": {"M": 10.0, "A": 1.0, "B": 2.0},
+            "V": {"M": 9.0, "A": 1.0, "B": 1.0},
+        }
+        PRODUCTS = ["U", "V"]
+        RESOURCES = ["M", "A", "B"]
+        ampl.set["PRODUCTS"] = PRODUCTS
+        ampl.set["RESOURCES"] = RESOURCES
+        ampl.param["need"] = pd.DataFrame(
+            [
+                [10, 1, 2],
+                [9, 1, 1],
+            ],
+            columns=RESOURCES,
+            index=PRODUCTS,
+        ).transpose()
+        self.assertEqual(
+            ampl.param["need"].to_dict(),
+            {
+                (r, p): value
+                for p, rdict in need_dict.items()
+                for r, value in rdict.items()
+            },
         )
 
 

@@ -384,7 +384,7 @@ class DataFrame(BaseClass):
         return cls(index=index, columns=columns)
 
     @classmethod
-    def from_pandas(cls, df, index_names=None):
+    def from_pandas(cls, df, index_names=None, indexarity=None):
         """
         Create a :class:`~amplpy.DataFrame` from a pandas DataFrame.
 
@@ -397,7 +397,18 @@ class DataFrame(BaseClass):
             df = pd.DataFrame(df)
         else:
             assert isinstance(df, pd.DataFrame)
-        keys = [key if isinstance(key, tuple) else (key,) for key in df.index.tolist()]
+        if len(df) == 0:
+            return cls(index=[], columns=[])
+        if isinstance(df.index[0], tuple):
+            df.index = pd.MultiIndex.from_tuples(df.index.tolist())
+        if indexarity == df.index.nlevels + 1:
+            df = df.stack()
+            if isinstance(df, pd.Series):
+                df = pd.DataFrame(df)
+        if isinstance(df.index[0], tuple):
+            keys = df.index.tolist()
+        else:
+            keys = [(key,) for key in df.index]
         index = [("index{}".format(i), cindex) for i, cindex in enumerate(zip(*keys))]
         if index_names is not None:
             assert len(index) == len(index_names)

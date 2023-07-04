@@ -226,7 +226,7 @@ class Entity(BaseClass):
             self._impl.setValuesDf(DataFrame.from_dict(data)._impl)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                df = DataFrame.from_pandas(data)
+                df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 self._impl.setValuesDf(df._impl)
                 return
             raise TypeError

@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.11.1 - 2023-07-04
 - Add aliases Entity.get_values.to_pandas/to_list/to_dict.
+- Automatically stack 2D pandas.DataFrames.
 
 ## 0.11.0 - 2023-06-21
 - Upgrade libampl to 2.1.2-20230618.
