@@ -36,9 +36,7 @@ ampl.eval(r"""
 """)
 tickers, cov_matrix = # ... pre-process data in Python
 ampl.set["A"] = tickers
-ampl.param["S"] = pd.DataFrame(
-    cov_matrix, index=tickers, columns=tickers
-).unstack()
+ampl.param["S"] = pd.DataFrame(cov_matrix, index=tickers, columns=tickers)
 ampl.option["solver"] = "gurobi"
 ampl.option["gurobi_options"] = "outlev=1"
 ampl.solve()
@@ -156,7 +154,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.11.1",
+    version="0.11.2",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",

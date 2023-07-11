@@ -120,7 +120,7 @@ Installation & minimal example
     ampl.set["A"] = tickers
     ampl.param["S"] = pd.DataFrame(
         cov_matrix, index=tickers, columns=tickers
-    ).unstack()
+    )
     ampl.option["solver"] = "gurobi"
     ampl.option["gurobi_options"] = "outlev=1"
     ampl.solve()

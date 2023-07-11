@@ -102,7 +102,7 @@ def main(argc, argv):
     # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
     ampl.set_data(nutr_df, "NUTR")
     # 3. Set the values for the parameter "amt" using "amt_df"
-    ampl.get_parameter("amt").set_values(amt_df.unstack())
+    ampl.get_parameter("amt").set_values(amt_df)
 
     # Solve
     ampl.solve()

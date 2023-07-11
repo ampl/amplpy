@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.11.2 - 2023-07-11
-- Cast floats to integers whenever possible.
+- [Breaking] Cast floats to integers whenever possible.
 
 ## 0.11.1 - 2023-07-04
 - Add aliases Entity.get_values.to_pandas/to_list/to_dict.

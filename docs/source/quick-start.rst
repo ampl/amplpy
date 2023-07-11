@@ -101,7 +101,7 @@ all the code in the examples below does not include exception handling.
     # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
     ampl.set_data(nutr_df, "NUTR")
     # 3. Set the values for the parameter "amt" using "amt_df"
-    ampl.get_parameter("amt").set_values(amt_df.unstack())
+    ampl.get_parameter("amt").set_values(amt_df)
 
     # Specify the solver to use (e.g., HiGHS)
     ampl.option["solver"] = "highs"
@@ -315,7 +315,7 @@ and :func:`amplpy.Parameter.set_values` is used to load data in ``amt_df`` into 
     # 2. Send the data from "nutr_df" to AMPL and initialize the indexing set "NUTR"
     ampl.set_data(nutr_df, "NUTR")
     # 3. Set the values for the parameter "amt" using "amt_df"
-    ampl.get_parameter("amt").set_values(amt_df.unstack())
+    ampl.get_parameter("amt").set_values(amt_df)
 
 
 Load the data using lists and dictionaries
