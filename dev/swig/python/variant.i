@@ -17,12 +17,20 @@
 
 /* Convert from C --> Python */
 %typemap(out) ampl::VariantRef {
+    double vd;
+    int vi;
     switch ($1.type()) {
     case ampl::STRING:
         $result = PyString_FromString($1.c_str());
         break;
     case ampl::NUMERIC:
-        $result = PyFloat_FromDouble($1.dbl());
+        vd = $1.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+            $result = PyLong_FromLong(vi);
+        } else {
+            $result = PyFloat_FromDouble(vd);
+        }
         break;
     default:
         $result = Py_None;

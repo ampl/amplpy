@@ -5178,6 +5178,8 @@ SWIGINTERN void ampl_DataFrame_setColumnPyList(ampl::DataFrame *self,fmt::CStrin
 SWIGINTERN PyObject *ampl_internal_Slice_Sl_false_Sg__toPyList(ampl::internal::Slice< false > *self){
         std::size_t size = self->size();
         PyObject* res = PyList_New(size);
+        double vd;
+        int vi;
         for (std::size_t i = 0; i < size; i++) {
             const ampl::VariantRef &v = (*self)[i];
             PyObject *item = NULL;
@@ -5186,7 +5188,13 @@ SWIGINTERN PyObject *ampl_internal_Slice_Sl_false_Sg__toPyList(ampl::internal::S
                 item = PyString_FromString(v.c_str());
                 break;
             case ampl::NUMERIC:
-                item = PyFloat_FromDouble(v.dbl());
+                vd = v.dbl();
+                vi = int(vd);
+                if (vd == vi) {
+                    item = PyLong_FromLong(vi);
+                } else {
+                    item = PyFloat_FromDouble(vd);
+                }
                 break;
             case ampl::EMPTY:
                 item = Py_None;
@@ -10134,12 +10142,20 @@ SWIGINTERN PyObject *_wrap_TupleRef_getIndex(PyObject *self, PyObject *args) {
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -10669,12 +10685,20 @@ SWIGINTERN PyObject *_wrap_Tuple_getIndex(PyObject *self, PyObject *args) {
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -16311,12 +16335,20 @@ SWIGINTERN PyObject *_wrap_DataFrameColumn_getIndex(PyObject *self, PyObject *ar
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -16693,12 +16725,20 @@ SWIGINTERN PyObject *_wrap_ColIterator___ref__(PyObject *self, PyObject *args) {
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -17284,12 +17324,20 @@ SWIGINTERN PyObject *_wrap_DataFrameRow_getIndex(PyObject *self, PyObject *args)
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -17598,12 +17646,20 @@ SWIGINTERN PyObject *_wrap_RowIterator___ref__(PyObject *self, PyObject *args) {
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -18184,6 +18240,8 @@ SWIGINTERN PyObject *_wrap_Instance_key(PyObject *self, PyObject *args) {
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -18192,7 +18250,13 @@ SWIGINTERN PyObject *_wrap_Instance_key(PyObject *self, PyObject *args) {
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -19690,6 +19754,8 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -19698,7 +19764,13 @@ SWIGINTERN PyObject *_wrap_iterator___ref__(PyObject *self, PyObject *args) {
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -27887,12 +27959,20 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_0(PyObject *self, Py_s
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -27974,12 +28054,20 @@ SWIGINTERN PyObject *_wrap_BasicEntityParameter_get__SWIG_1(PyObject *self, Py_s
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -36296,6 +36384,8 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -36304,7 +36394,13 @@ SWIGINTERN PyObject *_wrap_VariableIterator_first(PyObject *self, PyObject *args
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -36989,6 +37085,8 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -36997,7 +37095,13 @@ SWIGINTERN PyObject *_wrap_ConstraintIterator_first(PyObject *self, PyObject *ar
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -37682,6 +37786,8 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -37690,7 +37796,13 @@ SWIGINTERN PyObject *_wrap_ObjectiveIterator_first(PyObject *self, PyObject *arg
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -38375,6 +38487,8 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -38383,7 +38497,13 @@ SWIGINTERN PyObject *_wrap_SetIterator_first(PyObject *self, PyObject *args) {
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -39068,6 +39188,8 @@ SWIGINTERN PyObject *_wrap_TableIterator_first(PyObject *self, PyObject *args) {
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -39076,7 +39198,13 @@ SWIGINTERN PyObject *_wrap_TableIterator_first(PyObject *self, PyObject *args) {
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -39761,6 +39889,8 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
     if (size != 1) {
       resultobj = PyTuple_New(size);
     }
+    double vd;
+    int vi;
     for (std::size_t i = 0; i < size; i++) {
       const ampl::VariantRef &v = tuple[i];
       PyObject *item = NULL;
@@ -39769,7 +39899,13 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_first(PyObject *self, PyObject *arg
         item = PyString_FromString(v.c_str());
         break;
       case ampl::NUMERIC:
-        item = PyFloat_FromDouble(v.dbl());
+        vd = v.dbl();
+        vi = int(vd);
+        if (vd == vi) {
+          item = PyLong_FromLong(vi);
+        } else {
+          item = PyFloat_FromDouble(vd);
+        }
         break;
       case ampl::EMPTY:
         item = Py_None;
@@ -39850,12 +39986,20 @@ SWIGINTERN PyObject *_wrap_ParameterIterator_second(PyObject *self, PyObject *ar
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;
@@ -53546,12 +53690,20 @@ SWIGINTERN PyObject *_wrap_AMPL_getValue(PyObject *self, PyObject *args) {
     }
   }
   {
+    double vd;
+    int vi;
     switch ((&result)->type()) {
     case ampl::STRING:
       resultobj = PyString_FromString((&result)->c_str());
       break;
     case ampl::NUMERIC:
-      resultobj = PyFloat_FromDouble((&result)->dbl());
+      vd = (&result)->dbl();
+      vi = int(vd);
+      if (vd == vi) {
+        resultobj = PyLong_FromLong(vi);
+      } else {
+        resultobj = PyFloat_FromDouble(vd);
+      }
       break;
     default:
       resultobj = Py_None;

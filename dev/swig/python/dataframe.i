@@ -2,6 +2,8 @@
     PyObject *toPyList() {
         std::size_t size = self->size();
         PyObject* res = PyList_New(size);
+        double vd;
+        int vi;
         for (std::size_t i = 0; i < size; i++) {
             const ampl::VariantRef &v = (*self)[i];
             PyObject *item = NULL;
@@ -10,7 +12,13 @@
                 item = PyString_FromString(v.c_str());
                 break;
             case ampl::NUMERIC:
-                item = PyFloat_FromDouble(v.dbl());
+                vd = v.dbl();
+                vi = int(vd);
+                if (vd == vi) {
+                    item = PyLong_FromLong(vi);
+                } else {
+                    item = PyFloat_FromDouble(vd);
+                }
                 break;
             case ampl::EMPTY:
                 item = Py_None;
