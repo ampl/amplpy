@@ -373,6 +373,10 @@ class TestEntities(TestBase.TestBase):
         ampl.eval("param x;")
         ampl.get_parameter("x").set(inf)
         self.assertEqual(ampl.get_value("x"), inf)
+        self.assertTrue(isinstance(ampl.get_value("x"), float))
+        ampl.get_parameter("x").set(5)
+        self.assertEqual(ampl.get_value("x"), 5)
+        self.assertTrue(isinstance(ampl.get_value("x"), int))
         ampl.eval("param y{1..3};")
         ampl.get_parameter("y").set_values([inf] * 3)
         for i in range(3):

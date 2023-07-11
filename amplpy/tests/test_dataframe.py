@@ -321,6 +321,27 @@ class TestDataFrame(TestBase.TestBase):
         for row in df:
             self.assertTrue(tuple(row) in [(1, 12), (2, 23)])
 
+    def test_integer_values(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        df1 = ampl.get_data("{i in 1..2, j in 1..2} i*j/2")
+        df1_pd = df1.to_pandas()
+        df2 = ampl.get_data("{i in 1..2, j in 1..2} i*j")
+        df2_pd = df2.to_pandas()
+
+        self.assertEqual(df1_pd.index.tolist(), [(1, 1), (1, 2), (2, 1), (2, 2)])
+        self.assertEqual(df1_pd["i*j/2"].tolist(), [0.5, 1.0, 1.0, 2.0])
+
+        self.assertEqual(df2_pd.index.tolist(), [(1, 1), (1, 2), (2, 1), (2, 2)])
+        self.assertEqual(df2_pd["i*j"].tolist(), [1, 2, 2, 4])
+
+        self.assertEqual(df1.to_dict(), {(1, 1): 0.5, (1, 2): 1, (2, 1): 1, (2, 2): 2})
+        self.assertEqual(df2.to_dict(), {(1, 1): 1, (1, 2): 2, (2, 1): 2, (2, 2): 4})
+
+        self.assertEqual(df1.to_list(), [(1, 1, 0.5), (1, 2, 1), (2, 1, 1), (2, 2, 2)])
+        self.assertEqual(df2.to_list(), [(1, 1, 1), (1, 2, 2), (2, 1, 2), (2, 2, 4)])
+
 
 if __name__ == "__main__":
     unittest.main()
