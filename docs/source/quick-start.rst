@@ -203,7 +203,7 @@ Where ``prepare_data`` is the following function that returns three ``pandas.Dat
             ),
             columns=food_df.index.to_list(),
             index=nutr_df.index.to_list(),
-        ).transpose()
+        )
         return food_df, nutr_df, amt_df
 
 .. note::

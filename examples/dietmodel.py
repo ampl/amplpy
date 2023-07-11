@@ -47,7 +47,7 @@ def prepare_data():
         ),
         columns=food_df.index.to_list(),
         index=nutr_df.index.to_list(),
-    ).transpose()
+    )
     return food_df, nutr_df, amt_df
 
 
