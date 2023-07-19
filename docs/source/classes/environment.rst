@@ -8,4 +8,4 @@ Environment
   :members:
   :undoc-members:
   :special-members:
-  :exclude-members: __dict__,__weakref__
+  :exclude-members: __dict__,__weakref__,__module__,getBinDir,getBinName,setBinDir,setBinName
