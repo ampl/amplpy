@@ -398,7 +398,7 @@ class DataFrame(BaseClass):
         else:
             assert isinstance(df, pd.DataFrame)
         if len(df) == 0:
-            return cls(index=[], columns=[])
+            return cls(index=df.index.names, columns=df.columns.tolist())
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
         if indexarity == df.index.nlevels + 1:
