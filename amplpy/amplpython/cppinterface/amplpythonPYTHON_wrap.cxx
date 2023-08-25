@@ -17980,12 +17980,12 @@ SWIGINTERN PyObject *_wrap_Instance_toString(PyObject *self, PyObject *args) {
   if (!SWIG_Python_UnpackTuple(args, "Instance_toString", 0, 0, 0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__Instance, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_toString" "', argument " "1"" of type '" "ampl::Instance const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Instance_toString" "', argument " "1"" of type '" "ampl::Instance *""'"); 
   }
   arg1 = reinterpret_cast< ampl::Instance * >(argp1);
   {
     try {
-      result = ((ampl::Instance const *)arg1)->toString();
+      result = (arg1)->toString();
     }
     catch (std::range_error) {
       SWIG_exception(SWIG_ValueError, "Range Error");
