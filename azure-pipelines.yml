@@ -126,3 +126,22 @@ stages:
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
         inputs: {pathtoPublish: 'wheelhouse'}
+
+- stage: publish
+  jobs:
+    - job: upload
+      pool: {vmImage: 'ubuntu-latest'}
+      steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+              buildType: 'current'
+              downloadPath: 'artifacts/'
+              artifactName: 'drop'
+          displayName: 'Download current pipeline artifacts'
+        - bash: mv artifacts/drop artifacts/amplpy
+          displayName: Rename directory
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: 'artifacts/'
+            artifact: 'release'
+            artifactType: 'pipeline'
