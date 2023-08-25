@@ -57,8 +57,7 @@
     if (PyList_Check($input)) {
       int size = PyList_Size($input);
       int i = 0;
-      $1 = (ampl::Tuple *)malloc(size * sizeof(ampl::Tuple));
-      memset($1, 0, size * sizeof(ampl::Tuple));
+      $1 = new ampl::Tuple[size];
       for (i = 0; i < size; i++) {
         PyObject *obj = PyList_GetItem($input, i);
         SetTupleFromPyObject(obj, &t);
@@ -66,7 +65,7 @@
       }
     } else {
       SetTupleFromPyObject($input, &t);
-      $1 = (ampl::Tuple *)malloc(1 * sizeof(ampl::Tuple));
+      $1 = new ampl::Tuple[1];
       memset($1, 0, 1 * sizeof(ampl::Tuple));
       $1[0] = t;
     }
@@ -82,5 +81,5 @@
 
 // This cleans up the char ** array we malloc'd before the function call
 %typemap(freearg) ampl::Tuple *{
-    free((ampl::Tuple *)$1);
+  delete[] $1;
 }

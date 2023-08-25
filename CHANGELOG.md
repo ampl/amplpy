@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.12.0 - 2023-08-XX
+- Upgrade libampl to 2.2.0-20230825.
+- Use x-ampl by default if available.
+
 ## 0.11.2 - 2023-07-11
 - [Breaking] Cast floats to integers whenever possible.
 

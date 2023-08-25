@@ -134,7 +134,20 @@ def compile_args():
         ignore_warnings = [
             "-Wno-unused-variable",
         ]
-        return ["-std=c++11", "-mmacosx-version-min=10.9"] + ignore_warnings
+        debug = []
+        if os.environ.get("DEBUG", None) == "1":
+            debug = [
+                "-g",
+                "-fno-omit-frame-pointer",
+            ]
+        return (
+            [
+                "-std=c++11",
+                "-mmacosx-version-min=10.9",
+            ]
+            + debug
+            + ignore_warnings
+        )
     else:
         return []
 
@@ -154,7 +167,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.11.2",
+    version="0.12.0b0",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",

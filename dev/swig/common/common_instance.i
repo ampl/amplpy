@@ -6,7 +6,7 @@ class Instance
 {
   public:
 
-  std::string toString()const;
+  std::string toString() const;
   std::string name() const;
   ampl::Entity entity() const;
   ampl::Tuple key() const;
@@ -15,7 +15,7 @@ class Instance
 class SetInstance : public ampl::Instance
 {
 public:
-  std::size_t size() const;
+  std::size_t size();
   std::size_t arity() const;
   bool contains(TupleRef t) const;
   ampl::DataFrame getValues() const;
@@ -36,30 +36,29 @@ public:
     iterator end() const;
     size_t size() const;
   };
-  MemberRange members() const;
+  MemberRange members();
 
   %extend{
-    bool Contains(ampl::Tuple t) const
-  {
-    return self->contains(ampl::TupleRef(t));
-  }
-  void setValues(const ampl::Tuple *t, std::size_t n)
-  {
-    return self->setValues(t, n);
-  }
-  void setValues(TupleArray &t, std::size_t n)
-
-  {
-    return self->setValues(TupleArray_cast(&t), n);
-  }
-  void setValues(double *values, std::size_t n)
-  {
-    return self->setValues(ampl::internal::Args(values), n);
-  }
-  void setValues(const char *args[], std::size_t n)
-  {
-    return self->setValues(ampl::internal::Args(args), n);
-  }
+    bool Contains(ampl::Tuple t)
+	{
+		return self->contains(ampl::TupleRef(t));
+	}
+	void setValuesTuples(const ampl::Tuple *t, std::size_t n)
+	{
+		return self->setValues(t, n);
+	}
+	void setValues(TupleArray &t, std::size_t n)
+	{
+		return self->setValues(TupleArray_cast(&t), n);
+	}
+	void setValues(double *values, std::size_t n)
+	{
+		return self->setValues(ampl::internal::Args(values), n);
+	}
+	void setValues(const char *args[], std::size_t n)
+	{
+		return self->setValues(ampl::internal::Args(args), n);
+	}
   }
 };
 
