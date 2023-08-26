@@ -6,7 +6,7 @@ class Instance
 {
   public:
 
-  std::string toString();
+  std::string toString() const;
   std::string name() const;
   ampl::Entity entity() const;
   ampl::Tuple key() const;
