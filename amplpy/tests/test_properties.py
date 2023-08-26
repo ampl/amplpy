@@ -7,12 +7,12 @@ from . import TestBase
 class TestProperties(TestBase.TestBase):
     """Test Properties."""
 
-    # def test_var_prop(self):
-    #     ampl = self.ampl
-    #     ampl.eval("var x;")
-    #     ampl.var["x"] = 10
-    #     self.assertEqual(ampl.var["x"].value(), ampl.get_variable("x").value())
-    #     self.assertEqual(len(list(ampl.var)), len(list(ampl.get_variables())))
+    def test_var_prop(self):
+        ampl = self.ampl
+        ampl.eval("var x;")
+        ampl.var["x"] = 10
+        self.assertEqual(ampl.var["x"].value(), ampl.get_variable("x").value())
+        self.assertEqual(len(list(ampl.var)), len(list(ampl.get_variables())))
 
     def test_con_prop(self):
         ampl = self.ampl
