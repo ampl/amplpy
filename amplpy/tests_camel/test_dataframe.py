@@ -17,37 +17,37 @@ class TestDataFrame(TestBase.TestBase):
         # Create first dataframe (for data indexed over NUTR)
         # Add data row by row
         df1 = DataFrame("NUTR", ("n_min", "n_max"))
-        df1.addRow(("A", 700, 20000))
-        df1.addRow(("B1", 700, 20000))
-        df1.addRow(("B2", 700, 20000))
-        df1.addRow(("C", 700, 20000))
-        df1.addRow(("CAL", 16000, 24000))
-        df1.addRow(("NA", 0.0, 50000))
+        df1._addRow(("A", 700, 20000))
+        df1._addRow(("B1", 700, 20000))
+        df1._addRow(("B2", 700, 20000))
+        df1._addRow(("C", 700, 20000))
+        df1._addRow(("CAL", 16000, 24000))
+        df1._addRow(("NA", 0.0, 50000))
 
         # Create second dataframe (for data indexed over FOOD)
         # Add column by column
         df2 = DataFrame("FOOD")
         foods = ["BEEF", "CHK", "FISH", "HAM", "MCH", "MTL", "SPG", "TUR"]
-        df2.setColumn("FOOD", foods)
-        self.assertEqual(list(df2.getColumn("FOOD")), foods)
+        df2._setColumn("FOOD", foods)
+        self.assertEqual(list(df2._getColumn("FOOD")), foods)
         contents = [2] * 8
-        df2.addColumn("f_min", contents)
-        self.assertEqual(list(df2.getColumn("f_min")), contents)
+        df2._addColumn("f_min", contents)
+        self.assertEqual(list(df2._getColumn("f_min")), contents)
         contents = [10] * 8
-        df2.addColumn("f_max", contents)
-        self.assertEqual(list(df2.getColumn("f_max")), contents)
+        df2._addColumn("f_max", contents)
+        self.assertEqual(list(df2._getColumn("f_max")), contents)
         costs = [3.19, 2.59, 2.29, 2.89, 1.89, 1.99, 1.99, 2.49]
-        df2.addColumn("cost", costs)
-        self.assertEqual(list(df2.getColumn("cost")), costs)
+        df2._addColumn("cost", costs)
+        self.assertEqual(list(df2._getColumn("cost")), costs)
         labels = [random.choice(string.ascii_letters)] * 8
-        df2.addColumn("labels", labels)
-        self.assertEqual(list(df2.getColumn("labels")), labels)
-        df2.addColumn("empty", [])
-        self.assertEqual(list(df2.getColumn("empty")), [None] * 8)
+        df2._addColumn("labels", labels)
+        self.assertEqual(list(df2._getColumn("labels")), labels)
+        df2._addColumn("empty", [])
+        self.assertEqual(list(df2._getColumn("empty")), [None] * 8)
 
-        print(df2.getColumn("FOOD"))
-        for index in df2.getColumn("FOOD"):
-            print(df2.getRow(index))
+        print(df2._getColumn("FOOD"))
+        for index in df2._getColumn("FOOD"):
+            print(df2._getRow(index))
 
         # Create third dataframe, to assign data to the AMPL entity
         # param amt{NUTR, FOOD};
@@ -58,12 +58,12 @@ class TestDataFrame(TestBase.TestBase):
         i = 0
         for n in range(6):
             for f in range(8):
-                print(df1.getRowByIndex(n)[0])
-                nutrWithMultiplicity[i] = df1.getRowByIndex(n)[0]
+                print(df1._getRowByIndex(n)[0])
+                nutrWithMultiplicity[i] = df1._getRowByIndex(n)[0]
                 foodWithMultiplicity[i] = foods[f]
                 i += 1
-        df3.setColumn("NUTR", nutrWithMultiplicity)
-        df3.setColumn("FOOD", foodWithMultiplicity)
+        df3._setColumn("NUTR", nutrWithMultiplicity)
+        df3._setColumn("FOOD", foodWithMultiplicity)
 
         # Populate with all these values
         values = [
@@ -116,7 +116,7 @@ class TestDataFrame(TestBase.TestBase):
             1329,
             1397,
         ]
-        df3.addColumn("amt", values)
+        df3._addColumn("amt", values)
 
     def testPandas(self):
         ampl = self.ampl
@@ -226,7 +226,7 @@ class TestDataFrame(TestBase.TestBase):
         )
         # RangeIndex
         self.assertEqual(
-            DataFrame.fromPandas(df_unindexed).getHeaders(),
+            DataFrame.fromPandas(df_unindexed)._getHeaders(),
             ("index0", "Fruit", "Color", "Count", "Price"),
         )
 
@@ -235,7 +235,7 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(
             DataFrame.fromPandas(
                 df_indexed, index_names=["Fruit", "Color"]
-            ).getHeaders(),
+            )._getHeaders(),
             ("Fruit", "Color", "Count", "Price"),
         )
 
@@ -246,7 +246,7 @@ class TestDataFrame(TestBase.TestBase):
             columns=[1, 2, 3, 4, 5],
         )
         self.assertEqual(
-            DataFrame.fromPandas(df.stack()).getHeaders(), ("index0", "index1", "0")
+            DataFrame.fromPandas(df.stack())._getHeaders(), ("index0", "index1", "0")
         )
 
     def testNumpy(self):
@@ -281,22 +281,22 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(dic, DataFrame.fromDict(dic).toDict())
         df = DataFrame("x", "y")
         dic = {1: 12, 2: 23}
-        df.setValues(dic)
+        df._setValues(dic)
         self.assertEqual(dic, df.toDict())
         df = DataFrame("x", ["y", "z"])
         dic = {1: (12, 2), 2: (23, -1)}
-        df.setValues(dic)
+        df._setValues(dic)
         self.assertEqual(dic, df.toDict())
         df = DataFrame("x", ["y", "z"])
-        df.setValues({1: [1, 2]})
+        df._setValues({1: [1, 2]})
         self.assertEqual({1: (1, 2)}, df.toDict())
 
     def testNoIndex(self):
         df = DataFrame([], ["x", "y"])
         x = [1, 2, 3]
         y = [4, 5, 6]
-        df.setColumn("x", x)
-        df.setColumn("y", y)
+        df._setColumn("x", x)
+        df._setColumn("y", y)
         with self.assertRaises(ValueError):
             df.toDict()
         pd_df = df.toPandas()
@@ -306,7 +306,7 @@ class TestDataFrame(TestBase.TestBase):
     def testIter(self):
         df = DataFrame("x", "y")
         dic = {1: 12, 2: 23}
-        df.setValues(dic)
+        df._setValues(dic)
         for row in df:
             self.assertTrue(tuple(row) in [(1, 12), (2, 23)])
 

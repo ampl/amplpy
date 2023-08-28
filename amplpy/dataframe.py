@@ -57,7 +57,7 @@ class DataFrame(BaseClass):
 
     .. warning::
         DataFrame objects should not be instantiated manually. For best performance
-        using Python native types or Pandas Dataframes. The API takes care of the conversion
+        using Python native types or Pandas DataFrames. The API takes care of the conversion
         for you in the most efficient way it finds.
 
     An object of this class can be used to do the following tasks:
@@ -110,19 +110,19 @@ class DataFrame(BaseClass):
             super(DataFrame, self).__init__(impl)
             for col in index:
                 if isinstance(col, tuple):
-                    self.set_column(col[0], col[1])
+                    self._set_column(col[0], col[1])
             for col in columns:
                 if isinstance(col, tuple):
-                    self.set_column(col[0], col[1])
+                    self._set_column(col[0], col[1])
         else:
             impl = kwargs.get("_impl", None)
             super(DataFrame, self).__init__(impl)
 
     def __iter__(self):
         # FIXME: C++ iterators for dataframes not working with SWIG.
-        return (self.get_row_by_index(i) for i in range(self.get_num_rows()))
+        return (self._get_row_by_index(i) for i in range(self._get_num_rows()))
 
-    def get_num_cols(self):
+    def _get_num_cols(self):
         """
         Get the total number of columns in this dataframe (indexarity + number
         of values).
@@ -132,7 +132,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumCols()
 
-    def get_num_rows(self):
+    def _get_num_rows(self):
         """
         Get the number of data rows in this dataframe.
 
@@ -141,7 +141,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumRows()
 
-    def get_num_indices(self):
+    def _get_num_indices(self):
         """
         Get the number of indices (the indexarity) of this dataframe.
 
@@ -150,7 +150,7 @@ class DataFrame(BaseClass):
         """
         return self._impl.getNumIndices()
 
-    def add_row(self, *value):
+    def _add_row(self, *value):
         """
         Add a row to the DataFrame. The size of the tuple must be equal to the
         total number of columns in the dataframe.
@@ -162,10 +162,10 @@ class DataFrame(BaseClass):
         """
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
-        assert len(value) == self.get_num_cols()
+        assert len(value) == self._get_num_cols()
         self._impl.addRow(tuple(value))
 
-    def add_column(self, header, values=None):
+    def _add_column(self, header, values=None):
         """
         Add a new column with the corresponding header and values to the
         dataframe.
@@ -181,7 +181,7 @@ class DataFrame(BaseClass):
         if len(values) == 0:
             self._impl.addColumn(header)
         else:
-            assert len(values) == self.get_num_rows()
+            assert len(values) == self._get_num_rows()
             if any(isinstance(value, str) for value in values):
                 if not isinstance(values, (list, tuple)):
                     values = list(values)
@@ -192,7 +192,7 @@ class DataFrame(BaseClass):
             else:
                 raise NotImplementedError
 
-    def get_column(self, header):
+    def _get_column(self, header):
         """
         Get the specified column as a view object.
 
@@ -201,7 +201,7 @@ class DataFrame(BaseClass):
         """
         return Column(self._impl.getColumn(header))
 
-    def set_column(self, header, values):
+    def _set_column(self, header, values):
         """
         Set the values of a column.
 
@@ -212,7 +212,7 @@ class DataFrame(BaseClass):
         """
         self._impl.setColumnPyList(header, list(values))
 
-    def get_row(self, key):
+    def _get_row(self, key):
         """
         Get a row by value of the indexing columns. If the index is not
         specified, gets the only row of a dataframe with no indexing columns.
@@ -225,7 +225,7 @@ class DataFrame(BaseClass):
         """
         return Row(self._impl.getRowTpl(key))
 
-    def get_row_by_index(self, index):
+    def _get_row_by_index(self, index):
         """
         Get row by numeric index.
 
@@ -237,7 +237,7 @@ class DataFrame(BaseClass):
         """
         return Row(self._impl.getRowByIndex(index))
 
-    def get_headers(self):
+    def _get_headers(self):
         """
         Get the headers of this DataFrame.
 
@@ -246,15 +246,15 @@ class DataFrame(BaseClass):
         """
         return tuple(self._impl.getHeaders())
 
-    def set_values(self, values):
+    def _set_values(self, values):
         """
         Set the values of a DataFrame from a dictionary.
 
         Args:
             values: Dictionary with the values to set.
         """
-        ncols = self.get_num_cols()
-        nindices = self.get_num_indices()
+        ncols = self._get_num_cols()
+        nindices = self._get_num_indices()
 
         def conv_to_list(value):
             if isinstance(value, list):
@@ -269,18 +269,18 @@ class DataFrame(BaseClass):
             assert len(key) == nindices
             value = conv_to_list(value)
             assert len(value) == ncols - nindices
-            self.add_row(key + value)
+            self._add_row(key + value)
 
     def to_dict(self):
         """
         Return a dictionary with the DataFrame data.
         """
         d = {}
-        nindices = self.get_num_indices()
+        nindices = self._get_num_indices()
         if nindices == 0:
             raise ValueError("cannot convert to dictionary without an index")
         data = zip(
-            *[self.get_column(header).to_list() for header in self.get_headers()]
+            *[self._get_column(header).to_list() for header in self._get_headers()]
         )
         for row in data:
             if nindices == 1:
@@ -302,13 +302,15 @@ class DataFrame(BaseClass):
         Args:
             skip_index: set to True to retrieve only values.
         """
-        if self.get_num_cols() > 1:
-            lst = [tuple(self.get_row_by_index(i)) for i in range(self.get_num_rows())]
+        if self._get_num_cols() > 1:
+            lst = [
+                tuple(self._get_row_by_index(i)) for i in range(self._get_num_rows())
+            ]
         else:
-            lst = [self.get_row_by_index(i)[0] for i in range(self.get_num_rows())]
+            lst = [self._get_row_by_index(i)[0] for i in range(self._get_num_rows())]
         if skip_index:
-            ncols = self.get_num_cols()
-            nindices = self.get_num_indices()
+            ncols = self._get_num_cols()
+            nindices = self._get_num_indices()
             if ncols - nindices == 1:
                 return [row[-1] for row in lst]
             else:
@@ -321,20 +323,20 @@ class DataFrame(BaseClass):
         Return a pandas.DataFrame with the DataFrame data.
         """
         assert pd is not None
-        nindices = self.get_num_indices()
-        headers = self.get_headers()
+        nindices = self._get_num_indices()
+        headers = self._get_headers()
         columns = {
-            header: self.get_column(header).to_list() for header in headers[nindices:]
+            header: self._get_column(header).to_list() for header in headers[nindices:]
         }
         index_names = headers[:nindices]
         if len(index_names) >= 2 and multi_index is True:
             index = pd.MultiIndex.from_arrays(
-                [self.get_column(header).to_list() for header in index_names],
+                [self._get_column(header).to_list() for header in index_names],
                 names=index_names,
             )
             return pd.DataFrame(columns, index=index)
         else:
-            index = zip(*[self.get_column(header).to_list() for header in index_names])
+            index = zip(*[self._get_column(header).to_list() for header in index_names])
             index = [key if len(key) > 1 else key[0] for key in index]
             if index == []:
                 return pd.DataFrame(columns, index=None)
@@ -442,20 +444,20 @@ class DataFrame(BaseClass):
         return cls(None, None, _impl=df_ref)
 
     # Aliases
-    addColumn = add_column
-    addRow = add_row
+    _addColumn = _add_column
+    _addRow = _add_row
+    _getColumn = _get_column
+    _getHeaders = _get_headers
+    _getNumCols = _get_num_cols
+    _getNumIndices = _get_num_indices
+    _getNumRows = _get_num_rows
+    _getRow = _get_row
+    _getRowByIndex = _get_row_by_index
+    _setColumn = _set_column
+    _setValues = _set_values
     fromDict = from_dict
     fromNumpy = from_numpy
     fromPandas = from_pandas
-    getColumn = get_column
-    getHeaders = get_headers
-    getNumCols = get_num_cols
-    getNumIndices = get_num_indices
-    getNumRows = get_num_rows
-    getRow = get_row
-    getRowByIndex = get_row_by_index
-    setColumn = set_column
-    setValues = set_values
     toDict = to_dict
     toList = to_list
     toPandas = to_pandas

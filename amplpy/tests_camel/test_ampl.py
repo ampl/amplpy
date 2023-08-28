@@ -13,12 +13,12 @@ class TestAMPL(TestBase.TestBase):
         from amplpy import Set, Parameter, Variable, Constraint, Objective
 
         ampl = self.ampl
-        self.assertEqual(ampl.getData("1..3").getNumRows(), 3)
-        self.assertEqual(ampl.getData("1..3").getNumCols(), 1)
+        self.assertEqual(ampl.getData("1..3")._getNumRows(), 3)
+        self.assertEqual(ampl.getData("1..3")._getNumCols(), 1)
         ampl.eval("set X := 1..10;")
         self.assertTrue(isinstance(ampl.getEntity("X"), amplpy.Entity))
-        self.assertEqual(ampl.getEntity("X").getValues().getNumRows(), 10)
-        self.assertEqual(ampl.getData("X").getNumRows(), 10)
+        self.assertEqual(ampl.getEntity("X").getValues()._getNumRows(), 10)
+        self.assertEqual(ampl.getData("X")._getNumRows(), 10)
 
         with self.assertRaises(RuntimeError):
             self.assertRaises(ampl.getData("XXX"))

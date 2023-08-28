@@ -58,11 +58,11 @@ def main(argc, argv):
     highcutoff = 0.1
 
     # Get the variable representing the (relaxed) solution vector
-    holdvalues = hold.get_values()
+    holdvalues = hold.get_values().to_list()
     to_hold = []
     # For each asset, if it was held by more than the highcutoff,
     # forces it in the model, if less than lowcutoff, forces it out
-    for value in holdvalues.get_column("hold.val"):
+    for _, value in holdvalues:
         if value < lowcutoff:
             to_hold.append(0)
         elif value > highcutoff:

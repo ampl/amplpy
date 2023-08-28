@@ -14,12 +14,12 @@ class TestAMPL(TestBase.TestBase):
         from amplpy import Set, Parameter, Variable, Constraint, Objective
 
         ampl = self.ampl
-        self.assertEqual(ampl.get_data("1..3").get_num_rows(), 3)
-        self.assertEqual(ampl.get_data("1..3").get_num_cols(), 1)
+        self.assertEqual(ampl.get_data("1..3")._get_num_rows(), 3)
+        self.assertEqual(ampl.get_data("1..3")._get_num_cols(), 1)
         ampl.eval("set X := 1..10;")
         self.assertTrue(isinstance(ampl.get_entity("X"), amplpy.Entity))
-        self.assertEqual(ampl.get_entity("X").get_values().get_num_rows(), 10)
-        self.assertEqual(ampl.get_data("X").get_num_rows(), 10)
+        self.assertEqual(ampl.get_entity("X").get_values()._get_num_rows(), 10)
+        self.assertEqual(ampl.get_data("X")._get_num_rows(), 10)
 
         with self.assertRaises(RuntimeError):
             ampl.get_data("XXX")
@@ -65,15 +65,15 @@ class TestAMPL(TestBase.TestBase):
         )
         df = ampl.get_data("p1", "p2", "p3")
         df = ampl.get_data("p1", "p2", "p3")
-        self.assertEqual(list(df.get_column("p1")), [i for i in range(1, 10 + 1)])
-        self.assertEqual(list(df.get_column("p2")), [2 * i for i in range(1, 10 + 1)])
-        self.assertEqual(list(df.get_column("p3")), [3 * i for i in range(1, 10 + 1)])
-        self.assertEqual(df.get_headers(), ("index0", "p1", "p2", "p3"))
+        self.assertEqual(list(df._get_column("p1")), [i for i in range(1, 10 + 1)])
+        self.assertEqual(list(df._get_column("p2")), [2 * i for i in range(1, 10 + 1)])
+        self.assertEqual(list(df._get_column("p3")), [3 * i for i in range(1, 10 + 1)])
+        self.assertEqual(df._get_headers(), ("index0", "p1", "p2", "p3"))
         df = ampl.get_data("1..10", "p1", "p2", "p3")
-        self.assertEqual(list(df.get_column("p1")), [i for i in range(1, 10 + 1)])
-        self.assertEqual(list(df.get_column("p2")), [2 * i for i in range(1, 10 + 1)])
-        self.assertEqual(list(df.get_column("p3")), [3 * i for i in range(1, 10 + 1)])
-        self.assertEqual(df.get_headers(), ("1 .. 10", "p1", "p2", "p3"))
+        self.assertEqual(list(df._get_column("p1")), [i for i in range(1, 10 + 1)])
+        self.assertEqual(list(df._get_column("p2")), [2 * i for i in range(1, 10 + 1)])
+        self.assertEqual(list(df._get_column("p3")), [3 * i for i in range(1, 10 + 1)])
+        self.assertEqual(df._get_headers(), ("1 .. 10", "p1", "p2", "p3"))
         with self.assertRaises(TypeError):
             ampl.get_data("1..11", "p1", "p2", "p3")
 

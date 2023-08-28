@@ -49,9 +49,7 @@ def main(argc, argv):
     ampl.solve()
     # Calibrate the efficient frontier range
     minret = portfolio_return.value()
-    values = average_return.get_values()
-    col = values.get_column("averret")
-    maxret = max(col)
+    maxret = ampl.get_value("max {s in stockall} averret[s]")
     stepsize = (maxret - minret) / steps
     returns = [None] * steps
     variances = [None] * steps

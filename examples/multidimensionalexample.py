@@ -24,26 +24,14 @@ def main(argc, argv):
     ampl.eval("param cost {LINKS} >= 0; param capacity {LINKS} >= 0;")
     ampl.eval("data; set CITIES := PITT NE SE BOS EWR BWI ATL MCO;")
 
-    cost = [2.5, 3.5, 1.7, 0.7, 1.3, 1.3, 0.8, 0.2, 2.1]
-    capacity = [250, 250, 100, 100, 100, 100, 100, 100, 100]
-    links_from = ["PITT", "PITT", "NE", "NE", "NE", "SE", "SE", "SE", "SE"]
-    links_to = ["NE", "SE", "BOS", "EWR", "BWI", "EWR", "BWI", "ATL", "MCO"]
-
-    # Using amplpy.DataFrame
-    df = DataFrame(("LINKSFrom", "LINKSTo"), ("cost", "capacity"))
-    df.set_column("LINKSFrom", links_from)
-    df.set_column("LINKSTo", links_to)
-    df.set_column("cost", cost)
-    df.set_column("capacity", capacity)
-    print(df)
-
-    ampl.set_data(df, "LINKS")
-    ampl.display("LINKS")
-
-    # Using pandas.DataFrame (recommended)
+    # Using a pandas.DataFrame:
     df = pd.DataFrame(
-        list(zip(links_from, links_to, cost, capacity)),
-        columns=["LINKSFrom", "LINKSTo", "cost", "capacity"],
+        {
+            "LINKSFrom": ["PITT", "PITT", "NE", "NE", "NE", "SE", "SE", "SE", "SE"],
+            "LINKSTo": ["NE", "SE", "BOS", "EWR", "BWI", "EWR", "BWI", "ATL", "MCO"],
+            "cost": [2.5, 3.5, 1.7, 0.7, 1.3, 1.3, 0.8, 0.2, 2.1],
+            "capacity": [250, 250, 100, 100, 100, 100, 100, 100, 100],
+        }
     ).set_index(["LINKSFrom", "LINKSTo"])
     print(df)
 
