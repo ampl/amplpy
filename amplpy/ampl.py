@@ -304,14 +304,27 @@ class AMPL(object):
         """
         return self._impl.isRunning()
 
-    def solve(self):
+    def solve(self, problem=None, verbose=True):
         """
-        Solve the current model.
+        Solve the current model or the problem specified by ``problem``.
+
+        Args:
+            problem: Name of the problem to solve.
+
+            verbose: Display verbose output if set to ``True``.
 
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        self._impl.solve()
+        if not verbose:
+            if problem is None:
+                self.get_output("solve;")
+            else:
+                self.get_output(f"solve {problem};")
+        elif problem is not None:
+            self.eval(f"solve {problem};")
+        else:
+            self._impl.solve()
 
     def cd(self, path=None):
         """

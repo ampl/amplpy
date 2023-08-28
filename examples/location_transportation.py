@@ -53,7 +53,7 @@ def main(argc, argv):
         print(f"Iteration {num_cuts}")
         ampl.display("build")
         # Solve the subproblem.
-        ampl.eval("solve Sub;")
+        ampl.solve("Sub")
         result = ship_cost.result()
         if result == "infeasible":
             # Add a feasibility cut.
@@ -77,7 +77,7 @@ def main(argc, argv):
             break
         # Re-solve the master problem.
         print("RE-SOLVING MASTER PROBLEM")
-        ampl.eval("solve Master;")
+        ampl.solve("Master")
         if ampl.solve_result != "solved":
             raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
         # Copy the data from the Build variable used in the master problem
