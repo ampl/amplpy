@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.12.0 - 2023-08-XX
 - Upgrade libampl to 2.2.0-20230825.
 - Use x-ampl by default if available.
+- Add AMPL.solve_result property.
+- Add arguments to AMPL.solve to specify problem name and verbosity.
+- Allow passing pandas.Series to AMPL.set_data and Parameter.set_values.
+- [Breaking] Drop Python 3.5 compatibility.
+- [Breaking] Deprecate direct access methods to amplpy.DataFrame. Deprecated methods are still available with _ prefix.
 
 ## 0.11.2 - 2023-07-11
 - [Breaking] Cast floats to integers whenever possible.
