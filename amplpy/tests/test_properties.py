@@ -51,6 +51,14 @@ class TestProperties(TestBase.TestBase):
         ampl.option["solver"] = "gurobi"
         self.assertEqual(ampl.option["solver"], ampl.get_option("solver"))
 
+    def test_solve_result(self):
+        ampl = self.ampl
+        self.assertEqual(ampl.solve_result, "?")
+        self.assertEqual(ampl.solve_result_num, -1)
+        ampl.solve()
+        self.assertEqual(ampl.solve_result, "solved")
+        self.assertEqual(ampl.solve_result_num, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

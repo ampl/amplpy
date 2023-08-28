@@ -839,9 +839,51 @@ class AMPL(object):
     def solve_result(self):
         """
         Return solve_result value, which indicates if the problem has been solved.
-        Possible values: "solved", "solved?", "infeasible", "unbounded", "limit", "failure".
+
+        +---------+-----------+---------------------------------------------+
+        | Number  |  String   |           Interpretation                    |
+        +=========+===========+=============================================+
+        |    0-99 |  solved   | Optimal solution found                      |
+        +---------+-----------+---------------------------------------------+
+        | 100-199 |  solved?  | Optimal solution indicated, but error likely|
+        +---------+-----------+---------------------------------------------+
+        | 200-299 | infeasible| Constraints cannot be satisfied             |
+        +---------+-----------+---------------------------------------------+
+        | 300-399 | unbounded | Objective can be improved without limit     |
+        +---------+-----------+---------------------------------------------+
+        | 400-499 |   limit   | Stopped by a limit that you set (such as on |
+        |         |           | iterations)                                 |
+        +---------+-----------+---------------------------------------------+
+        | 500-599 |  failure  | Stopped by an error condition in the solver |
+        |         |           | routines                                    |
+        +---------+-----------+---------------------------------------------+
         """
         return self.get_value("solve_result")
+
+    @property
+    def solve_result_num(self):
+        """
+        Return solve_result_num value, which indicates if the problem has been solved.
+
+        +---------+-----------+---------------------------------------------+
+        | Number  |  String   |           Interpretation                    |
+        +=========+===========+=============================================+
+        |    0-99 |  solved   | Optimal solution found                      |
+        +---------+-----------+---------------------------------------------+
+        | 100-199 |  solved?  | Optimal solution indicated, but error likely|
+        +---------+-----------+---------------------------------------------+
+        | 200-299 | infeasible| Constraints cannot be satisfied             |
+        +---------+-----------+---------------------------------------------+
+        | 300-399 | unbounded | Objective can be improved without limit     |
+        +---------+-----------+---------------------------------------------+
+        | 400-499 |   limit   | Stopped by a limit that you set (such as on |
+        |         |           | iterations)                                 |
+        +---------+-----------+---------------------------------------------+
+        | 500-599 |  failure  | Stopped by an error condition in the solver |
+        |         |           | routines                                    |
+        +---------+-----------+---------------------------------------------+
+        """
+        return self.get_value("solve_result_num")
 
     def _start_recording(self, filename):
         """

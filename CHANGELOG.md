@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.12.0 - 2023-08-XX
 - Upgrade libampl to 2.2.0-20230825.
 - Use x-ampl by default if available.
-- Add AMPL.solve_result property.
+- Add properties AMPL.solve_result/AMPL.solve_result_num.
 - Add arguments to AMPL.solve to specify problem name and verbosity.
 - Allow passing pandas.Series to AMPL.set_data and Parameter.set_values.
 - Add AMPL.snapshot, and implement AMPL.export_model/AMPL.export_data using it.
