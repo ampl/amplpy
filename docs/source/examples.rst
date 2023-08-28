@@ -11,7 +11,7 @@ distribution, and show the basic usage of the Python API.
 Example 1: First steps
 ----------------------
 
-:download:`firstexample.py <../../examples/firstexample.py>`
+:download:`first_example.py <../../examples/first_example.py>`
 
 This example shows how to
 
@@ -24,7 +24,7 @@ This example shows how to
 Example 2: Get and set AMPL options
 -----------------------------------
 
-:download:`optionsexample.py <../../examples/optionsexample.py>`
+:download:`options_example.py <../../examples/options_example.py>`
 
 This example shows how to:
 
@@ -34,7 +34,7 @@ This example shows how to:
 Example 3: Assign all data to a model and solve it
 --------------------------------------------------
 
-:download:`dietmodel.py <../../examples/dietmodel.py>`
+:download:`diet_model.py <../../examples/diet_model.py>`
 
 This example shows how to:
 
@@ -43,7 +43,7 @@ This example shows how to:
 Example 4: Build an efficient frontier
 --------------------------------------
 
-:download:`efficientfrontier.py <../../examples/efficientfrontier.py>`
+:download:`efficient_frontier.py <../../examples/efficient_frontier.py>`
 
 This example shows how to:
 
@@ -53,7 +53,7 @@ This example shows how to:
 Example 5: Simple heuristic
 ---------------------------
 
-:download:`trackingmodel.py <../../examples/trackingmodel.py>`
+:download:`tracking_model.py <../../examples/tracking_model.py>`
 
 This example shows how to:
 

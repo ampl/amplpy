@@ -8,44 +8,44 @@ class TestExamples(unittest.TestCase):
     """Test examples."""
 
     def test_first_example(self):
-        import firstexample
+        import first_example
 
-        firstexample.main(1, [None])
+        first_example.main(1, [None])
 
     def test_options_example(self):
-        import optionsexample
+        import options_example
 
-        optionsexample.main(1, [None])
+        options_example.main(1, [None])
 
     def test_dataframe_example(self):
-        import dataframeexample
+        import dataframe_example
 
-        dataframeexample.main(1, [None])
+        dataframe_example.main(1, [None])
 
     def test_multidimensional_example(self):
-        import multidimensionalexample
+        import multidimensional_example
 
-        multidimensionalexample.main(1, [None])
+        multidimensional_example.main(1, [None])
 
     def test_dietmodel_example(self):
-        import dietmodel
+        import diet_model
 
-        dietmodel.main(1, [None])
+        diet_model.main(1, [None])
 
     def test_efficient_frontier_example(self):
-        import efficientfrontier
+        import efficient_frontier
 
-        efficientfrontier.main(1, [None])
+        efficient_frontier.main(1, [None])
 
     def test_trackingmodel_example(self):
-        import trackingmodel
+        import tracking_model
 
-        trackingmodel.main(1, [None])
+        tracking_model.main(1, [None])
 
     def test_location_transportation(self):
-        import locationtransportation
+        import location_transportation
 
-        locationtransportation.main(1, [None])
+        location_transportation.main(1, [None])
 
 
 if __name__ == "__main__":

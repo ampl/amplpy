@@ -72,7 +72,7 @@ There are many more notebooks with examples available on the `AMPL Model Colabor
 Complete listing
 ----------------
 
-This is the complete listing of the example. You can download it from: :download:`dietmodel.py <../../examples/dietmodel.py>`. A simplified version using a data file instead of Pandas can be download from: :download:`firstexample.py <../../examples/firstexample.py>`. Please note that, for clarity of presentation,
+This is the complete listing of the example. You can download it from: :download:`diet_model.py <../../examples/diet_model.py>`. A simplified version using a data file instead of Pandas can be download from: :download:`first_example.py <../../examples/first_example.py>`. Please note that, for clarity of presentation,
 all the code in the examples below does not include exception handling.
 
 .. code-block:: python
@@ -191,7 +191,7 @@ Where ``prepare_data`` is the following function that returns three ``pandas.Dat
         ).set_index("NUTR")
 
         amt_df = pd.DataFrame(
-            np.matrix(
+            np.array(
                 [
                     [60, 8, 8, 40, 15, 70, 25, 60],
                     [20, 0, 10, 40, 35, 30, 50, 20],

@@ -35,7 +35,7 @@ def prepare_data():
     ).set_index("NUTR")
 
     amt_df = pd.DataFrame(
-        np.matrix(
+        np.array(
             [
                 [60, 8, 8, 40, 15, 70, 25, 60],
                 [20, 0, 10, 40, 35, 30, 50, 20],
