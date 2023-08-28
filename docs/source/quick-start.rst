@@ -108,7 +108,7 @@ all the code in the examples below does not include exception handling.
     # Solve
     ampl.solve()
     # Stop if the model was not solved
-    assert ampl.get_value("solve_result") == "solved"
+    assert ampl.solve_result == "solved"
 
     # Get objective entity by AMPL name
     totalcost = ampl.get_objective("Total_Cost")
@@ -123,7 +123,7 @@ all the code in the examples below does not include exception handling.
     # Resolve and display objective
     ampl.solve()
     # Stop if the model was not solved
-    assert ampl.get_value("solve_result") == "solved"
+    assert ampl.solve_result == "solved"
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
@@ -145,7 +145,7 @@ all the code in the examples below does not include exception handling.
     # Resolve and display objective
     ampl.solve()
     # Stop if the model was not solved
-    assert ampl.get_value("solve_result") == "solved"
+    assert ampl.solve_result == "solved"
     print("New objective value:", totalcost.value())
 
     # Get the values of the variable Buy in a pandas.DataFrame object
@@ -385,7 +385,7 @@ To solve the currently loaded problem instance, it is sufficient to issue the fo
    ampl.solve()
 
    # Stop if the model was not solved
-   assert ampl.get_value("solve_result") == "solved"
+   assert ampl.solve_result == "solved"
 
 Get an AMPL entity in the programming environment (get objective value)
 -----------------------------------------------------------------------

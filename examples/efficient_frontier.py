@@ -70,9 +70,10 @@ def main(argc, argv):
         # Solve the problem
         ampl.solve()
         # Check if the problem was solved successfully
-        solve_result = ampl.get_value("solve_result")
-        if solve_result != "solved":
-            raise Exception("Failed to solve (solve_result: {})".format(solve_result))
+        if ampl.solve_result != "solved":
+            raise Exception(
+                "Failed to solve (solve_result: {})".format(ampl.solve_result)
+            )
         print("QMIP result = {:g}".format(variance.value()))
         # Store data of corrent frontier point
         returns[i] = maxret - (i - 1) * stepsize

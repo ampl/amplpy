@@ -119,7 +119,7 @@ def main(argc, argv):
 
     # Resolve and display objective
     ampl.solve()
-    assert ampl.get_value("solve_result") == "solved"
+    assert ampl.solve_result == "solved"
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
@@ -140,7 +140,7 @@ def main(argc, argv):
 
     # Resolve and display objective
     ampl.solve()
-    assert ampl.get_value("solve_result") == "solved"
+    assert ampl.solve_result == "solved"
     print("New objective value:", totalcost.value())
 
     # Get the values of the variable Buy in a pandas.DataFrame object

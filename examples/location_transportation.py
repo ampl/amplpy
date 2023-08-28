@@ -78,9 +78,10 @@ def main(argc, argv):
         # Re-solve the master problem.
         print("RE-SOLVING MASTER PROBLEM")
         ampl.eval("solve Master;")
-        solve_result = ampl.get_value("solve_result")
-        if solve_result != "solved":
-            raise Exception("Failed to solve (solve_result: {})".format(solve_result))
+        if ampl.solve_result != "solved":
+            raise Exception(
+                "Failed to solve (solve_result: {})".format(ampl.solve_result)
+            )
         # Copy the data from the Build variable used in the master problem
         # to the build parameter used in the subproblem.
         build_param.set_values(build_var.get_values())

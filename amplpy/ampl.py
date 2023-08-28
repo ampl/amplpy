@@ -806,6 +806,14 @@ class AMPL(object):
             else:
                 raise
 
+    @property
+    def solve_result(self):
+        """
+        Return solve_result value, which indicates if the problem has been solved.
+        Possible values: "solved", "solved?", "infeasible", "unbounded", "limit", "failure".
+        """
+        return self.get_value("solve_result")
+
     def _start_recording(self, filename):
         """
         Start recording the session to a file for debug purposes.
