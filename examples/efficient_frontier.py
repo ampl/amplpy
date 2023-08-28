@@ -61,7 +61,7 @@ def main(argc, argv):
         # Relax integrality
         ampl.set_option("relax_integrality", True)
         ampl.solve()
-        print("QP result = {variance.value():g}")
+        print(f"QP result = {variance.value():g}")
         # Adjust included stocks
         ampl.eval("let stockrun:={i in stockrun:weights[i]>0};")
         ampl.eval("let stockopall:={i in stockrun:weights[i]>0.5};")
