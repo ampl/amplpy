@@ -312,7 +312,7 @@ class TestEntities(TestBase.TestBase):
         ampl.eval("param y{1..3};")
         ampl.getParameter("y").setValues([inf] * 3)
         for i in range(3):
-            self.assertEqual(ampl.getValue("y[{}]".format(i + 1)), inf)
+            self.assertEqual(ampl.getValue(f"y[{i+1}]"), inf)
 
     def testObjective(self):
         loadDietModel(self.ampl)

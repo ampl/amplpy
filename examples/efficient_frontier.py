@@ -54,14 +54,14 @@ def main(argc, argv):
     returns = [None] * steps
     variances = [None] * steps
     for i in range(steps):
-        print("Solving for return = {:g}".format(maxret - i * stepsize))
+        print(f"Solving for return = {maxret - i * stepsize:g}")
         # Set target return to the desired point
         target_return.set(maxret - i * stepsize)
         ampl.eval("let stockopall:={};let stockrun:=stockall;")
         # Relax integrality
         ampl.set_option("relax_integrality", True)
         ampl.solve()
-        print("QP result = {:g}".format(variance.value()))
+        print("QP result = {variance.value():g}")
         # Adjust included stocks
         ampl.eval("let stockrun:={i in stockrun:weights[i]>0};")
         ampl.eval("let stockopall:={i in stockrun:weights[i]>0.5};")
@@ -71,10 +71,8 @@ def main(argc, argv):
         ampl.solve()
         # Check if the problem was solved successfully
         if ampl.solve_result != "solved":
-            raise Exception(
-                "Failed to solve (solve_result: {})".format(ampl.solve_result)
-            )
-        print("QMIP result = {:g}".format(variance.value()))
+            raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
+        print(f"QMIP result = {variance.value():g}")
         # Store data of corrent frontier point
         returns[i] = maxret - (i - 1) * stepsize
         variances[i] = variance.value()
@@ -82,7 +80,7 @@ def main(argc, argv):
     # Display efficient frontier points
     print("RETURN    VARIANCE")
     for i in range(steps):
-        print("{:-6f}  {:-6f}".format(returns[i], variances[i]))
+        print(f"{returns[i]:-6f}  {variances[i]:-6f}")
 
 
 if __name__ == "__main__":

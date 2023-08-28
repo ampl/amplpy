@@ -108,7 +108,7 @@ class TestAMPL(TestBase.TestBase):
 
             def output(self, kind, msg):
                 if kind == amplpy.Kind.DISPLAY:
-                    print("Display: |{}|".format(msg))
+                    print(f"Display: |{msg}|")
                 self.lastmsg = msg
 
         class MyErrorHandler(amplpy.ErrorHandler):

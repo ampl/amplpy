@@ -4,9 +4,9 @@
 def display_error_message(exception, error=True):
     msg = "\t" + str(exception).replace("\n", "\n\t")
     if error:
-        print("Error:\n{:s}".format(msg))
+        print(f"Error:\n{msg}")
     else:
-        print("Warning:\n{:s}".format(msg))
+        print(f"Warning:\n{msg}")
 
 
 class ErrorHandler:

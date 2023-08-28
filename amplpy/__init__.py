@@ -74,5 +74,5 @@ def _list_aliases():
                 continue
             cammel_method = camelize(method, False)
             if cammel_method != method:
-                print("\t{} = {}".format(cammel_method, method))
+                print(f"\t{cammel_method} = {method}")
                 # setattr(cls, cammel_method, getattr(cls, method))

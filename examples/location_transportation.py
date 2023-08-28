@@ -50,7 +50,7 @@ def main(argc, argv):
     num_cuts = 0
     while True:
         num_cuts += 1
-        print("Iteration {}".format(num_cuts))
+        print(f"Iteration {num_cuts}")
         ampl.display("build")
         # Solve the subproblem.
         ampl.eval("solve Sub;")
@@ -79,13 +79,11 @@ def main(argc, argv):
         print("RE-SOLVING MASTER PROBLEM")
         ampl.eval("solve Master;")
         if ampl.solve_result != "solved":
-            raise Exception(
-                "Failed to solve (solve_result: {})".format(ampl.solve_result)
-            )
+            raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
         # Copy the data from the Build variable used in the master problem
         # to the build parameter used in the subproblem.
         build_param.set_values(build_var.get_values())
-    print("\nProcedure completed in {} iterations\n".format(num_cuts))
+    print(f"\nProcedure completed in {num_cuts} iterations\n")
     ampl.display("Ship")
 
 

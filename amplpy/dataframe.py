@@ -374,10 +374,10 @@ class DataFrame(BaseClass):
         columns = zip(*lst_columns)
 
         if index_names is None:
-            index_names = ["index{}".format(i) for i in range(nindices)]
+            index_names = [f"index{i}" for i in range(nindices)]
 
         if column_names is None:
-            column_names = ["value{}".format(i) for i in range(ncolumns)]
+            column_names = [f"value{i}" for i in range(ncolumns)]
 
         index = [(index_names[i], cindex) for i, cindex in enumerate(zip(*lst_index))]
         columns = [
@@ -411,7 +411,7 @@ class DataFrame(BaseClass):
             keys = df.index.tolist()
         else:
             keys = [(key,) for key in df.index]
-        index = [("index{}".format(i), cindex) for i, cindex in enumerate(zip(*keys))]
+        index = [(f"index{i}", cindex) for i, cindex in enumerate(zip(*keys))]
         if index_names is not None:
             assert len(index) == len(index_names)
             for i in range(len(index)):
@@ -430,9 +430,7 @@ class DataFrame(BaseClass):
             if len(data.shape) == 1:
                 columns = [("value", data.tolist())]
             elif len(data.shape) == 2:
-                columns = [
-                    ("c{}".format(i), col) for i, col in enumerate(zip(*data.tolist()))
-                ]
+                columns = [(f"c{i}", col) for i, col in enumerate(zip(*data.tolist()))]
             else:
                 raise TypeError
         else:

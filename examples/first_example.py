@@ -32,7 +32,7 @@ def main(argc, argv):
     # Solve
     ampl.solve()
     if ampl.solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(ampl.solve_result))
+        raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
 
     # Get objective entity by AMPL name
     totalcost = ampl.get_objective("Total_Cost")
@@ -47,7 +47,7 @@ def main(argc, argv):
     # Resolve and display objective
     ampl.solve()
     if ampl.solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(ampl.solve_result))
+        raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
     print("New objective value:", totalcost.value())
 
     # Reassign data - all instances
@@ -58,7 +58,7 @@ def main(argc, argv):
     # Resolve and display objective
     ampl.solve()
     if ampl.solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(ampl.solve_result))
+        raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
     print("New objective value:", totalcost.value())
 
     # Get the values of the variable Buy in a dataframe object

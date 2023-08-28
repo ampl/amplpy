@@ -47,7 +47,7 @@ def main(argc, argv):
     # Solve the problem
     ampl.solve()
     if ampl.solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(ampl.solve_result))
+        raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
 
     objectives = list(obj for name, obj in ampl.get_objectives())
     assert objectives[0].value() == ampl.get_objective("cst").value()
@@ -78,7 +78,7 @@ def main(argc, argv):
     # Solve the (integer) problem
     ampl.solve()
     if ampl.solve_result != "solved":
-        raise Exception("Failed to solve (solve_result: {})".format(ampl.solve_result))
+        raise Exception(f"Failed to solve (solve_result: {ampl.solve_result})")
 
     print("QMIP objective value", ampl.get_objective("cst").value())
 

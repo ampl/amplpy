@@ -380,7 +380,7 @@ class TestEntities(TestBase.TestBase):
         ampl.eval("param y{1..3};")
         ampl.get_parameter("y").set_values([inf] * 3)
         for i in range(3):
-            self.assertEqual(ampl.get_value("y[{}]".format(i + 1)), inf)
+            self.assertEqual(ampl.get_value(f"y[{i+1}]"), inf)
 
     def test_objective(self):
         load_diet_model(self.ampl)

@@ -106,7 +106,7 @@ class AMPL(object):
             if str(exp).startswith("AMPL could not be started"):
                 print("*" * 79, file=sys.stderr)
                 for line in AMPL_NOT_FOUND_MESSAGE.split("\n"):
-                    print("* {:75} *".format(line), file=sys.stderr)
+                    print(f"* {line:75} *", file=sys.stderr)
                 print("*" * 79, file=sys.stderr)
             raise
         self._error_handler = None

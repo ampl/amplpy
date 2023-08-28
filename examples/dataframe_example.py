@@ -79,9 +79,8 @@ def main(argc, argv):
     ampl.solve()
 
     # Print out the result
-    print(
-        "Objective function value: {}".format(ampl.get_objective("Total_Cost").value())
-    )
+    objective_value = ampl.get_objective("Total_Cost").value()
+    print(f"Objective function value: {objective_value}")
 
     # Get the values of the variable Buy in a dataframe
     results = ampl.get_variable("Buy").get_values()

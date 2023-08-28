@@ -145,22 +145,20 @@ class Set(Entity):
                         if dimen == 1:
                             raise TypeError("Excepted string or real.")
                         else:
-                            raise ValueError(
-                                "Excepted tuple of arity {}.".format(dimen)
-                            )
+                            raise ValueError(f"Excepted tuple of arity {dimen}.")
 
                 values = [cast_row(row) for row in values]
                 if dimen == 1:
                     if any(isinstance(row, tuple) for row in values):
                         raise ValueError(
-                            "Trying to assign tuples to set of arity {}.".format(dimen)
+                            f"Trying to assign tuples to set of arity {dimen}."
                         )
                 else:
                     if any(
                         not isinstance(row, tuple) or len(row) != dimen
                         for row in values
                     ):
-                        raise ValueError("Expected tuples of arity {}.".format(dimen))
+                        raise ValueError(f"Expected tuples of arity {dimen}.")
                 self._impl.setValuesTuples(values, len(values))
         else:
             Entity.set_values(self, values)

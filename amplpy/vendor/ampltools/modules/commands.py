@@ -64,7 +64,7 @@ def _main():
     try:
         _commands(sys.argv)
     except Exception as e:
-        print("Error: {}".format(e), file=sys.stderr)
+        print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 
@@ -112,7 +112,7 @@ def _commands(args):
         load_modules()
         p = subprocess.run(" ".join(args), shell=True)
         if p.returncode != 0:
-            raise Exception("Exit code {}".format(p.returncode))
+            raise Exception(f"Exit code {p.returncode}")
     elif command == "activate":
         if len(args) != 1:
             raise Exception(ERROR + usage)

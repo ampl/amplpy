@@ -134,12 +134,10 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
                         pass
                     if module in includes:
                         raise Exception(
-                            "AMPL module '{}' is not available. It is included in module '{}'.".format(
-                                module, bundle
-                            )
+                            f"AMPL module '{module}' is not available. It is included in module '{bundle}'."
                         )
                 else:
-                    raise Exception("AMPL module '{}' is not available.".format(module))
+                    raise Exception(f"AMPL module '{module}' is not available.")
 
     modules = _normalize_modules(modules=requirements, add_base=True)
     pip_cmd = [sys.executable, "-m", "pip", "install", "-i", "https://pypi.ampl.com"]
@@ -196,7 +194,7 @@ def _load_ampl_module(module_name):
     except:
         pass
     if module.__file__ is None or not os.path.isfile(module.__file__):
-        raise Exception("Module {} needs to be reinstalled.".format(module_name))
+        raise Exception(f"Module {module_name} needs to be reinstalled.")
     bin_dir, version = module.bin_dir, module.__version__
     return bin_dir, version
 
@@ -210,12 +208,12 @@ def _locate_modules(modules, verbose=False):
             bin_dir, _ = _load_ampl_module(module_name)
         except:
             if verbose:
-                print("Failed to import {}.".format(module_name))
+                print(f"Failed to import {module_name}.")
             continue
         if bin_dir not in path_modules:
             path_modules.append(bin_dir)
         if verbose:
-            print("Imported {}.".format(module_name))
+            print(f"Imported {module_name}.")
 
     return path_modules
 
@@ -244,7 +242,7 @@ def generate_requirements(modules=[]):
     for m in modules:
         try:
             _, version = _load_ampl_module(m)
-            requirements += "ampl_module_{}=={}\n".format(m, version)
+            requirements += f"ampl_module_{m}=={version}\n"
         except:
             pass
     return requirements
@@ -277,16 +275,16 @@ def _prepare_amplkey_env(verbose=False):
 
     def set_ampl_lic(ampl_lic):
         if verbose:
-            print('Setting {}="{}".'.format(VAR_AMPL_LICFILE, ampl_lic))
+            print(f'Setting {VAR_AMPL_LICFILE}="{ampl_lic}".')
         os.environ[VAR_AMPL_LICFILE] = ampl_lic
 
     def set_amplkey_runtime(amplkey_runtime):
         if verbose:
-            print('Setting {}="{}".'.format(VAR_AMPLKEY_RUNTIME_DIR, amplkey_runtime))
+            print(f'Setting {VAR_AMPLKEY_RUNTIME_DIR}="{amplkey_runtime}".')
         os.environ[VAR_AMPLKEY_RUNTIME_DIR] = amplkey_runtime
 
     if verbose and VAR_AMPL_LICFILE not in os.environ:
-        print('Found ampl.lic ("{}") but it is not writable.'.format(ampl_lic))
+        print(f'Found ampl.lic ("{ampl_lic}") but it is not writable.')
     if VAR_AMPLKEY_RUNTIME_DIR in os.environ:
         amplkey_dir = os.environ[VAR_AMPLKEY_RUNTIME_DIR]
     else:
@@ -400,7 +398,7 @@ def find(filename):
         full_path = os.path.join(p, filename + ".exe")
         if os.path.isfile(full_path):
             return full_path
-    raise FileNotFoundError("Could not find {} in any AMPL module.".format(filename))
+    raise FileNotFoundError(f"Could not find {filename} in any AMPL module.")
 
 
 def activate_license(uuid, verbose=False):

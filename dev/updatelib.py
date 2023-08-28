@@ -6,7 +6,7 @@ import shutil
 import tempfile
 
 VERSION = "nightly"
-API_URL = "https://portal.ampl.com/dl/API/future/{}/libampl.zip".format(VERSION)
+API_URL = f"https://portal.ampl.com/dl/API/future/{VERSION}/libampl.zip"
 ARCHS = ["amd64", "ppc64le", "aarch64"]
 
 
@@ -62,7 +62,7 @@ def updatelib(package, archs):
 
     # print('wrapper:')
     # for filename in os.listdir(wrapper_dir):
-    #     print('\t{}'.format(filename))
+    #     print(f'\t{filename}')
     #     shutil.copyfile(
     #         os.path.join(wrapper_dir, filename),
     #         os.path.join('amplpy', 'amplpython', 'cppinterface', filename)
@@ -80,9 +80,9 @@ def updatelib(package, archs):
         srcdir = os.path.join(libampldir, libname)
         dstdir = os.path.join(dstbase, libname)
         os.mkdir(dstdir)
-        print("{}:".format(libname))
+        print(f"{libname}:")
         for filename in os.listdir(srcdir):
-            print("\t{}".format(filename))
+            print(f"\t{filename}")
             shutil.copyfile(
                 os.path.join(srcdir, filename), os.path.join(dstdir, filename)
             )
