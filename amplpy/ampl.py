@@ -775,25 +775,41 @@ class AMPL(object):
     param = property(_param)
     option = property(_option)
 
-    def export_model(self, modfile):
+    def export_model(self, filename=""):
         """
         Create a .mod file with the model that has been loaded.
 
         Args:
-            modfile: Path to the file (Relative to the current working
+            filename: Path to the file (Relative to the current working
             directory or absolute).
         """
-        self._impl.exportModel(modfile)
+        return self.snapshot(filename, model=True, data=False, options=False)
 
-    def export_data(self, datfile):
+    def export_data(self, filename=""):
         """
         Create a .dat file with the data that has been loaded.
 
         Args:
-            datfile: Path to the file (Relative to the current working
+            filename: Path to the file (Relative to the current working
             directory or absolute).
         """
-        self._impl.exportData(datfile)
+        return self.snapshot(filename, model=False, data=True, options=False)
+
+    def snapshot(self, filename="", model=True, data=True, options=True):
+        """
+        Create a snapshot file that replicates the current session.
+
+        Args:
+            filename: Path to the file (Relative to the current working
+            directory or absolute).
+
+            model: include model declaration if set to ``True``.
+
+            data: include data declaration if set to ``True``.
+
+            options: include options if set to ``True``.
+        """
+        return self._impl.snapshot(model, data, options, filename)
 
     def write(self, filename, auxfiles=""):
         """

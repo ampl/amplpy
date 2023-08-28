@@ -231,9 +231,112 @@ class TestAMPL(TestBase.TestBase):
         data2 = self.tmpfile("data2.dat")
         ampl.export_model(model2)
         ampl.export_data(data2)
+
         ampl.reset()
         ampl.read(model2)
         ampl.read_data(data2)
+        self.assertEqual(
+            ampl.set["family"]["first"].get_values().to_list(), ["Gutierrez"]
+        )
+        self.assertEqual(
+            ampl.set["family"]["second"].get_values().to_list(), ["Montoro"]
+        )
+        self.assertEqual(ampl.set["A"].get_values().to_list(), [1, 2, 3, 4])
+
+    def test_snapshot(self):
+        ampl = self.ampl
+        model = self.str2file(
+            "model.mod",
+            """
+            set A;
+            set FLOOR;
+            set family {FLOOR};
+        """,
+        )
+        data = self.str2file(
+            "data.dat",
+            """
+            set A := 1, 2, 3, 4;
+            set FLOOR := 'first' 'second';
+            set family['first'] := 'Gutierrez';
+            set family['second'] := 'Montoro';
+        """,
+        )
+        ampl.read(model)
+        ampl.read_data(data)
+        snapshot_file = self.tmpfile("snapshot.run")
+        ampl.snapshot(snapshot_file)
+
+        ampl.reset()
+        ampl.read(snapshot_file)
+        self.assertEqual(
+            ampl.set["family"]["first"].get_values().to_list(), ["Gutierrez"]
+        )
+        self.assertEqual(
+            ampl.set["family"]["second"].get_values().to_list(), ["Montoro"]
+        )
+        self.assertEqual(ampl.set["A"].get_values().to_list(), [1, 2, 3, 4])
+
+    def test_export_nofiles(self):
+        ampl = self.ampl
+        model = self.str2file(
+            "model.mod",
+            """
+            set A;
+            set FLOOR;
+            set family {FLOOR};
+        """,
+        )
+        data = self.str2file(
+            "data.dat",
+            """
+            set A := 1, 2, 3, 4;
+            set FLOOR := 'first' 'second';
+            set family['first'] := 'Gutierrez';
+            set family['second'] := 'Montoro';
+        """,
+        )
+        ampl.read(model)
+        ampl.read_data(data)
+        model2 = ampl.export_model()
+        data2 = ampl.export_data()
+
+        ampl.reset()
+        ampl.eval(model2)
+        ampl.eval(data2)
+        self.assertEqual(
+            ampl.set["family"]["first"].get_values().to_list(), ["Gutierrez"]
+        )
+        self.assertEqual(
+            ampl.set["family"]["second"].get_values().to_list(), ["Montoro"]
+        )
+        self.assertEqual(ampl.set["A"].get_values().to_list(), [1, 2, 3, 4])
+
+    def test_snapshot_nofiles(self):
+        ampl = self.ampl
+        model = self.str2file(
+            "model.mod",
+            """
+            set A;
+            set FLOOR;
+            set family {FLOOR};
+        """,
+        )
+        data = self.str2file(
+            "data.dat",
+            """
+            set A := 1, 2, 3, 4;
+            set FLOOR := 'first' 'second';
+            set family['first'] := 'Gutierrez';
+            set family['second'] := 'Montoro';
+        """,
+        )
+        ampl.read(model)
+        ampl.read_data(data)
+        snapshot = ampl.snapshot()
+        ampl.reset()
+
+        ampl.eval(snapshot)
         self.assertEqual(
             ampl.set["family"]["first"].get_values().to_list(), ["Gutierrez"]
         )

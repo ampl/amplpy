@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Add AMPL.solve_result property.
 - Add arguments to AMPL.solve to specify problem name and verbosity.
 - Allow passing pandas.Series to AMPL.set_data and Parameter.set_values.
+- Add AMPL.snapshot, and implement AMPL.export_model/AMPL.export_data using it.
 - [Breaking] Drop Python 3.5 compatibility.
 - [Breaking] Deprecate direct access methods to amplpy.DataFrame. Deprecated methods are still available with _ prefix.
 
