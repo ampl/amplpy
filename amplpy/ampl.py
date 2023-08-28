@@ -451,7 +451,7 @@ class AMPL(object):
             AMPLException: if the data assignment procedure was not successful.
         """
         if not isinstance(data, DataFrame):
-            if pd is not None and isinstance(data, pd.DataFrame):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 data = DataFrame.from_pandas(data)
         if set_name is None:
             self._impl.setData(data._impl)
