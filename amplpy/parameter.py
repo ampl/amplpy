@@ -120,7 +120,7 @@ class Parameter(Entity):
             self._impl.setValuesPyDict(values)
         elif isinstance(values, DataFrame):
             Entity.set_values(self, values)
-        elif pd is not None and isinstance(values, pd.DataFrame):
+        elif pd is not None and isinstance(values, (pd.DataFrame, pd.Series)):
             Entity.set_values(self, values)
         elif isinstance(values, Iterable):
             if all(isinstance(value, str) for value in values):
