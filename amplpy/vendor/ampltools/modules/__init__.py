@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.6.0b1"
+__version__ = "0.6.0"
 
 from .amplpypi import (
     path,
