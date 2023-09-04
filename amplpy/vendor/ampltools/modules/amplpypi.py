@@ -2,6 +2,7 @@
 import sys
 import os
 import tempfile
+from .utils import cloud_platform_name
 
 
 def _normalize_modules(modules=[], add_base=False, skip_base=False):
@@ -402,6 +403,47 @@ def find(filename):
     raise FileNotFoundError(f"Could not find {filename} in any AMPL module.")
 
 
+def _activate_default_license(platform, retry=3):
+    from subprocess import getoutput
+    from requests import post
+    from time import sleep
+    from json import loads
+    from tempfile import mktemp, mkdtemp
+
+    url = "https://portal.ampl.com/v1/amplkey"
+    cmd = find("leasefingerprint") + " -s"
+    fp = getoutput(cmd)
+    for i in range(1, retry + 1):
+        response = post(url, data={"uuid": platform, "fingerprint": fp})
+        if response.status_code == 200:
+            break
+        elif i < retry:
+            print("Default license activation failed. Retrying...")
+            sleep(i)
+        else:
+            raise Exception("Failed to retrieve default license")
+    tmpfile = mktemp(".lic")
+    open(tmpfile, "w").write(loads(response.text)["license"])
+    os.environ["AMPL_LICFILE"] = tmpfile
+    os.environ["AMPL_LICFILE_DEFAULT"] = tmpfile
+    os.environ["AMPLKEY_RUNTIME_DIR"] = mkdtemp()
+
+
+def _handle_default_uuid():
+    if "AMPL_LICFILE" in os.environ:
+        return os.environ.get("AMPL_LICFILE", "") == os.environ.get(
+            "AMPL_LICFILE_DEFAULT", ""
+        )
+    if cloud_platform_name() != "colab":
+        return False
+    try:
+        _activate_default_license("colab")
+        return True
+    except:
+        print("Failed to activate default license.")
+        return False
+
+
 def activate_license(uuid, verbose=False):
     """
     Activate an AMPL license using the UUID.
@@ -410,9 +452,19 @@ def activate_license(uuid, verbose=False):
         verbose: show verbose output if True.
     """
     load_modules()
+    if uuid in (None, "", "default", "your-license-uuid"):
+        if _handle_default_uuid():
+            return True
+        else:
+            print(
+                "Please provide a valid license UUID. "
+                "You can use a free https://ampl.com/ce license."
+            )
+            raise Exception("Invalid license UUID.")
     exit_code = run_command(
         ["amplkey", "activate", "--uuid", uuid],
         verbose=verbose,
     )
     if exit_code != 0:
         raise Exception("The license activation failed.")
+    return True

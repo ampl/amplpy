@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Register magics globally by default.
 - Allow ampl_notebook to be used outside notebooks.
 - Load modules automatically after installing.
+- Allow modules.activate to work with default licenses.
 
 ## 0.5.6 - 2023-06-06
 - Adjust modules.find to find files, not modules.

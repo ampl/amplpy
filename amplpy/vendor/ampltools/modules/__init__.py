@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.5.6"
+__version__ = "0.6.0b1"
 
 from .amplpypi import (
     path,
@@ -15,5 +15,7 @@ from .amplpypi import (
     available_modules as available,
     generate_requirements as requirements,
 )
+
+from .utils import cloud_platform_name
 
 from .commands import _main

@@ -3,11 +3,10 @@ import os
 from .modules import activate as activate_license
 from .modules import install as install_modules
 from .modules import load as load_modules
+from .modules import cloud_platform_name
 from .utils import (
-    cloud_platform_name,
     register_magics,
     _is_valid_uuid,
-    _activate_default_license,
 )
 
 
@@ -69,23 +68,6 @@ def _ampl_license_cell(check_callback):
     display(widgets.VBox([header, widgets.HBox([uuid_input]), message, version]))
 
 
-def _handle_default_uuid():
-    if "AMPL_LICFILE" in os.environ:
-        return os.environ.get("AMPL_LICFILE", "") == os.environ.get(
-            "AMPL_LICFILE_DEFAULT", ""
-        )
-    if cloud_platform_name() != "colab":
-        return False
-    try:
-        from ampl_module_base import bin_dir
-
-        _activate_default_license(bin_dir, "colab")
-        return True
-    except:
-        print("Failed to activate default license.")
-        return False
-
-
 def ampl_notebook(
     modules=[],
     license_uuid=None,
@@ -128,7 +110,6 @@ def ampl_notebook(
     else:
         modules = []
 
-    using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
     open_modules = [
         "highs",
         "cbc",
@@ -145,8 +126,9 @@ def ampl_notebook(
     ]
     open_source_only = len(set(modules) - set(open_modules)) == 0
 
+    using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
     if using_default_license:
-        using_default_license = _handle_default_uuid()
+        using_default_license = activate_license(license_uuid)
     if using_default_license:
         if show_prompt and open_source_only:
             show_prompt = False
