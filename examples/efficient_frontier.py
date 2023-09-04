@@ -38,8 +38,7 @@ def main(argc, argv):
     ampl.read_table("assetstable")
     ampl.read_table("astrets")
 
-    portfolio_return = ampl.getVariable("portret")
-    average_return = ampl.get_parameter("averret")
+    portfolio_return = ampl.get_variable("portret")
     target_return = ampl.get_parameter("targetret")
     variance = ampl.get_objective("cst")
 
@@ -57,14 +56,14 @@ def main(argc, argv):
         print(f"Solving for return = {maxret - i * stepsize:g}")
         # Set target return to the desired point
         target_return.set(maxret - i * stepsize)
-        ampl.eval("let stockopall:={};let stockrun:=stockall;")
+        ampl.eval("let stockopall := {}; let stockrun := stockall;")
         # Relax integrality
         ampl.set_option("relax_integrality", True)
         ampl.solve()
         print(f"QP result = {variance.value():g}")
         # Adjust included stocks
-        ampl.eval("let stockrun:={i in stockrun:weights[i]>0};")
-        ampl.eval("let stockopall:={i in stockrun:weights[i]>0.5};")
+        ampl.eval("let stockrun := {i in stockrun:weights[i] > 0};")
+        ampl.eval("let stockopall := {i in stockrun:weights[i] > 0.5};")
         # Set integrality back
         ampl.set_option("relax_integrality", False)
         # Solve the problem
