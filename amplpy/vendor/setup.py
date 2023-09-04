@@ -24,7 +24,7 @@ def ls_dir(base_dir):
 
 setup(
     name="ampltools",
-    version="0.6.0",
+    version="0.6.1",
     description="AMPL Python Tools",
     long_description=__doc__,
     long_description_content_type="text/markdown",

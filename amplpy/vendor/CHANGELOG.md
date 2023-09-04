@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.1 - 2023-09-04
+- Fix issue with license activation when using ampl_notebook locally.
+
 ## 0.6.0 - 2023-09-04
 - Register magics globally by default.
 - Allow ampl_notebook to be used outside notebooks.

@@ -128,7 +128,7 @@ def ampl_notebook(
 
     using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
     if using_default_license:
-        using_default_license = activate_license(license_uuid)
+        using_default_license = activate_license("default")
     if using_default_license:
         if show_prompt and open_source_only:
             show_prompt = False
