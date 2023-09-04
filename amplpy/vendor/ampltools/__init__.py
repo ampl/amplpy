@@ -20,3 +20,10 @@ Please report any bugs at: https://github.com/ampl/amplpy
 
 For support/feedback go to https://discuss.ampl.com or e-mail <support@ampl.com>
 """
+
+try:
+    from IPython import get_ipython
+
+    register_magics(ampl_object="ampl", globals_=get_ipython().user_global_ns)
+except:
+    pass

@@ -94,27 +94,25 @@ def ampl_notebook(
     show_license=None,
     **kwargs,
 ):
-    from IPython import get_ipython
-
+    try:
+        from IPython import get_ipython
+    except:
+        get_ipython = lambda: None
     globals_ = kwargs.get("globals_", kwargs.get("g", None))
     if globals_ is None:
-        globals_ = get_ipython().user_global_ns
-    show_prompt = globals_ is not None
+        if get_ipython() is not None:
+            globals_ = get_ipython().user_global_ns
+        else:
+            globals_ = {}
+
+    show_prompt = get_ipython() is not None and globals_ is not None
     if show_license is None:
         show_license = True
 
     def instantiate_ampl(print_license=True):
-        from amplpy import AMPL, Environment
+        from amplpy import AMPL
 
-        if cloud_platform_name() == "colab":
-            try:
-                ampl = AMPL(Environment("", "x-ampl"))
-                ampl.option["show_context"] = 1
-            except Exception:
-                print("Failed to start x-ampl session. Using regular ampl instead.")
-                ampl = AMPL()
-        else:
-            ampl = AMPL()
+        ampl = AMPL()
         if print_license:
             version = ampl.option["version"]
             for row in version.split("\n"):
@@ -135,10 +133,13 @@ def ampl_notebook(
     open_modules = [
         "highs",
         "cbc",
+        "couenne",
+        "bonmin",
+        "ipopt",
         "coin",
-        "gecode",
-        "scip",
         "gcg",
+        "scip",
+        "gecode",
         "open",
         "plugins",
         "ampl",
@@ -184,5 +185,6 @@ def ampl_notebook(
             else:
                 instantiate_ampl(print_license=True)
 
-    register_magics(ampl_object="ampl", globals_=globals_)
+    if get_ipython() is not None:
+        register_magics(ampl_object="ampl", globals_=globals_)
     return globals_.get("ampl", None)
