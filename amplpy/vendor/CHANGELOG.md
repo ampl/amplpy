@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.6.0 - 2023-09-##
 - Register magics globally by default.
 - Allow ampl_notebook to be used outside notebooks.
+- Load modules automatically after installing.
 
 ## 0.5.6 - 2023-06-06
 - Adjust modules.find to find files, not modules.

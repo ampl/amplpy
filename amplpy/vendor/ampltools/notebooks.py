@@ -125,7 +125,6 @@ def ampl_notebook(
 
     if modules not in (None, []):
         install_modules(modules, reinstall=reinstall, verbose=verbose)
-        load_modules(modules, verbose=verbose)
     else:
         modules = []
 

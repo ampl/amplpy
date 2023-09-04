@@ -145,6 +145,7 @@ def install_modules(modules=[], reinstall=False, options=[], verbose=False):
         pip_cmd += ["--force-reinstall", "--upgrade", "--no-cache"]
     if run_command(pip_cmd + modules + options, verbose=verbose) != 0:
         raise Exception("Failed to install modules.")
+    load_modules(modules, verbose=verbose)
 
 
 def uninstall_modules(modules=[], options=[], verbose=False):

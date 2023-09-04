@@ -26,7 +26,7 @@ class TestLoad(TestBase.TestBase):
         self.assertEqual(initial_path, self.get_env_path_list())
 
         modules.install("highs", verbose=verbose)
-        self.assertEqual(initial_path, self.get_env_path_list())
+        self.assertNotEqual(initial_path, self.get_env_path_list())
         self.assertTrue(os.path.isfile(modules.find("highs")))
 
         modules.load("highs", verbose=verbose)
