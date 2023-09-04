@@ -68,6 +68,17 @@ def _main():
         sys.exit(1)
 
 
+def verbose_option(options):
+    for opt in options:
+        if opt.startswith("--"):
+            if opt == "--quiet":
+                return False
+        elif opt.startswith("-"):
+            if "q" in opt:
+                return False
+    return True
+
+
 def _commands(args):
     usage = USAGE.replace("$PACKAGE", "amplpy" if "amplpy" in args[0] else "ampltools")
     if len(args) < 2:
@@ -79,11 +90,15 @@ def _commands(args):
     elif command == "install":
         modules = [m for m in args if not m.startswith("-")]
         options = [o for o in args if o.startswith("-")]
-        install_modules(modules=modules, options=options, verbose=True)
+        install_modules(
+            modules=modules, options=options, verbose=verbose_option(options)
+        )
     elif command == "uninstall":
         modules = [m for m in args if not m.startswith("-")]
         options = [o for o in args if o.startswith("-")]
-        uninstall_modules(modules=modules, options=options, verbose=True)
+        uninstall_modules(
+            modules=modules, options=options, verbose=verbose_option(options)
+        )
     elif command in ("list", "installed"):
         names = installed_modules()
         if names == []:
