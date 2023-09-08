@@ -9,7 +9,7 @@ Installation
 The AMPL API can function as an add-on to any existing AMPL installation.
 If you do not yet have an AMPL installation on the computer where you will
 be working with the API, see our
-`AMPL Community Edition page <http://ampl.com/ce/>`_ to download a
+`AMPL Community Edition page <https://ampl.com/ce/>`_ to download a
 working version that can be installed quickly. Alternatively,
 you can use :ref:`amplpy.modules <amplpyModules>` if you only intend to access AMPL from the Python environment.
 
@@ -63,7 +63,7 @@ Google Colab
 On Google Colab there is a default `AMPL Community
 Edition license <https://ampl.com/ce/>`_ that gives you unlimited access to AMPL
 with open-source solvers (e.g., HiGHS, CBC, Couenne, Ipopt, Bonmin)
-or with commercial solvers from the `NEOS Server <http://www.neos-server.org/>`_ as described in `Kestrel documentation <https://dev.ampl.com/solvers/kestrel.html>`_.
+or with commercial solvers from the `NEOS Server <https://www.neos-server.org/>`_ as described in `Kestrel documentation <https://dev.ampl.com/solvers/kestrel.html>`_.
 
 In the list ``modules`` you need to include 
 ``"gokestrel"`` to use the `kestrel <https://dev.ampl.com/solvers/kestrel.html>`_ driver; 
