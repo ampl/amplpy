@@ -5,6 +5,8 @@ from collections.abc import Iterable
 from .entity import Entity
 from .dataframe import DataFrame
 
+import itertools
+
 try:
     import pandas as pd
 except ImportError:
@@ -122,6 +124,11 @@ class Parameter(Entity):
             Entity.set_values(self, values)
         elif pd is not None and isinstance(values, (pd.DataFrame, pd.Series)):
             Entity.set_values(self, values)
+        elif np is not None and isinstance(values, np.ndarray):
+            if len(values.shape) <= 1:
+                self.set_values(values.tolist())
+            else:
+                self.set_values(tuple(itertools.chain(*values.tolist())))
         elif isinstance(values, Iterable):
             if all(isinstance(value, str) for value in values):
                 if not isinstance(values, (list, tuple)):
@@ -131,7 +138,7 @@ class Parameter(Entity):
                 values = list(map(float, values))
                 self._impl.setValuesDbl(values, len(values))
             else:
-                raise TypeError("Expected list of values.")
+                Entity.set_values(self, values)
         else:
             Entity.set_values(self, values)
 

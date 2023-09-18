@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.12.1 - 2023-09-18
+- Fix Parameter.set_values with np.ndarray objects.
+
 ## 0.12.0 - 2023-08-29
 - Upgrade libampl to 2.2.0-20230825.
 - Use x-ampl by default if available.

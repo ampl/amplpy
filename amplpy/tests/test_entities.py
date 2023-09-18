@@ -315,6 +315,57 @@ class TestEntities(TestBase.TestBase):
         ampl.get_parameter("p_indexed").set(2, np.int64(456))
         self.assertEqual(ampl.get_parameter("p_indexed").get(2), 456)
 
+    def test_parameter_numpy_array(self):
+        if np is None:
+            self.skipTest("numpy not available")
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+        set I;
+        set J;
+        param p{I, J};
+        """
+        )
+        values = np.array([1, 2, 3])
+        n, k = values.shape[0], 1
+        ampl.set["I"] = range(n)
+        ampl.set["J"] = range(k)
+        ampl.param["p"] = values
+        self.assertEqual(ampl.param["p"].to_dict(), {(0, 0): 1, (1, 0): 2, (2, 0): 3})
+
+    def test_parameter_numpy_ndarray(self):
+        if np is None:
+            self.skipTest("numpy not available")
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+        set I;
+        set J;
+        param p{I, J};
+        """
+        )
+        values = np.array(
+            [
+                [1, 2, 3],
+                [4, 5, 6],
+            ]
+        )
+        n, k = values.shape
+        ampl.set["I"] = range(n)
+        ampl.set["J"] = range(k)
+        ampl.param["p"] = values
+        self.assertEqual(
+            ampl.param["p"].to_dict(),
+            {
+                (0, 0): 1,
+                (0, 1): 2,
+                (0, 2): 3,
+                (1, 0): 4,
+                (1, 1): 5,
+                (1, 2): 6,
+            },
+        )
+
     def test_set_numpy(self):
         if np is None:
             self.skipTest("numpy not available")

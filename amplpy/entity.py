@@ -229,7 +229,7 @@ class Entity(BaseClass):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 self._impl.setValuesDf(df._impl)
                 return
-            raise TypeError
+            raise TypeError(f"Unexpected data type: {type(data)}.")
 
     # Aliases
     getIndexingSets = get_indexing_sets
