@@ -452,17 +452,17 @@ def activate_license(uuid, verbose=False):
         verbose: show verbose output if True.
     """
     load_modules()
-    if uuid in ("default", "your-license-uuid"):
+    if not isinstance(uuid, str):
+        raise Exception("The license UUID must be a string.")
+    if uuid == "default" or "license-uuid" in uuid:
         if _handle_default_uuid():
             return True
         else:
             print(
                 "Please provide a valid license UUID. "
-                "You can use a free https://ampl.com/ce license."
+                "You can use free https://ampl.com/ce or https://ampl.com/courses licenses."
             )
             raise Exception("Invalid license UUID.")
-    if not isinstance(uuid, str):
-        raise Exception("The license UUID must be a string.")
     exit_code = run_command(
         ["amplkey", "activate", "--uuid", uuid],
         verbose=verbose,

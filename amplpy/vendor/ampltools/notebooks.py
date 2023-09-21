@@ -18,7 +18,11 @@ def _deactivate_license():
 
 
 def _ampl_license_cell(check_callback):
-    import ipywidgets as widgets
+    try:
+        import ipywidgets as widgets
+    except ImportError:
+        check_callback()
+        return
     from IPython.display import display
 
     header = widgets.Output()
@@ -27,7 +31,9 @@ def _ampl_license_cell(check_callback):
 
     platform = cloud_platform_name()
     with header:
-        print("AMPL License UUID (you can use a free https://ampl.com/ce license):")
+        print(
+            "AMPL License UUID (you can use free https://ampl.com/ce or https://ampl.com/courses licenses):"
+        )
     with message:
         ampl_lic = os.environ.get("AMPL_LICFILE", None)
         if ampl_lic is not None and platform is None:
@@ -126,7 +132,9 @@ def ampl_notebook(
     ]
     open_source_only = len(set(modules) - set(open_modules)) == 0
 
-    using_default_license = license_uuid in (None, "", "default", "your-license-uuid")
+    using_default_license = license_uuid is not None and (
+        license_uuid == "default" or "license-uuid" in license_uuid
+    )
     if using_default_license:
         using_default_license = activate_license("default")
     if using_default_license:

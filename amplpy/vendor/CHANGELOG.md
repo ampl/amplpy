@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.2 - 2023-09-21
+- Only try to activate default license if uuid is "default" or contains "license-uuid".
+
 ## 0.6.1 - 2023-09-04
 - Fix issue with license activation when using ampl_notebook locally.
 
