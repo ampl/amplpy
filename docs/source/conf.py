@@ -115,6 +115,7 @@ html_theme_options = {
     "logo_text": "Python API",
 }
 
+html_baseurl = "https://amplpy.ampl.com"
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
