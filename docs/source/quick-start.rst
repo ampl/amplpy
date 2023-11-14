@@ -67,7 +67,8 @@ Full class reference is given in :ref:`secReferencePython`.
             :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Open In SageMaker Studio Lab
 
-There are many more notebooks with examples available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_.
+There are many more notebooks with examples are available on the new book `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+and the new book `Hands-On Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
 Complete listing
 ----------------

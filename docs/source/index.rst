@@ -19,6 +19,10 @@ With ``amplpy`` you can model and solve large scale optimization problems in Pyt
 without losing model readability. The same model can be deployed on applications
 built on different languages by just switching the API used.
 
+.. image:: https://portal.ampl.com/dl/ads/mo_book_big.png
+  :alt: Hands-On Optimization with AMPL in Python 
+  :target: https://ampl.com/mo-book/
+
 .. grid:: 1 1 2 2
     :gutter: 0
     :margin: 0
@@ -74,7 +78,8 @@ built on different languages by just switching the API used.
             :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
             :alt: Open In SageMaker Studio Lab
 
-More notebooks with examples available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_.
+Many more notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+and the new book `Hands-On Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
 Installation & minimal example
 ------------------------------

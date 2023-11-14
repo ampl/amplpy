@@ -77,24 +77,25 @@ at the beginning of your notebook:
 .. code-block:: bash
 
    # Install dependencies
-   !pip install -q amplpy
+   %pip install -q amplpy
 
 
 .. code-block:: python
 
     # Google Colab & Kaggle integration
-    from amplpy import AMPL, tools
-    ampl = tools.ampl_notebook(
-        modules=["coin", "highs", "gokestrel"], # modules to install
+    from amplpy import AMPL, ampl_notebook
+    ampl = ampl_notebook(
+        modules=["coin", "highs", "gokestrel", "gurobi"], # modules to install
         license_uuid="default", # license to use
-        g=globals()) # instantiate AMPL object and register magics
+    ) # instantiate AMPL object and register magics
 
 .. note::
 
     In these notebooks there are ``%%ampl_eval`` cells that allow you to run AMPL code directly from the notebook. 
     They are equivalent to ``ampl.eval("""cell content""")``.
 
-Several notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_.
+Many notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+and the new book `Hands-On Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
 Initial test
 ------------
