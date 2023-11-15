@@ -15,6 +15,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
+          python -m pip install setuptools
           python setup.py sdist -d upload
           pip install .
           cd docs
@@ -33,7 +34,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.12.0
+          python -m pip install --upgrade cibuildwheel==2.16.2
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -45,7 +46,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.12.0
+          python -m pip install --upgrade cibuildwheel==2.16.2
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -57,7 +58,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.12.0
+          python -m pip install --upgrade cibuildwheel==2.16.2
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -121,7 +122,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.15.0
+          python -m pip install --upgrade cibuildwheel==2.16.2
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
