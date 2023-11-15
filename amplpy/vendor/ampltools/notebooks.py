@@ -135,6 +135,12 @@ def ampl_notebook(
     using_default_license = license_uuid is not None and (
         license_uuid == "default" or "license-uuid" in license_uuid
     )
+
+    # Ignore default license outside colab
+    if using_default_license and cloud_platform_name() != "colab":
+        using_default_license = False
+        license_uuid = None
+
     if using_default_license:
         using_default_license = activate_license("default")
     if using_default_license:

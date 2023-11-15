@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.3 - 2023-11-15
+- Ignore default license outside Google Colab.
+
 ## 0.6.2 - 2023-09-21
 - Only try to activate default license if uuid is "default" or contains "license-uuid".
 

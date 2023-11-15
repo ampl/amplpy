@@ -462,7 +462,10 @@ def activate_license(uuid, verbose=False):
                 "Please provide a valid license UUID. "
                 "You can use free https://ampl.com/ce or https://ampl.com/courses licenses."
             )
-            raise Exception("Invalid license UUID.")
+            raise Exception(
+                "Invalid license UUID. "
+                "You can use free https://ampl.com/ce or https://ampl.com/courses licenses."
+            )
     exit_code = run_command(
         ["amplkey", "activate", "--uuid", uuid],
         verbose=verbose,
