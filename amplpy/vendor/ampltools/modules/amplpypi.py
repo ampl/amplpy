@@ -203,8 +203,9 @@ def _load_ampl_module(module_name):
 
 def _locate_modules(modules, verbose=False):
     path_modules = []
-    for name in modules:
-        module_name = "ampl_module_" + name
+    for module_name in modules:
+        if not module_name.startswith("ampl_module_"):
+            module_name = "ampl_module_" + module_name
         bin_dir = None
         try:
             bin_dir, _ = _load_ampl_module(module_name)

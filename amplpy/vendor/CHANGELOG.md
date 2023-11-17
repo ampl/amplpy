@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.4 - 2023-11-17
+- Fix error after installing modules.
+
 ## 0.6.3 - 2023-11-15
 - Ignore default license outside Google Colab.
 
