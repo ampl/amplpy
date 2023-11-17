@@ -48,6 +48,7 @@ print(f"Volatility: {sigma*100:.1f}%")
 # ... post-process solution in Python
 ```
 
+[![Hands-On Optimization with AMPL in Python](https://portal.ampl.com/dl/ads/mo_book_big.png)](https://ampl.com/mo-book/)
 
 [[Documentation](https://amplpy.readthedocs.io/)] [[AMPL Modules for Python](https://dev.ampl.com/ampl/python/modules.html)] [[AMPL on Streamlit](https://ampl.com/streamlit)] [[AMPL on Google Colab](https://colab.ampl.com/)] [[Community Edition](https://ampl.com/ce)]
 
