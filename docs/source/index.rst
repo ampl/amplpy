@@ -20,7 +20,7 @@ without losing model readability. The same model can be deployed on applications
 built on different languages by just switching the API used.
 
 .. image:: https://portal.ampl.com/dl/ads/mo_book_big.png
-  :alt: Hands-On Optimization with AMPL in Python 
+  :alt: Hands-On Mathematical Optimization with AMPL in Python
   :target: https://ampl.com/mo-book/
 
 .. grid:: 1 1 2 2

@@ -95,7 +95,7 @@ at the beginning of your notebook:
     They are equivalent to ``ampl.eval("""cell content""")``.
 
 Many notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
-and the new book `Hands-On Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
 Initial test
 ------------
