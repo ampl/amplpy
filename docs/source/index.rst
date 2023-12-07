@@ -79,7 +79,7 @@ built on different languages by just switching the API used.
             :alt: Open In SageMaker Studio Lab
 
 Many more notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
-and the new book `Hands-On Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
 Installation & minimal example
 ------------------------------
