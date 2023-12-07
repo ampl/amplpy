@@ -213,9 +213,9 @@ Where ``prepare_data`` is the following function that returns three ``pandas.Dat
     in a couple of seconds, but if you are dealing with such large amounts of data (e.g., over 10 millions of rows), you may
     consider using a table handler to transfer the data directly into AMPL from its source without
     having to pass it though Python, as Python may sometimes be the performance bottleneck. We have table handlers such as
-    `amplcsv <https://amplplugins.readthedocs.io/en/latest/rst/amplcsv.html>`_ (CSV files),
-    `amplxl <https://amplplugins.readthedocs.io/en/latest/rst/amplxl.html>`_ (XLSX files), and
-    `eodbc <https://amplplugins.readthedocs.io/en/latest/rst/eodbc.html>`_ (Databases such as MySQL and PostgreSQL via ODBC).
+    `amplcsv <https://plugins.ampl.com/amplcsv.html>`_ (CSV files),
+    `amplxl <https://plugins.ampl.com/amplxl.html>`_ (XLSX files), and
+    `eodbc <https://plugins.ampl.com/eodbc.html>`_ (Databases such as MySQL and PostgreSQL via ODBC).
     You can still use the API to update the data and retrieve solutions, but you may gain substantial performance by
     passing the initial values directly into AMPL.
 
