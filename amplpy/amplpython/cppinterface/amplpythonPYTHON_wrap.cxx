@@ -50751,18 +50751,18 @@ fail:
 SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  bool arg2 ;
+  fmt::CStringRef arg2 ;
   bool arg3 ;
   bool arg4 ;
-  fmt::CStringRef arg5 ;
+  bool arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
   bool val3 ;
   int ecode3 = 0 ;
   bool val4 ;
   int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
   std::string result;
   
   (void)self;
@@ -50772,11 +50772,9 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_0(PyObject *self, Py_ssize_t nobj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_snapshot" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AMPL_snapshot" "', argument " "2"" of type '" "bool""'");
-  } 
-  arg2 = static_cast< bool >(val2);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_snapshot" "', argument " "3"" of type '" "bool""'");
@@ -50787,9 +50785,11 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_0(PyObject *self, Py_ssize_t nobj
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AMPL_snapshot" "', argument " "4"" of type '" "bool""'");
   } 
   arg4 = static_cast< bool >(val4);
-  
-  arg5 = PyUnicode_AsUTF8(swig_obj[4]);
-  
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AMPL_snapshot" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
   {
     try {
       result = ((ampl::AMPL const *)arg1)->snapshot(arg2,arg3,arg4,arg5);
@@ -50847,13 +50847,11 @@ fail:
 SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  bool arg2 ;
+  fmt::CStringRef arg2 ;
   bool arg3 ;
   bool arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
   bool val3 ;
   int ecode3 = 0 ;
   bool val4 ;
@@ -50867,11 +50865,9 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_1(PyObject *self, Py_ssize_t nobj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_snapshot" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AMPL_snapshot" "', argument " "2"" of type '" "bool""'");
-  } 
-  arg2 = static_cast< bool >(val2);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_snapshot" "', argument " "3"" of type '" "bool""'");
@@ -50939,12 +50935,10 @@ fail:
 SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  bool arg2 ;
+  fmt::CStringRef arg2 ;
   bool arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
   bool val3 ;
   int ecode3 = 0 ;
   std::string result;
@@ -50956,11 +50950,9 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_2(PyObject *self, Py_ssize_t nobj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_snapshot" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AMPL_snapshot" "', argument " "2"" of type '" "bool""'");
-  } 
-  arg2 = static_cast< bool >(val2);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
   ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AMPL_snapshot" "', argument " "3"" of type '" "bool""'");
@@ -51023,11 +51015,9 @@ fail:
 SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
-  bool arg2 ;
+  fmt::CStringRef arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
   std::string result;
   
   (void)self;
@@ -51037,11 +51027,9 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot__SWIG_3(PyObject *self, Py_ssize_t nobj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_snapshot" "', argument " "1"" of type '" "ampl::AMPL const *""'"); 
   }
   arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
-  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AMPL_snapshot" "', argument " "2"" of type '" "bool""'");
-  } 
-  arg2 = static_cast< bool >(val2);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
   {
     try {
       result = ((ampl::AMPL const *)arg1)->snapshot(arg2);
@@ -51188,10 +51176,8 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_bool(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_AMPL_snapshot__SWIG_3(self, argc, argv);
       }
@@ -51203,10 +51189,8 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_bool(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
       if (_v) {
         {
           int res = SWIG_AsVal_bool(argv[2], NULL);
@@ -51224,10 +51208,8 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_bool(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
       if (_v) {
         {
           int res = SWIG_AsVal_bool(argv[2], NULL);
@@ -51251,10 +51233,8 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_bool(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
       if (_v) {
         {
           int res = SWIG_AsVal_bool(argv[2], NULL);
@@ -51266,8 +51246,10 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            int res = SWIG_AsCharPtrAndSize(argv[4], 0, NULL, 0);
-            _v = SWIG_CheckState(res);
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
             if (_v) {
               return _wrap_AMPL_snapshot__SWIG_0(self, argc, argv);
             }
@@ -51280,10 +51262,10 @@ SWIGINTERN PyObject *_wrap_AMPL_snapshot(PyObject *self, PyObject *args) {
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'AMPL_snapshot'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    ampl::AMPL::snapshot(bool,bool,bool,fmt::CStringRef) const\n"
-    "    ampl::AMPL::snapshot(bool,bool,bool) const\n"
-    "    ampl::AMPL::snapshot(bool,bool) const\n"
-    "    ampl::AMPL::snapshot(bool) const\n"
+    "    ampl::AMPL::snapshot(fmt::CStringRef,bool,bool,bool) const\n"
+    "    ampl::AMPL::snapshot(fmt::CStringRef,bool,bool) const\n"
+    "    ampl::AMPL::snapshot(fmt::CStringRef,bool) const\n"
+    "    ampl::AMPL::snapshot(fmt::CStringRef) const\n"
     "    ampl::AMPL::snapshot() const\n");
   return 0;
 }
@@ -52510,14 +52492,160 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_AMPL_solve__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  fmt::CStringRef arg2 ;
+  fmt::CStringRef arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  (void)self;
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solve" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
+  
+  arg3 = PyUnicode_AsUTF8(swig_obj[2]);
+  
+  {
+    try {
+      (arg1)->solve(arg2,arg3);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_solve__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
+  fmt::CStringRef arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  (void)self;
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solve" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
+  }
+  arg1 = reinterpret_cast< ampl::AMPL * >(argp1);
+  
+  arg2 = PyUnicode_AsUTF8(swig_obj[1]);
+  
+  {
+    try {
+      (arg1)->solve(arg2);
+    }
+    catch (std::range_error) {
+      SWIG_exception(SWIG_ValueError, "Range Error");
+    }
+    catch (const ampl::AMPLException &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const ampl::InfeasibilityException &e) {
+      std::string msg = "InfeasibilityException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const ampl::PresolveException &e) {
+      std::string msg = "PresolveException: " + std::string(e.what());
+      SWIG_exception(SWIG_RuntimeError, msg.c_str());
+    }
+    catch (const std::invalid_argument &e) {
+      SWIG_exception(SWIG_ValueError, e.what());
+    }
+    catch (const std::out_of_range &e) {
+      // SWIG_KeyError does not exist
+      SWIG_Python_SetErrorMsg(PyExc_KeyError, e.what()); SWIG_fail;
+    }
+    catch (const std::logic_error &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::UnsupportedOperationException &e) {
+      SWIG_exception(SWIG_TypeError, e.what());
+    }
+    catch (const ampl::LicenseException &e) {
+      SWIG_exception(SWIG_SystemError, e.what());
+    }
+    catch (const ampl::FileIOException &e) {
+      SWIG_exception(SWIG_IOError, e.what());
+    }
+    catch (const std::runtime_error &e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+    catch (const std::exception &e) {
+      SWIG_exception(SWIG_UnknownError, e.what());
+    }
+    catch (...) {
+      SWIG_exception(SWIG_UnknownError,"Unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_solve__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   ampl::AMPL *arg1 = (ampl::AMPL *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "AMPL_solve", 0, 0, 0)) SWIG_fail;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_ampl__AMPL, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AMPL_solve" "', argument " "1"" of type '" "ampl::AMPL *""'"); 
@@ -52574,6 +52702,65 @@ SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AMPL_solve(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  (void)self;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "AMPL_solve", 0, 3, argv+1))) SWIG_fail;
+  argv[0] = self;
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AMPL_solve__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_AMPL_solve__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ampl__AMPL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_AMPL_solve__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'AMPL_solve'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ampl::AMPL::solve(fmt::CStringRef,fmt::CStringRef)\n"
+    "    ampl::AMPL::solve(fmt::CStringRef)\n"
+    "    ampl::AMPL::solve()\n");
+  return 0;
 }
 
 
@@ -74767,7 +74954,7 @@ SWIGINTERN PyMethodDef SwigPyBuiltin__ampl__AMPL_methods[] = {
   { "close", _wrap_AMPL_close, METH_NOARGS, "" },
   { "isRunning", _wrap_AMPL_isRunning, METH_NOARGS, "" },
   { "isBusy", _wrap_AMPL_isBusy, METH_NOARGS, "" },
-  { "solve", _wrap_AMPL_solve, METH_NOARGS, "" },
+  { "solve", _wrap_AMPL_solve, METH_VARARGS, "" },
   { "readAsync", _wrap_AMPL_readAsync, METH_VARARGS, "" },
   { "readDataAsync", _wrap_AMPL_readDataAsync, METH_VARARGS, "" },
   { "evalAsync", _wrap_AMPL_evalAsync, METH_VARARGS, "" },

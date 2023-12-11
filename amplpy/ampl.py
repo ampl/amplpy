@@ -304,12 +304,14 @@ class AMPL(object):
         """
         return self._impl.isRunning()
 
-    def solve(self, problem=None, verbose=True):
+    def solve(self, problem="", solver="", verbose=True):
         """
         Solve the current model or the problem specified by ``problem``.
 
         Args:
             problem: Name of the problem to solve.
+
+            solver: Name of the solver to use.
 
             verbose: Display verbose output if set to ``True``.
 
@@ -317,14 +319,14 @@ class AMPL(object):
             RuntimeError: if the underlying interpreter is not running.
         """
         if not verbose:
+            if solver is not None:
+                self.set_option("solver", solver)
             if problem is None:
                 self.get_output("solve;")
             else:
                 self.get_output(f"solve {problem};")
-        elif problem is not None:
-            self.eval(f"solve {problem};")
         else:
-            self._impl.solve()
+            self._impl.solve(problem, solver)
 
     def cd(self, path=None):
         """
@@ -809,7 +811,7 @@ class AMPL(object):
 
             options: include options if set to ``True``.
         """
-        return self._impl.snapshot(model, data, options, filename)
+        return self._impl.snapshot(filename, model, data, options)
 
     def write(self, filename, auxfiles=""):
         """

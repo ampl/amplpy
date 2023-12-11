@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.12.2 - 2023-12-11
+- Upgrade libampl to 2.3.6-20231130.
+- Add solver argument to AMPL.solve.
+
 ## 0.12.1 - 2023-09-21
 - Fix Parameter.set_values with np.ndarray objects.
 

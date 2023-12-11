@@ -1,4 +1,4 @@
-amplpy==0.12.1
+amplpy==0.12.2
 ampl-sphinx-theme @ git+https://github.com/ampl/ampl.github.io.git#subdirectory=ampl-sphinx-theme
 sphinx==4.2.0
 myst_parser>=0.17.0
