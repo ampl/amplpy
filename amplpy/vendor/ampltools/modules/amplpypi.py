@@ -23,6 +23,15 @@ def installed_modules():
         norm = name.replace("-", "_")
         if norm.startswith(prefix):
             installed.append(norm.replace(prefix, ""))
+
+    # Move bundles to the end to load individual modules first
+    low_piority = ["coin", "open"]
+    for name in low_piority:
+        module_name = prefix + name
+        if module_name in installed:
+            installed.remove(module_name)
+            installed.append(module_name)
+
     return installed
 
 
@@ -195,8 +204,15 @@ def _load_ampl_module(module_name):
         reload(module)
     except:
         pass
-    if module.__file__ is None or not os.path.isfile(module.__file__):
+
+    mod_file = module.__file__
+    if mod_file is None:
+        mod_file = ""
+    if mod_file.endswith(".pyc"):
+        mod_file = mod_file[:-1]
+    if not os.path.isfile(mod_file):
         raise Exception(f"Module {module_name} needs to be reinstalled.")
+
     bin_dir, version = module.bin_dir, module.__version__
     return bin_dir, version
 
@@ -354,9 +370,15 @@ def unload_modules(modules=[]):
         modules: list of modules to be unloaded.
     """
     modules = _sort_modules_for_loading(modules, add_base=False)
-    to_remove = set(_locate_modules(modules))
+    to_remove = tuple(
+        path[path.find("ampl_module_") :] for path in _locate_modules(modules)
+    )
     os.environ["PATH"] = os.pathsep.join(
-        [path for path in os.environ["PATH"].split(os.pathsep) if path not in to_remove]
+        [
+            path
+            for path in os.environ["PATH"].split(os.pathsep)
+            if not path.endswith(to_remove)
+        ]
     )
 
 
@@ -368,8 +390,8 @@ def preload_modules(silently=True, verbose=False):
         verbose: show verbose output if True.
     """
     try:
-        head = False if _find_ampl_lic() else True
-        load_modules(head=head, verbose=verbose)
+        # head = False if _find_ampl_lic() else True
+        load_modules(head=True, verbose=verbose)
         return True
     except:
         if not silently:

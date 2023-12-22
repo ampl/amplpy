@@ -37,7 +37,7 @@ class TestLoad(TestBase.TestBase):
         self.assertIn(modules.path("highs", add_base=False), self.get_env_path_list())
 
         modules.install(["cbc"], verbose=verbose)
-        modules.unload(["base", "highs"])
+        modules.unload(["base", "cbc", "highs"])
         modules.load(["cbc", "highs"], verbose=verbose)
         expected = modules.path().split(os.pathsep) + initial_path
         self.assertEqual(expected, self.get_env_path_list())
