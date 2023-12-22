@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.7.0-2023-12-22
 - Preload modules to the beginning of the PATH.
 - Fix module load and unload issues with Pyinstaller.
+- Add ampltools.bundle to create executable bundles for distribution using PyInstaller.
 
 ## 0.6.4 - 2023-11-17
 - Fix error after installing modules.
