@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.1-2023-12-26
+- Adjust ampltools.bundle to be used as amplpy.bundle.
+
 ## 0.7.0-2023-12-22
 - Preload modules to the beginning of the PATH.
 - Fix module load and unload issues with Pyinstaller.
