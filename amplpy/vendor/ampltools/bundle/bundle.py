@@ -16,6 +16,9 @@ def bundle(args):
     extra_arguments = args[1:]
     basename = os.path.basename(main_script).replace(".py", "")
     dist_dir = os.path.join(os.path.abspath(os.curdir), "dist", basename)
+    keep_license = "--keep-license" in args
+    if keep_license:
+        args.remove("--keep-license")
 
     if os.path.isdir(dist_dir):
         print(f"Deleting: {dist_dir}")
@@ -49,6 +52,15 @@ def bundle(args):
     for line in process.stdout:
         print(line, end="")
     exit_code = process.wait()
+
+    if not keep_license:
+        for fname in ["ampl.lic", "amplkey.log"]:
+            to_delete = os.path.join(
+                dist_dir, "_internal", "ampl_module_base", "bin", fname
+            )
+            if os.path.isfile(to_delete):
+                print(f"Deleting: {to_delete}")
+                os.remove(to_delete)
 
     if exit_code == 0:
         # Locate the executable
