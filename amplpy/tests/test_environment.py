@@ -39,8 +39,9 @@ class TestEnvironment(unittest.TestCase):
         ampl.close()
 
     def test_libpath(self):
-        os.environ["ampl_libpath"] = "abc"
         from amplpy import AMPL, Environment
+
+        os.environ["ampl_libpath"] = "abc"
 
         ampl = AMPL()
         self.assertEqual(ampl.option["ampl_libpath"], "abc")

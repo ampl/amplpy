@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.13.0 - 2023-12-26
 - Upgrade ampltools to 0.7.1 adding amplpy.bundle command.
 - [Breaking] Modules now have priority in the PATH.
+- Fix ampl_libpath issue on Windows.
 
 ## 0.12.2 - 2023-12-11
 - Upgrade libampl to 2.3.6-20231130.
