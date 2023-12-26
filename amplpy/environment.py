@@ -2,6 +2,7 @@
 from .iterators import EnvIterator
 from .base import BaseClass
 from . import amplpython
+import os
 
 
 class Environment(BaseClass):
@@ -24,9 +25,13 @@ class Environment(BaseClass):
             binary_directory = ""
         if binary_name is None:
             binary_name = ""
-        super(Environment, self).__init__(
-            amplpython.Environment(binary_directory, binary_name)
-        )
+        _impl = amplpython.Environment(binary_directory, binary_name)
+        if os.name == "nt":
+            # Workaround for Windows issue with environment variables
+            ampl_libpath = os.environ.get("ampl_libpath", "")
+            if ampl_libpath:
+                _impl.put("ampl_libpath", ampl_libpath)
+        super(Environment, self).__init__(_impl)
 
     def __iter__(self):
         return EnvIterator(self._impl)

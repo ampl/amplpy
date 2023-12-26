@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 from numbers import Real
 
 from .errorhandler import ErrorHandler
@@ -100,6 +101,11 @@ class AMPL(object):
         try:
             if environment is None:
                 self._impl = amplpython.AMPL()
+                if os.name == "nt":
+                    # Workaround for Windows issue with environment variables
+                    ampl_libpath = os.environ.get("ampl_libpath", "")
+                    if ampl_libpath:
+                        self._impl.setOption("ampl_libpath", ampl_libpath)
             else:
                 self._impl = amplpython.AMPL(environment._impl)
         except RuntimeError as exp:
