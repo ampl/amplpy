@@ -9,10 +9,10 @@ if _vendor_dir not in sys.path:
 
 if __name__ == "__main__":
     try:
-        from ampltools.modules import _main
+        from ampltools.bundle import _main
     except ImportError:
         print(
-            "Failed to import 'ampltools.modules'. Install or upgrade with:\n"
+            "Failed to import 'ampltools.bundle'. Install or upgrade with:\n"
             "   $ python -m pip install ampltools --upgrade",
             file=sys.stderr,
         )
