@@ -42,7 +42,7 @@ try:
 except Exception:
     pass
 
-__version__ = "0.12.2"
+__version__ = "0.13.0b0"
 
 
 def _list_aliases():
