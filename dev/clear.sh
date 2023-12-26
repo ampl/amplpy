@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 cd "`dirname "$0"`"
 cd ..
+set -ex
 
 find ./ -name "*~" -exec rm -v "{}" \; 2>/dev/null
 find ./ -name "*.pyc" -exec rm -v "{}" \; 2>/dev/null

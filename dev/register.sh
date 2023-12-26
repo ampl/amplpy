@@ -1,6 +1,7 @@
 #!/bin/bash
 cd "`dirname "$0"`"
 cd ..
+set -ex
 
 bash clear.sh
 rm -rf dist/*

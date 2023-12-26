@@ -1,6 +1,6 @@
-#!/bin/sh
-BASEDIR=`dirname $0`
-cd $BASEDIR
+#!/bin/bash
+cd "`dirname "$0"`"
+set -ex
 
 find ./ -name "*~" -exec rm -v "{}" \; 2>/dev/null
 find ./ -name "*.pyc" -exec rm -v "{}" \; 2>/dev/null

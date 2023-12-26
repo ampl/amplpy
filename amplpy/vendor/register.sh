@@ -1,6 +1,6 @@
 #!/bin/bash
-BASEDIR=`dirname $0`
-cd $BASEDIR
+cd "`dirname "$0"`"
+set -ex
 
 bash clear.sh
 rm -rf dist/*
