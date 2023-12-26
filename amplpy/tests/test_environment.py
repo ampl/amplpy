@@ -38,6 +38,16 @@ class TestEnvironment(unittest.TestCase):
         ampl = AMPL(Environment())
         ampl.close()
 
+    def test_libpath(self):
+        os.environ["ampl_libpath"] = "abc"
+        from amplpy import AMPL, Environment
+
+        ampl = AMPL()
+        self.assertEqual(ampl.option["ampl_libpath"], "abc")
+
+        ampl = AMPL(Environment())
+        self.assertEqual(ampl.option["ampl_libpath"], "abc")
+
 
 if __name__ == "__main__":
     unittest.main()
