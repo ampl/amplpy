@@ -16,9 +16,9 @@ def bundle(args):
     extra_arguments = args[1:]
     basename = os.path.basename(main_script).replace(".py", "")
     dist_dir = os.path.join(os.path.abspath(os.curdir), "dist", basename)
-    keep_license = "--keep-license" in args
+    keep_license = "--keep-license" in extra_arguments
     if keep_license:
-        args.remove("--keep-license")
+        extra_arguments.remove("--keep-license")
 
     if os.path.isdir(dist_dir):
         print(f"Deleting: {dist_dir}")
