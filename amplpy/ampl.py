@@ -83,7 +83,7 @@ class AMPL(object):
     :func:`~amplpy.AMPL.set_output_handler`.
     """
 
-    def __init__(self, environment=None, langext=None):
+    def __init__(self, environment=None):
         """
         Constructor:
         creates a new AMPL instance with the specified environment if provided.
@@ -113,7 +113,6 @@ class AMPL(object):
             raise
         self._error_handler = None
         self._output_handler = None
-        self._langext = langext
         self.set_output_handler(OutputHandler())
         self.set_error_handler(ErrorHandler())
 
@@ -237,7 +236,7 @@ class AMPL(object):
         """
         return Parameter(self._impl.getParameter(name))
 
-    def eval(self, statements, **kwargs):
+    def eval(self, statements):
         """
         Parses AMPL code and evaluates it as a possibly empty sequence of AMPL
         declarations and statements.
@@ -263,8 +262,6 @@ class AMPL(object):
           if it does not end with semicolon) or if the underlying
           interpreter is not running.
         """
-        if self._langext is not None:
-            statements = self._langext.translate(statements, **kwargs)
         # Workaround for #56
         if not statements.endswith((" ", ";", "\n")):
             statements += "\n"
@@ -410,7 +407,7 @@ class AMPL(object):
                 except ValueError:
                     return value
 
-    def read(self, filename, **kwargs):
+    def read(self, filename):
         """
         Interprets the specified file (script or model or mixed) As a side
         effect, it invalidates all entities (as the passed file can contain any
@@ -423,14 +420,7 @@ class AMPL(object):
         Raises:
             RuntimeError: in case the file does not exist.
         """
-        filename = str(filename)
-        if self._langext is not None:
-            with open(filename, "r") as fin:
-                newmodel = self._langext.translate(fin.read(), **kwargs)
-                with open(filename + ".translated", "w") as fout:
-                    fout.write(newmodel)
-                    filename += ".translated"
-        self._impl.read(filename)
+        self._impl.read(str(filename))
         self._error_handler_wrapper.check()
 
     def read_data(self, filename):
