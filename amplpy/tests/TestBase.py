@@ -15,8 +15,6 @@ REAL_ROOT = os.environ.get("REAL_ROOT", None)
 class TestBase(unittest.TestCase):
     def setUp(self):
         print("Method:", self._testMethodName)
-        # os.environ["solver"] = "highs"
-        # os.environ["highs_options"] = "outlev=1"
         self.ampl = amplpy.AMPL()
         self.ampl.option["solver"] = "highs"
         self.ampl.option["highs_options"] = "outlev=1"
