@@ -18,8 +18,8 @@ class TestBase(unittest.TestCase):
         # os.environ["solver"] = "highs"
         # os.environ["highs_options"] = "outlev=1"
         self.ampl = amplpy.AMPL()
-        self.ampl["solver"] = "highs"
-        self.ampl["highs_options"] = "outlev=1"
+        self.ampl.option["solver"] = "highs"
+        self.ampl.option["highs_options"] = "outlev=1"
         self.dirpath = tempfile.mkdtemp()
 
     def _tmpfile(self, filename):
