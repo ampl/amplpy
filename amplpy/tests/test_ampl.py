@@ -382,6 +382,28 @@ class TestAMPL(TestBase.TestBase):
         with self.assertRaises(amplpy.PresolveException):
             ampl.write("bmod", "rc")
 
+    def test_solve_arguments(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+        param n integer > 0; # N-queens
+        var Row {1..n} integer >= 1 <= n;
+        s.t. row_attacks: alldiff ({j in 1..n} Row[j]);
+        s.t. diag_attacks: alldiff ({j in 1..n} Row[j]+j);
+        s.t. rdiag_attacks: alldiff ({j in 1..n} Row[j]-j);
+        """
+        )
+        ampl.param["n"] = 5
+        ampl.option["highs_options"] = ""
+
+        output = ampl.solve(solver="highs", return_output=True)
+        self.assertFalse("outlev" in output)
+
+        output = ampl.solve(
+            solver="highs", return_output=True, highs_options="outlev=1"
+        )
+        self.assertTrue("outlev" in output)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -309,7 +309,7 @@ class AMPL(object):
         """
         return self._impl.isRunning()
 
-    def solve(self, problem="", solver="", verbose=True):
+    def solve(self, problem="", solver="", verbose=True, return_output=False, **kwargs):
         """
         Solve the current model or the problem specified by ``problem``.
 
@@ -320,16 +320,25 @@ class AMPL(object):
 
             verbose: Display verbose output if set to ``True``.
 
+            return_output: Return output as a string if set to ``True``.
+
+            kwargs: Pass ``solvername_options`` as additional arguments.
+
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        if not verbose:
+        if not verbose or return_output:
             if solver is not None:
                 self.set_option("solver", solver)
+            for option, value in kwargs.items():
+                assert option.endswith("_options")
+                self.set_option(option, value)
             if problem is None:
-                self.get_output("solve;")
+                output = self.get_output("solve;")
             else:
-                self.get_output(f"solve {problem};")
+                output = self.get_output(f"solve {problem};")
+            if return_output:
+                return output
         else:
             self._impl.solve(problem, solver)
 
