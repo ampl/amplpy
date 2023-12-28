@@ -397,6 +397,8 @@ class TestAMPL(TestBase.TestBase):
         ampl.option["highs_options"] = ""
         self.assertEqual(ampl.option["highs_options"], "")
 
+        print(">>>", ampl.get_output("option highs_options;"))
+
         output = ampl.solve(solver="highs", return_output=True)
         print("output1:", output)
         self.assertFalse("outlev" in output)

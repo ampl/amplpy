@@ -15,9 +15,11 @@ REAL_ROOT = os.environ.get("REAL_ROOT", None)
 class TestBase(unittest.TestCase):
     def setUp(self):
         print("Method:", self._testMethodName)
-        os.environ["solver"] = "highs"
-        os.environ["highs_options"] = "outlev=1"
+        # os.environ["solver"] = "highs"
+        # os.environ["highs_options"] = "outlev=1"
         self.ampl = amplpy.AMPL()
+        self.ampl["solver"] = "highs"
+        self.ampl["highs_options"] = "outlev=1"
         self.dirpath = tempfile.mkdtemp()
 
     def _tmpfile(self, filename):
