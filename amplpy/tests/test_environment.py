@@ -38,7 +38,7 @@ class TestEnvironment(unittest.TestCase):
         ampl = AMPL(Environment())
         ampl.close()
 
-    def test_libpath(self):
+    def test_env_options(self):
         from amplpy import AMPL, Environment
 
         os.environ["ampl_libpath"] = "abc"
@@ -48,6 +48,14 @@ class TestEnvironment(unittest.TestCase):
 
         ampl = AMPL(Environment())
         self.assertEqual(ampl.option["ampl_libpath"], "abc")
+
+        os.environ["solver"] = "gurobi"
+
+        ampl = AMPL()
+        self.assertEqual(ampl.option["solver"], "gurobi")
+
+        ampl = AMPL(Environment())
+        self.assertEqual(ampl.option["solver"], "gurobi")
 
 
 if __name__ == "__main__":

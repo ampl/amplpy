@@ -55,11 +55,6 @@ class DataFrame(BaseClass):
     """
     A DataFrame object, used to communicate data to and from the AMPL entities.
 
-    .. warning::
-        DataFrame objects should not be instantiated manually. For best performance
-        using Python native types or Pandas DataFrames. The API takes care of the conversion
-        for you in the most efficient way it finds.
-
     An object of this class can be used to do the following tasks:
 
     - Assign values to AMPL entities (once the DataFrame is populated, use

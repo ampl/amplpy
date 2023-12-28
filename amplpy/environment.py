@@ -28,9 +28,10 @@ class Environment(BaseClass):
         _impl = amplpython.Environment(binary_directory, binary_name)
         if os.name == "nt":
             # Workaround for Windows issue with environment variables
-            ampl_libpath = os.environ.get("ampl_libpath", "")
-            if ampl_libpath:
-                _impl.put("ampl_libpath", ampl_libpath)
+            for option_name in ["ampl_libpath", "solver"]:
+                option_value = os.environ.get(option_name, "")
+                if option_value:
+                    _impl.put(option_name, option_value)
         super(Environment, self).__init__(_impl)
 
     def __iter__(self):

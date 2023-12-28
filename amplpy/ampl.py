@@ -5,6 +5,7 @@ from numbers import Real
 
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
+from .environment import Environment
 from .objective import Objective
 from .variable import Variable
 from .constraint import Constraint
@@ -31,12 +32,10 @@ add it before instantiating the AMPL object with:
     add_to_path(r"full path to the AMPL installation directory")
     ampl = AMPL()
 
-Or, if you are using amplpy.modules, do the following:
+Or, if you are using amplpy.modules, please make sure that they are installed:
 
-    # More info at https://ampl.com/python
-    from amplpy import AMPL, modules
-    modules.load()
-    ampl = AMPL()
+    # Install solver modules (e.g., HiGHS, CBC, Gurobi)
+    $ python -m amplpy.modules install highs cbc gurobi
 """
 
 
@@ -99,13 +98,10 @@ class AMPL(object):
             translator cannot be started for any other reason.
         """
         try:
+            if environment is None and os.name == "nt":
+                environment = Environment()
             if environment is None:
                 self._impl = amplpython.AMPL()
-                if os.name == "nt":
-                    # Workaround for Windows issue with environment variables
-                    ampl_libpath = os.environ.get("ampl_libpath", "")
-                    if ampl_libpath:
-                        self._impl.setOption("ampl_libpath", ampl_libpath)
             else:
                 self._impl = amplpython.AMPL(environment._impl)
         except RuntimeError as exp:

@@ -126,9 +126,8 @@ Installation & minimal example
     ampl.param["S"] = pd.DataFrame(
         cov_matrix, index=tickers, columns=tickers
     )
-    ampl.option["solver"] = "gurobi"
     ampl.option["gurobi_options"] = "outlev=1"
-    ampl.solve()
+    ampl.solve(solver="gurobi")
     assert ampl.solve_result == "solved"
     sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
     print(f"Volatility: {sigma*100:.1f}%")
