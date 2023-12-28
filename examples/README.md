@@ -12,4 +12,4 @@ More notebooks with examples available on the [AMPL Model Colaboratory](https://
 
 ## Documentation
 
-- http://amplpy.readthedocs.io
+- http://amplpy.ampl.com

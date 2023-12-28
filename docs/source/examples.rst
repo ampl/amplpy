@@ -7,8 +7,12 @@ This section lists a few examples in Python.
 These are the same files that can be found in the *examples* directory of the
 distribution, and show the basic usage of the Python API.
 
-There are many more notebooks with examples are available on the new book `AMPL Model Colaboratory <https://colab.ampl.com/>`_
-and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+.. note::
+    Many Jupyter notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+    and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+
+    You should also check out our collection of interactive `Streamlit Apps <https://ampl.com/streamlit>`_ and
+    learn how easy you can build your own apps.
 
 Example 1: First steps
 ----------------------

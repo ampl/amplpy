@@ -23,63 +23,12 @@ built on different languages by just switching the API used.
   :alt: Hands-On Mathematical Optimization with AMPL in Python
   :target: https://ampl.com/mo-book/
 
-.. grid:: 1 1 2 2
-    :gutter: 0
-    :margin: 0
-    :padding: 0
+.. note::
+    Many Jupyter notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+    and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
 
-    .. grid-item-card::
-        :margin: 0
-        :padding: 0
-
-        Quick Start using Pandas dataframes
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-        Data can be loaded in various forms, one of which is ``pandas.DataFrame`` objects.
-
-        .. image:: https://colab.research.google.com/assets/colab-badge.svg
-            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
-            :alt: Open In Colab
-
-        .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
-            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
-            :alt: Kaggle
-
-        .. image:: https://assets.paperspace.io/img/gradient-badge.svg
-            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
-            :alt: Gradient
-
-        .. image:: https://studiolab.sagemaker.aws/studiolab.svg
-            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/pandasdiet.ipynb
-            :alt: Open In SageMaker Studio Lab
-
-    .. grid-item-card::
-        :margin: 0
-        :padding: 0
-
-        Quick Start using lists and dictionaries
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-        Data can be loaded in various forms, including Python lists and dictionaries.
-
-        .. image:: https://colab.research.google.com/assets/colab-badge.svg
-            :target: https://colab.research.google.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
-            :alt: Open In Colab
-
-        .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
-            :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
-            :alt: Kaggle
-
-        .. image:: https://assets.paperspace.io/img/gradient-badge.svg
-            :target: https://console.paperspace.com/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
-            :alt: Gradient
-
-        .. image:: https://studiolab.sagemaker.aws/studiolab.svg
-            :target: https://studiolab.sagemaker.aws/import/github/ampl/amplcolab/blob/master/authors/fdabrandao/quick-start/nativediet.ipynb
-            :alt: Open In SageMaker Studio Lab
-
-Many more notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
-and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+    You should also check out our collection of interactive `Streamlit Apps <https://ampl.com/streamlit>`_ and
+    learn how easy you can build your own apps.
 
 Installation & minimal example
 ------------------------------
@@ -102,7 +51,8 @@ Installation & minimal example
 
 .. note::
   You can use a free `Community Edition license <https://ampl.com/ce>`_, which allows **free
-  and perpetual use of AMPL with Open-Source solvers**.
+  and perpetual use of AMPL with Open-Source solvers**. There are also free `AMPL for Courses <https://ampl.com/courses>`_ licenses that give unlimited
+  access to all commercial solvers for teaching.
 
 .. code-block:: python
 
@@ -123,11 +73,8 @@ Installation & minimal example
     """)
     tickers, cov_matrix = # ... pre-process data in Python
     ampl.set["A"] = tickers
-    ampl.param["S"] = pd.DataFrame(
-        cov_matrix, index=tickers, columns=tickers
-    )
-    ampl.option["gurobi_options"] = "outlev=1"
-    ampl.solve(solver="gurobi")
+    ampl.param["S"] = pd.DataFrame(cov_matrix, index=tickers, columns=tickers)
+    ampl.solve(solver="gurobi", gurobi_options="outlev=1")
     assert ampl.solve_result == "solved"
     sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
     print(f"Volatility: {sigma*100:.1f}%")

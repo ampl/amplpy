@@ -2,13 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.13.1 - 2023-12-26
+## 0.13.1 - 2023-12-28
 - Upgrade ampltools to 0.7.2 adding amplpy.bundle command.
 - Fix issue with environment variables on Windows in a generic way.
-- Add return_output and solvername_options arguments to AMPL.solve.
+- Add return_output and solvername_options arguments to AMPL.solve
+  - You can now do `ampl.solve(solver="gurobi", gurobi_options="outlev=1")`.
 
 ## 0.13.0 - 2023-12-26
-- [Breaking] Modules now have priority in the PATH.
+- [Breaking] amplpy.modules now have priority in the PATH.
 - Fix ampl_libpath issue on Windows.
 
 ## 0.12.2 - 2023-12-11

@@ -37,9 +37,7 @@ ampl.eval(r"""
 tickers, cov_matrix = # ... pre-process data in Python
 ampl.set["A"] = tickers
 ampl.param["S"] = pd.DataFrame(cov_matrix, index=tickers, columns=tickers)
-ampl.option["solver"] = "gurobi"
-ampl.option["gurobi_options"] = "outlev=1"
-ampl.solve()
+ampl.solve(solver="gurobi", gurobi_options="outlev=1")
 assert ampl.solve_result == "solved"
 sigma = ampl.get_value("sqrt(sum {i in A, j in A} w[i] * S[i, j] * w[j])")
 print(f"Volatility: {sigma*100:.1f}%")
@@ -58,7 +56,7 @@ With `amplpy` you can model and solve large scale optimization problems in Pytho
 
 ## Documentation
 
-- http://amplpy.readthedocs.io
+- http://amplpy.ampl.com
 
 ## Repositories:
 
@@ -192,13 +190,13 @@ setup(
         "Programming Language :: C++",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     packages=["amplpy"],
