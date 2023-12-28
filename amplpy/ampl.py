@@ -265,6 +265,9 @@ class AMPL(object):
         """
         if self._langext is not None:
             statements = self._langext.translate(statements, **kwargs)
+        # Workaround for #56
+        if not statements.endswith((" ", ";", "\n")):
+            statements += "\n"
         self._impl.eval(statements)
         self._error_handler_wrapper.check()
 
