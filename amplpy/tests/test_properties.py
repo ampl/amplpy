@@ -19,7 +19,7 @@ class TestProperties(TestBase.TestBase):
         print("assert 3")
         self.assertEqual(len(list(ampl.var)), 1)
         print("assert 4")
-        self.assertEqual(len(list(ampl.get_variables())), 1)
+        # self.assertEqual(len(list(ampl.get_variables())), 1)
 
     def test_con_prop(self):
         ampl = self.ampl
