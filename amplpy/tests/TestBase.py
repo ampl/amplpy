@@ -14,7 +14,7 @@ REAL_ROOT = os.environ.get("REAL_ROOT", None)
 
 class TestBase(unittest.TestCase):
     def setUp(self):
-        print("Method:", self._testMethodName)
+        print("setUp:", self._testMethodName)
         self.ampl = amplpy.AMPL()
         self.ampl.option["solver"] = "highs"
         self.ampl.option["highs_options"] = "outlev=1"
@@ -39,8 +39,10 @@ class TestBase(unittest.TestCase):
         return self._real_filename(self._tmpfile(filename))
 
     def tearDown(self):
+        print("tearDown:", self._testMethodName)
         self.ampl.close()
         shutil.rmtree(self.dirpath)
+        print("done!")
 
 
 if __name__ == "__main__":
