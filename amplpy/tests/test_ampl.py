@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import unittest
+import shutil
 import os
 
 import amplpy
@@ -383,6 +384,8 @@ class TestAMPL(TestBase.TestBase):
             ampl.write("bmod", "rc")
 
     def test_solve_arguments(self):
+        if shutil.which("highs") is None:
+            self.skipTest("highs not available")
         ampl = self.ampl
         ampl.eval(
             """
@@ -395,7 +398,6 @@ class TestAMPL(TestBase.TestBase):
         )
         ampl.param["n"] = 5
         ampl.option["highs_options"] = ""
-        ampl.option["HIGHS_OPTIONS"] = ""
         self.assertEqual(ampl.option["highs_options"], "")
 
         output = ampl.solve(solver="highs", return_output=True)
