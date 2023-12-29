@@ -395,14 +395,17 @@ class TestAMPL(TestBase.TestBase):
         )
         ampl.param["n"] = 5
         ampl.option["highs_options"] = ""
+        ampl.option["HIGHS_OPTIONS"] = ""
         self.assertEqual(ampl.option["highs_options"], "")
 
         output = ampl.solve(solver="highs", return_output=True)
+        print("output1:", output)
         self.assertFalse("outlev" in output)
 
         output = ampl.solve(
             solver="highs", return_output=True, highs_options="outlev=1"
         )
+        print("output2:", output)
         self.assertTrue("outlev" in output)
 
 
