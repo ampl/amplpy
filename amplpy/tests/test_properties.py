@@ -11,45 +11,57 @@ class TestProperties(TestBase.TestBase):
         ampl = self.ampl
         ampl.eval("var x;")
         ampl.var["x"] = 10
-        self.assertEqual(ampl.var["x"].value(), ampl.get_variable("x").value())
-        self.assertEqual(len(list(ampl.var)), len(list(ampl.get_variables())))
+
+        self.assertEqual(ampl.var["x"].value(), 10)
+        self.assertEqual(ampl.get_variable("x").value(), 10)
+        self.assertEqual(len(list(ampl.var)), 1)
+        self.assertEqual(len(list(ampl.get_variables())), 1)
 
     def test_con_prop(self):
         ampl = self.ampl
         ampl.eval("var x; s.t. c: x = 10;")
-        ampl.con["c"] = 10
-        self.assertEqual(ampl.con["c"].dual(), ampl.get_constraint("c").dual())
-        self.assertEqual(len(list(ampl.con)), len(list(ampl.get_constraints())))
+        ampl.con["c"].set_dual(1)  # FIXME: does not seem to have any effect
+        self.assertEqual(ampl.con["c"].body(), 10)
+        self.assertEqual(ampl.get_constraint("c").body(), 10)
+        self.assertEqual(len(list(ampl.con)), 1)
+        self.assertEqual(len(list(ampl.get_constraints())), 1)
 
     def test_obj_prop(self):
         ampl = self.ampl
         ampl.eval("var x; maximize obj: x;")
-        self.assertEqual(ampl.obj["obj"].name(), ampl.get_objective("obj").name())
-        self.assertEqual(len(list(ampl.obj)), len(list(ampl.get_objectives())))
+        self.assertEqual(ampl.obj["obj"].name(), "obj")
+        self.assertEqual(ampl.get_objective("obj").name(), "obj")
+        self.assertEqual(len(list(ampl.obj)), 1)
+        self.assertEqual(len(list(ampl.get_objectives())), 1)
 
     def test_set_prop(self):
         ampl = self.ampl
         ampl.eval("set s;")
         ampl.set["s"] = [1, 2, 3]
-        self.assertEqual(ampl.set["s"].name(), ampl.get_set("s").name())
+        self.assertEqual(ampl.set["s"].name(), "s")
+        self.assertEqual(ampl.get_set("s").name(), "s")
         self.assertEqual(ampl.set["s"].size(), 3)
-        self.assertEqual(len(list(ampl.set)), len(list(ampl.get_sets())))
+        self.assertEqual(len(list(ampl.set)), 1)
+        self.assertEqual(len(list(ampl.get_sets())), 1)
 
     def test_param_prop(self):
         ampl = self.ampl
         ampl.eval("param p1; param p2{1..2};")
-        self.assertEqual(ampl.param["p1"].name(), ampl.get_parameter("p1").name())
+        self.assertEqual(ampl.param["p1"].name(), "p1")
+        self.assertEqual(ampl.get_parameter("p1").name(), "p1")
         ampl.param["p1"] = 3
         self.assertEqual(ampl.param["p1"].value(), 3)
         ampl.param["p2"] = {1: 10, 2: 20}
         self.assertEqual(ampl.param["p2"][1], 10)
         self.assertEqual(ampl.param["p2"][2], 20)
-        self.assertEqual(len(list(ampl.param)), len(list(ampl.get_parameters())))
+        self.assertEqual(len(list(ampl.param)), 2)
+        self.assertEqual(len(list(ampl.get_parameters())), 2)
 
     def test_option_prop(self):
         ampl = self.ampl
         ampl.option["solver"] = "gurobi"
-        self.assertEqual(ampl.option["solver"], ampl.get_option("solver"))
+        self.assertEqual(ampl.option["solver"], "gurobi")
+        self.assertEqual(ampl.get_option("solver"), "gurobi")
 
     def test_solve_result(self):
         ampl = self.ampl
