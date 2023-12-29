@@ -280,6 +280,9 @@ class AMPL(object):
         Returns:
           A string with the output.
         """
+        # Workaround for #56
+        if not statements.endswith((" ", ";", "\n")):
+            statements += "\n"
         return self._impl.getOutput(statements)
 
     def reset(self):

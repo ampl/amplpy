@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.13.1 - 2023-12-28
+## 0.13.1 - 2023-12-29
 - Upgrade ampltools to 0.7.2 adding amplpy.bundle command.
 - Fix issue with environment variables on Windows in a generic way.
 - Add return_output and solvername_options arguments to AMPL.solve

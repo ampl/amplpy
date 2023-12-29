@@ -410,6 +410,14 @@ class TestAMPL(TestBase.TestBase):
         print("output2:", output)
         self.assertTrue("outlev" in output)
 
+    def test_issue56(self):
+        # https://github.com/ampl/amplpy/issues/56
+        ampl = self.ampl
+        self.assertEqual(
+            ampl.get_output("for{i in 0..2} { display i; }"),
+            ampl.get_output("for{i in 0..2} { display i;}"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
