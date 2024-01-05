@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.13.2 - 2023-01-XX
+- Flush standard output after every message in the default OutputHandler.
+
 ## 0.13.1 - 2023-12-29
 - Upgrade libampl to 2.3.7-20231229.
 - Upgrade ampltools to 0.7.3 adding amplpy.bundle command.
