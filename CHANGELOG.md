@@ -2,8 +2,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.13.2 - 2023-01-XX
-- Flush standard output after every message in the default OutputHandler.
+## 0.13.2 - 2024-01-05
+- OutputHandler: Flush standard output after every message.
 
 ## 0.13.1 - 2023-12-29
 - Upgrade libampl to 2.3.7-20231229.
