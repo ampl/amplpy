@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.4-2024-01-05
+- Update support message.
+
 ## 0.7.3-2023-12-27
 - amplpy.bundle: fix issue "--keep-license" argument.
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 from .notebooks import (
     ampl_notebook,
 )
@@ -15,8 +15,6 @@ from .utils import (
 )
 
 _SUPPORT_MESSAGE = """
-
-Please report any bugs at: https://github.com/ampl/amplpy
 
 For support/feedback go to https://discuss.ampl.com or e-mail <support@ampl.com>
 """
