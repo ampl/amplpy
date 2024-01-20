@@ -19,7 +19,7 @@ stages:
           python -m pip install .
           python setup.py sdist -d upload
           cd docs
-          pip install -r requirements-dev.txt
+          pip install -r requirements-dev.txt --upgrade
           make html
           cd ..
           mkdir -p upload/doc
