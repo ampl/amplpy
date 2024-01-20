@@ -15,9 +15,8 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install setuptools
-          python setup.py sdist -d upload
           pip install .
+          python setup.py sdist -d upload
           cd docs
           pip install -r requirements-dev.txt
           make html

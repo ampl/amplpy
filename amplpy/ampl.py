@@ -15,7 +15,8 @@ from .dataframe import DataFrame
 from .iterators import EntityMap
 from .entity import Entity
 from . import exceptions
-from . import amplpython
+
+# from . import amplpython
 
 try:
     import pandas as pd
