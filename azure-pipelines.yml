@@ -15,7 +15,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          pip install .
+          python -m pip install .
           python setup.py sdist -d upload
           cd docs
           pip install -r requirements-dev.txt
