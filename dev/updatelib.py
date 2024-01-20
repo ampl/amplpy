@@ -5,7 +5,7 @@ import sys
 import shutil
 import tempfile
 
-VERSION = "nightly"
+VERSION = "nightly/v3"
 API_URL = f"https://portal.ampl.com/dl/API/future/{VERSION}/libampl.zip"
 ARCHS = ["amd64", "ppc64le", "aarch64"]
 

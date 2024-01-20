@@ -38,8 +38,14 @@ Or, if you are using amplpy.modules, please make sure that they are installed:
     $ python -m amplpy.modules install highs cbc gurobi
 """
 
+from _amplpy import AMPL as _AMPL
 
-class AMPL(object):
+
+class AMPL(_AMPL):
+    pass
+
+
+class AMPLOrg(object):
     """An AMPL translator.
 
     An object of this class can be used to do the following tasks:

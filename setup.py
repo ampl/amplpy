@@ -64,6 +64,7 @@ With `amplpy` you can model and solve large scale optimization problems in Pytho
 * PyPI Repository: https://pypi.python.org/pypi/amplpy
 '''
 from setuptools import setup, Extension
+from Cython.Build import cythonize
 import platform
 import sys
 import os
@@ -87,6 +88,7 @@ else:
     LIBRARY_EXT = ".dll"
 
 CPP_BASE = os.path.join("amplpy", "amplpython", "cppinterface")
+CYTHON_BASE = os.path.join("amplpy", "cython")
 LIBRARY_BASE = os.path.join(CPP_BASE, "lib")
 LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
 
@@ -127,7 +129,7 @@ def compile_args():
             "-Wno-catch-value",
             "-Wno-unused-variable",
         ]
-        return ["-std=c++11"] + ignore_warnings
+        return ignore_warnings
     elif OSTYPE == "Darwin":
         ignore_warnings = [
             "-Wno-unused-variable",
@@ -140,7 +142,6 @@ def compile_args():
             ]
         return (
             [
-                "-std=c++11",
                 "-mmacosx-version-min=10.9",
             ]
             + debug
@@ -200,17 +201,19 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     packages=["amplpy"],
-    ext_modules=[
-        Extension(
-            "_amplpython",
-            libraries=["ampl"],
-            library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
-            include_dirs=[os.path.join(CPP_BASE, "include")],
-            extra_compile_args=compile_args(),
-            extra_link_args=link_args(),
-            sources=[os.path.join(CPP_BASE, "amplpythonPYTHON_wrap.cxx")],
-        )
-    ],
+    ext_modules=cythonize(
+        [
+            Extension(
+                "_amplpy",
+                libraries=["ampl"],
+                library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
+                include_dirs=[os.path.join(CPP_BASE, "include")],
+                extra_compile_args=compile_args(),
+                extra_link_args=link_args(),
+                sources=[os.path.join(CYTHON_BASE, "ampl.pyx")],
+            )
+        ]
+    ),
     package_data={"": package_content()},
     install_requires=["ampltools >= 0.7.4"],
 )
