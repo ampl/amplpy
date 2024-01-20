@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from . import amplpython
 
 
-class OutputHandler(amplpython.OutputHandler):
+class OutputHandler(object):
     """
     Interface to handle the outputs from the calls to any
     function that causes the underlying AMPL interpreter to display a message.
@@ -29,319 +28,323 @@ class OutputHandler(amplpython.OutputHandler):
         print(msg, end="", flush=True)
 
 
-class Kind(object):
-    """
-    Represents the type of the output coming from the interpreter.
-    """
+class Kind(object):  # TODO
+    pass
 
-    WAITING = amplpython.WAITING
-    """
-    Output ``prompt2``, returned when incomplete statements are interpreted.
-    """
 
-    BREAK = amplpython.BREAK
-    """
-    Output ``break``, displayed when an operation is interrupted with SIGINT.
-    """
+# class Kind(object):
+#     """
+#     Represents the type of the output coming from the interpreter.
+#     """
 
-    CD = amplpython.CD
-    """
-    Output ``cd``, returned by the ``cd`` function.
-    """
+#     WAITING = amplpython.WAITING
+#     """
+#     Output ``prompt2``, returned when incomplete statements are interpreted.
+#     """
 
-    DISPLAY = amplpython.DISPLAY
-    """
-    Output ``display``, returned by the ``display`` function.
-    """
+#     BREAK = amplpython.BREAK
+#     """
+#     Output ``break``, displayed when an operation is interrupted with SIGINT.
+#     """
 
-    EXIT = amplpython.EXIT
-    """
-    Output ``exit``, returned as last message from AMPL before exiting the
-    interpreter.
-    """
+#     CD = amplpython.CD
+#     """
+#     Output ``cd``, returned by the ``cd`` function.
+#     """
 
-    EXPAND = amplpython.EXPAND
-    """
-    Output ``expand``, returned by the ``expand`` function.
+#     DISPLAY = amplpython.DISPLAY
+#     """
+#     Output ``display``, returned by the ``display`` function.
+#     """
 
-    """
+#     EXIT = amplpython.EXIT
+#     """
+#     Output ``exit``, returned as last message from AMPL before exiting the
+#     interpreter.
+#     """
 
-    LOAD = amplpython.LOAD
-    """
-    Output ``load``, returned by the ``load`` function when loading a library.
-    """
+#     EXPAND = amplpython.EXPAND
+#     """
+#     Output ``expand``, returned by the ``expand`` function.
 
-    OPTION = amplpython.OPTION
-    """
-    Output ``option``, returned by the ``option`` function when getting the
-    value of an option.
-    """
+#     """
 
-    PRINT = amplpython.PRINT
-    """
-    Output ``print``, returned by the ``print`` function when printing values
-    from AMPL command line.
-    """
+#     LOAD = amplpython.LOAD
+#     """
+#     Output ``load``, returned by the ``load`` function when loading a library.
+#     """
 
-    PROMPT = amplpython.PROMPT  # prompt1 and prompt3
-    """
-    Output ``prompt1``, normal AMPL prompt.
-    """
+#     OPTION = amplpython.OPTION
+#     """
+#     Output ``option``, returned by the ``option`` function when getting the
+#     value of an option.
+#     """
 
-    SOLUTION = amplpython.SOLUTION
-    """
-    Output ``solution``, returned when loading a solution with the command
-    ``solution``, contains the solver message.
-    """
+#     PRINT = amplpython.PRINT
+#     """
+#     Output ``print``, returned by the ``print`` function when printing values
+#     from AMPL command line.
+#     """
 
-    SOLVE = amplpython.SOLVE
-    """
-    Output ``solve``, returned by the ``solve`` function, contains the solver
-    message.
-    """
+#     PROMPT = amplpython.PROMPT  # prompt1 and prompt3
+#     """
+#     Output ``prompt1``, normal AMPL prompt.
+#     """
 
-    SHOW = amplpython.SHOW
-    """
-    Output ``show``, returned by the ``show`` function.
-    """
+#     SOLUTION = amplpython.SOLUTION
+#     """
+#     Output ``solution``, returned when loading a solution with the command
+#     ``solution``, contains the solver message.
+#     """
 
-    XREF = amplpython.XREF
-    """
-    Output ``xref``, returned by the ``xref`` function.
-    """
+#     SOLVE = amplpython.SOLVE
+#     """
+#     Output ``solve``, returned by the ``solve`` function, contains the solver
+#     message.
+#     """
 
-    SHELL_OUTPUT = amplpython.SHELL_OUTPUT
-    """
-    Output of the AMPL command ``shell``.
-    """
+#     SHOW = amplpython.SHOW
+#     """
+#     Output ``show``, returned by the ``show`` function.
+#     """
 
-    SHELL_MESSAGE = amplpython.SHELL_MESSAGE
-    """
-    Messages from the command ``shell``.
-    """
+#     XREF = amplpython.XREF
+#     """
+#     Output ``xref``, returned by the ``xref`` function.
+#     """
 
-    MISC = amplpython.MISC
-    """
-    Output ``misc``.
-    """
+#     SHELL_OUTPUT = amplpython.SHELL_OUTPUT
+#     """
+#     Output of the AMPL command ``shell``.
+#     """
 
-    WRITE_TABLE = amplpython.WRITE_TABLE
-    """
-    Messages from the command ``write table``.
-    """
+#     SHELL_MESSAGE = amplpython.SHELL_MESSAGE
+#     """
+#     Messages from the command ``shell``.
+#     """
 
-    READ_TABLE = amplpython.READ_TABLE
-    """
-    Messages from the command ``read table``.
-    """
+#     MISC = amplpython.MISC
+#     """
+#     Output ``misc``.
+#     """
 
-    _READTABLE = amplpython._READTABLE
-    """
-    Internal messages from the command ``read table``.
-    """
+#     WRITE_TABLE = amplpython.WRITE_TABLE
+#     """
+#     Messages from the command ``write table``.
+#     """
 
-    _WRITETABLE = amplpython._WRITETABLE
-    """
-    Internal messages from the command ``write table``.
-    """
+#     READ_TABLE = amplpython.READ_TABLE
+#     """
+#     Messages from the command ``read table``.
+#     """
 
-    BREAKPOINT = amplpython.BREAKPOINT
-    """
-    Breakpoint hit.
-    """
+#     _READTABLE = amplpython._READTABLE
+#     """
+#     Internal messages from the command ``read table``.
+#     """
 
-    CALL = amplpython.CALL
-    """
-    Output of a script ``call``.
+#     _WRITETABLE = amplpython._WRITETABLE
+#     """
+#     Internal messages from the command ``write table``.
+#     """
 
-    """
+#     BREAKPOINT = amplpython.BREAKPOINT
+#     """
+#     Breakpoint hit.
+#     """
 
-    CHECK = amplpython.CHECK
-    """
-    Output of a ``check`` operation.
-    """
+#     CALL = amplpython.CALL
+#     """
+#     Output of a script ``call``.
 
-    CLOSE = amplpython.CLOSE
-    """
-    Output of a ``close`` command for output redirection.
-    """
+#     """
 
-    COMMANDS = amplpython.COMMANDS
-    """
-    Output of a ``commands`` call into another file.
-    """
+#     CHECK = amplpython.CHECK
+#     """
+#     Output of a ``check`` operation.
+#     """
 
-    CONTINUE = amplpython.CONTINUE
-    """
-    Issued when ``continue`` is encountered.
-    """
+#     CLOSE = amplpython.CLOSE
+#     """
+#     Output of a ``close`` command for output redirection.
+#     """
 
-    DATA = amplpython.DATA
-    """
-    Output of a ``data`` command.
-    """
+#     COMMANDS = amplpython.COMMANDS
+#     """
+#     Output of a ``commands`` call into another file.
+#     """
 
-    DELETECMD = amplpython.DELETECMD
-    """
-    Output of a ``delete`` command.
-    """
+#     CONTINUE = amplpython.CONTINUE
+#     """
+#     Issued when ``continue`` is encountered.
+#     """
 
-    DROP = amplpython.DROP
-    """
-    Output of a ``drop`` command.
-    """
+#     DATA = amplpython.DATA
+#     """
+#     Output of a ``data`` command.
+#     """
 
-    DROP_OR_RESTORE_ALL = amplpython.DROP_OR_RESTORE_ALL
-    """
-    Internal.
-    """
+#     DELETECMD = amplpython.DELETECMD
+#     """
+#     Output of a ``delete`` command.
+#     """
 
-    ELSE = amplpython.ELSE
-    """
-    Else block.
-    """
+#     DROP = amplpython.DROP
+#     """
+#     Output of a ``drop`` command.
+#     """
 
-    ELSE_CHECK = amplpython.ELSE_CHECK
-    """
-    Internal.
-    """
+#     DROP_OR_RESTORE_ALL = amplpython.DROP_OR_RESTORE_ALL
+#     """
+#     Internal.
+#     """
 
-    ENDIF = amplpython.ENDIF
-    """
-    End of if block.
-    """
+#     ELSE = amplpython.ELSE
+#     """
+#     Else block.
+#     """
 
-    ENVIRON = amplpython.ENVIRON
-    """
-    Output of a ``environ`` command.
-    """
+#     ELSE_CHECK = amplpython.ELSE_CHECK
+#     """
+#     Internal.
+#     """
 
-    FIX = amplpython.FIX
-    """
-    Output of a ``fix`` command.
-    """
+#     ENDIF = amplpython.ENDIF
+#     """
+#     End of if block.
+#     """
 
-    FOR = amplpython.FOR
-    """
-    Output of a ``for`` command.
-    """
+#     ENVIRON = amplpython.ENVIRON
+#     """
+#     Output of a ``environ`` command.
+#     """
 
-    IF = amplpython.IF
-    """
-    Output of an ``if`` command.
-    """
+#     FIX = amplpython.FIX
+#     """
+#     Output of a ``fix`` command.
+#     """
 
-    LET = amplpython.LET
-    """
-    Output of a ``let`` command.
-    """
+#     FOR = amplpython.FOR
+#     """
+#     Output of a ``for`` command.
+#     """
 
-    LOOPEND = amplpython.LOOPEND
-    """
-    End of loop.
-    """
+#     IF = amplpython.IF
+#     """
+#     Output of an ``if`` command.
+#     """
 
-    OBJECTIVE = amplpython.OBJECTIVE
-    """
-    Output of an ``objective`` command.
-    """
+#     LET = amplpython.LET
+#     """
+#     Output of a ``let`` command.
+#     """
 
-    OPTION_RESET = amplpython.OPTION_RESET
-    """
-    Occurs when resetting option values.
-    """
+#     LOOPEND = amplpython.LOOPEND
+#     """
+#     End of loop.
+#     """
 
-    PRINTF = amplpython.PRINTF
-    """
-    Output of a ``printf`` command.
-    """
+#     OBJECTIVE = amplpython.OBJECTIVE
+#     """
+#     Output of an ``objective`` command.
+#     """
 
-    PROBLEM = amplpython.PROBLEM
-    """
-    Output of a ``problem`` command.
-    """
+#     OPTION_RESET = amplpython.OPTION_RESET
+#     """
+#     Occurs when resetting option values.
+#     """
 
-    PURGE = amplpython.PURGE
-    """
-    Output of a ``purge`` command.
-    """
+#     PRINTF = amplpython.PRINTF
+#     """
+#     Output of a ``printf`` command.
+#     """
 
-    RBRACE = amplpython.RBRACE
-    """
-    Occurs when a right brace is encountered.
-    """
+#     PROBLEM = amplpython.PROBLEM
+#     """
+#     Output of a ``problem`` command.
+#     """
 
-    READ = amplpython.READ
-    """
-    Output of a ``read`` command.
-    """
+#     PURGE = amplpython.PURGE
+#     """
+#     Output of a ``purge`` command.
+#     """
 
-    RELOAD = amplpython.RELOAD
-    """
-    Output of a ``reload`` command.
-    """
+#     RBRACE = amplpython.RBRACE
+#     """
+#     Occurs when a right brace is encountered.
+#     """
 
-    REMOVE = amplpython.REMOVE
-    """
-    Output of a ``remove`` command.
-    """
+#     READ = amplpython.READ
+#     """
+#     Output of a ``read`` command.
+#     """
 
-    REPEAT = amplpython.REPEAT
-    """
-    Beginning of a repeat loop.
-    """
+#     RELOAD = amplpython.RELOAD
+#     """
+#     Output of a ``reload`` command.
+#     """
 
-    REPEAT_END = amplpython.REPEAT_END
-    """
-    End of a repeat loop.
-    """
+#     REMOVE = amplpython.REMOVE
+#     """
+#     Output of a ``remove`` command.
+#     """
 
-    RESET = amplpython.RESET
-    """
-    Output of a ``reset`` command.
-    """
+#     REPEAT = amplpython.REPEAT
+#     """
+#     Beginning of a repeat loop.
+#     """
 
-    RESTORE = amplpython.RESTORE
-    """
-    Output of a ``restore`` command.
-    """
+#     REPEAT_END = amplpython.REPEAT_END
+#     """
+#     End of a repeat loop.
+#     """
 
-    RUN_ARGS = amplpython.RUN_ARGS
-    """
-    Internal.
-    """
+#     RESET = amplpython.RESET
+#     """
+#     Output of a ``reset`` command.
+#     """
 
-    SEMICOLON = amplpython.SEMICOLON
-    """
-    Internal.
-    """
+#     RESTORE = amplpython.RESTORE
+#     """
+#     Output of a ``restore`` command.
+#     """
 
-    SSTEP = amplpython.SSTEP
-    """
-    Internal.
-    """
+#     RUN_ARGS = amplpython.RUN_ARGS
+#     """
+#     Internal.
+#     """
 
-    THEN = amplpython.THEN
-    """
-    Beginning of the ``then`` part of an if statement.
-    """
+#     SEMICOLON = amplpython.SEMICOLON
+#     """
+#     Internal.
+#     """
 
-    UNFIX = amplpython.UNFIX
-    """
-    Output of an ``unfix`` command.
-    """
+#     SSTEP = amplpython.SSTEP
+#     """
+#     Internal.
+#     """
 
-    UNLOAD = amplpython.UNLOAD
-    """
-    Output of an ``unload`` command.
-    """
+#     THEN = amplpython.THEN
+#     """
+#     Beginning of the ``then`` part of an if statement.
+#     """
 
-    UPDATE = amplpython.UPDATE
-    """
-    Output of an ``update`` command.
-    """
+#     UNFIX = amplpython.UNFIX
+#     """
+#     Output of an ``unfix`` command.
+#     """
 
-    WRITE = amplpython.WRITE
-    """
-    Output of a ``write`` command.
-    """
+#     UNLOAD = amplpython.UNLOAD
+#     """
+#     Output of an ``unload`` command.
+#     """
+
+#     UPDATE = amplpython.UPDATE
+#     """
+#     Output of an ``update`` command.
+#     """
+
+#     WRITE = amplpython.WRITE
+#     """
+#     Output of a ``write`` command.
+#     """
