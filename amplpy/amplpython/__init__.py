@@ -21,7 +21,8 @@ if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "cppinterface"))
 try:
-    from amplpython import _READTABLE, _WRITETABLE
-    from amplpython import *
+    # from amplpython import _READTABLE, _WRITETABLE
+    # from amplpython import *
+    pass
 except Exception as exp:
     raise exp

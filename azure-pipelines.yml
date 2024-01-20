@@ -15,6 +15,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
+          python -m pip install setuptools cython
           python -m pip install .
           python setup.py sdist -d upload
           cd docs
