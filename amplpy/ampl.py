@@ -327,12 +327,12 @@ class AMPL(object):
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
+        for option, value in kwargs.items():
+            assert option.endswith("_options")
+            self.set_option(option, value)
         if not verbose or return_output:
-            if solver is not None:
+            if solver != "":
                 self.set_option("solver", solver)
-            for option, value in kwargs.items():
-                assert option.endswith("_options")
-                self.set_option(option, value)
             if problem is None:
                 output = self.get_output("solve;")
             else:
