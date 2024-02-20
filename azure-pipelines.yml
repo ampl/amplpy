@@ -34,7 +34,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.2
+          python -m pip install --upgrade cibuildwheel==2.16.5
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -46,7 +46,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.2
+          python -m pip install --upgrade cibuildwheel==2.16.5
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -58,7 +58,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.2
+          python -m pip install --upgrade cibuildwheel==2.16.5
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -122,7 +122,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.2
+          python -m pip install --upgrade cibuildwheel==2.16.5
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
