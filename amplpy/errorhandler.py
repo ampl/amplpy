@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+try:
+    from .tools import _SUPPORT_MESSAGE
+except Exception:
+    _SUPPORT_MESSAGE = ""
 
 
 def display_error_message(exception, error=True):
     msg = "\t" + str(exception).replace("\n", "\n\t")
     if error:
-        print(f"Error:\n{msg}")
+        print(f"Error:\n{msg}{_SUPPORT_MESSAGE}")
     else:
         print(f"Warning:\n{msg}")
 

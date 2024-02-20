@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.13.3 - 2024-02-20
+- Fix issues with AMPL.solve(verbose=False) when the solver argument was not set.
+
 ## 0.13.2 - 2024-01-05
 - OutputHandler: Flush standard output after every message.
 
