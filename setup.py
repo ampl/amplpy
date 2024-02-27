@@ -212,5 +212,5 @@ setup(
         )
     ],
     package_data={"": package_content()},
-    install_requires=["ampltools >= 0.7.4"],
+    install_requires=["ampltools >= 0.7.5"],
 )

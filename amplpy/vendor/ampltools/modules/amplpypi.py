@@ -268,7 +268,7 @@ def generate_requirements(modules=[]):
 
 
 def _find_ampl_lic():
-    for path in os.environ["PATH"].split(os.pathsep):
+    for path in os.environ.get("PATH", "").split(os.pathsep):
         ampl_lic = os.path.abspath(os.path.join(path, "ampl.lic"))
         if os.path.isfile(ampl_lic):
             return ampl_lic
@@ -335,7 +335,7 @@ def load_modules(modules=[], head=True, verbose=False):
     """
     path_modules = []
     path_others = []
-    for path in os.environ["PATH"].split(os.pathsep):
+    for path in os.environ.get("PATH", "").split(os.pathsep):
         if path.endswith("bin") and "ampl_module_" in path:
             path_modules.append(path)
         else:
@@ -376,7 +376,7 @@ def unload_modules(modules=[]):
     os.environ["PATH"] = os.pathsep.join(
         [
             path
-            for path in os.environ["PATH"].split(os.pathsep)
+            for path in os.environ.get("PATH", "").split(os.pathsep)
             if not path.endswith(to_remove)
         ]
     )
