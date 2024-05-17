@@ -418,7 +418,7 @@ class TestAMPL(TestBase.TestBase):
             ampl.get_output("for{i in 0..2} { display i;}"),
         )
 
-    def test_iis(self):
+    def test_get_iis(self):
         ampl = self.ampl
         ampl.eval(
             r"""
@@ -430,10 +430,37 @@ class TestAMPL(TestBase.TestBase):
         )
         ampl.option["presolve"] = 0
         ampl.solve(solver="gurobi", gurobi_options="outlev=0 iis=1")
-        if ampl.solve_result == "infeasible":
-            var_iis, con_iis = ampl.get_iis()
-            self.assertEqual(var_iis, {"x": "low", "y": "low"})
-            self.assertEqual(con_iis, {"s": "mem"})
+        self.assertEqual(ampl.solve_result, "infeasible")
+        var_iis, con_iis = ampl.get_iis()
+        self.assertEqual(var_iis, {"x": "low", "y": "low"})
+        self.assertEqual(con_iis, {"s": "mem"})
+
+    def test_get_solution(self):
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+        set I := {1, 2, 'a', 'b'};
+        var x >= 0;
+        var y{I} >= 0 <= 5;
+
+        maximize obj: sum{i in I} y[i]-x;
+        """
+        )
+        ampl.option["presolve"] = 0
+        ampl.solve(solver="highs", gurobi_options="outlev=0 iis=1")
+        self.assertEqual(ampl.solve_result, "solved")
+        self.assertEqual(
+            ampl.get_solution(flat=False, zeros=True),
+            {"x": 0, "y": {1: 5, 2: 5, "a": 5, "b": 5}},
+        )
+        self.assertEqual(
+            ampl.get_solution(flat=False),
+            {"y": {1: 5, 2: 5, "a": 5, "b": 5}},
+        )
+        self.assertEqual(
+            ampl.get_solution(flat=True),
+            {"y[1]": 5, "y[2]": 5, "y['a']": 5, "y['b']": 5},
+        )
 
 
 if __name__ == "__main__":

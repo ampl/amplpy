@@ -2,6 +2,7 @@
 import sys
 import os
 from numbers import Real
+from ast import literal_eval
 
 from .errorhandler import ErrorHandler
 from .outputhandler import OutputHandler
@@ -929,6 +930,47 @@ class AMPL(object):
             ).to_list(skip_index=True)
         )
         return df_var, df_con
+
+    def get_solution(self, flat=False, zeros=False):
+        """
+        Get solution values for all variables.
+
+        Args:
+            flat: Return a flat dictionary if set to True, or a nested dictionary otherwise.
+
+            zeros: Include zeros in the solution if set to True.
+
+        Returns:
+            Returns a dictionary with the solution.
+
+        Usage example:
+
+        .. code-block:: python
+
+            ampl.solve(solver="gurobi", gurobi_options="outlev=0")
+            if ampl.solve_result == "solved":
+                print(ampl.get_solution())
+        """
+        if zeros:
+            stmt = "{i in 1.._nvars} (_varname[i], _var[i].val)"
+        else:
+            stmt = "{i in 1.._nvars: _var[i].val != 0} (_varname[i], _var[i].val)"
+        flat_solution = self.get_data(stmt).to_list(skip_index=True)
+        if flat:
+            return dict(flat_solution)
+        solution = {}
+        for varname, value in flat_solution:
+            if "[" not in varname:
+                solution[varname] = value
+            else:
+                p = varname.find("[")
+                v, index = varname[:p], literal_eval(f"({varname[p+1:-1]},)")
+                if v not in solution:
+                    solution[v] = {}
+                if len(index) == 1:
+                    index = index[0]
+                solution[v][index] = value
+        return solution
 
     def _start_recording(self, filename):
         """
