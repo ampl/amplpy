@@ -418,6 +418,23 @@ class TestAMPL(TestBase.TestBase):
             ampl.get_output("for{i in 0..2} { display i;}"),
         )
 
+    def test_iis(self):
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+            var x >= 0;
+            var y >= 0;
+            maximize obj: x+y;
+            s.t. s: x+y <= -5;
+            """
+        )
+        ampl.option["presolve"] = 0
+        ampl.solve(solver="gurobi", gurobi_options="outlev=0 iis=1")
+        if ampl.solve_result == "infeasible":
+            var_iis, con_iis = ampl.get_iis()
+            self.assertEqual(var_iis, {"x": "low", "y": "low"})
+            self.assertEqual(con_iis, {"s": "mem"})
+
 
 if __name__ == "__main__":
     unittest.main()

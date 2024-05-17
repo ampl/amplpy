@@ -891,6 +891,45 @@ class AMPL(object):
         """
         return self.get_value("solve_result_num")
 
+    def get_iis(self):
+        """
+        Get IIS attributes for all variables and constraints.
+
+        Returns:
+            Tuple with a dictionary for variables in the IIS and another for the constraints.
+
+        Usage example:
+
+        .. code-block:: python
+
+            from amplpy import AMPL
+            ampl = AMPL()
+            ampl.eval(
+                r\"\"\"
+            var x >= 0;
+            var y >= 0;
+            maximize obj: x+y;
+            s.t. s: x+y <= -5;
+            \"\"\"
+            )
+            ampl.option["presolve"] = 0  # disable AMPL presolve
+            ampl.solve(solver="gurobi", gurobi_options="outlev=1 iis=1")
+            if ampl.solve_result == "infeasible":
+                var_iis, con_iis = ampl.get_iis()
+                print(var_iis, con_iis)
+        """
+        df_var = dict(
+            self.get_data(
+                "{i in 1.._nvars: _var[i].iis != 'non'} (_varname[i], _var[i].iis)"
+            ).to_list(skip_index=True)
+        )
+        df_con = dict(
+            self.get_data(
+                "{i in 1.._ncons: _con[i].iis != 'non'} (_conname[i], _con[i].iis)"
+            ).to_list(skip_index=True)
+        )
+        return df_var, df_con
+
     def _start_recording(self, filename):
         """
         Start recording the session to a file for debug purposes.

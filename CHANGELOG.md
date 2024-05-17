@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.14.0 - 2024-05-##
 - Allow assigning values to indexed sets from a dictionary with the lists of members
   for every index.
+- Add AMPL.get_iis() to return dictionaries with variables and constraints in IIS.
 
 ## 0.13.3 - 2024-02-20
 - Fix issues with AMPL.solve(verbose=False) when the solver argument was not set.
