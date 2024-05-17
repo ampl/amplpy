@@ -410,6 +410,24 @@ class TestEntities(TestBase.TestBase):
         with self.assertRaises(ValueError):
             ampl.get_set("B").set_values([1, 2])
 
+    def test_indexed_set(self):
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+        set I;
+        set J{I};
+        """
+        )
+        self.assertEqual(ampl.set["I"].is_scalar(), True)
+        self.assertEqual(ampl.set["J"].is_scalar(), False)
+        ampl.set["I"] = range(10)
+        ampl.set["J"] = {i: range(i) for i in range(10)}
+        self.assertEqual(ampl.set["I"].size(), 10)
+        self.assertEqual(list(ampl.set["I"].members()), list(range(10)))
+        for i in range(10):
+            self.assertEqual(ampl.set["J"][i].size(), i)
+            self.assertEqual(list(ampl.set["J"][i].members()), list(range(i)))
+
     def test_precision(self):
         pi = 3.1415926535897932384626433832795028841971
         ampl = self.ampl
