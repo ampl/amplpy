@@ -432,7 +432,7 @@ class TestAMPL(TestBase.TestBase):
             """
         )
         ampl.option["presolve"] = 0
-        ampl.solve(solver="gurobi", gurobi_options="outlev=0 iis=1")
+        ampl.solve(solver="gurobi", gurobi_options="outlev=1 iis=1")
         self.assertEqual(ampl.solve_result, "infeasible")
         var_iis, con_iis = ampl.get_iis()
         self.assertEqual(var_iis, {"x": "low", "y": "low"})
@@ -452,7 +452,7 @@ class TestAMPL(TestBase.TestBase):
         """
         )
         ampl.option["presolve"] = 0
-        ampl.solve(solver="highs", gurobi_options="outlev=0 iis=1")
+        ampl.solve(solver="highs", highs_options="outlev=1")
         self.assertEqual(ampl.solve_result, "solved")
         self.assertEqual(
             ampl.get_solution(flat=False, zeros=True),
