@@ -3,7 +3,7 @@ variables:
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_TEST_COMMAND: python -m amplpy.tests
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
-  CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base # ampl_module_highs
+  CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs
   CIBW_TEST_REQUIRES_PPC64LE: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
 stages:
