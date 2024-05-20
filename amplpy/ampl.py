@@ -931,7 +931,7 @@ class AMPL(object):
         )
         return df_var, df_con
 
-    def get_solution(self, flat=False, zeros=False):
+    def get_solution(self, flat=True, zeros=False):
         """
         Get solution values for all variables.
 
