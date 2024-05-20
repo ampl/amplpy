@@ -2,7 +2,9 @@ variables:
   CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_TEST_COMMAND: python -m amplpy.tests
-  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
+  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
+  CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs
+  CIBW_TEST_REQUIRES_PPC64LE: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
 stages:
 - stage: native
@@ -67,54 +69,66 @@ stages:
 - stage: qemu
   displayName: 'Build with QEMU'
   jobs:
-  - job: qemu
+  - job: qemu aarch64
     pool: {vmImage: 'Ubuntu-20.04'}
     strategy:
       matrix:
         aarch64 cp36:
           CIBW_BUILD: cp36-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp37:
           CIBW_BUILD: cp37-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp38:
           CIBW_BUILD: cp38-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp39:
           CIBW_BUILD: cp39-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp310:
           CIBW_BUILD: cp310-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp311:
           CIBW_BUILD: cp311-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp312:
           CIBW_BUILD: cp312-*
           CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         ppc64le cp36:
           CIBW_BUILD: cp36-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp37:
           CIBW_BUILD: cp37-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp38:
           CIBW_BUILD: cp38-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp39:
           CIBW_BUILD: cp39-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp310:
           CIBW_BUILD: cp310-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp311:
           CIBW_BUILD: cp311-*
           CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
         ppc64le cp312:
           CIBW_BUILD: cp312-*
           CIBW_ARCHS_LINUX: ppc64le
-    variables:
-      CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
     steps:
       - task: UsePythonVersion@0
       - bash: docker run --rm --privileged multiarch/qemu-user-static --persistent yes

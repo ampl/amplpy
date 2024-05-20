@@ -5,6 +5,7 @@ import shutil
 import os
 
 import amplpy
+from amplpy import modules
 from . import TestBase
 
 
@@ -384,8 +385,8 @@ class TestAMPL(TestBase.TestBase):
             ampl.write("bmod", "rc")
 
     def test_solve_arguments(self):
-        if shutil.which("highs") is None:
-            self.skipTest("highs not available")
+        if "highs" not in modules.installed():
+            self.skipTest("highs is not available")
         ampl = self.ampl
         ampl.eval(
             """
@@ -419,6 +420,8 @@ class TestAMPL(TestBase.TestBase):
         )
 
     def test_get_iis(self):
+        if "gurobi" not in modules.installed():
+            self.skipTest("gurobi is not available")
         ampl = self.ampl
         ampl.eval(
             r"""
@@ -436,6 +439,8 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(con_iis, {"s": "mem"})
 
     def test_get_solution(self):
+        if "highs" not in modules.installed():
+            self.skipTest("highs is not available")
         ampl = self.ampl
         ampl.eval(
             r"""
