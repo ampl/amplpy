@@ -69,7 +69,7 @@ stages:
 - stage: qemu
   displayName: 'Build with QEMU'
   jobs:
-  - job: qemu aarch64
+  - job: qemu
     pool: {vmImage: 'Ubuntu-20.04'}
     strategy:
       matrix:
