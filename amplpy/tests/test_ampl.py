@@ -426,16 +426,19 @@ class TestAMPL(TestBase.TestBase):
         ampl.eval(
             r"""
             var x >= 0;
-            var y >= 0;
-            maximize obj: x+y;
-            s.t. s: x+y <= -5;
+            var y{1..2} >= 0;
+            maximize obj: x+y[1]+y[2];
+            s.t. s: x+y[1] <= -5;
             """
         )
         ampl.option["presolve"] = 0
         ampl.solve(solver="gurobi", gurobi_options="outlev=1 iis=1")
         self.assertEqual(ampl.solve_result, "infeasible")
         var_iis, con_iis = ampl.get_iis()
-        self.assertEqual(var_iis, {"x": "low", "y": "low"})
+        self.assertEqual(var_iis, {"x": "low", "y[1]": "low"})
+        self.assertEqual(con_iis, {"s": "mem"})
+        var_iis, con_iis = ampl.get_iis(flat=False)
+        self.assertEqual(var_iis, {"x": "low", "y": {1: "low"}})
         self.assertEqual(con_iis, {"s": "mem"})
 
     def test_get_solution(self):

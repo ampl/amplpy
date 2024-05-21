@@ -25,6 +25,22 @@ except ImportError:
 inf = float("inf")
 
 
+def nested_dict_of_suffixes(lst):
+    nested = {}
+    for name, value in lst:
+        if "[" not in name:
+            nested[name] = value
+        else:
+            p = name.find("[")
+            v, index = name[:p], literal_eval(f"({name[p+1:-1]},)")
+            if v not in nested:
+                nested[v] = {}
+            if len(index) == 1:
+                index = index[0]
+            nested[v][index] = value
+    return nested
+
+
 AMPL_NOT_FOUND_MESSAGE = """
 Please make sure that the AMPL directory is in the system search path, or
 add it before instantiating the AMPL object with:
@@ -892,9 +908,12 @@ class AMPL(object):
         """
         return self.get_value("solve_result_num")
 
-    def get_iis(self):
+    def get_iis(self, flat=True):
         """
         Get IIS attributes for all variables and constraints.
+
+        Args:
+            flat: Return flat dictionaries if set to True, or nested dictionaries otherwise.
 
         Returns:
             Tuple with a dictionary for variables in the IIS and another for the constraints.
@@ -919,16 +938,18 @@ class AMPL(object):
                 var_iis, con_iis = ampl.get_iis()
                 print(var_iis, con_iis)
         """
-        iis_var = dict(
-            self.get_data(
-                "{i in 1.._nvars: _var[i].iis != 'non'} (_varname[i], _var[i].iis)"
-            ).to_list(skip_index=True)
-        )
-        iis_con = dict(
-            self.get_data(
-                "{i in 1.._ncons: _con[i].iis != 'non'} (_conname[i], _con[i].iis)"
-            ).to_list(skip_index=True)
-        )
+        iis_var = self.get_data(
+            "{i in 1.._nvars: _var[i].iis != 'non'} (_varname[i], _var[i].iis)"
+        ).to_list(skip_index=True)
+        iis_con = self.get_data(
+            "{i in 1.._ncons: _con[i].iis != 'non'} (_conname[i], _con[i].iis)"
+        ).to_list(skip_index=True)
+        if flat is False:
+            iis_var = nested_dict_of_suffixes(iis_var)
+            iis_con = nested_dict_of_suffixes(iis_con)
+        else:
+            iis_var = dict(iis_var)
+            iis_con = dict(iis_con)
         return iis_var, iis_con
 
     def get_solution(self, flat=True, zeros=False):
@@ -955,22 +976,10 @@ class AMPL(object):
             stmt = "{i in 1.._nvars} (_varname[i], _var[i].val)"
         else:
             stmt = "{i in 1.._nvars: _var[i].val != 0} (_varname[i], _var[i].val)"
-        flat_solution = self.get_data(stmt).to_list(skip_index=True)
+        lst_solution = self.get_data(stmt).to_list(skip_index=True)
         if flat:
-            return dict(flat_solution)
-        solution = {}
-        for varname, value in flat_solution:
-            if "[" not in varname:
-                solution[varname] = value
-            else:
-                p = varname.find("[")
-                v, index = varname[:p], literal_eval(f"({varname[p+1:-1]},)")
-                if v not in solution:
-                    solution[v] = {}
-                if len(index) == 1:
-                    index = index[0]
-                solution[v][index] = value
-        return solution
+            return dict(lst_solution)
+        return nested_dict_of_suffixes(lst_solution)
 
     def _start_recording(self, filename):
         """
