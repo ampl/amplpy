@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.14.0 - 2024-05-##
+## 0.14.0 - 2024-05-21
 - Allow assigning values to indexed sets from a dictionary with the lists of members
   for every index.
 - Add AMPL.get_iis() to return dictionaries with variables and constraints in IIS.

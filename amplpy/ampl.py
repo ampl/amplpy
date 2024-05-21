@@ -919,17 +919,17 @@ class AMPL(object):
                 var_iis, con_iis = ampl.get_iis()
                 print(var_iis, con_iis)
         """
-        df_var = dict(
+        iis_var = dict(
             self.get_data(
                 "{i in 1.._nvars: _var[i].iis != 'non'} (_varname[i], _var[i].iis)"
             ).to_list(skip_index=True)
         )
-        df_con = dict(
+        iis_con = dict(
             self.get_data(
                 "{i in 1.._ncons: _con[i].iis != 'non'} (_conname[i], _con[i].iis)"
             ).to_list(skip_index=True)
         )
-        return df_var, df_con
+        return iis_var, iis_con
 
     def get_solution(self, flat=True, zeros=False):
         """
