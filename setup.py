@@ -88,7 +88,7 @@ else:
     LIBRARY_EXT = ".dll"
 
 CPP_BASE = os.path.join("amplpy", "amplpython", "cppinterface")
-CYTHON_BASE = os.path.join("amplpy", "cython")
+#CYTHON_BASE = os.path.join("amplpy", "cython")
 LIBRARY_BASE = os.path.join(CPP_BASE, "lib")
 LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
 
@@ -210,9 +210,9 @@ setup(
                 include_dirs=[os.path.join(CPP_BASE, "include")],
                 extra_compile_args=compile_args(),
                 extra_link_args=link_args(),
-                sources=[os.path.join(CYTHON_BASE, "ampl.pyx")],
+                sources=[os.path.join("amplpy", "ampl.pyx")],
             )
-        ]
+        ], compiler_directives={"language_level": "3", 'binding': True, "embedsignature": True}
     ),
     package_data={"": package_content()},
     install_requires=["ampltools >= 0.7.4"],
