@@ -12,14 +12,14 @@ from cpython.bool cimport PyBool_Check
 from numbers import Real
 
 include "constraint.pxi"
-include "dataframe.pxi"
+#include "dataframe.pxi"
 include "entity.pxi"
 include "environment.pxi"
-include "errorhandler.pxi"
-include "exceptions.pxi"
+#include "errorhandler.pxi"
+#include "exceptions.pxi"
 include "iterators.pxi"
 include "objective.pxi"
-include "outputhandler.pxi"
+#include "outputhandler.pxi"
 include "parameter.pxi"
 include "set.pxi"
 include "util.pxi"
@@ -34,10 +34,10 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
         pass
     elif rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
         message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
+    #    raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
     elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
         message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise PresolveException("PresolveException: " + message.decode('utf-8'))
+    #    raise PresolveException("PresolveException: " + message.decode('utf-8'))
     elif rc == campl.AMPL_LICENSE_EXCEPTION:
         message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
         raise SystemError(message.decode('utf-8'))
@@ -172,10 +172,10 @@ cdef class AMPL:
                     print(f"* {line:75} *", file=sys.stderr)
                 print("*" * 79, file=sys.stderr)
             raise
-        self._output_handler = None
-        self._error_handler = None
-        self.set_output_handler(OutputHandler())
-        self.set_error_handler(ErrorHandler())
+    #    self._output_handler = None
+    #    self._error_handler = None
+    #    self.set_output_handler(OutputHandler())
+    #    self.set_error_handler(ErrorHandler())
 
     def __dealloc__(self):
         """
@@ -185,7 +185,7 @@ cdef class AMPL:
         """
         self.close()
 
-    def get_data(self, *statements):
+    #def get_data(self, *statements):
         """
         Get the data corresponding to the display statements. The statements
         can be AMPL expressions, or entities. It captures the equivalent of the
@@ -217,15 +217,15 @@ cdef class AMPL:
             DataFrame capturing the output of the display
             command in tabular form.
         """
-        cdef campl.AMPL_DATAFRAME* data
-        cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
-        for i in range(len(statements)):
-            statements_c[i] = strdup(statements[i].encode('utf-8'))
-        PY_AMPL_CALL(campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data))
-        for i in range(len(statements)):
-            free(statements_c[i])
-        free(statements_c)
-        return DataFrame.create(data)
+    #    cdef campl.AMPL_DATAFRAME* data
+    #    cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
+    #    for i in range(len(statements)):
+    #        statements_c[i] = strdup(statements[i].encode('utf-8'))
+    #    PY_AMPL_CALL(campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data))
+    #    for i in range(len(statements)):
+    #        free(statements_c[i])
+    #    free(statements_c)
+    #    return DataFrame.create(data)
 
     def get_entity(self, name):
         """
@@ -564,29 +564,29 @@ cdef class AMPL:
         PY_AMPL_CALL(campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v))
         return to_py_variant(v)
 
-    def set_data(self, data, set_name=None):
-        """
-        Assign the data in the dataframe to the AMPL entities with the names
-        corresponding to the column names.
+    #def set_data(self, data, set_name=None):
+    #    """
+    #    Assign the data in the dataframe to the AMPL entities with the names
+    #    corresponding to the column names.
 
-        Args:
-            data: The dataframe containing the data to be assigned.
+    #    Args:
+    #        data: The dataframe containing the data to be assigned.
 
-            set_name: The name of the set to which the indices values of the
-            DataFrame are to be assigned.
+    #        set_name: The name of the set to which the indices values of the
+    #        DataFrame are to be assigned.
 
-        Raises:
-            AMPLException: if the data assignment procedure was not successful.
-        """
-        if not isinstance(data, DataFrame):
-            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                data = DataFrame.from_pandas(data)
-        cdef DataFrame data_frame = data
-        cdef campl.AMPL_DATAFRAME* data_c = data_frame.get_ptr()
-        if set_name is None:
-            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
-        else:
-            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
+    #    Raises:
+    #        AMPLException: if the data assignment procedure was not successful.
+    #    """
+    #    if not isinstance(data, DataFrame):
+    #        if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+    #            data = DataFrame.from_pandas(data)
+    #    cdef DataFrame data_frame = data
+    #    cdef campl.AMPL_DATAFRAME* data_c = data_frame.get_ptr()
+    #    if set_name is None:
+    #        PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
+    #    else:
+    #        PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
 
     def read_table(self, table_name):
         """
@@ -641,48 +641,48 @@ cdef class AMPL:
         display = "display"
         PY_AMPL_CALL(campl.AMPL_CallVisualisationCommandOnNames(self._c_ampl, display.encode('utf-8'), <const char* const*>array, size))
 
-    def set_output_handler(self, output_handler):
-        """
-        Sets a new output handler.
+    #def set_output_handler(self, output_handler):
+    #    """
+    #    Sets a new output handler.
 
-        Args:
-            output_handler: The function handling the AMPL output derived from
-            interpreting user commands.
-        """
-        self._output_handler = output_handler
-        PY_AMPL_CALL(campl.AMPL_SetOutputHandler(self._c_ampl, PyOutput, <void*>output_handler))
+    #    Args:
+    #        output_handler: The function handling the AMPL output derived from
+    #        interpreting user commands.
+    #    """
+    #    self._output_handler = output_handler
+    #    PY_AMPL_CALL(campl.AMPL_SetOutputHandler(self._c_ampl, PyOutput, <void*>output_handler))
 
-    def set_error_handler(self, error_handler):
-        """
-        Sets a new error handler.
+    #def set_error_handler(self, error_handler):
+    #    """
+    #    Sets a new error handler.
 
-        Args:
-            error_handler: The object handling AMPL errors and warnings.
-        """
-        self._error_handler = error_handler
-        PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, <void*>error_handler, PyError))
+    #    Args:
+    #        error_handler: The object handling AMPL errors and warnings.
+    #    """
+    #    self._error_handler = error_handler
+    #    PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, <void*>error_handler, PyError))
 
-    def get_output_handler(self):
-        """
-        Get the current output handler.
+    #def get_output_handler(self):
+    #    """
+    #    Get the current output handler.
+#
+    #    Returns:
+    #        The current output handler.
+    #    """
+    #    cdef void* output_handler
+    #    output_handler = campl.AMPL_GetOutputHandler(self._c_ampl)
+    #    return <OutputHandler>output_handler
 
-        Returns:
-            The current output handler.
-        """
-        cdef void* output_handler
-        output_handler = campl.AMPL_GetOutputHandler(self._c_ampl)
-        return <OutputHandler>output_handler
-
-    def get_error_handler(self):
+    #def get_error_handler(self):
         """
         Get the current error handler.
 
         Returns:
             The current error handler.
         """
-        cdef void* error_handler
-        error_handler = campl.AMPL_GetErrorHandler(self._c_ampl)
-        return <ErrorHandler>error_handler
+    #    cdef void* error_handler
+    #    error_handler = campl.AMPL_GetErrorHandler(self._c_ampl)
+    #    return <ErrorHandler>error_handler
 
     def get_variables(self):
         """
@@ -1005,14 +1005,14 @@ cdef class AMPL:
     getConstraint = get_constraint
     getConstraints = get_constraints
     getCurrentObjective = get_current_objective
-    getData = get_data
+    #getData = get_data
     getEntity = get_entity
-    getErrorHandler = get_error_handler
+    #getErrorHandler = get_error_handler
     getObjective = get_objective
     getObjectives = get_objectives
     getOption = get_option
     getOutput = get_output
-    getOutputHandler = get_output_handler
+    #getOutputHandler = get_output_handler
     getParameter = get_parameter
     getParameters = get_parameters
     getSet = get_set
@@ -1023,8 +1023,8 @@ cdef class AMPL:
     isRunning = is_running
     readData = read_data
     readTable = read_table
-    setData = set_data
-    setErrorHandler = set_error_handler
+    #setData = set_data
+    #setErrorHandler = set_error_handler
     setOption = set_option
-    setOutputHandler = set_output_handler
+    #setOutputHandler = set_output_handler
     writeTable = write_table

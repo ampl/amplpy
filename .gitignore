@@ -98,3 +98,7 @@ ENV/
 /tmp
 /debug
 /notes.txt
+
+
+# Cython
+amplpy/*.c

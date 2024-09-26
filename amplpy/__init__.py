@@ -2,9 +2,9 @@
 import sys
 import os
 
-from _amplpy import OutputHandler, Kind
-from _amplpy import ErrorHandler
-from _amplpy import AMPLException, PresolveException, InfeasibilityException
+#from _amplpy import OutputHandler, Kind
+#from _amplpy import ErrorHandler
+#from _amplpy import AMPLException, PresolveException, InfeasibilityException
 from _amplpy import EntityMap
 from _amplpy import Objective
 from _amplpy import Variable
@@ -12,7 +12,7 @@ from _amplpy import Constraint
 from _amplpy import Set
 from _amplpy import Parameter
 from _amplpy import Entity
-from _amplpy import DataFrame, Row, Column
+#from _amplpy import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from _amplpy import Environment
 from _amplpy import AMPL

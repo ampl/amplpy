@@ -205,7 +205,7 @@ cdef class Entity(object):
                 pylist.append(None)
         return pylist
 
-    def get_values(self, suffixes=None):
+    #def get_values(self, suffixes=None):
         """
         If a list of suffixes is provided, get the specified suffixes value for
         all instances. Otherwise, get all the principal values of this entity.
@@ -225,27 +225,27 @@ cdef class Entity(object):
             A :class:`~amplpy.DataFrame` containing the values for all
             instances.
         """
-        cdef campl.AMPL_DATAFRAME* df_c
-        cdef char** suffixes_c
-        cdef size_t n
-        if suffixes is None:
-            n = 0
-            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), NULL, n, &df_c))
-        else:
-            if isinstance(suffixes, str):
-                suffixes = [suffixes]
-            else:
-                suffixes = list(map(str, suffixes))
-            suffixes_c = <char**> malloc(len(suffixes) * sizeof(char*))
-            for i in range(len(suffixes)):
-                suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
-            n = len(suffixes)
-            campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), suffixes_c, n, &df_c)
-            for i in range(len(suffixes)):
-                free(suffixes_c[i])
-            free(suffixes_c)
+    #    cdef campl.AMPL_DATAFRAME* df_c
+    #    cdef char** suffixes_c
+    #    cdef size_t n
+    #    if suffixes is None:
+    #        n = 0
+    #        PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), NULL, n, &df_c))
+    #    else:
+    #        if isinstance(suffixes, str):
+    #            suffixes = [suffixes]
+    #        else:
+    #            suffixes = list(map(str, suffixes))
+    #        suffixes_c = <char**> malloc(len(suffixes) * sizeof(char*))
+    #        for i in range(len(suffixes)):
+    #            suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
+    #        n = len(suffixes)
+    #        campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), suffixes_c, n, &df_c)
+    #        for i in range(len(suffixes)):
+    #            free(suffixes_c[i])
+    #        free(suffixes_c)
 
-        return DataFrame.create(df_c)
+    #    return DataFrame.create(df_c)
 
     def to_pandas(self, **kwargs):
         """
@@ -265,7 +265,7 @@ cdef class Entity(object):
         """
         return self.get_values().to_list(**kwargs)
 
-    def set_values(self, data):
+    #def set_values(self, data):
         """
         Set the values of this entiy to the correponding values of a
         DataFrame indexed over the same sets (or a subset).
@@ -286,30 +286,30 @@ cdef class Entity(object):
         Args:
             data: The data to set the entity to.
         """
-        cdef DataFrame df
-        cdef campl.AMPL_DATAFRAME* df_c 
-        cdef char* _name_c 
-        campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), self._index, &_name_c)
-        if isinstance(data, DataFrame):
-            df = data
-            df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
-        elif isinstance(data, dict):
-            df = DataFrame.from_dict(data)
-            df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
-        else:
-            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                df = DataFrame.from_pandas(data, indexarity=self.indexarity())
-                df_c = df.get_ptr()
-                campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
-                return
-            raise TypeError(f"Unexpected data type: {type(data)}.")
+    #    cdef DataFrame df
+    #    cdef campl.AMPL_DATAFRAME* df_c 
+    #    cdef char* _name_c 
+    #    campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), self._index, &_name_c)
+    #    if isinstance(data, DataFrame):
+    #        df = data
+    #        df_c = df.get_ptr()
+    #        campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+    #    elif isinstance(data, dict):
+    #        df = DataFrame.from_dict(data)
+    #        df_c = df.get_ptr()
+    #        campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+    #    else:
+    #        if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+    #            df = DataFrame.from_pandas(data, indexarity=self.indexarity())
+    #            df_c = df.get_ptr()
+    #            campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+    #            return
+    #        raise TypeError(f"Unexpected data type: {type(data)}.")
 
     # Aliases
     toString = to_string
     getIndexingSets = get_indexing_sets
-    getValues = get_values
+    #getValues = get_values
     isScalar = is_scalar
     numInstances = num_instances
-    setValues = set_values
+    #setValues = set_values

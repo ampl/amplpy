@@ -127,7 +127,7 @@ cdef class Parameter(Entity):
             else:
                 raise TypeError
 
-    def set_values(self, values):
+    #def set_values(self, values):
         """
         Assign the values (string or float) to the parameter instances with the
         specified indices, equivalent to the AMPL code:
@@ -143,33 +143,33 @@ cdef class Parameter(Entity):
         Raises:
             TypeError: If called on a scalar parameter.
         """
-        if isinstance(values, dict):
-            if not values:
-                return
-            setValuesPyDict(self._c_ampl, self._name, values)
-        elif isinstance(values, DataFrame):
-            Entity.set_values(self, values)
-        elif pd is not None and isinstance(values, (pd.DataFrame, pd.Series)):
-            Entity.set_values(self, values)
-        elif np is not None and isinstance(values, np.ndarray):
-            if len(values.shape) <= 1:
-                self.set_values(values.tolist())
-            else:
-                self.set_values(tuple(itertools.chain(*values.tolist())))
-        elif isinstance(values, Iterable):
-            if all(isinstance(value, str) for value in values):
-                if not isinstance(values, (list, tuple)):
-                    values = list(values)
-                setValuesParamStr(self._c_ampl, self._name, values)
-            elif all(isinstance(value, Real) for value in values):
-                values = list(map(float, values))
-                setValuesParamNum(self._c_ampl, self._name, values)
-            else:
-                Entity.set_values(self, values)
-        else:
-            Entity.set_values(self, values)
+    #    if isinstance(values, dict):
+    #        if not values:
+    #            return
+    #        setValuesPyDict(self._c_ampl, self._name, values)
+    #    elif isinstance(values, DataFrame):
+    #        Entity.set_values(self, values)
+    #    elif pd is not None and isinstance(values, (pd.DataFrame, pd.Series)):
+    #        Entity.set_values(self, values)
+    #    elif np is not None and isinstance(values, np.ndarray):
+    #        if len(values.shape) <= 1:
+    #            self.set_values(values.tolist())
+    #        else:
+    #            self.set_values(tuple(itertools.chain(*values.tolist())))
+    #    elif isinstance(values, Iterable):
+    #        if all(isinstance(value, str) for value in values):
+    #            if not isinstance(values, (list, tuple)):
+    #                values = list(values)
+    #            setValuesParamStr(self._c_ampl, self._name, values)
+    #        elif all(isinstance(value, Real) for value in values):
+    #            values = list(map(float, values))
+    #            setValuesParamNum(self._c_ampl, self._name, values)
+    #        else:
+    #            Entity.set_values(self, values)
+    #    else:
+    #        Entity.set_values(self, values)
 
     # Aliases
     hasDefault = has_default
     isSymbolic = is_symbolic
-    setValues = set_values
+    #setValues = set_values
