@@ -61,13 +61,13 @@ cdef class Set(Entity):
         campl.AMPL_SetGetArity(self._c_ampl, self._name.encode('utf-8'), &arity)
         return int(arity)
 
-    #def get_values(self):
+    def get_values(self):
         """
         Get values of this set in a DataFrame. Valid only for non-indexed sets.
         """
-    #    cdef campl.AMPL_DATAFRAME* df_c
-    #    campl.AMPL_SetInstanceGetValuesDataframe(self._c_ampl, self._name.encode('utf-8'), self._index, &df_c)
-    #    return DataFrame.create(df_c)
+        cdef campl.AMPL_DATAFRAME* df_c
+        campl.AMPL_SetInstanceGetValuesDataframe(self._c_ampl, self._name.encode('utf-8'), self._index, &df_c)
+        return DataFrame.create(df_c)
 
     def members(self):
         """
@@ -96,7 +96,7 @@ cdef class Set(Entity):
         campl.AMPL_SetInstanceContains(self._c_ampl, self._name.encode('utf-8'), NULL, t_c, &contains_c)    
         return contains_c
 
-    #def set_values(self, values):
+    def set_values(self, values):
         """
         Set the tuples in this set. Valid only for non-indexed sets.
 
@@ -124,58 +124,58 @@ cdef class Set(Entity):
             A, AA = ampl.getSet('A'), ampl.getSet('AA')
             AA.setValues(A.getValues())  # AA has now the members {1, 2}
         """
-    #    cdef DataFrame df = None
-    #    if isinstance(values, DataFrame):
-    #        df = values
-    #        campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name.encode('utf-8'), self._index, df.get_ptr())
-    #    elif isinstance(values, Iterable):
-    #        dimen = self.arity()
-    #        if dimen == 1 and all(isinstance(value, str) for value in values):
-    #            if not isinstance(values, (list, tuple)):
-    #                values = list(values)
-    #            setValues(self._c_ampl, self._name, self._index, values, len(values))
-    #        elif dimen == 1 and all(isinstance(value, Real) for value in values):
-    #            values = list(map(float, values))
-    #            setValues(self._c_ampl, self._name, self._index, values, len(values))
-    #        else:
+        cdef DataFrame df = None
+        if isinstance(values, DataFrame):
+            df = values
+            campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name.encode('utf-8'), self._index, df.get_ptr())
+        elif isinstance(values, Iterable):
+            dimen = self.arity()
+            if dimen == 1 and all(isinstance(value, str) for value in values):
+                if not isinstance(values, (list, tuple)):
+                    values = list(values)
+                setValues(self._c_ampl, self._name, self._index, values, len(values))
+            elif dimen == 1 and all(isinstance(value, Real) for value in values):
+                values = list(map(float, values))
+                setValues(self._c_ampl, self._name, self._index, values, len(values))
+            else:
 
-    #            def cast_value(value):
-    #                if isinstance(value, str):
-    #                    return value
-    #                elif isinstance(value, Real):
-    #                    return float(value)
-    #                else:
-    #                    raise TypeError("Excepted string or real.")
+                def cast_value(value):
+                    if isinstance(value, str):
+                        return value
+                    elif isinstance(value, Real):
+                        return float(value)
+                    else:
+                        raise TypeError("Excepted string or real.")
 
-    #            def cast_row(row):
-    #                if isinstance(row, str):
-    #                    return row
-    #                elif isinstance(row, Real):
-    #                    return float(row)
-    #                elif isinstance(row, Iterable):
-    #                    return tuple(map(cast_value, row))
-    #                else:
-    #                    if dimen == 1:
-    #                        raise TypeError("Excepted string or real.")
-    #                    else:
-    #                        raise ValueError(f"Excepted tuple of arity {dimen}.")
+                def cast_row(row):
+                    if isinstance(row, str):
+                        return row
+                    elif isinstance(row, Real):
+                        return float(row)
+                    elif isinstance(row, Iterable):
+                        return tuple(map(cast_value, row))
+                    else:
+                        if dimen == 1:
+                            raise TypeError("Excepted string or real.")
+                        else:
+                            raise ValueError(f"Excepted tuple of arity {dimen}.")
 
-    #            values = [cast_row(row) for row in values]
-    #            if dimen == 1:
-    #                if any(isinstance(row, tuple) for row in values):
-    #                    raise ValueError(
-    #                        f"Trying to assign tuples to set of arity {dimen}."
-    #                    )
-    #            else:
-    #                if any(
-    #                    not isinstance(row, tuple) or len(row) != dimen
-    #                    for row in values
-    #                ):
-    #                    raise ValueError(f"Expected tuples of arity {dimen}.")
-    #            setValues(self._c_ampl, self._name, self._index, values, len(values))
-    #    else:
-    #        Entity.set_values(self, values)
+                values = [cast_row(row) for row in values]
+                if dimen == 1:
+                    if any(isinstance(row, tuple) for row in values):
+                        raise ValueError(
+                            f"Trying to assign tuples to set of arity {dimen}."
+                        )
+                else:
+                    if any(
+                        not isinstance(row, tuple) or len(row) != dimen
+                        for row in values
+                    ):
+                        raise ValueError(f"Expected tuples of arity {dimen}.")
+                setValues(self._c_ampl, self._name, self._index, values, len(values))
+        else:
+            Entity.set_values(self, values)
 
     # Aliases
-    #getValues = get_values
-    #setValues = set_values
+    getValues = get_values
+    setValues = set_values

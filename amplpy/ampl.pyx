@@ -12,7 +12,7 @@ from cpython.bool cimport PyBool_Check
 from numbers import Real
 
 include "constraint.pxi"
-#include "dataframe.pxi"
+include "dataframe.pxi"
 include "entity.pxi"
 include "environment.pxi"
 #include "errorhandler.pxi"
@@ -185,7 +185,7 @@ cdef class AMPL:
         """
         self.close()
 
-    #def get_data(self, *statements):
+    def get_data(self, *statements):
         """
         Get the data corresponding to the display statements. The statements
         can be AMPL expressions, or entities. It captures the equivalent of the
@@ -217,15 +217,15 @@ cdef class AMPL:
             DataFrame capturing the output of the display
             command in tabular form.
         """
-    #    cdef campl.AMPL_DATAFRAME* data
-    #    cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
-    #    for i in range(len(statements)):
-    #        statements_c[i] = strdup(statements[i].encode('utf-8'))
-    #    PY_AMPL_CALL(campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data))
-    #    for i in range(len(statements)):
-    #        free(statements_c[i])
-    #    free(statements_c)
-    #    return DataFrame.create(data)
+        cdef campl.AMPL_DATAFRAME* data
+        cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
+        for i in range(len(statements)):
+            statements_c[i] = strdup(statements[i].encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data))
+        for i in range(len(statements)):
+            free(statements_c[i])
+        free(statements_c)
+        return DataFrame.create(data)
 
     def get_entity(self, name):
         """
@@ -564,29 +564,29 @@ cdef class AMPL:
         PY_AMPL_CALL(campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v))
         return to_py_variant(v)
 
-    #def set_data(self, data, set_name=None):
-    #    """
-    #    Assign the data in the dataframe to the AMPL entities with the names
-    #    corresponding to the column names.
+    def set_data(self, data, set_name=None):
+        """
+        Assign the data in the dataframe to the AMPL entities with the names
+        corresponding to the column names.
 
-    #    Args:
-    #        data: The dataframe containing the data to be assigned.
+        Args:
+            data: The dataframe containing the data to be assigned.
 
-    #        set_name: The name of the set to which the indices values of the
-    #        DataFrame are to be assigned.
+            set_name: The name of the set to which the indices values of the
+            DataFrame are to be assigned.
 
-    #    Raises:
-    #        AMPLException: if the data assignment procedure was not successful.
-    #    """
-    #    if not isinstance(data, DataFrame):
-    #        if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-    #            data = DataFrame.from_pandas(data)
-    #    cdef DataFrame data_frame = data
-    #    cdef campl.AMPL_DATAFRAME* data_c = data_frame.get_ptr()
-    #    if set_name is None:
-    #        PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
-    #    else:
-    #        PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
+        Raises:
+            AMPLException: if the data assignment procedure was not successful.
+        """
+        if not isinstance(data, DataFrame):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+                data = DataFrame.from_pandas(data)
+        cdef DataFrame data_frame = data
+        cdef campl.AMPL_DATAFRAME* data_c = data_frame.get_ptr()
+        if set_name is None:
+            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
+        else:
+            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
 
     def read_table(self, table_name):
         """
@@ -665,7 +665,7 @@ cdef class AMPL:
     #def get_output_handler(self):
     #    """
     #    Get the current output handler.
-#
+
     #    Returns:
     #        The current output handler.
     #    """
@@ -1005,7 +1005,7 @@ cdef class AMPL:
     getConstraint = get_constraint
     getConstraints = get_constraints
     getCurrentObjective = get_current_objective
-    #getData = get_data
+    getData = get_data
     getEntity = get_entity
     #getErrorHandler = get_error_handler
     getObjective = get_objective
@@ -1023,7 +1023,7 @@ cdef class AMPL:
     isRunning = is_running
     readData = read_data
     readTable = read_table
-    #setData = set_data
+    setData = set_data
     #setErrorHandler = set_error_handler
     setOption = set_option
     #setOutputHandler = set_output_handler

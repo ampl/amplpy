@@ -12,7 +12,7 @@ from _amplpy import Constraint
 from _amplpy import Set
 from _amplpy import Parameter
 from _amplpy import Entity
-#from _amplpy import DataFrame, Row, Column
+from _amplpy import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from _amplpy import Environment
 from _amplpy import AMPL
