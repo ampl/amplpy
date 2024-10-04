@@ -15,43 +15,43 @@ cdef extern from "ampl/ampl_c.h":
         AMPL_STRING
 
     ctypedef enum AMPL_STRINGSUFFIX:
-        astatus
-        sstatus
-        status
-        message
-        result
-        sense
+        AMPL_ASTATUS
+        AMPL_SSTATUS
+        AMPL_STATUS
+        AMPL_MESSAGE
+        AMPL_RESULT
+        AMPL_SENSE
 
     ctypedef enum AMPL_NUMERICSUFFIX:
-        VALUE
-        DEFEQN
-        DUAL
-        INIT
-        INIT0
-        LB
-        UB
-        LB0
-        UB0
-        LB1
-        UB1
-        LB2
-        UB2
-        LRC
-        URC
-        LSLACK
-        USLACK
-        RC
-        SLACK
-        BODY
-        DEFVAR
-        DINIT
-        DINIT0
-        LBS
-        UBS
-        LDUAL
-        UDUAL
-        VAL
-        EXITCODE
+        AMPL_VALUE
+        AMPL_DEFEQN
+        AMPL_DUAL
+        AMPL_INIT
+        AMPL_INIT0
+        AMPL_LB
+        AMPL_UB
+        AMPL_LB0
+        AMPL_UB0
+        AMPL_LB1
+        AMPL_UB1
+        AMPL_LB2
+        AMPL_UB2
+        AMPL_LRC
+        AMPL_URC
+        AMPL_LSLACK
+        AMPL_USLACK
+        AMPL_RC
+        AMPL_SLACK
+        AMPL_BODY
+        AMPL_DEFVAR
+        AMPL_DINIT
+        AMPL_DINIT0
+        AMPL_LBS
+        AMPL_UBS
+        AMPL_LDUAL
+        AMPL_UDUAL
+        AMPL_VAL
+        AMPL_EXITCODE
 
     const char* NUMERICSUFFIXES[29]
 
