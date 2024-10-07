@@ -2,9 +2,9 @@
 import sys
 import os
 
-#from _amplpy import OutputHandler, Kind
-#from _amplpy import ErrorHandler
-#from _amplpy import AMPLException, PresolveException, InfeasibilityException
+from _amplpy import OutputHandler, Kind
+from _amplpy import ErrorHandler
+from _amplpy import AMPLException, PresolveException, InfeasibilityException
 from _amplpy import EntityMap
 from _amplpy import Objective
 from _amplpy import Variable
