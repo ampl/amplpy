@@ -195,7 +195,7 @@ class TestAMPL(TestBase.TestBase):
             ampl.eval("X X;")
 
         ampl.set_output_handler(OutputHandlerRaise())
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(AssertionError):
             ampl.eval("display 1;")
 
     def test_get_output(self):
