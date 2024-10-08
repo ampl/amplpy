@@ -205,7 +205,7 @@ setup(
         [
             Extension(
                 "_amplpy",
-                libraries=["ampl"],
+                libraries=["libampl" if platform.system() in ["Windows"] else "ampl"],
                 library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
                 include_dirs=[os.path.join(CPP_BASE, "include")],
                 extra_compile_args=compile_args(),
