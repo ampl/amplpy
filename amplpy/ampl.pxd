@@ -1,12 +1,12 @@
 # pip install autopxd2
 # autopxd -I amplpy/amplpython/cppinterface/include/ amplpy/amplpython/cppinterface/include/ampl/ampl_c.h
 
-# add except * to the end of ctypedef void (*ErrorHandlerCbPtr)(bool isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler)
+# add except * to the end of ctypedef void (*ErrorHandlerCbPtr)(bool isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler) except *
 # add except * to the end of ctypedef void (*AMPL_OutputHandlerCb)(AMPL_OUTPUTKIND, const char*, void*) except *
 # add except * to the end of AMPL_Eval(AMPL* ampl, const char* statement) except *
 
+from libcpp cimport bool # add this line
 
-from libcpp cimport bool
 cdef extern from "ampl/ampl_c.h":
 
     ctypedef enum AMPL_TYPE:
@@ -79,9 +79,42 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_ArgsGetStrValues(AMPL_ARGS* args, const char* const** values)
 
+    ctypedef enum AMPL_RETCODE:
+        AMPL_OK
+        AMPL_EXCEPTION
+        AMPL_LICENSE_EXCEPTION
+        AMPL_FILE_IO_EXCEPTION
+        AMPL_UNSUPPORTED_OPERATION_EXCEPTION
+        AMPL_INVALID_SUBSCRIPT_EXCEPTION
+        AMPL_SYNTAX_ERROR_EXCEPTION
+        AMPL_NO_DATA_EXCEPTION
+        AMPL_LOGIC_ERROR
+        AMPL_RUNTIME_ERROR
+        AMPL_INVALID_ARGUMENT
+        AMPL_OUT_OF_RANGE
+        AMPL_STD_EXCEPTION
+        AMPL_PRESOLVE_EXCEPTION
+        AMPL_INFEASIBILITY_EXCEPTION
+
+    #ctypedef AMPL_ErrorInfo AMPL_ERRORINFO
+    ctypedef struct AMPL_ERRORINFO:
+        pass
+
+    AMPL_RETCODE AMPL_ErrorInfoGetError(AMPL_ERRORINFO* error)
+
+    char* AMPL_ErrorInfoGetMessage(AMPL_ERRORINFO* error)
+
+    int AMPL_ErrorInfoGetLine(AMPL_ERRORINFO* error)
+
+    int AMPL_ErrorInfoGetOffset(AMPL_ERRORINFO* error)
+
+    char* AMPL_ErrorInfoGetSource(AMPL_ERRORINFO* error)
+
+    ctypedef void (*ErrorHandlerCbPtr)(bool isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler) except *
+
     #ctypedef AMPL_Variant AMPL_VARIANT
     ctypedef struct AMPL_VARIANT:
-        pass 
+        pass
 
     void retainVariant(AMPL_VARIANT* v)
 
@@ -107,7 +140,7 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_VariantFormat(AMPL_VARIANT* v, char** cstr)
 
-   # ctypedef AMPL_Tuple AMPL_TUPLE
+    #ctypedef AMPL_Tuple AMPL_TUPLE
     ctypedef struct AMPL_TUPLE:
         pass
 
@@ -139,68 +172,69 @@ cdef extern from "ampl/ampl_c.h":
     ctypedef struct AMPL_DATAFRAME:
         pass
 
-    int AMPL_DataFrameCreate(AMPL_DATAFRAME** dataframe, size_t numberOfIndexColumns, size_t numberOfDataColumns, const char* const* headers)
+    AMPL_ERRORINFO* AMPL_DataFrameCreate(AMPL_DATAFRAME** dataframe, size_t numberOfIndexColumns, size_t numberOfDataColumns, const char* const* headers)
 
-    int AMPL_DataFrameCreate2(AMPL_DATAFRAME** dataframe, size_t numberOfIndexColumns)
+    AMPL_ERRORINFO* AMPL_DataFrameCreate2(AMPL_DATAFRAME** dataframe, size_t numberOfIndexColumns)
 
-    int AMPL_DataFrameCopy(AMPL_DATAFRAME** dataframe, AMPL_DATAFRAME* copy)
+    AMPL_ERRORINFO* AMPL_DataFrameCopy(AMPL_DATAFRAME** dataframe, AMPL_DATAFRAME* copy)
 
-    int AMPL_DataFrameFree(AMPL_DATAFRAME** dataframe)
+    void AMPL_DataFrameFree(AMPL_DATAFRAME** dataframe)
 
-    int AMPL_DataFrameGetHeaders(AMPL_DATAFRAME* dataframe, size_t* size, char*** headers)
+    AMPL_ERRORINFO* AMPL_DataFrameGetHeaders(AMPL_DATAFRAME* dataframe, size_t* size, char*** headers)
 
-    int AMPL_DataFrameEquals(AMPL_DATAFRAME* df1, AMPL_DATAFRAME* df2, int* equals)
+    AMPL_ERRORINFO* AMPL_DataFrameEquals(AMPL_DATAFRAME* df1, AMPL_DATAFRAME* df2, int* equals)
 
-    int AMPL_DataFrameToString(AMPL_DATAFRAME* dataframe, char** output)
+    AMPL_ERRORINFO* AMPL_DataFrameToString(AMPL_DATAFRAME* dataframe, char** output)
 
-    int AMPL_DataFrameReserve(AMPL_DATAFRAME* dataframe, size_t numRows)
+    AMPL_ERRORINFO* AMPL_DataFrameReserve(AMPL_DATAFRAME* dataframe, size_t numRows)
 
-    int AMPL_DataFrameAddRow(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* value)
+    AMPL_ERRORINFO* AMPL_DataFrameAddRow(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* value)
 
-    int AMPL_DataFrameSetColumnArg(AMPL_DATAFRAME* dataframe, const char* header, AMPL_ARGS* column, size_t n)
+    AMPL_ERRORINFO* AMPL_DataFrameSetColumnArg(AMPL_DATAFRAME* dataframe, const char* header, AMPL_ARGS* column, size_t n)
 
-    int AMPL_DataFrameSetColumnArgDouble(AMPL_DATAFRAME* dataframe, const char* header, const double* column, size_t n)
+    AMPL_ERRORINFO* AMPL_DataFrameSetColumnArgDouble(AMPL_DATAFRAME* dataframe, const char* header, const double* column, size_t n)
 
-    int AMPL_DataFrameSetColumnArgString(AMPL_DATAFRAME* dataframe, const char* header, const char* const* column, size_t n)
+    AMPL_ERRORINFO* AMPL_DataFrameSetColumnArgString(AMPL_DATAFRAME* dataframe, const char* header, const char* const* column, size_t n)
 
-    int AMPL_DataFrameSetValue(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* rowIndex, const char* header, AMPL_VARIANT* value)
+    AMPL_ERRORINFO* AMPL_DataFrameSetValue(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* rowIndex, const char* header, AMPL_VARIANT* value)
 
-    int AMPL_DataFrameSetValueByIndex(AMPL_DATAFRAME* dataframe, size_t rowNumber, size_t colNumber, AMPL_VARIANT* value)
+    AMPL_ERRORINFO* AMPL_DataFrameSetValueByIndex(AMPL_DATAFRAME* dataframe, size_t rowNumber, size_t colNumber, AMPL_VARIANT* value)
 
-    int AMPL_DataFrameAddColumn(AMPL_DATAFRAME* dataframe, const char* header, AMPL_ARGS* values)
+    AMPL_ERRORINFO* AMPL_DataFrameAddColumn(AMPL_DATAFRAME* dataframe, const char* header, AMPL_ARGS* values)
 
-    int AMPL_DataFrameAddColumnDouble(AMPL_DATAFRAME* dataframe, const char* header, const double* values)
+    AMPL_ERRORINFO* AMPL_DataFrameAddColumnDouble(AMPL_DATAFRAME* dataframe, const char* header, const double* values)
 
-    int AMPL_DataFrameAddColumnString(AMPL_DATAFRAME* dataframe, const char* header, const char** values)
+    AMPL_ERRORINFO* AMPL_DataFrameAddColumnString(AMPL_DATAFRAME* dataframe, const char* header, const char** values)
 
-    int AMPL_DataFrameAddEmptyColumn(AMPL_DATAFRAME* dataframe, const char* header)
+    AMPL_ERRORINFO* AMPL_DataFrameAddEmptyColumn(AMPL_DATAFRAME* dataframe, const char* header)
 
-    int AMPL_DataFrameGetNumCols(AMPL_DATAFRAME* dataframe, size_t* num)
+    AMPL_ERRORINFO* AMPL_DataFrameGetNumCols(AMPL_DATAFRAME* dataframe, size_t* num)
 
-    int AMPL_DataFrameGetNumRows(AMPL_DATAFRAME* dataframe, size_t* num)
+    AMPL_ERRORINFO* AMPL_DataFrameGetNumRows(AMPL_DATAFRAME* dataframe, size_t* num)
 
-    int AMPL_DataFrameGetNumIndices(AMPL_DATAFRAME* dataframe, size_t* num)
+    AMPL_ERRORINFO* AMPL_DataFrameGetNumIndices(AMPL_DATAFRAME* dataframe, size_t* num)
 
-    int AMPL_DataFrameSetArray(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, AMPL_ARGS* indices0)
+    AMPL_ERRORINFO* AMPL_DataFrameSetArray(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, AMPL_ARGS* indices0)
 
-    int AMPL_DataFrameSetArrayString(AMPL_DATAFRAME* dataframe, const char* const* values, size_t l0, AMPL_ARGS* indices0)
+    AMPL_ERRORINFO* AMPL_DataFrameSetArrayString(AMPL_DATAFRAME* dataframe, const char* const* values, size_t l0, AMPL_ARGS* indices0)
 
-    int AMPL_DataFrameSetMatrix(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, AMPL_ARGS* indices0, size_t l1, AMPL_ARGS* indices1)
+    AMPL_ERRORINFO* AMPL_DataFrameSetMatrix(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, AMPL_ARGS* indices0, size_t l1, AMPL_ARGS* indices1)
 
-    int AMPL_DataFrameSetMatrixStringString(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, const char* const* indices0, size_t l1, const char* const* indices1)
+    AMPL_ERRORINFO* AMPL_DataFrameSetMatrixStringString(AMPL_DATAFRAME* dataframe, const double* values, size_t l0, const char* const* indices0, size_t l1, const char* const* indices1)
 
-    int AMPL_DataFrameSetMatrixString(AMPL_DATAFRAME* dataframe, const char* const* values, size_t l0, AMPL_ARGS* indices0, size_t l1, AMPL_ARGS* indices1)
+    AMPL_ERRORINFO* AMPL_DataFrameSetMatrixString(AMPL_DATAFRAME* dataframe, const char* const* values, size_t l0, AMPL_ARGS* indices0, size_t l1, AMPL_ARGS* indices1)
 
-    int AMPL_DataFrameGetColumnIndex(AMPL_DATAFRAME* dataframe, const char* name, size_t* columnindex)
+    AMPL_ERRORINFO* AMPL_DataFrameGetColumnIndex(AMPL_DATAFRAME* dataframe, const char* name, size_t* columnindex)
 
-    int AMPL_DataFrameGetIndexingTuple(AMPL_DATAFRAME* dataframe, size_t rowindex, AMPL_TUPLE** index)
+    AMPL_ERRORINFO* AMPL_DataFrameGetIndexingTuple(AMPL_DATAFRAME* dataframe, size_t rowindex, AMPL_TUPLE** index)
 
-    int AMPL_DataFrameGetRowIndex(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* index, size_t* rowindex)
+    AMPL_ERRORINFO* AMPL_DataFrameGetRowIndex(AMPL_DATAFRAME* dataframe, AMPL_TUPLE* index, size_t* rowindex)
 
-    int AMPL_DataFrameElement(AMPL_DATAFRAME* dataframe, size_t rowindex, size_t colindex, AMPL_VARIANT** v)
+    AMPL_ERRORINFO* AMPL_DataFrameElement(AMPL_DATAFRAME* dataframe, size_t rowindex, size_t colindex, AMPL_VARIANT** v)
 
     ctypedef struct AMPL_ENVIRONMENTVAR:
-        pass
+        char* name
+        char* value
 
     int AMPL_EnvironmentVarGetName(AMPL_ENVIRONMENTVAR* envvar, char** name)
 
@@ -208,7 +242,7 @@ cdef extern from "ampl/ampl_c.h":
 
     #ctypedef AMPL_Environment AMPL_ENVIRONMENT
     ctypedef struct AMPL_ENVIRONMENT:
-        pass 
+        pass
 
     int AMPL_EnvironmentCreate(AMPL_ENVIRONMENT** env, const char* binaryDirectory, const char* binaryName)
 
@@ -218,53 +252,23 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_EnvironmentAddEnvironmentVariable(AMPL_ENVIRONMENT* env, const char* name, const char* value)
 
-    int AMPL_EnvironmentGetBinaryDirectory(AMPL_ENVIRONMENT* env, const char** binaryDirectory)
+    int AMPL_EnvironmentGetBinaryDirectory(AMPL_ENVIRONMENT* env, char** binaryDirectory)
+
+    int AMPL_EnvironmentGetAMPLCommand(AMPL_ENVIRONMENT* env, char** amplCommand)
 
     int AMPL_EnvironmentSetBinaryDirectory(AMPL_ENVIRONMENT* env, const char* binaryDirectory)
 
-    int AMPL_EnvironmentGetBinaryName(AMPL_ENVIRONMENT* env, const char** binaryName)
+    int AMPL_EnvironmentGetBinaryName(AMPL_ENVIRONMENT* env, char** binaryName)
 
     int AMPL_EnvironmentSetBinaryName(AMPL_ENVIRONMENT* env, const char* binaryName)
 
-    int AMPL_EnvironmentToString(AMPL_ENVIRONMENT* env, const char** str)
+    int AMPL_EnvironmentToString(AMPL_ENVIRONMENT* env, char** str)
 
     int AMPL_EnvironmentGetSize(AMPL_ENVIRONMENT* env, size_t* size)
 
     int AMPL_EnvironmentGetEnvironmentVar(AMPL_ENVIRONMENT* env, AMPL_ENVIRONMENTVAR** envvar)
 
     int AMPL_EnvironmentFindEnvironmentVar(AMPL_ENVIRONMENT* env, const char* name, AMPL_ENVIRONMENTVAR** envvar)
-
-    ctypedef enum AMPL_RETCODE:
-        AMPL_OK
-        AMPL_EXCEPTION
-        AMPL_LICENSE_EXCEPTION
-        AMPL_FILE_IO_EXCEPTION
-        AMPL_UNSUPPORTED_OPERATION_EXCEPTION
-        AMPL_INVALID_SUBSCRIPT_EXCEPTION
-        AMPL_SYNTAX_ERROR_EXCEPTION
-        AMPL_NO_DATA_EXCEPTION
-        AMPL_LOGIC_ERROR
-        AMPL_RUNTIME_ERROR
-        AMPL_INVALID_ARGUMENT
-        AMPL_OUT_OF_RANGE
-        AMPL_STD_EXCEPTION
-        AMPL_PRESOLVE_EXCEPTION
-        AMPL_INFEASIBILITY_EXCEPTION
-
-    ctypedef struct AMPL_ERRORINFO:
-        pass 
-
-    AMPL_RETCODE AMPL_ErrorInfoGetError(AMPL_ERRORINFO* error)
-
-    char* AMPL_ErrorInfoGetMessage(AMPL_ERRORINFO* error)
-
-    int AMPL_ErrorInfoGetLine(AMPL_ERRORINFO* error)
-
-    int AMPL_ErrorInfoGetOffset(AMPL_ERRORINFO* error)
-
-    char* AMPL_ErrorInfoGetSource(AMPL_ERRORINFO* error)
-
-    ctypedef void (*ErrorHandlerCbPtr)(bool isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler) except *
 
     ctypedef enum AMPL_OUTPUTKIND:
         AMPL_OUTPUT_WAITING
@@ -335,9 +339,13 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_StringFree(char** string)
 
+    int AMPL_ErrorInfoFree(AMPL_ERRORINFO** error)
+
+    void AMPL_AddToPath(const char* newPath)
+
     #ctypedef Ampl AMPL
     ctypedef struct AMPL:
-        pass 
+        pass
 
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
@@ -399,7 +407,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_ReadData(AMPL* ampl, const char* fileName)
 
-    AMPL_ERRORINFO* AMPL_GetData(AMPL* ampl, const char** displayStatements, size_t n, AMPL_DATAFRAME** output)
+    AMPL_ERRORINFO* AMPL_GetData(AMPL* ampl, const char* const* displayStatements, size_t n, AMPL_DATAFRAME** output)
 
     AMPL_ERRORINFO* AMPL_SetData(AMPL* ampl, AMPL_DATAFRAME* df, const char* setName)
 
@@ -443,7 +451,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_GetProblems(AMPL* ampl, size_t* size, char*** names)
 
-    int AMPL_DataFrameCreate3(AMPL_DATAFRAME** dataframe, AMPL* ampl, const char* const* args, size_t nargs)
+    AMPL_ERRORINFO* AMPL_DataFrameCreate3(AMPL_DATAFRAME** dataframe, AMPL* ampl, const char* const* args, size_t nargs)
 
     ctypedef enum AMPL_ENTITYTYPE:
         AMPL_VARIABLE
@@ -457,13 +465,13 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntityGetIndexarity(AMPL* ampl, const char* name, size_t* arity)
 
-    AMPL_ERRORINFO* AMPL_EntityGetXref(AMPL* ampl, const char* name, const char*** xref, size_t* size)
+    AMPL_ERRORINFO* AMPL_EntityGetXref(AMPL* ampl, const char* name, char*** xref, size_t* size)
 
     AMPL_ERRORINFO* AMPL_EntityGetNumInstances(AMPL* ampl, const char* name, size_t* size)
 
     AMPL_ERRORINFO* AMPL_EntityGetTuples(AMPL* ampl, const char* name, AMPL_TUPLE*** tuples, size_t* size)
 
-    AMPL_ERRORINFO* AMPL_EntityGetIndexingSets(AMPL* ampl, const char* name, const char*** indexingsets, size_t* size)
+    AMPL_ERRORINFO* AMPL_EntityGetIndexingSets(AMPL* ampl, const char* name, char*** indexingsets, size_t* size)
 
     AMPL_ERRORINFO* AMPL_EntityGetType(AMPL* ampl, const char* name, AMPL_ENTITYTYPE* type)
 
@@ -475,7 +483,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntityRestore(AMPL* ampl, const char* name)
 
-    AMPL_ERRORINFO* AMPL_EntityGetValues(AMPL* ampl, const char* name, const char** suffixes, size_t n, AMPL_DATAFRAME** output)
+    AMPL_ERRORINFO* AMPL_EntityGetValues(AMPL* ampl, const char* name, const char* const* suffixes, size_t n, AMPL_DATAFRAME** output)
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 

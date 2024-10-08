@@ -176,9 +176,16 @@ cdef class DataFrame(object):
         df._c_df = df_c
         return df
 
+    def __dealloc__(self):
+        """
+        Default destructor:
+        releases all the resources related to the Dataframe instance.
+        """
+        campl.AMPL_DataFrameFree(&self._c_df)
+
     def to_string(self):
         cdef char* value_c
-        campl.AMPL_DataFrameToString(self._c_df, &value_c)
+        PY_AMPL_CALL(campl.AMPL_DataFrameToString(self._c_df, &value_c))
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -199,7 +206,7 @@ cdef class DataFrame(object):
             The number of columns.
         """
         cdef size_t num
-        campl.AMPL_DataFrameGetNumCols(self._c_df, &num)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(self._c_df, &num))
         return int(num)
 
     def _get_num_rows(self):
@@ -301,20 +308,20 @@ cdef class DataFrame(object):
 
             values: The values to set.
         """
-        cdef double* c_double_array
-        cdef char** c_string_array
+        cdef double* c_double_array = NULL
+        cdef char** c_string_array = NULL
         cdef size_t size = len(values)
         if isinstance(values[0], Real):
             c_double_array = <double*> malloc(size * sizeof(double))
             for i in range(size):
                 c_double_array[i] = values[i]
-            campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
+            PY_AMPL_CALL(campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size))
             free(c_double_array)
         elif isinstance(values[0], str):
             c_string_array = <char**> malloc(size * sizeof(char*))
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
-            campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size)
+            PY_AMPL_CALL(campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size))
             for i in range(size):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])

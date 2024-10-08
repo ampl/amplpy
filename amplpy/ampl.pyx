@@ -11,6 +11,7 @@ from cpython.bool cimport PyBool_Check
 
 from numbers import Real
 
+include "util.pxi" # must be first
 include "constraint.pxi"
 include "dataframe.pxi"
 include "entity.pxi"
@@ -22,63 +23,7 @@ include "objective.pxi"
 include "outputhandler.pxi"
 include "parameter.pxi"
 include "set.pxi"
-include "util.pxi"
 include "variable.pxi"
-
-
-cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
-    cdef campl.AMPL_RETCODE rc
-    cdef char* message
-    rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-    if rc == campl.AMPL_OK:
-        pass
-    elif rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise PresolveException("PresolveException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_LICENSE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise SystemError(message.decode('utf-8'))
-    elif rc == campl.AMPL_FILE_IO_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise IOError(message.decode('utf-8'))
-    elif rc == campl.AMPL_UNSUPPORTED_OPERATION_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
-        print("AMPL: AMPL_INVALID_SUBSCRIPT_EXCEPTION")
-        #throw InvalidSubscriptException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                              AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
-        print("AMPL: AMPL_SYNTAX_ERROR_EXCEPTION")
-        #throw SyntaxErrorException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                         AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_NO_DATA_EXCEPTION:
-        print("AMPL: AMPL_NO_DATA_EXCEPTION")
-        #throw NoDataException(AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_RUNTIME_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_LOGIC_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_OUT_OF_RANGE:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise KeyError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_ARGUMENT:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise ValueError(message.decode('utf-8'))
-    elif rc == campl.AMPL_STD_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise Exception(message.decode('utf-8'))
-    else:
-        print("AMPL: unknown return code!")
-        raise Exception('AMPL: unknown return code!')
 
 
 AMPL_NOT_FOUND_MESSAGE = """
