@@ -2,6 +2,9 @@
 import sys
 import os
 
+if hasattr(os, 'add_dll_directory'):
+    os.add_dll_directory(os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib"))
+
 from _amplpy import OutputHandler, Kind
 from _amplpy import ErrorHandler
 from _amplpy import AMPLException, PresolveException, InfeasibilityException
