@@ -4,6 +4,9 @@ import sys
 import ctypes
 import platform
 
+if hasattr(os, 'add_dll_directory'):
+    os.add_dll_directory(os.path.join(os.path.dirname(__file__), "cppinterface", "lib"))
+
 if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
     libbase = os.path.join(os.path.dirname(__file__), "cppinterface", "lib")
     lib32 = os.path.join(libbase, "intel32")
