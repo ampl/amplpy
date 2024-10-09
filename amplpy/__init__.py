@@ -16,11 +16,11 @@ if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
     except Exception as exp:
         raise exp
 
-if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
-    os.environ["Path"] += os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64")
+#if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
+#    os.environ["Path"] += os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64")
 
-if hasattr(os, 'add_dll_directory'):
-    os.add_dll_directory(os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64"))
+#if hasattr(os, 'add_dll_directory'):
+#    os.add_dll_directory(os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64"))
 
 from _amplpy import OutputHandler, Kind
 from _amplpy import ErrorHandler
