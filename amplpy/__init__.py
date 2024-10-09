@@ -2,6 +2,19 @@
 import sys
 import os
 import platform
+import ctypes
+
+
+if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
+    libbase = os.path.join(os.path.dirname(__file__), "cppinterface", "lib")
+    lib64 = os.path.join(libbase, "amd64")
+    from glob import glob
+
+    try:
+        dllfile = glob(lib64 + "/*.dll")[0]
+        ctypes.CDLL(dllfile)
+    except Exception as exp:
+        raise exp
 
 if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
     os.environ["Path"] += os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64")
