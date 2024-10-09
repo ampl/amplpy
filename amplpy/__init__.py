@@ -2,7 +2,7 @@
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64"))
+os.environ["Path"] += os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64")
 
 if hasattr(os, 'add_dll_directory'):
     os.add_dll_directory(os.path.join(os.path.dirname(__file__), "amplpython", "cppinterface", "lib", "amd64"))
