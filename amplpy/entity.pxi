@@ -142,7 +142,10 @@ cdef class Entity(object):
             entity is not indexed.
         """
         cdef size_t indexarity
-        campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name.encode('utf-8'), &indexarity)
+        if self._index is not NULL:
+            indexarity = 0
+        else:
+            campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name.encode('utf-8'), &indexarity)
         return indexarity
 
     def is_scalar(self):
