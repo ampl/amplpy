@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.14.1 - 2024-05-##
+- Add flat argument to AMPL.get_iis.
+
+## 0.14.0 - 2024-05-21
+- Allow assigning values to indexed sets from a dictionary with the lists of members
+  for every index.
+- Add AMPL.get_iis() to return dictionaries with variables and constraints in IIS.
+- Add AMPL.get_solution() to return a dictionary with the solution.
+
+## 0.13.3 - 2024-02-20
+- Fix issues with AMPL.solve(verbose=False) when the solver argument was not set.
+
 ## 0.13.2 - 2024-01-05
 - OutputHandler: Flush standard output after every message.
 

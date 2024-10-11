@@ -10,7 +10,7 @@ class TestBase(unittest.TestCase):
         modules.uninstall()
 
     def get_env_path(self):
-        return os.environ["PATH"]
+        return os.environ.get("PATH", "")
 
     def get_env_path_list(self):
         return self.get_env_path().split(os.pathsep)

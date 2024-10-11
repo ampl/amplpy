@@ -5,6 +5,7 @@ import shutil
 import os
 
 import amplpy
+from amplpy import modules
 from . import TestBase
 
 
@@ -384,8 +385,8 @@ class TestAMPL(TestBase.TestBase):
             ampl.write("bmod", "rc")
 
     def test_solve_arguments(self):
-        if shutil.which("highs") is None:
-            self.skipTest("highs not available")
+        if "highs" not in modules.installed():
+            self.skipTest("highs is not available")
         ampl = self.ampl
         ampl.eval(
             """
@@ -416,6 +417,57 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(
             ampl.get_output("for{i in 0..2} { display i; }"),
             ampl.get_output("for{i in 0..2} { display i;}"),
+        )
+
+    def test_get_iis(self):
+        if "gurobi" not in modules.installed():
+            self.skipTest("gurobi is not available")
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+            var x >= 0;
+            var y{1..2} >= 0;
+            maximize obj: x+y[1]+y[2];
+            s.t. s: x+y[1] <= -5;
+            """
+        )
+        ampl.option["presolve"] = 0
+        ampl.solve(solver="gurobi", gurobi_options="outlev=1 iis=1")
+        self.assertEqual(ampl.solve_result, "infeasible")
+        var_iis, con_iis = ampl.get_iis()
+        self.assertEqual(var_iis, {"x": "low", "y[1]": "low"})
+        self.assertEqual(con_iis, {"s": "mem"})
+        var_iis, con_iis = ampl.get_iis(flat=False)
+        self.assertEqual(var_iis, {"x": "low", "y": {1: "low"}})
+        self.assertEqual(con_iis, {"s": "mem"})
+
+    def test_get_solution(self):
+        if "highs" not in modules.installed():
+            self.skipTest("highs is not available")
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+        set I := {1, 2, 'a', 'b'};
+        var x >= 0;
+        var y{I} >= 0 <= 5;
+
+        maximize obj: sum{i in I} y[i]-x;
+        """
+        )
+        ampl.option["presolve"] = 0
+        ampl.solve(solver="highs", highs_options="outlev=1")
+        self.assertEqual(ampl.solve_result, "solved")
+        self.assertEqual(
+            ampl.get_solution(flat=False, zeros=True),
+            {"x": 0, "y": {1: 5, 2: 5, "a": 5, "b": 5}},
+        )
+        self.assertEqual(
+            ampl.get_solution(flat=False),
+            {"y": {1: 5, 2: 5, "a": 5, "b": 5}},
+        )
+        self.assertEqual(
+            ampl.get_solution(flat=True),
+            {"y[1]": 5, "y[2]": 5, "y['a']": 5, "y['b']": 5},
         )
 
 

@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from .tools import _SUPPORT_MESSAGE
-except Exception:
-    _SUPPORT_MESSAGE = ""
-
 
 class AMPLException(Exception):
     """
@@ -45,7 +40,6 @@ class AMPLException(Exception):
 
     def __str__(self):
         return "file: " + self.source_name + self.message + _SUPPORT_MESSAGE #discuss with Filipe
-        #return self.what.lstrip("file: -").strip("\n") + _SUPPORT_MESSAGE
 
     # Aliases
     getLineNumber = get_line_number

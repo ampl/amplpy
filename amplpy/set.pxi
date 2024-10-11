@@ -121,11 +121,16 @@ cdef class Set(Entity):
 
         .. code-block:: python
 
-            A, AA = ampl.getSet('A'), ampl.getSet('AA')
-            AA.setValues(A.getValues())  # AA has now the members {1, 2}
+            A, AA = ampl.get_set('A'), ampl.get_set('AA')
+            AA.set_values(A.get_values())  # AA has now the members {1, 2}
         """
         cdef DataFrame df = None
-        if isinstance(values, DataFrame):
+        if not self.is_scalar():
+            if not isinstance(values, dict):
+                raise TypeError("Excepted dictionary of set members for each index.")
+            for index, members in values.items():
+                self[index].set_values(members)
+        elif isinstance(values, DataFrame):
             df = values
             campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name.encode('utf-8'), self._index, df.get_ptr())
         elif isinstance(values, Iterable):

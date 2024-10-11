@@ -16,9 +16,9 @@ def _is_valid_uuid(uuid):
 
 def add_to_path(path, head=True):
     if head:
-        os.environ["PATH"] = path + os.pathsep + os.environ["PATH"]
+        os.environ["PATH"] = path + os.pathsep + os.environ.get("PATH", "")
     else:
-        os.environ["PATH"] = os.environ["PATH"] + os.pathsep + path
+        os.environ["PATH"] = os.environ.get("PATH", "") + os.pathsep + path
 
 
 def register_magics(store_name="_ampl_cells", ampl_object=None, globals_=None):

@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.5-2024-02-27
+- Fix bug when the environment variable PATH is not set.
+
 ## 0.7.4-2024-01-05
 - Update support message.
 
