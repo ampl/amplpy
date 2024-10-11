@@ -80,7 +80,7 @@ cdef class Set(Entity):
         Get the number of tuples in this set. Valid only for non-indexed sets.
         """
         cdef size_t size
-        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name.encode('utf-8'), NULL, &size)
+        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name.encode('utf-8'), self._index, &size)
         return int(size)
 
     def contains(self, t):
@@ -126,6 +126,7 @@ cdef class Set(Entity):
         """
         cdef DataFrame df = None
         if not self.is_scalar():
+            print(values)
             if not isinstance(values, dict):
                 raise TypeError("Excepted dictionary of set members for each index.")
             for index, members in values.items():
