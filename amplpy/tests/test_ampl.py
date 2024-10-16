@@ -427,7 +427,7 @@ class TestAMPL(TestBase.TestBase):
             r"""
             var x >= 0;
             var y{1..2} >= 0;
-            maximize obj: x+y[1]+y[2];
+            maximize obj: 0;
             s.t. s: x+y[1] <= -5;
             """
         )
