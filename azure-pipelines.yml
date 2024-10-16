@@ -36,7 +36,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.5
+          python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -48,7 +48,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.5
+          python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -60,7 +60,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.5
+          python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
@@ -101,6 +101,10 @@ stages:
           CIBW_BUILD: cp312-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
+        aarch64 cp313:
+          CIBW_BUILD: cp313-*
+          CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         ppc64le cp36:
           CIBW_BUILD: cp36-*
           CIBW_ARCHS_LINUX: ppc64le
@@ -129,6 +133,10 @@ stages:
           CIBW_BUILD: cp312-*
           CIBW_ARCHS_LINUX: ppc64le
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
+        ppc64le cp313:
+          CIBW_BUILD: cp313-*
+          CIBW_ARCHS_LINUX: ppc64le
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
     steps:
       - task: UsePythonVersion@0
       - bash: docker run --rm --privileged multiarch/qemu-user-static --persistent yes
@@ -136,7 +144,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.16.5
+          python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
