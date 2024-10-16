@@ -379,22 +379,13 @@ cdef class AMPL:
         Raises:
             RuntimeError: if the underlying interpreter is not running.
         """
-        cdef char* output_c
-        cdef bytes ampl_statement_c
+        for option, value in kwargs.items():
+            if option.endswith("_options"):
+                self.set_option(option, value)
         if not verbose or return_output:
-            if solver is not None:
-                PY_AMPL_CALL(campl.AMPL_SetOption(self._c_ampl, "solver", solver.encode('utf-8')))
-            for option, value in kwargs.items():
-                assert option.endswith("_options")
-                PY_AMPL_CALL(campl.AMPL_SetOption(self._c_ampl, option.encode('utf-8'), value.encode('utf-8')))
-            if problem is None:
-                ampl_statement_c = b"solve;"
-                PY_AMPL_CALL(campl.AMPL_GetOutput(self._c_ampl, ampl_statement_c, &output_c))
-            else:
-                ampl_statement_c = str("solve " + problem + ";").encode('utf-8')
-                PY_AMPL_CALL(campl.AMPL_GetOutput(self._c_ampl, ampl_statement_c, &output_c))
-            output = str(output_c.decode('utf-8'))
-            campl.AMPL_StringFree(&output_c)
+            if solver != "":
+                self.set_option("solver", solver)
+            output = self.get_output(f"solve {problem};")
             if return_output:
                 return output
         else:
