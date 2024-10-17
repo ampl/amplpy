@@ -69,7 +69,13 @@ jobs:
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
           CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
+      - name: Escape build variable
+        run: |
+          # Replace '*' with '' and store it in an environment variable
+          ESCAPED_BUILD=$(echo "${{ matrix.build }}" | sed 's/\*//g')
+          echo "ESCAPED_BUILD=$ESCAPED_BUILD" >> $GITHUB_ENV
+
       - uses: actions/upload-artifact@v4
         with:
-          name: artifact-${{ matrix.arch }}-${{ matrix.build//\*/\\* }}
+          name: artifact-${{ matrix.arch }}-${{ env.ESCAPED_BUILD }}
           path: ./wheelhouse/*.whl
