@@ -515,7 +515,9 @@ cdef class AMPL:
         """
         cdef campl.AMPL_VARIANT* v
         PY_AMPL_CALL(campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v))
-        return to_py_variant(v)
+        py_variant = to_py_variant(v)
+        campl.AMPL_VariantFree(&v)
+        return py_variant
 
     def set_data(self, data, set_name=None):
         """

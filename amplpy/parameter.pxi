@@ -79,7 +79,10 @@ cdef class Parameter(Entity):
         cdef campl.AMPL_VARIANT* v
         campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), tuple_c, &expression)
         campl.AMPL_GetValue(self._c_ampl, expression, &v)
-        return to_py_variant(v)
+        campl.AMPL_StringFree(&expression)
+        py_variant = to_py_variant(v)
+        campl.AMPL_VariantFree(&v)
+        return py_variant
 
     def value(self):
         """
@@ -87,7 +90,9 @@ cdef class Parameter(Entity):
         """
         cdef campl.AMPL_VARIANT* v
         campl.AMPL_GetValue(self._c_ampl, self._name.encode('utf-8'), &v)
-        return to_py_variant(v)
+        py_variant = to_py_variant(v)
+        campl.AMPL_VariantFree(&v)
+        return py_variant
 
     def set(self, *args):
         """

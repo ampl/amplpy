@@ -36,7 +36,6 @@ cdef class Row(object):
 
     def __getitem__(self, key):
         cdef campl.AMPL_VARIANT* v
-        #campl.AMPL_DataFrameGetColumnIndex(self._df, key.encode('utf-8'), &column_index)
         campl.AMPL_DataFrameElement(self._df, self._index, key, &v)
         return to_py_variant(v)
 

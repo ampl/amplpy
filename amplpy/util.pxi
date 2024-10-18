@@ -180,11 +180,13 @@ cdef void setValuesPyDict(campl.AMPL* ampl, str name, dicts):
         for i, (key, value) in enumerate(dicts.items()):
             key_c = to_c_tuple(key)
             campl.AMPL_ParameterInstanceSetStringValue(ampl, name.encode('utf-8'), key_c, value.encode('utf-8'))
+            campl.AMPL_TupleFree(&key_c)
     elif has_numbers and not has_strings:
         for i, (key, value) in enumerate(dicts.items()):
             if isinstance(value, int) or isinstance(value, float):
                 key_c = to_c_tuple(key)
-                campl.AMPL_ParameterInstanceSetNumericValue(ampl, name.encode('utf-8'), key_c, value)            
+                campl.AMPL_ParameterInstanceSetNumericValue(ampl, name.encode('utf-8'), key_c, value)   
+                campl.AMPL_TupleFree(&key_c)         
             else:
                 raise ValueError("Unexpected value type")
     else:

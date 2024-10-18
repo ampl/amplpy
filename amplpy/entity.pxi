@@ -48,6 +48,10 @@ cdef class Entity(object):
         entity.wrap_function = campl.AMPL_UNDEFINED
         return entity
 
+    #def __dealloc__(self):
+    #    if self._index is not NULL:
+    #        campl.AMPL_TupleFree(&self._index)
+
     def to_string(self):
         cdef char* output_c
         campl.AMPL_EntityGetDeclaration(self._c_ampl, self._name.encode('utf-8'), &output_c)
@@ -179,6 +183,7 @@ cdef class Entity(object):
             The string representation of the indexing sets for this entity or
             an empty array if the entity is scalar.
         """
+        cdef size_t i
         cdef size_t size
         cdef char** sets
         cdef list pylist = []
@@ -188,6 +193,9 @@ cdef class Entity(object):
                 pylist.append(sets[i].decode('utf-8'))
             else:
                 pylist.append(None)
+            campl.AMPL_StringFree(&sets[i])
+        free(sets)
+        
         return pylist
 
     def xref(self):
@@ -297,15 +305,18 @@ cdef class Entity(object):
             df = data
             df_c = df.get_ptr()
             campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+            campl.AMPL_StringFree(&_name_c)
         elif isinstance(data, dict):
             df = DataFrame.from_dict(data)
             df_c = df.get_ptr()
             campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+            campl.AMPL_StringFree(&_name_c)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 df_c = df.get_ptr()
                 campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+                campl.AMPL_StringFree(&_name_c)
                 return
             raise TypeError(f"Unexpected data type: {type(data)}.")
 
