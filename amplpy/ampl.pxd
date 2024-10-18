@@ -509,6 +509,10 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_ParameterSetSomeArgsValues(AMPL* ampl, const char* name, size_t size, AMPL_TUPLE** index, AMPL_ARGS* args)
 
+    AMPL_ERRORINFO *AMPL_ParameterSetSomeStringValues(AMPL *ampl, const char *name, size_t size, AMPL_TUPLE **index, char **str_values)
+
+    AMPL_ERRORINFO *AMPL_ParameterSetSomeDoubleValues(AMPL *ampl, const char *name, size_t size, AMPL_TUPLE **index, double *dbl_values)
+
     AMPL_ERRORINFO* AMPL_VariableGetValue(AMPL* ampl, const char* name, double* value)
 
     AMPL_ERRORINFO* AMPL_VariableFix(AMPL* ampl, const char* name)
