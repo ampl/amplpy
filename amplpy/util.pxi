@@ -122,7 +122,7 @@ cdef campl.AMPL_VARIANT* to_c_variant(value):
         raise ValueError(f"unsupported type {type(value)}")
     return variant
 
-cdef m(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, str name, campl.AMPL_TUPLE* index):
+cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, str name, campl.AMPL_TUPLE* index):
     if entity_class == campl.AMPL_VARIABLE:
         return Variable.create(ampl, name, index)
     elif entity_class == campl.AMPL_CONSTRAINT:

@@ -104,7 +104,7 @@ cdef class AMPL:
     cdef object _output_handler
     cdef object _error_handler
 
-    def __cinit__(self, environment=None):
+    def __init__(self, environment=None):
         """
         Constructor:
         creates a new AMPL instance with the specified environment if provided.

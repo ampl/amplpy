@@ -65,6 +65,12 @@ cdef class EntityMap(object):
         entityit.end = entityit.begin + entityit._size
         return entityit
 
+    def __dealloc__(self):
+        if self.begin != NULL:
+            for i in range(self._size):
+                free(self.begin[i])
+            free(self.begin)
+
     def __iter__(self):
         self.iterator = self.begin
         return self
@@ -75,14 +81,14 @@ cdef class EntityMap(object):
         cdef char** it = self.iterator
         self.iterator += 1
         name = it[0].decode('utf-8')
-        return (name, m(self.entity_class, self._c_ampl, name, NULL))
+        return (name, create_entity(self.entity_class, self._c_ampl, name, NULL))
 
     def __getitem__(self, key):
         assert isinstance(key, str)
         cdef campl.AMPL_ENTITYTYPE entitytype
         PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, key.encode('utf-8'), &entitytype))
         if entitytype != self.entity_class: raiseKeyError(self.entity_class, key)
-        return m(self.entity_class, self._c_ampl, key, NULL)
+        return create_entity(self.entity_class, self._c_ampl, key, NULL)
 
     def size(self):
         return int(self._size)
@@ -123,6 +129,12 @@ cdef class InstanceIterator(object):
             instanceit.end = instanceit.begin + instanceit._size
         return instanceit
 
+    def __dealloc__(self):
+        if self.begin != NULL:
+            for i in range(self._size):
+                campl.AMPL_TupleFree(&self.begin[i])
+            free(self.begin)
+
     def __iter__(self):
         return self
 
@@ -131,15 +143,15 @@ cdef class InstanceIterator(object):
             raise StopIteration
         self.iterator += 1
         if self.begin == NULL:
-            return (None, m(self.entity_class, self._c_ampl, self._name, NULL))
+            return (None, create_entity(self.entity_class, self._c_ampl, self._name, NULL))
         else:
-            return (to_py_tuple(self.begin[self.iterator]), m(self.entity_class, self._c_ampl, self._name, self.begin[self.iterator]))
+            return (to_py_tuple(self.begin[self.iterator]), create_entity(self.entity_class, self._c_ampl, self._name, self.begin[self.iterator]))
 
     def __getitem__(self, key):
         assert isinstance(key, str)
         key = tuple(key)
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(key)
-        return m(self.entity_class, self._c_ampl, self._name, tuple_c)
+        return create_entity(self.entity_class, self._c_ampl, self._name, tuple_c)
 
     def size(self):
         return int(self._size)
@@ -172,6 +184,11 @@ cdef class MemberRangeIterator(object):
             instanceit.iterator = instanceit.begin
             instanceit.end = instanceit.begin + instanceit._size
         return instanceit
+
+    def __dealloc__(self):
+        for i in range(self._size):
+            campl.AMPL_TupleFree(&self.begin[i])
+        free(self.begin)
 
     def size(self):
         cdef size_t size

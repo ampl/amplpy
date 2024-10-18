@@ -66,7 +66,7 @@ cdef class Entity(object):
         if not isinstance(index, (tuple, list)):
             index = [index]
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
-        return m(self.wrap_function, self._c_ampl, self._name, tuple_c)
+        return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c)
 
     def get(self, *index):
         """
@@ -82,14 +82,14 @@ cdef class Entity(object):
             index = index[0]
             index = list(index)
         if len(index) == 0:
-            return m(self.wrap_function, self._c_ampl, self._name, NULL)
+            return create_entity(self.wrap_function, self._c_ampl, self._name, NULL)
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
                 campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), tuple_c, &name_c)
-                return m(self.wrap_function, self._c_ampl, name_c.decode('utf-8'), NULL).value()
+                return create_entity(self.wrap_function, self._c_ampl, name_c.decode('utf-8'), NULL).value()
             else:
-                return m(self.wrap_function, self._c_ampl, self._name, tuple_c)
+                return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c)
 
     def find(self, index):
         """
@@ -106,7 +106,7 @@ cdef class Entity(object):
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
                 free(indices_c)
-                return m(self.wrap_function, self._c_ampl, self._name, index_c)
+                return create_entity(self.wrap_function, self._c_ampl, self._name, index_c)
         free(indices_c)
         return None
 
