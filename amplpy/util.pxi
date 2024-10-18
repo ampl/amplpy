@@ -1,3 +1,12 @@
+from cpython.dict cimport PyDict_Check, PyDict_Keys, PyDict_Values
+from cpython.unicode cimport PyUnicode_Check
+from cpython.unicode cimport PyUnicode_AsUTF8
+from cpython.list cimport PyList_GetItem
+from cpython.long cimport PyLong_Check, PyLong_AsLong
+from cpython.float cimport PyFloat_AsDouble
+from cpython.object cimport PyObject
+from libcpp cimport bool
+
 cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
     cdef campl.AMPL_RETCODE rc
     cdef char* message
@@ -156,39 +165,62 @@ cdef void setValuesParamStr(campl.AMPL* ampl, str name, values):
         free(values_c[i])
     free(values_c)
 
-cdef void setValuesPyDict(campl.AMPL* ampl, str name, dicts):
-    cdef campl.AMPL_TUPLE* key_c
+cdef void setValuesPyDict(campl.AMPL* ampl, str name, dict dicts):
+    cdef size_t i
+    cdef campl.AMPL_TUPLE** indices_c
+    cdef char** values_str_c
+    cdef double* values_num_c
+    cdef PyObject* item
 
-    if not isinstance(dicts, dict):
+    if not PyDict_Check(dicts):
         raise ValueError("Expected a dictionary")
         
-    d_keys = dicts.keys()
-    d_values = dicts.values()
-    size = len(dicts)
-    has_numbers = False
-    has_strings = False
+    cdef object d_keys = PyDict_Keys(dicts)
+    cdef object d_values = PyDict_Values(dicts)
+    cdef size_t size = len(dicts)
 
-    for item in d_values:
-        if isinstance(item, str):
+    cdef bool has_numbers = False
+    cdef bool has_strings = False
+
+    for i in range(size):
+        item = PyList_GetItem(d_values, i)
+        if item == NULL:
+            raise ValueError("Failed to access value")
+
+        if PyUnicode_Check(<object>item):
             has_strings = True
         else:
             has_numbers = True
+
         if has_numbers and has_strings:
             raise ValueError("All values must be either numbers or strings")
         
     if has_strings and not has_numbers:
-        for i, (key, value) in enumerate(dicts.items()):
-            key_c = to_c_tuple(key)
-            campl.AMPL_ParameterInstanceSetStringValue(ampl, name.encode('utf-8'), key_c, value.encode('utf-8'))
-            campl.AMPL_TupleFree(&key_c)
+        indices_c = <campl.AMPL_TUPLE**> malloc(size * sizeof(campl.AMPL_TUPLE*))
+        values_str_c = <char **> malloc(size * sizeof(char*))
+        for i in range(size):
+            indices_c[i] = to_c_tuple(<object>PyList_GetItem(d_keys, i))
+            values_str_c[i] = PyUnicode_AsUTF8(<object>PyList_GetItem(d_values, i))
+        campl.AMPL_ParameterSetSomeStringValues(ampl, name.encode('utf-8'), size, indices_c, values_str_c)
+        for i in range(size):
+            campl.AMPL_TupleFree(&indices_c[i])
+        free(indices_c)
+        free(values_str_c)
     elif has_numbers and not has_strings:
-        for i, (key, value) in enumerate(dicts.items()):
-            if isinstance(value, int) or isinstance(value, float):
-                key_c = to_c_tuple(key)
-                campl.AMPL_ParameterInstanceSetNumericValue(ampl, name.encode('utf-8'), key_c, value)   
-                campl.AMPL_TupleFree(&key_c)         
+        indices_c = <campl.AMPL_TUPLE**> malloc(size * sizeof(campl.AMPL_TUPLE*))
+        values_num_c = <double *> malloc(size * sizeof(double))
+        for i in range(size):
+            indices_c[i] = to_c_tuple(<object>PyList_GetItem(d_keys, i))
+            item = PyList_GetItem(d_values, i)
+            if PyLong_Check(<object>item):
+                values_num_c[i] = PyLong_AsLong(<object>item)
             else:
-                raise ValueError("Unexpected value type")
+                values_num_c[i] = PyFloat_AsDouble(<object>item)
+        campl.AMPL_ParameterSetSomeDoubleValues(ampl, name.encode('utf-8'), size, indices_c, values_num_c)
+        for i in range(size):
+            campl.AMPL_TupleFree(&indices_c[i])
+        free(indices_c)
+        free(values_num_c)
     else:
         raise ValueError("Dictionary must contain either all strings or all numbers")
 

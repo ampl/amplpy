@@ -91,7 +91,9 @@ cdef class Entity(object):
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
                 campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), tuple_c, &name_c)
-                return create_entity(self.wrap_function, self._c_ampl, name_c.decode('utf-8'), NULL).value()
+                entity = create_entity(self.wrap_function, self._c_ampl, name_c.decode('utf-8'), NULL).value()
+                campl.AMPL_StringFree(&name_c)
+                return entity
             else:
                 return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c)
 
@@ -212,8 +214,10 @@ cdef class Entity(object):
         for i in range(size):
             if xref[i] != NULL:
                 pylist.append(xref[i].decode('utf-8'))
+                campl.AMPL_StringFree(&xref[i])
             else:
                 pylist.append(None)
+        free(xref)
         return pylist
 
     def get_values(self, suffixes=None):
