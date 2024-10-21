@@ -1,7 +1,7 @@
 .. _secReferencePython:
 
-Python API Reference
-====================
+Reference Manual
+================
 
 AMPL classes
 ------------
