@@ -73,7 +73,6 @@ cdef class Environment(object):
         cdef const char* to_string_c
         campl.AMPL_EnvironmentToString(self._c_env, &to_string_c)
         to_string = str(to_string_c.decode('utf-8'))
-        #campl.AMPL_StringFree(&to_string_c)
         return to_string
 
     def set_bin_dir(self, binary_directory):
@@ -92,7 +91,6 @@ cdef class Environment(object):
         cdef const char* bin_dir_c
         campl.AMPL_EnvironmentGetBinaryDirectory(self._c_env, &bin_dir_c)
         bin_dir = str(bin_dir_c.decode('utf-8'))
-        #campl.AMPL_StringFree(&bin_dir_c)
         return bin_dir
 
     def set_bin_name(self, binary_name):
@@ -111,7 +109,6 @@ cdef class Environment(object):
         cdef const char* bin_name_c
         campl.AMPL_EnvironmentGetBinaryName(self._c_env, &bin_name_c)
         bin_name = str(bin_name_c.decode('utf-8'))
-        #campl.AMPL_StringFree(&(<char*>bin_name_c))
         return bin_name
     
     # Aliases

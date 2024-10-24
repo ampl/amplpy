@@ -243,8 +243,9 @@ cdef class DataFrame(object):
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
         assert len(value) == self._get_num_cols()
-        cdef campl.AMPL_TUPLE* py_tuple = to_c_tuple(tuple(value))
-        campl.AMPL_DataFrameAddRow(self._c_df, py_tuple)
+        cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(tuple(value))
+        campl.AMPL_DataFrameAddRow(self._c_df, tuple_c)
+        campl.AMPL_TupleFree(&tuple_c)
 
     def _add_column(self, header, values=None):
         """
@@ -341,6 +342,7 @@ cdef class DataFrame(object):
         cdef size_t index
         cdef campl.AMPL_TUPLE* tuple = to_c_tuple(key)
         campl.AMPL_DataFrameGetRowIndex(self._c_df, tuple, &index)
+        campl.AMPL_TupleFree(&tuple)
         return Row.create(self._c_df, index)
 
     def _get_row_by_index(self, index):
@@ -365,7 +367,11 @@ cdef class DataFrame(object):
         cdef size_t size
         cdef char** headers
         campl.AMPL_DataFrameGetHeaders(self._c_df, &size, &headers)
-        return tuple(headers[i].decode('utf-8') for i in range(size))
+        headers_py = tuple(str(headers[i].decode('utf-8')) for i in range(size))
+        for i in range(size):
+            campl.AMPL_StringFree(&headers[i])
+        free(headers)
+        return headers_py
 
     def _set_values(self, values):
         """

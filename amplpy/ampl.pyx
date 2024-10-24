@@ -465,6 +465,7 @@ cdef class AMPL:
 
         PY_AMPL_CALL(campl.AMPL_GetOption(self._c_ampl, name.encode('utf-8'), &exists, &value_c))
         value = value_c.decode('utf-8')
+        campl.AMPL_StringFree(&value_c)
         if exists:
             try:
                 return int(value)

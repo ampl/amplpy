@@ -72,7 +72,7 @@ cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, value
     campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
 
     for i in range(size):
-        free(values_c[i])
+        campl.AMPL_TupleFree(&values_c[i])
     free(values_c)
 
 cdef to_py_variant(campl.AMPL_VARIANT* variant):
@@ -103,6 +103,7 @@ cdef to_py_tuple(campl.AMPL_TUPLE* tuple_c):
     return tuple(pylist)
 
 cdef campl.AMPL_TUPLE* to_c_tuple(py_tuple):
+    cdef size_t i
     cdef campl.AMPL_TUPLE* tuple_c
 
     if not isinstance(py_tuple, (tuple, list)):
@@ -115,6 +116,9 @@ cdef campl.AMPL_TUPLE* to_c_tuple(py_tuple):
         variants[i] = to_c_variant(py_tuple[i])
 
     campl.AMPL_TupleCreate(&tuple_c, size, variants)
+
+    for i in range(size):
+        campl.AMPL_VariantFree(&variants[i])
 
     free(variants)
     return tuple_c

@@ -49,8 +49,10 @@ cdef class Entity(object):
         return entity
 
     #def __dealloc__(self):
-    #    if self._index is not NULL:
-    #        campl.AMPL_TupleFree(&self._index)
+    #    if self._name is not NULL:
+    #        campl.AMPL_StringFree(&self._name)
+        #if self._index is not NULL:
+        #    campl.AMPL_TupleFree(&self._index)
 
     def to_string(self):
         cdef char* output_c
@@ -111,9 +113,12 @@ cdef class Entity(object):
         campl.AMPL_EntityGetTuples(self._c_ampl, self._name, &indices_c, &size)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
+                for j in range(size):
+                    campl.AMPL_TupleFree(&indices_c[j])
                 free(indices_c)
                 return create_entity(self.wrap_function, self._c_ampl, self._name, index_c)
         free(indices_c)
+        campl.AMPL_TupleFree(&index_c)
         return None
 
     def instances(self):
