@@ -22,7 +22,7 @@ cdef class Objective(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index):
         entity = Objective()
         entity._c_ampl = ampl_c
         entity._name = name
@@ -35,7 +35,7 @@ cdef class Objective(Entity):
         Get the value of the objective.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
         return value
 
     def astatus(self):
@@ -43,7 +43,7 @@ cdef class Objective(Entity):
         Return the AMPL status.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -53,7 +53,7 @@ cdef class Objective(Entity):
         Return the solver status.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -64,7 +64,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef int value
-        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value)
+        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value)
         return value
 
     def message(self):
@@ -73,7 +73,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -84,7 +84,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -93,13 +93,13 @@ cdef class Objective(Entity):
         """
         Drop this objective instance.
         """
-        campl.AMPL_EntityDrop(self._c_ampl, self._name.encode('utf-8'))
+        campl.AMPL_EntityDrop(self._c_ampl, self._name)
 
     def restore(self):
         """
         Restore this objective (if it had been dropped, no effect otherwise).
         """
-        campl.AMPL_EntityRestore(self._c_ampl, self._name.encode('utf-8'))
+        campl.AMPL_EntityRestore(self._c_ampl, self._name)
 
     def minimization(self):
         """
@@ -107,7 +107,7 @@ cdef class Objective(Entity):
         False if maximize.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         if value == 'minimize':

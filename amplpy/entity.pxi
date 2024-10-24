@@ -33,14 +33,14 @@ cdef class Entity(object):
     - Parameters (see :class:`~amplpy.Parameter`)
     """
     cdef campl.AMPL* _c_ampl
-    cdef str _name
+    cdef char* _name
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_ENTITYTYPE wrap_function
 
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index):
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(ampl_c, name.encode('utf-8'), &entitytype))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(ampl_c, name, &entitytype))
         entity = Entity()
         entity._c_ampl = ampl_c
         entity._name = name
@@ -54,7 +54,7 @@ cdef class Entity(object):
 
     def to_string(self):
         cdef char* output_c
-        campl.AMPL_EntityGetDeclaration(self._c_ampl, self._name.encode('utf-8'), &output_c)
+        campl.AMPL_EntityGetDeclaration(self._c_ampl, self._name, &output_c)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
         return output
@@ -90,8 +90,8 @@ cdef class Entity(object):
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
-                campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), tuple_c, &name_c)
-                entity = create_entity(self.wrap_function, self._c_ampl, name_c.decode('utf-8'), NULL).value()
+                campl.AMPL_InstanceGetName(self._c_ampl, self._name, tuple_c, &name_c)
+                entity = create_entity(self.wrap_function, self._c_ampl, name_c, NULL).value()
                 campl.AMPL_StringFree(&name_c)
                 return entity
             else:
@@ -108,7 +108,7 @@ cdef class Entity(object):
         cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
-        campl.AMPL_EntityGetTuples(self._c_ampl, self._name.encode('utf-8'), &indices_c, &size)
+        campl.AMPL_EntityGetTuples(self._c_ampl, self._name, &indices_c, &size)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
                 free(indices_c)
@@ -126,7 +126,7 @@ cdef class Entity(object):
         """
         Get the name of this entity.
         """
-        return self._name
+        return self._name.decode('utf-8')
 
     def indexarity(self):
         """
@@ -151,7 +151,7 @@ cdef class Entity(object):
         if self._index is not NULL:
             indexarity = 0
         else:
-            campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name.encode('utf-8'), &indexarity)
+            campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name, &indexarity)
         return indexarity
 
     def is_scalar(self):
@@ -172,7 +172,7 @@ cdef class Entity(object):
         Get the number of instances in this entity.
         """
         cdef size_t size
-        campl.AMPL_EntityGetNumInstances(self._c_ampl, self._name.encode('utf-8'), &size);
+        campl.AMPL_EntityGetNumInstances(self._c_ampl, self._name, &size);
         return int(size)
 
     def get_indexing_sets(self):
@@ -189,7 +189,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** sets
         cdef list pylist = []
-        campl.AMPL_EntityGetIndexingSets(self._c_ampl, self._name.encode('utf-8'), &sets, &size)
+        campl.AMPL_EntityGetIndexingSets(self._c_ampl, self._name, &sets, &size)
         for i in range(size):
             if sets[i] != NULL:
                 pylist.append(sets[i].decode('utf-8'))
@@ -210,7 +210,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** xref
         cdef list pylist = []
-        campl.AMPL_EntityGetXref(self._c_ampl, self._name.encode('utf-8'), &xref, &size)
+        campl.AMPL_EntityGetXref(self._c_ampl, self._name, &xref, &size)
         for i in range(size):
             if xref[i] != NULL:
                 pylist.append(xref[i].decode('utf-8'))
@@ -245,7 +245,7 @@ cdef class Entity(object):
         cdef size_t n
         if suffixes is None:
             n = 0
-            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), NULL, n, &df_c))
+            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._c_ampl, self._name, NULL, n, &df_c))
         else:
             if isinstance(suffixes, str):
                 suffixes = [suffixes]
@@ -255,7 +255,7 @@ cdef class Entity(object):
             for i in range(len(suffixes)):
                 suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
             n = len(suffixes)
-            campl.AMPL_EntityGetValues(self._c_ampl, self._name.encode('utf-8'), suffixes_c, n, &df_c)
+            campl.AMPL_EntityGetValues(self._c_ampl, self._name, suffixes_c, n, &df_c)
             for i in range(len(suffixes)):
                 free(suffixes_c[i])
             free(suffixes_c)
@@ -304,7 +304,7 @@ cdef class Entity(object):
         cdef DataFrame df
         cdef campl.AMPL_DATAFRAME* df_c 
         cdef char* _name_c 
-        campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), self._index, &_name_c)
+        campl.AMPL_InstanceGetName(self._c_ampl, self._name, self._index, &_name_c)
         if isinstance(data, DataFrame):
             df = data
             df_c = df.get_ptr()

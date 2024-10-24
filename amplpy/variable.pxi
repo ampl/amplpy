@@ -21,7 +21,7 @@ cdef class Variable(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index):
         entity = Variable()
         entity._c_ampl = ampl_c
         entity._name = name
@@ -37,7 +37,7 @@ cdef class Variable(Entity):
         Get the current value of this variable.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
         return value
 
     def fix(self, value=None):
@@ -49,15 +49,15 @@ cdef class Variable(Entity):
             value: value to be set.
         """
         if value is None:
-            campl.AMPL_VariableInstanceFix(self._c_ampl, self._name.encode('utf-8'), self._index)
+            campl.AMPL_VariableInstanceFix(self._c_ampl, self._name, self._index)
         else:
-            campl.AMPL_VariableInstanceFixToValue(self._c_ampl, self._name.encode('utf-8'), self._index, value)
+            campl.AMPL_VariableInstanceFixToValue(self._c_ampl, self._name, self._index, value)
 
     def unfix(self):
         """
         Unfix all instances of this variable.
         """
-        campl.AMPL_VariableInstanceUnfix(self._c_ampl, self._name.encode('utf-8'), self._index)
+        campl.AMPL_VariableInstanceUnfix(self._c_ampl, self._name, self._index)
 
     def set_value(self, value):
         """
@@ -68,16 +68,16 @@ cdef class Variable(Entity):
             value: value to be set.
         """
         if isinstance(value, Parameter):
-            campl.AMPL_VariableInstanceSetValue(self._c_ampl, self._name.encode('utf-8'), self._index, value.value())
+            campl.AMPL_VariableInstanceSetValue(self._c_ampl, self._name, self._index, value.value())
         else:
-            campl.AMPL_VariableInstanceSetValue(self._c_ampl, self._name.encode('utf-8'), self._index, float(value))
+            campl.AMPL_VariableInstanceSetValue(self._c_ampl, self._name, self._index, float(value))
 
     def astatus(self):
         """
         Get the AMPL status (fixed, presolved, or substituted out).
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -88,7 +88,7 @@ cdef class Variable(Entity):
         variable out.
         """
         cdef int value
-        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFEQN, &value)
+        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFEQN, &value)
         return value
 
     def dual(self):
@@ -96,7 +96,7 @@ cdef class Variable(Entity):
         Get the dual value on defining constraint of variable substituted out.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value)
         return value
 
     def init(self):
@@ -104,7 +104,7 @@ cdef class Variable(Entity):
         Get the current initial guess.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT, &value)
         return value
 
     def init0(self):
@@ -113,7 +113,7 @@ cdef class Variable(Entity):
         statement).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT0, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT0, &value)
         return value
 
     def lb(self):
@@ -121,7 +121,7 @@ cdef class Variable(Entity):
         Returns the current lower bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value)
         return value
 
     def ub(self):
@@ -129,7 +129,7 @@ cdef class Variable(Entity):
         Returns the current upper bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value)
         return value
 
     def lb0(self):
@@ -137,7 +137,7 @@ cdef class Variable(Entity):
         Returns the initial lower bounds, from the var declaration.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB0, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB0, &value)
         return value
 
     def ub0(self):
@@ -145,7 +145,7 @@ cdef class Variable(Entity):
         Returns the initial upper bound, from the var declaration.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB0, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB0, &value)
         return value
 
     def lb1(self):
@@ -153,7 +153,7 @@ cdef class Variable(Entity):
         Returns the weaker lower bound from AMPL's presolve phase.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB1, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB1, &value)
         return value
 
     def ub1(self):
@@ -161,7 +161,7 @@ cdef class Variable(Entity):
         Returns the weaker upper bound from AMPL's presolve phase.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB1, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB1, &value)
         return value
 
     def lb2(self):
@@ -169,7 +169,7 @@ cdef class Variable(Entity):
         Returns the stronger lower bound from AMPL's presolve phase.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB2, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB2, &value)
         return value
 
     def ub2(self):
@@ -177,7 +177,7 @@ cdef class Variable(Entity):
         Returns the stronger upper bound from AMPL's presolve phase.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB2, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB2, &value)
         return value
 
     def lrc(self):
@@ -185,7 +185,7 @@ cdef class Variable(Entity):
         Returns the reduced cost at lower bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LRC, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LRC, &value)
         return value
 
     def urc(self):
@@ -193,7 +193,7 @@ cdef class Variable(Entity):
         Returns the reduced cost at upper bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_URC, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_URC, &value)
         return value
 
     def lslack(self):
@@ -201,7 +201,7 @@ cdef class Variable(Entity):
         Return the slack at lower bound (``val - lb``).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value)
         return value
 
     def uslack(self):
@@ -209,7 +209,7 @@ cdef class Variable(Entity):
         Return the slack at upper bound (``ub - val``).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value)
         return value
 
     def rc(self):
@@ -217,7 +217,7 @@ cdef class Variable(Entity):
         Get the reduced cost (at the nearer bound).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_RC, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_RC, &value)
         return value
 
     def slack(self):
@@ -226,7 +226,7 @@ cdef class Variable(Entity):
         :func:`~amplpy.Variable.lslack` and :func:`~amplpy.Variable.uslack`.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value)
         return value
 
     def sstatus(self):
@@ -234,7 +234,7 @@ cdef class Variable(Entity):
         Solver status (basis status of variable).
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -244,7 +244,7 @@ cdef class Variable(Entity):
         AMPL status if not `in`, otherwise solver status.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value

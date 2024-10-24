@@ -61,7 +61,7 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
         print("AMPL: unknown return code!")
         raise Exception('AMPL: unknown return code!')
 
-cdef void setValues(campl.AMPL* ampl, str name, campl.AMPL_TUPLE* index, values, size_t size):
+cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
     cdef campl.AMPL_TUPLE** values_c
     cdef size_t i
     values_c = <campl.AMPL_TUPLE**>malloc(size * sizeof(campl.AMPL_TUPLE*))
@@ -69,7 +69,7 @@ cdef void setValues(campl.AMPL* ampl, str name, campl.AMPL_TUPLE* index, values,
     for i in range(size):
         values_c[i] = to_c_tuple(values[i])
     
-    campl.AMPL_SetInstanceSetValuesTuples(ampl, name.encode('utf-8'), index, values_c, size)
+    campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
 
     for i in range(size):
         free(values_c[i])
@@ -131,7 +131,7 @@ cdef campl.AMPL_VARIANT* to_c_variant(value):
         raise ValueError(f"unsupported type {type(value)}")
     return variant
 
-cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, str name, campl.AMPL_TUPLE* index):
+cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index):
     if entity_class == campl.AMPL_VARIABLE:
         return Variable.create(ampl, name, index)
     elif entity_class == campl.AMPL_CONSTRAINT:
@@ -145,27 +145,27 @@ cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, str nam
     else:
         return Entity.create(ampl, name, index)
 
-cdef void setValuesParamNum(campl.AMPL* ampl, str name, values):
+cdef void setValuesParamNum(campl.AMPL* ampl, char* name, values):
     cdef size_t size = len(values)
     cdef double* values_c = <double*> malloc(size * sizeof(double))
     for i in range(size):
         values_c[i] = values[i]
-    campl.AMPL_ParameterSetArgsDoubleValues(ampl, name.encode('utf-8'), size, values_c)
+    campl.AMPL_ParameterSetArgsDoubleValues(ampl, name, size, values_c)
     free(values_c)
 
-cdef void setValuesParamStr(campl.AMPL* ampl, str name, values):
+cdef void setValuesParamStr(campl.AMPL* ampl, char* name, values):
     cdef size_t size = len(values)
     cdef char** values_c = <char**> malloc(size * sizeof(char*))
     for i in range(size):
         values_c[i] = strdup(values[i].encode('utf-8'))
     
-    campl.AMPL_ParameterSetArgsStringValues(ampl, name.encode('utf-8'), size, values_c)
+    campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
 
     for i in range(size):
         free(values_c[i])
     free(values_c)
 
-cdef void setValuesPyDict(campl.AMPL* ampl, str name, dict dicts):
+cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
     cdef size_t i
     cdef campl.AMPL_TUPLE** indices_c
     cdef char** values_str_c
@@ -201,7 +201,7 @@ cdef void setValuesPyDict(campl.AMPL* ampl, str name, dict dicts):
         for i in range(size):
             indices_c[i] = to_c_tuple(<object>PyList_GetItem(d_keys, i))
             values_str_c[i] = PyUnicode_AsUTF8(<object>PyList_GetItem(d_values, i))
-        campl.AMPL_ParameterSetSomeStringValues(ampl, name.encode('utf-8'), size, indices_c, values_str_c)
+        campl.AMPL_ParameterSetSomeStringValues(ampl, name, size, indices_c, values_str_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
@@ -216,7 +216,7 @@ cdef void setValuesPyDict(campl.AMPL* ampl, str name, dict dicts):
                 values_num_c[i] = PyLong_AsLong(<object>item)
             else:
                 values_num_c[i] = PyFloat_AsDouble(<object>item)
-        campl.AMPL_ParameterSetSomeDoubleValues(ampl, name.encode('utf-8'), size, indices_c, values_num_c)
+        campl.AMPL_ParameterSetSomeDoubleValues(ampl, name, size, indices_c, values_num_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
@@ -224,7 +224,7 @@ cdef void setValuesPyDict(campl.AMPL* ampl, str name, dict dicts):
     else:
         raise ValueError("Dictionary must contain either all strings or all numbers")
 
-cdef raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, name):
+cdef raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name):
     if entity_class == campl.AMPL_VARIABLE:
         raise KeyError("A variable called {name} cannot be found.")
     elif entity_class == campl.AMPL_CONSTRAINT:

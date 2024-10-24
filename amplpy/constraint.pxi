@@ -30,7 +30,7 @@ cdef class Constraint(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index):
         entity = Constraint()
         entity._c_ampl = ampl_c
         entity._name = name
@@ -52,7 +52,7 @@ cdef class Constraint(Entity):
         """
         cdef bool_c value
         try:
-            campl.AMPL_ConstraintIsLogical(self._c_ampl, self._name.encode('utf-8'), &value)
+            campl.AMPL_ConstraintIsLogical(self._c_ampl, self._name, &value)
             return value
         except AttributeError:
             return False
@@ -62,21 +62,21 @@ cdef class Constraint(Entity):
         Drop all instances in this constraint entity, corresponding to the AMPL
         code: `drop constraintname;`.
         """
-        campl.AMPL_EntityDrop(self._c_ampl, self._name.encode('utf-8'))
+        campl.AMPL_EntityDrop(self._c_ampl, self._name)
 
     def restore(self):
         """
         Restore all instances in this constraint entity, corresponding to the
         AMPL code: `restore constraintname;`.
         """
-        campl.AMPL_EntityRestore(self._c_ampl, self._name.encode('utf-8'))
+        campl.AMPL_EntityRestore(self._c_ampl, self._name)
 
     def body(self):
         """
         Get the current value of the constraint's body.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_BODY, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_BODY, &value)
         return value
 
     def astatus(self):
@@ -84,7 +84,7 @@ cdef class Constraint(Entity):
         Get the current AMPL status (dropped, presolved, or substituted out).
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -95,7 +95,7 @@ cdef class Constraint(Entity):
         constraint.
         """
         cdef int value
-        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFVAR, &value)
+        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFVAR, &value)
         return value
 
     def dinit(self):
@@ -103,7 +103,7 @@ cdef class Constraint(Entity):
         Get the current initial guess for the constraint's dual variable.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT, &value)
         return value
 
     def dinit0(self):
@@ -111,7 +111,7 @@ cdef class Constraint(Entity):
         Get the original initial guess for the constraint's dual variable.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT0, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT0, &value)
         return value
 
     def dual(self):
@@ -124,7 +124,7 @@ cdef class Constraint(Entity):
         (see :func:`~amplpy.AMPL.setOption`).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value)
         return value
 
     def lb(self):
@@ -132,7 +132,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's lower bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value)
         return value
 
     def ub(self):
@@ -140,7 +140,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's upper bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value)
         return value
 
     def lbs(self):
@@ -149,7 +149,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LBS, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LBS, &value)
         return value
 
     def ubs(self):
@@ -158,7 +158,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UBS, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UBS, &value)
         return value
 
     def ldual(self):
@@ -166,7 +166,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the lower bound.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LDUAL, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LDUAL, &value)
         return value
 
     def udual(self):
@@ -174,7 +174,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the upper bounds.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UDUAL, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UDUAL, &value)
         return value
 
     def lslack(self):
@@ -182,7 +182,7 @@ cdef class Constraint(Entity):
         Get the slack at lower bound `body - lb`.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value)
         return value
 
     def uslack(self):
@@ -190,7 +190,7 @@ cdef class Constraint(Entity):
         Get the slack at upper bound `ub - body`.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value)
         return value
 
     def slack(self):
@@ -198,7 +198,7 @@ cdef class Constraint(Entity):
         Constraint slack (the lesser of lslack and uslack).
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value)
+        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value)
         return value
 
     def sstatus(self):
@@ -207,7 +207,7 @@ cdef class Constraint(Entity):
         variable).
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -217,7 +217,7 @@ cdef class Constraint(Entity):
         Get the AMPL status if not `in`, otherwise solver status.
         """
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
+        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -237,7 +237,7 @@ cdef class Constraint(Entity):
         Args:
             dual: The value to be assigned to the dual variable.
         """
-        campl.AMPL_ConstraintSetDual(self._c_ampl, self._name.encode('utf-8'), float(dual))
+        campl.AMPL_ConstraintSetDual(self._c_ampl, self._name, float(dual))
 
     def val(self):
         """
@@ -245,7 +245,7 @@ cdef class Constraint(Entity):
         """
         cdef double value
         if self.is_logical():
-            campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name.encode('utf-8'), self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VAL, &value)
+            campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VAL, &value)
             return value
         else:
             return None

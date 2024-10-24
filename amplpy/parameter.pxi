@@ -29,7 +29,7 @@ cdef class Parameter(Entity):
     and an object of class :class:`~amplpy.DataFrame`.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index):
         entity = Parameter()
         entity._c_ampl = ampl_c
         entity._name = name
@@ -46,7 +46,7 @@ cdef class Parameter(Entity):
         numerical and string values).
         """
         cdef bool_c value
-        campl.AMPL_ParameterIsSymbolic(self._c_ampl, self._name.encode('utf-8'), &value)
+        campl.AMPL_ParameterIsSymbolic(self._c_ampl, self._name, &value)
         return value
 
     def has_default(self):
@@ -68,7 +68,7 @@ cdef class Parameter(Entity):
             True.
         """
         cdef bool_c value
-        campl.AMPL_ParameterHasDefault(self._c_ampl, self._name.encode('utf-8'), &value)
+        campl.AMPL_ParameterHasDefault(self._c_ampl, self._name, &value)
         return value
 
     def __getitem__(self, index):
@@ -77,7 +77,7 @@ cdef class Parameter(Entity):
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
         cdef char* expression
         cdef campl.AMPL_VARIANT* v
-        campl.AMPL_InstanceGetName(self._c_ampl, self._name.encode('utf-8'), tuple_c, &expression)
+        campl.AMPL_InstanceGetName(self._c_ampl, self._name, tuple_c, &expression)
         campl.AMPL_GetValue(self._c_ampl, expression, &v)
         campl.AMPL_StringFree(&expression)
         py_variant = to_py_variant(v)
@@ -89,7 +89,7 @@ cdef class Parameter(Entity):
         Get the value of this parameter. Valid only for non-indexed parameters.
         """
         cdef campl.AMPL_VARIANT* v
-        campl.AMPL_GetValue(self._c_ampl, self._name.encode('utf-8'), &v)
+        campl.AMPL_GetValue(self._c_ampl, self._name, &v)
         py_variant = to_py_variant(v)
         campl.AMPL_VariantFree(&v)
         return py_variant
@@ -115,9 +115,9 @@ cdef class Parameter(Entity):
             value = args[0]
     
             if isinstance(value, Real):
-                campl.AMPL_ParameterSetNumeric(self._c_ampl, self._name.encode('utf-8'), float(value))
+                campl.AMPL_ParameterSetNumeric(self._c_ampl, self._name, float(value))
             elif isinstance(value, str):
-                campl.AMPL_ParameterSetString(self._c_ampl, self._name.encode('utf-8'), value.encode('utf-8'))
+                campl.AMPL_ParameterSetString(self._c_ampl, self._name, value.encode('utf-8'))
             else:
                 raise TypeError
         else:
@@ -126,9 +126,9 @@ cdef class Parameter(Entity):
                 index = [index]
             index_c = to_c_tuple(index)
             if isinstance(value, Real):
-                campl.AMPL_ParameterInstanceSetNumericValue(self._c_ampl, self._name.encode('utf-8'), index_c, float(value))
+                campl.AMPL_ParameterInstanceSetNumericValue(self._c_ampl, self._name, index_c, float(value))
             elif isinstance(value, str):
-                campl.AMPL_ParameterInstanceSetStringValue(self._c_ampl, self._name.encode('utf-8'), index_c, value.encode('utf-8'))
+                campl.AMPL_ParameterInstanceSetStringValue(self._c_ampl, self._name, index_c, value.encode('utf-8'))
             else:
                 raise TypeError
 

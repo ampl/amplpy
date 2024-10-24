@@ -80,15 +80,16 @@ cdef class EntityMap(object):
             raise StopIteration
         cdef char** it = self.iterator
         self.iterator += 1
-        name = it[0].decode('utf-8')
+        name = it[0]
         return (name, create_entity(self.entity_class, self._c_ampl, name, NULL))
 
     def __getitem__(self, key):
         assert isinstance(key, str)
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, key.encode('utf-8'), &entitytype))
-        if entitytype != self.entity_class: raiseKeyError(self.entity_class, key)
-        return create_entity(self.entity_class, self._c_ampl, key, NULL)
+        cdef char* name_c = strdup(key.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
+        if entitytype != self.entity_class: raiseKeyError(self.entity_class, name_c)
+        return create_entity(self.entity_class, self._c_ampl, name_c, NULL)
 
     def size(self):
         return int(self._size)
@@ -99,7 +100,7 @@ cdef class EntityMap(object):
 cdef class InstanceIterator(object):
     
     cdef campl.AMPL* _c_ampl
-    cdef str _name
+    cdef char* _name
     cdef campl.AMPL_ENTITYTYPE entity_class
     cdef campl.AMPL_TUPLE** begin
     cdef campl.AMPL_TUPLE** end
@@ -107,20 +108,20 @@ cdef class InstanceIterator(object):
     cdef size_t _size
 
     @staticmethod
-    cdef create(campl.AMPL* ampl, name, campl.AMPL_ENTITYTYPE entity_class):
+    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_ENTITYTYPE entity_class):
         instanceit = InstanceIterator()
         cdef size_t arity
         instanceit._c_ampl = ampl
         instanceit._name = name
         instanceit.entity_class = entity_class
-        campl.AMPL_EntityGetIndexarity(instanceit._c_ampl, instanceit._name.encode('utf-8'), &arity)
+        campl.AMPL_EntityGetIndexarity(instanceit._c_ampl, instanceit._name, &arity)
         if arity == 0:
             instanceit._size = 1
             instanceit.begin = NULL
             instanceit.iterator = 0
             instanceit.end = NULL
             return instanceit
-        campl.AMPL_EntityGetTuples(instanceit._c_ampl, instanceit._name.encode('utf-8'), &instanceit.begin, &instanceit._size)
+        campl.AMPL_EntityGetTuples(instanceit._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
         if instanceit._size == 0:
             instanceit.iterator = 0
             instanceit.end = NULL
@@ -163,7 +164,7 @@ cdef class InstanceIterator(object):
 cdef class MemberRangeIterator(object):
     """Iterator for set members."""
     cdef campl.AMPL* _c_ampl
-    cdef str _name
+    cdef char* _name
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_TUPLE** begin
     cdef campl.AMPL_TUPLE** end
@@ -171,12 +172,12 @@ cdef class MemberRangeIterator(object):
     cdef size_t _size
 
     @staticmethod
-    cdef create(campl.AMPL* ampl, name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index):
         instanceit = MemberRangeIterator()
         instanceit._c_ampl = ampl
         instanceit._name = name
         instanceit._index = index
-        campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name.encode('utf-8'), instanceit._index, &instanceit.begin, &instanceit._size)
+        campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name, instanceit._index, &instanceit.begin, &instanceit._size)
         if instanceit._size == 0:
             instanceit.iterator = NULL
             instanceit.end = NULL
@@ -192,7 +193,7 @@ cdef class MemberRangeIterator(object):
 
     def size(self):
         cdef size_t size
-        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name.encode('utf-8'), self._index, &size)
+        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name, self._index, &size)
         return int(size)
 
     def __len__(self):

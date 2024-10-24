@@ -203,7 +203,8 @@ cdef class AMPL:
         Returns:
             The AMPL entity with the specified name.
         """
-        return Entity.create(self._c_ampl, name, NULL)
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        return Entity.create(self._c_ampl, name_c, NULL)
 
     def get_variable(self, name):
         """
@@ -216,9 +217,10 @@ cdef class AMPL:
             KeyError: if the specified variable does not exist.
         """
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name.encode('utf-8'), &entitytype))
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
         if entitytype != campl.AMPL_VARIABLE: raiseKeyError(campl.AMPL_VARIABLE, name)
-        return Variable.create(self._c_ampl, name, NULL)
+        return Variable.create(self._c_ampl, name_c, NULL)
 
     def get_constraint(self, name):
         """
@@ -231,9 +233,10 @@ cdef class AMPL:
             KeyError: if the specified constraint does not exist.
         """
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name.encode('utf-8'), &entitytype))
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
         if entitytype != campl.AMPL_CONSTRAINT: raiseKeyError(campl.AMPL_CONSTRAINT, name)
-        return Constraint.create(self._c_ampl, name, NULL)
+        return Constraint.create(self._c_ampl, name_c, NULL)
 
     def get_objective(self, name):
         """
@@ -246,9 +249,10 @@ cdef class AMPL:
             KeyError: if the specified objective does not exist.
         """
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name.encode('utf-8'), &entitytype))
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
         if entitytype != campl.AMPL_OBJECTIVE: raiseKeyError(campl.AMPL_OBJECTIVE, name)
-        return Objective.create(self._c_ampl, name, NULL)
+        return Objective.create(self._c_ampl, name_c, NULL)
 
     def get_set(self, name):
         """
@@ -261,9 +265,10 @@ cdef class AMPL:
             KeyError: if the specified set does not exist.
         """
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name.encode('utf-8'), &entitytype))
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
         if entitytype != campl.AMPL_SET: raiseKeyError(campl.AMPL_SET, name)
-        return Set.create(self._c_ampl, name, NULL)
+        return Set.create(self._c_ampl, name_c, NULL)
 
     def get_parameter(self, name):
         """
@@ -276,9 +281,10 @@ cdef class AMPL:
             KeyError: if the specified parameter does not exist.
         """
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name.encode('utf-8'), &entitytype))
+        cdef char* name_c = strdup(name.encode('utf-8'))
+        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
         if entitytype != campl.AMPL_PARAMETER: raiseKeyError(campl.AMPL_PARAMETER, name)
-        return Parameter.create(self._c_ampl, name, NULL)
+        return Parameter.create(self._c_ampl, name_c, NULL)
 
     def eval(self, statements):
         """

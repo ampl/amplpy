@@ -433,7 +433,7 @@ cdef class DataFrame(object):
             ncols = self._get_num_cols()
             nindices = self._get_num_indices()
             if ncols - nindices == 1:
-                return [row[-1] for row in lst]
+                return [row[len(row)-1] for row in lst]
             else:
                 return [row[nindices:] for row in lst]
         else:
