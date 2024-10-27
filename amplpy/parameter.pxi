@@ -29,12 +29,15 @@ cdef class Parameter(Entity):
     and an object of class :class:`~amplpy.DataFrame`.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index, parent):
         entity = Parameter()
         entity._c_ampl = ampl_c
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_PARAMETER
+        entity._entity = parent
+        if entity._entity is not None:
+            Py_INCREF(entity._entity)
         return entity
 
     def __setitem__(self, index, value):
@@ -78,6 +81,7 @@ cdef class Parameter(Entity):
         cdef char* expression
         cdef campl.AMPL_VARIANT* v
         campl.AMPL_InstanceGetName(self._c_ampl, self._name, tuple_c, &expression)
+        campl.AMPL_TupleFree(&tuple_c)
         campl.AMPL_GetValue(self._c_ampl, expression, &v)
         campl.AMPL_StringFree(&expression)
         py_variant = to_py_variant(v)
@@ -127,9 +131,12 @@ cdef class Parameter(Entity):
             index_c = to_c_tuple(index)
             if isinstance(value, Real):
                 campl.AMPL_ParameterInstanceSetNumericValue(self._c_ampl, self._name, index_c, float(value))
+                campl.AMPL_TupleFree(&index_c)
             elif isinstance(value, str):
                 campl.AMPL_ParameterInstanceSetStringValue(self._c_ampl, self._name, index_c, value.encode('utf-8'))
+                campl.AMPL_TupleFree(&index_c)
             else:
+                campl.AMPL_TupleFree(&index_c)
                 raise TypeError
 
     def set_values(self, values):

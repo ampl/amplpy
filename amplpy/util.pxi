@@ -135,19 +135,19 @@ cdef campl.AMPL_VARIANT* to_c_variant(value):
         raise ValueError(f"unsupported type {type(value)}")
     return variant
 
-cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index):
+cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, parent):
     if entity_class == campl.AMPL_VARIABLE:
-        return Variable.create(ampl, name, index)
+        return Variable.create(ampl, name, index, parent)
     elif entity_class == campl.AMPL_CONSTRAINT:
-        return Constraint.create(ampl, name, index)
+        return Constraint.create(ampl, name, index, parent)
     elif entity_class == campl.AMPL_OBJECTIVE:
-        return Objective.create(ampl, name, index)
+        return Objective.create(ampl, name, index, parent)
     elif entity_class == campl.AMPL_SET:
-        return Set.create(ampl, name, index)
+        return Set.create(ampl, name, index, parent)
     elif entity_class == campl.AMPL_PARAMETER:
-        return Parameter.create(ampl, name, index)
+        return Parameter.create(ampl, name, index, parent)
     else:
-        return Entity.create(ampl, name, index)
+        return Entity.create(ampl, name, index, parent)
 
 cdef void setValuesParamNum(campl.AMPL* ampl, char* name, values):
     cdef size_t size = len(values)

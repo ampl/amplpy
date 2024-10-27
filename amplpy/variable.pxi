@@ -21,12 +21,15 @@ cdef class Variable(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index, parent):
         entity = Variable()
         entity._c_ampl = ampl_c
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_VARIABLE
+        entity._entity = parent
+        if entity._entity is not None:
+            Py_INCREF(entity._entity)
         return entity
 
     def __setitem__(self, index, value):

@@ -29,12 +29,15 @@ cdef class Set(Entity):
     :class:`~amplpy.DataFrame`.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index, parent):
         entity = Set()
         entity._c_ampl = ampl_c
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_SET
+        entity._entity = parent
+        if entity._entity is not None:
+            Py_INCREF(entity._entity)
         return entity
 
     def __setitem__(self, index, value):
@@ -73,7 +76,7 @@ cdef class Set(Entity):
         """
         Get members (tuples) of this Set. Valid only for non-indexed sets.
         """
-        return MemberRangeIterator.create(self._c_ampl, self._name, self._index)
+        return MemberRangeIterator.create(self._c_ampl, self._name, self._index, self)
 
     def size(self):
         """
@@ -94,6 +97,7 @@ cdef class Set(Entity):
         cdef bool_c contains_c
         cdef campl.AMPL_TUPLE* t_c = to_c_tuple(t)
         campl.AMPL_SetInstanceContains(self._c_ampl, self._name, NULL, t_c, &contains_c)    
+        campl.AMPL_TupleFree(&t_c)
         return contains_c
 
     def set_values(self, values):

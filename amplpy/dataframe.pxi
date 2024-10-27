@@ -308,6 +308,8 @@ cdef class DataFrame(object):
 
             values: The values to set.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef double* c_double_array = NULL
         cdef char** c_string_array = NULL
         cdef size_t size = len(values)
@@ -315,18 +317,23 @@ cdef class DataFrame(object):
             c_double_array = <double*> malloc(size * sizeof(double))
             for i in range(size):
                 c_double_array[i] = values[i]
-            PY_AMPL_CALL(campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size))
+            errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
+            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             free(c_double_array)
+            if rc != campl.AMPL_OK:
+                PY_AMPL_CALL(errorinfo)
         elif isinstance(values[0], str):
             c_string_array = <char**> malloc(size * sizeof(char*))
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
-            PY_AMPL_CALL(campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size))
+            errorinfo = campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size)
+            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             for i in range(size):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])
             free(c_string_array)
-        #self._impl.setColumnPyList(header, list(values))
+            if rc != campl.AMPL_OK:
+                PY_AMPL_CALL(errorinfo)
 
     def _get_row(self, key):
         """

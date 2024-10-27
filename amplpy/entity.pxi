@@ -36,23 +36,35 @@ cdef class Entity(object):
     cdef char* _name
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_ENTITYTYPE wrap_function
+    cdef object _entity
 
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index, parent):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(ampl_c, name, &entitytype))
+        errorinfo = campl.AMPL_EntityGetType(ampl_c, name, &entitytype)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            free(name)
+            PY_AMPL_CALL(errorinfo)
         entity = Entity()
         entity._c_ampl = ampl_c
         entity._name = name
         entity._index = index
-        entity.wrap_function = campl.AMPL_UNDEFINED
+        entity.wrap_function = entitytype
+        entity._entity = parent
+        if entity._entity is not None:
+            Py_INCREF(entity._entity)
         return entity
 
-    #def __dealloc__(self):
-    #    if self._name is not NULL:
-    #        campl.AMPL_StringFree(&self._name)
-        #if self._index is not NULL:
-        #    campl.AMPL_TupleFree(&self._index)
+    def __dealloc__(self):
+        if self._entity is not None:
+            Py_DECREF(self._entity)
+        if self._index is not NULL:
+            campl.AMPL_TupleFree(&self._index)
+        else:
+            campl.AMPL_StringFree(&self._name)
 
     def to_string(self):
         cdef char* output_c
@@ -66,13 +78,13 @@ cdef class Entity(object):
 
     def __iter__(self):
         assert self.wrap_function is not None
-        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function)
+        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function, self)
 
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
             index = [index]
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
-        return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c)
+        return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c, self)
 
     def get(self, *index):
         """
@@ -88,16 +100,16 @@ cdef class Entity(object):
             index = index[0]
             index = list(index)
         if len(index) == 0:
-            return create_entity(self.wrap_function, self._c_ampl, self._name, NULL)
+            return create_entity(self.wrap_function, self._c_ampl, self._name, NULL, None)
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
                 campl.AMPL_InstanceGetName(self._c_ampl, self._name, tuple_c, &name_c)
-                entity = create_entity(self.wrap_function, self._c_ampl, name_c, NULL).value()
-                campl.AMPL_StringFree(&name_c)
+                campl.AMPL_TupleFree(&tuple_c)
+                entity = create_entity(self.wrap_function, self._c_ampl, name_c, NULL, None).value()
                 return entity
             else:
-                return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c)
+                return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c, self)
 
     def find(self, index):
         """
@@ -107,6 +119,7 @@ cdef class Entity(object):
             The wanted instance if found, otherwise it returns `None`.
         """
         assert self.wrap_function is not None
+        cdef size_t i
         cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
@@ -116,7 +129,9 @@ cdef class Entity(object):
                 for j in range(size):
                     campl.AMPL_TupleFree(&indices_c[j])
                 free(indices_c)
-                return create_entity(self.wrap_function, self._c_ampl, self._name, index_c)
+                return create_entity(self.wrap_function, self._c_ampl, self._name, index_c, self)
+        for i in range(size):
+            campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
         campl.AMPL_TupleFree(&index_c)
         return None
@@ -125,7 +140,7 @@ cdef class Entity(object):
         """
         Get all the instances in this entity.
         """
-        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function)
+        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function, self)
 
     def name(self):
         """

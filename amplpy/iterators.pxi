@@ -40,56 +40,73 @@ cdef class EntityMap(object):
     cdef campl.AMPL_ENTITYTYPE entity_class
     cdef char** begin
     cdef char** end
-    cdef char** iterator
+    cdef size_t iterator
     cdef size_t _size
 
     @staticmethod
     cdef create(campl.AMPL* ampl, campl.AMPL_ENTITYTYPE entity_class):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         entityit = EntityMap()
         entityit._c_ampl = ampl
         entityit.entity_class = entity_class
         if entity_class == campl.AMPL_VARIABLE:
-            campl.AMPL_GetVariables(entityit._c_ampl, &entityit._size, &entityit.begin)
+            errorinfo = campl.AMPL_GetVariables(entityit._c_ampl, &entityit._size, &entityit.begin)
         elif entity_class == campl.AMPL_CONSTRAINT:
-            campl.AMPL_GetConstraints(entityit._c_ampl, &entityit._size, &entityit.begin)
+            errorinfo = campl.AMPL_GetConstraints(entityit._c_ampl, &entityit._size, &entityit.begin)
         elif entity_class == campl.AMPL_OBJECTIVE:
-            campl.AMPL_GetObjectives(entityit._c_ampl, &entityit._size, &entityit.begin)
+            errorinfo = campl.AMPL_GetObjectives(entityit._c_ampl, &entityit._size, &entityit.begin)
         elif entity_class == campl.AMPL_SET:
-            campl.AMPL_GetSets(entityit._c_ampl, &entityit._size, &entityit.begin)
+            errorinfo = campl.AMPL_GetSets(entityit._c_ampl, &entityit._size, &entityit.begin)
         elif entity_class == campl.AMPL_PARAMETER:
-            campl.AMPL_GetParameters(entityit._c_ampl, &entityit._size, &entityit.begin)
+            errorinfo = campl.AMPL_GetParameters(entityit._c_ampl, &entityit._size, &entityit.begin)
         else:
             raise ValueError(f"Unknown entity class.")
 
-        entityit.iterator = entityit.begin
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            for i in range(entityit._size):
+                campl.AMPL_StringFree(&entityit.begin[i])
+            free(entityit.begin)
+            PY_AMPL_CALL(errorinfo)
+
+        entityit.iterator = 0
         entityit.end = entityit.begin + entityit._size
         return entityit
 
     def __dealloc__(self):
+        if self.iterator < self._size:
+            for i in range(self.iterator, self._size):
+                campl.AMPL_StringFree(&self.begin[i])
         if self.begin != NULL:
-            for i in range(self._size):
-                free(self.begin[i])
             free(self.begin)
+            self.begin = NULL
 
     def __iter__(self):
-        self.iterator = self.begin
         return self
 
     def __next__(self):
-        if self.iterator >= self.end:
+        if self.iterator >= self._size:
             raise StopIteration
-        cdef char** it = self.iterator
+        tuple = (self.begin[self.iterator].decode('utf-8'), create_entity(self.entity_class, self._c_ampl, self.begin[self.iterator], NULL, None))
         self.iterator += 1
-        name = it[0]
-        return (name, create_entity(self.entity_class, self._c_ampl, name, NULL))
+        return tuple
 
     def __getitem__(self, key):
         assert isinstance(key, str)
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(key.encode('utf-8'))
-        PY_AMPL_CALL(campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype))
-        if entitytype != self.entity_class: raiseKeyError(self.entity_class, name_c)
-        return create_entity(self.entity_class, self._c_ampl, name_c, NULL)
+        errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            free(name_c)
+            PY_AMPL_CALL(errorinfo)
+        if entitytype != self.entity_class:
+            free(name_c)
+            raiseKeyError(self.entity_class, key)
+        return create_entity(self.entity_class, self._c_ampl, name_c, NULL, None)
 
     def size(self):
         return int(self._size)
@@ -98,7 +115,6 @@ cdef class EntityMap(object):
         return self.size()
 
 cdef class InstanceIterator(object):
-    
     cdef campl.AMPL* _c_ampl
     cdef char* _name
     cdef campl.AMPL_ENTITYTYPE entity_class
@@ -106,14 +122,16 @@ cdef class InstanceIterator(object):
     cdef campl.AMPL_TUPLE** end
     cdef size_t iterator
     cdef size_t _size
+    cdef object _entity
 
     @staticmethod
-    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_ENTITYTYPE entity_class):
+    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_ENTITYTYPE entity_class, parent):
         instanceit = InstanceIterator()
         cdef size_t arity
         instanceit._c_ampl = ampl
         instanceit._name = name
         instanceit.entity_class = entity_class
+        instanceit._entity = parent
         campl.AMPL_EntityGetIndexarity(instanceit._c_ampl, instanceit._name, &arity)
         if arity == 0:
             instanceit._size = 1
@@ -131,10 +149,12 @@ cdef class InstanceIterator(object):
         return instanceit
 
     def __dealloc__(self):
-        if self.begin != NULL:
-            for i in range(self._size):
+        if self.iterator+1 < self._size:
+            for i in range(self.iterator+1, self._size):
                 campl.AMPL_TupleFree(&self.begin[i])
+        if self.begin != NULL:
             free(self.begin)
+            self.begin = NULL
 
     def __iter__(self):
         return self
@@ -144,15 +164,15 @@ cdef class InstanceIterator(object):
             raise StopIteration
         self.iterator += 1
         if self.begin == NULL:
-            return (None, create_entity(self.entity_class, self._c_ampl, self._name, NULL))
+            return (None, self._entity)
         else:
-            return (to_py_tuple(self.begin[self.iterator]), create_entity(self.entity_class, self._c_ampl, self._name, self.begin[self.iterator]))
+            return (to_py_tuple(self.begin[self.iterator]), create_entity(self.entity_class, self._c_ampl, self._name, self.begin[self.iterator], self._entity))
 
     def __getitem__(self, key):
         assert isinstance(key, str)
         key = tuple(key)
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(key)
-        return create_entity(self.entity_class, self._c_ampl, self._name, tuple_c)
+        return create_entity(self.entity_class, self._c_ampl, self._name, tuple_c, self._entity)
 
     def size(self):
         return int(self._size)
@@ -168,33 +188,38 @@ cdef class MemberRangeIterator(object):
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_TUPLE** begin
     cdef campl.AMPL_TUPLE** end
-    cdef campl.AMPL_TUPLE** iterator
+    cdef size_t iterator
     cdef size_t _size
+    cdef object _entity
 
     @staticmethod
-    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index):
+    cdef create(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, parent):
         instanceit = MemberRangeIterator()
         instanceit._c_ampl = ampl
         instanceit._name = name
         instanceit._index = index
+        instanceit._entity = parent
+        if instanceit._entity is not None:
+            Py_INCREF(instanceit._entity)
         campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name, instanceit._index, &instanceit.begin, &instanceit._size)
+        instanceit.iterator = 0
         if instanceit._size == 0:
-            instanceit.iterator = NULL
             instanceit.end = NULL
         else:
-            instanceit.iterator = instanceit.begin
             instanceit.end = instanceit.begin + instanceit._size
         return instanceit
 
     def __dealloc__(self):
+        if self._entity is not None:
+            Py_DECREF(self._entity)
         for i in range(self._size):
             campl.AMPL_TupleFree(&self.begin[i])
-        free(self.begin)
+        if self.begin != NULL:
+            free(self.begin)
+            self.begin = NULL
 
     def size(self):
-        cdef size_t size
-        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name, self._index, &size)
-        return int(size)
+        return int(self._size)
 
     def __len__(self):
         return self.size()
@@ -203,20 +228,22 @@ cdef class MemberRangeIterator(object):
         return self
 
     def __next__(self):
-        if self.iterator >= self.end or self.iterator == NULL:
+        if self.iterator >= self._size:
             raise StopIteration
-        cdef campl.AMPL_TUPLE** it = self.iterator
+        cdef campl.AMPL_TUPLE* it = self.begin[self.iterator]
         cdef size_t size
         cdef campl.AMPL_VARIANT* variant
-        campl.AMPL_TupleGetSize(it[0], &size)
+        campl.AMPL_TupleGetSize(it, &size)
         self.iterator += 1
         if size == 1:
-            campl.AMPL_TupleGetVariant(it[0], 0, &variant)
-            return to_py_variant(variant)
+            campl.AMPL_TupleGetVariant(it, 0, &variant)
+            py_variant = to_py_variant(variant)
+            self.iterator += 1
+            return py_variant
         else:
-            return to_py_tuple(it[0])
-
-
+            py_tuple = to_py_tuple(it)
+            self.iterator += 1
+            return py_tuple
 
 cdef class ColIterator(object):
     cdef campl.AMPL_DATAFRAME* _df
