@@ -234,7 +234,6 @@ cdef class MemberRangeIterator(object):
         cdef size_t size
         cdef campl.AMPL_VARIANT* variant
         campl.AMPL_TupleGetSize(it, &size)
-        self.iterator += 1
         if size == 1:
             campl.AMPL_TupleGetVariant(it, 0, &variant)
             py_variant = to_py_variant(variant)

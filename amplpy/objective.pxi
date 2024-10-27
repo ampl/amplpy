@@ -28,7 +28,7 @@ cdef class Objective(Entity):
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_OBJECTIVE
-        entity._parent = parent
+        entity._entity = parent
         if entity._entity is not None:
             Py_INCREF(entity._entity)
         return entity
