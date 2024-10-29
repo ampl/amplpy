@@ -33,7 +33,7 @@ cdef void PyOutput(campl.AMPL_OUTPUTKIND kind, const char* msg, void* usrdata) e
     PyOutputHandler = <OutputHandler>usrdata
     PyOutputHandler.output(kind, str(msg.decode('utf-8')))
 
-class Kind(Enum):
+class Kind(object):
     """
     Represents the type of the output coming from the interpreter.
     """
