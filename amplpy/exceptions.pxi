@@ -8,7 +8,6 @@ class AMPLException(Exception):
 
     def __init__(self, source_name, line_number, offset, message):
         super(AMPLException, self).__init__()
-        #self.what = self._impl.what()
         self.source_name = source_name
         self.line_number = line_number
         self.offset = offset

@@ -45,20 +45,34 @@ cdef class Objective(Entity):
         """
         Return the AMPL status.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def sstatus(self):
         """
         Return the solver status.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def exitcode(self):
@@ -75,10 +89,17 @@ cdef class Objective(Entity):
         Result message returned by solver after most recent solve with this
         objective.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def result(self):
@@ -86,10 +107,17 @@ cdef class Objective(Entity):
         Result string returned by solver after most recent solve with this
         objective.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def drop(self):
@@ -109,10 +137,17 @@ cdef class Objective(Entity):
         Get the sense of this objective. Returns True if minimize,
         False if maximize.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         if value == 'minimize':
             return True
         else:
