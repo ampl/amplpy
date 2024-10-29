@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from enum import Enum
+
+
 cdef class OutputHandler(object):
     """
     Interface to handle the outputs from the calls to any
@@ -30,195 +33,317 @@ cdef void PyOutput(campl.AMPL_OUTPUTKIND kind, const char* msg, void* usrdata) e
     PyOutputHandler = <OutputHandler>usrdata
     PyOutputHandler.output(kind, str(msg.decode('utf-8')))
 
-class Kind(object):
+class Kind(Enum):
     """
     Represents the type of the output coming from the interpreter.
     """
 
-    #: Output ``prompt2``, returned when incomplete statements are interpreted.
     WAITING = campl.AMPL_OUTPUT_WAITING
+    """
+    Output ``prompt2``, returned when incomplete statements are interpreted.
+    """
 
-    #: Output ``break``, displayed when an operation is interrupted with SIGINT.
     BREAK = campl.AMPL_OUTPUT_BREAK
+    """
+    Output ``break``, displayed when an operation is interrupted with SIGINT.
+    """
 
-    #: Output ``cd``, returned by the ``cd`` function.
     CD = campl.AMPL_OUTPUT_CD
+    """
+    Output ``cd``, returned by the ``cd`` function.
+    """
 
-    #: Output ``display``, returned by the ``display`` function.
     DISPLAY = campl.AMPL_OUTPUT_DISPLAY
+    """
+    Output ``display``, returned by the ``display`` function.
+    """
 
-    #: Output ``exit``, returned as last message from AMPL before exiting the
-    #: interpreter.
     EXIT = campl.AMPL_OUTPUT_EXIT
+    """
+    Output ``exit``, returned as last message from AMPL before exiting the
+    interpreter.
+    """
 
-    #: Output ``expand``, returned by the ``expand`` function.
     EXPAND = campl.AMPL_OUTPUT_EXPAND
+    """
+    Output ``expand``, returned by the ``expand`` function.
+    """
 
-    #: Output ``load``, returned by the ``load`` function when loading a library.
     LOAD = campl.AMPL_OUTPUT_LOAD
+    """
+    Output ``load``, returned by the ``load`` function when loading a library.
+    """
 
-    #: Output ``option``, returned by the ``option`` function when getting the
-    #: value of an option.
     OPTION = campl.AMPL_OUTPUT_OPTION
+    """
+    Output ``option``, returned by the ``option`` function when getting the
+    value of an option.
+    """
 
-    #: Output ``print``, returned by the ``print`` function when printing values
-    #: from AMPL command line.
     PRINT = campl.AMPL_OUTPUT_PRINT
+    """
+    Output ``print``, returned by the ``print`` function when printing values
+    from AMPL command line.
+    """
 
-    #: Output ``prompt1``, normal AMPL prompt.
     PROMPT = campl.AMPL_OUTPUT_PROMPT  # prompt1 and prompt3
+    """
+    Output ``prompt1``, normal AMPL prompt.
+    """
 
-    #: Output ``solution``, returned when loading a solution with the command
-    #: ``solution``, contains the solver message.
     SOLUTION = campl.AMPL_OUTPUT_SOLUTION
+    """
+    Output ``solution``, returned when loading a solution with the command
+    ``solution``, contains the solver message.
+    """
 
-    #: Output ``solve``, returned by the ``solve`` function, contains the solver
-    #: message.
     SOLVE = campl.AMPL_OUTPUT_SOLVE
+    """
+    Output ``solve``, returned by the ``solve`` function, contains the solver
+    message.
+    """
 
-    #: Output ``show``, returned by the ``show`` function.
     SHOW = campl.AMPL_OUTPUT_SHOW
+    """
+    Output ``show``, returned by the ``show`` function.
+    """
 
-    #: Output ``xref``, returned by the ``xref`` function.
     XREF = campl.AMPL_OUTPUT_XREF
+    """
+    Output ``xref``, returned by the ``xref`` function.
+    """
 
-    #: Output of the AMPL command ``shell``.
     SHELL_OUTPUT = campl.AMPL_OUTPUT_SHELL_OUTPUT
+    """
+    Output of the AMPL command ``shell``.
+    """
 
-    #: Messages from the command ``shell``.
     SHELL_MESSAGE = campl.AMPL_OUTPUT_SHELL_MESSAGE
+    """
+    Messages from the command ``shell``.
+    """
 
-    #: Output ``misc``.
     MISC = campl.AMPL_OUTPUT_MISC
+    """
+    Output ``misc``.
+    """
 
-    #: Messages from the command ``write table``.
     WRITE_TABLE = campl.AMPL_OUTPUT_WRITE_TABLE
+    """
+    Messages from the command ``write table``.
+    """
 
-    #: Messages from the command ``read table``.
     READ_TABLE = campl.AMPL_OUTPUT_READ_TABLE
+    """
+    Messages from the command ``read table``.
+    """
 
-    #: Internal messages from the command ``read table``.
     _READTABLE = campl.AMPL_OUTPUT_READTABLE
+    """
+    Internal messages from the command ``read table``.
+    """
 
-    #: Internal messages from the command ``write table``.
     _WRITETABLE = campl.AMPL_OUTPUT_WRITETABLE
+    """
+    Internal messages from the command ``write table``.
+    """
 
-    #: Breakpoint hit.
     BREAKPOINT = campl.AMPL_OUTPUT_BREAKPOINT
+    """
+    Breakpoint hit.
+    """
 
-    #: Output of a script ``call``.
     CALL = campl.AMPL_OUTPUT_CALL
+    """
+    Output of a script ``call``.
+    """
 
-    #: Output of a ``check`` operation.
     CHECK = campl.AMPL_OUTPUT_CHECK
+    """
+    Output of a ``check`` operation.
+    """
 
-    #: Output of a ``close`` command for output redirection.
     CLOSE = campl.AMPL_OUTPUT_CLOSE
+    """
+    Output of a ``close`` command for output redirection.
+    """
 
-    #: Output of a ``commands`` call into another file.
     COMMANDS = campl.AMPL_OUTPUT_COMMANDS
+    """
+    Output of a ``commands`` call into another file.
+    """
 
-    #: Issued when ``continue`` is encountered.
     CONTINUE = campl.AMPL_OUTPUT_CONTINUE
+    """
+    Issued when ``continue`` is encountered.
+    """
 
-    #: Output of a ``data`` command.
     DATA = campl.AMPL_OUTPUT_DATA
+    """
+    Output of a ``data`` command.
+    """
 
-    #: Output of a ``delete`` command.
     DELETECMD = campl.AMPL_OUTPUT_DELETECMD
+    """
+    Output of a ``delete`` command.
+    """
 
-    #: Output of a ``drop`` command.
     DROP = campl.AMPL_OUTPUT_DROP
+    """
+    Output of a ``drop`` command.
+    """
 
-    #: Internal.
     DROP_OR_RESTORE_ALL = campl.AMPL_OUTPUT_DROP_OR_RESTORE_ALL
+    """
+    Internal.
+    """
 
-    #: Else block.
     _ELSE = campl.AMPL_OUTPUT_ELSE
+    """
+    Else block.
+    """
 
-    #: Internal.
     ELSE_CHECK = campl.AMPL_OUTPUT_ELSE_CHECK
+    """
+    Internal.
+    """
 
-    #: End of if block.
     ENDIF = campl.AMPL_OUTPUT_ENDIF
+    """
+    End of if block.
+    """
 
-    #: Output of a ``environ`` command.
     ENVIRON = campl.AMPL_OUTPUT_ENVIRON
+    """
+    Output of a ``environ`` command.
+    """
 
-    #: Output of a ``fix`` command.
     FIX = campl.AMPL_OUTPUT_FIX
+    """
+    Output of a ``fix`` command.
+    """
 
-    #: Output of a ``for`` command.
     FOR = campl.AMPL_OUTPUT_FOR
+    """
+    Output of a ``for`` command.
+    """
 
-    #: Output of an ``if`` command.
     _IF = campl.AMPL_OUTPUT_IF
+    """
+    Output of an ``if`` command.
+    """
 
-    #: Output of a ``let`` command.
     LET = campl.AMPL_OUTPUT_LET
+    """
+    Output of a ``let`` command.
+    """
 
-    #: End of loop.
     LOOPEND = campl.AMPL_OUTPUT_LOOPEND
+    """
+    End of loop.
+    """
 
-    #: Output of an ``objective`` command.
     OBJECTIVE = campl.AMPL_OUTPUT_OBJECTIVE
+    """
+    Output of an ``objective`` command.
+    """
 
-    #: Occurs when resetting option values.
     OPTION_RESET = campl.AMPL_OUTPUT_OPTION_RESET
+    """
+    Occurs when resetting option values.
+    """
 
-    #: Output of a ``printf`` command.
     PRINTF = campl.AMPL_OUTPUT_PRINTF
+    """
+    Output of a ``printf`` command.
+    """
 
-    #: Output of a ``problem`` command.
     PROBLEM = campl.AMPL_OUTPUT_PROBLEM
+    """
+    Output of a ``problem`` command.
+    """
 
-    #: Output of a ``purge`` command.
     PURGE = campl.AMPL_OUTPUT_PURGE
+    """
+    Output of a ``purge`` command.
+    """
 
-    #: Occurs when a right brace is encountered.
     RBRACE = campl.AMPL_OUTPUT_RBRACE
+    """
+    Occurs when a right brace is encountered.
+    """
 
-    #: Output of a ``read`` command.
     READ = campl.AMPL_OUTPUT_READ
+    """
+    Output of a ``read`` command.
+    """
 
-    #: Output of a ``reload`` command.
     RELOAD = campl.AMPL_OUTPUT_RELOAD
+    """
+    Output of a ``reload`` command.
+    """
 
-    #: Output of a ``remove`` command.
     REMOVE = campl.AMPL_OUTPUT_REMOVE
+    """
+    Output of a ``remove`` command.
+    """
 
-    #: Beginning of a repeat loop.
     REPEAT = campl.AMPL_OUTPUT_REPEAT
+    """
+    Beginning of a repeat loop.
+    """
 
-    #: End of a repeat loop.
     REPEAT_END = campl.AMPL_OUTPUT_REPEAT_END
+    """
+    End of a repeat loop.
+    """
 
-    #: Output of a ``reset`` command.
     RESET = campl.AMPL_OUTPUT_RESET
+    """
+    Output of a ``reset`` command.
+    """
 
-    #: Output of a ``restore`` command.
     RESTORE = campl.AMPL_OUTPUT_RESTORE
+    """
+    Output of a ``restore`` command.
+    """
 
-    #: Internal.
     RUN_ARGS = campl.AMPL_OUTPUT_RUN_ARGS
+    """
+    Internal.
+    """
 
-    #: Internal.
     SEMICOLON = campl.AMPL_OUTPUT_SEMICOLON
+    """
+    Internal.
+    """
 
-    #: Internal.
     SSTEP = campl.AMPL_OUTPUT_SSTEP
+    """
+    Internal.
+    """
 
-    #: Beginning of the ``then`` part of an if statement.
     THEN = campl.AMPL_OUTPUT_THEN
+    """
+    Beginning of the ``then`` part of an if statement.
+    """
 
-    #: Output of an ``unfix`` command.
     UNFIX = campl.AMPL_OUTPUT_UNFIX
+    """
+    Output of an ``unfix`` command.
+    """
 
-    #: Output of an ``unload`` command.
     UNLOAD = campl.AMPL_OUTPUT_UNLOAD
+    """
+    Output of an ``unload`` command.
+    """
 
-    #: Output of an ``update`` command.
     UPDATE = campl.AMPL_OUTPUT_UPDATE
+    """
+    Output of an ``update`` command.
+    """
 
-    #: Output of a ``write`` command.
     WRITE = campl.AMPL_OUTPUT_WRITE
+    """
+    Output of a ``write`` command.
+    """

@@ -38,7 +38,7 @@ cdef class Objective(Entity):
         Get the value of the objective.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
     def astatus(self):
@@ -67,7 +67,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef int value
-        campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value)
+        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
         return value
 
     def message(self):
@@ -96,13 +96,13 @@ cdef class Objective(Entity):
         """
         Drop this objective instance.
         """
-        campl.AMPL_EntityDrop(self._c_ampl, self._name)
+        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._c_ampl, self._name))
 
     def restore(self):
         """
         Restore this objective (if it had been dropped, no effect otherwise).
         """
-        campl.AMPL_EntityRestore(self._c_ampl, self._name)
+        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._c_ampl, self._name))
 
     def minimization(self):
         """

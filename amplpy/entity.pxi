@@ -39,7 +39,7 @@ cdef class Entity(object):
     cdef object _entity
 
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index, parent):
+    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index, object parent):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype

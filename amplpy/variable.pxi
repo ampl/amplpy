@@ -40,7 +40,7 @@ cdef class Variable(Entity):
         Get the current value of this variable.
         """
         cdef double value
-        campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value)
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
     def fix(self, value=None):
@@ -52,15 +52,15 @@ cdef class Variable(Entity):
             value: value to be set.
         """
         if value is None:
-            campl.AMPL_VariableInstanceFix(self._c_ampl, self._name, self._index)
+            PY_AMPL_CALL(campl.AMPL_VariableInstanceFix(self._c_ampl, self._name, self._index))
         else:
-            campl.AMPL_VariableInstanceFixToValue(self._c_ampl, self._name, self._index, value)
+            PY_AMPL_CALL(campl.AMPL_VariableInstanceFixToValue(self._c_ampl, self._name, self._index, value))
 
     def unfix(self):
         """
         Unfix all instances of this variable.
         """
-        campl.AMPL_VariableInstanceUnfix(self._c_ampl, self._name, self._index)
+        PY_AMPL_CALL(campl.AMPL_VariableInstanceUnfix(self._c_ampl, self._name, self._index))
 
     def set_value(self, value):
         """
