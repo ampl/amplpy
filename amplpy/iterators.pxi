@@ -126,20 +126,28 @@ cdef class InstanceIterator(object):
 
     @staticmethod
     cdef create(campl.AMPL* ampl, char* name, campl.AMPL_ENTITYTYPE entity_class, parent):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         instanceit = InstanceIterator()
         cdef size_t arity
         instanceit._c_ampl = ampl
         instanceit._name = name
         instanceit.entity_class = entity_class
         instanceit._entity = parent
-        campl.AMPL_EntityGetIndexarity(instanceit._c_ampl, instanceit._name, &arity)
+        PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(instanceit._c_ampl, instanceit._name, &arity))
         if arity == 0:
             instanceit._size = 1
             instanceit.begin = NULL
             instanceit.iterator = 0
             instanceit.end = NULL
             return instanceit
-        campl.AMPL_EntityGetTuples(instanceit._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
+        errorinfo = campl.AMPL_EntityGetTuples(instanceit._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            for i in range(instanceit._size):
+                campl.AMPL_TupleFree(&instanceit.begin[i])
+            free(instanceit.begin)
+            PY_AMPL_CALL(errorinfo)
         if instanceit._size == 0:
             instanceit.iterator = 0
             instanceit.end = NULL
@@ -194,6 +202,8 @@ cdef class MemberRangeIterator(object):
 
     @staticmethod
     cdef create(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, parent):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         instanceit = MemberRangeIterator()
         instanceit._c_ampl = ampl
         instanceit._name = name
@@ -201,7 +211,13 @@ cdef class MemberRangeIterator(object):
         instanceit._entity = parent
         if instanceit._entity is not None:
             Py_INCREF(instanceit._entity)
-        campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name, instanceit._index, &instanceit.begin, &instanceit._size)
+        errorinfo = campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name, instanceit._index, &instanceit.begin, &instanceit._size)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            for i in range(instanceit._size):
+                campl.AMPL_TupleFree(&instanceit.begin[i])
+            free(instanceit.begin)
+            PY_AMPL_CALL(errorinfo)
         instanceit.iterator = 0
         if instanceit._size == 0:
             instanceit.end = NULL
@@ -256,7 +272,7 @@ cdef class ColIterator(object):
         colit._df = df
         colit._index = index
         colit._rowit = 0
-        campl.AMPL_DataFrameGetNumRows(colit._df, &colit._rowsize)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(colit._df, &colit._rowsize))
         return colit
 
     def __iter__(self):
@@ -266,7 +282,7 @@ cdef class ColIterator(object):
         cdef campl.AMPL_VARIANT* v
         if self._rowit >= self._rowsize:
             raise StopIteration
-        campl.AMPL_DataFrameElement(self._df, self._rowit, self._index, &v)
+        PY_AMPL_CALL(campl.AMPL_DataFrameElement(self._df, self._rowit, self._index, &v))
         self._rowit += 1
         return to_py_variant(v)
 
@@ -282,7 +298,7 @@ cdef class RowIterator(object):
         rowit._df = df
         rowit._index = index
         rowit._columnit = 0
-        campl.AMPL_DataFrameGetNumCols(rowit._df, &rowit._columnsize)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(rowit._df, &rowit._columnsize))
         return rowit
 
     def __iter__(self):
@@ -292,6 +308,6 @@ cdef class RowIterator(object):
         cdef campl.AMPL_VARIANT* v
         if self._columnit >= self._columnsize:
             raise StopIteration
-        campl.AMPL_DataFrameElement(self._df, self._index, self._columnit, &v)
+        PY_AMPL_CALL(campl.AMPL_DataFrameElement(self._df, self._index, self._columnit, &v))
         self._columnit += 1
         return to_py_variant(v)

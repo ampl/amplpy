@@ -36,7 +36,7 @@ cdef class Row(object):
 
     def __getitem__(self, key):
         cdef campl.AMPL_VARIANT* v
-        campl.AMPL_DataFrameElement(self._df, self._index, key, &v)
+        PY_AMPL_CALL(campl.AMPL_DataFrameElement(self._df, self._index, key, &v))
         return to_py_variant(v)
 
     def to_string(self):
@@ -74,9 +74,9 @@ cdef class Column(object):
         cdef campl.AMPL_VARIANT* v
         cdef size_t rowindex
         cdef size_t i
-        campl.AMPL_DataFrameGetNumRows(self._df, &rowindex)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self._df, &rowindex))
         for i in range(rowindex):
-            campl.AMPL_DataFrameElement(self._df, i, self._index, &v)
+            PY_AMPL_CALL(campl.AMPL_DataFrameElement(self._df, i, self._index, &v))
             py_list.append(to_py_variant(v))
         return py_list
 
@@ -150,7 +150,7 @@ cdef class DataFrame(object):
                     temp = column_names[i - index_size].encode('utf-8')
                 headers[i] = strdup(temp)
 
-            campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, headers)
+            PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, headers))
 
             for i in range(index_size+column_size):
                 if headers[i] != NULL:
@@ -163,8 +163,6 @@ cdef class DataFrame(object):
             for col in columns:
                 if isinstance(col, tuple):
                     self._set_column(col[0], col[1])
-        #else:
-        #    impl = kwargs.get("_impl", None)
 
     cdef campl.AMPL_DATAFRAME* get_ptr(self):
         return self._c_df
@@ -216,7 +214,7 @@ cdef class DataFrame(object):
             The number of rows.
         """
         cdef size_t num
-        campl.AMPL_DataFrameGetNumRows(self._c_df, &num)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self._c_df, &num))
         return int(num)
 
     def _get_num_indices(self):
