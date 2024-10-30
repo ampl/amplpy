@@ -79,10 +79,17 @@ cdef class Variable(Entity):
         """
         Get the AMPL status (fixed, presolved, or substituted out).
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def defeqn(self):
@@ -236,20 +243,32 @@ cdef class Variable(Entity):
         """
         Solver status (basis status of variable).
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     def status(self):
         """
         AMPL status if not `in`, otherwise solver status.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
+
         return value
 
     # Aliases
