@@ -212,7 +212,8 @@ setup(
                 extra_link_args=link_args(),
                 sources=[os.path.join("amplpy", "ampl.pyx")],
             )
-        ], compiler_directives={"language_level": "3", 'binding': True, "embedsignature": True}
+        ], compiler_directives={"language_level": "3", 'binding': True, "embedsignature": True,
+                                "boundscheck": False, "wraparound": False},
     ),
     package_data={"": package_content()},
     install_requires=["ampltools >= 0.7.5"],
