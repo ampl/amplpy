@@ -154,7 +154,7 @@ def compile_args():
 def link_args():
     rpath = os.path.join(LIBRARY_BASE, LIBRARY)
     if OSTYPE == "Darwin":
-        return ["-Wl,-rpath,@loader_path/" + rpath]
+        return ["-Wl,-headerpad_max_install_names,-rpath,@loader_path/" + rpath]
     elif OSTYPE == "Linux":
         return ["-Wl,-rpath,$ORIGIN/" + rpath]
     else:
