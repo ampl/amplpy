@@ -227,7 +227,7 @@ cdef class DataFrame(object):
             The number of indices needed to access one row of this dataframe.
         """
         cdef size_t num
-        campl.AMPL_DataFrameGetNumIndices(self._c_df, &num)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumIndices(self._c_df, &num))
         return int(num)
 
     def _add_row(self, *value):
@@ -264,7 +264,7 @@ cdef class DataFrame(object):
         if values is None:
             values = []
         if size == 0:
-            campl.AMPL_DataFrameAddEmptyColumn(self._c_df, header.encode('utf-8'))
+            PY_AMPL_CALL(campl.AMPL_DataFrameAddEmptyColumn(self._c_df, header.encode('utf-8')))
         else:
             assert len(values) == self._get_num_rows()
             if any(isinstance(value, str) for value in values):
@@ -296,7 +296,7 @@ cdef class DataFrame(object):
             header: The header of the column.
         """
         cdef size_t index
-        campl.AMPL_DataFrameGetColumnIndex(self._c_df, header.encode('utf-8'), &index)
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetColumnIndex(self._c_df, header.encode('utf-8'), &index))
         return Column.create(self._c_df, index)
 
     def _set_column(self, header, values):

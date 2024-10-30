@@ -61,7 +61,7 @@ cdef class Set(Entity):
         set.
         """
         cdef size_t arity
-        campl.AMPL_SetGetArity(self._c_ampl, self._name, &arity)
+        PY_AMPL_CALL(campl.AMPL_SetGetArity(self._c_ampl, self._name, &arity))
         return int(arity)
 
     def get_values(self):
@@ -83,7 +83,7 @@ cdef class Set(Entity):
         Get the number of tuples in this set. Valid only for non-indexed sets.
         """
         cdef size_t size
-        campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name, self._index, &size)
+        PY_AMPL_CALL(campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name, self._index, &size))
         return int(size)
 
     def contains(self, t):
@@ -136,7 +136,7 @@ cdef class Set(Entity):
                 self[index].set_values(members)
         elif isinstance(values, DataFrame):
             df = values
-            campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name, self._index, df.get_ptr())
+            PY_AMPL_CALL(campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name, self._index, df.get_ptr()))
         elif isinstance(values, Iterable):
             dimen = self.arity()
             if dimen == 1 and all(isinstance(value, str) for value in values):

@@ -455,13 +455,20 @@ cdef class AMPL:
         Returns:
             Current working directory.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* workdir_c
         if path is None:
-            PY_AMPL_CALL(campl.AMPL_Cd(self._c_ampl, &workdir_c))
+            errorinfo = campl.AMPL_Cd(self._c_ampl, &workdir_c)
         else:
-            PY_AMPL_CALL(campl.AMPL_Cd2(self._c_ampl, path.encode('utf-8'), &workdir_c))
+            errorinfo = campl.AMPL_Cd2(self._c_ampl, path.encode('utf-8'), &workdir_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&workdir_c)
+            PY_AMPL_CALL(errorinfo)
         workdir = str(workdir_c.decode('utf-8'))
         campl.AMPL_StringFree(&workdir_c)
+
         return workdir
 
     def set_option(self, name, value):
@@ -503,13 +510,17 @@ cdef class AMPL:
         Raises:
             InvalidArgumet: if the option name is not valid.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef bool_c exists
-        cdef int integer
-        cdef double dbl
         cdef char* value_c
 
+        errorinfo = campl.AMPL_GetOption(self._c_ampl, name.encode('utf-8'), &exists, &value_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&value_c)
+            PY_AMPL_CALL(errorinfo)
 
-        PY_AMPL_CALL(campl.AMPL_GetOption(self._c_ampl, name.encode('utf-8'), &exists, &value_c))
         value = value_c.decode('utf-8')
         campl.AMPL_StringFree(&value_c)
         if exists:
@@ -520,8 +531,6 @@ cdef class AMPL:
                     return float(value)
                 except ValueError:
                     return value
-        #raise InvalidArgument
-
 
     def read(self, filename):
         """
@@ -566,10 +575,18 @@ cdef class AMPL:
         Returns:
             The value of the expression.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_VARIANT* v
-        PY_AMPL_CALL(campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v))
+        errorinfo = campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_VariantFree(&v)
+            PY_AMPL_CALL(errorinfo)
+
         py_variant = to_py_variant(v)
         campl.AMPL_VariantFree(&v)
+
         return py_variant
 
     def set_data(self, data, set_name=None):
@@ -734,8 +751,14 @@ cdef class AMPL:
         """
         Get the the current objective. Returns `None` if no objective is set.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* objname_c
-        PY_AMPL_CALL(campl.AMPL_GetCurrentObjective(self._c_ampl, &objname_c))
+        errorinfo = campl.AMPL_GetCurrentObjective(self._c_ampl, &objname_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&objname_c)
+            PY_AMPL_CALL(errorinfo)
         objname = str(objname_c.decode('utf-8'))
         campl.AMPL_StringFree(&objname_c)
         if objname == "":
@@ -883,10 +906,17 @@ cdef class AMPL:
             filename: Path to the file (Relative to the current working
             directory or absolute).
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
-        PY_AMPL_CALL(campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 1, 0, 0, &output_c))
+        errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 1, 0, 0, &output_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&output_c)
+            PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
+
         return output
 
     def export_data(self, filename=""):
@@ -897,10 +927,17 @@ cdef class AMPL:
             filename: Path to the file (Relative to the current working
             directory or absolute).
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
-        PY_AMPL_CALL(campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 0, 1, 0, &output_c))
+        errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 0, 1, 0, &output_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&output_c)
+            PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
+
         return output
 
     def snapshot(self, filename="", model=True, data=True, options=True):
@@ -917,13 +954,20 @@ cdef class AMPL:
 
             options: include options if set to ``True``.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef int model_c = model
         cdef int data_c = data
         cdef int options_c = options
         cdef char* output_c
-        PY_AMPL_CALL(campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), model_c, data_c, options_c, &output_c))
+        errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), model_c, data_c, options_c, &output_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            campl.AMPL_StringFree(&output_c)
+            PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
+
         return output
 
     def write(self, filename, auxfiles=""):

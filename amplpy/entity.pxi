@@ -172,7 +172,7 @@ cdef class Entity(object):
         if self._index is not NULL:
             indexarity = 0
         else:
-            campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name, &indexarity)
+            PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name, &indexarity))
         return indexarity
 
     def is_scalar(self):
@@ -193,7 +193,7 @@ cdef class Entity(object):
         Get the number of instances in this entity.
         """
         cdef size_t size
-        campl.AMPL_EntityGetNumInstances(self._c_ampl, self._name, &size);
+        PY_AMPL_CALL(campl.AMPL_EntityGetNumInstances(self._c_ampl, self._name, &size))
         return int(size)
 
     def get_indexing_sets(self):
