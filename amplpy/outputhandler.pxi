@@ -31,7 +31,7 @@ cdef class OutputHandler(object):
 
 cdef void PyOutput(campl.AMPL_OUTPUTKIND kind, const char* msg, void* usrdata) except * with gil:
     PyOutputHandler = <OutputHandler>usrdata
-    PyOutputHandler.output(kind, str(msg.decode('utf-8')))
+    PyOutputHandler.output(kind, msg.decode('utf-8'))
 
 class Kind(object):
     """
