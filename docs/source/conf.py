@@ -101,7 +101,6 @@ html_theme_options = {
             "icon": "fab fa-github fa-fw",
         },
     ],
-    "collapse_navigation": True,
     "logo_text": "Python API",
 }
 html_context = {"default_mode": "light"}
