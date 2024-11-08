@@ -3,16 +3,77 @@
 Examples
 ========
 
+
+Many Jupyter notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
+and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
+
+You should also check out our collection of interactive `Streamlit Apps <https://ampl.com/streamlit>`_ and
+learn how easy you can build your own apps.
+
+
+.. grid:: 1 1 2 2
+    :gutter: 1
+
+    .. grid-item::
+
+        .. grid:: 1 1 1 1
+            :gutter: 1
+
+            .. grid-item-card::
+
+                `AMPL Model Colaboratory <https://ampl.com/colab/>`_ is a collection of AMPL models in Jupyter Notebooks that run on platforms such as Google Colab, Kaggle, Gradient, and AWS SageMaker.
+
+                Available at: `ampl.com/colab <https://ampl.com/colab/>`_.
+
+            .. grid-item-card::
+
+                You can use the **Christmas notebook** written by `ChatGPT <https://chat.openai.com/>`_ to get started:
+
+                .. image:: https://colab.research.google.com/assets/colab-badge.svg
+                    :target: https://colab.research.google.com/github/ampl/colab.ampl.com/blob/master/authors/fdabrandao/chatgpt/christmas.ipynb
+                    :alt: Open In Colab
+
+                .. image:: https://kaggle.com/static/images/open-in-kaggle.svg
+                    :target: https://kaggle.com/kernels/welcome?src=https://github.com/ampl/colab.ampl.com/blob/master/authors/fdabrandao/chatgpt/christmas.ipynb
+                    :alt: Kaggle
+
+                .. image:: https://assets.paperspace.io/img/gradient-badge.svg
+                    :target: https://console.paperspace.com/github/ampl/colab.ampl.com/blob/master/authors/fdabrandao/chatgpt/christmas.ipynb
+                    :alt: Gradient
+
+                .. image:: https://studiolab.sagemaker.aws/studiolab.svg
+                    :target: https://studiolab.sagemaker.aws/import/github/ampl/colab.ampl.com/blob/master/authors/fdabrandao/chatgpt/christmas.ipynb
+                    :alt: Open In SageMaker Studio Lab
+
+                | BTW: you can even ask `ChatGPT <https://chat.openai.com/>`_ to write models for you! If it makes mistakes you can ask for help in our new `Discourse Forum <https://discuss.ampl.com>`_!
+
+    .. grid-item::
+
+        .. grid:: 1 1 1 1
+            :gutter: 1
+
+            .. grid-item-card::
+
+                The repository of notebooks `MO-BOOK: Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_
+                introduces the concepts and tools of mathematical optimization with examples from a range of disciplines.
+                
+                Available at: `ampl.com/mo-book <https://ampl.com/mo-book/>`_.
+
+            .. grid-item-card::
+
+                Build and share data apps quickly with Streamlit - no front-end experience necessary.
+
+                Available at: `ampl.com/streamlit <https://ampl.com/streamlit/>`_.
+
+                .. figure:: https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.png
+                    :alt: AMPL Optimization Apps on Streamlit Cloud
+                    :target: https://ampl.com/streamlit/
+ 
+Example files
+=============
+
 This section lists a few examples in Python.
-These are the same files that can be found in the *examples* directory of the
-distribution, and show the basic usage of the Python API.
-
-.. note::
-    Many Jupyter notebooks with examples are available on the `AMPL Model Colaboratory <https://colab.ampl.com/>`_
-    and the new book `Hands-On Mathematical Optimization with AMPL in Python 🐍 <https://ampl.com/mo-book/>`_.
-
-    You should also check out our collection of interactive `Streamlit Apps <https://ampl.com/streamlit>`_ and
-    learn how easy you can build your own apps.
+These are the same files that can be found in the `amplpy Github repository <https://github.com/ampl/amplpy/tree/master/examples>`_, and show the basic usage of the Python API.
 
 Example 1: First steps
 ----------------------
