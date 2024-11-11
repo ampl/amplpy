@@ -23,6 +23,8 @@ class TestEnvironment(unittest.TestCase):
     def test_environment(self):
         from amplpy import Environment, AMPL
 
+        os.environ["PYTHONIOENCODING"] = "utf-8"
+        
         env1 = Environment()
         env2 = Environment(os.curdir)
         self.assertEqual(env2.get_bin_dir(), os.curdir)
