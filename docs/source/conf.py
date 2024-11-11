@@ -21,6 +21,7 @@ extensions = [
     "sphinx.ext.ifconfig",
     "sphinx.ext.mathjax",
     "sphinx.ext.autodoc",
+    "sphinxcontrib.googleanalytics",
 ]
 myst_enable_extensions = ["colon_fence"]
 
@@ -104,6 +105,7 @@ html_theme_options = {
     "logo_text": "Python API",
 }
 html_context = {"default_mode": "light"}
+googleanalytics_id = "G-3QCX2M65J4"
 
 html_baseurl = "https://amplpy.ampl.com/en/latest/"
 
