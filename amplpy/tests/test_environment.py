@@ -27,7 +27,7 @@ class TestEnvironment(unittest.TestCase):
         for name, value in os.environ.items():
             print("{0}: {1}".format(name, value))
 
-        os.environ["USER1"] = "Filipe Brandão"
+        os.environ["USER1"] = "Filipe Brandão".encode('utf-8')
         env1 = Environment()
         env2 = Environment(os.curdir)
         self.assertEqual(env2.get_bin_dir(), os.curdir)
