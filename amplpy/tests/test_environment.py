@@ -21,13 +21,11 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual("binary_name_2", env.get_bin_name())
 
     def test_environment(self):
-        from amplpy import Environment #, AMPL
+        from amplpy import Environment, AMPL
 
-        #os.environ["PYTHONIOENCODING"] = "utf-8"
-        for name, value in os.environ.items():
-            print("{0}: {1}".format(name, value))
-
-        os.environ["USER1"] = "Filipe Brandão".encode('utf-8')
+        os.environ["PYTHONIOENCODING"] = "utf-8"
+        os.environ["USER1"] = "Filipe Brandão"
+        
         env1 = Environment()
         env2 = Environment(os.curdir)
         self.assertEqual(env2.get_bin_dir(), os.curdir)
@@ -40,13 +38,6 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual(env2["MyEnvVar"], None)
         d = dict(env1)
         self.assertEqual(d["MyEnvVar"], "TEST")
-        #ampl = AMPL(Environment())
-        #ampl.close()
-
-    def test_environment2(self):
-        from amplpy import Environment, AMPL
-    
-        os.environ["USER1"] = "Filipe Brandão"
         ampl = AMPL(Environment())
         ampl.close()
 
