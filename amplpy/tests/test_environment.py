@@ -43,13 +43,12 @@ class TestEnvironment(unittest.TestCase):
         ampl = AMPL(Environment())
         ampl.close()
 
-def test_environment2(self):
+    def test_environment2(self):
         from amplpy import Environment, AMPL
     
         os.environ["USER1"] = "Filipe Brandão"
         ampl = AMPL(Environment())
         ampl.close()
-
 
     def test_env_options(self):
         from amplpy import AMPL, Environment
