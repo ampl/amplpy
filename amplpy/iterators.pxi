@@ -34,14 +34,14 @@ cdef class EnvIterator(object):
         import sys
         if sys.platform == "win32":
             try:
-                name = name_c.decode('utf-16')
-                value = value_c.decode('utf-16')
+                name = name_c.decode('utf-16', errors='replace')
+                value = value_c.decode('utf-16', errors='replace')
             except UnicodeDecodeError as e:
                 raise RuntimeError(f"Failed to decode environment variable (Windows): {e}")
         else:
             try:
-                name = name_c.decode('utf-8')  # Strict UTF-8 decoding
-                value = value_c.decode('utf-8')
+                name = name_c.decode('utf-8', errors='replace')
+                value = value_c.decode('utf-8', errors='replace')
             except UnicodeDecodeError as e:
                 raise RuntimeError(f"Failed to decode environment variable (Non-Windows): {e}")
     
