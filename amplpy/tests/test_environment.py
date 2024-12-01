@@ -23,7 +23,7 @@ class TestEnvironment(unittest.TestCase):
     def test_environment(self):
         from amplpy import Environment, AMPL
 
-        os.environ["PYTHONIOENCODING"] = "utf-8"
+        #os.environ["PYTHONIOENCODING"] = "utf-8"
         os.environ["USER1"] = "Filipe Brandão"
         
         env1 = Environment()
