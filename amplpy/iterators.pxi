@@ -21,31 +21,31 @@ cdef class EnvIterator(object):
     def __iter__(self):
         return self
 
-def __next__(self):
-    if self.iterator >= self.end:
-        raise StopIteration
-    cdef campl.AMPL_ENVIRONMENTVAR* it = self.iterator
-    self.iterator += 1
-    cdef char* name_c
-    cdef char* value_c
-    campl.AMPL_EnvironmentVarGetName(it, &name_c)
-    campl.AMPL_EnvironmentVarGetValue(it, &value_c)
+    def __next__(self):
+        if self.iterator >= self.end:
+            raise StopIteration
+        cdef campl.AMPL_ENVIRONMENTVAR* it = self.iterator
+        self.iterator += 1
+        cdef char* name_c
+        cdef char* value_c
+        campl.AMPL_EnvironmentVarGetName(it, &name_c)
+        campl.AMPL_EnvironmentVarGetValue(it, &value_c)
     
-    import sys
-    if sys.platform == "win32":
-        try:
-            name = name_c.decode('utf-16')
-            value = value_c.decode('utf-16')
-        except UnicodeDecodeError as e:
-            raise RuntimeError(f"Failed to decode environment variable (Windows): {e}")
-    else:
-        try:
-            name = name_c.decode('utf-8')  # Strict UTF-8 decoding
-            value = value_c.decode('utf-8')
-        except UnicodeDecodeError as e:
-            raise RuntimeError(f"Failed to decode environment variable (Non-Windows): {e}")
+        import sys
+        if sys.platform == "win32":
+            try:
+                name = name_c.decode('utf-16')
+                value = value_c.decode('utf-16')
+            except UnicodeDecodeError as e:
+                raise RuntimeError(f"Failed to decode environment variable (Windows): {e}")
+        else:
+            try:
+                name = name_c.decode('utf-8')  # Strict UTF-8 decoding
+                value = value_c.decode('utf-8')
+            except UnicodeDecodeError as e:
+                raise RuntimeError(f"Failed to decode environment variable (Non-Windows): {e}")
     
-    return (name, value)
+        return (name, value)
 
 
 cdef class EntityMap(object):
