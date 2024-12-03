@@ -28,7 +28,6 @@ class TestEnvironment(unittest.TestCase):
         
         env1 = Environment()
         env2 = Environment(os.curdir)
-        print(env1)
         self.assertEqual(env2.get_bin_dir(), os.curdir)
         env1.set_bin_dir(env2.get_bin_dir())
         self.assertEqual(env1.get_bin_dir(), env1.get_bin_dir())
