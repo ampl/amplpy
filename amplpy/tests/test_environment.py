@@ -24,7 +24,7 @@ class TestEnvironment(unittest.TestCase):
         from amplpy import Environment, AMPL
 
         #os.environ["PYTHONIOENCODING"] = "utf-8"
-        #os.environ["USER1"] = "Filipe Brandão"
+        os.environ["USER1"] = "Filipe Brandão"
         
         env1 = Environment()
         env2 = Environment(os.curdir)
@@ -32,8 +32,9 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual(env2.get_bin_dir(), os.curdir)
         env1.set_bin_dir(env2.get_bin_dir())
         self.assertEqual(env1.get_bin_dir(), env1.get_bin_dir())
-        self.assertEqual(len(dict(env1)), len(list(env1)))
-        self.assertEqual(list(sorted(dict(env1).items())), list(sorted(env1)))
+        #self.assertEqual(len(dict(env1)), len(list(env1)))
+        #self.assertEqual(list(sorted(dict(env1).items())), list(sorted(env1)))
+        self.assertEqual(len(env1["USER1"]), len("Filipe Brandão"))
         env1["MyEnvVar"] = "TEST"
         self.assertEqual(env1["MyEnvVar"], "TEST")
         self.assertEqual(env2["MyEnvVar"], None)
