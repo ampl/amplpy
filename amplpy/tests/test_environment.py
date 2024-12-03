@@ -24,7 +24,7 @@ class TestEnvironment(unittest.TestCase):
         from amplpy import Environment, AMPL
 
         #os.environ["PYTHONIOENCODING"] = "utf-8"
-        os.environ["USER1"] = "Filipe Brandão"
+        #os.environ["USER1"] = "Filipe Brandão"
         
         env1 = Environment()
         env2 = Environment(os.curdir)
@@ -39,8 +39,8 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual(env2["MyEnvVar"], None)
         d = dict(env1)
         self.assertEqual(d["MyEnvVar"], "TEST")
-        #ampl = AMPL(Environment())
-        #ampl.close()
+        ampl = AMPL(Environment())
+        ampl.close()
 
     def test_env_options(self):
         from amplpy import AMPL, Environment

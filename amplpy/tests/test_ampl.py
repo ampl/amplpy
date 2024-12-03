@@ -12,6 +12,12 @@ from . import TestBase
 class TestAMPL(TestBase.TestBase):
     """Test AMPL."""
 
+    def test_ampldebug(self):
+        ampl = self.ampl
+        ampl.eval("param name symbolic := 'brandão';")
+        print(ampl.get_value("name"))
+        self.assertEqual(ampl.get_value("name"), 'brandão')
+
     def test_ampl(self):
         from amplpy import Set, Parameter, Variable, Constraint, Objective
 
