@@ -72,7 +72,7 @@ cdef class Environment(object):
     def to_string(self):
         cdef const char* to_string_c
         campl.AMPL_EnvironmentToString(self._c_env, &to_string_c)
-        to_string = str(to_string_c.decode('utf-8'))
+        to_string = str(to_string_c.decode('utf-16'))
         return to_string
 
     def set_bin_dir(self, binary_directory):
