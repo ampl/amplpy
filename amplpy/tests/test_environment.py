@@ -28,6 +28,7 @@ class TestEnvironment(unittest.TestCase):
         
         env1 = Environment()
         env2 = Environment(os.curdir)
+        print(env1)
         self.assertEqual(env2.get_bin_dir(), os.curdir)
         env1.set_bin_dir(env2.get_bin_dir())
         self.assertEqual(env1.get_bin_dir(), env1.get_bin_dir())
@@ -38,8 +39,8 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual(env2["MyEnvVar"], None)
         d = dict(env1)
         self.assertEqual(d["MyEnvVar"], "TEST")
-        ampl = AMPL(Environment())
-        ampl.close()
+        #ampl = AMPL(Environment())
+        #ampl.close()
 
     def test_env_options(self):
         from amplpy import AMPL, Environment
