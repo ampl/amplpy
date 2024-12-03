@@ -30,20 +30,8 @@ cdef class EnvIterator(object):
         cdef char* value_c
         campl.AMPL_EnvironmentVarGetName(it, &name_c)
         campl.AMPL_EnvironmentVarGetValue(it, &value_c)
-    
-        import sys
-        if sys.platform == "win32":
-            try:
-                name = name_c.decode('utf-16', errors='replace')
-                value = value_c.decode('utf-16', errors='replace')
-            except UnicodeDecodeError as e:
-                raise RuntimeError(f"Failed to decode environment variable (Windows): {e}")
-        else:
-            try:
-                name = name_c.decode('utf-8', errors='replace')
-                value = value_c.decode('utf-8', errors='replace')
-            except UnicodeDecodeError as e:
-                raise RuntimeError(f"Failed to decode environment variable (Non-Windows): {e}")
+        name = name_c.decode('utf-8', errors='replace')
+        value = value_c.decode('utf-8', errors='replace')
     
         return (name, value)
 
