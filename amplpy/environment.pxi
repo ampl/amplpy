@@ -60,10 +60,10 @@ cdef class Environment(object):
         Searches the current object for an environment variable called name and
         returns an iterator to it if found, otherwise it returns `None`.
         """
-        cdef campl.AMPL_ENVIRONMENTVAR* iterator
-        cdef char* value_c
-        if not campl.AMPL_EnvironmentFindEnvironmentVar(self._c_env, name.encode('utf-8'), &iterator):
-            campl.AMPL_EnvironmentVarGetValue(iterator, &value_c)
+        cdef campl.AMPL_ENVIRONMENTITERATOR* iterator
+        cdef const char* value_c
+        if not campl.AMPL_EnvironmentGetEnvironmentVarFind(self._c_env, name.encode('utf-8'), &iterator):
+            value_c = campl.AMPL_EnvironmentVarGetValue(iterator)
             value = str(value_c.decode('utf-8'))
             return value
         else:
