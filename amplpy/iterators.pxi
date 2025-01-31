@@ -20,7 +20,9 @@ cdef class EnvIterator(object):
         return self
 
     def __next__(self):
-        if self.iterator >= self.end:
+        cdef int equal
+        campl.AMPL_EnvironmentFindEnvironmentEqual(self.iterator, self.end, &equal)
+        if equal:
             raise StopIteration
         cdef campl.AMPL_ENVIRONMENTITERATOR* it = self.iterator
         campl.AMPL_EnvironmentGetEnvironmentVarIterate(self.env_c, &it)
