@@ -35,12 +35,8 @@ cdef class EnvIterator(object):
         free(self.iterator)
         campl.AMPL_EnvironmentGetEnvironmentVarIterate(self.env_c, &self.iterator)
 
-        if sys.platform == 'win32':
-            name = name_c.decode('utf-16')
-            value = value_c.decode('utf-16') 
-        else:
-            name = name_c.decode('utf-8')
-            value = value_c.decode('utf-8') 
+        name = name_c.decode('utf-8', errors='replace')
+        value = value_c.decode('utf-8', errors='replace') 
 
         free(name_c)
         free(value_c)
