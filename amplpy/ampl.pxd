@@ -277,6 +277,8 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_EnvironmentFindEnvironmentEqual(AMPL_ENVIRONMENTITERATOR *it0, AMPL_ENVIRONMENTITERATOR *it1, int *equal)
 
+    int AMPL_EnvironmentGetEnvironmentVarReset(AMPL_ENVIRONMENT *env)
+
 
     ctypedef enum AMPL_OUTPUTKIND:
         AMPL_OUTPUT_WAITING
