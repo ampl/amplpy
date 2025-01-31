@@ -16,6 +16,12 @@ cdef class EnvIterator(object):
         campl.AMPL_EnvironmentGetEnvironmentVarBegin(envit.env_c, &envit.iterator)
         return envit
 
+    def __dealloc__(self):
+        campl.AMPL_EnvironmentGetEnvironmentVarReset(self.env_c) 
+        free(self.begin)
+        free(self.end)
+        free(self.iterator)
+
     def __iter__(self):
         return self
 
@@ -24,12 +30,17 @@ cdef class EnvIterator(object):
         campl.AMPL_EnvironmentFindEnvironmentEqual(self.iterator, self.end, &equal)
         if equal:
             raise StopIteration
-        cdef campl.AMPL_ENVIRONMENTITERATOR* it = self.iterator
-        campl.AMPL_EnvironmentGetEnvironmentVarIterate(self.env_c, &it)
-        cdef const char* name_c = campl.AMPL_EnvironmentVarGetKey(it)
-        cdef const char* value_c = campl.AMPL_EnvironmentVarGetValue(it)
+        cdef char* name_c = strdup(campl.AMPL_EnvironmentVarGetKey(self.iterator))
+        cdef char* value_c = strdup(campl.AMPL_EnvironmentVarGetValue(self.iterator))
+        free(self.iterator)
+        campl.AMPL_EnvironmentGetEnvironmentVarIterate(self.env_c, &self.iterator)
 
-        return (name_c.decode('utf-8'), value_c.decode('utf-8'))
+        name = name_c.decode('utf-8')
+        value = value_c.decode('utf-8')
+        free(name_c)
+        free(value_c)
+
+        return (name, value)
 
 
 cdef class EntityMap(object):
