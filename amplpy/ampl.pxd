@@ -232,12 +232,13 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_DataFrameElement(AMPL_DATAFRAME* dataframe, size_t rowindex, size_t colindex, AMPL_VARIANT** v)
 
-    ctypedef struct AMPL_ENVIRONMENTITERATOR:
-        pass
+    ctypedef struct AMPL_ENVIRONMENTVAR:
+        char* name
+        char* value
 
-    const char* AMPL_EnvironmentVarGetKey(AMPL_ENVIRONMENTITERATOR *envit)
+    int AMPL_EnvironmentVarGetName(AMPL_ENVIRONMENTVAR* envvar, char** name)
 
-    const char* AMPL_EnvironmentVarGetValue(AMPL_ENVIRONMENTITERATOR *envit)
+    int AMPL_EnvironmentVarGetValue(AMPL_ENVIRONMENTVAR* envvar, char** value)
 
     #ctypedef AMPL_Environment AMPL_ENVIRONMENT
     ctypedef struct AMPL_ENVIRONMENT:
@@ -265,18 +266,9 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_EnvironmentGetSize(AMPL_ENVIRONMENT* env, size_t* size)
 
-    int AMPL_EnvironmentVarCopy(AMPL_ENVIRONMENTITERATOR **copy, AMPL_ENVIRONMENTITERATOR *src)
+    int AMPL_EnvironmentGetEnvironmentVar(AMPL_ENVIRONMENT* env, AMPL_ENVIRONMENTVAR** envvar)
 
-    int AMPL_EnvironmentGetEnvironmentVarBegin(AMPL_ENVIRONMENT *env, AMPL_ENVIRONMENTITERATOR **envvar)
-
-    int AMPL_EnvironmentGetEnvironmentVarFind(AMPL_ENVIRONMENT *env, const char *name, AMPL_ENVIRONMENTITERATOR **envvar)
-
-    int AMPL_EnvironmentGetEnvironmentVarEnd(AMPL_ENVIRONMENT *env, AMPL_ENVIRONMENTITERATOR **envvar)
-
-    int AMPL_EnvironmentGetEnvironmentVarIterate(AMPL_ENVIRONMENT *env, AMPL_ENVIRONMENTITERATOR **envvar)
-
-    int AMPL_EnvironmentFindEnvironmentEqual(AMPL_ENVIRONMENTITERATOR *it0, AMPL_ENVIRONMENTITERATOR *it1, int *equal)
-
+    int AMPL_EnvironmentFindEnvironmentVar(AMPL_ENVIRONMENT* env, const char* name, AMPL_ENVIRONMENTVAR** envvar)
 
     ctypedef enum AMPL_OUTPUTKIND:
         AMPL_OUTPUT_WAITING

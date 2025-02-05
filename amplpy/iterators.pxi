@@ -1,8 +1,8 @@
 cdef class EnvIterator(object):
     cdef campl.AMPL_ENVIRONMENT* env_c
-    cdef campl.AMPL_ENVIRONMENTITERATOR* begin
-    cdef campl.AMPL_ENVIRONMENTITERATOR* end
-    cdef campl.AMPL_ENVIRONMENTITERATOR* iterator
+    cdef campl.AMPL_ENVIRONMENTVAR* begin
+    cdef campl.AMPL_ENVIRONMENTVAR* end
+    cdef campl.AMPL_ENVIRONMENTVAR* iterator
 
     @staticmethod
     cdef create(campl.AMPL_ENVIRONMENT* env_c):
@@ -11,26 +11,29 @@ cdef class EnvIterator(object):
         envit.begin = NULL
         envit.end = NULL
         envit.iterator = NULL
-        campl.AMPL_EnvironmentGetEnvironmentVarBegin(envit.env_c, &envit.begin)
-        campl.AMPL_EnvironmentGetEnvironmentVarEnd(envit.env_c, &envit.end)
-        campl.AMPL_EnvironmentGetEnvironmentVarBegin(envit.env_c, &envit.iterator)
+        campl.AMPL_EnvironmentGetEnvironmentVar(envit.env_c, &envit.begin)
+        cdef size_t size
+        campl.AMPL_EnvironmentGetSize(envit.env_c, &size)
+        envit.end = envit.begin + size
+        envit.iterator = envit.begin
         return envit
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        cdef int equal
-        campl.AMPL_EnvironmentFindEnvironmentEqual(self.iterator, self.end, &equal)
-        if equal:
+        if self.iterator >= self.end:
             raise StopIteration
-        cdef campl.AMPL_ENVIRONMENTITERATOR* it = self.iterator
-        campl.AMPL_EnvironmentGetEnvironmentVarIterate(self.env_c, &it)
-        cdef const char* name_c = campl.AMPL_EnvironmentVarGetKey(it)
-        cdef const char* value_c = campl.AMPL_EnvironmentVarGetValue(it)
-
-        return (name_c.decode('utf-8'), value_c.decode('utf-8'))
-
+        cdef campl.AMPL_ENVIRONMENTVAR* it = self.iterator
+        self.iterator += 1
+        cdef char* name_c
+        cdef char* value_c
+        campl.AMPL_EnvironmentVarGetName(it, &name_c)
+        campl.AMPL_EnvironmentVarGetValue(it, &value_c)
+        name = name_c.decode('utf-8', errors='replace')
+        value = value_c.decode('utf-8', errors='replace')
+    
+        return (name, value)
 
 cdef class EntityMap(object):
     cdef campl.AMPL* _c_ampl
