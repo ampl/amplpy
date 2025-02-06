@@ -107,8 +107,8 @@ stages:
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:
       - task: UsePythonVersion@0
-      - bash: docker run --rm --privileged multiarch/qemu-user-static --persistent yes
-        displayName: Configure qemu
+      - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:latest --install all
+        displayName: Configure qemu (temp solution until qemu fix)
       - bash: |
           set -ex
           python dev/updatelib.py
