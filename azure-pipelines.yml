@@ -107,7 +107,7 @@ stages:
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:
       - task: UsePythonVersion@0
-      - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:latest --install all
+      - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:qemu-v8.1.5 --install all
         displayName: Configure qemu (temp solution until qemu fix)
       - bash: |
           set -ex
