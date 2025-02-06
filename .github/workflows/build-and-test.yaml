@@ -7,7 +7,6 @@ env:
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_BEFORE_BUILD: pip install cython
   CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
-  CIBW_ENABLE: cpython-freethreading # Include free-threaded support
   CIBW_TEST_COMMAND: python -m amplpy.tests 
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
 
@@ -32,13 +31,46 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
           CIBW_BEFORE_BUILD: ${{ env.CIBW_BEFORE_BUILD }}
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
-          CIBW_ENABLE: ${{ env.CIBW_ENABLE }}
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
           CIBW_TEST_REQUIRES: ${{ env.CIBW_TEST_REQUIRES }}
 
       - uses: actions/upload-artifact@v4
         with:
           name: artifact-${{ matrix.os }}
+          path: ./wheelhouse/*.whl
+
+  build_nogil:
+    name: Build wheels on ${{ matrix.os }}-nogil
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-2022, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download libampl
+        run: python3 dev/updatelib.py
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.3
+        env:
+          CIBW_ARCHS_LINUX: ${{ env.CIBW_ARCHS_LINUX }}
+          CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
+          CIBW_BEFORE_BUILD: pip install cython==3.1.0a1
+          CIBW_SKIP: ${{ env.CIBW_SKIP }}
+          CIBW_PRERELEASE_PYTHONS: true
+          CIBW_FREE_THREADED_SUPPORT: true
+          CIBW_BUILD: cp313t-${{ matrix.os }}
+          # TODO:
+          # remove when a released cython can build free-threaded extensions
+          CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
+          CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
+          CIBW_TEST_REQUIRES: ${{ env.CIBW_TEST_REQUIRES }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.os }}-nogil
           path: ./wheelhouse/*.whl
 
   build_with_qemu:
