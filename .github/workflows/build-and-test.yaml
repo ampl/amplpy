@@ -8,9 +8,6 @@ env:
   CIBW_BEFORE_BUILD: pip install cython
   CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
   CIBW_TEST_COMMAND: python -m amplpy.tests
-  # TODO:
-  # remove when a released cython can build free-threaded extensions
-  CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
 
 jobs:
@@ -65,7 +62,9 @@ jobs:
           CIBW_PRERELEASE_PYTHONS: true
           CIBW_FREE_THREADED_SUPPORT: true
           CIBW_BUILD: cp313t-*
-          CIBW_BUILD_FRONTEND: ${{ env.CIBW_BUILD_FRONTEND }}
+          # TODO:
+          # remove when a released cython can build free-threaded extensions
+          CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
           CIBW_TEST_REQUIRES: ${{ env.CIBW_TEST_REQUIRES }}
 
