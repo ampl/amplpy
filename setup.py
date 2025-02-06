@@ -64,7 +64,6 @@ With `amplpy` you can model and solve large scale optimization problems in Pytho
 * PyPI Repository: https://pypi.python.org/pypi/amplpy
 '''
 from setuptools import setup, Extension
-from packaging.version import Version
 from Cython.Build import cythonize
 from Cython.Compiler.Version import version as cython_version
 import platform
@@ -167,7 +166,7 @@ def link_args():
 
 compiler_directives = {"language_level": "3", 'binding': True, "embedsignature": True,
                                 "boundscheck": False, "wraparound": False}
-if Version(cython_version) >= Version("3.1.0a0"):
+if cython_version == "3.1.0a0":
     compiler_directives["freethreading_compatible"] = True
 
 setup(

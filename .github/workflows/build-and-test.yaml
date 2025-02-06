@@ -5,7 +5,7 @@ on: [push]
 env:
   CIBW_ARCHS_LINUX: auto
   CIBW_ARCHS_MACOS: x86_64 universal2
-  CIBW_BEFORE_BUILD: pip install cython setuptools packaging
+  CIBW_BEFORE_BUILD: pip install cython
   CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
   CIBW_TEST_COMMAND: python -m amplpy.tests
   # TODO:
@@ -34,7 +34,6 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
           CIBW_BEFORE_BUILD: ${{ env.CIBW_BEFORE_BUILD }}
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
-          CIBW_BUILD_FRONTEND: ${{ env.CIBW_BUILD_FRONTEND }}
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
           CIBW_TEST_REQUIRES: ${{ env.CIBW_TEST_REQUIRES }}
 
@@ -105,7 +104,6 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
           CIBW_BUILD: ${{ matrix.build }}
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
-          CIBW_BUILD_FRONTEND: ${{ env.CIBW_BUILD_FRONTEND }}
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
           CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
