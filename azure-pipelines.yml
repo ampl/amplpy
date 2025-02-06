@@ -105,38 +105,6 @@ stages:
           CIBW_BUILD: cp313-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
-        ppc64le cp36:
-          CIBW_BUILD: cp36-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp37:
-          CIBW_BUILD: cp37-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp38:
-          CIBW_BUILD: cp38-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp39:
-          CIBW_BUILD: cp39-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp310:
-          CIBW_BUILD: cp310-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp311:
-          CIBW_BUILD: cp311-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp312:
-          CIBW_BUILD: cp312-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
-        ppc64le cp313:
-          CIBW_BUILD: cp313-*
-          CIBW_ARCHS_LINUX: ppc64le
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_PPC64LE)
     steps:
       - task: UsePythonVersion@0
       - bash: docker run --rm --privileged multiarch/qemu-user-static --persistent yes
