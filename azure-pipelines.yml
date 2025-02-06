@@ -1,5 +1,5 @@
 variables:
-  CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux* cp36-*
+  CIBW_SKIP: pp* cp27-* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_TEST_COMMAND: python -m amplpy.tests
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
@@ -107,8 +107,8 @@ stages:
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:
       - task: UsePythonVersion@0
-      - bash: docker run --rm --privileged multiarch/qemu-user-static --persistent yes
-        displayName: Configure qemu
+      - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:qemu-v8.1.5 --install all
+        displayName: Configure qemu (temp solution until qemu fix)
       - bash: |
           set -ex
           python dev/updatelib.py
