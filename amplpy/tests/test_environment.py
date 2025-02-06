@@ -21,7 +21,6 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual("binary_name_2", env.get_bin_name())
 
     def test_environment(self):
-        os.environ["USER1"] = "Filipe Brandão"
         from amplpy import Environment, AMPL
 
         env1 = Environment()
