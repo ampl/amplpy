@@ -166,9 +166,7 @@ def link_args():
 
 compiler_directives = {"language_level": "3", 'binding': True, "embedsignature": True,
                                 "boundscheck": False, "wraparound": False}
-print("debug call")
 if cython_version == "3.1.0a0":
-    print("Cython 3.1.0a0 detected, enabling freethreading_compatible")
     compiler_directives["freethreading_compatible"] = True
 
 setup(
