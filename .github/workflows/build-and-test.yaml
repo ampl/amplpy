@@ -61,7 +61,7 @@ jobs:
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
           CIBW_PRERELEASE_PYTHONS: true
           CIBW_FREE_THREADED_SUPPORT: true
-          CIBW_BUILD: cp313t-${{ matrix.os }}
+          CIBW_BUILD: cp313t-*
           # TODO:
           # remove when a released cython can build free-threaded extensions
           CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
