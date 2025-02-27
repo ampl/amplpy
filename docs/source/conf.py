@@ -18,6 +18,7 @@ needs_sphinx = "4.2.0"
 extensions = [
     "myst_parser",
     "sphinx_design",
+    "sphinx_sitemap",
     "sphinx.ext.ifconfig",
     "sphinx.ext.mathjax",
     "sphinx.ext.autodoc",
