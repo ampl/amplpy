@@ -431,11 +431,11 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetOutputHandler(AMPL* ampl, AMPL_OutputHandlerCb callback, void* usrdata)
 
-    AMPL_ERRORINFO* AMPL_SetErrorHandler(AMPL* ampl, void* errorhandler, ErrorHandlerCbPtr callback)
+    AMPL_ERRORINFO* AMPL_SetErrorHandler(AMPL* ampl, ErrorHandlerCbPtr callback, void* usrdata)
 
-    void* AMPL_GetOutputHandler(AMPL* ampl)
+    AMPL_ERRORINFO *AMPL_GetOutputHandler(AMPL *ampl, void **usrdata);
 
-    void* AMPL_GetErrorHandler(AMPL* ampl)
+    AMPL_ERRORINFO *AMPL_GetErrorHandler(AMPL *ampl, void **usrdata);
 
     AMPL_ERRORINFO* AMPL_GetVariables(AMPL* ampl, size_t* size, char*** names)
 

@@ -32,26 +32,27 @@ cdef class Entity(object):
     - Sets (see :class:`~amplpy.Set`)
     - Parameters (see :class:`~amplpy.Parameter`)
     """
-    cdef campl.AMPL* _c_ampl
+    cdef AMPL _ampl
     cdef char* _name
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_ENTITYTYPE wrap_function
     cdef object _entity
 
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char *name, campl.AMPL_TUPLE* index, object parent):
+    cdef create(AMPL ampl, char *name, campl.AMPL_TUPLE* index, object parent):
+        entity = Entity()
+        entity._ampl = ampl
+        Py_INCREF(entity._ampl)
+        entity._name = name
+        entity._index = index
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
-        errorinfo = campl.AMPL_EntityGetType(ampl_c, name, &entitytype)
+        errorinfo = campl.AMPL_EntityGetType(entity._ampl._c_ampl, name, &entitytype)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
-            free(name)
+            #free(name)
             PY_AMPL_CALL(errorinfo)
-        entity = Entity()
-        entity._c_ampl = ampl_c
-        entity._name = name
-        entity._index = index
         entity.wrap_function = entitytype
         entity._entity = parent
         if entity._entity is not None:
@@ -65,10 +66,11 @@ cdef class Entity(object):
             campl.AMPL_TupleFree(&self._index)
         else:
             campl.AMPL_StringFree(&self._name)
+        Py_DECREF(self._ampl)
 
     def to_string(self):
         cdef char* output_c
-        campl.AMPL_EntityGetDeclaration(self._c_ampl, self._name, &output_c)
+        campl.AMPL_EntityGetDeclaration(self._ampl._c_ampl, self._name, &output_c)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
         
@@ -79,13 +81,13 @@ cdef class Entity(object):
 
     def __iter__(self):
         assert self.wrap_function is not None
-        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function, self)
+        return InstanceIterator.create(self._ampl, self._name, self.wrap_function, self)
 
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
             index = [index]
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
-        return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c, self)
+        return create_entity(self.wrap_function, self._ampl, self._name, tuple_c, self)
 
     def get(self, *index):
         """
@@ -101,16 +103,16 @@ cdef class Entity(object):
             index = index[0]
             index = list(index)
         if len(index) == 0:
-            return create_entity(self.wrap_function, self._c_ampl, self._name, NULL, None)
+            return create_entity(self.wrap_function, self._ampl, self._name, NULL, None)
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
-                campl.AMPL_InstanceGetName(self._c_ampl, self._name, tuple_c, &name_c)
+                campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &name_c)
                 campl.AMPL_TupleFree(&tuple_c)
-                entity = create_entity(self.wrap_function, self._c_ampl, name_c, NULL, None).value()
+                entity = create_entity(self.wrap_function, self._ampl, name_c, NULL, None).value()
                 return entity
             else:
-                return create_entity(self.wrap_function, self._c_ampl, self._name, tuple_c, self)
+                return create_entity(self.wrap_function, self._ampl, self._name, tuple_c, self)
 
     def find(self, index):
         """
@@ -124,13 +126,13 @@ cdef class Entity(object):
         cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
-        campl.AMPL_EntityGetTuples(self._c_ampl, self._name, &indices_c, &size)
+        campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
                 for j in range(size):
                     campl.AMPL_TupleFree(&indices_c[j])
                 free(indices_c)
-                return create_entity(self.wrap_function, self._c_ampl, self._name, index_c, self)
+                return create_entity(self.wrap_function, self._ampl, self._name, index_c, self)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
@@ -141,7 +143,7 @@ cdef class Entity(object):
         """
         Get all the instances in this entity.
         """
-        return InstanceIterator.create(self._c_ampl, self._name, self.wrap_function, self)
+        return InstanceIterator.create(self._ampl, self._name, self.wrap_function, self)
 
     def name(self):
         """
@@ -172,7 +174,7 @@ cdef class Entity(object):
         if self._index is not NULL:
             indexarity = 0
         else:
-            PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._c_ampl, self._name, &indexarity))
+            PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
         return indexarity
 
     def is_scalar(self):
@@ -193,7 +195,7 @@ cdef class Entity(object):
         Get the number of instances in this entity.
         """
         cdef size_t size
-        PY_AMPL_CALL(campl.AMPL_EntityGetNumInstances(self._c_ampl, self._name, &size))
+        PY_AMPL_CALL(campl.AMPL_EntityGetNumInstances(self._ampl._c_ampl, self._name, &size))
         return int(size)
 
     def get_indexing_sets(self):
@@ -210,7 +212,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** sets
         cdef list pylist = []
-        campl.AMPL_EntityGetIndexingSets(self._c_ampl, self._name, &sets, &size)
+        campl.AMPL_EntityGetIndexingSets(self._ampl._c_ampl, self._name, &sets, &size)
         for i in range(size):
             if sets[i] != NULL:
                 pylist.append(sets[i].decode('utf-8'))
@@ -231,7 +233,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** xref
         cdef list pylist = []
-        campl.AMPL_EntityGetXref(self._c_ampl, self._name, &xref, &size)
+        campl.AMPL_EntityGetXref(self._ampl._c_ampl, self._name, &xref, &size)
         for i in range(size):
             if xref[i] != NULL:
                 pylist.append(xref[i].decode('utf-8'))
@@ -266,7 +268,7 @@ cdef class Entity(object):
         cdef size_t n
         if suffixes is None:
             n = 0
-            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._c_ampl, self._name, NULL, n, &df_c))
+            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, NULL, n, &df_c))
         else:
             if isinstance(suffixes, str):
                 suffixes = [suffixes]
@@ -276,7 +278,7 @@ cdef class Entity(object):
             for i in range(len(suffixes)):
                 suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
             n = len(suffixes)
-            campl.AMPL_EntityGetValues(self._c_ampl, self._name, suffixes_c, n, &df_c)
+            campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, suffixes_c, n, &df_c)
             for i in range(len(suffixes)):
                 free(suffixes_c[i])
             free(suffixes_c)
@@ -325,22 +327,22 @@ cdef class Entity(object):
         cdef DataFrame df
         cdef campl.AMPL_DATAFRAME* df_c 
         cdef char* _name_c 
-        campl.AMPL_InstanceGetName(self._c_ampl, self._name, self._index, &_name_c)
+        campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c)
         if isinstance(data, DataFrame):
             df = data
             df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+            campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
             campl.AMPL_StringFree(&_name_c)
         elif isinstance(data, dict):
             df = DataFrame.from_dict(data)
             df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+            campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
             campl.AMPL_StringFree(&_name_c)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 df_c = df.get_ptr()
-                campl.AMPL_EntitySetValues(self._c_ampl, _name_c, df_c)
+                campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
                 campl.AMPL_StringFree(&_name_c)
                 return
             raise TypeError(f"Unexpected data type: {type(data)}.")

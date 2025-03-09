@@ -476,6 +476,17 @@ class TestAMPL(TestBase.TestBase):
             {"y[1]": 5, "y[2]": 5, "y['a']": 5, "y['b']": 5},
         )
 
+    def test_ampl_deallocate(self):
+        ampl = self.ampl
+        ampl.eval(
+            r"""
+            var x >= 42.0;
+            """
+        )
+        x = ampl.get_variable("x")
+        del ampl
+        self.assertEqual(x.lb(), 42.0)
+
 
 if __name__ == "__main__":
     unittest.main()

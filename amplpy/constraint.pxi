@@ -30,9 +30,10 @@ cdef class Constraint(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index, parent):
+    cdef create(AMPL ampl, char* name, campl.AMPL_TUPLE* index, parent):
         entity = Constraint()
-        entity._c_ampl = ampl_c
+        entity._ampl = ampl
+        Py_INCREF(entity._ampl)
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_CONSTRAINT
@@ -55,7 +56,7 @@ cdef class Constraint(Entity):
         """
         cdef bool_c value
         try:
-            PY_AMPL_CALL(campl.AMPL_ConstraintIsLogical(self._c_ampl, self._name, &value))
+            PY_AMPL_CALL(campl.AMPL_ConstraintIsLogical(self._ampl._c_ampl, self._name, &value))
             return value
         except AttributeError:
             return False
@@ -65,21 +66,21 @@ cdef class Constraint(Entity):
         Drop all instances in this constraint entity, corresponding to the AMPL
         code: `drop constraintname;`.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._c_ampl, self._name))
+        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
 
     def restore(self):
         """
         Restore all instances in this constraint entity, corresponding to the
         AMPL code: `restore constraintname;`.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._c_ampl, self._name))
+        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
 
     def body(self):
         """
         Get the current value of the constraint's body.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_BODY, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_BODY, &value))
         return value
 
     def astatus(self):
@@ -89,7 +90,7 @@ cdef class Constraint(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -105,7 +106,7 @@ cdef class Constraint(Entity):
         constraint.
         """
         cdef int value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFVAR, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFVAR, &value))
         return value
 
     def dinit(self):
@@ -113,7 +114,7 @@ cdef class Constraint(Entity):
         Get the current initial guess for the constraint's dual variable.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT, &value))
         return value
 
     def dinit0(self):
@@ -121,7 +122,7 @@ cdef class Constraint(Entity):
         Get the original initial guess for the constraint's dual variable.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT0, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT0, &value))
         return value
 
     def dual(self):
@@ -134,7 +135,7 @@ cdef class Constraint(Entity):
         (see :func:`~amplpy.AMPL.setOption`).
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value))
         return value
 
     def lb(self):
@@ -142,7 +143,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's lower bound.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value))
         return value
 
     def ub(self):
@@ -150,7 +151,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's upper bound.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value))
         return value
 
     def lbs(self):
@@ -159,7 +160,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LBS, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LBS, &value))
         return value
 
     def ubs(self):
@@ -168,7 +169,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UBS, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UBS, &value))
         return value
 
     def ldual(self):
@@ -176,7 +177,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the lower bound.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LDUAL, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LDUAL, &value))
         return value
 
     def udual(self):
@@ -184,7 +185,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the upper bounds.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UDUAL, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UDUAL, &value))
         return value
 
     def lslack(self):
@@ -192,7 +193,7 @@ cdef class Constraint(Entity):
         Get the slack at lower bound `body - lb`.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value))
         return value
 
     def uslack(self):
@@ -200,7 +201,7 @@ cdef class Constraint(Entity):
         Get the slack at upper bound `ub - body`.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value))
         return value
 
     def slack(self):
@@ -208,7 +209,7 @@ cdef class Constraint(Entity):
         Constraint slack (the lesser of lslack and uslack).
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value))
         return value
 
     def sstatus(self):
@@ -219,7 +220,7 @@ cdef class Constraint(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -236,7 +237,7 @@ cdef class Constraint(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -261,7 +262,7 @@ cdef class Constraint(Entity):
         Args:
             dual: The value to be assigned to the dual variable.
         """
-        PY_AMPL_CALL(campl.AMPL_ConstraintSetDual(self._c_ampl, self._name, float(dual)))
+        PY_AMPL_CALL(campl.AMPL_ConstraintSetDual(self._ampl._c_ampl, self._name, float(dual)))
 
     def val(self):
         """
@@ -269,7 +270,7 @@ cdef class Constraint(Entity):
         """
         cdef double value
         if self.is_logical():
-            PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VAL, &value))
+            PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VAL, &value))
             return value
         else:
             return None

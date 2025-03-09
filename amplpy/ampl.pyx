@@ -210,7 +210,7 @@ cdef class AMPL:
             The AMPL entity with the specified name.
         """
         cdef char* name_c = strdup(name.encode('utf-8'))
-        return Entity.create(self._c_ampl, name_c, NULL, None)
+        return Entity.create(self, name_c, NULL, None)
 
     def get_variable(self, name):
         """
@@ -234,7 +234,7 @@ cdef class AMPL:
         if entitytype != campl.AMPL_VARIABLE:
             free(name_c)
             raiseKeyError(campl.AMPL_VARIABLE, name)
-        return Variable.create(self._c_ampl, name_c, NULL, None)
+        return Variable.create(self, name_c, NULL, None)
 
     def get_constraint(self, name):
         """
@@ -258,7 +258,7 @@ cdef class AMPL:
         if entitytype != campl.AMPL_CONSTRAINT:
             free(name_c)
             raiseKeyError(campl.AMPL_CONSTRAINT, name)
-        return Constraint.create(self._c_ampl, name_c, NULL, None)
+        return Constraint.create(self, name_c, NULL, None)
 
     def get_objective(self, name):
         """
@@ -282,7 +282,7 @@ cdef class AMPL:
         if entitytype != campl.AMPL_OBJECTIVE:
             free(name_c)
             raiseKeyError(campl.AMPL_OBJECTIVE, name)
-        return Objective.create(self._c_ampl, name_c, NULL, None)
+        return Objective.create(self, name_c, NULL, None)
 
     def get_set(self, name):
         """
@@ -306,7 +306,7 @@ cdef class AMPL:
         if entitytype != campl.AMPL_SET:
             free(name_c)
             raiseKeyError(campl.AMPL_SET, name)
-        return Set.create(self._c_ampl, name_c, NULL, None)
+        return Set.create(self, name_c, NULL, None)
 
     def get_parameter(self, name):
         """
@@ -330,7 +330,7 @@ cdef class AMPL:
         if entitytype != campl.AMPL_PARAMETER:
             free(name_c)
             raiseKeyError(campl.AMPL_PARAMETER, name)
-        return Parameter.create(self._c_ampl, name_c, NULL, None)
+        return Parameter.create(self, name_c, NULL, None)
 
     def eval(self, statements):
         """
@@ -693,7 +693,7 @@ cdef class AMPL:
             error_handler: The object handling AMPL errors and warnings.
         """
         self._error_handler = error_handler
-        PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, <void*>error_handler, PyError))
+        PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>error_handler))
 
     def get_output_handler(self):
         """
@@ -703,7 +703,7 @@ cdef class AMPL:
             The current output handler.
         """
         cdef void* output_handler
-        output_handler = campl.AMPL_GetOutputHandler(self._c_ampl)
+        PY_AMPL_CALL(campl.AMPL_GetOutputHandler(self._c_ampl, &output_handler))
         return <OutputHandler>output_handler
 
     def get_error_handler(self):
@@ -714,38 +714,38 @@ cdef class AMPL:
             The current error handler.
         """
         cdef void* error_handler
-        error_handler = campl.AMPL_GetErrorHandler(self._c_ampl)
+        PY_AMPL_CALL(campl.AMPL_GetErrorHandler(self._c_ampl, &error_handler))
         return <ErrorHandler>error_handler
 
     def get_variables(self):
         """
         Get all the variables declared.
         """
-        return EntityMap.create(self._c_ampl, campl.AMPL_VARIABLE)
+        return EntityMap.create(self, campl.AMPL_VARIABLE)
 
     def get_constraints(self):
         """
         Get all the constraints declared.
         """
-        return EntityMap.create(self._c_ampl, campl.AMPL_CONSTRAINT)
+        return EntityMap.create(self, campl.AMPL_CONSTRAINT)
 
     def get_objectives(self):
         """
         Get all the objectives declared.
         """
-        return EntityMap.create(self._c_ampl, campl.AMPL_OBJECTIVE)
+        return EntityMap.create(self, campl.AMPL_OBJECTIVE)
 
     def get_sets(self):
         """
         Get all the sets declared.
         """
-        return EntityMap.create(self._c_ampl, campl.AMPL_SET)
+        return EntityMap.create(self, campl.AMPL_SET)
 
     def get_parameters(self):
         """
         Get all the parameters declared.
         """
-        return EntityMap.create(self._c_ampl, campl.AMPL_PARAMETER)
+        return EntityMap.create(self, campl.AMPL_PARAMETER)
 
     def get_current_objective(self):
         """

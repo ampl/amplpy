@@ -29,9 +29,10 @@ cdef class Set(Entity):
     :class:`~amplpy.DataFrame`.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index, parent):
+    cdef create(AMPL ampl, char* name, campl.AMPL_TUPLE* index, parent):
         entity = Set()
-        entity._c_ampl = ampl_c
+        entity._ampl = ampl
+        Py_INCREF(entity._ampl)
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_SET
@@ -61,7 +62,7 @@ cdef class Set(Entity):
         set.
         """
         cdef size_t arity
-        PY_AMPL_CALL(campl.AMPL_SetGetArity(self._c_ampl, self._name, &arity))
+        PY_AMPL_CALL(campl.AMPL_SetGetArity(self._ampl._c_ampl, self._name, &arity))
         return int(arity)
 
     def get_values(self):
@@ -69,21 +70,21 @@ cdef class Set(Entity):
         Get values of this set in a DataFrame. Valid only for non-indexed sets.
         """
         cdef campl.AMPL_DATAFRAME* df_c
-        campl.AMPL_SetInstanceGetValuesDataframe(self._c_ampl, self._name, self._index, &df_c)
+        campl.AMPL_SetInstanceGetValuesDataframe(self._ampl._c_ampl, self._name, self._index, &df_c)
         return DataFrame.create(df_c)
 
     def members(self):
         """
         Get members (tuples) of this Set. Valid only for non-indexed sets.
         """
-        return MemberRangeIterator.create(self._c_ampl, self._name, self._index, self)
+        return MemberRangeIterator.create(self._ampl._c_ampl, self._name, self._index, self)
 
     def size(self):
         """
         Get the number of tuples in this set. Valid only for non-indexed sets.
         """
         cdef size_t size
-        PY_AMPL_CALL(campl.AMPL_SetInstanceGetSize(self._c_ampl, self._name, self._index, &size))
+        PY_AMPL_CALL(campl.AMPL_SetInstanceGetSize(self._ampl._c_ampl, self._name, self._index, &size))
         return int(size)
 
     def contains(self, t):
@@ -96,7 +97,7 @@ cdef class Set(Entity):
         """
         cdef bool_c contains_c
         cdef campl.AMPL_TUPLE* t_c = to_c_tuple(t)
-        campl.AMPL_SetInstanceContains(self._c_ampl, self._name, NULL, t_c, &contains_c)    
+        campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, NULL, t_c, &contains_c)    
         campl.AMPL_TupleFree(&t_c)
         return contains_c
 
@@ -136,16 +137,16 @@ cdef class Set(Entity):
                 self[index].set_values(members)
         elif isinstance(values, DataFrame):
             df = values
-            PY_AMPL_CALL(campl.AMPL_SetInstanceSetValuesDataframe(self._c_ampl, self._name, self._index, df.get_ptr()))
+            PY_AMPL_CALL(campl.AMPL_SetInstanceSetValuesDataframe(self._ampl._c_ampl, self._name, self._index, df.get_ptr()))
         elif isinstance(values, Iterable):
             dimen = self.arity()
             if dimen == 1 and all(isinstance(value, str) for value in values):
                 if not isinstance(values, (list, tuple)):
                     values = list(values)
-                setValues(self._c_ampl, self._name, self._index, values, len(values))
+                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
             elif dimen == 1 and all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
-                setValues(self._c_ampl, self._name, self._index, values, len(values))
+                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
             else:
 
                 def cast_value(value):
@@ -181,7 +182,7 @@ cdef class Set(Entity):
                         for row in values
                     ):
                         raise ValueError(f"Expected tuples of arity {dimen}.")
-                setValues(self._c_ampl, self._name, self._index, values, len(values))
+                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
         else:
             Entity.set_values(self, values)
 

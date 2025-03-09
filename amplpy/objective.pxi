@@ -22,9 +22,10 @@ cdef class Objective(Entity):
     and the :class:`~amplpy.DataFrame` class.
     """
     @staticmethod
-    cdef create(campl.AMPL* ampl_c, char* name, campl.AMPL_TUPLE* index, parent):
+    cdef create(AMPL ampl, char* name, campl.AMPL_TUPLE* index, parent):
         entity = Objective()
-        entity._c_ampl = ampl_c
+        entity._ampl = ampl
+        Py_INCREF(entity._ampl)
         entity._name = name
         entity._index = index
         entity.wrap_function = campl.AMPL_OBJECTIVE
@@ -38,7 +39,7 @@ cdef class Objective(Entity):
         Get the value of the objective.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
     def astatus(self):
@@ -48,7 +49,7 @@ cdef class Objective(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -65,7 +66,7 @@ cdef class Objective(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -81,7 +82,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef int value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
         return value
 
     def message(self):
@@ -92,7 +93,7 @@ cdef class Objective(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -110,7 +111,7 @@ cdef class Objective(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
@@ -124,13 +125,13 @@ cdef class Objective(Entity):
         """
         Drop this objective instance.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._c_ampl, self._name))
+        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
 
     def restore(self):
         """
         Restore this objective (if it had been dropped, no effect otherwise).
         """
-        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._c_ampl, self._name))
+        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
 
     def minimization(self):
         """
@@ -140,7 +141,7 @@ cdef class Objective(Entity):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_RETCODE rc
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc != campl.AMPL_OK:
             campl.AMPL_StringFree(&value_c)
