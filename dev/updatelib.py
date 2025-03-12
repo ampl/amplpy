@@ -7,7 +7,7 @@ import tempfile
 
 VERSION = "nightly/v3"
 API_URL = f"https://portal.ampl.com/~jurgen/jl/libampl.zip"
-ARCHS = ["amd64", "ppc64le", "aarch64"]
+ARCHS = ["amd64", "aarch64"]
 
 
 def updatelib(package, archs):
