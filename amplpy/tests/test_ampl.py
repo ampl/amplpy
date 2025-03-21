@@ -481,11 +481,21 @@ class TestAMPL(TestBase.TestBase):
         ampl.eval(
             r"""
             var x >= 42.0;
+            var y{1..2} >= 0;
+            maximize obj: 0;
+            s.t. s: x+y[1] <= -5;
             """
         )
         x = ampl.get_variable("x")
+        y = ampl.get_variable("y")
+        obj = ampl.get_objective("obj")
+        s = ampl.get_constraint("s")
         del ampl
         self.assertEqual(x.lb(), 42.0)
+        self.assertEqual(y.num_instances(), 2)
+        self.assertEqual(obj.num_instances(), 1)
+        self.assertEqual(s.num_instances(), 1)
+
 
 
 if __name__ == "__main__":
