@@ -16,8 +16,8 @@ class TestBase(unittest.TestCase):
     def setUp(self):
         print("setUp:", self._testMethodName)
         self.ampl = amplpy.AMPL()
-        self.ampl.option["solver"] = "highs"
-        self.ampl.option["highs_options"] = "outlev=1"
+        self.ampl.option["solver"] = "gurobi"
+        self.ampl.option["gurobi_options"] = "outlev=1"
         self.dirpath = tempfile.mkdtemp()
 
     def _tmpfile(self, filename):

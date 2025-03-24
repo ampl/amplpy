@@ -391,8 +391,8 @@ class TestAMPL(TestBase.TestBase):
             ampl.write("bmod", "rc")
 
     def test_solve_arguments(self):
-        if "highs" not in modules.installed():
-            self.skipTest("highs is not available")
+        if "gurobi" not in modules.installed():
+            self.skipTest("gurobi is not available")
         ampl = self.ampl
         ampl.eval(
             """
@@ -404,15 +404,15 @@ class TestAMPL(TestBase.TestBase):
         """
         )
         ampl.param["n"] = 5
-        ampl.option["highs_options"] = ""
-        self.assertEqual(ampl.option["highs_options"], "")
+        ampl.option["gurobi_options"] = ""
+        self.assertEqual(ampl.option["gurobi_options"], "")
 
-        output = ampl.solve(solver="highs", return_output=True)
+        output = ampl.solve(solver="gurobi", return_output=True)
         print("output1:", output)
         self.assertFalse("outlev" in output)
 
         output = ampl.solve(
-            solver="highs", return_output=True, highs_options="outlev=1"
+            solver="gurobi", return_output=True, gurobi_options="outlev=1"
         )
         print("output2:", output)
         self.assertTrue("outlev" in output)
@@ -448,8 +448,8 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(con_iis, {"s": "mem"})
 
     def test_get_solution(self):
-        if "highs" not in modules.installed():
-            self.skipTest("highs is not available")
+        if "gurobi" not in modules.installed():
+            self.skipTest("gurobi is not available")
         ampl = self.ampl
         ampl.eval(
             r"""
@@ -461,7 +461,7 @@ class TestAMPL(TestBase.TestBase):
         """
         )
         ampl.option["presolve"] = 0
-        ampl.solve(solver="highs", highs_options="outlev=1")
+        ampl.solve(solver="gurobi", gurobi_options="outlev=1")
         self.assertEqual(ampl.solve_result, "solved")
         self.assertEqual(
             ampl.get_solution(flat=False, zeros=True),
