@@ -30,7 +30,7 @@ stages:
       - task: PublishBuildArtifacts@1
         inputs: {pathtoPublish: 'upload'}
   - job: manylinux
-    pool: {vmImage: 'Ubuntu-20.04'}
+    pool: {vmImage: 'Ubuntu-22.04'}
     steps:
       - task: UsePythonVersion@0
       - bash: |
