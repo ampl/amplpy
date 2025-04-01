@@ -2,6 +2,11 @@
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 
+from cpython.float cimport PyFloat_AsDouble
+from cpython.int cimport PyInt_AsLong, PyInt_Check
+from cpython.long cimport PyLong_AsLong, PyLong_Check
+from cpython.exc cimport PyErr_Occurred, PyErr_Clear
+
 from numbers import Real
 
 try:
@@ -311,16 +316,7 @@ cdef class DataFrame(object):
         cdef double* c_double_array = NULL
         cdef char** c_string_array = NULL
         cdef size_t size = len(values)
-        if isinstance(values[0], Real):
-            c_double_array = <double*> malloc(size * sizeof(double))
-            for i in range(size):
-                c_double_array[i] = values[i]
-            errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-            free(c_double_array)
-            if rc != campl.AMPL_OK:
-                PY_AMPL_CALL(errorinfo)
-        elif isinstance(values[0], str):
+        if isinstance(values[0], str):
             c_string_array = <char**> malloc(size * sizeof(char*))
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
@@ -330,6 +326,23 @@ cdef class DataFrame(object):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])
             free(c_string_array)
+            if rc != campl.AMPL_OK:
+                PY_AMPL_CALL(errorinfo)
+        else:
+            c_double_array = <double*> malloc(size * sizeof(double))
+            for i in range(size):
+                if PyInt_Check(values[i]):
+                    c_double_array[i] = PyInt_AsLong(values[i])
+                elif PyLong_Check(values[i]):
+                    c_double_array[i] = PyLong_AsLong(values[i]);
+                else:
+                    PyErr_Clear()
+                    c_double_array[i] = PyFloat_AsDouble(values[i]);
+                    if PyErr_Occurred():
+                        raise TypeError("Failed to cast value to int/float/double")
+            errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
+            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+            free(c_double_array)
             if rc != campl.AMPL_OK:
                 PY_AMPL_CALL(errorinfo)
 
