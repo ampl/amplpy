@@ -1129,6 +1129,68 @@ cdef class AMPL:
         except RuntimeError as exp:
             print(exp)
 
+    def to_ampls(self, driver, options=None):
+        if driver == "gurobi":
+            try:
+                from amplpy_gurobi import export_gurobi_model
+            except ImportError:
+                raise ImportError("amplpy_gurobi package not found")
+            return export_gurobi_model(self, options)
+        elif driver == "cplex":
+            try:
+                from amplpy_cplex import export_cplex_model
+            except ImportError:
+                raise ImportError("amplpy_cplex package not found")
+            return export_cplex_model(self, options)
+        elif driver == "scip":
+            try:
+                from amplpy_scip import export_scip_model
+            except ImportError:
+                raise ImportError("amplpy_scip package not found")
+            return export_scip_model(self, options)
+        elif driver == "copt":
+            try:
+                from amplpy_copt import export_copt_model
+            except ImportError:
+                raise ImportError("amplpy_copt package not found")
+            return export_copt_model(self, options)
+        elif driver == "highs":
+            try:
+                from amplpy_highs import export_highs_model
+            except ImportError:
+                raise ImportError("amplpy_highs package not found")
+            return export_highs_model(self, options)
+        elif driver == "xpress":
+            try:
+                from amplpy_xpress import export_xpress_model
+            except ImportError:
+                raise ImportError("amplpy_xpress package not found")
+            return export_xpress_model(self, options)
+        solver_list = "copt, cplex, gurobi, highs, scip, xpress"
+        raise ValueError(f"{driver} is not supported, please choose from: {solver_list}")
+
+    def import_ampls_solution(self, model, number=None, import_entities=False, keep_files=False):
+        if isinstance(model, dict):
+            self.eval(
+                "".join(
+                    "let {} := {};".format(name, value) for name, value in model.items()
+                )
+            )
+            return
+        if isinstance(model, str):
+            if number is None:
+                self.eval(f'solution "{model}.sol";')
+            else:
+                self.eval(f'solution "{model}{number}.sol";')
+            return
+        import shutil
+        model.write_sol()
+        self.eval(f'solution "{model._solfile}";')
+        if import_entities:
+            self.eval(model.getRecordedEntities())
+        if not keep_files:
+            shutil.rmtree(model._tmpdir)
+
     # Aliases
     _loadSession = _load_session
     _startRecording = _start_recording
