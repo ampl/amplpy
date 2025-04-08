@@ -2,6 +2,13 @@
 from numbers import Real
 from collections.abc import Iterable
 
+from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
+
+import polars as pl
+import pyarrow as pa
+import nanoarrow as na
+
+
 
 import itertools
 
@@ -181,6 +188,29 @@ cdef class Parameter(Entity):
                 Entity.set_values(self, values)
         else:
             Entity.set_values(self, values)
+
+    def bla(self, df):
+        return pa.Table.from_pandas(df)
+    
+    def bla1(self, table):
+        return na.c_array_stream(table)
+
+    cdef bla2(self, campl.ArrowSchema* schema, campl.ArrowArray* array):
+        campl.AMPL_EntitySetValuesNanoarrow(self._ampl._c_ampl, self._name, array, schema)
+
+
+
+    def set_nanoarrow(self, df):
+        cdef campl.ArrowSchema* arrow_schema_ptr
+        cdef campl.ArrowArray* arrow_array_ptr
+        array_stream = self.bla1(self.bla(df))
+        c_schema_capsule = array_stream.get_schema().__arrow_c_schema__()
+        _, c_array_capsule = array_stream.get_next().__arrow_c_array__()
+
+        arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
+        arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
+
+        self.bla2(arrow_schema_ptr, arrow_array_ptr)
 
     # Aliases
     hasDefault = has_default

@@ -347,6 +347,16 @@ cdef extern from "ampl/ampl_c.h":
     ctypedef struct AMPL:
         pass
 
+    cdef struct ArrowSchema:
+        pass
+
+    #ctypedef ArrowSchema s_ArrowSchema
+    
+    cdef struct ArrowArray:
+        pass
+
+    #ctypedef ArrowArray s_ArrowArray
+
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
     AMPL_ERRORINFO* AMPL_CreateWithEnv(AMPL** ampl, AMPL_ENVIRONMENT* env)
@@ -486,6 +496,8 @@ cdef extern from "ampl/ampl_c.h":
     AMPL_ERRORINFO* AMPL_EntityGetValues(AMPL* ampl, const char* name, const char* const* suffixes, size_t n, AMPL_DATAFRAME** output)
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
+
+    AMPL_ERRORINFO* AMPL_EntitySetValuesNanoarrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema)
 
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
