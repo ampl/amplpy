@@ -497,7 +497,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
-    AMPL_ERRORINFO* AMPL_EntitySetValuesNanoarrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema)
+    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema) nogil
 
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 

@@ -70,7 +70,7 @@ cdef class Environment(object):
             return None
 
     def to_string(self):
-        cdef const char* to_string_c
+        cdef char* to_string_c
         campl.AMPL_EnvironmentToString(self._c_env, &to_string_c)
         to_string = str(to_string_c.decode('utf-8'))
         return to_string
@@ -88,7 +88,7 @@ cdef class Environment(object):
         """
         Get the location where AMPL API will search for the AMPL executable.
         """
-        cdef const char* bin_dir_c
+        cdef char* bin_dir_c
         campl.AMPL_EnvironmentGetBinaryDirectory(self._c_env, &bin_dir_c)
         bin_dir = str(bin_dir_c.decode('utf-8'))
         return bin_dir
@@ -106,7 +106,7 @@ cdef class Environment(object):
         """
         Get the name of the AMPL executable.
         """
-        cdef const char* bin_name_c
+        cdef char* bin_name_c
         campl.AMPL_EnvironmentGetBinaryName(self._c_env, &bin_name_c)
         bin_name = str(bin_name_c.decode('utf-8'))
         return bin_name

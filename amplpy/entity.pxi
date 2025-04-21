@@ -342,7 +342,7 @@ cdef class Entity(object):
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 df_c = df.get_ptr()
-                campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+                PY_AMPL_CALL(campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c))
                 campl.AMPL_StringFree(&_name_c)
                 return
             raise TypeError(f"Unexpected data type: {type(data)}.")

@@ -189,28 +189,27 @@ cdef class Parameter(Entity):
         else:
             Entity.set_values(self, values)
 
-    def bla(self, df):
-        return pa.Table.from_pandas(df)
-    
-    def bla1(self, table):
-        return na.c_array_stream(table)
-
-    cdef bla2(self, campl.ArrowSchema* schema, campl.ArrowArray* array):
-        campl.AMPL_EntitySetValuesNanoarrow(self._ampl._c_ampl, self._name, array, schema)
-
-
 
     def set_nanoarrow(self, df):
-        cdef campl.ArrowSchema* arrow_schema_ptr
-        cdef campl.ArrowArray* arrow_array_ptr
-        array_stream = self.bla1(self.bla(df))
-        c_schema_capsule = array_stream.get_schema().__arrow_c_schema__()
-        _, c_array_capsule = array_stream.get_next().__arrow_c_array__()
+        array_stream = na.c_array_stream(pa.Table.from_pandas(df.reset_index(), preserve_index=False))
+        c_schema_capsule, c_array_capsule = array_stream.get_next().__arrow_c_array__()
+
+        cdef campl.ArrowSchema* arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
+        cdef campl.ArrowArray* arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
+
+        campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, self._name, arrow_array_ptr, arrow_schema_ptr)
+
+    def set_nanoarrowpolars(self, df):
+        cdef const campl.ArrowSchema* arrow_schema_ptr
+        cdef const campl.ArrowArray* arrow_array_ptr
+        stream = na.c_array_stream(df.to_arrow())
+        c_schema_capsule = stream.get_schema().__arrow_c_schema__()
+        _, c_array_capsule = stream.get_next().__arrow_c_array__()
 
         arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
         arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
 
-        self.bla2(arrow_schema_ptr, arrow_array_ptr)
+        campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, self._name, arrow_array_ptr, arrow_schema_ptr)
 
     # Aliases
     hasDefault = has_default

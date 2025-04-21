@@ -166,7 +166,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.15.0b4",
+    version="0.15.0b5",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",
@@ -213,8 +213,8 @@ setup(
                 extra_link_args=link_args(),
                 sources=[os.path.join("amplpy", "ampl.pyx")],
             )
-        ], compiler_directives={"language_level": "3", 'binding': True, "embedsignature": True,
-                                "boundscheck": False, "wraparound": False, "profile": True},
+        ], compiler_directives={"language_level": "3", "binding": True, #"embedsignature": True,
+                                "boundscheck": False, "wraparound": False},
     ),
     package_data={"": package_content()},
     install_requires=["ampltools >= 0.7.5"],
