@@ -50,7 +50,7 @@ cdef class Parameter(Entity):
         numerical and string values).
         """
         cdef bool_c value
-        campl.AMPL_ParameterIsSymbolic(self._ampl._c_ampl, self._name, &value)
+        PY_AMPL_CALL(campl.AMPL_ParameterIsSymbolic(self._ampl._c_ampl, self._name, &value))
         return value
 
     def has_default(self):
@@ -72,7 +72,7 @@ cdef class Parameter(Entity):
             True.
         """
         cdef bool_c value
-        campl.AMPL_ParameterHasDefault(self._ampl._c_ampl, self._name, &value)
+        PY_AMPL_CALL(campl.AMPL_ParameterHasDefault(self._ampl._c_ampl, self._name, &value))
         return value
 
     def __getitem__(self, index):

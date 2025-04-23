@@ -70,7 +70,7 @@ cdef class Set(Entity):
         Get values of this set in a DataFrame. Valid only for non-indexed sets.
         """
         cdef campl.AMPL_DATAFRAME* df_c
-        campl.AMPL_SetInstanceGetValuesDataframe(self._ampl._c_ampl, self._name, self._index, &df_c)
+        PY_AMPL_CALL(campl.AMPL_SetInstanceGetValuesDataframe(self._ampl._c_ampl, self._name, self._index, &df_c))
         return DataFrame.create(df_c)
 
     def members(self):

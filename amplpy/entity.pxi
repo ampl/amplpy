@@ -69,8 +69,13 @@ cdef class Entity(object):
         Py_DECREF(self._ampl)
 
     def to_string(self):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
         campl.AMPL_EntityGetDeclaration(self._ampl._c_ampl, self._name, &output_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
         
