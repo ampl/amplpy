@@ -95,10 +95,15 @@ cdef class Set(Entity):
         Args:
             t: Tuple to be found.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef bool_c contains_c
         cdef campl.AMPL_TUPLE* t_c = to_c_tuple(t)
-        campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, NULL, t_c, &contains_c)    
+        errorinfo = campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, NULL, t_c, &contains_c)    
         campl.AMPL_TupleFree(&t_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            PY_AMPL_CALL(errorinfo)
         return contains_c
 
     def set_values(self, values):
@@ -129,6 +134,8 @@ cdef class Set(Entity):
             A, AA = ampl.get_set('A'), ampl.get_set('AA')
             AA.set_values(A.get_values())  # AA has now the members {1, 2}
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
         cdef DataFrame df = None
         if not self.is_scalar():
             if not isinstance(values, dict):
@@ -143,10 +150,16 @@ cdef class Set(Entity):
             if dimen == 1 and all(isinstance(value, str) for value in values):
                 if not isinstance(values, (list, tuple)):
                     values = list(values)
-                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+                if rc != campl.AMPL_OK:
+                    PY_AMPL_CALL(errorinfo)
             elif dimen == 1 and all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
-                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+                if rc != campl.AMPL_OK:
+                    PY_AMPL_CALL(errorinfo)
             else:
 
                 def cast_value(value):
@@ -182,7 +195,10 @@ cdef class Set(Entity):
                         for row in values
                     ):
                         raise ValueError(f"Expected tuples of arity {dimen}.")
-                setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
+                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+                if rc != campl.AMPL_OK:
+                    PY_AMPL_CALL(errorinfo)
         else:
             Entity.set_values(self, values)
 

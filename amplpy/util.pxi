@@ -61,7 +61,8 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
         print("AMPL: unknown return code!")
         raise Exception('AMPL: unknown return code!')
 
-cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
+cdef campl.AMPL_ERRORINFO* setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef campl.AMPL_TUPLE** values_c
     cdef size_t i
     values_c = <campl.AMPL_TUPLE**>malloc(size * sizeof(campl.AMPL_TUPLE*))
@@ -69,11 +70,13 @@ cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, value
     for i in range(size):
         values_c[i] = to_c_tuple(values[i])
     
-    campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
+    errorinfo = campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
 
     for i in range(size):
         campl.AMPL_TupleFree(&values_c[i])
     free(values_c)
+
+    return errorinfo
 
 cdef to_py_variant(campl.AMPL_VARIANT* variant):
     cdef campl.AMPL_TYPE type
@@ -149,27 +152,34 @@ cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, AMPL ampl, char* name, ca
     else:
         return Entity.create(ampl, name, index, parent)
 
-cdef void setValuesParamNum(campl.AMPL* ampl, char* name, values):
+cdef campl.AMPL_ERRORINFO* setValuesParamNum(campl.AMPL* ampl, char* name, values):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t size = len(values)
     cdef double* values_c = <double*> malloc(size * sizeof(double))
     for i in range(size):
         values_c[i] = values[i]
-    campl.AMPL_ParameterSetArgsDoubleValues(ampl, name, size, values_c)
+    errorinfo = campl.AMPL_ParameterSetArgsDoubleValues(ampl, name, size, values_c)
     free(values_c)
 
-cdef void setValuesParamStr(campl.AMPL* ampl, char* name, values):
+    return errorinfo
+
+cdef campl.AMPL_ERRORINFO* setValuesParamStr(campl.AMPL* ampl, char* name, values):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t size = len(values)
     cdef char** values_c = <char**> malloc(size * sizeof(char*))
     for i in range(size):
         values_c[i] = strdup(values[i].encode('utf-8'))
     
-    campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
+    errorinfo = campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
 
     for i in range(size):
         free(values_c[i])
     free(values_c)
 
-cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
+    return errorinfo
+
+cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t i
     cdef campl.AMPL_TUPLE** indices_c
     cdef char** values_str_c
@@ -205,7 +215,7 @@ cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
         for i in range(size):
             indices_c[i] = to_c_tuple(<object>PyList_GetItem(d_keys, i))
             values_str_c[i] = PyUnicode_AsUTF8(<object>PyList_GetItem(d_values, i))
-        campl.AMPL_ParameterSetSomeStringValues(ampl, name, size, indices_c, values_str_c)
+        errorinfo = campl.AMPL_ParameterSetSomeStringValues(ampl, name, size, indices_c, values_str_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
@@ -220,13 +230,14 @@ cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
                 values_num_c[i] = PyLong_AsLong(<object>item)
             else:
                 values_num_c[i] = PyFloat_AsDouble(<object>item)
-        campl.AMPL_ParameterSetSomeDoubleValues(ampl, name, size, indices_c, values_num_c)
+        errorinfo = campl.AMPL_ParameterSetSomeDoubleValues(ampl, name, size, indices_c, values_num_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
         free(values_num_c)
     else:
         raise ValueError("Dictionary must contain either all strings or all numbers")
+    return errorinfo
 
 cdef raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name):
     if entity_class == campl.AMPL_VARIABLE:
