@@ -26,10 +26,12 @@ def beta_function():
    p.setValues(pdf)
    t1 = time.perf_counter()
    elapsed_wall = t1 - t0
+   df = ampl.get_data_arrow("p")
+   print(df)
    print(f"Wall Time (perf):  {elapsed_wall:.6f} seconds")
 
 def main():
-   nanoarrow_function()
+   #nanoarrow_function()
    beta_function()
 
 main()

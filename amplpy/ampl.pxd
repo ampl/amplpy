@@ -419,6 +419,8 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_GetData(AMPL* ampl, const char* const* displayStatements, size_t n, AMPL_DATAFRAME** output)
 
+    AMPL_ERRORINFO *AMPL_GetDataArrow(AMPL *ampl, const char *const *displayStatements, size_t n, ArrowSchema **schema, ArrowArray **array)
+
     AMPL_ERRORINFO* AMPL_SetData(AMPL* ampl, AMPL_DATAFRAME* df, const char* setName)
 
     AMPL_ERRORINFO* AMPL_ToString(AMPL* ampl, char** output)
@@ -497,7 +499,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
-    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema) nogil
+    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema)
 
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
