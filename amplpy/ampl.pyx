@@ -1191,6 +1191,22 @@ cdef class AMPL:
         if not keep_files:
             shutil.rmtree(model._tmpdir)
 
+    def to_string(self):
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_RETCODE rc
+        cdef char* output_c
+        errorinfo = campl.AMPL_ToString(self._c_ampl, &output_c)
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc != campl.AMPL_OK:
+            PY_AMPL_CALL(errorinfo)
+        output = str(output_c.decode('utf-8'))
+        campl.AMPL_StringFree(&output_c)
+        
+        return output
+
+    def __str__(self):
+        return self.to_string()
+
     # Aliases
     _loadSession = _load_session
     _startRecording = _start_recording
@@ -1222,4 +1238,5 @@ cdef class AMPL:
     setErrorHandler = set_error_handler
     setOption = set_option
     setOutputHandler = set_output_handler
+    toString = to_string
     writeTable = write_table

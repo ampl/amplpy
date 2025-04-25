@@ -16,20 +16,20 @@ if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
     except Exception as exp:
         raise exp
 
-from _amplpy import OutputHandler, Kind
-from _amplpy import ErrorHandler
-from _amplpy import AMPLException, PresolveException, InfeasibilityException
-from _amplpy import EntityMap
-from _amplpy import Objective
-from _amplpy import Variable
-from _amplpy import Constraint
-from _amplpy import Set
-from _amplpy import Parameter
-from _amplpy import Entity
-from _amplpy import DataFrame, Row, Column
+from .campl import OutputHandler, Kind
+from .campl import ErrorHandler
+from .campl import AMPLException, PresolveException, InfeasibilityException
+from .campl import EntityMap
+from .campl import Objective
+from .campl import Variable
+from .campl import Constraint
+from .campl import Set
+from .campl import Parameter
+from .campl import Entity
+from .campl import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
-from _amplpy import Environment
-from _amplpy import AMPL
+from .campl import Environment
+from .campl import AMPL
 
 _parent_dir = os.path.abspath(os.path.dirname(__file__))
 _vendor_dir = os.path.join(_parent_dir, "vendor")
@@ -55,7 +55,7 @@ try:
 except Exception:
     pass
 
-__version__ = "0.15.0b3"
+__version__ = "0.15.0b4"
 
 
 def _list_aliases():

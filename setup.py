@@ -108,7 +108,11 @@ def package_content():
         lst = all_files
     else:
         source_only = [
-            fpath for fpath in all_files if not fpath.startswith(LIBRARY_BASE)
+            fpath for fpath in all_files 
+                  if not fpath.startswith(LIBRARY_BASE)
+                  if not fpath.endswith(".pyx")
+                  if not fpath.endswith(".pxi")
+                  if not fpath.endswith(".pxd")
         ]
         library_only = [
             fpath
@@ -166,7 +170,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.15.0b3",
+    version="0.15.0b4",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",
@@ -205,7 +209,7 @@ setup(
     ext_modules=cythonize(
         [
             Extension(
-                "_amplpy",
+                "amplpy.campl",
                 libraries=["ampl"],
                 library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
                 include_dirs=[os.path.join(CPP_BASE, "include")],
