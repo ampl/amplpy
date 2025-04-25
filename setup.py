@@ -205,7 +205,7 @@ setup(
     ext_modules=cythonize(
         [
             Extension(
-                "amplpy.campl",
+                "_amplpy",
                 libraries=["ampl"],
                 library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
                 include_dirs=[os.path.join(CPP_BASE, "include")],
