@@ -29,7 +29,7 @@ from _amplpy import Entity
 from _amplpy import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from _amplpy import Environment
-from ._amplpy import AMPL
+from _amplpy import AMPL
 
 _parent_dir = os.path.abspath(os.path.dirname(__file__))
 _vendor_dir = os.path.join(_parent_dir, "vendor")
