@@ -16,20 +16,20 @@ if platform.system().startswith(("Windows", "MSYS", "CYGWIN", "MINGW")):
     except Exception as exp:
         raise exp
 
-from _amplpy import OutputHandler, Kind
-from _amplpy import ErrorHandler
-from _amplpy import AMPLException, PresolveException, InfeasibilityException
-from _amplpy import EntityMap
-from _amplpy import Objective
-from _amplpy import Variable
-from _amplpy import Constraint
-from _amplpy import Set
-from _amplpy import Parameter
-from _amplpy import Entity
-from _amplpy import DataFrame, Row, Column
+from amplpy.ampl import OutputHandler, Kind
+from amplpy.ampl import ErrorHandler
+from amplpy.ampl import AMPLException, PresolveException, InfeasibilityException
+from amplpy.ampl import EntityMap
+from amplpy.ampl import Objective
+from amplpy.ampl import Variable
+from amplpy.ampl import Constraint
+from amplpy.ampl import Set
+from amplpy.ampl import Parameter
+from amplpy.ampl import Entity
+from amplpy.ampl import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
-from _amplpy import Environment
-from _amplpy import AMPL
+from amplpy.ampl import Environment
+from amplpy.ampl import AMPL
 
 _parent_dir = os.path.abspath(os.path.dirname(__file__))
 _vendor_dir = os.path.join(_parent_dir, "vendor")
