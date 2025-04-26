@@ -1,7 +1,7 @@
 # https://cython.readthedocs.io/en/latest/src/tutorial/clibraries.html
 import sys
 
-cimport amplpy.ampl as campl
+cimport amplpy.campl as campl
 
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup

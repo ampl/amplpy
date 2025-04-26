@@ -88,7 +88,7 @@ else:
     LIBRARY_EXT = ".dll"
 
 CPP_BASE = os.path.join("amplpy", "amplpython", "cppinterface")
-#CYTHON_BASE = os.path.join("amplpy", "cython")
+RPATH_BASE = os.path.join("amplpython", "cppinterface", "lib")
 LIBRARY_BASE = os.path.join(CPP_BASE, "lib")
 LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
 
@@ -157,7 +157,7 @@ def compile_args():
 
 
 def link_args():
-    rpath = os.path.join(LIBRARY_BASE, LIBRARY)
+    rpath = os.path.join(RPATH_BASE, LIBRARY)
     if OSTYPE == "Darwin":
         return ["-Wl,-headerpad_max_install_names,-rpath,@loader_path/" + rpath]
     elif OSTYPE == "Linux":
@@ -210,7 +210,7 @@ setup(
     ext_modules=cythonize(
         [
             Extension(
-                "_amplpy",
+                "amplpy.ampl",
                 libraries=["ampl"],
                 library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
                 include_dirs=[os.path.join(CPP_BASE, "include")],
