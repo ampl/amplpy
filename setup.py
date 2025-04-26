@@ -108,7 +108,11 @@ def package_content():
         lst = all_files
     else:
         source_only = [
-            fpath for fpath in all_files if not fpath.startswith(LIBRARY_BASE)
+            fpath for fpath in all_files 
+            if not fpath.startswith(LIBRARY_BASE)
+            if not fpath.startswith(".pxi")
+            if not fpath.startswith(".pxd")
+            if not fpath.startswith(".pyx")
         ]
         library_only = [
             fpath
