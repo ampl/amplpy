@@ -113,6 +113,7 @@ def package_content():
             if not fpath.endswith(".pxi")
             if not fpath.endswith(".pxd")
             if not fpath.endswith(".pyx")
+            if not fpath.endswith(".c")
         ]
         library_only = [
             fpath
