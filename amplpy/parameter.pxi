@@ -79,19 +79,16 @@ cdef class Parameter(Entity):
         if not isinstance(index, (tuple, list)):
             index = [index]
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
         cdef char* expression
         cdef campl.AMPL_VARIANT* v
         errorinfo = campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &expression)
         campl.AMPL_TupleFree(&tuple_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         errorinfo = campl.AMPL_GetValue(self._ampl._c_ampl, expression, &v)
         campl.AMPL_StringFree(&expression)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         py_variant = to_py_variant(v)
         campl.AMPL_VariantFree(&v)
@@ -102,11 +99,9 @@ cdef class Parameter(Entity):
         Get the value of this parameter. Valid only for non-indexed parameters.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_VARIANT* v
         errorinfo = campl.AMPL_GetValue(self._ampl._c_ampl, self._name, &v)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         py_variant = to_py_variant(v)
         campl.AMPL_VariantFree(&v)
@@ -129,7 +124,6 @@ cdef class Parameter(Entity):
         """
         assert len(args) in (1, 2)
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_TUPLE* index_c
         if len(args) == 1:
             value = args[0]
@@ -154,8 +148,7 @@ cdef class Parameter(Entity):
             else:
                 campl.AMPL_TupleFree(&index_c)
                 raise TypeError
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
     def set_values(self, values):
@@ -175,13 +168,11 @@ cdef class Parameter(Entity):
             TypeError: If called on a scalar parameter.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         if isinstance(values, dict):
             if not values:
                 return
             errorinfo = setValuesPyDict(self._ampl._c_ampl, self._name, values)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-            if rc != campl.AMPL_OK:
+            if errorinfo:
                 PY_AMPL_CALL(errorinfo)
         elif isinstance(values, DataFrame):
             Entity.set_values(self, values)
@@ -197,14 +188,12 @@ cdef class Parameter(Entity):
                 if not isinstance(values, (list, tuple)):
                     values = list(values)
                 errorinfo = setValuesParamStr(self._ampl._c_ampl, self._name, values)
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
             elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 errorinfo = setValuesParamNum(self._ampl._c_ampl, self._name, values)
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
             else:
                 Entity.set_values(self, values)

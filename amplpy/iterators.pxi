@@ -46,7 +46,6 @@ cdef class EntityMap(object):
     @staticmethod
     cdef create(AMPL ampl, campl.AMPL_ENTITYTYPE entity_class):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         entityit = EntityMap()
         entityit._ampl = ampl
         entityit.entity_class = entity_class
@@ -63,8 +62,7 @@ cdef class EntityMap(object):
         else:
             raise ValueError(f"Unknown entity class.")
 
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             for i in range(entityit._size):
                 campl.AMPL_StringFree(&entityit.begin[i])
             free(entityit.begin)
@@ -95,12 +93,10 @@ cdef class EntityMap(object):
     def __getitem__(self, key):
         assert isinstance(key, str)
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(key.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._ampl._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != self.entity_class:
@@ -127,7 +123,6 @@ cdef class InstanceIterator(object):
     @staticmethod
     cdef create(AMPL ampl, char* name, campl.AMPL_ENTITYTYPE entity_class, parent):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         instanceit = InstanceIterator()
         cdef size_t arity
         instanceit._ampl = ampl
@@ -142,8 +137,7 @@ cdef class InstanceIterator(object):
             instanceit.end = NULL
             return instanceit
         errorinfo = campl.AMPL_EntityGetTuples(instanceit._ampl._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             for i in range(instanceit._size):
                 campl.AMPL_TupleFree(&instanceit.begin[i])
             free(instanceit.begin)
@@ -203,7 +197,6 @@ cdef class MemberRangeIterator(object):
     @staticmethod
     cdef create(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, parent):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         instanceit = MemberRangeIterator()
         instanceit._c_ampl = ampl
         instanceit._name = name
@@ -212,8 +205,7 @@ cdef class MemberRangeIterator(object):
         if instanceit._entity is not None:
             Py_INCREF(instanceit._entity)
         errorinfo = campl.AMPL_SetInstanceGetValues(instanceit._c_ampl, instanceit._name, instanceit._index, &instanceit.begin, &instanceit._size)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             for i in range(instanceit._size):
                 campl.AMPL_TupleFree(&instanceit.begin[i])
             free(instanceit.begin)

@@ -96,13 +96,11 @@ cdef class Set(Entity):
             t: Tuple to be found.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef bool_c contains_c
         cdef campl.AMPL_TUPLE* t_c = to_c_tuple(t)
         errorinfo = campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, NULL, t_c, &contains_c)    
         campl.AMPL_TupleFree(&t_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         return contains_c
 
@@ -135,7 +133,6 @@ cdef class Set(Entity):
             AA.set_values(A.get_values())  # AA has now the members {1, 2}
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef DataFrame df = None
         if not self.is_scalar():
             if not isinstance(values, dict):
@@ -151,14 +148,12 @@ cdef class Set(Entity):
                 if not isinstance(values, (list, tuple)):
                     values = list(values)
                 errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
             elif dimen == 1 and all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
             else:
 
@@ -196,8 +191,7 @@ cdef class Set(Entity):
                     ):
                         raise ValueError(f"Expected tuples of arity {dimen}.")
                 errorinfo = setValues(self._ampl._c_ampl, self._name, self._index, values, len(values))
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
         else:
             Entity.set_values(self, values)

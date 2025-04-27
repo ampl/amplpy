@@ -181,17 +181,15 @@ cdef class AMPL:
             command in tabular form.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_DATAFRAME* data
         cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
         for i in range(len(statements)):
             statements_c[i] = strdup(statements[i].encode('utf-8'))
         errorinfo = campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         for i in range(len(statements)):
             free(statements_c[i])
         free(statements_c)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         return DataFrame.create(data)
 
@@ -223,12 +221,10 @@ cdef class AMPL:
             KeyError: if the specified variable does not exist.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(name.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != campl.AMPL_VARIABLE:
@@ -247,12 +243,10 @@ cdef class AMPL:
             KeyError: if the specified constraint does not exist.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(name.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != campl.AMPL_CONSTRAINT:
@@ -271,12 +265,10 @@ cdef class AMPL:
             KeyError: if the specified objective does not exist.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(name.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != campl.AMPL_OBJECTIVE:
@@ -295,12 +287,10 @@ cdef class AMPL:
             KeyError: if the specified set does not exist.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(name.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != campl.AMPL_SET:
@@ -319,12 +309,10 @@ cdef class AMPL:
             KeyError: if the specified parameter does not exist.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         cdef char* name_c = strdup(name.encode('utf-8'))
         errorinfo = campl.AMPL_EntityGetType(self._c_ampl, name_c, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             free(name_c)
             PY_AMPL_CALL(errorinfo)
         if entitytype != campl.AMPL_PARAMETER:
@@ -456,15 +444,12 @@ cdef class AMPL:
             Current working directory.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* workdir_c
         if path is None:
             errorinfo = campl.AMPL_Cd(self._c_ampl, &workdir_c)
         else:
             errorinfo = campl.AMPL_Cd2(self._c_ampl, path.encode('utf-8'), &workdir_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&workdir_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         workdir = str(workdir_c.decode('utf-8'))
         campl.AMPL_StringFree(&workdir_c)
@@ -511,14 +496,11 @@ cdef class AMPL:
             InvalidArgumet: if the option name is not valid.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef bool_c exists
         cdef char* value_c
 
         errorinfo = campl.AMPL_GetOption(self._c_ampl, name.encode('utf-8'), &exists, &value_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&value_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
         value = value_c.decode('utf-8')
@@ -576,12 +558,9 @@ cdef class AMPL:
             The value of the expression.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_VARIANT* v
         errorinfo = campl.AMPL_GetValue(self._c_ampl, scalar_expression.encode('utf-8'), &v)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_VariantFree(&v)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
         py_variant = to_py_variant(v)
@@ -655,7 +634,6 @@ cdef class AMPL:
             ampl_expressions: Expressions to be evaluated.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         exprs = list(map(str, ampl_expressions))
         cdef int size = len(exprs)
         cdef const char** array = <const char**>malloc(size * sizeof(const char*))
@@ -667,11 +645,10 @@ cdef class AMPL:
     
         display = "display"
         errorinfo = campl.AMPL_CallVisualisationCommandOnNames(self._c_ampl, display.encode('utf-8'), <const char* const*>array, size)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         for i in range(size):
             free(array[i])
         free(array)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
     def set_output_handler(self, output_handler):
@@ -752,12 +729,9 @@ cdef class AMPL:
         Get the the current objective. Returns `None` if no objective is set.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* objname_c
         errorinfo = campl.AMPL_GetCurrentObjective(self._c_ampl, &objname_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&objname_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         objname = str(objname_c.decode('utf-8'))
         campl.AMPL_StringFree(&objname_c)
@@ -907,12 +881,9 @@ cdef class AMPL:
             directory or absolute).
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
         errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 1, 0, 0, &output_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&output_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
@@ -928,12 +899,9 @@ cdef class AMPL:
             directory or absolute).
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
         errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), 0, 1, 0, &output_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&output_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
@@ -955,15 +923,12 @@ cdef class AMPL:
             options: include options if set to ``True``.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef int model_c = model
         cdef int data_c = data
         cdef int options_c = options
         cdef char* output_c
         errorinfo = campl.AMPL_Snapshot(self._c_ampl, filename.encode('utf-8'), model_c, data_c, options_c, &output_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&output_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
@@ -1193,11 +1158,9 @@ cdef class AMPL:
 
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
         errorinfo = campl.AMPL_ToString(self._c_ampl, &output_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)

@@ -8,58 +8,57 @@ from cpython.object cimport PyObject
 from libcpp cimport bool
 
 cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
-    cdef campl.AMPL_RETCODE rc
+    cdef campl.AMPL_ERRORCODE rc
     cdef char* message
-    rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-    if rc == campl.AMPL_OK:
-        pass
-    elif rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise PresolveException("PresolveException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_LICENSE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise SystemError(message.decode('utf-8'))
-    elif rc == campl.AMPL_FILE_IO_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise IOError(message.decode('utf-8'))
-    elif rc == campl.AMPL_UNSUPPORTED_OPERATION_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
-        print("AMPL: AMPL_INVALID_SUBSCRIPT_EXCEPTION")
-        #throw InvalidSubscriptException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                              AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
-        print("AMPL: AMPL_SYNTAX_ERROR_EXCEPTION")
-        #throw SyntaxErrorException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                         AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_NO_DATA_EXCEPTION:
-        print("AMPL: AMPL_NO_DATA_EXCEPTION")
-        #throw NoDataException(AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_RUNTIME_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_LOGIC_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_OUT_OF_RANGE:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise KeyError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_ARGUMENT:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise ValueError(message.decode('utf-8'))
-    elif rc == campl.AMPL_STD_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise Exception(message.decode('utf-8'))
-    else:
-        print("AMPL: unknown return code!")
-        raise Exception('AMPL: unknown return code!')
+    if errorinfo:
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
+        elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise PresolveException("PresolveException: " + message.decode('utf-8'))
+        elif rc == campl.AMPL_LICENSE_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise SystemError(message.decode('utf-8'))
+        elif rc == campl.AMPL_FILE_IO_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise IOError(message.decode('utf-8'))
+        elif rc == campl.AMPL_UNSUPPORTED_OPERATION_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise TypeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
+            print("AMPL: AMPL_INVALID_SUBSCRIPT_EXCEPTION")
+            #throw InvalidSubscriptException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
+            #                              AMPL_ErrorInfoGetMessage(call))
+        elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
+            print("AMPL: AMPL_SYNTAX_ERROR_EXCEPTION")
+            #throw SyntaxErrorException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
+            #                         AMPL_ErrorInfoGetMessage(call))
+        elif rc == campl.AMPL_NO_DATA_EXCEPTION:
+            print("AMPL: AMPL_NO_DATA_EXCEPTION")
+            #throw NoDataException(AMPL_ErrorInfoGetMessage(call))
+        elif rc == campl.AMPL_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_RUNTIME_ERROR:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_LOGIC_ERROR:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise TypeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_OUT_OF_RANGE:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise KeyError(message.decode('utf-8'))
+        elif rc == campl.AMPL_INVALID_ARGUMENT:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise ValueError(message.decode('utf-8'))
+        elif rc == campl.AMPL_STD_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise Exception(message.decode('utf-8'))
+        else:
+            print("AMPL: unknown return code!")
+            raise Exception('AMPL: unknown return code!')
 
 cdef campl.AMPL_ERRORINFO* setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
     cdef campl.AMPL_ERRORINFO* errorinfo

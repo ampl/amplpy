@@ -46,11 +46,9 @@ cdef class Entity(object):
         entity._name = name
         entity._index = index
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         errorinfo = campl.AMPL_EntityGetType(entity._ampl._c_ampl, name, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             #free(name)
             PY_AMPL_CALL(errorinfo)
         entity.wrap_function = entitytype
@@ -70,11 +68,9 @@ cdef class Entity(object):
 
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* output_c
         errorinfo = campl.AMPL_EntityGetDeclaration(self._ampl._c_ampl, self._name, &output_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
@@ -102,7 +98,6 @@ cdef class Entity(object):
             The corresponding instance.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         assert self.wrap_function is not None
         cdef campl.AMPL_TUPLE* tuple_c
         cdef char* name_c
@@ -116,8 +111,7 @@ cdef class Entity(object):
             if self.wrap_function == campl.AMPL_PARAMETER:
                 errorinfo = campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &name_c)
                 campl.AMPL_TupleFree(&tuple_c)
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
                 entity = create_entity(self.wrap_function, self._ampl, name_c, NULL, None).value()
                 return entity
@@ -133,14 +127,12 @@ cdef class Entity(object):
         """
         assert self.wrap_function is not None
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef size_t i
         cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
         errorinfo = campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
@@ -340,7 +332,6 @@ cdef class Entity(object):
             data: The data to set the entity to.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef DataFrame df
         cdef campl.AMPL_DATAFRAME* df_c 
         cdef char* _name_c 
@@ -349,26 +340,23 @@ cdef class Entity(object):
             df = data
             df_c = df.get_ptr()
             errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             campl.AMPL_StringFree(&_name_c)
-            if rc != campl.AMPL_OK:
+            if errorinfo:
                 PY_AMPL_CALL(errorinfo)
         elif isinstance(data, dict):
             df = DataFrame.from_dict(data)
             df_c = df.get_ptr()
             errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             campl.AMPL_StringFree(&_name_c)
-            if rc != campl.AMPL_OK:
+            if errorinfo:
                 PY_AMPL_CALL(errorinfo)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 df_c = df.get_ptr()
                 errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-                rc = campl.AMPL_ErrorInfoGetError(errorinfo)
                 campl.AMPL_StringFree(&_name_c)
-                if rc != campl.AMPL_OK:
+                if errorinfo:
                     PY_AMPL_CALL(errorinfo)
                 return
             raise TypeError(f"Unexpected data type: {type(data)}.")
