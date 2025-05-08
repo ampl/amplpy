@@ -30,13 +30,13 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
             raise TypeError(message.decode('utf-8'))
         elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-            source = AMPL_ErrorInfoGetSource(errorinfo)
-            raise AMPLException(.decode('utf-8'), AMPL_ErrorInfoGetLine(errorinfo), AMPL_ErrorInfoGetOffset(errorinfo),
+            source = campl.AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(source.decode('utf-8'), campl.AMPL_ErrorInfoGetLine(errorinfo), campl.AMPL_ErrorInfoGetOffset(errorinfo),
                                           message.decode('utf-8'))
         elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-            source = AMPL_ErrorInfoGetSource(errorinfo)
-            raise AMPLException(source.decode('utf-8'), AMPL_ErrorInfoGetLine(errorinfo), AMPL_ErrorInfoGetOffset(errorinfo),
+            source = campl.AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(source.decode('utf-8'), campl.AMPL_ErrorInfoGetLine(errorinfo), campl.AMPL_ErrorInfoGetOffset(errorinfo),
                                      message.decode('utf-8'))
         elif rc == campl.AMPL_NO_DATA_EXCEPTION:
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)

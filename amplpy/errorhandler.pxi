@@ -7,7 +7,7 @@ except Exception:
 def display_error_message(exception, error=True):
     msg = "\t" + str(exception).replace("\n", "\n\t")
     if error:
-        print(f"Error:\n{msg}\n{_SUPPORT_MESSAGE}\n")
+        print(f"Error:\n{msg}{_SUPPORT_MESSAGE}")
     else:
         print(f"Warning:\n{msg}")
 
