@@ -39,8 +39,8 @@ class AMPLException(Exception):
 
     def __str__(self):
         if self.source_name == "":
-            return "line " + self.line_number + " offset " + self.offset + "\n" + self.message
-        return self.source_name + "\nline " + self.line_number + " offset " + self.offset + "\n" + self.message
+            return "line " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
+        return self.source_name + "\nline " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
 
     # Aliases
     getLineNumber = get_line_number
