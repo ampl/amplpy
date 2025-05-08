@@ -10,6 +10,7 @@ from libcpp cimport bool
 cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
     cdef campl.AMPL_ERRORCODE rc
     cdef char* message
+    cdef char* source
     if errorinfo:
         rc = campl.AMPL_ErrorInfoGetError(errorinfo)
         if rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
@@ -28,16 +29,18 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
             raise TypeError(message.decode('utf-8'))
         elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
-            print("AMPL: AMPL_INVALID_SUBSCRIPT_EXCEPTION")
-            #throw InvalidSubscriptException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-            #                              AMPL_ErrorInfoGetMessage(call))
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            source = AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(.decode('utf-8'), AMPL_ErrorInfoGetLine(errorinfo), AMPL_ErrorInfoGetOffset(errorinfo),
+                                          message.decode('utf-8'))
         elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
-            print("AMPL: AMPL_SYNTAX_ERROR_EXCEPTION")
-            #throw SyntaxErrorException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-            #                         AMPL_ErrorInfoGetMessage(call))
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            source = AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(source.decode('utf-8'), AMPL_ErrorInfoGetLine(errorinfo), AMPL_ErrorInfoGetOffset(errorinfo),
+                                     message.decode('utf-8'))
         elif rc == campl.AMPL_NO_DATA_EXCEPTION:
-            print("AMPL: AMPL_NO_DATA_EXCEPTION")
-            #throw NoDataException(AMPL_ErrorInfoGetMessage(call))
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
         elif rc == campl.AMPL_EXCEPTION:
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
             raise RuntimeError(message.decode('utf-8'))
@@ -55,10 +58,9 @@ cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
             raise ValueError(message.decode('utf-8'))
         elif rc == campl.AMPL_STD_EXCEPTION:
             message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-            raise Exception(message.decode('utf-8'))
+            raise RuntimeError(message.decode('utf-8'))
         else:
-            print("AMPL: unknown return code!")
-            raise Exception('AMPL: unknown return code!')
+            raise RuntimeError("Unknown exception")
 
 cdef campl.AMPL_ERRORINFO* setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
     cdef campl.AMPL_ERRORINFO* errorinfo
