@@ -3,7 +3,6 @@ from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 
 from cpython.float cimport PyFloat_AsDouble
-from cpython.int cimport PyInt_AsLong, PyInt_Check
 from cpython.long cimport PyLong_AsLong, PyLong_Check
 from cpython.exc cimport PyErr_Occurred, PyErr_Clear
 
@@ -337,9 +336,7 @@ cdef class DataFrame(object):
         else:
             c_double_array = <double*> malloc(size * sizeof(double))
             for i in range(size):
-                if PyInt_Check(values[i]):
-                    c_double_array[i] = PyInt_AsLong(values[i])
-                elif PyLong_Check(values[i]):
+                if PyLong_Check(values[i]):
                     c_double_array[i] = PyLong_AsLong(values[i]);
                 else:
                     PyErr_Clear()
