@@ -34,7 +34,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
@@ -49,7 +49,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
@@ -64,7 +64,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
