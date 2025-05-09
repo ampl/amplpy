@@ -1,7 +1,6 @@
 variables:
   CIBW_SKIP: pp* cp27-* cp36-* cp37-* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
-  CIBW_TEST_COMMAND: "python -m amplpy.modules install base && python -m amplpy.modules activate $AMPLKEY_UUID && python -m amplpy.tests"
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
   CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs
 
@@ -35,6 +34,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
+          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
@@ -47,6 +47,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
+          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
@@ -59,6 +60,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
+          export CIBW_TEST_COMMAND="python -m amplpy.modules install base && python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==2.21.3
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
