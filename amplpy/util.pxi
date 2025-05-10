@@ -127,7 +127,7 @@ cdef campl.AMPL_TUPLE* to_c_tuple(py_tuple):
     free(variants)
     return tuple_c
 
-cdef void campl.AMPL_VARIANT* to_c_variant(value)  except *:
+cdef campl.AMPL_VARIANT* to_c_variant(value)  except *:
     cdef campl.AMPL_VARIANT* variant
     if isinstance(value, str):
         campl.AMPL_VariantCreateString(&variant, value.encode('utf-8'))
