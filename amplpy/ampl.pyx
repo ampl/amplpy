@@ -679,13 +679,15 @@ cdef class AMPL:
                 try:
                     self.error_handler.error(exception)
                 except Exception as exp:
-                    self.last_exception = exp
+                    if self.last_exception == None:
+                        self.last_exception = exp
 
             def warning(self, exception):
                 try:
                     self.error_handler.warning(exception)
                 except Exception as exp:
-                    self.last_exception = exp
+                    if self.last_exception == None:
+                        self.last_exception = exp
 
             def check(self):
                 if isinstance(self.last_exception, Exception):
