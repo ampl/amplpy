@@ -34,6 +34,7 @@ cdef class ErrorHandler:
         Receives notification of a warning.
         """
         display_error_message(exception, error=False)
+        raise exception
 
 cdef void PyError(bool_c isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler) except * with gil:
     handler = <ErrorHandler>errorHandler
