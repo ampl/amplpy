@@ -104,6 +104,7 @@ cdef class AMPL:
     cdef campl.AMPL* _c_ampl
     cdef object _output_handler
     cdef object _error_handler
+    cdef object _error_handler_wrapper
 
     def __init__(self, environment=None):
         """
@@ -349,10 +350,8 @@ cdef class AMPL:
         # Workaround for #56
         if not statements.endswith((" ", ";", "\n")):
             statements += "\n"
-        try:
-            PY_AMPL_CALL(campl.AMPL_Eval(self._c_ampl, statements.encode('utf-8')))
-        except SystemError as e:
-            raise RuntimeError(str(e))
+        PY_AMPL_CALL(campl.AMPL_Eval(self._c_ampl, statements.encode('utf-8')))
+        self._error_handler_wrapper.check()
 
     def get_output(self, statements):
         """
@@ -528,6 +527,7 @@ cdef class AMPL:
             RuntimeError: in case the file does not exist.
         """
         PY_AMPL_CALL(campl.AMPL_Read(self._c_ampl, str(filename).encode('utf-8')))
+        self._error_handler_wrapper.check()
 
     def read_data(self, filename):
         """
@@ -544,6 +544,7 @@ cdef class AMPL:
             RuntimeError: in case the file does not exist.
         """
         PY_AMPL_CALL(campl.AMPL_ReadData(self._c_ampl, str(filename).encode('utf-8')))
+        self._error_handler_wrapper.check()
 
     def get_value(self, scalar_expression):
         """
@@ -669,8 +670,33 @@ cdef class AMPL:
         Args:
             error_handler: The object handling AMPL errors and warnings.
         """
+        class ErrorHandlerWrapper(ErrorHandler):
+            def __init__(self, error_handler):
+                self.error_handler = error_handler
+                self.last_exception = None
+
+            def error(self, exception):
+                try:
+                    self.error_handler.error(exception)
+                except Exception as exp:
+                    self.last_exception = exp
+
+            def warning(self, exception):
+                try:
+                    self.error_handler.warning(exception)
+                except Exception as exp:
+                    self.last_exception = exp
+
+            def check(self):
+                if isinstance(self.last_exception, Exception):
+                    exp = self.last_exception
+                    self.last_exception = None
+                    raise exp
+
         self._error_handler = error_handler
-        PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>error_handler))
+        self._error_handler_wrapper = ErrorHandlerWrapper(error_handler)
+
+        PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>self._error_handler_wrapper))
 
     def get_output_handler(self):
         """
