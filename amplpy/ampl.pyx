@@ -716,9 +716,7 @@ cdef class AMPL:
         Returns:
             The current error handler.
         """
-        cdef void* error_handler
-        PY_AMPL_CALL(campl.AMPL_GetErrorHandler(self._c_ampl, &error_handler))
-        return <ErrorHandler>error_handler
+        return <ErrorHandler>self._error_handler
 
     def get_variables(self):
         """
