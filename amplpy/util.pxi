@@ -7,7 +7,7 @@ from cpython.float cimport PyFloat_AsDouble
 from cpython.object cimport PyObject
 from libcpp cimport bool
 
-cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
+cdef void PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo) except *:
     cdef campl.AMPL_ERRORCODE rc
     cdef char* message
     cdef char* source
@@ -127,7 +127,7 @@ cdef campl.AMPL_TUPLE* to_c_tuple(py_tuple):
     free(variants)
     return tuple_c
 
-cdef campl.AMPL_VARIANT* to_c_variant(value):
+cdef void campl.AMPL_VARIANT* to_c_variant(value)  except *:
     cdef campl.AMPL_VARIANT* variant
     if isinstance(value, str):
         campl.AMPL_VariantCreateString(&variant, value.encode('utf-8'))
@@ -179,7 +179,7 @@ cdef campl.AMPL_ERRORINFO* setValuesParamStr(campl.AMPL* ampl, char* name, value
 
     return errorinfo
 
-cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
+cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts) except *:
     cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t i
     cdef campl.AMPL_TUPLE** indices_c
@@ -240,16 +240,16 @@ cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict di
         raise ValueError("Dictionary must contain either all strings or all numbers")
     return errorinfo
 
-cdef raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name):
+cdef void raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name) except *:
     if entity_class == campl.AMPL_VARIABLE:
-        raise KeyError("A variable called {name} cannot be found.")
+        raise KeyError(f"A variable called {name} cannot be found.")
     elif entity_class == campl.AMPL_CONSTRAINT:
-        raise KeyError("A constraint called {name} cannot be found.")
+        raise KeyError(f"A constraint called {name} cannot be found.")
     elif entity_class == campl.AMPL_OBJECTIVE:
-        raise KeyError("An objective called {name} cannot be found.")
+        raise KeyError(f"An objective called {name} cannot be found.")
     elif entity_class == campl.AMPL_SET:
-        raise KeyError("A set called {name} cannot be found.")
+        raise KeyError(f"A set called {name} cannot be found.")
     elif entity_class == campl.AMPL_PARAMETER:
-        raise KeyError("A parameter called {name} cannot be found.")
+        raise KeyError(f"A parameter called {name} cannot be found.")
     else: 
         pass
