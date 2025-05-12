@@ -8,6 +8,7 @@ except Exception:
 
 logger = logging.getLogger("amplpy")
 logger.setLevel(logging.WARNING)
+
 if not logger.hasHandlers():
     handler = logging.StreamHandler()
     formatter = logging.Formatter("[%(levelname)s] %(message)s")

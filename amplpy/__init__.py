@@ -30,6 +30,7 @@ from amplpy.ampl import DataFrame, Row, Column
 from .utils import add_to_path, multidict, register_magics
 from amplpy.ampl import Environment
 from amplpy.ampl import AMPL
+from amplpy.ampl import logger
 
 _parent_dir = os.path.abspath(os.path.dirname(__file__))
 _vendor_dir = os.path.join(_parent_dir, "vendor")
