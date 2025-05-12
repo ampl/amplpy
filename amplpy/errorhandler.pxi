@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*-
+import logging
+
 try:
     from .tools import _SUPPORT_MESSAGE
 except Exception:
     _SUPPORT_MESSAGE = ""
 
+logger = logging.getLogger("amplpy")
+logger.setLevel(logging.WARNING)
+if not logger.hasHandlers():
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter("[%(levelname)s] %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False
+
 def display_error_message(exception, error=True):
-    msg = "\t" + str(exception).replace("\n", "\n\t")
+    logger.setLevel(logging.WARNING)
+    msg = "\t" + str(exception).replace(_SUPPORT_MESSAGE, "").replace("\n", "\n\t")
     if error:
-        print(f"Error:\n{msg}{_SUPPORT_MESSAGE}")
+        logger.error(f"\n{msg}")
     else:
-        print(f"Warning:\n{msg}")
+        logger.warning(f"\n{msg}")
 
 
 cdef class ErrorHandler:
@@ -38,8 +50,9 @@ cdef class ErrorHandler:
 
 cdef void PyError(bool_c isWarning, const char* filename, int row, int offset, const char* message, void* errorHandler) except * with gil:
     handler = <ErrorHandler>errorHandler
-    exception = AMPLException(filename.decode('utf-8'), row, offset, message.decode('utf-8'))
     if isWarning:
+        exception = AMPLException(filename.decode('utf-8'), row, offset, message.decode('utf-8'))
         handler.warning(exception)
     else:
+        exception = AMPLException(filename.decode('utf-8'), row, offset, f"{message.decode('utf-8')}{_SUPPORT_MESSAGE}")
         handler.error(exception)
