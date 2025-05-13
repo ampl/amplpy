@@ -39,7 +39,6 @@ cdef class EntityMap(object):
     cdef AMPL _ampl
     cdef campl.AMPL_ENTITYTYPE entity_class
     cdef char** begin
-    cdef char** end
     cdef size_t iterator
     cdef size_t _size
 
@@ -69,7 +68,6 @@ cdef class EntityMap(object):
             PY_AMPL_CALL(errorinfo)
 
         entityit.iterator = 0
-        entityit.end = entityit.begin + entityit._size
         return entityit
 
     def __dealloc__(self):
@@ -115,7 +113,6 @@ cdef class InstanceIterator(object):
     cdef char* _name
     cdef campl.AMPL_ENTITYTYPE entity_class
     cdef campl.AMPL_TUPLE** begin
-    cdef campl.AMPL_TUPLE** end
     cdef size_t iterator
     cdef size_t _size
     cdef object _entity
@@ -134,7 +131,6 @@ cdef class InstanceIterator(object):
             instanceit._size = 1
             instanceit.begin = NULL
             instanceit.iterator = 0
-            instanceit.end = NULL
             return instanceit
         errorinfo = campl.AMPL_EntityGetTuples(instanceit._ampl._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
         if errorinfo:
@@ -144,10 +140,8 @@ cdef class InstanceIterator(object):
             PY_AMPL_CALL(errorinfo)
         if instanceit._size == 0:
             instanceit.iterator = 0
-            instanceit.end = NULL
         else:
             instanceit.iterator = 0
-            instanceit.end = instanceit.begin + instanceit._size
         return instanceit
 
     def __dealloc__(self):
@@ -189,7 +183,6 @@ cdef class MemberRangeIterator(object):
     cdef char* _name
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_TUPLE** begin
-    cdef campl.AMPL_TUPLE** end
     cdef size_t iterator
     cdef size_t _size
     cdef object _entity
@@ -211,10 +204,6 @@ cdef class MemberRangeIterator(object):
             free(instanceit.begin)
             PY_AMPL_CALL(errorinfo)
         instanceit.iterator = 0
-        if instanceit._size == 0:
-            instanceit.end = NULL
-        else:
-            instanceit.end = instanceit.begin + instanceit._size
         return instanceit
 
     def __dealloc__(self):
