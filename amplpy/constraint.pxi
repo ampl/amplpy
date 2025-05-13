@@ -253,7 +253,7 @@ cdef class Constraint(Entity):
         Args:
             dual: The value to be assigned to the dual variable.
         """
-        PY_AMPL_CALL(campl.AMPL_ConstraintSetDual(self._ampl._c_ampl, self._name, float(dual)))
+        PY_AMPL_CALL(campl.AMPL_ConstraintInstanceSetDual(self._ampl._c_ampl, self._name, self._index, float(dual)))
 
     def val(self):
         """

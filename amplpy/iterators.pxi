@@ -146,7 +146,7 @@ cdef class InstanceIterator(object):
             instanceit.iterator = 0
             instanceit.end = NULL
         else:
-            instanceit.iterator = -1
+            instanceit.iterator = 0
             instanceit.end = instanceit.begin + instanceit._size
         return instanceit
 
@@ -168,7 +168,7 @@ cdef class InstanceIterator(object):
         if self.begin == NULL:
             return (None, self._entity)
         else:
-            return (to_py_tuple(self.begin[self.iterator]), create_entity(self.entity_class, self._ampl, self._name, self.begin[self.iterator], self._entity))
+            return (to_py_tuple(self.begin[self.iterator-1]), create_entity(self.entity_class, self._ampl, self._name, self.begin[self.iterator-1], self._entity))
 
     def __getitem__(self, key):
         assert isinstance(key, str)

@@ -39,7 +39,7 @@ cdef class Objective(Entity):
         Get the value of the objective.
         """
         cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
     def astatus(self):
@@ -48,7 +48,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
@@ -62,7 +62,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
@@ -76,7 +76,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef int value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
+        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
         return value
 
     def message(self):
@@ -86,7 +86,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
@@ -101,7 +101,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
@@ -128,7 +128,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, NULL, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
