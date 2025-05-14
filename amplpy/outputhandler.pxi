@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from enum import Enum
-
-
 cdef class OutputHandler(object):
     """
     Interface to handle the outputs from the calls to any

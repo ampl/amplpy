@@ -1,0 +1,7 @@
+[run]
+plugins = Cython.Coverage
+
+[report]
+include =
+    amplpy/*.pyx
+    amplpy/*.pxi
