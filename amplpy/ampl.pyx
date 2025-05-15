@@ -557,6 +557,9 @@ cdef class AMPL:
 
         Returns:
             The value of the expression.
+
+        Raises:
+            TypeError: in case scalar_expression does not evaluate to a value.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_VARIANT* v
@@ -638,8 +641,6 @@ cdef class AMPL:
         exprs = list(map(str, ampl_expressions))
         cdef int size = len(exprs)
         cdef const char** array = <const char**>malloc(size * sizeof(const char*))
-        if array == NULL:
-            raise MemoryError("Unable to allocate memory for array of strings")
     
         for i in range(size):
             array[i] = strdup(exprs[i].encode('utf-8'))
@@ -802,7 +803,6 @@ cdef class AMPL:
                 return self.ampl.get_constraint(name)
 
             def __setitem__(self, name, value):
-                self.ampl.get_constraint(name).set_dual(value)
                 if isinstance(value, Real):
                     self.ampl.get_constraint(name).set_dual(value)
                 else:

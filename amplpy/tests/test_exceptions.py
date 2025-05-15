@@ -12,6 +12,11 @@ class TestExceptions(TestBase.TestBase):
         with self.assertRaises(ValueError):
             ampl.get_option("option 42 42")
 
+    def test_get_value_fail(self):
+        ampl = self.ampl
+        with self.assertRaises(TypeError):
+            ampl.get_value("x.val")
+
     def test_default_errorhandler_error(self):
         ampl = self.ampl
         with self.assertRaises(amplpy.AMPLException):
