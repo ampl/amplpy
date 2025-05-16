@@ -886,13 +886,11 @@ cdef class AMPL:
                 return self.ampl.get_option(name)
 
             def __setitem__(self, name, value):
-                if isinstance(value, str):
-                    self.ampl.set_option(name, value)
-                elif isinstance(value, dict):
+                if isinstance(value, dict):
                     if name.endswith("_options"):
-                        self.ampl.set_option(name, " ".join(f"{k}={v}" for k, v in value.items()))
+                        self.ampl.set_option(name, " ".join(f"{k}={int(v) if isinstance(v, bool) else v}" for k, v in value.items()))
                 else:
-                    raise TypeError
+                    self.ampl.set_option(name, value)
 
         return Options(self)
 

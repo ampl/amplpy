@@ -73,7 +73,7 @@ class TestProperties(TestBase.TestBase):
     def test_option_prop_setitem_dict(self):
         ampl = self.ampl
         ampl.option["gurobi_options"] = {
-            "outlev": 1,
+            "outlev": True,
             "alg:method": 2,
             "cvt:mip:eps": 1e-3,
         }
@@ -85,7 +85,7 @@ class TestProperties(TestBase.TestBase):
             "solver": "gurobi",
             "presolve": False,
             "pl_linearize": False,
-            "gurobi_options": {"outlev": 1, "timelim": 1},
+            "gurobi_options": {"outlev": True, "timelim": 1},
         }
         self.assertEqual(ampl.get_option("solver"), "gurobi")
         self.assertEqual(ampl.get_option("presolve"), False)
