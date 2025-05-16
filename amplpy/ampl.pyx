@@ -886,17 +886,30 @@ cdef class AMPL:
                 return self.ampl.get_option(name)
 
             def __setitem__(self, name, value):
-                self.ampl.set_option(name, value)
+                if isinstance(value, str):
+                    self.ampl.set_option(name, value)
+                elif isinstance(value, dict):
+                    if name.endswith("_options"):
+                        self.ampl.set_option(name, " ".join(f"{k}={v}" for k, v in value.items()))
+                else:
+                    raise TypeError
 
         return Options(self)
+
+    def _set_option(self, options_dict):
+        for name, value in options_dict.items():
+            if isinstance(value, dict):
+                if name.endswith("_options"):
+                    self.set_option(name, " ".join(f"{k}={v}" for k, v in value.items()))
+            else:
+                self.set_option(name, value)
 
     var = property(_var)
     con = property(_con)
     obj = property(_obj)
     set = property(_set)
     param = property(_param)
-    option = property(_option)
-
+    option = property(_option, _set_option)
 
     def export_model(self, filename=""):
         """
