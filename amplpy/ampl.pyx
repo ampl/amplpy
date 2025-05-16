@@ -10,6 +10,8 @@ from cpython.bool cimport PyBool_Check
 
 from cpython cimport Py_INCREF, Py_DECREF
 
+import builtins
+
 from numbers import Real
 from ast import literal_eval
 
@@ -888,7 +890,7 @@ cdef class AMPL:
             def __setitem__(self, name, value):
                 if isinstance(value, dict):
                     if name.endswith("_options"):
-                        self.ampl.set_option(name, " ".join(f"{k}={int(v) if isinstance(v, bool) else v}" for k, v in value.items()))
+                        self.ampl.set_option(name, " ".join(f"{k}={int(v) if isinstance(v, builtins.bool) else v}" for k, v in value.items()))
                 else:
                     self.ampl.set_option(name, value)
 
@@ -898,7 +900,7 @@ cdef class AMPL:
         for name, value in options_dict.items():
             if isinstance(value, dict):
                 if name.endswith("_options"):
-                    self.set_option(name, " ".join(f"{k}={v}" for k, v in value.items()))
+                    self.set_option(name, " ".join(f"{k}={int(v) if isinstance(v, builtins.bool) else v}" for k, v in value.items()))
             else:
                 self.set_option(name, value)
 
