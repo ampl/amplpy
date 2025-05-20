@@ -443,6 +443,9 @@ cdef class AMPL:
 
         Returns:
             Current working directory.
+
+        Raises:
+            RuntimeError: change directory cannot be executed.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* workdir_c

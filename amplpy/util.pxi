@@ -240,7 +240,7 @@ cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict di
         raise ValueError("Dictionary must contain either all strings or all numbers")
     return errorinfo
 
-cdef void raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name) except *:
+cdef void raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, str name) except *:
     if entity_class == campl.AMPL_VARIABLE:
         raise KeyError(f"A variable called {name} cannot be found.")
     elif entity_class == campl.AMPL_CONSTRAINT:

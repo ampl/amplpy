@@ -5,3 +5,10 @@ plugins = Cython.Coverage
 include =
     amplpy/*.pyx
     amplpy/*.pxi
+
+exclude_also =
+    class Kind\(.*\):
+    ^ {4,}[A-Z_]+ = campl\..*$
+    ^ {4,}""".*"""$
+    ^ {4,}""".*
+    PyOutput
