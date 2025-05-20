@@ -25,22 +25,22 @@ class TestExceptions(TestBase.TestBase):
     def test_export_model_exception(self):
         ampl = self.ampl
         with self.assertRaises(IOError):
-            ampl.export_model("///.\noname")
+            ampl.export_model("/")
 
     def test_export_data_exception(self):
         ampl = self.ampl
         with self.assertRaises(IOError):
-            ampl.export_data("///.\noname")
+            ampl.export_data("/")
 
     def test_snapshot_exception(self):
         ampl = self.ampl
         with self.assertRaises(IOError):
-            ampl.snapshot("///.\noname")
+            ampl.snapshot("/")
 
     def test_ampl_cd_exception(self):
         ampl = self.ampl
         with self.assertRaises(RuntimeError):
-            ampl.cd("///.\noname")
+            ampl.cd("/")
 
     def test_get_variable_exception(self):
         ampl = self.ampl
