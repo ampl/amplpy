@@ -40,7 +40,7 @@ class TestExceptions(TestBase.TestBase):
     def test_ampl_cd_exception(self):
         ampl = self.ampl
         with self.assertRaises(RuntimeError):
-            ampl.cd("/")
+            ampl.cd("nodir")
 
     def test_get_variable_exception(self):
         ampl = self.ampl
