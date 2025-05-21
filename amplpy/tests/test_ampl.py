@@ -18,6 +18,10 @@ class TestAMPL(TestBase.TestBase):
         print(ampl.get_value("name"))
         self.assertEqual(ampl.get_value("name"), 'brandão')
 
+    def test_tostring(self):
+        ampl = self.ampl
+        self.assertTrue(str(ampl).startswith("AMPL API version"))
+
     def test_ampl(self):
         from amplpy import Set, Parameter, Variable, Constraint, Objective
 

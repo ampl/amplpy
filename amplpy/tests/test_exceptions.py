@@ -72,6 +72,17 @@ class TestExceptions(TestBase.TestBase):
         with self.assertRaises(KeyError):
             ampl.get_parameter("x")
 
+    def test_entitymap_iterator_exception(self):
+        ampl = self.ampl
+        ampl.eval("param x; param xx; var y;")
+        with self.assertRaises(KeyError):
+            y = ampl.get_parameters()["y"]
+
+    def test_display_exception(self):
+        ampl = self.ampl
+        with self.assertRaises(RuntimeError):
+            ampl.display("x;")
+
     def test_ampl_exception_methods(self):
         exc = amplpy.AMPLException("test.mod", 42, 5, "Invalid expression")
 

@@ -641,6 +641,9 @@ cdef class AMPL:
 
         Args:
             ampl_expressions: Expressions to be evaluated.
+
+        Raises:
+            RuntimeError: if ampl_expressions do not evaluate to expressions.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         exprs = list(map(str, ampl_expressions))
