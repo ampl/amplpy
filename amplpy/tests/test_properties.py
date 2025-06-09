@@ -20,11 +20,18 @@ class TestProperties(TestBase.TestBase):
     def test_con_prop(self):
         ampl = self.ampl
         ampl.eval("var x; s.t. c: x = 10;")
-        ampl.con["c"].set_dual(1)  # FIXME: does not seem to have any effect
         self.assertEqual(ampl.con["c"].body(), 10)
         self.assertEqual(ampl.get_constraint("c").body(), 10)
         self.assertEqual(len(list(ampl.con)), 1)
         self.assertEqual(len(list(ampl.get_constraints())), 1)
+
+    def test_con_dual(self):
+        ampl = self.ampl
+        ampl.eval("var x; var y; s.t. c: x + y >= 42;")
+        ampl.con["c"].set_dual(1)
+        self.assertEqual(ampl.con["c"].dual(), 1)
+        ampl.con["c"] = 42
+        self.assertEqual(ampl.con["c"].dual(), 42)
 
     def test_obj_prop(self):
         ampl = self.ampl
@@ -62,6 +69,28 @@ class TestProperties(TestBase.TestBase):
         ampl.option["solver"] = "gurobi"
         self.assertEqual(ampl.option["solver"], "gurobi")
         self.assertEqual(ampl.get_option("solver"), "gurobi")
+
+    def test_option_prop_setitem_dict(self):
+        ampl = self.ampl
+        ampl.option["gurobi_options"] = {
+            "outlev": True,
+            "alg:method": 2,
+            "cvt:mip:eps": 1e-3,
+        }
+        self.assertEqual(ampl.get_option("gurobi_options"), "outlev=1 alg:method=2 cvt:mip:eps=0.001")
+
+    def test_option_prop_dict(self):
+        ampl = self.ampl
+        ampl.option = {
+            "solver": "gurobi",
+            "presolve": False,
+            "pl_linearize": False,
+            "gurobi_options": {"outlev": True, "timelim": 1},
+        }
+        self.assertEqual(ampl.get_option("solver"), "gurobi")
+        self.assertEqual(ampl.get_option("presolve"), False)
+        self.assertEqual(ampl.get_option("pl_linearize"), False)
+        self.assertEqual(ampl.get_option("gurobi_options"), "outlev=1 timelim=1")
 
     def test_solve_result(self):
         ampl = self.ampl

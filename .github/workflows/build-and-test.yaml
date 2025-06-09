@@ -5,8 +5,8 @@ on: [push]
 env:
   CIBW_ARCHS_LINUX: auto
   CIBW_ARCHS_MACOS: x86_64 universal2
-  CIBW_BEFORE_BUILD: pip install cython
-  CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
+  CIBW_BEFORE_BUILD: pip install cython==3.1.0
+  CIBW_SKIP: pp* cp36-* cp37-* *_i686 *-win32 *musllinux*
   CIBW_ENABLE: cpython-freethreading # Include free-threaded support
   CIBW_TEST_COMMAND: python -m amplpy.tests 
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2022, macos-latest]
+        os: [ubuntu-24.04, windows-2022, macos-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         arch: [aarch64]
-        build: [cp36-*, cp37-*, cp38-*, cp39-*, cp310-*, cp311-*, cp312-*, cp313-*]
+        build: [cp38-*, cp39-*, cp310-*, cp311-*, cp312-*, cp313-*]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

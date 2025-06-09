@@ -79,8 +79,7 @@ cdef extern from "ampl/ampl_c.h":
 
     int AMPL_ArgsGetStrValues(AMPL_ARGS* args, const char* const** values)
 
-    ctypedef enum AMPL_RETCODE:
-        AMPL_OK
+    ctypedef enum AMPL_ERRORCODE:
         AMPL_EXCEPTION
         AMPL_LICENSE_EXCEPTION
         AMPL_FILE_IO_EXCEPTION
@@ -100,7 +99,7 @@ cdef extern from "ampl/ampl_c.h":
     ctypedef struct AMPL_ERRORINFO:
         pass
 
-    AMPL_RETCODE AMPL_ErrorInfoGetError(AMPL_ERRORINFO* error)
+    AMPL_ERRORCODE AMPL_ErrorInfoGetError(AMPL_ERRORINFO* error)
 
     char* AMPL_ErrorInfoGetMessage(AMPL_ERRORINFO* error)
 

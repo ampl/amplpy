@@ -7,61 +7,63 @@ from cpython.float cimport PyFloat_AsDouble
 from cpython.object cimport PyObject
 from libcpp cimport bool
 
-cdef PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo):
-    cdef campl.AMPL_RETCODE rc
+cdef void PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo) except *:
+    cdef campl.AMPL_ERRORCODE rc
     cdef char* message
-    rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-    if rc == campl.AMPL_OK:
-        pass
-    elif rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise PresolveException("PresolveException: " + message.decode('utf-8'))
-    elif rc == campl.AMPL_LICENSE_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise SystemError(message.decode('utf-8'))
-    elif rc == campl.AMPL_FILE_IO_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise IOError(message.decode('utf-8'))
-    elif rc == campl.AMPL_UNSUPPORTED_OPERATION_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
-        print("AMPL: AMPL_INVALID_SUBSCRIPT_EXCEPTION")
-        #throw InvalidSubscriptException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                              AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
-        print("AMPL: AMPL_SYNTAX_ERROR_EXCEPTION")
-        #throw SyntaxErrorException(AMPL_ErrorInfoGetSource(call), AMPL_ErrorInfoGetLine(call), AMPL_ErrorInfoGetOffset(call),
-        #                         AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_NO_DATA_EXCEPTION:
-        print("AMPL: AMPL_NO_DATA_EXCEPTION")
-        #throw NoDataException(AMPL_ErrorInfoGetMessage(call))
-    elif rc == campl.AMPL_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_RUNTIME_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise RuntimeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_LOGIC_ERROR:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise TypeError(message.decode('utf-8'))
-    elif rc == campl.AMPL_OUT_OF_RANGE:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise KeyError(message.decode('utf-8'))
-    elif rc == campl.AMPL_INVALID_ARGUMENT:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise ValueError(message.decode('utf-8'))
-    elif rc == campl.AMPL_STD_EXCEPTION:
-        message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
-        raise Exception(message.decode('utf-8'))
-    else:
-        print("AMPL: unknown return code!")
-        raise Exception('AMPL: unknown return code!')
+    cdef char* source
+    if errorinfo:
+        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+        if rc == campl.AMPL_INFEASIBILITY_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise InfeasibilityException("InfeasibilityException: " + message.decode('utf-8'))
+        elif rc == campl.AMPL_PRESOLVE_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise PresolveException("PresolveException: " + message.decode('utf-8'))
+        elif rc == campl.AMPL_LICENSE_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise SystemError(message.decode('utf-8'))
+        elif rc == campl.AMPL_FILE_IO_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise IOError(message.decode('utf-8'))
+        elif rc == campl.AMPL_UNSUPPORTED_OPERATION_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise TypeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_INVALID_SUBSCRIPT_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            source = campl.AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(source.decode('utf-8'), campl.AMPL_ErrorInfoGetLine(errorinfo), campl.AMPL_ErrorInfoGetOffset(errorinfo),
+                                          message.decode('utf-8'))
+        elif rc == campl.AMPL_SYNTAX_ERROR_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            source = campl.AMPL_ErrorInfoGetSource(errorinfo)
+            raise AMPLException(source.decode('utf-8'), campl.AMPL_ErrorInfoGetLine(errorinfo), campl.AMPL_ErrorInfoGetOffset(errorinfo),
+                                     message.decode('utf-8'))
+        elif rc == campl.AMPL_NO_DATA_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_RUNTIME_ERROR:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_LOGIC_ERROR:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise TypeError(message.decode('utf-8'))
+        elif rc == campl.AMPL_OUT_OF_RANGE:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise KeyError(message.decode('utf-8'))
+        elif rc == campl.AMPL_INVALID_ARGUMENT:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise ValueError(message.decode('utf-8'))
+        elif rc == campl.AMPL_STD_EXCEPTION:
+            message = campl.AMPL_ErrorInfoGetMessage(errorinfo)
+            raise RuntimeError(message.decode('utf-8'))
+        else:
+            raise RuntimeError("Unknown exception")
 
-cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
+cdef campl.AMPL_ERRORINFO* setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, values, size_t size):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef campl.AMPL_TUPLE** values_c
     cdef size_t i
     values_c = <campl.AMPL_TUPLE**>malloc(size * sizeof(campl.AMPL_TUPLE*))
@@ -69,11 +71,13 @@ cdef void setValues(campl.AMPL* ampl, char* name, campl.AMPL_TUPLE* index, value
     for i in range(size):
         values_c[i] = to_c_tuple(values[i])
     
-    campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
+    errorinfo = campl.AMPL_SetInstanceSetValuesTuples(ampl, name, index, values_c, size)
 
     for i in range(size):
         campl.AMPL_TupleFree(&values_c[i])
     free(values_c)
+
+    return errorinfo
 
 cdef to_py_variant(campl.AMPL_VARIANT* variant):
     cdef campl.AMPL_TYPE type
@@ -123,7 +127,7 @@ cdef campl.AMPL_TUPLE* to_c_tuple(py_tuple):
     free(variants)
     return tuple_c
 
-cdef campl.AMPL_VARIANT* to_c_variant(value):
+cdef campl.AMPL_VARIANT* to_c_variant(value)  except *:
     cdef campl.AMPL_VARIANT* variant
     if isinstance(value, str):
         campl.AMPL_VariantCreateString(&variant, value.encode('utf-8'))
@@ -149,27 +153,34 @@ cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, AMPL ampl, char* name, ca
     else:
         return Entity.create(ampl, name, index, parent)
 
-cdef void setValuesParamNum(campl.AMPL* ampl, char* name, values):
+cdef campl.AMPL_ERRORINFO* setValuesParamNum(campl.AMPL* ampl, char* name, values):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t size = len(values)
     cdef double* values_c = <double*> malloc(size * sizeof(double))
     for i in range(size):
         values_c[i] = values[i]
-    campl.AMPL_ParameterSetArgsDoubleValues(ampl, name, size, values_c)
+    errorinfo = campl.AMPL_ParameterSetArgsDoubleValues(ampl, name, size, values_c)
     free(values_c)
 
-cdef void setValuesParamStr(campl.AMPL* ampl, char* name, values):
+    return errorinfo
+
+cdef campl.AMPL_ERRORINFO* setValuesParamStr(campl.AMPL* ampl, char* name, values):
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t size = len(values)
     cdef char** values_c = <char**> malloc(size * sizeof(char*))
     for i in range(size):
         values_c[i] = strdup(values[i].encode('utf-8'))
     
-    campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
+    errorinfo = campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
 
     for i in range(size):
         free(values_c[i])
     free(values_c)
 
-cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
+    return errorinfo
+
+cdef campl.AMPL_ERRORINFO* setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts) except *:
+    cdef campl.AMPL_ERRORINFO* errorinfo
     cdef size_t i
     cdef campl.AMPL_TUPLE** indices_c
     cdef char** values_str_c
@@ -205,7 +216,7 @@ cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
         for i in range(size):
             indices_c[i] = to_c_tuple(<object>PyList_GetItem(d_keys, i))
             values_str_c[i] = PyUnicode_AsUTF8(<object>PyList_GetItem(d_values, i))
-        campl.AMPL_ParameterSetSomeStringValues(ampl, name, size, indices_c, values_str_c)
+        errorinfo = campl.AMPL_ParameterSetSomeStringValues(ampl, name, size, indices_c, values_str_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
@@ -220,24 +231,25 @@ cdef void setValuesPyDict(campl.AMPL* ampl, char* name, dict dicts):
                 values_num_c[i] = PyLong_AsLong(<object>item)
             else:
                 values_num_c[i] = PyFloat_AsDouble(<object>item)
-        campl.AMPL_ParameterSetSomeDoubleValues(ampl, name, size, indices_c, values_num_c)
+        errorinfo = campl.AMPL_ParameterSetSomeDoubleValues(ampl, name, size, indices_c, values_num_c)
         for i in range(size):
             campl.AMPL_TupleFree(&indices_c[i])
         free(indices_c)
         free(values_num_c)
     else:
         raise ValueError("Dictionary must contain either all strings or all numbers")
+    return errorinfo
 
-cdef raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, char* name):
+cdef void raiseKeyError(campl.AMPL_ENTITYTYPE entity_class, str name) except *:
     if entity_class == campl.AMPL_VARIABLE:
-        raise KeyError("A variable called {name} cannot be found.")
+        raise KeyError(f"A variable called {name} cannot be found.")
     elif entity_class == campl.AMPL_CONSTRAINT:
-        raise KeyError("A constraint called {name} cannot be found.")
+        raise KeyError(f"A constraint called {name} cannot be found.")
     elif entity_class == campl.AMPL_OBJECTIVE:
-        raise KeyError("An objective called {name} cannot be found.")
+        raise KeyError(f"An objective called {name} cannot be found.")
     elif entity_class == campl.AMPL_SET:
-        raise KeyError("A set called {name} cannot be found.")
+        raise KeyError(f"A set called {name} cannot be found.")
     elif entity_class == campl.AMPL_PARAMETER:
-        raise KeyError("A parameter called {name} cannot be found.")
+        raise KeyError(f"A parameter called {name} cannot be found.")
     else: 
         pass

@@ -88,7 +88,7 @@ else:
     LIBRARY_EXT = ".dll"
 
 CPP_BASE = os.path.join("amplpy", "amplpython", "cppinterface")
-#CYTHON_BASE = os.path.join("amplpy", "cython")
+RPATH_BASE = os.path.join("amplpython", "cppinterface", "lib")
 LIBRARY_BASE = os.path.join(CPP_BASE, "lib")
 LIBRARY_DIR = os.path.join(LIBRARY_BASE, LIBRARY)
 
@@ -108,7 +108,12 @@ def package_content():
         lst = all_files
     else:
         source_only = [
-            fpath for fpath in all_files if not fpath.startswith(LIBRARY_BASE)
+            fpath for fpath in all_files 
+            if not fpath.startswith(LIBRARY_BASE)
+            if not fpath.endswith(".pxi")
+            if not fpath.endswith(".pxd")
+            if not fpath.endswith(".pyx")
+            if not fpath.endswith(".c")
         ]
         library_only = [
             fpath
@@ -152,7 +157,7 @@ def compile_args():
 
 
 def link_args():
-    rpath = os.path.join(LIBRARY_BASE, LIBRARY)
+    rpath = os.path.join(RPATH_BASE, LIBRARY)
     if OSTYPE == "Darwin":
         return ["-Wl,-headerpad_max_install_names,-rpath,@loader_path/" + rpath]
     elif OSTYPE == "Linux":
@@ -166,7 +171,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.15.0b5",
+    version="0.15.0b8",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",
@@ -191,8 +196,6 @@ setup(
         "Programming Language :: C",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -205,7 +208,7 @@ setup(
     ext_modules=cythonize(
         [
             Extension(
-                "_amplpy",
+                "amplpy.ampl",
                 libraries=["ampl"],
                 library_dirs=[os.path.join(LIBRARY_BASE, LIBRARY)],
                 include_dirs=[os.path.join(CPP_BASE, "include")],
@@ -213,7 +216,7 @@ setup(
                 extra_link_args=link_args(),
                 sources=[os.path.join("amplpy", "ampl.pyx")],
             )
-        ], compiler_directives={"language_level": "3", "binding": True, #"embedsignature": True,
+        ], compiler_directives={"language_level": "3", "binding": True, "embedsignature": True,
                                 "boundscheck": False, "wraparound": False},
     ),
     package_data={"": package_content()},

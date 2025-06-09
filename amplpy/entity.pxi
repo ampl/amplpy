@@ -46,11 +46,9 @@ cdef class Entity(object):
         entity._name = name
         entity._index = index
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef campl.AMPL_ENTITYTYPE entitytype
         errorinfo = campl.AMPL_EntityGetType(entity._ampl._c_ampl, name, &entitytype)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
+        if errorinfo:
             #free(name)
             PY_AMPL_CALL(errorinfo)
         entity.wrap_function = entitytype
@@ -69,8 +67,11 @@ cdef class Entity(object):
         Py_DECREF(self._ampl)
 
     def to_string(self):
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* output_c
-        campl.AMPL_EntityGetDeclaration(self._ampl._c_ampl, self._name, &output_c)
+        errorinfo = campl.AMPL_EntityGetDeclaration(self._ampl._c_ampl, self._name, &output_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
         
@@ -96,6 +97,7 @@ cdef class Entity(object):
         Returns:
             The corresponding instance.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
         assert self.wrap_function is not None
         cdef campl.AMPL_TUPLE* tuple_c
         cdef char* name_c
@@ -107,8 +109,10 @@ cdef class Entity(object):
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
-                campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &name_c)
+                errorinfo = campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &name_c)
                 campl.AMPL_TupleFree(&tuple_c)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
                 entity = create_entity(self.wrap_function, self._ampl, name_c, NULL, None).value()
                 return entity
             else:
@@ -122,11 +126,14 @@ cdef class Entity(object):
             The wanted instance if found, otherwise it returns `None`.
         """
         assert self.wrap_function is not None
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t i
         cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
-        campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
+        errorinfo = campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
                 for j in range(size):
@@ -212,7 +219,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** sets
         cdef list pylist = []
-        campl.AMPL_EntityGetIndexingSets(self._ampl._c_ampl, self._name, &sets, &size)
+        PY_AMPL_CALL(campl.AMPL_EntityGetIndexingSets(self._ampl._c_ampl, self._name, &sets, &size))
         for i in range(size):
             if sets[i] != NULL:
                 pylist.append(sets[i].decode('utf-8'))
@@ -233,7 +240,7 @@ cdef class Entity(object):
         cdef size_t size
         cdef char** xref
         cdef list pylist = []
-        campl.AMPL_EntityGetXref(self._ampl._c_ampl, self._name, &xref, &size)
+        PY_AMPL_CALL(campl.AMPL_EntityGetXref(self._ampl._c_ampl, self._name, &xref, &size))
         for i in range(size):
             if xref[i] != NULL:
                 pylist.append(xref[i].decode('utf-8'))
@@ -278,7 +285,7 @@ cdef class Entity(object):
             for i in range(len(suffixes)):
                 suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
             n = len(suffixes)
-            campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, suffixes_c, n, &df_c)
+            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, suffixes_c, n, &df_c))
             for i in range(len(suffixes)):
                 free(suffixes_c[i])
             free(suffixes_c)
@@ -324,26 +331,34 @@ cdef class Entity(object):
         Args:
             data: The data to set the entity to.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef DataFrame df
         cdef campl.AMPL_DATAFRAME* df_c 
         cdef char* _name_c 
-        campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c)
+        PY_AMPL_CALL(campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c))
         if isinstance(data, DataFrame):
             df = data
             df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+            errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
             campl.AMPL_StringFree(&_name_c)
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
         elif isinstance(data, dict):
             df = DataFrame.from_dict(data)
             df_c = df.get_ptr()
-            campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+            errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
             campl.AMPL_StringFree(&_name_c)
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
         else:
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 df = DataFrame.from_pandas(data, indexarity=self.indexarity())
                 df_c = df.get_ptr()
-                PY_AMPL_CALL(campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c))
+                errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+
                 campl.AMPL_StringFree(&_name_c)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
                 return
             raise TypeError(f"Unexpected data type: {type(data)}.")
 

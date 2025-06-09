@@ -3,7 +3,6 @@ from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 
 from cpython.float cimport PyFloat_AsDouble
-from cpython.int cimport PyInt_AsLong, PyInt_Check
 from cpython.long cimport PyLong_AsLong, PyLong_Check
 from cpython.exc cimport PyErr_Occurred, PyErr_Clear
 
@@ -243,12 +242,15 @@ cdef class DataFrame(object):
            for the row to be added, or multiple arguments with the values for
            each column.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
         assert len(value) == self._get_num_cols()
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(tuple(value))
-        campl.AMPL_DataFrameAddRow(self._c_df, tuple_c)
+        errorinfo = campl.AMPL_DataFrameAddRow(self._c_df, tuple_c)
         campl.AMPL_TupleFree(&tuple_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
 
     def _add_column(self, header, values=None):
         """
@@ -261,6 +263,7 @@ cdef class DataFrame(object):
             values: A list of size :func:`~amplpy.DataFrame.getNumRows` with
             all the values of the new column.
         """   
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t size = len(values)
         cdef const char** c_string_array = NULL
         cdef double* c_double_array = NULL
@@ -276,18 +279,22 @@ cdef class DataFrame(object):
                     values = list(values)
                 for i in range(size):
                     c_string_array[i] = strdup(values[i].encode('utf-8'))
-                campl.AMPL_DataFrameAddColumnString(self._c_df, header.encode('utf-8'), c_string_array)
+                errorinfo = campl.AMPL_DataFrameAddColumnString(self._c_df, header.encode('utf-8'), c_string_array)
                 for i in range(size):
                     if c_string_array[i] != NULL:
                         free(c_string_array[i])
                 free(c_string_array)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
             elif all(isinstance(value, Real) for value in values):
                 values = list(map(float, values))
                 c_double_array = <double*> malloc(size * sizeof(double))
                 for i in range(size):
                     c_double_array[i] = values[i]
-                campl.AMPL_DataFrameAddColumnDouble(self._c_df, header.encode('utf-8'), c_double_array)
+                errorinfo = campl.AMPL_DataFrameAddColumnDouble(self._c_df, header.encode('utf-8'), c_double_array)
                 free(c_double_array)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
             else:
                 raise NotImplementedError
 
@@ -312,7 +319,6 @@ cdef class DataFrame(object):
             values: The values to set.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef double* c_double_array = NULL
         cdef char** c_string_array = NULL
         cdef size_t size = len(values)
@@ -321,19 +327,16 @@ cdef class DataFrame(object):
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
             errorinfo = campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             for i in range(size):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])
             free(c_string_array)
-            if rc != campl.AMPL_OK:
+            if errorinfo:
                 PY_AMPL_CALL(errorinfo)
         else:
             c_double_array = <double*> malloc(size * sizeof(double))
             for i in range(size):
-                if PyInt_Check(values[i]):
-                    c_double_array[i] = PyInt_AsLong(values[i])
-                elif PyLong_Check(values[i]):
+                if PyLong_Check(values[i]):
                     c_double_array[i] = PyLong_AsLong(values[i]);
                 else:
                     PyErr_Clear()
@@ -341,9 +344,8 @@ cdef class DataFrame(object):
                     if PyErr_Occurred():
                         raise TypeError("Failed to cast value to int/float/double")
             errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
-            rc = campl.AMPL_ErrorInfoGetError(errorinfo)
             free(c_double_array)
-            if rc != campl.AMPL_OK:
+            if errorinfo:
                 PY_AMPL_CALL(errorinfo)
 
     def _get_row(self, key):
@@ -357,10 +359,13 @@ cdef class DataFrame(object):
         Returns:
             The row.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t index
         cdef campl.AMPL_TUPLE* tuple = to_c_tuple(key)
-        campl.AMPL_DataFrameGetRowIndex(self._c_df, tuple, &index)
+        errorinfo = campl.AMPL_DataFrameGetRowIndex(self._c_df, tuple, &index)
         campl.AMPL_TupleFree(&tuple)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
         return Row.create(self._c_df, index)
 
     def _get_row_by_index(self, index):
@@ -382,9 +387,12 @@ cdef class DataFrame(object):
         Returns:
            The headers of this DataFrame.
         """
+        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t size
         cdef char** headers
-        campl.AMPL_DataFrameGetHeaders(self._c_df, &size, &headers)
+        errorinfo = campl.AMPL_DataFrameGetHeaders(self._c_df, &size, &headers)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
         headers_py = tuple(str(headers[i].decode('utf-8')) for i in range(size))
         for i in range(size):
             campl.AMPL_StringFree(&headers[i])

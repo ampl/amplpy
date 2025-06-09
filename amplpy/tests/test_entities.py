@@ -489,6 +489,32 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.get_current_objective().name(), "A")
         self.assertFalse(ampl.get_current_objective().minimization())
 
+    def test_objective_indexed(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set I;
+            minimize obj{i in I}: i;
+        """
+        )
+        ampl.set["I"] = range(10)
+        obj = ampl.get_objective("obj")
+        for i in range(10):
+            self.assertEqual(obj[i].value(), i)
+            self.assertEqual(obj[i].minimization(), True)
+            self.assertEqual(obj[i].result(), "'?'")
+            self.assertEqual(obj[i].message(), "'?'")
+            self.assertEqual(obj[i].astatus(), "in")
+            self.assertEqual(obj[i].sstatus(), "none")
+        ampl.solve()
+        for i in range(10):
+            self.assertEqual(obj[i].value(), i)
+            self.assertEqual(obj[i].minimization(), True)
+            self.assertEqual(obj[i].result(), "solved")
+            self.assertEqual(obj[i].message(), "'No variables declared.'")
+            self.assertEqual(obj[i].astatus(), "in")
+            self.assertEqual(obj[i].sstatus(), "none")
+
     def test_set_values(self):
         ampl = self.ampl
         ampl.eval("var x{1..3};")

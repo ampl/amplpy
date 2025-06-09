@@ -88,12 +88,9 @@ cdef class Constraint(Entity):
         Get the current AMPL status (dropped, presolved, or substituted out).
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&value_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
@@ -218,12 +215,9 @@ cdef class Constraint(Entity):
         variable).
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&value_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
@@ -235,12 +229,9 @@ cdef class Constraint(Entity):
         Get the AMPL status if not `in`, otherwise solver status.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
         cdef char* value_c
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        if rc != campl.AMPL_OK:
-            campl.AMPL_StringFree(&value_c)
+        if errorinfo:
             PY_AMPL_CALL(errorinfo)
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
@@ -262,7 +253,7 @@ cdef class Constraint(Entity):
         Args:
             dual: The value to be assigned to the dual variable.
         """
-        PY_AMPL_CALL(campl.AMPL_ConstraintSetDual(self._ampl._c_ampl, self._name, float(dual)))
+        PY_AMPL_CALL(campl.AMPL_ConstraintInstanceSetDual(self._ampl._c_ampl, self._name, self._index, float(dual)))
 
     def val(self):
         """
