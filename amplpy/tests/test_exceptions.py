@@ -103,6 +103,26 @@ class TestExceptions(TestBase.TestBase):
 
         self.assertEqual(context.exception.get_message(), 
             "y is not defined\ncontext:  var x :=  >>> y; <<<  var xx := y; var xy := y;")
+        
+    def test_cons_exceptions(self):
+        ampl = self.ampl
+        ampl.eval("var x>=0; s.t. cons: x^2 + x >= 42;")
+        cons = ampl.get_constraint("cons")
+        ampl.reset()
+        with self.assertRaises(RuntimeError):
+            cons.drop()
+        with self.assertRaises(RuntimeError):
+            cons.restore()
+        with self.assertRaises(TypeError):
+            cons.astatus()
+        with self.assertRaises(TypeError):
+            cons.defvar()
+        with self.assertRaises(TypeError):
+            cons.dinit()
+        with self.assertRaises(TypeError):
+            cons.dinit0()
+        #with self.assertRaises(AttributeError):
+        #    cons.is_logical()
 
 
 if __name__ == "__main__":
