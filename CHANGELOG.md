@@ -7,11 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Add __str__ for AMPL objects.
 - Add ampls methods into AMPL object, i.e., AMPL.to_ampls() and AMPL.import_ampls_solution().
 - Add logging to exceptions thrown by ErrorHandler.
-- Update AMPL warnings to throw an exception.
-- Throw if options times or gentimes are set.
+- [Breaking] Update AMPL warnings to throw an exception.
+- [Breaking] Throw if options times or gentimes are set.
 - Allow setting options as dict in AMPL, e.g., AMPL.option = {"solver": "gurobi", "var_bounds": 1, "gurobi_options": {"outlev": True, "timelim": 1}}
 
-## 0.14.1 - 2024-05-##
+## 0.14.1 - 2024-05-21
 - Add flat argument to AMPL.get_iis.
 
 ## 0.14.0 - 2024-05-21
