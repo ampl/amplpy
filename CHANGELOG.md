@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.15.0 - 2025-06-18
+- Migrated to Cython for generating extension modules, improving performance and maintainability.
+- Add __str__ for AMPL objects.
+- Add ampls methods into AMPL object, i.e., AMPL.to_ampls() and AMPL.import_ampls_solution().
+- Add logging to exceptions thrown by ErrorHandler.
+- Update AMPL warnings to throw an exception.
+- Throw if options times or gentimes are set.
+- Allow setting options as dict in AMPL, e.g., AMPL.option = {"solver": "gurobi", "var_bounds": 1, "gurobi_options": {"outlev": True, "timelim": 1}}
+
 ## 0.14.1 - 2024-05-##
 - Add flat argument to AMPL.get_iis.
 
