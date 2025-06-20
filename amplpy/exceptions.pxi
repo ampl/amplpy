@@ -38,11 +38,12 @@ cdef class AMPLException(Exception):
         return self.message
 
     def __str__(self):
-        if self.source_name == "-":
-            if self.offset != -1:
-                return "line " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
+        if self.offset != -1:
             return self.message
-        return self.source_name + "\nline " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
+        elif self.source_name == "-":
+            return "line " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
+        else:
+            return self.source_name + "\nline " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
 
     # Aliases
     getLineNumber = get_line_number
