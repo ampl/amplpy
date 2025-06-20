@@ -680,7 +680,8 @@ cdef class AMPL:
             error_handler: The object handling AMPL errors and warnings.
         """
         class ErrorHandlerWrapper(ErrorHandler):
-            def __init__(self, error_handler):
+            def __init__(self, ampl_instance, error_handler):
+                self.ampl = ampl_instance
                 self.error_handler = error_handler
                 self.last_exception = None
 
@@ -705,7 +706,7 @@ cdef class AMPL:
                     raise exp
 
         self._error_handler = error_handler
-        self._error_handler_wrapper = ErrorHandlerWrapper(error_handler)
+        self._error_handler_wrapper = ErrorHandlerWrapper(self, error_handler)
 
         PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>self._error_handler_wrapper))
 
