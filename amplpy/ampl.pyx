@@ -707,7 +707,7 @@ cdef class AMPL:
                     raise exp
 
         self._error_handler = error_handler
-        self._error_handler_wrapper = ErrorHandlerWrapper(error_handler)
+        self._error_handler_wrapper = ErrorHandlerWrapper(self, error_handler)
 
         PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>self._error_handler_wrapper))
 
