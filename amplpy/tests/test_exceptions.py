@@ -91,6 +91,17 @@ class TestExceptions(TestBase.TestBase):
         self.assertEqual(exc.get_offset(), 5)
         self.assertEqual(exc.get_message(), "Invalid expression")
 
+    def test_throw_on_warning(self):
+        ampl = self.ampl
+        with self.assertRaises(amplpy.AMPLException) as context:
+            ampl.eval("c: 3 > 2;")
+
+        ampl.setOption("_throw_on_warnings", 0)
+        try:
+            ampl.eval("c1: 4 > 2;")
+        except amplpy.AMPLException as e:
+            self.fail(f"AMPLException was raised unexpectedly: {e}")
+
     def test_default_errorhandler_error(self):
         ampl = self.ampl
         with self.assertRaises(amplpy.AMPLException) as context:
