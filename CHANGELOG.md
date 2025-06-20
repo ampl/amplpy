@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.15.1 - 2025-06-20
+- [Breaking] Support options times or gentimes.
+- Add option "_throw_on_warnings" to control whether warnings raise exceptions.
+
 ## 0.15.0 - 2025-06-18
 - Migrated to Cython for generating extension modules, improving performance and maintainability.
 - Add __str__ for AMPL objects.

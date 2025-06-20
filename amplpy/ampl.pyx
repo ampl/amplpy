@@ -689,15 +689,17 @@ cdef class AMPL:
                 try:
                     self.error_handler.error(exception)
                 except Exception as exp:
-                    if self.last_exception == None:
+                    if self.last_exception is None:
                         self.last_exception = exp
 
             def warning(self, exception):
                 try:
                     self.error_handler.warning(exception)
                 except Exception as exp:
-                    if self.last_exception == None:
-                        if self.ampl.getOption("_throw_on_warnings") != 0:
+                    if self.last_exception is None:
+                        if self.ampl.get_option("_throw_on_warnings") != 1.0:
+                            pass
+                        else:
                             self.last_exception = exp
 
             def check(self):
@@ -706,8 +708,10 @@ cdef class AMPL:
                     self.last_exception = None
                     raise exp
 
+        error_handler_wrapper = ErrorHandlerWrapper(self, error_handler)
+
         self._error_handler = error_handler
-        self._error_handler_wrapper = ErrorHandlerWrapper(self, error_handler)
+        self._error_handler_wrapper = error_handler_wrapper
 
         PY_AMPL_CALL(campl.AMPL_SetErrorHandler(self._c_ampl, PyError, <void*>self._error_handler_wrapper))
 
