@@ -6,6 +6,7 @@
 # add except * to the end of AMPL_Eval(AMPL* ampl, const char* statement) except *
 
 from libcpp cimport bool # add this line
+from libc.stdint cimport int64_t
 
 cdef extern from "ampl/ampl_c.h":
 
@@ -360,7 +361,8 @@ cdef extern from "ampl/ampl_c.h":
         pass
 
     AMPL_ERRORINFO *AMPL_DataFrameArrowCreate(AMPL_DATAFRAMEARROW **dataframe,
-                                          ArrowSchema *schema, ArrowArray *array)
+                                          ArrowSchema *schema, ArrowArray *array,
+                                          int64_t nindices)
 
     void AMPL_DataFrameArrowFree(AMPL_DATAFRAMEARROW **dataframe)
 
