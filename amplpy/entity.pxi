@@ -333,7 +333,9 @@ cdef class Entity(object):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef DataFrame df
+        cdef DataFrameArrow df_arrow
         cdef campl.AMPL_DATAFRAME* df_c 
+        cdef campl.AMPL_DATAFRAMEARROW* df_c_arrow 
         cdef char* _name_c 
         PY_AMPL_CALL(campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c))
         if isinstance(data, DataFrame):
@@ -356,6 +358,14 @@ cdef class Entity(object):
                 df_c = df.get_ptr()
                 errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
 
+                campl.AMPL_StringFree(&_name_c)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
+                return
+            elif pl is not None and isinstance(data, pl.dataframe.frame.DataFrame):
+                df_arrow = DataFrameArrow.from_polars(data)
+                df_c_arrow = df_arrow.get_ptr()
+                errorinfo = campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, _name_c, df_c_arrow)
                 campl.AMPL_StringFree(&_name_c)
                 if errorinfo:
                     PY_AMPL_CALL(errorinfo)

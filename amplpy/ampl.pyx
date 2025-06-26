@@ -6,8 +6,6 @@ cimport amplpy.campl as campl
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 
-from nanoarrow import c_array, c_schema, c_array_stream
-import polars as pl
 
 from cpython.bool cimport PyBool_Check
 from cpython.pycapsule cimport PyCapsule_New, PyCapsule_IsValid, PyCapsule_GetPointer
@@ -22,6 +20,7 @@ from ast import literal_eval
 include "util.pxi" # must be first
 include "constraint.pxi"
 include "dataframe.pxi"
+include "dataframe_arrow.pxi"
 include "entity.pxi"
 include "environment.pxi"
 include "errorhandler.pxi"
@@ -155,27 +154,26 @@ cdef class AMPL:
         """
         self.close()
 
-    def get_data_arrow(self, *statements):
-        cdef campl.ArrowSchema* c_schema
-        cdef campl.ArrowArray* c_array
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_RETCODE rc
-        cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
-        for i in range(len(statements)):
-            statements_c[i] = strdup(statements[i].encode('utf-8'))
-        errorinfo = campl.AMPL_GetDataArrow(self._c_ampl, statements_c, len(statements), &c_schema, &c_array)
-        rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-        for i in range(len(statements)):
-            free(statements_c[i])
-        free(statements_c)
-        if rc != campl.AMPL_OK:
-            PY_AMPL_CALL(errorinfo)
-        capsule_schema = PyCapsule_New(<void*>c_schema, "arrow_schema", NULL)
-        capsule_array = PyCapsule_New(<void*>c_array, "arrow_array", NULL)
-        stream = c_array_stream(capsule_array, capsule_schema)
-        df = pl.from_arrow(stream)
+    #def get_data_arrow(self, *statements):
+    #    cdef campl.ArrowSchema* c_schema
+    #    cdef campl.ArrowArray* c_array
+    #    cdef campl.AMPL_ERRORINFO* errorinfo
+    #    cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
+    #    for i in range(len(statements)):
+    #        statements_c[i] = strdup(statements[i].encode('utf-8'))
+    #    errorinfo = campl.AMPL_GetDataArrow(self._c_ampl, statements_c, len(statements), &c_schema, &c_array)
+    #    rc = campl.AMPL_ErrorInfoGetError(errorinfo)
+    #    for i in range(len(statements)):
+    #        free(statements_c[i])
+    #    free(statements_c)
+    #    if errorinfo:
+    #        PY_AMPL_CALL(errorinfo)
+    #    capsule_schema = PyCapsule_New(<void*>c_schema, "arrow_schema", NULL)
+    #    capsule_array = PyCapsule_New(<void*>c_array, "arrow_array", NULL)
+    #    stream = c_array_stream(capsule_array, capsule_schema)
+    #    df = pl.from_arrow(stream)
         
-        return df
+    #    return df
 
 
     def get_data(self, *statements):

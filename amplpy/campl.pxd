@@ -356,6 +356,18 @@ cdef extern from "ampl/ampl_c.h":
 
     #ctypedef ArrowArray s_ArrowArray
 
+    cdef struct AMPL_DATAFRAMEARROW:
+        pass
+
+    AMPL_ERRORINFO *AMPL_DataFrameArrowCreate(AMPL_DATAFRAMEARROW **dataframe,
+                                          ArrowSchema *schema, ArrowArray *array)
+
+    void AMPL_DataFrameArrowFree(AMPL_DATAFRAMEARROW **dataframe)
+
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema **schema)
+
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
+
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
     AMPL_ERRORINFO* AMPL_CreateWithEnv(AMPL** ampl, AMPL_ENVIRONMENT* env)
@@ -498,7 +510,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
-    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, const ArrowArray *array, const ArrowSchema *schema)
+    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, AMPL_DATAFRAMEARROW *dataframe)
 
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
