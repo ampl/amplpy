@@ -436,6 +436,8 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetData(AMPL* ampl, AMPL_DATAFRAME* df, const char* setName)
 
+    AMPL_ERRORINFO *AMPL_SetDataArrow(AMPL *ampl, AMPL_DATAFRAMEARROW *df, const char *setName)
+
     AMPL_ERRORINFO* AMPL_ToString(AMPL* ampl, char** output)
 
     AMPL_ERRORINFO* AMPL_ReadTable(AMPL* ampl, const char* tableName)

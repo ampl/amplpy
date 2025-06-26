@@ -27,6 +27,7 @@ from amplpy.ampl import Set
 from amplpy.ampl import Parameter
 from amplpy.ampl import Entity
 from amplpy.ampl import DataFrame, Row, Column
+from amplpy.ampl import DataFrameArrow
 from .utils import add_to_path, multidict, register_magics
 from amplpy.ampl import Environment
 from amplpy.ampl import AMPL
@@ -76,6 +77,7 @@ def _list_aliases():
         Row,
         Column,
         DataFrame,
+        DataFrameArrow,
         Environment,
         AMPL,
     ]

@@ -6,6 +6,7 @@ from .test_entities import TestEntities
 from .test_exceptions import TestExceptions
 from .test_iterators import TestIterators
 from .test_dataframe import TestDataFrame
+from .test_df_arrow import TestDataFrameArrow
 from .test_environment import TestEnvironment
 from .test_outputhandler import TestOutputHandler
 from .test_properties import TestProperties

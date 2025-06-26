@@ -4,15 +4,12 @@ from collections.abc import Iterable
 
 from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
 
-import polars as pl
-import pyarrow as pa
-import nanoarrow as na
-
 
 
 import itertools
 
 try:
+    import pyarrow as pa
     import pandas as pd
 except ImportError:
     pd = None
