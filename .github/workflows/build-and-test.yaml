@@ -9,7 +9,7 @@ env:
   CIBW_SKIP: pp* cp36-* cp37-* *_i686 *-win32 *musllinux*
   CIBW_ENABLE: cpython-freethreading # Include free-threaded support
   CIBW_TEST_COMMAND: python -m amplpy.tests 
-  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
+  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy nanoarrow pyarrow
 
 jobs:
   build_native:
