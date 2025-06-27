@@ -4,6 +4,10 @@ from collections.abc import Iterable
 
 from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
 
+import polars as pl
+import pyarrow as pa
+import nanoarrow as na
+
 
 
 import itertools
@@ -186,41 +190,32 @@ cdef class Parameter(Entity):
             Entity.set_values(self, values)
         elif pd is not None and isinstance(values, (pd.DataFrame, pd.Series)):
             Entity.set_values(self, values)
-        #elif isinstance(values, pl.dataframe.frame.DataFrame):
-        Entity.set_values(self, values)
-        return 
-
-        #elif np is not None and isinstance(values, np.ndarray):
-        #    if len(values.shape) <= 1:
-        #        self.set_values(values.tolist())
-        #    else:
-        #        self.set_values(tuple(itertools.chain(*values.tolist())))
-        #elif isinstance(values, Iterable):
-        #    if all(isinstance(value, str) for value in values):
-        #        if not isinstance(values, (list, tuple)):
-        #            values = list(values)
-        #        errorinfo = setValuesParamStr(self._ampl._c_ampl, self._name, values)
-        #        if errorinfo:
-        #            PY_AMPL_CALL(errorinfo)
-        #    elif all(isinstance(value, Real) for value in values):
-        #        values = list(map(float, values))
-        #        errorinfo = setValuesParamNum(self._ampl._c_ampl, self._name, values)
-        #        if errorinfo:
-        #            PY_AMPL_CALL(errorinfo)
-        #    else:
-        #        Entity.set_values(self, values)
-        #else:
-        #    Entity.set_values(self, values)
+        elif np is not None and isinstance(values, np.ndarray):
+            if len(values.shape) <= 1:
+                self.set_values(values.tolist())
+            else:
+                self.set_values(tuple(itertools.chain(*values.tolist())))
+        elif isinstance(values, Iterable):
+            if all(isinstance(value, str) for value in values):
+                if not isinstance(values, (list, tuple)):
+                    values = list(values)
+                errorinfo = setValuesParamStr(self._ampl._c_ampl, self._name, values)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
+            elif all(isinstance(value, Real) for value in values):
+                values = list(map(float, values))
+                errorinfo = setValuesParamNum(self._ampl._c_ampl, self._name, values)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
+            else:
+                Entity.set_values(self, values)
+        else:
+            Entity.set_values(self, values)
 
 
-    #def set_nanoarrow(self, df):
-    #    array_stream = na.c_array_stream(pa.Table.from_pandas(df.reset_index(), preserve_index=False))
-    #    c_schema_capsule, c_array_capsule = array_stream.get_next().__arrow_c_array__()
-
-    #    cdef campl.ArrowSchema* arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
-    #    cdef campl.ArrowArray* arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
-
-    #    campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, self._name, arrow_array_ptr, arrow_schema_ptr)
+    def set_values_nanoarrow(self, df):
+        cdef DataFrameArrow obj = DataFrameArrow.from_pandas(df)
+        campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, self._name, obj.get_ptr())
 
     # Aliases
     hasDefault = has_default

@@ -7,6 +7,8 @@ from cpython.long cimport PyLong_AsLong, PyLong_Check
 from cpython.exc cimport PyErr_Occurred, PyErr_Clear
 from libc.stdint cimport int64_t
 
+from cpython.pycapsule cimport PyCapsule_IsValid
+
 from numbers import Real
 
 import nanoarrow as na
@@ -29,18 +31,30 @@ except ImportError:
 
 cdef class DataFrameArrow:
     cdef campl.AMPL_DATAFRAMEARROW* _c_df
+    cdef object _capsule_schema
+    cdef object _capsule_array
 
     def __cinit__(self):
         self._c_df = NULL
 
     def __dealloc__(self):
         if self._c_df != NULL:
-            #campl.AMPL_DataFrameArrowFree(&self._c_df)
+            # Uncomment when Free is implemented
+            # campl.AMPL_DataFrameArrowFree(&self._c_df)
             self._c_df = NULL
 
-    cdef void init_from_arrow(self, const campl.ArrowSchema* schema_ptr, const campl.ArrowArray* array_ptr, int64_t nindices):
+
+    cdef void init_from_arrow(self,
+                              campl.ArrowSchema* schema_ptr,
+                              campl.ArrowArray* array_ptr,
+                              int64_t nindices):
+        #if array_ptr.release == NULL:
+        #    raise ValueError("ArrowArray has been released — invalid memory.")
         cdef campl.AMPL_ERRORINFO* errorinfo
-        errorinfo = campl.AMPL_DataFrameArrowCreate(&self._c_df, schema_ptr, array_ptr, nindices)
+        errorinfo = campl.AMPL_DataFrameArrowCreate(&self._c_df,
+                                                    schema_ptr,
+                                                    array_ptr,
+                                                    nindices)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
@@ -52,19 +66,18 @@ cdef class DataFrameArrow:
         """
         Create a :class:`~amplpy.DataFrameArrow` from a Polars DataFrame.
         """
-        assert isinstance(df, pl.DataFrame)
-
+        assert pl is not None and isinstance(df, pl.DataFrame)
         stream = na.c_array_stream(df.to_arrow())
+
         c_schema_capsule = stream.get_schema().__arrow_c_schema__()
         _, c_array_capsule = stream.get_next().__arrow_c_array__()
 
-        cdef const campl.ArrowSchema* arrow_schema_ptr
-        cdef const campl.ArrowArray* arrow_array_ptr
-        arrow_schema_ptr = <const campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
-        arrow_array_ptr = <const campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
+        cdef const campl.ArrowSchema* schema_ptr = <const campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
+        cdef const campl.ArrowArray* array_ptr = <const campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
 
         cdef DataFrameArrow obj = DataFrameArrow()
-        obj.init_from_arrow(arrow_schema_ptr, arrow_array_ptr, 0)
+
+        obj.init_from_arrow(schema_ptr, array_ptr, 0)
         return obj
 
     @classmethod
@@ -74,52 +87,51 @@ cdef class DataFrameArrow:
 
         Args:
             df: Pandas DataFrame or Series to load.
-            index_names: index names to use (optional).
-            indexarity: number of index columns (optional).
+            index_names: Optional list of index column names.
+            indexarity: Optional number of index columns.
         """
-        assert pd is not None
+        assert pd is not None and isinstance(df, (pd.DataFrame, pd.Series))
+
         if isinstance(df, pd.Series):
             df = pd.DataFrame(df)
-        else:
-            assert isinstance(df, pd.DataFrame)
 
         if len(df) == 0:
             raise ValueError("Cannot create DataFrameArrow from empty DataFrame")
 
-        # Convert Series or single-level index to MultiIndex if necessary
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
-        elif df.index.nlevels == 1 and isinstance(df.index, pd.MultiIndex) is False:
+        elif df.index.nlevels == 1 and not isinstance(df.index, pd.MultiIndex):
             df.index = pd.MultiIndex.from_tuples([(idx,) for idx in df.index])
 
-        # Stack the DataFrame if the indexarity requires it
         if indexarity is not None and indexarity == df.index.nlevels + 1:
             df = df.stack()
             if isinstance(df, pd.Series):
                 df = pd.DataFrame(df)
 
-        # Prepare the index names
         if index_names is not None:
             assert len(index_names) == df.index.nlevels
             df.index.names = index_names
 
-        # Reset index to make it part of columns
         df_reset = df.reset_index()
 
-        # Convert to Arrow Table
-        arrow_table = pa.Table.from_pandas(df_reset, preserve_index=False)
-
-        # Convert to Arrow C stream
-        print(arrow_table)
-        array_stream = na.c_array_stream(arrow_table)
+        pa_df = pa.Table.from_pandas(df_reset, preserve_index=False)
+        #print(pa_df)
+        array_stream = na.c_array_stream(pa_df)
         c_schema_capsule, c_array_capsule = array_stream.get_next().__arrow_c_array__()
 
-        # Cast to C pointers
         cdef campl.ArrowSchema* arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
         cdef campl.ArrowArray* arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
 
-        # Initialize and return DataFrameArrow
+        # VALIDATE capsule contents
+        #if not PyCapsule_IsValid(c_schema_capsule, "arrow_schema"):
+        #    raise RuntimeError("Invalid arrow_schema capsule")
+        #if not PyCapsule_IsValid(c_array_capsule, "arrow_array"):
+        #    raise RuntimeError("Invalid arrow_array capsule")
+
         cdef DataFrameArrow obj = DataFrameArrow()
+        obj._capsule_schema = c_schema_capsule
+        obj._capsule_array = c_array_capsule
+
         cdef int64_t nindices = df.index.nlevels if indexarity is None else indexarity
         obj.init_from_arrow(arrow_schema_ptr, arrow_array_ptr, nindices)
         return obj

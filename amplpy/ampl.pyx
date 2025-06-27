@@ -628,10 +628,10 @@ cdef class AMPL:
 
 
     def set_data_arrow(self, data, set_name=None):
+        cdef DataFrameArrow data_frame
         if not isinstance(data, DataFrameArrow):
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                data = DataFrameArrow.from_pandas(data)
-        cdef DataFrameArrow data_frame = data
+                data_frame = DataFrameArrow.from_pandas(data)
         cdef campl.AMPL_DATAFRAMEARROW* data_c = data_frame.get_ptr()
         if set_name is None:
             PY_AMPL_CALL(campl.AMPL_SetDataArrow(self._c_ampl, data_c, ""))

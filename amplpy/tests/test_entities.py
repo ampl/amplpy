@@ -613,36 +613,6 @@ class TestEntities(TestBase.TestBase):
             },
         )
 
-    def test_entity_get_values_aliases(self):
-        import polars as pl
-
-        if pd is None:
-            self.skipTest("pandas not available")
-        ampl = self.ampl
-        ampl.eval("param p{i in 1..10, j in 1..10};")
-
-        col1 = np.repeat(np.arange(1, 11), 10)
-        # Second column: 1-10 sequence repeated 10 times
-        col2 = np.tile(np.arange(1, 11), 10)
-
-        # Third column: Incremental numbers 1-100
-        col3 = np.arange(1, 101)
-
-        # Create DataFrame
-        df = pd.DataFrame({
-            'index1': col1,
-            'index2': col2,
-            'val': col3
-        })
-        ampl._start_recording("/home/lentz/Developer/AMPL/amplpy/zzz.txt")
-        ampl.get_parameter("p").set_nanoarrow(df)
-        ampl._stop_recoding()
-        #self.assertTrue(
-        #    ampl.get_parameter("p")
-        #    .to_pandas()
-        #    .equals(ampl.get_parameter("p").get_values().to_pandas())
-        #)
-
 
 if __name__ == "__main__":
     unittest.main()
