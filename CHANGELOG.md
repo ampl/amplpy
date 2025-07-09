@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.15.2 - 2025-07-09
+- Fix Environment object issue when an ampl directory exists.
+- Fix AMPLException object issue when the exception is printed.
+- 
 ## 0.15.1 - 2025-06-20
 - [Breaking] Support options times or gentimes.
 - Add option "_throw_on_warnings" to control whether warnings raise exceptions.

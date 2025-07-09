@@ -38,7 +38,7 @@ cdef class AMPLException(Exception):
         return self.message
 
     def __str__(self):
-        if self.offset != -1:
+        if self.offset == -1:
             return self.message
         elif self.source_name == "-":
             return "line " + str(self.line_number) + " offset " + str(self.offset) + "\n" + self.message
