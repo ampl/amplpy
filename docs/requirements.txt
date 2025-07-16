@@ -1,2 +1,2 @@
-amplpy==0.14.0
+amplpy==0.15.2
 ampl-sphinx-theme @ git+https://github.com/ampl/ampl.github.io.git#subdirectory=themes/ampl_sphinx_theme

@@ -59,7 +59,6 @@ except Exception:
 
 __version__ = "0.16.0b0"
 
-
 def _list_aliases():
     from inflection import camelize
 
