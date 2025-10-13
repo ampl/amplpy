@@ -102,3 +102,4 @@ ENV/
 
 # Cython
 amplpy/*.c
+cython_debug
