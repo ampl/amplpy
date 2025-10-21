@@ -606,6 +606,8 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetInstanceSetValuesDataframe(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_DATAFRAME* data)
 
+    AMPL_ERRORINFO *AMPL_SetInstanceSetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple, AMPL_DATAFRAMEARROW *dataframe);
+
     AMPL_ERRORINFO* AMPL_SetInstanceToString(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, char** str)
 
     AMPL_ERRORINFO* AMPL_ParameterInstanceSetValue(AMPL* ampl, const char* name, AMPL_TUPLE* index, AMPL_VARIANT* v)

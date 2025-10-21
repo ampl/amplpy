@@ -581,6 +581,7 @@ class TestEntities(TestBase.TestBase):
         if pd is None:
             self.skipTest("pandas not available")
         ampl = self.ampl
+        ampl._start_recording("/home/lentz/Schreibtisch/out.txt")
         ampl.eval(
             """
         set PRODUCTS;

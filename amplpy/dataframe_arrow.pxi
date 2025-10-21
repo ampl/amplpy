@@ -19,14 +19,14 @@ try:
     import pandas as pd
 except ImportError:
     pd = None
+try:
+    import pyarrow as pa
+except ImportError:
+    pa = None
 try :
     import polars as pl
 except ImportError:
     pl = None
-try:
-    import numpy as np
-except ImportError:
-    np = None
 
 
 cdef class DataFrameArrow:
@@ -90,7 +90,7 @@ cdef class DataFrameArrow:
             index_names: Optional list of index column names.
             indexarity: Optional number of index columns.
         """
-        assert pd is not None and isinstance(df, (pd.DataFrame, pd.Series))
+        assert None not in (pd, pa, na) and isinstance(df, (pd.DataFrame, pd.Series))
 
         if isinstance(df, pd.Series):
             df = pd.DataFrame(df)
