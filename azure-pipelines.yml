@@ -1,8 +1,8 @@
 variables:
-  CIBW_SKIP: pp* cp27-* cp36-* cp37-* *_i686 *-win32 *musllinux*
+  CIBW_SKIP: pp* cp27-* cp36-* cp37-* cp38-* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
-  CIBW_TEST_REQUIRES: "--index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy nanoarrow pyarrow==20.0.0; python_version>=\"3.9\" pyarrow<18; python_version==\"3.8\" polars"
-  CIBW_TEST_REQUIRES_AARCH64: "--index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs nanoarrow pyarrow==20.0.0; python_version>=\"3.9\" pyarrow<18; python_version==\"3.8\" polars"
+  CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy nanoarrow pyarrow==20.0.0 polars
+  CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs nanoarrow pyarrow==20.0.0 polars
 
 stages:
 - stage: native
@@ -80,10 +80,6 @@ stages:
     pool: {vmImage: 'Ubuntu-22.04'}
     strategy:
       matrix:
-        aarch64 cp38:
-          CIBW_BUILD: cp38-*
-          CIBW_ARCHS_LINUX: aarch64
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp39:
           CIBW_BUILD: cp39-*
           CIBW_ARCHS_LINUX: aarch64
