@@ -370,6 +370,8 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
 
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetNIndices(AMPL_DATAFRAMEARROW *dataframe, int64_t *nindices)
+
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
     AMPL_ERRORINFO* AMPL_CreateWithEnv(AMPL** ampl, AMPL_ENVIRONMENT* env)
@@ -599,6 +601,8 @@ cdef extern from "ampl/ampl_c.h":
     AMPL_ERRORINFO* AMPL_SetInstanceGetValues(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_TUPLE*** tuples, size_t* size)
 
     AMPL_ERRORINFO* AMPL_SetInstanceGetValuesDataframe(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_DATAFRAME** dataframe)
+
+    AMPL_ERRORINFO *AMPL_SetInstanceGetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple,  AMPL_DATAFRAMEARROW **dataframe_arrow)
 
     AMPL_ERRORINFO* AMPL_SetInstanceSetValues(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_ARGS* args, size_t size)
 

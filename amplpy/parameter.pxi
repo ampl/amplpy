@@ -211,11 +211,6 @@ cdef class Parameter(Entity):
         else:
             Entity.set_values(self, values)
 
-
-    def set_values_nanoarrow(self, df):
-        cdef DataFrameArrow obj = DataFrameArrow.from_pandas(df)
-        campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, self._name, obj.get_ptr())
-
     # Aliases
     hasDefault = has_default
     isSymbolic = is_symbolic
