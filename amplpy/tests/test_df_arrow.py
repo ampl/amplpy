@@ -57,7 +57,6 @@ class TestDataFrameArrow(TestBase.TestBase):
         #if na is None:
         #    self.skipTest("nanoarrow not available")
         df = pd.DataFrame({"a": [1, 2], "b": [3.5, 4]}, index=["x", "y"])
-        ampl._start_recording("/home/lentz/Schreibtisch/out.txt")
         ampl.eval(
             """
             set S;
