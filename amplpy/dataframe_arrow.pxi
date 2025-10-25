@@ -100,8 +100,8 @@ cdef class DataFrameArrow:
 
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
-        elif df.index.nlevels == 1 and not isinstance(df.index, pd.MultiIndex):
-            df.index = pd.MultiIndex.from_tuples([(idx,) for idx in df.index])
+        #elif df.index.nlevels == 1 and not isinstance(df.index, pd.MultiIndex):
+        #    df.index = pd.MultiIndex.from_tuples([(idx,) for idx in df.index])
 
         if indexarity is not None and indexarity == df.index.nlevels + 1:
             df = df.stack()
@@ -115,18 +115,12 @@ cdef class DataFrameArrow:
         df_reset = df.reset_index()
 
         pa_df = pa.Table.from_pandas(df_reset, preserve_index=False)
-        #print(pa_df)
         array_stream = na.c_array_stream(pa_df)
         c_schema_capsule, c_array_capsule = array_stream.get_next().__arrow_c_array__()
 
         cdef campl.ArrowSchema* arrow_schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
         cdef campl.ArrowArray* arrow_array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
 
-        # VALIDATE capsule contents
-        #if not PyCapsule_IsValid(c_schema_capsule, "arrow_schema"):
-        #    raise RuntimeError("Invalid arrow_schema capsule")
-        #if not PyCapsule_IsValid(c_array_capsule, "arrow_array"):
-        #    raise RuntimeError("Invalid arrow_array capsule")
 
         cdef DataFrameArrow obj = DataFrameArrow()
         obj._capsule_schema = c_schema_capsule
