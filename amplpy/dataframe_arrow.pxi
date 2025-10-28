@@ -100,8 +100,6 @@ cdef class DataFrameArrow:
 
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
-        #elif df.index.nlevels == 1 and not isinstance(df.index, pd.MultiIndex):
-        #    df.index = pd.MultiIndex.from_tuples([(idx,) for idx in df.index])
 
         if indexarity is not None and indexarity == df.index.nlevels + 1:
             df = df.stack()
