@@ -103,7 +103,7 @@ class TestExceptions(TestBase.TestBase):
         except amplpy.AMPLException as e:
             self.fail(f"AMPLException was raised unexpectedly: {e}")
 
-    def test_throw_on_warning(self):
+    def test_times_and_gentimes(self):
         ampl = self.ampl
 
         try:
