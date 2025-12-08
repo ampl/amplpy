@@ -285,7 +285,7 @@ cdef class Entity(object):
             for i in range(len(suffixes)):
                 suffixes_c[i] = strdup(suffixes[i].encode('utf-8'))
             n = len(suffixes)
-            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, suffixes_c, n, &df_c))
+            PY_AMPL_CALL(campl.AMPL_EntityGetValues(self._ampl._c_ampl, self._name, <const char* const*>suffixes_c, n, &df_c))
             for i in range(len(suffixes)):
                 free(suffixes_c[i])
             free(suffixes_c)

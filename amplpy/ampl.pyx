@@ -188,7 +188,7 @@ cdef class AMPL:
         cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
         for i in range(len(statements)):
             statements_c[i] = strdup(statements[i].encode('utf-8'))
-        errorinfo = campl.AMPL_GetData(self._c_ampl, statements_c, len(statements), &data)
+        errorinfo = campl.AMPL_GetData(self._c_ampl, <const char* const*>statements_c, len(statements), &data)
         for i in range(len(statements)):
             free(statements_c[i])
         free(statements_c)
