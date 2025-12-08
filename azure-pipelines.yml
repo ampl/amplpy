@@ -35,7 +35,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==2.21.3
+          python -m pip install --upgrade cibuildwheel==3.3.0
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -50,7 +50,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==2.21.3
+          python -m pip install --upgrade cibuildwheel==3.3.0
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -65,7 +65,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==2.21.3
+          python -m pip install --upgrade cibuildwheel==3.3.0
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -104,6 +104,10 @@ stages:
           CIBW_BUILD: cp313-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
+        aarch64 cp314:
+          CIBW_BUILD: cp314-*
+          CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:
       - task: UsePythonVersion@0
       - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:qemu-v8.1.5 --install all
@@ -111,7 +115,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==2.21.3
+          python -m pip install --upgrade cibuildwheel==3.3.0
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1

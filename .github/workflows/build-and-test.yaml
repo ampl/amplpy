@@ -26,7 +26,7 @@ jobs:
         run: python3 dev/updatelib.py
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel@v3.3.0
         env:
           CIBW_ARCHS_LINUX: ${{ env.CIBW_ARCHS_LINUX }}
           CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         arch: [aarch64]
-        build: [cp38-*, cp39-*, cp310-*, cp311-*, cp312-*, cp313-*]
+        build: [cp38-*, cp39-*, cp310-*, cp311-*, cp312-*, cp313-*, cp314-*]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +65,7 @@ jobs:
         run: python3 dev/updatelib.py
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel@v3.3.0
         env:
           CIBW_ARCHS_LINUX: ${{ matrix.arch }}
           CIBW_ARCHS_MACOS: ${{ env.CIBW_ARCHS_MACOS }}
