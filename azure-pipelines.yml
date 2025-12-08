@@ -1,5 +1,5 @@
 variables:
-  CIBW_SKIP: pp* cp27-* cp36-* cp37-* *_i686 *-win32 *musllinux*
+  CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
   CIBW_TEST_REQUIRES_AARCH64: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs
@@ -106,6 +106,10 @@ stages:
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp314:
           CIBW_BUILD: cp314-*
+          CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
+        aarch64 cp314t:
+          CIBW_BUILD: cp314t-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:

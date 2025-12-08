@@ -171,7 +171,7 @@ def link_args():
 
 setup(
     name="amplpy",
-    version="0.15.2",
+    version="0.16.0",
     description="Python API for AMPL",
     long_description=__doc__,
     long_description_content_type="text/markdown",
@@ -202,6 +202,8 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.14t",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     packages=["amplpy"],
