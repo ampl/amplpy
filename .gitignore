@@ -103,3 +103,6 @@ ENV/
 # Cython
 amplpy/*.c
 cython_debug
+
+# mypy
+.mypy_cache/
