@@ -93,6 +93,7 @@ class TestExceptions(TestBase.TestBase):
 
     def test_throw_on_warning(self):
         ampl = self.ampl
+        ampl.setOption("strict_ineq_warn", True)
         with self.assertRaises(amplpy.AMPLException):
             ampl.eval("c: 3 > 2;")
 
