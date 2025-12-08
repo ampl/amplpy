@@ -154,7 +154,7 @@ cdef class DataFrame(object):
                     temp = column_names[i - index_size].encode('utf-8')
                 headers[i] = strdup(temp)
 
-            PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, headers))
+            PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
 
             for i in range(index_size+column_size):
                 if headers[i] != NULL:
@@ -326,7 +326,7 @@ cdef class DataFrame(object):
             c_string_array = <char**> malloc(size * sizeof(char*))
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
-            errorinfo = campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), c_string_array, size)
+            errorinfo = campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), <const char* const*>c_string_array, size)
             for i in range(size):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])
