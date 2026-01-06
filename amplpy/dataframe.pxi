@@ -475,7 +475,7 @@ cdef class DataFrame(object):
         """
         Return a pandas.DataFrame with the DataFrame data.
         """
-        assert pd is not None
+        assert pd is not None, "Failed to import pandas. Ensure pandas is installed and importable."
         nindices = self._get_num_indices()
         headers = self._get_headers()
         columns = {
@@ -547,7 +547,7 @@ cdef class DataFrame(object):
             df: Pandas DataFrame to load.
             index_names: index names to use.
         """
-        assert pd is not None
+        assert pd is not None, "Failed to import pandas. Ensure pandas is installed and importable."
         if isinstance(df, pd.Series):
             df = pd.DataFrame(df)
         else:
@@ -577,7 +577,7 @@ cdef class DataFrame(object):
         """
         Create a :class:`~amplpy.DataFrame` from a numpy array or matrix.
         """
-        assert np is not None
+        assert np is not None, "Failed to import numpy. Ensure numpy is installed and importable."
         if isinstance(data, np.ndarray):
             index = []
             if len(data.shape) == 1:
