@@ -35,7 +35,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==3.3.0
+          python -m pip install --upgrade cibuildwheel==3.3.1
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -50,7 +50,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==3.3.0
+          python -m pip install --upgrade cibuildwheel==3.3.1
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -65,7 +65,7 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
-          python -m pip install --upgrade cibuildwheel==3.3.0
+          python -m pip install --upgrade cibuildwheel==3.3.1
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -119,7 +119,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==3.3.0
+          python -m pip install --upgrade cibuildwheel==3.3.1
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
