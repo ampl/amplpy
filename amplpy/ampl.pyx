@@ -407,7 +407,7 @@ cdef class AMPL:
         Solve the current model or the problem specified by ``problem``.
 
         Args:
-            problem: Name of the problem to solve.
+            problem: Name of the problem or objective to solve.
 
             solver: Name of the solver to use.
 
