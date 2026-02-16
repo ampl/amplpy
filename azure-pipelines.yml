@@ -9,7 +9,7 @@ stages:
   displayName: 'Build native'
   jobs:
   - job: docs
-    pool: {vmImage: 'Ubuntu-22.04'}
+    pool: {vmImage: 'Ubuntu-24.04'}
     steps:
       - task: UsePythonVersion@0
       - bash: |
@@ -28,7 +28,7 @@ stages:
       - task: PublishBuildArtifacts@1
         inputs: {pathtoPublish: 'upload'}
   - job: manylinux
-    pool: {vmImage: 'Ubuntu-22.04'}
+    pool: {vmImage: 'Ubuntu-24.04'}
     steps:
       - task: UsePythonVersion@0
       - bash: |
@@ -77,7 +77,7 @@ stages:
   displayName: 'Build with QEMU'
   jobs:
   - job: qemu
-    pool: {vmImage: 'Ubuntu-22.04'}
+    pool: {vmImage: 'Ubuntu-24.04'}
     strategy:
       matrix:
         aarch64 cp38:
