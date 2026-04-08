@@ -7,6 +7,7 @@ from cpython.long cimport PyLong_AsLong, PyLong_Check
 from cpython.exc cimport PyErr_Occurred, PyErr_Clear
 from libc.stdint cimport int64_t
 
+from cpython.pycapsule cimport PyCapsule_New
 from cpython.pycapsule cimport PyCapsule_IsValid
 
 from numbers import Real
@@ -44,17 +45,9 @@ cdef class DataFrameArrow:
             self._c_df = NULL
 
 
-    cdef void init_from_arrow(self,
-                              campl.ArrowSchema* schema_ptr,
-                              campl.ArrowArray* array_ptr,
-                              int64_t nindices):
-        #if array_ptr.release == NULL:
-        #    raise ValueError("ArrowArray has been released — invalid memory.")
+    cdef void init_from_arrow(self, campl.ArrowSchema* schema_ptr, campl.ArrowArray* array_ptr, int64_t nindices):
         cdef campl.AMPL_ERRORINFO* errorinfo
-        errorinfo = campl.AMPL_DataFrameArrowCreate(&self._c_df,
-                                                    schema_ptr,
-                                                    array_ptr,
-                                                    nindices)
+        errorinfo = campl.AMPL_DataFrameArrowCreate(&self._c_df, schema_ptr, array_ptr, nindices)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
@@ -72,8 +65,8 @@ cdef class DataFrameArrow:
         c_schema_capsule = stream.get_schema().__arrow_c_schema__()
         _, c_array_capsule = stream.get_next().__arrow_c_array__()
 
-        cdef const campl.ArrowSchema* schema_ptr = <const campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
-        cdef const campl.ArrowArray* array_ptr = <const campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
+        cdef campl.ArrowSchema* schema_ptr = <campl.ArrowSchema*>PyCapsule_GetPointer(c_schema_capsule, "arrow_schema")
+        cdef campl.ArrowArray* array_ptr = <campl.ArrowArray*>PyCapsule_GetPointer(c_array_capsule, "arrow_array")
 
         cdef DataFrameArrow obj = DataFrameArrow()
 
@@ -127,3 +120,56 @@ cdef class DataFrameArrow:
         cdef int64_t nindices = df.index.nlevels if indexarity is None else indexarity
         obj.init_from_arrow(arrow_schema_ptr, arrow_array_ptr, nindices)
         return obj
+
+    def to_pandas(self):
+        """
+        Convert this DataFrameArrow to a pandas DataFrame.
+        """
+        assert self._c_df != NULL
+
+        cdef campl.ArrowSchema *schema
+        cdef campl.ArrowArray *array
+        cdef campl.AMPL_ERRORINFO* errorinfo
+
+        errorinfo = campl.AMPL_DataFrameArrowGetSchema(self._c_df, &schema)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        errorinfo = campl.AMPL_DataFrameArrowGetArray(self._c_df, &array)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+
+        c_schema_capsule = PyCapsule_New(&schema, "arrow_schema", NULL)
+        c_array_capsule = PyCapsule_New(&array, "arrow_array", NULL)
+
+        import pyarrow as pa
+
+        table = pa.Table._import_from_c(c_schema_capsule, c_array_capsule)
+
+        import pandas as pd
+        return table.to_pandas()
+
+    def to_polars(self):
+        """
+        Convert this DataFrameArrow to a Polars DataFrame.
+        """
+        assert self._c_df != NULL
+
+        cdef campl.ArrowSchema *schema
+        cdef campl.ArrowArray *array
+        cdef campl.AMPL_ERRORINFO* errorinfo
+
+        errorinfo = campl.AMPL_DataFrameArrowGetSchema(self._c_df, &schema)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        errorinfo = campl.AMPL_DataFrameArrowGetArray(self._c_df, &array)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+
+        c_schema_capsule = PyCapsule_New(&schema, "arrow_schema", NULL)
+        c_array_capsule = PyCapsule_New(&array, "arrow_array", NULL)
+
+        import pyarrow as pa
+        table = pa.Table._import_from_c(c_schema_capsule, c_array_capsule)
+
+        import polars as pl
+        return pl.from_arrow(table)
