@@ -171,7 +171,7 @@ cdef campl.AMPL_ERRORINFO* setValuesParamStr(campl.AMPL* ampl, char* name, value
     for i in range(size):
         values_c[i] = strdup(values[i].encode('utf-8'))
     
-    errorinfo = campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, values_c)
+    errorinfo = campl.AMPL_ParameterSetArgsStringValues(ampl, name, size, <const char* const*>values_c)
 
     for i in range(size):
         free(values_c[i])
