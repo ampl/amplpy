@@ -33,8 +33,10 @@ stages:
       - task: UsePythonVersion@0
       - bash: |
           set -ex
-          python dev/updatelib.py
+          export CIBW_BEFORE_BUILD="python dev/updatelib.py"
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          export CIBW_MANYLINUX_X86_64_IMAGE=manylinux_2_28
+
           python -m pip install --upgrade cibuildwheel==3.3.0
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
