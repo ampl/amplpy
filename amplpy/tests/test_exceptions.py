@@ -93,6 +93,7 @@ class TestExceptions(TestBase.TestBase):
 
     def test_throw_on_warning(self):
         ampl = self.ampl
+        ampl.setOption("strict_ineq_warn", True)
         with self.assertRaises(amplpy.AMPLException):
             ampl.eval("c: 3 > 2;")
 
@@ -103,7 +104,7 @@ class TestExceptions(TestBase.TestBase):
         except amplpy.AMPLException as e:
             self.fail(f"AMPLException was raised unexpectedly: {e}")
 
-    def test_throw_on_warning(self):
+    def test_times_and_gentimes(self):
         ampl = self.ampl
 
         try:

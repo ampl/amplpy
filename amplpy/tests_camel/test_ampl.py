@@ -210,7 +210,7 @@ class TestAMPL(TestBase.TestBase):
         self.assertEqual(ampl.set["family"]["second"].getValues().toList(), ["Montoro"])
         self.assertEqual(ampl.set["A"].getValues().toList(), [1, 2, 3, 4])
 
-    def testPath(self):
+    def testPathRead(self):
         ampl = self.ampl
         try:
             from pathlib import Path
