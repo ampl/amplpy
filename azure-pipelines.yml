@@ -80,10 +80,6 @@ stages:
     pool: {vmImage: 'Ubuntu-22.04'}
     strategy:
       matrix:
-        aarch64 cp39:
-          CIBW_BUILD: cp39-*
-          CIBW_ARCHS_LINUX: aarch64
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp310:
           CIBW_BUILD: cp310-*
           CIBW_ARCHS_LINUX: aarch64
