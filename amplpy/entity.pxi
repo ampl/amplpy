@@ -105,7 +105,8 @@ cdef class Entity(object):
             index = index[0]
             index = list(index)
         if len(index) == 0:
-            return create_entity(self.wrap_function, self._ampl, self._name, NULL, None)
+            return self
+            #return create_entity(self.wrap_function, self._ampl, self._name, NULL, None)
         else:
             tuple_c =  to_c_tuple(index)
             if self.wrap_function == campl.AMPL_PARAMETER:
