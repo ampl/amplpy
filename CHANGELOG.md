@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.16.1 - 2025-05-13
+- Fix get() function.
+
 ## 0.16.0 - 2025-12-08
 - Add type hints to amplpy.
 - Add Python 3.14 and Python 3.14t support.

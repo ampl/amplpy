@@ -455,6 +455,7 @@ class TestEntities(TestBase.TestBase):
         load_diet_model(self.ampl)
         ampl = self.ampl
         obj = ampl.get_objective("total_cost")
+        self.assertEqual(obj, obj.get())
         self.assertEqual(ampl.get_current_objective().name(), "total_cost")
         self.assertEqual(len(dict(obj)), obj.num_instances())
         self.assertTrue(isinstance(obj.value(), float))
