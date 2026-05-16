@@ -40,7 +40,7 @@ cdef class DataFrameArrow:
     def __dealloc__(self):
         if self._c_df != NULL:
             # Uncomment when Free is implemented
-            # campl.AMPL_DATAFRAMEARROWFree(&self._c_df)
+            # campl.AMPL_DataframeArrowFree(&self._c_df)
             self._c_df = NULL
 
 
@@ -51,7 +51,7 @@ cdef class DataFrameArrow:
         #if array_ptr.release == NULL:
         #    raise ValueError("ArrowArray has been released — invalid memory.")
         cdef campl.AMPL_ERRORINFO* errorinfo
-        errorinfo = campl.AMPL_DATAFRAMEARROWCreate(&self._c_df,
+        errorinfo = campl.AMPL_DataframeArrowCreate(&self._c_df,
                                                     schema_ptr,
                                                     array_ptr,
                                                     nindices)
