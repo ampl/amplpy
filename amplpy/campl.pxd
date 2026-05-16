@@ -357,20 +357,20 @@ cdef extern from "ampl/ampl_c.h":
 
     #ctypedef ArrowArray s_ArrowArray
 
-    cdef struct AMPL_DATAFRAMEARROW:
+    ctypedef struct AMPL_DataFrameArrow:
         pass
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowCreate(AMPL_DATAFRAMEARROW **dataframe,
+    AMPL_ERRORINFO *AMPL_DataFrameArrowCreate(AMPL_DataFrameArrow **dataframe,
                                           ArrowSchema *schema, ArrowArray *array,
                                           int64_t nindices)
 
-    void AMPL_DataFrameArrowFree(AMPL_DATAFRAMEARROW **dataframe)
+    void AMPL_DataFrameArrowFree(AMPL_DataFrameArrow **dataframe)
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema **schema)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DataFrameArrow *dataframe, ArrowSchema **schema)
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DataFrameArrow *dataframe, ArrowArray **array)
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowGetNIndices(AMPL_DATAFRAMEARROW *dataframe, int64_t *nindices)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetNIndices(AMPL_DataFrameArrow *dataframe, int64_t *nindices)
 
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
@@ -438,7 +438,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetData(AMPL* ampl, AMPL_DATAFRAME* df, const char* setName)
 
-    AMPL_ERRORINFO *AMPL_SetDataArrow(AMPL *ampl, AMPL_DATAFRAMEARROW *df, const char *setName)
+    AMPL_ERRORINFO *AMPL_SetDataArrow(AMPL *ampl, AMPL_DataFrameArrow *df, const char *setName)
 
     AMPL_ERRORINFO* AMPL_ToString(AMPL* ampl, char** output)
 
@@ -516,7 +516,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
-    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, AMPL_DATAFRAMEARROW *dataframe)
+    AMPL_ERRORINFO* AMPL_EntitySetValuesArrow(AMPL *ampl, const char *name, AMPL_DataFrameArrow *dataframe)
 
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
@@ -602,7 +602,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetInstanceGetValuesDataframe(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_DATAFRAME** dataframe)
 
-    AMPL_ERRORINFO *AMPL_SetInstanceGetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple,  AMPL_DATAFRAMEARROW **dataframe_arrow)
+    AMPL_ERRORINFO *AMPL_SetInstanceGetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple,  AMPL_DataFrameArrow **dataframe_arrow)
 
     AMPL_ERRORINFO* AMPL_SetInstanceSetValues(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_ARGS* args, size_t size)
 
@@ -610,7 +610,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_SetInstanceSetValuesDataframe(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, AMPL_DATAFRAME* data)
 
-    AMPL_ERRORINFO *AMPL_SetInstanceSetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple, AMPL_DATAFRAMEARROW *dataframe);
+    AMPL_ERRORINFO *AMPL_SetInstanceSetValuesArrow(AMPL *ampl, const char *entityname, AMPL_TUPLE *tuple, AMPL_DataFrameArrow *dataframe);
 
     AMPL_ERRORINFO* AMPL_SetInstanceToString(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple, char** str)
 

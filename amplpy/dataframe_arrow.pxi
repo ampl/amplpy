@@ -30,7 +30,7 @@ except ImportError:
 
 
 cdef class DataFrameArrow:
-    cdef campl.AMPL_DATAFRAMEARROW* _c_df
+    cdef campl.AMPL_DataFrameArrow* _c_df
     cdef object _capsule_schema
     cdef object _capsule_array
 
@@ -58,7 +58,7 @@ cdef class DataFrameArrow:
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
 
-    cdef campl.AMPL_DATAFRAMEARROW* get_ptr(self):
+    cdef campl.AMPL_DataFrameArrow* get_ptr(self):
         return self._c_df
 
     @classmethod
