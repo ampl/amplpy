@@ -51,7 +51,7 @@ cdef class DataFrameArrow:
         #if array_ptr.release == NULL:
         #    raise ValueError("ArrowArray has been released — invalid memory.")
         cdef campl.AMPL_ERRORINFO* errorinfo
-        errorinfo = campl.AMPL_DataframeArrowCreate(&self._c_df,
+        errorinfo = campl.AMPL_DataFrameArrowCreate(&self._c_df,
                                                     schema_ptr,
                                                     array_ptr,
                                                     nindices)

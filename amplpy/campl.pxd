@@ -362,17 +362,17 @@ cdef extern from "ampl/ampl_c.h":
     
     ctypedef AMPL_DataFrameArrow AMPL_DATAFRAMEARROW
 
-    AMPL_ERRORINFO *AMPL_DataframeArrowCreate(AMPL_DATAFRAMEARROW **dataframe,
+    AMPL_ERRORINFO *AMPL_DataFrameArrowCreate(AMPL_DATAFRAMEARROW **dataframe,
                                           ArrowSchema *schema, ArrowArray *array,
                                           int64_t nindices)
 
-    void AMPL_DataframeArrowFree(AMPL_DATAFRAMEARROW **dataframe)
+    void AMPL_DataFrameArrowFree(AMPL_DATAFRAMEARROW **dataframe)
 
-    AMPL_ERRORINFO *AMPL_DataframeArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema **schema)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema **schema)
 
-    AMPL_ERRORINFO *AMPL_DataframeArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
 
-    AMPL_ERRORINFO *AMPL_DataframeArrowGetNIndices(AMPL_DATAFRAMEARROW *dataframe, int64_t *nindices)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetNIndices(AMPL_DATAFRAMEARROW *dataframe, int64_t *nindices)
 
     AMPL_ERRORINFO* AMPL_Create(AMPL** ampl)
 
