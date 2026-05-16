@@ -62,7 +62,7 @@ cdef class DataFrameArrow:
         return self._c_df
 
     @classmethod
-    def from_polars(cls, df):
+    def from_polars(cls, df, index_names=None, indexarity=None):
         """
         Create a :class:`~amplpy.DataFrameArrow` from a Polars DataFrame.
         """
@@ -77,7 +77,8 @@ cdef class DataFrameArrow:
 
         cdef DataFrameArrow obj = DataFrameArrow()
 
-        obj.init_from_arrow(schema_ptr, array_ptr, 0)
+        cdef int64_t nindices = (len(df.columns) - 1) if indexarity is None else indexarity
+        obj.init_from_arrow(schema_ptr, array_ptr, nindices)
         return obj
 
     @classmethod
