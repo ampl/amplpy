@@ -362,7 +362,7 @@ cdef extern from "ampl/ampl_c.h":
     
     ctypedef AMPL_DataFrameArrow AMPL_DATAFRAMEARROW
 
-    AMPL_ERRORINFO *AMPL_DATAFRAMEARROWCreate(AMPL_DATAFRAMEARROW **dataframe,
+    AMPL_ERRORINFO *AMPL_DataframeArrow(AMPL_DATAFRAMEARROW **dataframe,
                                           ArrowSchema *schema, ArrowArray *array,
                                           int64_t nindices)
 
