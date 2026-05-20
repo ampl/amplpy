@@ -2,22 +2,32 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.16.1 - 2025-05-13
+## 20250513
+
+### 0.16.1
 - Fix get() function.
 
-## 0.16.0 - 2025-12-08
+## 20251208
+
+### 0.16.0
 - Add type hints to amplpy.
 - Add Python 3.14 and Python 3.14t support.
 
-## 0.15.2 - 2025-07-09
+## 20250709
+
+### 0.15.2
 - Fix Environment object issue when an ampl directory exists.
 - Fix AMPLException object issue when the exception is printed.
 
-## 0.15.1 - 2025-06-20
+## 20250620
+
+### 0.15.1
 - [Breaking] Support options times or gentimes.
 - Add option "_throw_on_warnings" to control whether warnings raise exceptions.
 
-## 0.15.0 - 2025-06-18
+## 20250618
+
+### 0.15.0
 - Migrated to Cython for generating extension modules, improving performance and maintainability.
 - Add __str__ for AMPL objects.
 - Add ampls methods into AMPL object, i.e., AMPL.to_ampls() and AMPL.import_ampls_solution().
@@ -26,40 +36,58 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [Breaking] Throw if options times or gentimes are set.
 - Allow setting options as dict in AMPL, e.g., AMPL.option = {"solver": "gurobi", "var_bounds": 1, "gurobi_options": {"outlev": True, "timelim": 1}}
 
-## 0.14.1 - 2024-05-21
+## 20240521
+
+### 0.14.1
 - Add flat argument to AMPL.get_iis.
 
-## 0.14.0 - 2024-05-21
+## 20240521
+
+### 0.14.0
 - Allow assigning values to indexed sets from a dictionary with the lists of members
   for every index.
 - Add AMPL.get_iis() to return dictionaries with variables and constraints in IIS.
 - Add AMPL.get_solution() to return a dictionary with the solution.
 
-## 0.13.3 - 2024-02-20
+## 20240220
+
+### 0.13.3
 - Fix issues with AMPL.solve(verbose=False) when the solver argument was not set.
 
-## 0.13.2 - 2024-01-05
+## 20240105
+
+### 0.13.2
 - OutputHandler: Flush standard output after every message.
 
-## 0.13.1 - 2023-12-29
+## 20231229
+
+### 0.13.1
 - Upgrade libampl to 2.3.7-20231229.
 - Upgrade ampltools to 0.7.3 adding amplpy.bundle command.
 - Fix issue with environment variables on Windows in a generic way.
 - Add return_output and solvername_options arguments to AMPL.solve
   - You can now do `ampl.solve(solver="gurobi", gurobi_options="outlev=1")`.
 
-## 0.13.0 - 2023-12-26
+## 20231226
+
+### 0.13.0
 - [Breaking] amplpy.modules now have priority in the PATH.
 - Fix ampl_libpath issue on Windows.
 
-## 0.12.2 - 2023-12-11
+## 20231211
+
+### 0.12.2
 - Upgrade libampl to 2.3.6-20231130.
 - Add solver argument to AMPL.solve.
 
-## 0.12.1 - 2023-09-21
+## 20230921
+
+### 0.12.1
 - Fix Parameter.set_values with np.ndarray objects.
 
-## 0.12.0 - 2023-08-29
+## 20230829
+
+### 0.12.0
 - Upgrade libampl to 2.2.0-20230825.
 - Use x-ampl by default if available.
 - Add properties AMPL.solve_result/AMPL.solve_result_num.
@@ -69,14 +97,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [Breaking] Drop Python 3.5 compatibility.
 - [Breaking] Deprecate direct access methods to amplpy.DataFrame. Deprecated methods are still available with _ prefix.
 
-## 0.11.2 - 2023-07-11
+## 20230711
+
+### 0.11.2
 - [Breaking] Cast floats to integers whenever possible.
 
-## 0.11.1 - 2023-07-04
+## 20230704
+
+### 0.11.1
 - Add aliases Entity.get_values.to_pandas/to_list/to_dict.
 - Automatically stack 2D pandas.DataFrames.
 
-## 0.11.0 - 2023-06-21
+## 20230621
+
+### 0.11.0
 - Upgrade libampl to 2.1.2-20230618.
 - Add AMPL.write, PresolveException, and InfeasibilityException.
 - Improve handling of numpy types.
@@ -86,38 +120,58 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [Breaking] Drop Python 2.7 compatibility.
 - [Breaking] Iterating over non-indexed sets now iterates over set members.
 
-## 0.10.0 - 2023-05-22
+## 20230522
+
+### 0.10.0
 - Upgrade libampl to 2.1.0-20230522.
 - Breaking: Entity names do not contain spaces in the indices anymore.
 
-## 0.9.3 - 2023-04-21
+## 20230421
+
+### 0.9.3
 - Removed CamelCase from docstrings.
 
-## 0.9.2 - 2023-04-05
+## 20230405
+
+### 0.9.2
 - Add message to append to AMPLException messages.
 
-## 0.9.1 - 2023-03-22
+## 20230322
+
+### 0.9.1
 - Simplify ampl_notebook import: "from amplpy import ampl_notebook".
 
-## 0.9.0 - 2023-03-14
+## 20230314
+
+### 0.9.0
 - Preload amplpy.modules if found (reduces need for modules.load()).
 - Vendor ampltools.
 
-## 0.8.6 - 2023-01-23
+## 20230123
+
+### 0.8.6
 - Add amplpy.modules.
 
-## 0.8.5 - 2022-08-23
+## 20220823
+
+### 0.8.5
 - Update libampl to 2.0.11-20220823.
 - Ensure times and gentimes default to disabled.
 
-## 0.8.4 - 2022-08-02
+## 20220802
+
+### 0.8.4
 - Update libampl to 2.0.10-20220627.
 - Disable options times and gentimes during internal operations.
 
-## 0.8.3 - 2022-06-23
+## 20220623
+
+### 0.8.3
 - Improved handling of numpy types.
 
-## 0.8.2 - 2022-05-27
+## 20220527
+
+### 0.8.2
 - [BREAKING] Raise RuntimeError in Entity.get_values if there are any issues with the data.
 - Update libampl to 2.0.9.20220527.
 - Fixed hanging when license check fails on Windows.
@@ -125,72 +179,106 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Drop 32-bit support.
 - Add ampltools as dependency.
 
-## 0.8.1 - 2022-01-21
+## 20220121
+
+### 0.8.1
 - [BREAKING] Raise KeyError exceptions instead of TypeError exceptions when accessing entities that do not exist.
 
-## 0.8.0 - 2021-12-24
+## 20211224
+
+### 0.8.0
 - Update libampl to 2.0.8-2.
 - Allow users to specify the name of the AMPL executable.
 - Allow users to choose between using camelCase and snake_case methods.
 - Drop AMPL.exportGurobi model. It is now part of amplpy_gurobi.
 
-## 0.7.2 - 2021-12-01
+## 20211201
+
+### 0.7.2
 - Improve performance of many operations by moving code to the C++ layer.
 
-## 0.7.1 - 2021-07-26
+## 20210726
+
+### 0.7.1
 - Update libampl to 2.0.6-0.
 - Add Entity.xref.
 - Include complete license error message in license error exceptions.
 
-## 0.7.0 - 2021-01-25
+## 20210125
+
+### 0.7.0
 - Fix bug when assigning sets with mixed types.
 - Add support for pathlib.Path paths.
 - Basic support for MSYS, CYGWIN, and MINGW.
 - Support for linux-ppc64le and linux-aarch64.
 - Update libampl to 2.0.4-0.
 
-## 0.6.11 - 2020-02-28
+## 20200228
+
+### 0.6.11
 - Add support for ppc64le.
 
-## 0.6.10 - 2019-11-16
+## 20191116
+
+### 0.6.10
 - Fix "ImportError: DLL load failed" not fixed in the previous version.
 
-## 0.6.9 - 2019-11-16
+## 20191116
+
+### 0.6.9
 - Fix "ImportError: No module named _amplpython" introduced in the previous version.
 
-## 0.6.8 - 2019-11-16
+## 20191116
+
+### 0.6.8
 - Add Python 3.8 support.
 
-## 0.6.7 - 2019-06-22
+## 20190622
+
+### 0.6.7
 - Add optional parameter index_names to DataFrame.fromPandas.
 - Add DataFrame.fromDict to load data from dictionaries.
 - Allow setting entity values directly from dictionaries.
 
-## 0.6.6 - 2019-05-11
+## 20190511
+
+### 0.6.6
 - Update internal library.
 - Add AMPL.exportModel.
 - AMPL.exportData now supports indexed sets.
 
-## 0.6.5 - 2019-04-14
+## 20190414
+
+### 0.6.5
 - Improve AMPL.exportGurobiModel and AMPL.importGurobiSolution.
 - Add verbose option to AMPL.exportGurobiModel.
 - Add register_magics to register `%%ampl` and `%%ampl_eval`.
 
-## 0.6.4 - 2019-02-13
+## 20190213
+
+### 0.6.4
 - Fix dll loading issue with python versions that come with conda.
 
-## 0.6.3 - 2018-12-04
+## 20181204
+
+### 0.6.3
 - Fix issue with indexed sets (by updating the internal library).
 
-## 0.6.2 - 2018-11-20
+## 20181120
+
+### 0.6.2
 - Add support for Pandas Series.
 - Add optional gurobiDriver parameter to AMPL.exportGurobiModel.
 
-## 0.6.1 - 2018-11-13
+## 20181113
+
+### 0.6.1
 - Improve robustness of AMPL.exportGurobiModel.
 - Improve error message when AMPL is not in the search path.
 
-## 0.6.0 - 2018-11-03
+## 20181103
+
+### 0.6.0
 - Upgrade internal API to v2.0.
 - Add experimental methods AMPL._startRecording and AMPL._stopRecording.
 - Add experimental method AMPL._loadSession.
@@ -200,47 +288,71 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Add method AMPL.importGurobiSolution.
 - Add method AMPL.getOutput.
 
-## 0.5.0 - 2018-05-06
+## 20180506
+
+### 0.5.0
 - Breaking: AMPL errors raise exceptions by default.
 - Breaking: Drop support for Python 3.3 on Linux.
 - Add AMPL.exportData.
 - Add AMPL.exportGurobiModel.
 
-## 0.4.1 - 2018-04-12
+## 20180412
+
+### 0.4.1
 - Fix: compatibility issues with multiple python versions.
 
-## 0.4.0 - 2018-04-10
+## 20180410
+
+### 0.4.0
 - Improve interaction with Pandas and Numpy.
 - Add DataFrame.fromNumpy.
 - Entity.setValues now accepts Pandas DataFrames.
 - Parameter.setValues and Set.setValues now accept Numpy arrays and matrices.
 - Breaking: DataFrame.toList and DataFrame.doDict do not wrap scalar values into lists anymore.
 
-## 0.3.4 - 2018-02-24
+## 20180224
+
+### 0.3.4
 - Fix: error messages not being shown in Jupyter Notebooks.
 - Breaking: AMPL errors no longer raise exceptions by default.
 
-## 0.3.3 - 2018-01-09
+## 20180109
+
+### 0.3.3
 - Fix issues related to the passing of infinity to AMPL.
 
-## 0.3.2 - 2017-12-13
+## 20171213
+
+### 0.3.2
 - Fix issue with DataFrames created with pandas.read_table.
 
-## 0.3.1 - 2017-11-17
+## 20171117
+
+### 0.3.1
 - Fix precision issue in parameters.
 
-## 0.3.0 - 2017-10-13
+## 20171013
+
+### 0.3.0
 - Introduce alternative method to access entities.
 
-## 0.2.0 - 2017-08-05
+## 20170805
+
+### 0.2.0
 - Add DataFrame.fromPandas and DataFrame.toPandas.
 
-## 0.1.2 - 2017-08-04
+## 20170804
+
+### 0.1.2
 - Improve DataFrame initialization.
 - Fix issue with stdout in jupyter notebooks.
 
-## 0.1.1 - 2017-07-30
+## 20170730
+
+### 0.1.1
 - Fix issues with strings in Python 3.
 
-## 0.1.0 - 2017-07-22
+## 20170722
+
+### 0.1.0
 - Initial release.
