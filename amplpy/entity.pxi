@@ -74,7 +74,26 @@ cdef class Entity(object):
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
-        
+
+        return output
+
+    def expand(self):
+        """
+        Get the expand message for this entity or instance.
+
+        Returns:
+            A string with the expand output.
+        """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef char* output_c
+        if self._index is NULL:
+            errorinfo = campl.AMPL_EntityExpand(self._ampl._c_ampl, self._name, &output_c)
+        else:
+            errorinfo = campl.AMPL_InstanceExpand(self._ampl._c_ampl, self._name, self._index, &output_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        output = str(output_c.decode('utf-8'))
+        campl.AMPL_StringFree(&output_c)
         return output
 
     def __str__(self):

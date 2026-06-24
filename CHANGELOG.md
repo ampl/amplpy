@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 20260624
+
+### 0.17.0
+- Add `AMPL.expand()` and `AMPL.show()` methods.
+- Add `Entity.expand()` method (dispatches to instance-level expand when indexed).
+
 ## 20250513
 
 ### 0.16.1

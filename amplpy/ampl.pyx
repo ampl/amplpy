@@ -1207,6 +1207,38 @@ cdef class AMPL:
         if not keep_files:
             shutil.rmtree(model._tmpdir)
 
+    def expand(self):
+        """
+        Get the expand message for the current model.
+
+        Returns:
+            A string with the expand output.
+        """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef char* output_c
+        errorinfo = campl.AMPL_Expand(self._c_ampl, &output_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        output = str(output_c.decode('utf-8'))
+        campl.AMPL_StringFree(&output_c)
+        return output
+
+    def show(self):
+        """
+        Get the show message for the current model.
+
+        Returns:
+            A string with the show output.
+        """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef char* output_c
+        errorinfo = campl.AMPL_Show(self._c_ampl, &output_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        output = str(output_c.decode('utf-8'))
+        campl.AMPL_StringFree(&output_c)
+        return output
+
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* output_c
@@ -1215,7 +1247,7 @@ cdef class AMPL:
             PY_AMPL_CALL(errorinfo)
         output = str(output_c.decode('utf-8'))
         campl.AMPL_StringFree(&output_c)
-        
+
         return output
 
     def __str__(self):

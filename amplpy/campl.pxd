@@ -587,3 +587,11 @@ cdef extern from "ampl/ampl_c.h":
     AMPL_ERRORINFO* AMPL_TableInstanceRead(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple)
 
     AMPL_ERRORINFO* AMPL_TableInstanceWrite(AMPL* ampl, const char* entityname, AMPL_TUPLE* tuple)
+
+    AMPL_ERRORINFO* AMPL_Expand(AMPL* ampl, char** expand)
+
+    AMPL_ERRORINFO* AMPL_Show(AMPL* ampl, char** show)
+
+    AMPL_ERRORINFO* AMPL_EntityExpand(AMPL* ampl, const char* entityname, char** expand)
+
+    AMPL_ERRORINFO* AMPL_InstanceExpand(AMPL* ampl, const char* entityname, AMPL_TUPLE* index, char** str)
