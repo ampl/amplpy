@@ -486,6 +486,8 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetValues(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
+    AMPL_ERRORINFO* AMPL_EntitySetSuffixes(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
+
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
     AMPL_ERRORINFO* AMPL_ParameterSetNumeric(AMPL* ampl, const char* scalarExpression, double value)
@@ -591,6 +593,8 @@ cdef extern from "ampl/ampl_c.h":
     AMPL_ERRORINFO* AMPL_Expand(AMPL* ampl, char** expand)
 
     AMPL_ERRORINFO* AMPL_Show(AMPL* ampl, char** show)
+
+    AMPL_ERRORINFO* AMPL_ResetOptions(AMPL* ampl)
 
     AMPL_ERRORINFO* AMPL_EntityExpand(AMPL* ampl, const char* entityname, char** expand)
 

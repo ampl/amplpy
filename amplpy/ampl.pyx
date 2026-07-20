@@ -1207,6 +1207,12 @@ cdef class AMPL:
         if not keep_files:
             shutil.rmtree(model._tmpdir)
 
+    def reset_options(self):
+        """
+        Reset all options to their default values.
+        """
+        PY_AMPL_CALL(campl.AMPL_ResetOptions(self._c_ampl))
+
     def expand(self):
         """
         Get the expand message for the current model.
