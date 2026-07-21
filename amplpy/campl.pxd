@@ -488,6 +488,10 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_EntitySetSuffixes(AMPL* ampl, const char* name, AMPL_DATAFRAME* data)
 
+    AMPL_ERRORINFO* AMPL_InstanceSetDoubleSuffix(AMPL* ampl, const char* entityname, AMPL_TUPLE* index, const char* suffix, double value)
+
+    AMPL_ERRORINFO* AMPL_InstanceSetStringSuffix(AMPL* ampl, const char* entityname, AMPL_TUPLE* index, const char* suffix, const char* value)
+
     AMPL_ERRORINFO* AMPL_ParameterSetValue(AMPL* ampl, const char* scalarExpression, AMPL_VARIANT* v)
 
     AMPL_ERRORINFO* AMPL_ParameterSetNumeric(AMPL* ampl, const char* scalarExpression, double value)

@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 20260721
+
+### 0.18.0
+- Add `AMPL.reset_options()` method.
+- Add `Entity.set_suffix(suffix, value)` method (numeric/string for scalar instances, DataFrame/Series for indexed entities).
+
 ## 20260624
 
 ### 0.17.0

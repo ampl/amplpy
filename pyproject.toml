@@ -4,3 +4,8 @@ requires = [
     "cython==3.1.0",
     "wheel",
 ]
+
+[tool.cibuildwheel.windows]
+# Force DLL handles closed before cibuildwheel attempts to delete its temp dir,
+# which otherwise fails on Windows (exit code 1) when the ampl.dll is still loaded.
+after-test = "taskkill /F /IM ampl.exe /T 2>NUL || EXIT /B 0"

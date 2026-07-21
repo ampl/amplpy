@@ -77,6 +77,44 @@ cdef class Entity(object):
 
         return output
 
+    def set_suffix(self, suffix, value):
+        """
+        Set the value of a suffix for this entity or instance.
+
+        For scalar or per-instance assignment pass a numeric or string value;
+        the call is forwarded to the appropriate instance-level C API function.
+        For bulk assignment over an indexed entity pass a
+        :class:`pandas.DataFrame` or :class:`pandas.Series`.
+
+        Args:
+            suffix: Name of the suffix (e.g. ``"relax"``).
+
+            value: Numeric value, string value, or a
+            :class:`pandas.DataFrame` / :class:`pandas.Series` mapping
+            indices to values.
+        """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef DataFrame df_typed
+        if pd is not None and isinstance(value, pd.Series):
+            df_typed = DataFrame.from_pandas(value.to_frame(name=suffix), indexarity=self.indexarity())
+            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
+        elif pd is not None and isinstance(value, pd.DataFrame):
+            df_typed = DataFrame.from_pandas(value, indexarity=self.indexarity())
+            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
+        elif isinstance(value, DataFrame):
+            df_typed = value
+            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
+        elif isinstance(value, str):
+            PY_AMPL_CALL(campl.AMPL_InstanceSetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), value.encode('utf-8')))
+        else:
+            PY_AMPL_CALL(campl.AMPL_InstanceSetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), float(value)))
+
     def expand(self):
         """
         Get the expand message for this entity or instance.

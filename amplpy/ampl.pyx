@@ -1275,6 +1275,7 @@ cdef class AMPL:
     getObjectives = get_objectives
     getOption = get_option
     getOutput = get_output
+    resetOptions = reset_options
     getOutputHandler = get_output_handler
     getParameter = get_parameter
     getParameters = get_parameters
