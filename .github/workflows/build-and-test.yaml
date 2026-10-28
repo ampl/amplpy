@@ -22,12 +22,11 @@ jobs:
       - run: python -m mypy --config-file dev/typing/mypy.ini
 
   build_native:
-    name: Build ${{ matrix.python }} wheels on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-latest]
-        python: [current, legacy]
 
     steps:
       - uses: actions/checkout@v4
@@ -36,20 +35,11 @@ jobs:
         run: python3 dev/updatelib.py
 
       - name: Build wheels
-        if: matrix.python == 'current'
         uses: pypa/cibuildwheel@v4.3.5
-
-      # cibuildwheel 4 no longer builds Python 3.13t wheels.
-      - name: Build legacy Python wheels
-        if: matrix.python == 'legacy'
-        uses: pypa/cibuildwheel@v3.4.1
-        env:
-          CIBW_BUILD: cp313t-*
-          CIBW_ENABLE: cpython-freethreading
 
       - uses: actions/upload-artifact@v4
         with:
-          name: artifact-${{ matrix.os }}-${{ matrix.python }}
+          name: artifact-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
   build_with_qemu:
