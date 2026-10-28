@@ -4,4 +4,7 @@ coverage
 bokeh
 pandas
 jupyter
+mypy
+pandas-stubs
+typing_extensions
 

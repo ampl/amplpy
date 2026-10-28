@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 20261028
 
 ### 0.18.1
+- Fix type hints for indexed entities, iteration, dataframes, callbacks, and solve results; add the `py.typed` marker.
 - Add Python 3.15 and Python 3.15t wheel builds.
 - Fix `Constraint.drop()` and `Constraint.restore()` on indexed instances affecting the whole constraint family.
 - Fix `Objective.drop()` and `Objective.restore()` on indexed instances affecting the whole objective family.

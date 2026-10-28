@@ -5,3 +5,7 @@ requires = [
     "cython==3.3.0; python_version >= '3.15'",
     "wheel",
 ]
+
+[tool.cibuildwheel.windows]
+# setup.py bundles libampl; amplpy.__init__ loads it via ctypes.
+repair-wheel-command = ""

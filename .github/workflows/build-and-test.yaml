@@ -10,6 +10,17 @@ env:
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs pandas numpy
 
 jobs:
+  type_hints:
+    name: Check type hints
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install mypy pandas-stubs typing_extensions
+      - run: python -m mypy --config-file dev/typing/mypy.ini
+
   build_native:
     name: Build ${{ matrix.python }} wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
