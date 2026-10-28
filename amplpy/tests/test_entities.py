@@ -196,6 +196,8 @@ class TestEntities(TestBase.TestBase):
             ):
                 with self.subTest(declaration=declaration, indexing=indexing):
                     ampl.reset()
+                    # Keep active constraints from being eliminated by presolve.
+                    ampl.option["presolve"] = 0
                     ampl.eval(f"var x; {declaration}{indexing}: {expression};")
                     entity = collection["c"]
                     indices = [index for index, _ in entity]
@@ -231,6 +233,7 @@ class TestEntities(TestBase.TestBase):
 
             with self.subTest(declaration=declaration, indexing="scalar"):
                 ampl.reset()
+                ampl.option["presolve"] = 0
                 ampl.eval(f"var x; {declaration}: x {operator} 1;")
                 entity = collection["c"]
                 entity.drop()

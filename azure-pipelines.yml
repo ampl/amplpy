@@ -1,4 +1,5 @@
 variables:
+  CIBW_VERSION: 4.3.5
   CIBW_SKIP: pp* *_i686 *-win32 *musllinux*
   CIBW_ARCHS_MACOS: x86_64 universal2
   CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base ampl_module_highs ampl_module_gurobi pandas numpy
@@ -35,7 +36,11 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
+          cibuildwheel --platform linux --output-dir wheelhouse .
+          # Retain Python 3.8 wheels using the last compatible major version.
           python -m pip install --upgrade cibuildwheel==3.4.1
+          export CIBW_BUILD="cp38-*"
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -50,7 +55,11 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
+          cibuildwheel --platform macos --output-dir wheelhouse .
+          # Retain Python 3.8 wheels using the last compatible major version.
           python -m pip install --upgrade cibuildwheel==3.4.1
+          export CIBW_BUILD="cp38-*"
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -65,7 +74,11 @@ stages:
           set -ex
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
+          python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
+          cibuildwheel --platform windows --output-dir wheelhouse .
+          # Retain Python 3.8 wheels using the last compatible major version.
           python -m pip install --upgrade cibuildwheel==3.4.1
+          export CIBW_BUILD="cp38-*"
           cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -81,6 +94,7 @@ stages:
     strategy:
       matrix:
         aarch64 cp38:
+          CIBW_VERSION: 3.4.1
           CIBW_BUILD: cp38-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
@@ -112,6 +126,14 @@ stages:
           CIBW_BUILD: cp314t-*
           CIBW_ARCHS_LINUX: aarch64
           CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
+        aarch64 cp315:
+          CIBW_BUILD: cp315-*
+          CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
+        aarch64 cp315t:
+          CIBW_BUILD: cp315t-*
+          CIBW_ARCHS_LINUX: aarch64
+          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
     steps:
       - task: UsePythonVersion@0
       - bash: docker run --rm --privileged docker.io/tonistiigi/binfmt:qemu-v8.1.5 --install all
@@ -119,7 +141,7 @@ stages:
       - bash: |
           set -ex
           python dev/updatelib.py
-          python -m pip install --upgrade cibuildwheel==3.4.1
+          python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
           cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
       - task: PublishBuildArtifacts@1
