@@ -183,6 +183,61 @@ class TestEntities(TestBase.TestBase):
         self.assertTrue(ampl.get_constraint("xy").is_logical())
         self.assertTrue(isinstance(ampl.get_constraint("xy").val(), float))
 
+    def test_drop_restore_instances(self):
+        ampl = self.ampl
+        for declaration, collection, operator in (
+            ("s.t. c", ampl.con, ">="),
+            ("minimize c", ampl.obj, "+"),
+        ):
+            for indexing, expression, target in (
+                ("{t in 1..3}", f"x {operator} t", 2),
+                ("{s in {'a', 'b', 'c'}}", f"x {operator} 1", "b"),
+                ("{s in {'a', 'b'}, t in 1..2}", f"x {operator} t", ("b", 2)),
+            ):
+                with self.subTest(declaration=declaration, indexing=indexing):
+                    ampl.reset()
+                    ampl.eval(f"var x; {declaration}{indexing}: {expression};")
+                    entity = collection["c"]
+                    indices = [index for index, _ in entity]
+                    target_index = target if isinstance(target, tuple) else (target,)
+                    entity[target].drop()
+                    self.assertEqual(
+                        [entity[index].astatus() for index in indices],
+                        ["drop" if index == target_index else "in" for index in indices],
+                    )
+                    entity[target].restore()
+                    self.assertEqual(
+                        [entity[index].astatus() for index in indices],
+                        ["in"] * len(indices),
+                    )
+                    entity.drop()
+                    self.assertEqual(
+                        [entity[index].astatus() for index in indices],
+                        ["drop"] * len(indices),
+                    )
+                    # Iterated instances must retain their indices too.
+                    for index, instance in entity:
+                        if index == target_index:
+                            instance.restore()
+                    self.assertEqual(
+                        [entity[index].astatus() for index in indices],
+                        ["in" if index == target_index else "drop" for index in indices],
+                    )
+                    entity.restore()
+                    self.assertEqual(
+                        [entity[index].astatus() for index in indices],
+                        ["in"] * len(indices),
+                    )
+
+            with self.subTest(declaration=declaration, indexing="scalar"):
+                ampl.reset()
+                ampl.eval(f"var x; {declaration}: x {operator} 1;")
+                entity = collection["c"]
+                entity.drop()
+                self.assertEqual(entity.astatus(), "drop")
+                entity.restore()
+                self.assertEqual(entity.astatus(), "in")
+
     def test_set(self):
         load_diet_model(self.ampl)
         ampl = self.ampl

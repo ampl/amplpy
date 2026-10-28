@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 20261028
+
+### 0.18.1
+- Fix `Constraint.drop()` and `Constraint.restore()` on indexed instances affecting the whole constraint family.
+- Fix `Objective.drop()` and `Objective.restore()` on indexed instances affecting the whole objective family.
+
 ## 20260721
 
 ### 0.18.0

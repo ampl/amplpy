@@ -111,15 +111,23 @@ cdef class Objective(Entity):
 
     def drop(self):
         """
-        Drop this objective instance.
+        Drop this objective instance, or all instances if called on the
+        objective entity.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
+        if self._index is NULL:
+            PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
+        else:
+            PY_AMPL_CALL(campl.AMPL_InstanceDrop(self._ampl._c_ampl, self._name, self._index))
 
     def restore(self):
         """
-        Restore this objective (if it had been dropped, no effect otherwise).
+        Restore this objective instance, or all instances if called on the
+        objective entity (no effect if already restored).
         """
-        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
+        if self._index is NULL:
+            PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
+        else:
+            PY_AMPL_CALL(campl.AMPL_InstanceRestore(self._ampl._c_ampl, self._name, self._index))
 
     def minimization(self):
         """

@@ -63,17 +63,23 @@ cdef class Constraint(Entity):
 
     def drop(self):
         """
-        Drop all instances in this constraint entity, corresponding to the AMPL
-        code: `drop constraintname;`.
+        Drop this constraint instance, or all instances if called on the
+        constraint entity.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
+        if self._index is NULL:
+            PY_AMPL_CALL(campl.AMPL_EntityDrop(self._ampl._c_ampl, self._name))
+        else:
+            PY_AMPL_CALL(campl.AMPL_InstanceDrop(self._ampl._c_ampl, self._name, self._index))
 
     def restore(self):
         """
-        Restore all instances in this constraint entity, corresponding to the
-        AMPL code: `restore constraintname;`.
+        Restore this constraint instance, or all instances if called on the
+        constraint entity.
         """
-        PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
+        if self._index is NULL:
+            PY_AMPL_CALL(campl.AMPL_EntityRestore(self._ampl._c_ampl, self._name))
+        else:
+            PY_AMPL_CALL(campl.AMPL_InstanceRestore(self._ampl._c_ampl, self._name, self._index))
 
     def body(self):
         """
