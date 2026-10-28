@@ -5,6 +5,7 @@ cimport amplpy.campl as campl
 
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
+from libc.stdint cimport int64_t
 
 
 from cpython.bool cimport PyBool_Check
@@ -154,28 +155,6 @@ cdef class AMPL:
         """
         self.close()
 
-    #def get_data_arrow(self, *statements):
-    #    cdef campl.ArrowSchema* c_schema
-    #    cdef campl.ArrowArray* c_array
-    #    cdef campl.AMPL_ERRORINFO* errorinfo
-    #    cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
-    #    for i in range(len(statements)):
-    #        statements_c[i] = strdup(statements[i].encode('utf-8'))
-    #    errorinfo = campl.AMPL_GetDataArrow(self._c_ampl, statements_c, len(statements), &c_schema, &c_array)
-    #    rc = campl.AMPL_ErrorInfoGetError(errorinfo)
-    #    for i in range(len(statements)):
-    #        free(statements_c[i])
-    #    free(statements_c)
-    #    if errorinfo:
-    #        PY_AMPL_CALL(errorinfo)
-    #    capsule_schema = PyCapsule_New(<void*>c_schema, "arrow_schema", NULL)
-    #    capsule_array = PyCapsule_New(<void*>c_array, "arrow_array", NULL)
-    #    stream = c_array_stream(capsule_array, capsule_schema)
-    #    df = pl.from_arrow(stream)
-        
-    #    return df
-
-
     def get_data(self, *statements):
         """
         Get the data corresponding to the display statements. The statements
@@ -205,8 +184,39 @@ cdef class AMPL:
             RuntimeError: if there are issues with the data.
 
         Returns:
-            DataFrame capturing the output of the display
+            :class:`~amplpy.DataFrameArrow` (when pyarrow is installed) or
+            :class:`~amplpy.DataFrame` capturing the output of the display
             command in tabular form.
+        """
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_DATAFRAMEARROW* c_df
+        cdef campl.AMPL_DATAFRAME* data
+        cdef DataFrameArrow arrow_result
+        cdef char** statements_c = <char**> malloc(len(statements) * sizeof(char*))
+        for i in range(len(statements)):
+            statements_c[i] = strdup(statements[i].encode('utf-8'))
+        if pa is not None:
+            errorinfo = campl.AMPL_GetDataArrow(self._c_ampl, <const char* const*>statements_c, len(statements), &c_df)
+            for i in range(len(statements)):
+                free(statements_c[i])
+            free(statements_c)
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
+            arrow_result = DataFrameArrow()
+            arrow_result._c_df = c_df
+            return arrow_result
+        errorinfo = campl.AMPL_GetData(self._c_ampl, <const char* const*>statements_c, len(statements), &data)
+        for i in range(len(statements)):
+            free(statements_c[i])
+        free(statements_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        return DataFrame.create(data)
+
+    def get_data_df(self, *statements):
+        """
+        Like :func:`~amplpy.AMPL.get_data` but always returns a
+        :class:`~amplpy.DataFrame` (no Arrow). Useful for benchmarking.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_DATAFRAME* data
@@ -220,6 +230,23 @@ cdef class AMPL:
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         return DataFrame.create(data)
+
+    def set_data_df(self, data, set_name=None):
+        """
+        Like :func:`~amplpy.AMPL.set_data` but always uses the DataFrame path
+        (no Arrow). Useful for benchmarking.
+        """
+        cdef DataFrame data_frame
+        cdef campl.AMPL_DATAFRAME* data_c
+        if not isinstance(data, DataFrame):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+                data = DataFrame.from_pandas(data)
+        data_frame = data
+        data_c = data_frame.get_ptr()
+        if set_name is None:
+            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
+        else:
+            PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
 
     def get_entity(self, name):
         """
@@ -616,27 +643,28 @@ cdef class AMPL:
         Raises:
             AMPLException: if the data assignment procedure was not successful.
         """
+        cdef DataFrameArrow arrow_frame
+        cdef campl.AMPL_DATAFRAMEARROW* arrow_c
+        cdef DataFrame data_frame
+        cdef campl.AMPL_DATAFRAME* data_c
+        if pa is not None and not isinstance(data, DataFrame):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+                arrow_frame = DataFrameArrow.from_pandas(data)
+                arrow_c = arrow_frame.get_ptr()
+                if set_name is None:
+                    PY_AMPL_CALL(campl.AMPL_SetDataArrow(self._c_ampl, arrow_c, ""))
+                else:
+                    PY_AMPL_CALL(campl.AMPL_SetDataArrow(self._c_ampl, arrow_c, set_name.encode('utf-8')))
+                return
         if not isinstance(data, DataFrame):
             if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
                 data = DataFrame.from_pandas(data)
-        cdef DataFrame data_frame = data
-        cdef campl.AMPL_DATAFRAME* data_c = data_frame.get_ptr()
+        data_frame = data
+        data_c = data_frame.get_ptr()
         if set_name is None:
             PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, ""))
         else:
             PY_AMPL_CALL(campl.AMPL_SetData(self._c_ampl, data_c, set_name.encode('utf-8')))
-
-
-    def set_data_arrow(self, data, set_name=None):
-        cdef DataFrameArrow data_frame
-        if not isinstance(data, DataFrameArrow):
-            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                data_frame = DataFrameArrow.from_pandas(data)
-        cdef campl.AMPL_DATAFRAMEARROW* data_c = data_frame.get_ptr()
-        if set_name is None:
-            PY_AMPL_CALL(campl.AMPL_SetDataArrow(self._c_ampl, data_c, ""))
-        else:
-            PY_AMPL_CALL(campl.AMPL_SetDataArrow(self._c_ampl, data_c, set_name.encode('utf-8')))
 
     def read_table(self, table_name):
         """

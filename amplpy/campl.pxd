@@ -348,14 +348,27 @@ cdef extern from "ampl/ampl_c.h":
         pass
 
     cdef struct ArrowSchema:
-        pass
+        const char* format
+        const char* name
+        const char* metadata
+        int64_t flags
+        int64_t n_children
+        ArrowSchema** children
+        ArrowSchema* dictionary
+        void (*release)(ArrowSchema*)
+        void* private_data
 
-    #ctypedef ArrowSchema s_ArrowSchema
-    
     cdef struct ArrowArray:
-        pass
-
-    #ctypedef ArrowArray s_ArrowArray
+        int64_t length
+        int64_t null_count
+        int64_t offset
+        int64_t n_buffers
+        int64_t n_children
+        const void** buffers
+        ArrowArray** children
+        ArrowArray* dictionary
+        void (*release)(ArrowArray*)
+        void* private_data
 
     ctypedef struct AMPL_DataFrameArrow:
         pass
@@ -368,9 +381,9 @@ cdef extern from "ampl/ampl_c.h":
 
     void AMPL_DataFrameArrowFree(AMPL_DATAFRAMEARROW **dataframe)
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema **schema)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetSchema(AMPL_DATAFRAMEARROW *dataframe, ArrowSchema *schema)
 
-    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray **array)
+    AMPL_ERRORINFO *AMPL_DataFrameArrowGetArray(AMPL_DATAFRAMEARROW *dataframe, ArrowArray *array)
 
     AMPL_ERRORINFO *AMPL_DataFrameArrowGetNIndices(AMPL_DATAFRAMEARROW *dataframe, int64_t *nindices)
 
@@ -436,7 +449,7 @@ cdef extern from "ampl/ampl_c.h":
 
     AMPL_ERRORINFO* AMPL_GetData(AMPL* ampl, const char* const* displayStatements, size_t n, AMPL_DATAFRAME** output)
 
-    AMPL_ERRORINFO *AMPL_GetDataArrow(AMPL *ampl, const char *const *displayStatements, size_t n, ArrowSchema **schema, ArrowArray **array)
+    AMPL_ERRORINFO *AMPL_GetDataArrow(AMPL *ampl, const char *const *displayStatements, size_t n, AMPL_DATAFRAMEARROW **dataframe_arrow)
 
     AMPL_ERRORINFO* AMPL_SetData(AMPL* ampl, AMPL_DATAFRAME* df, const char* setName)
 

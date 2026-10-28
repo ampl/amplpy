@@ -222,5 +222,5 @@ setup(
                                 "boundscheck": False, "wraparound": False},
     ),
     package_data={"": package_content()},
-    install_requires=["ampltools >= 0.7.5"],
+    install_requires=["ampltools >= 0.7.5", "nanoarrow"],
 )

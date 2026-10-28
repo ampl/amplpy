@@ -344,9 +344,17 @@ cdef class Entity(object):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef DataFrame df
         cdef DataFrameArrow data_frame
-        cdef campl.AMPL_DATAFRAME* df_c 
-        cdef char* _name_c 
+        cdef campl.AMPL_DATAFRAME* df_c
+        cdef char* _name_c
         PY_AMPL_CALL(campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c))
+        if pa is not None and not isinstance(data, (DataFrame, dict)):
+            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+                data_frame = DataFrameArrow.from_pandas(data, indexarity=self.indexarity())
+                errorinfo = campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, _name_c, data_frame.get_ptr())
+                campl.AMPL_StringFree(&_name_c)
+                if errorinfo:
+                    PY_AMPL_CALL(errorinfo)
+                return
         if isinstance(data, DataFrame):
             df = data
             df_c = df.get_ptr()
@@ -361,24 +369,15 @@ cdef class Entity(object):
             campl.AMPL_StringFree(&_name_c)
             if errorinfo:
                 PY_AMPL_CALL(errorinfo)
+        elif pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+            df = DataFrame.from_pandas(data, indexarity=self.indexarity())
+            df_c = df.get_ptr()
+            errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+            campl.AMPL_StringFree(&_name_c)
+            if errorinfo:
+                PY_AMPL_CALL(errorinfo)
         else:
-            if None not in (pd, pa, na) and isinstance(data, (pd.DataFrame, pd.Series)):
-                data_frame = DataFrameArrow.from_pandas(data, indexarity=self.indexarity())
-                errorinfo = campl.AMPL_EntitySetValuesArrow(self._ampl._c_ampl, _name_c, data_frame.get_ptr())
-                
-                campl.AMPL_StringFree(&_name_c)
-                if errorinfo:
-                    PY_AMPL_CALL(errorinfo)
-                return
-            elif pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                df = DataFrame.from_pandas(data, indexarity=self.indexarity())
-                df_c = df.get_ptr()
-                errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-
-                campl.AMPL_StringFree(&_name_c)
-                if errorinfo:
-                    PY_AMPL_CALL(errorinfo)
-                return
+            campl.AMPL_StringFree(&_name_c)
             raise TypeError(f"Unexpected data type: {type(data)}.")
 
     # Aliases
