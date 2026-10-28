@@ -39,12 +39,12 @@ jobs:
         if: matrix.python == 'current'
         uses: pypa/cibuildwheel@v4.3.5
 
-      # cibuildwheel 4 no longer builds Python 3.8 or Python 3.13t wheels.
+      # cibuildwheel 4 no longer builds Python 3.13t wheels.
       - name: Build legacy Python wheels
         if: matrix.python == 'legacy'
         uses: pypa/cibuildwheel@v3.4.1
         env:
-          CIBW_BUILD: cp38-* cp313t-*
+          CIBW_BUILD: cp313t-*
           CIBW_ENABLE: cpython-freethreading
 
       - uses: actions/upload-artifact@v4
@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         arch: [aarch64]
-        build: [cp38-*, cp39-*, cp310-*, cp311-*, cp312-*, cp313-*, cp314-*, cp314t-*, cp315-*, cp315t-*]
+        build: [cp39-*, cp310-*, cp311-*, cp312-*, cp313-*, cp314-*, cp314t-*, cp315-*, cp315t-*]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -76,7 +76,6 @@ jobs:
         run: python3 dev/updatelib.py
 
       - name: Build wheels
-        if: matrix.build != 'cp38-*'
         uses: pypa/cibuildwheel@v4.3.5
         env:
           CIBW_ARCHS_LINUX: ${{ matrix.arch }}
@@ -84,14 +83,6 @@ jobs:
           CIBW_BUILD: ${{ matrix.build }}
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
           CIBW_TEST_COMMAND: ${{ env.CIBW_TEST_COMMAND }}
-          CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
-
-      - name: Build Python 3.8 wheels
-        if: matrix.build == 'cp38-*'
-        uses: pypa/cibuildwheel@v3.4.1
-        env:
-          CIBW_ARCHS_LINUX: ${{ matrix.arch }}
-          CIBW_BUILD: ${{ matrix.build }}
           CIBW_TEST_REQUIRES: --index-url https://pypi.ampl.com --extra-index-url https://pypi.org/simple ampl_module_base
 
       - name: Remove '-*' from build variable

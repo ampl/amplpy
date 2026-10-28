@@ -38,10 +38,6 @@ stages:
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
           cibuildwheel --platform linux --output-dir wheelhouse .
-          # Retain Python 3.8 wheels using the last compatible major version.
-          python -m pip install --upgrade cibuildwheel==3.4.1
-          export CIBW_BUILD="cp38-*"
-          cibuildwheel --platform linux --output-dir wheelhouse .
         displayName: Build wheels
         env:
           AMPLKEY_UUID: $(AMPLKEY_UUID)
@@ -56,10 +52,6 @@ stages:
           python dev/updatelib.py
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
-          cibuildwheel --platform macos --output-dir wheelhouse .
-          # Retain Python 3.8 wheels using the last compatible major version.
-          python -m pip install --upgrade cibuildwheel==3.4.1
-          export CIBW_BUILD="cp38-*"
           cibuildwheel --platform macos --output-dir wheelhouse .
         displayName: Build wheels
         env:
@@ -76,10 +68,6 @@ stages:
           export CIBW_TEST_COMMAND="python -m amplpy.modules activate ${AMPLKEY_UUID} && python -m amplpy.tests"
           python -m pip install --upgrade cibuildwheel==$(CIBW_VERSION)
           cibuildwheel --platform windows --output-dir wheelhouse .
-          # Retain Python 3.8 wheels using the last compatible major version.
-          python -m pip install --upgrade cibuildwheel==3.4.1
-          export CIBW_BUILD="cp38-*"
-          cibuildwheel --platform windows --output-dir wheelhouse .
         displayName: Build wheels
         env:
           AMPLKEY_UUID: $(AMPLKEY_UUID)
@@ -93,11 +81,6 @@ stages:
     pool: {vmImage: 'Ubuntu-24.04'}
     strategy:
       matrix:
-        aarch64 cp38:
-          CIBW_VERSION: 3.4.1
-          CIBW_BUILD: cp38-*
-          CIBW_ARCHS_LINUX: aarch64
-          CIBW_TEST_REQUIRES: $(CIBW_TEST_REQUIRES_AARCH64)
         aarch64 cp39:
           CIBW_BUILD: cp39-*
           CIBW_ARCHS_LINUX: aarch64
