@@ -81,6 +81,7 @@ def _detect_env():
 os.environ["AMPL_API"] = "amplpy"
 os.environ["AMPL_API_VERSION"] = __version__
 os.environ["AMPL_API_ENV"] = _detect_env()
+os.environ["AMPL_API_RUNTIME"] = "python/" + platform.python_version()
 
 
 def _list_aliases():
