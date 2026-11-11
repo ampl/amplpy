@@ -59,6 +59,31 @@ except Exception:
 __version__ = "0.18.1"
 
 
+def _detect_env():
+    """Where amplpy is running: colab, kaggle, jupyter, ipython, or python."""
+    if "COLAB_RELEASE_TAG" in os.environ or "google.colab" in sys.modules:
+        return "colab"
+    if "KAGGLE_KERNEL_RUN_TYPE" in os.environ:
+        return "kaggle"
+    if "IPython" in sys.modules:
+        try:
+            shell = sys.modules["IPython"].get_ipython()
+        except Exception:
+            shell = None
+        if shell is not None:
+            if type(shell).__name__ == "ZMQInteractiveShell":
+                return "jupyter"
+            return "ipython"
+    return "python"
+
+
+# Read by amplkey (inherited by AMPL and amplkey)
+os.environ["AMPL_API"] = "amplpy"
+os.environ["AMPL_API_VERSION"] = __version__
+os.environ["AMPL_API_ENV"] = _detect_env()
+os.environ["AMPL_API_RUNTIME"] = "python/" + platform.python_version()
+
+
 def _list_aliases():
     from inflection import camelize
 
