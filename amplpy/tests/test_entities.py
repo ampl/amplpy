@@ -574,6 +574,77 @@ class TestEntities(TestBase.TestBase):
             self.assertEqual(obj[i].astatus(), "in")
             self.assertEqual(obj[i].sstatus(), "none")
 
+    def test_current_objective_indexed(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b c', "it's"};
+            set N := {1, 2.5};
+            var x >= 1;
+            maximize F {i in N}: i*x;
+            minimize G {s in S, i in N}: x + i;
+            minimize H: 7*x;
+            let x := 1;
+        """
+        )
+        for cmd, name, value, minimize in [
+            ("objective F[2.5];", "F", 2.5, False),
+            ("objective F[1];", "F", 1, False),
+            ("objective G['b c', 1];", "G", 2, True),
+            ("""objective G["it's", 2.5];""", "G", 3.5, True),
+            ("objective H;", "H", 7, True),
+        ]:
+            ampl.eval(cmd)
+            obj = ampl.get_current_objective()
+            self.assertEqual(obj.name(), name)
+            self.assertEqual(obj.value(), value)
+            self.assertEqual(obj.minimization(), minimize)
+
+    def test_indexed_entity_scalar_access(self):
+        ampl = self.ampl
+        # A single-instance family is the case in which the interpreter
+        # would otherwise return the indexing key instead of the suffix value.
+        for members in ["{'a'}", "{'a', 'b'}"]:
+            ampl.reset()
+            ampl.eval(
+                f"""
+                set S := {members};
+                var x >= 1;
+                var y {{S}} >= 0;
+                minimize Obj {{s in S}}: 2*x;
+                s.t. C {{s in S}}: y[s] <= 4;
+                let x := 1;
+            """
+            )
+            obj = ampl.get_objective("Obj")
+            y = ampl.get_variable("y")
+            c = ampl.get_constraint("C")
+            for getter in [
+                obj.value,
+                obj.astatus,
+                obj.exitcode,
+                obj.minimization,
+                y.value,
+                y.lb,
+                y.astatus,
+                y.defeqn,
+                c.body,
+                c.dual,
+                c.ub,
+                c.astatus,
+                c.defvar,
+            ]:
+                with self.assertRaises(TypeError):
+                    getter()
+            self.assertEqual(obj["a"].value(), 2)
+            self.assertTrue(obj["a"].minimization())
+            self.assertEqual(y["a"].value(), 0)
+            self.assertEqual(y["a"].lb(), 0)
+            self.assertEqual(c["a"].ub(), 4)
+            self.assertEqual(ampl.get_variable("x").value(), 1)
+            ampl.eval("objective Obj['a'];")
+            self.assertEqual(ampl.get_current_objective().value(), 2)
+
     def test_set_values(self):
         ampl = self.ampl
         ampl.eval("var x{1..3};")
