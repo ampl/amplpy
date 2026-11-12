@@ -314,6 +314,27 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(list(pd_df["x"]), x)
         self.assertEqual(list(pd_df["y"]), y)
 
+    def test_empty_pandas(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, name="v"))
+        self.assertEqual(df._get_num_rows(), 0)
+        self.assertEqual(df._get_headers(), ("index0", "v"))
+        df = DataFrame.from_pandas(
+            pd.DataFrame({"v": []}, index=pd.Index([], name="I"))
+        )
+        self.assertEqual(df._get_headers(), ("I", "v"))
+        df = DataFrame.from_pandas(
+            pd.DataFrame({"v": []}), index_names=["J"]
+        )
+        self.assertEqual(df._get_headers(), ("J", "v"))
+
+    def test_failed_construction(self):
+        # An exception raised before the native dataframe is created must
+        # propagate instead of crashing the process in the destructor.
+        with self.assertRaises(TypeError):
+            DataFrame(index=5)
+
     def test_iter(self):
         df = DataFrame("x", "y")
         dic = {1: 12, 2: 23}

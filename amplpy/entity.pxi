@@ -93,27 +93,24 @@ cdef class Entity(object):
             :class:`pandas.DataFrame` / :class:`pandas.Series` mapping
             indices to values.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
         cdef DataFrame df_typed
         if pd is not None and isinstance(value, pd.Series):
             df_typed = DataFrame.from_pandas(value.to_frame(name=suffix), indexarity=self.indexarity())
-            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
-            if errorinfo:
-                PY_AMPL_CALL(errorinfo)
         elif pd is not None and isinstance(value, pd.DataFrame):
             df_typed = DataFrame.from_pandas(value, indexarity=self.indexarity())
-            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
-            if errorinfo:
-                PY_AMPL_CALL(errorinfo)
         elif isinstance(value, DataFrame):
             df_typed = value
-            errorinfo = campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr())
-            if errorinfo:
-                PY_AMPL_CALL(errorinfo)
         elif isinstance(value, str):
             PY_AMPL_CALL(campl.AMPL_InstanceSetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), value.encode('utf-8')))
+            return
         else:
             PY_AMPL_CALL(campl.AMPL_InstanceSetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), float(value)))
+            return
+        # Assigning no data is a no-op; an empty statement must not be sent
+        # to the interpreter.
+        if df_typed._get_num_rows() == 0:
+            return
+        PY_AMPL_CALL(campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr()))
 
     def expand(self):
         """
@@ -392,32 +389,27 @@ cdef class Entity(object):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef DataFrame df
         cdef campl.AMPL_DATAFRAME* df_c 
-        cdef char* _name_c 
-        PY_AMPL_CALL(campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c))
+        cdef char* _name_c
         if isinstance(data, DataFrame):
             df = data
-            df_c = df.get_ptr()
-            errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-            campl.AMPL_StringFree(&_name_c)
-            if errorinfo:
-                PY_AMPL_CALL(errorinfo)
         elif isinstance(data, dict):
-            df = DataFrame.from_dict(data)
-            df_c = df.get_ptr()
-            errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-            campl.AMPL_StringFree(&_name_c)
-            if errorinfo:
-                PY_AMPL_CALL(errorinfo)
-        else:
-            if pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
-                df = DataFrame.from_pandas(data, indexarity=self.indexarity())
-                df_c = df.get_ptr()
-                errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
-                campl.AMPL_StringFree(&_name_c)
-                if errorinfo:
-                    PY_AMPL_CALL(errorinfo)
+            if not data:
                 return
+            df = DataFrame.from_dict(data)
+        elif pd is not None and isinstance(data, (pd.DataFrame, pd.Series)):
+            df = DataFrame.from_pandas(data, indexarity=self.indexarity())
+        else:
             raise TypeError(f"Unexpected data type: {type(data)}.")
+        # Assigning no data is a no-op; an empty statement must not be sent
+        # to the interpreter.
+        if df._get_num_rows() == 0:
+            return
+        df_c = df.get_ptr()
+        PY_AMPL_CALL(campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, self._index, &_name_c))
+        errorinfo = campl.AMPL_EntitySetValues(self._ampl._c_ampl, _name_c, df_c)
+        campl.AMPL_StringFree(&_name_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
 
     # Aliases
     toString = to_string
