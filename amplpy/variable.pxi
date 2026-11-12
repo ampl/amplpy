@@ -41,6 +41,7 @@ cdef class Variable(Entity):
         Get the current value of this variable.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
@@ -82,6 +83,7 @@ cdef class Variable(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -96,6 +98,7 @@ cdef class Variable(Entity):
         variable out.
         """
         cdef int value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFEQN, &value))
         return value
 
@@ -104,6 +107,7 @@ cdef class Variable(Entity):
         Get the dual value on defining constraint of variable substituted out.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value))
         return value
 
@@ -112,6 +116,7 @@ cdef class Variable(Entity):
         Get the current initial guess.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT, &value))
         return value
 
@@ -121,6 +126,7 @@ cdef class Variable(Entity):
         statement).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT0, &value))
         return value
 
@@ -129,6 +135,7 @@ cdef class Variable(Entity):
         Returns the current lower bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value))
         return value
 
@@ -137,6 +144,7 @@ cdef class Variable(Entity):
         Returns the current upper bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value))
         return value
 
@@ -145,6 +153,7 @@ cdef class Variable(Entity):
         Returns the initial lower bounds, from the var declaration.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB0, &value))
         return value
 
@@ -153,6 +162,7 @@ cdef class Variable(Entity):
         Returns the initial upper bound, from the var declaration.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB0, &value))
         return value
 
@@ -161,6 +171,7 @@ cdef class Variable(Entity):
         Returns the weaker lower bound from AMPL's presolve phase.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB1, &value))
         return value
 
@@ -169,6 +180,7 @@ cdef class Variable(Entity):
         Returns the weaker upper bound from AMPL's presolve phase.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB1, &value))
         return value
 
@@ -177,6 +189,7 @@ cdef class Variable(Entity):
         Returns the stronger lower bound from AMPL's presolve phase.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB2, &value))
         return value
 
@@ -185,6 +198,7 @@ cdef class Variable(Entity):
         Returns the stronger upper bound from AMPL's presolve phase.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB2, &value))
         return value
 
@@ -193,6 +207,7 @@ cdef class Variable(Entity):
         Returns the reduced cost at lower bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LRC, &value))
         return value
 
@@ -201,6 +216,7 @@ cdef class Variable(Entity):
         Returns the reduced cost at upper bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_URC, &value))
         return value
 
@@ -209,6 +225,7 @@ cdef class Variable(Entity):
         Return the slack at lower bound (``val - lb``).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value))
         return value
 
@@ -217,6 +234,7 @@ cdef class Variable(Entity):
         Return the slack at upper bound (``ub - val``).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value))
         return value
 
@@ -225,6 +243,7 @@ cdef class Variable(Entity):
         Get the reduced cost (at the nearer bound).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_RC, &value))
         return value
 
@@ -234,6 +253,7 @@ cdef class Variable(Entity):
         :func:`~amplpy.Variable.lslack` and :func:`~amplpy.Variable.uslack`.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value))
         return value
 
@@ -243,6 +263,7 @@ cdef class Variable(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -257,6 +278,7 @@ cdef class Variable(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)

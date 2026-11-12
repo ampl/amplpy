@@ -86,6 +86,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's body.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_BODY, &value))
         return value
 
@@ -95,6 +96,7 @@ cdef class Constraint(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -109,6 +111,7 @@ cdef class Constraint(Entity):
         constraint.
         """
         cdef int value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFVAR, &value))
         return value
 
@@ -117,6 +120,7 @@ cdef class Constraint(Entity):
         Get the current initial guess for the constraint's dual variable.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT, &value))
         return value
 
@@ -125,6 +129,7 @@ cdef class Constraint(Entity):
         Get the original initial guess for the constraint's dual variable.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DINIT0, &value))
         return value
 
@@ -138,6 +143,7 @@ cdef class Constraint(Entity):
         (see :func:`~amplpy.AMPL.setOption`).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value))
         return value
 
@@ -146,6 +152,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's lower bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value))
         return value
 
@@ -154,6 +161,7 @@ cdef class Constraint(Entity):
         Get the current value of the constraint's upper bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value))
         return value
 
@@ -163,6 +171,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LBS, &value))
         return value
 
@@ -172,6 +181,7 @@ cdef class Constraint(Entity):
         adjustment for fixed variables).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UBS, &value))
         return value
 
@@ -180,6 +190,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the lower bound.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LDUAL, &value))
         return value
 
@@ -188,6 +199,7 @@ cdef class Constraint(Entity):
         Get the current dual value associated with the upper bounds.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UDUAL, &value))
         return value
 
@@ -196,6 +208,7 @@ cdef class Constraint(Entity):
         Get the slack at lower bound `body - lb`.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value))
         return value
 
@@ -204,6 +217,7 @@ cdef class Constraint(Entity):
         Get the slack at upper bound `ub - body`.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value))
         return value
 
@@ -212,6 +226,7 @@ cdef class Constraint(Entity):
         Constraint slack (the lesser of lslack and uslack).
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value))
         return value
 
@@ -222,6 +237,7 @@ cdef class Constraint(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -236,6 +252,7 @@ cdef class Constraint(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -267,6 +284,7 @@ cdef class Constraint(Entity):
         """
         cdef double value
         if self.is_logical():
+            self._check_scalar()
             PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VAL, &value))
             return value
         else:

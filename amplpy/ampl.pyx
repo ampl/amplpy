@@ -778,8 +778,16 @@ cdef class AMPL:
         campl.AMPL_StringFree(&objname_c)
         if objname == "":
             return None
-        else:
+        bracket = objname.find("[")
+        if bracket == -1 or not objname.endswith("]"):
             return self.get_objective(objname)
+        # The current objective is an instance of an indexed objective
+        # (e.g., Obj['a']): return that instance of the objective family.
+        objective = self.get_objective(objname[:bracket])
+        instance = objective.find(_parse_ampl_subscript(objname[bracket + 1:-1]))
+        if instance is None:
+            raise KeyError(f"An entity called {objname} cannot be found.")
+        return instance
 
     def _var(self):
         """

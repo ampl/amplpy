@@ -39,6 +39,7 @@ cdef class Objective(Entity):
         Get the value of the objective.
         """
         cdef double value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
         return value
 
@@ -48,6 +49,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -62,6 +64,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -76,6 +79,7 @@ cdef class Objective(Entity):
         objective.
         """
         cdef int value
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
         return value
 
@@ -86,6 +90,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -101,6 +106,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -136,6 +142,7 @@ cdef class Objective(Entity):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
+        self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)

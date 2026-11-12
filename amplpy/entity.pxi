@@ -66,6 +66,27 @@ cdef class Entity(object):
             campl.AMPL_StringFree(&self._name)
         Py_DECREF(self._ampl)
 
+    cdef _check_scalar(self):
+        """
+        Raise TypeError if this object represents an indexed entity rather than
+        a scalar entity or a single instance. Instance-level getters must not
+        be forwarded to the native layer for indexed entities: for a
+        single-instance family the interpreter returns the indexing key in
+        place of the suffix value, which would otherwise be reported as a
+        meaningless number or string.
+        """
+        cdef size_t indexarity
+        if self._index is not NULL:
+            return
+        PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
+        if indexarity > 0:
+            name = self._name.decode('utf-8')
+            raise TypeError(
+                f"'{name}' is an indexed entity; this method can only be used "
+                f"on a scalar entity or on a single instance "
+                f"(e.g., {name}[...]). Use get_values() to access all instances."
+            )
+
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* output_c
