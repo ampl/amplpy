@@ -97,9 +97,13 @@ cdef class Parameter(Entity):
     def value(self):
         """
         Get the value of this parameter. Valid only for non-indexed parameters.
+
+        Raises:
+            TypeError: if this is an indexed parameter.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef campl.AMPL_VARIANT* v
+        self._check_scalar()
         errorinfo = campl.AMPL_GetValue(self._ampl._c_ampl, self._name, &v)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)

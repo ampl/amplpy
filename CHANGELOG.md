@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Fix rows and columns of a `DataFrame` (e.g. from iterating over it), and iterators over them, reading freed memory once no other reference to the `DataFrame` remained; they now keep the `DataFrame` alive.
 - `DataFrame.from_pandas()` and `AMPL.set_data()` accept empty pandas data.
 - `DataFrame.from_pandas()` raises `ValueError` instead of `AssertionError` when the number of `index_names` does not match the data.
+- Fix `AMPL.get_current_objective()` raising `KeyError` when the current objective is an instance of an indexed objective; it now returns that instance.
+- Instance-level accessors (e.g. `value()`, `lb()`, `dual()`, `astatus()`, `set_value()`, `fix(value)`, `set_dual()`, `Parameter.value()`) now raise `TypeError` when called on an indexed entity instead of returning a meaningless value. Access an instance (e.g. `x[i]`) or use `get_values()`. Whole-family operations (`fix()`, `unfix()`, `drop()`, `restore()`) are unchanged.
 
 ## 20261028
 
