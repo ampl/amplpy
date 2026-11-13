@@ -784,9 +784,16 @@ cdef class AMPL:
         # The current objective is an instance of an indexed objective
         # (e.g., Obj['a']): return that instance of the objective family.
         objective = self.get_objective(objname[:bracket])
-        instance = objective.find(_parse_ampl_subscript(objname[bracket + 1:-1]))
+        try:
+            index = _parse_ampl_subscript(objname[bracket + 1:-1])
+        except ValueError:
+            index = None
+        instance = objective.find(index) if index is not None else None
         if instance is None:
-            raise KeyError(f"An entity called {objname} cannot be found.")
+            raise KeyError(
+                f"The current objective {objname} cannot be resolved to an "
+                f"instance of {objname[:bracket]}."
+            )
         return instance
 
     def _var(self):

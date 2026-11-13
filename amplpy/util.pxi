@@ -6,6 +6,7 @@ from cpython.long cimport PyLong_Check, PyLong_AsLong
 from cpython.float cimport PyFloat_AsDouble
 from cpython.object cimport PyObject
 from libcpp cimport bool
+import re
 
 cdef void PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo) except *:
     cdef campl.AMPL_ERRORCODE rc
@@ -139,12 +140,20 @@ cdef campl.AMPL_VARIANT* to_c_variant(value)  except *:
         raise ValueError(f"unsupported type {type(value)}")
     return variant
 
+_AMPL_NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+
+
 def _parse_ampl_subscript(str subscript):
     """
     Parse the subscript of an AMPL instance name (the text between the
     outer brackets, e.g. ``'a', 1`` for ``Obj['a', 1]``) into a list of
     Python values. Strings may be quoted with single or double quotes,
-    with embedded quotes doubled; unquoted items are numbers.
+    with embedded quotes doubled. Unquoted items written in AMPL number
+    syntax become numbers (AMPL prints them with round-trip precision);
+    any other unquoted item is kept as a string.
+
+    Raises:
+        ValueError: if the subscript is malformed.
     """
     items = []
     n = len(subscript)
@@ -174,13 +183,14 @@ def _parse_ampl_subscript(str subscript):
             if j == -1:
                 j = n
             token = subscript[i:j].strip()
-            try:
+            if not token:
+                raise ValueError(f"Invalid subscript [{subscript}]")
+            if _AMPL_NUMBER.fullmatch(token):
                 value = float(token)
-            except ValueError:
-                value = token
-            else:
                 if value.is_integer() and abs(value) < 2**53:
                     value = int(value)
+            else:
+                value = token
             items.append(value)
             i = j
         while i < n and subscript[i].isspace():

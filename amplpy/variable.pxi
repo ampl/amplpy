@@ -40,22 +40,23 @@ cdef class Variable(Entity):
         """
         Get the current value of this variable.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_VALUE)
 
     def fix(self, value=None):
         """
-        Fix all instances of this variable to a value if provided or to
-        their current value otherwise.
+        Fix this variable at its current value or, if provided, at value.
+        Without a value, all instances of an indexed variable are fixed.
 
         Args:
-            value: value to be set.
+            value: value to be set (scalar variable or single instance only).
+
+        Raises:
+            TypeError: if a value is given for an indexed variable.
         """
         if value is None:
             PY_AMPL_CALL(campl.AMPL_VariableInstanceFix(self._ampl._c_ampl, self._name, self._index))
         else:
+            self._check_scalar()
             PY_AMPL_CALL(campl.AMPL_VariableInstanceFixToValue(self._ampl._c_ampl, self._name, self._index, value))
 
     def unfix(self):
@@ -71,7 +72,11 @@ cdef class Variable(Entity):
 
         Args:
             value: value to be set.
+
+        Raises:
+            TypeError: if this is an indexed variable.
         """
+        self._check_scalar()
         if isinstance(value, Parameter):
             PY_AMPL_CALL(campl.AMPL_VariableInstanceSetValue(self._ampl._c_ampl, self._name, self._index, value.value()))
         else:
@@ -81,211 +86,130 @@ cdef class Variable(Entity):
         """
         Get the AMPL status (fixed, presolved, or substituted out).
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        self._check_scalar()
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS)
 
     def defeqn(self):
         """
         Get the index in `_con` of "defining constraint" used to substitute
         variable out.
         """
-        cdef int value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DEFEQN, &value))
-        return value
+        return self._get_int_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_DEFEQN)
 
     def dual(self):
         """
         Get the dual value on defining constraint of variable substituted out.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_DUAL, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_DUAL)
 
     def init(self):
         """
         Get the current initial guess.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_INIT)
 
     def init0(self):
         """
         Get the original initial guess (set by `:=` or`default` or by a data
         statement).
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_INIT0, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_INIT0)
 
     def lb(self):
         """
         Returns the current lower bound.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LB)
 
     def ub(self):
         """
         Returns the current upper bound.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_UB)
 
     def lb0(self):
         """
         Returns the initial lower bounds, from the var declaration.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB0, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LB0)
 
     def ub0(self):
         """
         Returns the initial upper bound, from the var declaration.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB0, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_UB0)
 
     def lb1(self):
         """
         Returns the weaker lower bound from AMPL's presolve phase.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB1, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LB1)
 
     def ub1(self):
         """
         Returns the weaker upper bound from AMPL's presolve phase.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB1, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_UB1)
 
     def lb2(self):
         """
         Returns the stronger lower bound from AMPL's presolve phase.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LB2, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LB2)
 
     def ub2(self):
         """
         Returns the stronger upper bound from AMPL's presolve phase.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_UB2, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_UB2)
 
     def lrc(self):
         """
         Returns the reduced cost at lower bound.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LRC, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LRC)
 
     def urc(self):
         """
         Returns the reduced cost at upper bound.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_URC, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_URC)
 
     def lslack(self):
         """
         Return the slack at lower bound (``val - lb``).
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_LSLACK)
 
     def uslack(self):
         """
         Return the slack at upper bound (``ub - val``).
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_USLACK, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_USLACK)
 
     def rc(self):
         """
         Get the reduced cost (at the nearer bound).
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_RC, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_RC)
 
     def slack(self):
         """
         Returns the bound slack which is the lesser of
         :func:`~amplpy.Variable.lslack` and :func:`~amplpy.Variable.uslack`.
         """
-        cdef double value
-        self._check_scalar()
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_SLACK, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_SLACK)
 
     def sstatus(self):
         """
         Solver status (basis status of variable).
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        self._check_scalar()
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS)
 
     def status(self):
         """
         AMPL status if not `in`, otherwise solver status.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        self._check_scalar()
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_STATUS, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_STATUS)
 
     # Aliases
     setValue = set_value
