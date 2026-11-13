@@ -37,6 +37,7 @@ cdef class Entity(object):
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_ENTITYTYPE wrap_function
     cdef object _entity
+    cdef bint _is_scalar_checked
 
     @staticmethod
     cdef create(AMPL ampl, char *name, campl.AMPL_TUPLE* index, object parent):
@@ -65,6 +66,61 @@ cdef class Entity(object):
         else:
             campl.AMPL_StringFree(&self._name)
         Py_DECREF(self._ampl)
+
+    cdef _check_scalar(self):
+        """
+        Raise TypeError if this object represents an indexed entity rather than
+        a scalar entity or a single instance. Instance-level accessors must not
+        be forwarded to the native layer for indexed entities: for a
+        single-instance family the interpreter returns the indexing key in
+        place of the suffix value, which would otherwise be reported as a
+        meaningless number or string.
+
+        The indexarity of an entity does not change while this object exists,
+        so a successful check is cached and costs one native call per object.
+        """
+        cdef size_t indexarity
+        if self._index is not NULL or self._is_scalar_checked:
+            return
+        if b"[" in self._name:
+            # Instance addressed by its full name, e.g. p['a'] (Parameter.get).
+            self._is_scalar_checked = True
+            return
+        PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
+        if indexarity > 0:
+            name = self._name.decode('utf-8')
+            raise TypeError(
+                f"'{name}' is an indexed entity; this method can only be used "
+                f"on a scalar entity or on a single instance "
+                f"(e.g., {name}[...]). Use get_values() to access all instances."
+            )
+        self._is_scalar_checked = True
+
+    cdef _get_double_suffix(self, campl.AMPL_NUMERICSUFFIX suffix):
+        """Read a numeric suffix of this scalar entity or instance."""
+        cdef double value
+        self._check_scalar()
+        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value))
+        return value
+
+    cdef _get_int_suffix(self, campl.AMPL_NUMERICSUFFIX suffix):
+        """Read an integer suffix of this scalar entity or instance."""
+        cdef int value
+        self._check_scalar()
+        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value))
+        return value
+
+    cdef _get_string_suffix(self, campl.AMPL_STRINGSUFFIX suffix):
+        """Read a string suffix of this scalar entity or instance."""
+        cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef char* value_c
+        self._check_scalar()
+        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value_c)
+        if errorinfo:
+            PY_AMPL_CALL(errorinfo)
+        value = str(value_c.decode('utf-8'))
+        campl.AMPL_StringFree(&value_c)
+        return value
 
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo

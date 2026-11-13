@@ -38,76 +38,40 @@ cdef class Objective(Entity):
         """
         Get the value of the objective.
         """
-        cdef double value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_VALUE, &value))
-        return value
+        return self._get_double_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_VALUE)
 
     def astatus(self):
         """
         Return the AMPL status.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_ASTATUS)
 
     def sstatus(self):
         """
         Return the solver status.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SSTATUS)
 
     def exitcode(self):
         """
         Exit code returned by solver after most recent solve with this
         objective.
         """
-        cdef int value
-        PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE, &value))
-        return value
+        return self._get_int_suffix(campl.AMPL_NUMERICSUFFIX.AMPL_EXITCODE)
 
     def message(self):
         """
         Result message returned by solver after most recent solve with this
         objective.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_MESSAGE)
 
     def result(self):
         """
         Result string returned by solver after most recent solve with this
         objective.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_RESULT, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
-        return value
+        return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_RESULT)
 
     def drop(self):
         """
@@ -134,14 +98,7 @@ cdef class Objective(Entity):
         Get the sense of this objective. Returns True if minimize,
         False if maximize.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* value_c
-        errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, campl.AMPL_STRINGSUFFIX.AMPL_SENSE, &value_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-
+        value = self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SENSE)
         if value == 'minimize':
             return True
         else:

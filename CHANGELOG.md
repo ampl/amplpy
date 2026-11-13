@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Fix `AMPL.get_current_objective()` raising `KeyError` when the current objective is an instance of an indexed objective; it now returns that instance.
+- Instance-level accessors (e.g. `value()`, `lb()`, `dual()`, `astatus()`, `set_value()`, `fix(value)`, `set_dual()`, `Parameter.value()`) now raise `TypeError` when called on an indexed entity instead of returning a meaningless value. Access an instance (e.g. `x[i]`) or use `get_values()`. Whole-family operations (`fix()`, `unfix()`, `drop()`, `restore()`) are unchanged.
+
 ## 20261028
 
 ### 0.18.1
