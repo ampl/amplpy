@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Fix a crash (or termination of the AMPL interpreter) when `Entity.set_suffix()` or `Entity.set_values()` received empty data. Assigning zero rows is now a no-op that keeps existing values; empty data whose number of index columns does not match the entity raises `ValueError`.
+- Fix a crash when a `DataFrame` was constructed with invalid headers; headers must be strings and a `TypeError` is raised otherwise.
+
 ## 20261028
 
 ### 0.18.1

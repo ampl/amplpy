@@ -320,20 +320,49 @@ class TestDataFrame(TestBase.TestBase):
         df = DataFrame.from_pandas(pd.Series([], dtype=float, name="v"))
         self.assertEqual(df._get_num_rows(), 0)
         self.assertEqual(df._get_headers(), ("index0", "v"))
+        # Same headers as for non-empty data: pandas index names are not used.
         df = DataFrame.from_pandas(
             pd.DataFrame({"v": []}, index=pd.Index([], name="I"))
         )
-        self.assertEqual(df._get_headers(), ("I", "v"))
-        df = DataFrame.from_pandas(
-            pd.DataFrame({"v": []}), index_names=["J"]
-        )
+        self.assertEqual(df._get_headers(), ("index0", "v"))
+        df = DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J"])
         self.assertEqual(df._get_headers(), ("J", "v"))
+        with self.assertRaises(AssertionError):
+            DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J", "K"])
+        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
+        self.assertEqual(df._get_headers(), ("index0", "index1", "v"))
+        # indexarity one above the index levels mirrors df.stack() as for
+        # non-empty data: the columns become an extra index level.
+        for frame in [
+            pd.DataFrame({"a": [1.0], "b": [2.0]}, index=["x"]),
+            pd.DataFrame({"a": [], "b": []}),
+        ]:
+            df = DataFrame.from_pandas(frame, indexarity=2)
+            self.assertEqual(df._get_headers(), ("index0", "index1", "0"))
 
     def test_failed_construction(self):
         # An exception raised before the native dataframe is created must
         # propagate instead of crashing the process in the destructor.
         with self.assertRaises(TypeError):
             DataFrame(index=5)
+        # Headers must be strings (non-string headers used to crash).
+        with self.assertRaises(TypeError):
+            DataFrame(index=[1, 2], columns=[None])
+        with self.assertRaises(TypeError):
+            DataFrame(index=["i"], columns=["v", None])
+
+        class BadHeader(str):
+            def encode(self, *args, **kwargs):
+                raise RuntimeError("cannot encode")
+
+        # Failing to encode a header must propagate before any native
+        # allocation, and later constructions must still work.
+        for _ in range(100):
+            with self.assertRaises(RuntimeError):
+                DataFrame(index=["i"], columns=["v", BadHeader("w")])
+        df = DataFrame(index=["i"], columns=["v"])
+        self.assertEqual(df._get_headers(), ("i", "v"))
 
     def test_iter(self):
         df = DataFrame("x", "y")

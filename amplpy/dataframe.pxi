@@ -143,9 +143,13 @@ cdef class DataFrame(object):
             column_names = [
                 col[0] if isinstance(col, tuple) else col for col in columns
             ]
-            # Encode all headers before allocating native memory so that an
-            # invalid header raises a Python exception without leaking.
-            encoded = [str(name).encode('utf-8') for name in index_names + column_names]
+            # Validate and encode all headers before allocating native memory
+            # so that an invalid header raises a Python exception without
+            # leaking.
+            for name in index_names + column_names:
+                if not isinstance(name, str):
+                    raise TypeError(f"DataFrame headers must be strings, got {name!r}.")
+            encoded = [name.encode('utf-8') for name in index_names + column_names]
             index_size = len(index_names)
             column_size = len(column_names)
             headers = <char**> calloc(index_size + column_size, sizeof(char*))
@@ -154,6 +158,8 @@ cdef class DataFrame(object):
             try:
                 for i in range(index_size + column_size):
                     headers[i] = strdup(encoded[i])
+                    if headers[i] == NULL:
+                        raise MemoryError()
                 PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
             finally:
                 for i in range(index_size + column_size):
@@ -182,8 +188,9 @@ cdef class DataFrame(object):
         Default destructor:
         releases all the resources related to the Dataframe instance.
         """
-        # _c_df is NULL if construction failed before AMPL_DataFrameCreate
-        # (e.g. invalid headers) or for DataFrame(index=None) without create().
+        # _c_df is NULL if construction failed before or in
+        # AMPL_DataFrameCreate (which sets it to NULL on error, e.g. invalid
+        # headers), or for DataFrame(index=None) without create().
         if self._c_df != NULL:
             campl.AMPL_DataFrameFree(&self._c_df)
 
@@ -556,13 +563,18 @@ cdef class DataFrame(object):
         else:
             assert isinstance(df, pd.DataFrame)
         if len(df) == 0:
-            if index_names is None:
-                index_names = [
-                    f"index{i}" if name is None else str(name)
-                    for i, name in enumerate(df.index.names)
-                ]
+            # Build the same headers as the non-empty path below, including
+            # the extra index level that df.stack() would add.
+            nindices = df.index.nlevels
             columns = [str(cname) for cname in df.columns.tolist()]
-            return cls(index=list(index_names), columns=columns)
+            if indexarity == nindices + 1:
+                nindices += 1
+                columns = ["0"]
+            index = [f"index{i}" for i in range(nindices)]
+            if index_names is not None:
+                assert len(index) == len(index_names)
+                index = list(index_names)
+            return cls(index=index, columns=columns)
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
         if indexarity == df.index.nlevels + 1:
