@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from libc.stdlib cimport malloc, free
+from libc.stdlib cimport malloc, calloc, free
 from libc.string cimport strdup
 
 from cpython.float cimport PyFloat_AsDouble
@@ -143,23 +143,29 @@ cdef class DataFrame(object):
             column_names = [
                 col[0] if isinstance(col, tuple) else col for col in columns
             ]
+            # Validate and encode all headers before allocating native memory
+            # so that an invalid header raises a Python exception without
+            # leaking.
+            for name in index_names + column_names:
+                if not isinstance(name, str):
+                    raise TypeError(f"DataFrame headers must be strings, got {name!r}.")
+            encoded = [name.encode('utf-8') for name in index_names + column_names]
             index_size = len(index_names)
             column_size = len(column_names)
-            headers = <char**> malloc((index_size+column_size) * sizeof(char*))
-
-            for i in range(index_size + column_size):
-                if i < index_size:
-                    temp = index_names[i].encode('utf-8')
-                else:
-                    temp = column_names[i - index_size].encode('utf-8')
-                headers[i] = strdup(temp)
-
-            PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
-
-            for i in range(index_size+column_size):
-                if headers[i] != NULL:
-                    free(headers[i])
-            free(headers)
+            headers = <char**> calloc(index_size + column_size, sizeof(char*))
+            if headers == NULL:
+                raise MemoryError()
+            try:
+                for i in range(index_size + column_size):
+                    headers[i] = strdup(encoded[i])
+                    if headers[i] == NULL:
+                        raise MemoryError()
+                PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
+            finally:
+                for i in range(index_size + column_size):
+                    if headers[i] != NULL:
+                        free(headers[i])
+                free(headers)
 
             for col in index:
                 if isinstance(col, tuple):
@@ -182,7 +188,11 @@ cdef class DataFrame(object):
         Default destructor:
         releases all the resources related to the Dataframe instance.
         """
-        campl.AMPL_DataFrameFree(&self._c_df)
+        # _c_df is NULL if construction failed before or in
+        # AMPL_DataFrameCreate (which sets it to NULL on error, e.g. invalid
+        # headers), or for DataFrame(index=None) without create().
+        if self._c_df != NULL:
+            campl.AMPL_DataFrameFree(&self._c_df)
 
     def to_string(self):
         cdef char* value_c
@@ -553,7 +563,18 @@ cdef class DataFrame(object):
         else:
             assert isinstance(df, pd.DataFrame)
         if len(df) == 0:
-            return cls(index=df.index.names, columns=df.columns.tolist())
+            # Build the same headers as the non-empty path below, including
+            # the extra index level that df.stack() would add.
+            nindices = df.index.nlevels
+            columns = [str(cname) for cname in df.columns.tolist()]
+            if indexarity == nindices + 1:
+                nindices += 1
+                columns = ["0"]
+            index = [f"index{i}" for i in range(nindices)]
+            if index_names is not None:
+                assert len(index) == len(index_names)
+                index = list(index_names)
+            return cls(index=index, columns=columns)
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
         if indexarity == df.index.nlevels + 1:

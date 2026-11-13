@@ -574,6 +574,111 @@ class TestEntities(TestBase.TestBase):
             self.assertEqual(obj[i].astatus(), "in")
             self.assertEqual(obj[i].sstatus(), "none")
 
+    def test_set_suffix(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set I := 1..3;
+            var x {I} >= 0;
+            s.t. c {i in I}: x[i] <= i;
+            var y;
+            suffix rhspen IN;
+        """
+        )
+        c = ampl.get_constraint("c")
+        c.set_suffix("rhspen", pd.Series([10.0, 20.0, 30.0], index=[1, 2, 3]))
+        self.assertEqual(
+            [ampl.get_value(f"c[{i}].rhspen") for i in range(1, 4)], [10, 20, 30]
+        )
+        c.set_suffix("rhspen", pd.DataFrame({"rhspen": [5.0]}, index=[2]))
+        self.assertEqual(ampl.get_value("c[2].rhspen"), 5)
+        c[3].set_suffix("rhspen", 7)
+        self.assertEqual(ampl.get_value("c[3].rhspen"), 7)
+        ampl.get_variable("y").set_suffix("rhspen", 4)
+        self.assertEqual(ampl.get_value("y.rhspen"), 4)
+
+    def test_empty_data_assignment(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set E default {};
+            var x >= 0;
+            var z {E};
+            param p {E};
+            subject to c {i in E}: x <= 1;
+            suffix rhspen IN;
+        """
+        )
+        c = ampl.get_constraint("c")
+        z = ampl.get_variable("z")
+        p = ampl.get_parameter("p")
+        self.assertEqual(c.num_instances(), 0)
+        # Empty data must be a no-op and must not terminate the process or
+        # the AMPL interpreter.
+        c.set_suffix("rhspen", pd.Series(-1.0, index=pd.Index([])))
+        c.set_suffix("rhspen", pd.DataFrame({"rhspen": []}))
+        c.set_suffix("rhspen", amplpy.DataFrame(index=["i"], columns=["rhspen"]))
+        z.set_suffix("rhspen", pd.Series([], dtype=float))
+        z.set_values(pd.Series([], dtype=float))
+        z.set_values({})
+        p.set_values(pd.Series([], dtype=float))
+        p.set_values({})
+        self.assertEqual(ampl.get_value("1+1"), 2)
+        # Non-empty data on the same session still works afterwards.
+        ampl.set["E"] = [1, 2]
+        c.set_suffix("rhspen", pd.Series([3.0, 4.0], index=[1, 2]))
+        self.assertEqual(ampl.get_value("c[2].rhspen"), 4)
+        # Empty data assigns nothing: existing values are kept.
+        c.set_suffix("rhspen", pd.Series([], dtype=float))
+        self.assertEqual(ampl.get_value("c[2].rhspen"), 4)
+
+    def test_empty_data_assignment_arity(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set E default {};
+            var x;
+            var w {E, E};
+            subject to c2 {i in E, j in E}: w[i, j] <= 1;
+            suffix rhspen IN;
+            let x := 5;
+        """
+        )
+        x = ampl.get_variable("x")
+        w = ampl.get_variable("w")
+        c2 = ampl.get_constraint("c2")
+        empty2 = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        empty3 = pd.MultiIndex.from_tuples([], names=["i", "j", "k"])
+        # Empty data with matching arity is a no-op.
+        c2.set_suffix("rhspen", pd.Series([], dtype=float, index=empty2))
+        c2.set_suffix("rhspen", pd.DataFrame({"rhspen": []}, index=empty2))
+        c2.set_suffix("rhspen", pd.Series([], dtype=float))  # stacked to 2-D
+        c2.set_suffix(
+            "rhspen", amplpy.DataFrame(index=["i", "j"], columns=["rhspen"])
+        )
+        w.set_values(pd.Series([], dtype=float, index=empty2))
+        w.set_values(amplpy.DataFrame(index=["i", "j"], columns=["w"]))
+        x.set_values(amplpy.DataFrame(index=[], columns=["x"]))
+        self.assertEqual(x.value(), 5)
+        # Empty data of the wrong arity is rejected rather than ignored.
+        for call in [
+            lambda: c2.set_suffix("rhspen", pd.Series([], dtype=float, index=empty3)),
+            lambda: c2.set_suffix(
+                "rhspen", amplpy.DataFrame(index=["i"], columns=["rhspen"])
+            ),
+            lambda: w.set_values(amplpy.DataFrame(index=["i"], columns=["w"])),
+            lambda: x.set_values(pd.Series([], dtype=float)),
+        ]:
+            with self.assertRaises(ValueError):
+                call()
+        self.assertEqual(ampl.get_value("1+1"), 2)
+
     def test_set_values(self):
         ampl = self.ampl
         ampl.eval("var x{1..3};")
