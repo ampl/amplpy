@@ -15,6 +15,26 @@ except ImportError:
     np = None
 
 
+cdef _get_parameter_value(AMPL ampl, char* name, campl.AMPL_TUPLE* index):
+    """
+    Get the value of the scalar parameter ``name`` or, if ``index`` is not
+    NULL, of its instance ``name[index]``. ``index`` is not freed.
+    """
+    cdef campl.AMPL_ERRORINFO* errorinfo
+    cdef char* expression = NULL
+    cdef campl.AMPL_VARIANT* v
+    if index is NULL:
+        errorinfo = campl.AMPL_GetValue(ampl._c_ampl, name, &v)
+    else:
+        PY_AMPL_CALL(campl.AMPL_InstanceGetName(ampl._c_ampl, name, index, &expression))
+        errorinfo = campl.AMPL_GetValue(ampl._c_ampl, expression, &v)
+        campl.AMPL_StringFree(&expression)
+    if errorinfo:
+        PY_AMPL_CALL(errorinfo)
+    py_variant = to_py_variant(v)
+    campl.AMPL_VariantFree(&v)
+    return py_variant
+
 
 cdef class Parameter(Entity):
     """
@@ -78,38 +98,23 @@ cdef class Parameter(Entity):
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
             index = [index]
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
-        cdef char* expression
-        cdef campl.AMPL_VARIANT* v
-        errorinfo = campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &expression)
-        campl.AMPL_TupleFree(&tuple_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        errorinfo = campl.AMPL_GetValue(self._ampl._c_ampl, expression, &v)
-        campl.AMPL_StringFree(&expression)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        py_variant = to_py_variant(v)
-        campl.AMPL_VariantFree(&v)
-        return py_variant
+        cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(index)
+        try:
+            return _get_parameter_value(self._ampl, self._name, tuple_c)
+        finally:
+            campl.AMPL_TupleFree(&tuple_c)
 
     def value(self):
         """
-        Get the value of this parameter. Valid only for non-indexed parameters.
+        Get the value of this parameter. Valid only for non-indexed parameters
+        and for single instances (e.g., ``p['a']`` obtained by iterating
+        over ``p``).
 
         Raises:
             TypeError: if this is an indexed parameter.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef campl.AMPL_VARIANT* v
         self._check_scalar()
-        errorinfo = campl.AMPL_GetValue(self._ampl._c_ampl, self._name, &v)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        py_variant = to_py_variant(v)
-        campl.AMPL_VariantFree(&v)
-        return py_variant
+        return _get_parameter_value(self._ampl, self._name, self._index)
 
     def set(self, *args):
         """
@@ -131,8 +136,16 @@ cdef class Parameter(Entity):
         cdef campl.AMPL_TUPLE* index_c
         if len(args) == 1:
             value = args[0]
-    
-            if isinstance(value, Real):
+            self._check_scalar()
+            if self._index is not NULL:
+                # Single instance (e.g., obtained by iterating over p).
+                if isinstance(value, Real):
+                    errorinfo = campl.AMPL_ParameterInstanceSetNumericValue(self._ampl._c_ampl, self._name, self._index, float(value))
+                elif isinstance(value, str):
+                    errorinfo = campl.AMPL_ParameterInstanceSetStringValue(self._ampl._c_ampl, self._name, self._index, value.encode('utf-8'))
+                else:
+                    raise TypeError
+            elif isinstance(value, Real):
                 errorinfo = campl.AMPL_ParameterSetNumeric(self._ampl._c_ampl, self._name, float(value))
             elif isinstance(value, str):
                 errorinfo = campl.AMPL_ParameterSetString(self._ampl._c_ampl, self._name, value.encode('utf-8'))

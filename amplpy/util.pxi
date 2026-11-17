@@ -141,6 +141,8 @@ cdef campl.AMPL_VARIANT* to_c_variant(value)  except *:
     return variant
 
 _AMPL_NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+_AMPL_INFINITY = {"Infinity": float("inf"), "-Infinity": float("-inf")}
+_AMPL_INVALID_UNQUOTED = re.compile(r"[\s'\"]")
 
 
 def _parse_ampl_subscript(str subscript):
@@ -149,8 +151,9 @@ def _parse_ampl_subscript(str subscript):
     outer brackets, e.g. ``'a', 1`` for ``Obj['a', 1]``) into a list of
     Python values. Strings may be quoted with single or double quotes,
     with embedded quotes doubled. Unquoted items written in AMPL number
-    syntax become numbers (AMPL prints them with round-trip precision);
-    any other unquoted item is kept as a string.
+    syntax become numbers (AMPL prints them with round-trip precision),
+    as do ``Infinity`` and ``-Infinity``; any other unquoted item is kept
+    as a string, provided it contains no whitespace or quotes.
 
     Raises:
         ValueError: if the subscript is malformed.
@@ -189,6 +192,11 @@ def _parse_ampl_subscript(str subscript):
                 value = float(token)
                 if value.is_integer() and abs(value) < 2**53:
                     value = int(value)
+            elif token in _AMPL_INFINITY:
+                value = _AMPL_INFINITY[token]
+            elif _AMPL_INVALID_UNQUOTED.search(token):
+                # e.g. "1 2" (missing comma) or "a'b" (misplaced quote)
+                raise ValueError(f"Invalid subscript [{subscript}]")
             else:
                 value = token
             items.append(value)

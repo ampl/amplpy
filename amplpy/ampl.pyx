@@ -785,15 +785,18 @@ cdef class AMPL:
         # (e.g., Obj['a']): return that instance of the objective family.
         objective = self.get_objective(objname[:bracket])
         try:
-            index = _parse_ampl_subscript(objname[bracket + 1:-1])
-        except ValueError:
-            index = None
-        instance = objective.find(index) if index is not None else None
-        if instance is None:
+            # No negative slice index: this module disables wraparound.
+            subscript = objname[bracket + 1:len(objname) - 1]
+            instance = objective[_parse_ampl_subscript(subscript)]
+            # Make sure the parsed index is a member of the indexing set by
+            # resolving the instance once in AMPL (constant cost, unlike a
+            # scan of all the tuples of the objective).
+            instance.astatus()
+        except (ValueError, RuntimeError, AMPLException):
             raise KeyError(
                 f"The current objective {objname} cannot be resolved to an "
                 f"instance of {objname[:bracket]}."
-            )
+            ) from None
         return instance
 
     def _var(self):

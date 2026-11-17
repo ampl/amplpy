@@ -37,7 +37,6 @@ cdef class Entity(object):
     cdef campl.AMPL_TUPLE* _index
     cdef campl.AMPL_ENTITYTYPE wrap_function
     cdef object _entity
-    cdef bint _is_scalar_checked
 
     @staticmethod
     cdef create(AMPL ampl, char *name, campl.AMPL_TUPLE* index, object parent):
@@ -76,15 +75,12 @@ cdef class Entity(object):
         place of the suffix value, which would otherwise be reported as a
         meaningless number or string.
 
-        The indexarity of an entity does not change while this object exists,
-        so a successful check is cached and costs one native call per object.
+        The result is not cached: the entity can be redeclared with a
+        different indexing (e.g., after reset() or delete) while this
+        object exists.
         """
         cdef size_t indexarity
-        if self._index is not NULL or self._is_scalar_checked:
-            return
-        if b"[" in self._name:
-            # Instance addressed by its full name, e.g. p['a'] (Parameter.get).
-            self._is_scalar_checked = True
+        if self._index is not NULL:
             return
         PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
         if indexarity > 0:
@@ -94,7 +90,6 @@ cdef class Entity(object):
                 f"on a scalar entity or on a single instance "
                 f"(e.g., {name}[...]). Use get_values() to access all instances."
             )
-        self._is_scalar_checked = True
 
     cdef _get_double_suffix(self, campl.AMPL_NUMERICSUFFIX suffix):
         """Read a numeric suffix of this scalar entity or instance."""
@@ -153,6 +148,8 @@ cdef class Entity(object):
             ValueError: if the number of index columns of the data does not
             match the indexarity of the entity, or if a DataFrame with rows
             is given for a scalar entity (pass a single value instead).
+            TypeError: if a numeric or string value is passed for an indexed
+            entity.
         """
         cdef DataFrame df_typed
         cdef size_t indexarity
@@ -167,9 +164,11 @@ cdef class Entity(object):
             df_typed = value
             indexarity = self._family_indexarity()
         elif isinstance(value, str):
+            self._check_scalar()
             PY_AMPL_CALL(campl.AMPL_InstanceSetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), value.encode('utf-8')))
             return
         else:
+            self._check_scalar()
             PY_AMPL_CALL(campl.AMPL_InstanceSetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), float(value)))
             return
         if not self._has_rows_to_assign(df_typed, indexarity, self.name()):
@@ -244,32 +243,30 @@ cdef class Entity(object):
 
     def get(self, *index):
         """
-        Get the instance with the specified index.
+        Get the instance with the specified index. For a parameter, the value
+        of that instance is returned instead (as with ``p[index]``).
+
+        If no index is passed, this object itself is returned. For an indexed
+        entity it then still represents the whole family, so instance-level
+        accessors such as ``get().value()`` raise :class:`TypeError`.
 
         Returns:
             The corresponding instance.
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
         assert self.wrap_function is not None
         cdef campl.AMPL_TUPLE* tuple_c
-        cdef char* name_c
         if len(index) == 1 and isinstance(index[0], (tuple, list)):
             index = index[0]
             index = list(index)
         if len(index) == 0:
             return self
-            #return create_entity(self.wrap_function, self._ampl, self._name, NULL, None)
-        else:
-            tuple_c =  to_c_tuple(index)
-            if self.wrap_function == campl.AMPL_PARAMETER:
-                errorinfo = campl.AMPL_InstanceGetName(self._ampl._c_ampl, self._name, tuple_c, &name_c)
+        tuple_c = to_c_tuple(index)
+        if self.wrap_function == campl.AMPL_PARAMETER:
+            try:
+                return _get_parameter_value(self._ampl, self._name, tuple_c)
+            finally:
                 campl.AMPL_TupleFree(&tuple_c)
-                if errorinfo:
-                    PY_AMPL_CALL(errorinfo)
-                entity = create_entity(self.wrap_function, self._ampl, name_c, NULL, None).value()
-                return entity
-            else:
-                return create_entity(self.wrap_function, self._ampl, self._name, tuple_c, self)
+        return create_entity(self.wrap_function, self._ampl, self._name, tuple_c, self)
 
     def find(self, index):
         """

@@ -14,7 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - `DataFrame.from_pandas()` and `AMPL.set_data()` accept empty pandas data.
 - `DataFrame.from_pandas()` raises `ValueError` instead of `AssertionError` when the number of `index_names` does not match the data.
 - Fix `AMPL.get_current_objective()` raising `KeyError` when the current objective is an instance of an indexed objective; it now returns that instance.
-- Instance-level accessors (e.g. `value()`, `lb()`, `dual()`, `astatus()`, `set_value()`, `fix(value)`, `set_dual()`, `Parameter.value()`) now raise `TypeError` when called on an indexed entity instead of returning a meaningless value. Access an instance (e.g. `x[i]`) or use `get_values()`. Whole-family operations (`fix()`, `unfix()`, `drop()`, `restore()`) are unchanged.
+- Instance-level accessors (e.g. `value()`, `lb()`, `dual()`, `astatus()`, `set_value()`, `fix(value)`, `set_dual()`, `set_suffix()` with a numeric or string value, `Parameter.value()`, `Parameter.set(value)`) now raise `TypeError` when called on an indexed entity instead of returning a meaningless value. This includes `get()` without an index, which returns the indexed entity itself (e.g. `y.get().value()`). Access an instance (e.g. `x[i]`) or use `get_values()`. Whole-family operations (`fix()`, `unfix()`, `drop()`, `restore()`) are unchanged.
+- Fix `Parameter.value()` and `Parameter.set(value)` on a parameter instance obtained by iteration reading or assigning the whole parameter instead of that instance.
 
 ## 20261028
 
