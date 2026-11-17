@@ -850,7 +850,6 @@ class TestEntities(TestBase.TestBase):
                 obj.value,
                 obj.astatus,
                 obj.exitcode,
-                obj.minimization,
                 y.value,
                 y.lb,
                 y.astatus,
@@ -863,6 +862,8 @@ class TestEntities(TestBase.TestBase):
             ]:
                 with self.assertRaises(TypeError):
                     getter()
+            # The sense belongs to the whole indexed objective.
+            self.assertTrue(obj.minimization())
             self.assertEqual(obj["a"].value(), 2)
             self.assertTrue(obj["a"].minimization())
             self.assertEqual(y["a"].value(), 0)
@@ -887,14 +888,19 @@ class TestEntities(TestBase.TestBase):
         y = ampl.get_variable("y")
         c = ampl.get_constraint("C")
         p = ampl.get_parameter("p")
+        # These never worked on an indexed entity: AMPL rejected the
+        # generated statement (e.g. "let y := 1;") with a RuntimeError.
         for setter in [
             lambda: y.set_value(1),
             lambda: y.fix(1),
             lambda: c.set_dual(1),
+            lambda: ampl.var.__setitem__("y", 1),
+            lambda: ampl.con.__setitem__("C", 1),
             p.value,
         ]:
             with self.assertRaises(TypeError):
                 setter()
+        self.assertEqual(y.get_values().to_dict(), {"a": 0, "b": 0})
         # Whole-family operations remain valid on indexed entities.
         y.fix()
         self.assertEqual(y["a"].astatus(), "fix")
@@ -913,6 +919,29 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.get_parameter("q").value(), 3)
         ampl.get_variable("x").set_value(4)
         self.assertEqual(ampl.get_variable("x").value(), 4)
+
+    def test_indexed_objective_minimization(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set I := 1..2;
+            set E := {};
+            var y;
+            maximize G {i in I}: y;
+            minimize H {i in I, j in I}: y + i;
+            minimize Z {i in E}: y;
+            maximize S: y;
+        """
+        )
+        self.assertFalse(ampl.get_objective("G").minimization())
+        self.assertFalse(ampl.get_objective("G")[1].minimization())
+        self.assertTrue(ampl.get_objective("H").minimization())
+        self.assertTrue(ampl.get_objective("H")[1, 2].minimization())
+        self.assertTrue(ampl.get_objective("Z").minimization())
+        self.assertFalse(ampl.get_objective("S").minimization())
+        G = ampl.get_objective("G")
+        ampl.eval("redeclare minimize G {i in I}: 2*y;")
+        self.assertTrue(G.minimization())
 
     def test_current_objective_numeric_members(self):
         ampl = self.ampl

@@ -96,10 +96,11 @@ cdef class Objective(Entity):
     def minimization(self):
         """
         Get the sense of this objective. Returns True if minimize,
-        False if maximize.
+        False if maximize. All instances of an indexed objective share the
+        sense, so this also works on the indexed objective itself.
         """
-        value = self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SENSE)
-        if value == 'minimize':
-            return True
-        else:
-            return False
+        # The sense is part of the declaration, which AMPL normalizes to
+        # start with "minimize" or "maximize". Unlike the sense suffix, the
+        # declaration is also available for an indexed objective, including
+        # one without instances.
+        return self.to_string().startswith("minimize")
