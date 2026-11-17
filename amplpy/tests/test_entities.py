@@ -883,6 +883,7 @@ class TestEntities(TestBase.TestBase):
             s.t. C {s in S}: y[s] <= 4;
             param p {S} default 5;
             param q := 3;
+            param r;
         """
         )
         y = ampl.get_variable("y")
@@ -896,11 +897,17 @@ class TestEntities(TestBase.TestBase):
             lambda: c.set_dual(1),
             lambda: ampl.var.__setitem__("y", 1),
             lambda: ampl.con.__setitem__("C", 1),
+            lambda: p.set(1),
+            lambda: p.set("s"),
+            # A single value routes to Parameter.set(), not set_values().
+            lambda: ampl.param.__setitem__("p", 1),
+            lambda: ampl.param.__setitem__("p", "s"),
             p.value,
         ]:
             with self.assertRaises(TypeError):
                 setter()
         self.assertEqual(y.get_values().to_dict(), {"a": 0, "b": 0})
+        self.assertEqual((p["a"], p["b"]), (5, 5))
         # Whole-family operations remain valid on indexed entities.
         y.fix()
         self.assertEqual(y["a"].astatus(), "fix")
@@ -919,6 +926,11 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(ampl.get_parameter("q").value(), 3)
         ampl.get_variable("x").set_value(4)
         self.assertEqual(ampl.get_variable("x").value(), 4)
+        # Assigning all instances of an indexed parameter still works.
+        ampl.param["p"] = {"a": 1, "b": 2}
+        self.assertEqual(p.get_values().to_dict(), {"a": 1, "b": 2})
+        ampl.param["r"] = 6
+        self.assertEqual(ampl.get_parameter("r").value(), 6)
 
     def test_indexed_objective_minimization(self):
         ampl = self.ampl
