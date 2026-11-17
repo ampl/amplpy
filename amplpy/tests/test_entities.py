@@ -737,6 +737,30 @@ class TestEntities(TestBase.TestBase):
                     call()
         self.assertEqual(ampl.get_value("1+1"), 2)
 
+    def test_scalar_set_suffix_dataframe(self):
+        # A DataFrame without index columns passes the indexarity check of a
+        # scalar entity, but AMPL_EntitySetSuffixes would emit
+        # "let y := 4", assigning the value instead of the suffix.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            var y := 1;
+            subject to c: y <= 10;
+            suffix rhspen IN;
+        """
+        )
+        for name, suffix in [("y", "relax"), ("c", "rhspen")]:
+            entity = ampl.get_entity(name)
+            with self.assertRaises(ValueError):
+                entity.set_suffix(
+                    suffix, amplpy.DataFrame(index=[], columns=[(suffix, [4])])
+                )
+            # Zero rows assign nothing, as for indexed entities.
+            entity.set_suffix(suffix, amplpy.DataFrame(index=[], columns=[suffix]))
+            entity.set_suffix(suffix, 4)
+            self.assertEqual(ampl.get_value(f"{name}.{suffix}"), 4)
+        self.assertEqual(ampl.get_variable("y").value(), 1)
+
     def test_empty_data_other_paths(self):
         # These paths hand zero rows to AMPL, which handles them: an empty set
         # assignment empties the set, and parameters are left unchanged.

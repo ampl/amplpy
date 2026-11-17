@@ -95,7 +95,8 @@ cdef class Entity(object):
 
         Raises:
             ValueError: if the number of index columns of the data does not
-            match the indexarity of the entity.
+            match the indexarity of the entity, or if a DataFrame with rows
+            is given for a scalar entity (pass a single value instead).
         """
         cdef DataFrame df_typed
         cdef size_t indexarity
@@ -115,8 +116,17 @@ cdef class Entity(object):
         else:
             PY_AMPL_CALL(campl.AMPL_InstanceSetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), float(value)))
             return
-        if self._has_rows_to_assign(df_typed, indexarity, self.name()):
-            PY_AMPL_CALL(campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr()))
+        if not self._has_rows_to_assign(df_typed, indexarity, self.name()):
+            return
+        if indexarity == 0:
+            # Without index columns, AMPL_EntitySetSuffixes emits
+            # "let name := value", which assigns the value of the entity
+            # instead of the suffix.
+            raise ValueError(
+                f"'{self.name()}' is not indexed: pass a single numeric or "
+                "string value to set_suffix() instead of a DataFrame."
+            )
+        PY_AMPL_CALL(campl.AMPL_EntitySetSuffixes(self._ampl._c_ampl, self._name, df_typed.get_ptr()))
 
     cdef size_t _family_indexarity(self) except? 0:
         """Indexarity of the entity, also when this object is an instance."""
@@ -264,12 +274,9 @@ cdef class Entity(object):
             The sum of the dimensions of the indexing sets or 0 if the
             entity is not indexed.
         """
-        cdef size_t indexarity
         if self._index is not NULL:
-            indexarity = 0
-        else:
-            PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
-        return indexarity
+            return 0
+        return self._family_indexarity()
 
     def is_scalar(self):
         """

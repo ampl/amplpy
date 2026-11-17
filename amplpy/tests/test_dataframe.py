@@ -335,8 +335,11 @@ class TestDataFrame(TestBase.TestBase):
             self.assertEqual(df._get_headers(), ("index0", "index1", "v"), names)
         df = DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J"])
         self.assertEqual(df._get_headers(), ("J", "v"))
-        with self.assertRaises(AssertionError):
-            DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J", "K"])
+        # A wrong number of index_names raises ValueError (not an assert,
+        # which python -O removes), for empty and non-empty data alike.
+        for frame in [pd.DataFrame({"v": []}), pd.DataFrame({"v": [1.0]})]:
+            with self.assertRaises(ValueError):
+                DataFrame.from_pandas(frame, index_names=["J", "K"])
         # indexarity one above the index levels mirrors df.stack() as for
         # non-empty data: the columns become an extra index level.
         for frame in [
@@ -367,10 +370,28 @@ class TestDataFrame(TestBase.TestBase):
         # DataFrame(index=None) holds no native dataframe: using it must raise
         # instead of crashing the process.
         for df in [DataFrame(None), DataFrame(index=None)]:
-            with self.assertRaises(ValueError):
-                df._get_num_rows()
-            with self.assertRaises(ValueError):
-                df._get_num_indices()
+            for call in [
+                df._get_num_rows,
+                df._get_num_cols,
+                df._get_num_indices,
+                df._get_headers,
+                df.to_string,
+                lambda: str(df),
+                lambda: list(df),
+                lambda: df._add_row(1, 2),
+                lambda: df._add_column("v", [1]),
+                lambda: df._get_column("v"),
+                lambda: df._set_column("v", [1]),
+                lambda: df._get_row(1),
+                lambda: df._get_row_by_index(0),
+                df.to_dict,
+                df.to_list,
+            ]:
+                with self.assertRaises(ValueError):
+                    call()
+            if pd is not None:
+                with self.assertRaises(ValueError):
+                    df.to_pandas()
 
     def test_failed_construction(self):
         # An exception raised before the native dataframe is created must
