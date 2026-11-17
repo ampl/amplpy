@@ -3,8 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Fix a crash (or termination of the AMPL interpreter) when `Entity.set_suffix()` or `Entity.set_values()` received empty data. Assigning zero rows is now a no-op that keeps existing values; empty data whose number of index columns does not match the entity raises `ValueError`.
+
+### 0.18.2
+- Fix a crash (or termination of the AMPL interpreter) when `Entity.set_suffix()` or `Entity.set_values()` received empty data. Assigning zero rows is now a no-op that keeps existing values.
+- `Entity.set_suffix()` and `Entity.set_values()` now raise `ValueError` when the number of index columns of a `DataFrame` or pandas object does not match the entity, whether or not the data has rows (non-empty data used to fail in AMPL with a `RuntimeError`).
 - Fix a crash when a `DataFrame` was constructed with invalid headers; headers must be strings and a `TypeError` is raised otherwise.
+- Fix a crash when assigning a `DataFrame` created with `index=None`; a `ValueError` is raised instead.
+- `DataFrame.from_pandas()` and `AMPL.set_data()` accept empty pandas data.
 
 ## 20261028
 

@@ -665,18 +665,116 @@ class TestEntities(TestBase.TestBase):
         w.set_values(pd.Series([], dtype=float, index=empty2))
         w.set_values(amplpy.DataFrame(index=["i", "j"], columns=["w"]))
         x.set_values(amplpy.DataFrame(index=[], columns=["x"]))
+        # An empty flat index or dict states no index arity: nothing to
+        # assign, for scalar and indexed entities alike.
+        x.set_values(pd.Series([], dtype=float))
+        x.set_values({})
         self.assertEqual(x.value(), 5)
-        # Empty data of the wrong arity is rejected rather than ignored.
+        # Data of the wrong arity is rejected with the same error whether or
+        # not it has rows.
         for call in [
             lambda: c2.set_suffix("rhspen", pd.Series([], dtype=float, index=empty3)),
             lambda: c2.set_suffix(
                 "rhspen", amplpy.DataFrame(index=["i"], columns=["rhspen"])
             ),
             lambda: w.set_values(amplpy.DataFrame(index=["i"], columns=["w"])),
-            lambda: x.set_values(pd.Series([], dtype=float)),
+            lambda: w.set_values(
+                amplpy.DataFrame(index=[("i", ["a"])], columns=[("w", [1.0])])
+            ),
+            lambda: c2.set_suffix(
+                "rhspen", pd.Series([1.0], index=pd.MultiIndex.from_tuples([(1, 2, 3)]))
+            ),
+            lambda: x.set_values({"a": 1}),
+            lambda: x.set_values(pd.Series([1.0], index=["a"])),
         ]:
             with self.assertRaises(ValueError):
                 call()
+        self.assertEqual(x.value(), 5)
+        self.assertEqual(ampl.get_value("1+1"), 2)
+
+    def test_empty_data_tuple_keys(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set I := 1..2;
+            var w {I, I, I} := 0;
+            suffix rhspen IN;
+        """
+        )
+        w = ampl.get_variable("w")
+        keys = [(i, j, k) for i in [1, 2] for j in [1, 2] for k in [1, 2]]
+        for cond in [lambda key: key == (1, 2, 1), lambda key: False]:
+            # The same code path must work when the filter keeps no keys.
+            data = pd.Series({key: 7.0 for key in keys if cond(key)}, dtype=float)
+            w.set_values(data)
+            w.set_suffix("rhspen", data)
+        self.assertEqual(w[1, 2, 1].value(), 7)
+        self.assertEqual(ampl.get_value("w[1, 2, 1].rhspen"), 7)
+        self.assertEqual(ampl.get_value("sum {i in I, j in I, k in I} w[i, j, k]"), 7)
+
+    def test_dataframe_without_native_data(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S;
+            var x;
+            subject to c: x <= 1;
+            suffix rhspen IN;
+        """
+        )
+        x = ampl.get_variable("x")
+        c = ampl.get_constraint("c")
+        for make in [lambda: amplpy.DataFrame(None), lambda: amplpy.DataFrame(index=None)]:
+            for call in [
+                lambda: x.set_values(make()),
+                lambda: c.set_suffix("rhspen", make()),
+                lambda: ampl.set_data(make()),
+                lambda: ampl.get_set("S").set_values(make()),
+            ]:
+                with self.assertRaises(ValueError):
+                    call()
+        self.assertEqual(ampl.get_value("1+1"), 2)
+
+    def test_empty_data_other_paths(self):
+        # These paths hand zero rows to AMPL, which handles them: an empty set
+        # assignment empties the set, and parameters are left unchanged.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set U;
+            set U2 dimen 2;
+            set S := {'a', 'b'};
+            param r {S};
+            param q {S, S} default 0;
+            let r['a'] := 4;
+        """
+        )
+        u, u2 = ampl.get_set("U"), ampl.get_set("U2")
+        r, q = ampl.get_parameter("r"), ampl.get_parameter("q")
+        for empty in [[], (), (v for v in [])] + ([np.array([])] if np else []):
+            r.set_values(empty)
+        if np is not None:
+            q.set_values(np.zeros((0, 0)))
+        self.assertEqual(r.to_dict(), {"a": 4})
+        for assign, target in [
+            (lambda: u.set_values([]), u),
+            (lambda: u.set_values(amplpy.DataFrame(index=["U"])), u),
+            (lambda: ampl.set_data(amplpy.DataFrame(index=["U"]), "U"), u),
+            (lambda: u2.set_values([]), u2),
+            (lambda: u2.set_values(amplpy.DataFrame(index=["i", "j"])), u2),
+        ]:
+            target.set_values([("x", "y")] if target is u2 else ["x"])
+            self.assertEqual(target.size(), 1)
+            assign()
+            self.assertEqual(target.size(), 0)
+        if pd is not None:
+            ampl.set_data(pd.DataFrame({"r": []}))
+            u.set_values(["x"])
+            ampl.set_data(pd.DataFrame({"r": []}, index=pd.Index([], name="U")), "U")
+            self.assertEqual(u.size(), 0)
+        self.assertEqual(r.to_dict(), {"a": 4})
         self.assertEqual(ampl.get_value("1+1"), 2)
 
     def test_set_values(self):

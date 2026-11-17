@@ -174,7 +174,11 @@ cdef class DataFrame(object):
                 if isinstance(col, tuple):
                     self._set_column(col[0], col[1])
 
-    cdef campl.AMPL_DATAFRAME* get_ptr(self):
+    cdef campl.AMPL_DATAFRAME* get_ptr(self) except NULL:
+        if self._c_df == NULL:
+            raise ValueError(
+                "The DataFrame holds no data (it was created with index=None)."
+            )
         return self._c_df
 
     @staticmethod
@@ -217,7 +221,7 @@ cdef class DataFrame(object):
             The number of columns.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(self.get_ptr(), &num))
         return int(num)
 
     def _get_num_rows(self):
@@ -228,7 +232,7 @@ cdef class DataFrame(object):
             The number of rows.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self.get_ptr(), &num))
         return int(num)
 
     def _get_num_indices(self):
@@ -239,7 +243,7 @@ cdef class DataFrame(object):
             The number of indices needed to access one row of this dataframe.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumIndices(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumIndices(self.get_ptr(), &num))
         return int(num)
 
     def _add_row(self, *value):
@@ -563,17 +567,32 @@ cdef class DataFrame(object):
         else:
             assert isinstance(df, pd.DataFrame)
         if len(df) == 0:
-            # Build the same headers as the non-empty path below, including
-            # the extra index level that df.stack() would add.
+            # Build the headers the non-empty path below would build.
             nindices = df.index.nlevels
+            names = list(df.index.names)
             columns = [str(cname) for cname in df.columns.tolist()]
             if indexarity == nindices + 1:
+                # Mirror df.stack(): the columns become an extra index level.
                 nindices += 1
+                names.append(None)
                 columns = ["0"]
-            index = [f"index{i}" for i in range(nindices)]
+            elif nindices == 1 and indexarity is not None and indexarity != 1:
+                # An empty flat index does not tell the number of index
+                # columns: tuple keys (e.g. from a filtered dict comprehension)
+                # only become a MultiIndex when there are rows. Use the
+                # indexarity of the target entity.
+                nindices = indexarity
+                names = [None] * nindices
             if index_names is not None:
-                assert len(index) == len(index_names)
+                assert nindices == len(index_names)
                 index = list(index_names)
+            elif all(isinstance(name, str) for name in names) and len(
+                set(names + columns)
+            ) == len(names) + len(columns):
+                # Keep the pandas index names when they are valid headers.
+                index = names
+            else:
+                index = [f"index{i}" for i in range(nindices)]
             return cls(index=index, columns=columns)
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())

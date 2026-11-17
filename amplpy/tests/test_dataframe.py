@@ -320,18 +320,23 @@ class TestDataFrame(TestBase.TestBase):
         df = DataFrame.from_pandas(pd.Series([], dtype=float, name="v"))
         self.assertEqual(df._get_num_rows(), 0)
         self.assertEqual(df._get_headers(), ("index0", "v"))
-        # Same headers as for non-empty data: pandas index names are not used.
+        # Named pandas indexes keep their names as headers.
         df = DataFrame.from_pandas(
             pd.DataFrame({"v": []}, index=pd.Index([], name="I"))
         )
-        self.assertEqual(df._get_headers(), ("index0", "v"))
+        self.assertEqual(df._get_headers(), ("I", "v"))
+        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
+        self.assertEqual(df._get_headers(), ("i", "j", "v"))
+        # Names that are not valid headers fall back to index0, index1, ...
+        for names in [["i", None], ["i", "i"], ["i", "v"]]:
+            multi = pd.MultiIndex.from_tuples([], names=names)
+            df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
+            self.assertEqual(df._get_headers(), ("index0", "index1", "v"), names)
         df = DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J"])
         self.assertEqual(df._get_headers(), ("J", "v"))
         with self.assertRaises(AssertionError):
             DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J", "K"])
-        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
-        df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
-        self.assertEqual(df._get_headers(), ("index0", "index1", "v"))
         # indexarity one above the index levels mirrors df.stack() as for
         # non-empty data: the columns become an extra index level.
         for frame in [
@@ -340,6 +345,32 @@ class TestDataFrame(TestBase.TestBase):
         ]:
             df = DataFrame.from_pandas(frame, indexarity=2)
             self.assertEqual(df._get_headers(), ("index0", "index1", "0"))
+        # An empty flat index does not tell the number of index columns
+        # (tuple keys only become a MultiIndex when there are rows), so the
+        # indexarity is used, as for non-empty data with tuple keys.
+        nonempty = pd.Series({(1, 2, 3): 1.0}, name="v")
+        empty = pd.Series({k: 1.0 for k in nonempty.index if k[0] > 1}, name="v")
+        self.assertEqual(empty.index.nlevels, 1)
+        for series in [nonempty, empty]:
+            df = DataFrame.from_pandas(series, indexarity=3)
+            self.assertEqual(df._get_num_indices(), 3)
+        df = DataFrame.from_pandas(pd.Series([], dtype=float), indexarity=0)
+        self.assertEqual(df._get_num_indices(), 0)
+        # A MultiIndex states the number of index columns explicitly.
+        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, index=multi), indexarity=3)
+        self.assertEqual(df._get_num_indices(), 3)  # stacked
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, index=multi), indexarity=4)
+        self.assertEqual(df._get_num_indices(), 2)
+
+    def test_no_native_dataframe(self):
+        # DataFrame(index=None) holds no native dataframe: using it must raise
+        # instead of crashing the process.
+        for df in [DataFrame(None), DataFrame(index=None)]:
+            with self.assertRaises(ValueError):
+                df._get_num_rows()
+            with self.assertRaises(ValueError):
+                df._get_num_indices()
 
     def test_failed_construction(self):
         # An exception raised before the native dataframe is created must
