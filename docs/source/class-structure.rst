@@ -101,7 +101,7 @@ Setting entities and options is also possible:
 * ``ampl.var[name] = value`` is equivalent to ``ampl.get_variable(name).set_value(value)``  (:func:`~amplpy.Variable.set_value`);
 * ``ampl.con[name] = value`` is equivalent to ``ampl.get_constraint(name).set_dual(value)`` (:func:`~amplpy.Constraint.set_dual`);
 * ``ampl.set[name] = values`` is equivalent to ``ampl.get_set(name).set_values(values)`` (:func:`~amplpy.Set.set_values`);
-* ``ampl.param[name] = value`` is equivalent to ``ampl.get_parameter(name).set(value)`` if the parameter is scalar (:func:`~amplpy.Parameter.set`), ``ampl.get_parameter(name).set_values(value)`` otherwise (:func:`~amplpy.Parameter.set_values`);
+* ``ampl.param[name] = value`` is equivalent to ``ampl.get_parameter(name).set(value)`` if ``value`` is a number or a string, which is valid only for a scalar parameter (:func:`~amplpy.Parameter.set`), and to ``ampl.get_parameter(name).set_values(value)`` otherwise (:func:`~amplpy.Parameter.set_values`);
 * ``ampl.option[name] = value`` is equivalent to ``ampl.set_option(name, value)`` (:func:`~amplpy.AMPL.set_option`).
 
 

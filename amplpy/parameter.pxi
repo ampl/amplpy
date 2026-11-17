@@ -17,13 +17,16 @@ except ImportError:
 
 cdef _get_parameter_value(AMPL ampl, char* name, campl.AMPL_TUPLE* index):
     """
-    Get the value of the scalar parameter ``name`` or, if ``index`` is not
-    NULL, of its instance ``name[index]``. ``index`` is not freed.
+    Get the value of the scalar parameter ``name`` or, if ``index`` is a
+    non-empty tuple, of its instance ``name[index]``. ``index`` is not freed.
     """
     cdef campl.AMPL_ERRORINFO* errorinfo
     cdef char* expression = NULL
     cdef campl.AMPL_VARIANT* v
-    if index is NULL:
+    cdef size_t size = 0
+    if index is not NULL:
+        campl.AMPL_TupleGetSize(index, &size)
+    if size == 0:
         errorinfo = campl.AMPL_GetValue(ampl._c_ampl, name, &v)
     else:
         PY_AMPL_CALL(campl.AMPL_InstanceGetName(ampl._c_ampl, name, index, &expression))
@@ -31,9 +34,10 @@ cdef _get_parameter_value(AMPL ampl, char* name, campl.AMPL_TUPLE* index):
         campl.AMPL_StringFree(&expression)
     if errorinfo:
         PY_AMPL_CALL(errorinfo)
-    py_variant = to_py_variant(v)
-    campl.AMPL_VariantFree(&v)
-    return py_variant
+    try:
+        return to_py_variant(v)
+    finally:
+        campl.AMPL_VariantFree(&v)
 
 
 cdef class Parameter(Entity):
@@ -98,6 +102,9 @@ cdef class Parameter(Entity):
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
             index = [index]
+        if len(index) == 0:
+            # p[()] names the bare parameter: valid only for a scalar one.
+            return self.value()
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(index)
         try:
             return _get_parameter_value(self._ampl, self._name, tuple_c)
@@ -137,7 +144,7 @@ cdef class Parameter(Entity):
         if len(args) == 1:
             value = args[0]
             self._check_scalar()
-            if self._index is not NULL:
+            if self._is_instance():
                 # Single instance (e.g., obtained by iterating over p).
                 if isinstance(value, Real):
                     errorinfo = campl.AMPL_ParameterInstanceSetNumericValue(self._ampl._c_ampl, self._name, self._index, float(value))

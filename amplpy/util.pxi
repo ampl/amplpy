@@ -150,7 +150,8 @@ def _parse_ampl_subscript(str subscript):
     Parse the subscript of an AMPL instance name (the text between the
     outer brackets, e.g. ``'a', 1`` for ``Obj['a', 1]``) into a list of
     Python values. Strings may be quoted with single or double quotes,
-    with embedded quotes doubled. Unquoted items written in AMPL number
+    with embedded quotes doubled (AMPL prints a newline in a string as a
+    backslash followed by the newline). Unquoted items written in AMPL number
     syntax become numbers (AMPL prints them with round-trip precision),
     as do ``Infinity`` and ``-Infinity``; any other unquoted item is kept
     as a string, provided it contains no whitespace or quotes.
@@ -178,6 +179,12 @@ def _parse_ampl_subscript(str subscript):
                         continue
                     i += 1
                     break
+                if subscript[i] == "\\" and i + 1 < n and subscript[i + 1] == "\n":
+                    # AMPL prints a newline in a string as a backslash
+                    # followed by the newline; other backslashes are literal.
+                    chars.append("\n")
+                    i += 2
+                    continue
                 chars.append(subscript[i])
                 i += 1
             items.append("".join(chars))

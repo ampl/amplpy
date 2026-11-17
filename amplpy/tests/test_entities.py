@@ -932,6 +932,91 @@ class TestEntities(TestBase.TestBase):
         ampl.param["r"] = 6
         self.assertEqual(ampl.get_parameter("r").value(), 6)
 
+    def test_empty_index(self):
+        # An empty index names the bare entity. On an indexed entity with one
+        # instance, that returned the key or garbage instead of an error.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set T := {2026};
+            var y {T} := 4;
+            minimize O {t in T}: y[t];
+            s.t. C {t in T}: y[t] >= 1;
+            param cap {T} := 5;
+            var x := 3;
+            param q := 11;
+        """
+        )
+        y = ampl.get_variable("y")
+        for call in [
+            lambda: y[()].value(),
+            lambda: y[[]].value(),
+            lambda: y.instances()[""].value(),
+            lambda: y[()].astatus(),
+            lambda: y[()].set_value(1),
+            lambda: ampl.get_objective("O")[()].value(),
+            lambda: ampl.get_constraint("C")[()].dual(),
+            lambda: ampl.get_parameter("cap")[()],
+            lambda: ampl.get_entity("cap")[()].value(),
+        ]:
+            with self.assertRaises(TypeError):
+                call()
+        self.assertEqual(y[2026].value(), 4)
+        self.assertEqual(ampl.get_parameter("cap")[2026], 5)
+        # On a scalar entity, an empty index names the entity itself.
+        self.assertEqual(ampl.get_variable("x")[()].value(), 3)
+        self.assertEqual(ampl.get_parameter("q")[()], 11)
+        self.assertEqual(ampl.get_entity("q")[()].value(), 11)
+
+    def test_indexed_entity_error_messages(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            var y {S};
+            param p {S} default 1;
+            set T {S} := {1};
+            param r;
+        """
+        )
+        # The advice in the message works for the entity type.
+        with self.assertRaisesRegex(TypeError, r"p\[\.\.\.\] = value.*set_values"):
+            ampl.get_parameter("p").set(2)
+        with self.assertRaisesRegex(TypeError, r"y\[\.\.\.\]\)\. Use get_values"):
+            ampl.get_variable("y").value()
+        # Parameters and sets have no suffixes, indexed or not (unchanged).
+        for name in ["p", "T", "r"]:
+            with self.assertRaisesRegex(ValueError, "suffix", msg=name):
+                ampl.get_entity(name).set_suffix("relax", 1)
+
+    def test_objective_minimization_non_utf8_declaration(self):
+        # AMPL keeps the raw bytes of a Latin-1 model file in the declaration,
+        # so the sense must be read without decoding the declaration.
+        path = self.tmpfile("latin1.mod")
+        with open(path, "wb") as f:
+            f.write(
+                b"var x >= 0;\n"
+                b"minimize Cost 'co\xfbt total': x;\n"
+                b"maximize Profit {i in 1..2}: if 'caf\xe9' = 'x' then x else i*x;\n"
+                b"minimize Loss 'p\xe9nalit\xe9' {i in 1..2}: i*x;\n"
+            )
+        self.ampl.read(path)
+        self.assertTrue(self.ampl.get_objective("Cost").minimization())
+        self.assertFalse(self.ampl.get_objective("Profit")[1].minimization())
+        self.assertFalse(self.ampl.get_objective("Profit").minimization())
+        self.assertTrue(self.ampl.get_objective("Loss").minimization())
+
+    def test_minimization_deleted_objective(self):
+        # Like the other getters, minimization() raises TypeError once the
+        # objective is deleted.
+        ampl = self.ampl
+        ampl.eval("var x; minimize O: x;")
+        obj = ampl.get_objective("O")
+        ampl.eval("delete O;")
+        for getter in [obj.value, obj.minimization]:
+            with self.assertRaises(TypeError):
+                getter()
+
     def test_indexed_objective_minimization(self):
         ampl = self.ampl
         ampl.eval(
@@ -1002,6 +1087,11 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(parse("1e+20"), [1e20])
         # AMPL prints infinite members as Infinity and -Infinity.
         self.assertEqual(parse("Infinity,-Infinity"), [float("inf"), float("-inf")])
+        # AMPL prints a newline in a string as a backslash and the newline;
+        # other backslashes are literal.
+        self.assertEqual(parse("'new\\\nline'"), ["new\nline"])
+        self.assertEqual(parse("'new\\\\\nline'"), ["new\\\nline"])
+        self.assertEqual(parse("'a\\b','\\'"), ["a\\b", "\\"])
         # Only AMPL number syntax is numeric; other unquoted items stay strings.
         self.assertEqual(parse("alpha"), ["alpha"])
         self.assertEqual(parse("nan,inf,1_0"), ["nan", "inf", "1_0"])
@@ -1020,6 +1110,46 @@ class TestEntities(TestBase.TestBase):
         ]:
             with self.assertRaises(ValueError, msg=invalid):
                 parse(invalid)
+
+    def test_current_objective_newline_members(self):
+        # The current objective is resolved to the member with the newline,
+        # not to the member with a backslash before the newline.
+        ampl = self.ampl
+        for position in (1, 2):
+            ampl.reset()
+            ampl.eval("set S ordered; maximize F {s in S}: ord(s);")
+            ampl.set["S"] = ["new\nline", "new\\\nline"]
+            ampl.eval(f"objective F[member({position}, S)];")
+            ampl.get_current_objective().drop()
+            self.assertEqual(
+                ampl.get_value(f"F[member({position}, S)].astatus"), "drop", position
+            )
+
+    def test_current_objective_without_model_generation(self):
+        # Resolving the current objective must not generate the model: that
+        # fails while data is missing elsewhere, and while option times is set
+        # it made the first lookup fail.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            param m;
+            var x >= 0 <= 1;
+            maximize F {s in S}: if s = 'a' then 2*x else 3*x;
+            s.t. c: x <= m;
+            objective F['a'];
+        """
+        )
+        obj = ampl.get_current_objective()
+        self.assertEqual(obj.name(), "F")
+        ampl.param["m"] = 1
+        ampl.eval("let x := 1;")
+        self.assertEqual(obj.value(), 2)
+        # (While times is set, the C API cannot read suffixes such as the
+        # value, but the lookup itself must work.)
+        ampl.eval("option times 1; let m := 0.5;")
+        self.assertEqual(ampl.get_current_objective().name(), "F")
+        ampl.eval("option times 0;")
 
     def test_current_objective_infinite_members(self):
         ampl = self.ampl

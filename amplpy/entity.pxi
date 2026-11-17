@@ -80,16 +80,34 @@ cdef class Entity(object):
         object exists.
         """
         cdef size_t indexarity
-        if self._index is not NULL:
+        if self._is_instance():
             return
         PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
         if indexarity > 0:
             name = self._name.decode('utf-8')
+            if self.wrap_function == campl.AMPL_PARAMETER:
+                # p[...] is the value of an instance, not an instance object.
+                example = f"{name}[...] to read or {name}[...] = value to assign"
+                bulk = "get_values() or set_values()"
+            else:
+                example = f"{name}[...]"
+                bulk = "get_values()"
             raise TypeError(
                 f"'{name}' is an indexed entity; this method can only be used "
                 f"on a scalar entity or on a single instance "
-                f"(e.g., {name}[...]). Use get_values() to access all instances."
+                f"(e.g., {example}). Use {bulk} to access all instances."
             )
+
+    cdef bint _is_instance(self) except -1:
+        """
+        True if this object is a single instance. An empty tuple (e.g., from
+        x[()]) names the bare entity, like no tuple at all.
+        """
+        cdef size_t size = 0
+        if self._index is NULL:
+            return False
+        campl.AMPL_TupleGetSize(self._index, &size)
+        return size > 0
 
     cdef _get_double_suffix(self, campl.AMPL_NUMERICSUFFIX suffix):
         """Read a numeric suffix of this scalar entity or instance."""
@@ -113,9 +131,10 @@ cdef class Entity(object):
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
-        value = str(value_c.decode('utf-8'))
-        campl.AMPL_StringFree(&value_c)
-        return value
+        try:
+            return str(value_c.decode('utf-8'))
+        finally:
+            campl.AMPL_StringFree(&value_c)
 
     def to_string(self):
         cdef campl.AMPL_ERRORINFO* errorinfo
@@ -149,7 +168,7 @@ cdef class Entity(object):
             match the indexarity of the entity, or if a DataFrame with rows
             is given for a scalar entity (pass a single value instead).
             TypeError: if a numeric or string value is passed for an indexed
-            entity.
+            variable, constraint or objective.
         """
         cdef DataFrame df_typed
         cdef size_t indexarity
@@ -164,11 +183,11 @@ cdef class Entity(object):
             df_typed = value
             indexarity = self._family_indexarity()
         elif isinstance(value, str):
-            self._check_scalar()
+            self._check_suffix_target()
             PY_AMPL_CALL(campl.AMPL_InstanceSetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), value.encode('utf-8')))
             return
         else:
-            self._check_scalar()
+            self._check_suffix_target()
             PY_AMPL_CALL(campl.AMPL_InstanceSetDoubleSuffix(self._ampl._c_ampl, self._name, self._index, suffix.encode('utf-8'), float(value)))
             return
         if not self._has_rows_to_assign(df_typed, indexarity, self.name()):
@@ -208,6 +227,15 @@ cdef class Entity(object):
                 f"is indexed over {indexarity}."
             )
         return df._get_num_rows() != 0
+
+    cdef _check_suffix_target(self):
+        """
+        Check that a single suffix value can be set on this object. Parameters
+        and sets have no suffixes, which AMPL reports (ValueError) whether
+        they are indexed or not.
+        """
+        if self.wrap_function != campl.AMPL_PARAMETER and self.wrap_function != campl.AMPL_SET:
+            self._check_scalar()
 
     def expand(self):
         """

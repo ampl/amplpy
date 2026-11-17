@@ -787,16 +787,18 @@ cdef class AMPL:
         try:
             # No negative slice index: this module disables wraparound.
             subscript = objname[bracket + 1:len(objname) - 1]
-            instance = objective[_parse_ampl_subscript(subscript)]
-            # Make sure the parsed index is a member of the indexing set by
-            # resolving the instance once in AMPL (constant cost, unlike a
-            # scan of all the tuples of the objective).
-            instance.astatus()
-        except (ValueError, RuntimeError, AMPLException):
+            # find() checks the parsed index against the tuples of this
+            # objective only. Reading a suffix of the instance instead (e.g.
+            # astatus) makes AMPL generate the whole model, which is costly
+            # and can fail for unrelated reasons (missing data elsewhere).
+            instance = objective.find(_parse_ampl_subscript(subscript))
+        except ValueError:
+            instance = None
+        if instance is None:
             raise KeyError(
                 f"The current objective {objname} cannot be resolved to an "
                 f"instance of {objname[:bracket]}."
-            ) from None
+            )
         return instance
 
     def _var(self):
