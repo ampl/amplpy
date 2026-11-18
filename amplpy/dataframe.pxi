@@ -24,10 +24,13 @@ cdef class Row(object):
     """
     cdef campl.AMPL_DATAFRAME* _df
     cdef size_t _index
+    # The DataFrame that owns _df, kept alive as long as this view.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         row = Row()
+        row._parent = parent
         row._df = df
         row._index = index
         return row
@@ -36,7 +39,7 @@ cdef class Row(object):
         return self.to_string()
 
     def __iter__(self):
-        return RowIterator.create(self._df, self._index)
+        return RowIterator.create(self._parent, self._df, self._index)
 
     def __getitem__(self, key):
         cdef campl.AMPL_VARIANT* v
@@ -56,10 +59,13 @@ cdef class Column(object):
     """
     cdef campl.AMPL_DATAFRAME* _df
     cdef size_t _index
+    # The DataFrame that owns _df, kept alive as long as this view.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         col = Column()
+        col._parent = parent
         col._df = df
         col._index = index
         return col
@@ -68,7 +74,7 @@ cdef class Column(object):
         return self.to_string()
 
     def __iter__(self):
-        return ColIterator.create(self._df, self._index)
+        return ColIterator.create(self._parent, self._df, self._index)
 
     def to_string(self):
         return str(self.to_list())
@@ -288,12 +294,13 @@ cdef class DataFrame(object):
             all the values of the new column.
         """   
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef size_t size = len(values)
+        cdef size_t size
         cdef const char** c_string_array = NULL
         cdef double* c_double_array = NULL
         cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         if values is None:
             values = []
+        size = len(values)
         if size == 0:
             PY_AMPL_CALL(campl.AMPL_DataFrameAddEmptyColumn(df_c, header.encode('utf-8')))
         else:
@@ -333,7 +340,7 @@ cdef class DataFrame(object):
         cdef size_t index
         cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         PY_AMPL_CALL(campl.AMPL_DataFrameGetColumnIndex(df_c, header.encode('utf-8'), &index))
-        return Column.create(df_c, index)
+        return Column.create(self, df_c, index)
 
     def _set_column(self, header, values):
         """
@@ -394,7 +401,7 @@ cdef class DataFrame(object):
         campl.AMPL_TupleFree(&tuple)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
-        return Row.create(df_c, index)
+        return Row.create(self, df_c, index)
 
     def _get_row_by_index(self, index):
         """
@@ -406,7 +413,7 @@ cdef class DataFrame(object):
         Returns:
             The corresponding row.
         """
-        return Row.create(self.get_ptr(), index)
+        return Row.create(self, self.get_ptr(), index)
 
     def _get_headers(self):
         """

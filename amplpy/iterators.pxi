@@ -246,10 +246,13 @@ cdef class ColIterator(object):
     cdef size_t _index
     cdef size_t _rowsize
     cdef size_t _rowit
+    # The DataFrame that owns _df, kept alive as long as this iterator.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         colit = ColIterator()
+        colit._parent = parent
         colit._df = df
         colit._index = index
         colit._rowit = 0
@@ -272,10 +275,13 @@ cdef class RowIterator(object):
     cdef size_t _index
     cdef size_t _columnsize
     cdef size_t _columnit
+    # The DataFrame that owns _df, kept alive as long as this iterator.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         rowit = RowIterator()
+        rowit._parent = parent
         rowit._df = df
         rowit._index = index
         rowit._columnit = 0

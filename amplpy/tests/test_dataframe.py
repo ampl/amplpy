@@ -416,6 +416,44 @@ class TestDataFrame(TestBase.TestBase):
         df = DataFrame(index=["i"], columns=["v"])
         self.assertEqual(df._get_headers(), ("i", "v"))
 
+    def test_add_column_without_values(self):
+        # values defaults to None, which adds an empty column like [] does.
+        df = DataFrame("FOOD")
+        df._set_column("FOOD", ["BEEF", "CHK"])
+        df._add_column("cost", [3.19, 2.59])
+        df._add_column("empty")
+        self.assertEqual(df._get_headers(), ("FOOD", "cost", "empty"))
+        self.assertEqual(list(df._get_column("empty")), [None, None])
+
+    def test_views_outlive_dataframe(self):
+        # Rows, columns and their iterators keep the DataFrame alive, so they
+        # stay valid after the last other reference to it is gone.
+        def make_views():
+            df = DataFrame("x", "y")
+            df._set_values({1: 12, 2: 23})
+            return (
+                df._get_column("y"),
+                df._get_row(2),
+                df._get_row_by_index(0),
+                list(df),
+                iter(df._get_column("x")),
+                iter(df._get_row(1)),
+            )
+
+        column, row, row0, rows, column_it, row_it = make_views()
+        # Allocate other dataframes to reuse any memory freed too early.
+        others = [DataFrame("a", "b") for _ in range(100)]
+        for other in others:
+            other._set_values({3: 34, 4: 45})
+        self.assertEqual(list(column), [12, 23])
+        self.assertEqual(column.to_list(), [12, 23])
+        self.assertEqual(list(row), [2, 23])
+        self.assertEqual(row[1], 23)
+        self.assertEqual(list(row0), [1, 12])
+        self.assertEqual([tuple(r) for r in rows], [(1, 12), (2, 23)])
+        self.assertEqual(list(column_it), [1, 2])
+        self.assertEqual(list(row_it), [1, 12])
+
     def test_iter(self):
         df = DataFrame("x", "y")
         dic = {1: 12, 2: 23}

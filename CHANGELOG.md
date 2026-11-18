@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Fix `Entity.set_suffix()` on a scalar entity with a `DataFrame` without index columns assigning the value of the entity instead of the suffix; it now raises `ValueError` (pass a single value instead).
 - Fix a crash when a `DataFrame` was constructed with invalid headers; headers must be strings and a `TypeError` is raised otherwise.
 - Fix crashes when using a `DataFrame` created with `index=None` (assigning or printing it, or accessing its rows, columns or headers); a `ValueError` is raised instead.
+- Fix rows and columns of a `DataFrame` (e.g. from iterating over it), and iterators over them, reading freed memory once no other reference to the `DataFrame` remained; they now keep the `DataFrame` alive.
 - `DataFrame.from_pandas()` and `AMPL.set_data()` accept empty pandas data.
 - `DataFrame.from_pandas()` raises `ValueError` instead of `AssertionError` when the number of `index_names` does not match the data.
 
