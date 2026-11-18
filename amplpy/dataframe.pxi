@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from libc.stdlib cimport malloc, free
+from libc.stdlib cimport malloc, calloc, free
 from libc.string cimport strdup
 
 from cpython.float cimport PyFloat_AsDouble
@@ -24,10 +24,13 @@ cdef class Row(object):
     """
     cdef campl.AMPL_DATAFRAME* _df
     cdef size_t _index
+    # The DataFrame that owns _df, kept alive as long as this view.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         row = Row()
+        row._parent = parent
         row._df = df
         row._index = index
         return row
@@ -36,7 +39,7 @@ cdef class Row(object):
         return self.to_string()
 
     def __iter__(self):
-        return RowIterator.create(self._df, self._index)
+        return RowIterator.create(self._parent, self._df, self._index)
 
     def __getitem__(self, key):
         cdef campl.AMPL_VARIANT* v
@@ -56,10 +59,13 @@ cdef class Column(object):
     """
     cdef campl.AMPL_DATAFRAME* _df
     cdef size_t _index
+    # The DataFrame that owns _df, kept alive as long as this view.
+    cdef object _parent
 
     @staticmethod
-    cdef create(campl.AMPL_DATAFRAME* df, size_t index):
+    cdef create(object parent, campl.AMPL_DATAFRAME* df, size_t index):
         col = Column()
+        col._parent = parent
         col._df = df
         col._index = index
         return col
@@ -68,7 +74,7 @@ cdef class Column(object):
         return self.to_string()
 
     def __iter__(self):
-        return ColIterator.create(self._df, self._index)
+        return ColIterator.create(self._parent, self._df, self._index)
 
     def to_string(self):
         return str(self.to_list())
@@ -87,6 +93,15 @@ cdef class Column(object):
     # Aliases
     toString = to_string
     toList = to_list
+
+
+def _check_index_names(index_names, nindices):
+    # A ValueError rather than an assert, which python -O would remove.
+    if len(index_names) != nindices:
+        raise ValueError(
+            f"index_names has {len(index_names)} name(s), but the data has "
+            f"{nindices} index column(s)."
+        )
 
 
 cdef class DataFrame(object):
@@ -143,23 +158,29 @@ cdef class DataFrame(object):
             column_names = [
                 col[0] if isinstance(col, tuple) else col for col in columns
             ]
+            # Validate and encode all headers before allocating native memory
+            # so that an invalid header raises a Python exception without
+            # leaking.
+            for name in index_names + column_names:
+                if not isinstance(name, str):
+                    raise TypeError(f"DataFrame headers must be strings, got {name!r}.")
+            encoded = [name.encode('utf-8') for name in index_names + column_names]
             index_size = len(index_names)
             column_size = len(column_names)
-            headers = <char**> malloc((index_size+column_size) * sizeof(char*))
-
-            for i in range(index_size + column_size):
-                if i < index_size:
-                    temp = index_names[i].encode('utf-8')
-                else:
-                    temp = column_names[i - index_size].encode('utf-8')
-                headers[i] = strdup(temp)
-
-            PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
-
-            for i in range(index_size+column_size):
-                if headers[i] != NULL:
-                    free(headers[i])
-            free(headers)
+            headers = <char**> calloc(index_size + column_size, sizeof(char*))
+            if headers == NULL:
+                raise MemoryError()
+            try:
+                for i in range(index_size + column_size):
+                    headers[i] = strdup(encoded[i])
+                    if headers[i] == NULL:
+                        raise MemoryError()
+                PY_AMPL_CALL(campl.AMPL_DataFrameCreate(&self._c_df, index_size, column_size, <const char* const*>headers))
+            finally:
+                for i in range(index_size + column_size):
+                    if headers[i] != NULL:
+                        free(headers[i])
+                free(headers)
 
             for col in index:
                 if isinstance(col, tuple):
@@ -168,7 +189,11 @@ cdef class DataFrame(object):
                 if isinstance(col, tuple):
                     self._set_column(col[0], col[1])
 
-    cdef campl.AMPL_DATAFRAME* get_ptr(self):
+    cdef campl.AMPL_DATAFRAME* get_ptr(self) except NULL:
+        if self._c_df == NULL:
+            raise ValueError(
+                "The DataFrame holds no data (it was created with index=None)."
+            )
         return self._c_df
 
     @staticmethod
@@ -182,11 +207,15 @@ cdef class DataFrame(object):
         Default destructor:
         releases all the resources related to the Dataframe instance.
         """
-        campl.AMPL_DataFrameFree(&self._c_df)
+        # _c_df is NULL if construction failed before or in
+        # AMPL_DataFrameCreate (which sets it to NULL on error, e.g. invalid
+        # headers), or for DataFrame(index=None) without create().
+        if self._c_df != NULL:
+            campl.AMPL_DataFrameFree(&self._c_df)
 
     def to_string(self):
         cdef char* value_c
-        PY_AMPL_CALL(campl.AMPL_DataFrameToString(self._c_df, &value_c))
+        PY_AMPL_CALL(campl.AMPL_DataFrameToString(self.get_ptr(), &value_c))
         value = str(value_c.decode('utf-8'))
         campl.AMPL_StringFree(&value_c)
         return value
@@ -207,7 +236,7 @@ cdef class DataFrame(object):
             The number of columns.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumCols(self.get_ptr(), &num))
         return int(num)
 
     def _get_num_rows(self):
@@ -218,7 +247,7 @@ cdef class DataFrame(object):
             The number of rows.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumRows(self.get_ptr(), &num))
         return int(num)
 
     def _get_num_indices(self):
@@ -229,7 +258,7 @@ cdef class DataFrame(object):
             The number of indices needed to access one row of this dataframe.
         """
         cdef size_t num
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumIndices(self._c_df, &num))
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetNumIndices(self.get_ptr(), &num))
         return int(num)
 
     def _add_row(self, *value):
@@ -243,11 +272,12 @@ cdef class DataFrame(object):
            each column.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
+        cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         if len(value) == 1 and isinstance(value[0], (tuple, list)):
             value = value[0]
         assert len(value) == self._get_num_cols()
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(tuple(value))
-        errorinfo = campl.AMPL_DataFrameAddRow(self._c_df, tuple_c)
+        errorinfo = campl.AMPL_DataFrameAddRow(df_c, tuple_c)
         campl.AMPL_TupleFree(&tuple_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -264,13 +294,15 @@ cdef class DataFrame(object):
             all the values of the new column.
         """   
         cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef size_t size = len(values)
+        cdef size_t size
         cdef const char** c_string_array = NULL
         cdef double* c_double_array = NULL
+        cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         if values is None:
             values = []
+        size = len(values)
         if size == 0:
-            PY_AMPL_CALL(campl.AMPL_DataFrameAddEmptyColumn(self._c_df, header.encode('utf-8')))
+            PY_AMPL_CALL(campl.AMPL_DataFrameAddEmptyColumn(df_c, header.encode('utf-8')))
         else:
             assert len(values) == self._get_num_rows()
             if any(isinstance(value, str) for value in values):
@@ -279,7 +311,7 @@ cdef class DataFrame(object):
                     values = list(values)
                 for i in range(size):
                     c_string_array[i] = strdup(values[i].encode('utf-8'))
-                errorinfo = campl.AMPL_DataFrameAddColumnString(self._c_df, header.encode('utf-8'), c_string_array)
+                errorinfo = campl.AMPL_DataFrameAddColumnString(df_c, header.encode('utf-8'), c_string_array)
                 for i in range(size):
                     if c_string_array[i] != NULL:
                         free(c_string_array[i])
@@ -291,7 +323,7 @@ cdef class DataFrame(object):
                 c_double_array = <double*> malloc(size * sizeof(double))
                 for i in range(size):
                     c_double_array[i] = values[i]
-                errorinfo = campl.AMPL_DataFrameAddColumnDouble(self._c_df, header.encode('utf-8'), c_double_array)
+                errorinfo = campl.AMPL_DataFrameAddColumnDouble(df_c, header.encode('utf-8'), c_double_array)
                 free(c_double_array)
                 if errorinfo:
                     PY_AMPL_CALL(errorinfo)
@@ -306,8 +338,9 @@ cdef class DataFrame(object):
             header: The header of the column.
         """
         cdef size_t index
-        PY_AMPL_CALL(campl.AMPL_DataFrameGetColumnIndex(self._c_df, header.encode('utf-8'), &index))
-        return Column.create(self._c_df, index)
+        cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
+        PY_AMPL_CALL(campl.AMPL_DataFrameGetColumnIndex(df_c, header.encode('utf-8'), &index))
+        return Column.create(self, df_c, index)
 
     def _set_column(self, header, values):
         """
@@ -322,11 +355,12 @@ cdef class DataFrame(object):
         cdef double* c_double_array = NULL
         cdef char** c_string_array = NULL
         cdef size_t size = len(values)
+        cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         if isinstance(values[0], str):
             c_string_array = <char**> malloc(size * sizeof(char*))
             for i in range(size):
                 c_string_array[i] = strdup(values[i].encode('utf-8'))
-            errorinfo = campl.AMPL_DataFrameSetColumnArgString(self._c_df, header.encode('utf-8'), <const char* const*>c_string_array, size)
+            errorinfo = campl.AMPL_DataFrameSetColumnArgString(df_c, header.encode('utf-8'), <const char* const*>c_string_array, size)
             for i in range(size):
                 if c_string_array[i] != NULL:
                     free(c_string_array[i])
@@ -343,7 +377,7 @@ cdef class DataFrame(object):
                     c_double_array[i] = PyFloat_AsDouble(values[i]);
                     if PyErr_Occurred():
                         raise TypeError("Failed to cast value to int/float/double")
-            errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(self._c_df, header.encode('utf-8'), c_double_array, size)
+            errorinfo = campl.AMPL_DataFrameSetColumnArgDouble(df_c, header.encode('utf-8'), c_double_array, size)
             free(c_double_array)
             if errorinfo:
                 PY_AMPL_CALL(errorinfo)
@@ -361,12 +395,13 @@ cdef class DataFrame(object):
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t index
+        cdef campl.AMPL_DATAFRAME* df_c = self.get_ptr()
         cdef campl.AMPL_TUPLE* tuple = to_c_tuple(key)
-        errorinfo = campl.AMPL_DataFrameGetRowIndex(self._c_df, tuple, &index)
+        errorinfo = campl.AMPL_DataFrameGetRowIndex(df_c, tuple, &index)
         campl.AMPL_TupleFree(&tuple)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
-        return Row.create(self._c_df, index)
+        return Row.create(self, df_c, index)
 
     def _get_row_by_index(self, index):
         """
@@ -378,7 +413,7 @@ cdef class DataFrame(object):
         Returns:
             The corresponding row.
         """
-        return Row.create(self._c_df, index)
+        return Row.create(self, self.get_ptr(), index)
 
     def _get_headers(self):
         """
@@ -390,7 +425,7 @@ cdef class DataFrame(object):
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t size
         cdef char** headers
-        errorinfo = campl.AMPL_DataFrameGetHeaders(self._c_df, &size, &headers)
+        errorinfo = campl.AMPL_DataFrameGetHeaders(self.get_ptr(), &size, &headers)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
         headers_py = tuple(str(headers[i].decode('utf-8')) for i in range(size))
@@ -553,7 +588,33 @@ cdef class DataFrame(object):
         else:
             assert isinstance(df, pd.DataFrame)
         if len(df) == 0:
-            return cls(index=df.index.names, columns=df.columns.tolist())
+            # Build the headers the non-empty path below would build.
+            nindices = df.index.nlevels
+            names = list(df.index.names)
+            columns = [str(cname) for cname in df.columns.tolist()]
+            if indexarity == nindices + 1:
+                # Mirror df.stack(): the columns become an extra index level.
+                nindices += 1
+                names.append(None)
+                columns = ["0"]
+            elif nindices == 1 and indexarity is not None and indexarity != 1:
+                # An empty flat index does not tell the number of index
+                # columns: tuple keys (e.g. from a filtered dict comprehension)
+                # only become a MultiIndex when there are rows. Use the
+                # indexarity of the target entity.
+                nindices = indexarity
+                names = [None] * nindices
+            if index_names is not None:
+                _check_index_names(index_names, nindices)
+                index = list(index_names)
+            elif all(isinstance(name, str) for name in names) and len(
+                set(names + columns)
+            ) == len(names) + len(columns):
+                # Keep the pandas index names when they are valid headers.
+                index = names
+            else:
+                index = [f"index{i}" for i in range(nindices)]
+            return cls(index=index, columns=columns)
         if isinstance(df.index[0], tuple):
             df.index = pd.MultiIndex.from_tuples(df.index.tolist())
         if indexarity == df.index.nlevels + 1:
@@ -566,7 +627,7 @@ cdef class DataFrame(object):
             keys = [(key,) for key in df.index]
         index = [(f"index{i}", cindex) for i, cindex in enumerate(zip(*keys))]
         if index_names is not None:
-            assert len(index) == len(index_names)
+            _check_index_names(index_names, len(index))
             for i in range(len(index)):
                 index[i] = (index_names[i], index[i][1])
         columns = [(str(cname), df[cname].tolist()) for cname in df.columns.tolist()]
@@ -589,10 +650,6 @@ cdef class DataFrame(object):
         else:
             raise TypeError
         return cls(index=index, columns=columns)
-
-    @classmethod
-    def _from_data_frame_ref(cls, df_ref):
-        return cls(None, None, _impl=df_ref)
 
     # Aliases
     _addColumn = _add_column

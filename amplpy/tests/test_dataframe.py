@@ -314,6 +314,146 @@ class TestDataFrame(TestBase.TestBase):
         self.assertEqual(list(pd_df["x"]), x)
         self.assertEqual(list(pd_df["y"]), y)
 
+    def test_empty_pandas(self):
+        if pd is None:
+            self.skipTest("pandas not available")
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, name="v"))
+        self.assertEqual(df._get_num_rows(), 0)
+        self.assertEqual(df._get_headers(), ("index0", "v"))
+        # Named pandas indexes keep their names as headers.
+        df = DataFrame.from_pandas(
+            pd.DataFrame({"v": []}, index=pd.Index([], name="I"))
+        )
+        self.assertEqual(df._get_headers(), ("I", "v"))
+        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
+        self.assertEqual(df._get_headers(), ("i", "j", "v"))
+        # Names that are not valid headers fall back to index0, index1, ...
+        for names in [["i", None], ["i", "i"], ["i", "v"]]:
+            multi = pd.MultiIndex.from_tuples([], names=names)
+            df = DataFrame.from_pandas(pd.DataFrame({"v": []}, index=multi))
+            self.assertEqual(df._get_headers(), ("index0", "index1", "v"), names)
+        df = DataFrame.from_pandas(pd.DataFrame({"v": []}), index_names=["J"])
+        self.assertEqual(df._get_headers(), ("J", "v"))
+        # A wrong number of index_names raises ValueError (not an assert,
+        # which python -O removes), for empty and non-empty data alike.
+        for frame in [pd.DataFrame({"v": []}), pd.DataFrame({"v": [1.0]})]:
+            with self.assertRaises(ValueError):
+                DataFrame.from_pandas(frame, index_names=["J", "K"])
+        # indexarity one above the index levels mirrors df.stack() as for
+        # non-empty data: the columns become an extra index level.
+        for frame in [
+            pd.DataFrame({"a": [1.0], "b": [2.0]}, index=["x"]),
+            pd.DataFrame({"a": [], "b": []}),
+        ]:
+            df = DataFrame.from_pandas(frame, indexarity=2)
+            self.assertEqual(df._get_headers(), ("index0", "index1", "0"))
+        # An empty flat index does not tell the number of index columns
+        # (tuple keys only become a MultiIndex when there are rows), so the
+        # indexarity is used, as for non-empty data with tuple keys.
+        nonempty = pd.Series({(1, 2, 3): 1.0}, name="v")
+        empty = pd.Series({k: 1.0 for k in nonempty.index if k[0] > 1}, name="v")
+        self.assertEqual(empty.index.nlevels, 1)
+        for series in [nonempty, empty]:
+            df = DataFrame.from_pandas(series, indexarity=3)
+            self.assertEqual(df._get_num_indices(), 3)
+        df = DataFrame.from_pandas(pd.Series([], dtype=float), indexarity=0)
+        self.assertEqual(df._get_num_indices(), 0)
+        # A MultiIndex states the number of index columns explicitly.
+        multi = pd.MultiIndex.from_tuples([], names=["i", "j"])
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, index=multi), indexarity=3)
+        self.assertEqual(df._get_num_indices(), 3)  # stacked
+        df = DataFrame.from_pandas(pd.Series([], dtype=float, index=multi), indexarity=4)
+        self.assertEqual(df._get_num_indices(), 2)
+
+    def test_no_native_dataframe(self):
+        # DataFrame(index=None) holds no native dataframe: using it must raise
+        # instead of crashing the process.
+        for df in [DataFrame(None), DataFrame(index=None)]:
+            for call in [
+                df._get_num_rows,
+                df._get_num_cols,
+                df._get_num_indices,
+                df._get_headers,
+                df.to_string,
+                lambda: str(df),
+                lambda: list(df),
+                lambda: df._add_row(1, 2),
+                lambda: df._add_column("v", [1]),
+                lambda: df._get_column("v"),
+                lambda: df._set_column("v", [1]),
+                lambda: df._get_row(1),
+                lambda: df._get_row_by_index(0),
+                df.to_dict,
+                df.to_list,
+            ]:
+                with self.assertRaises(ValueError):
+                    call()
+            if pd is not None:
+                with self.assertRaises(ValueError):
+                    df.to_pandas()
+
+    def test_failed_construction(self):
+        # An exception raised before the native dataframe is created must
+        # propagate instead of crashing the process in the destructor.
+        with self.assertRaises(TypeError):
+            DataFrame(index=5)
+        # Headers must be strings (non-string headers used to crash).
+        with self.assertRaises(TypeError):
+            DataFrame(index=[1, 2], columns=[None])
+        with self.assertRaises(TypeError):
+            DataFrame(index=["i"], columns=["v", None])
+
+        class BadHeader(str):
+            def encode(self, *args, **kwargs):
+                raise RuntimeError("cannot encode")
+
+        # Failing to encode a header must propagate before any native
+        # allocation, and later constructions must still work.
+        for _ in range(100):
+            with self.assertRaises(RuntimeError):
+                DataFrame(index=["i"], columns=["v", BadHeader("w")])
+        df = DataFrame(index=["i"], columns=["v"])
+        self.assertEqual(df._get_headers(), ("i", "v"))
+
+    def test_add_column_without_values(self):
+        # values defaults to None, which adds an empty column like [] does.
+        df = DataFrame("FOOD")
+        df._set_column("FOOD", ["BEEF", "CHK"])
+        df._add_column("cost", [3.19, 2.59])
+        df._add_column("empty")
+        self.assertEqual(df._get_headers(), ("FOOD", "cost", "empty"))
+        self.assertEqual(list(df._get_column("empty")), [None, None])
+
+    def test_views_outlive_dataframe(self):
+        # Rows, columns and their iterators keep the DataFrame alive, so they
+        # stay valid after the last other reference to it is gone.
+        def make_views():
+            df = DataFrame("x", "y")
+            df._set_values({1: 12, 2: 23})
+            return (
+                df._get_column("y"),
+                df._get_row(2),
+                df._get_row_by_index(0),
+                list(df),
+                iter(df._get_column("x")),
+                iter(df._get_row(1)),
+            )
+
+        column, row, row0, rows, column_it, row_it = make_views()
+        # Allocate other dataframes to reuse any memory freed too early.
+        others = [DataFrame("a", "b") for _ in range(100)]
+        for other in others:
+            other._set_values({3: 34, 4: 45})
+        self.assertEqual(list(column), [12, 23])
+        self.assertEqual(column.to_list(), [12, 23])
+        self.assertEqual(list(row), [2, 23])
+        self.assertEqual(row[1], 23)
+        self.assertEqual(list(row0), [1, 12])
+        self.assertEqual([tuple(r) for r in rows], [(1, 12), (2, 23)])
+        self.assertEqual(list(column_it), [1, 2])
+        self.assertEqual(list(row_it), [1, 12])
+
     def test_iter(self):
         df = DataFrame("x", "y")
         dic = {1: 12, 2: 23}
