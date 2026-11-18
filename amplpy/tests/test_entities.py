@@ -934,7 +934,8 @@ class TestEntities(TestBase.TestBase):
 
     def test_empty_index(self):
         # An empty index names the bare entity. On an indexed entity with one
-        # instance, that returned the key or garbage instead of an error.
+        # instance, that returned the key or garbage instead of an error, so
+        # it is rejected as soon as the index is applied.
         ampl = self.ampl
         ampl.eval(
             """
@@ -949,24 +950,62 @@ class TestEntities(TestBase.TestBase):
         )
         y = ampl.get_variable("y")
         for call in [
-            lambda: y[()].value(),
-            lambda: y[[]].value(),
-            lambda: y.instances()[""].value(),
-            lambda: y[()].astatus(),
-            lambda: y[()].set_value(1),
-            lambda: ampl.get_objective("O")[()].value(),
-            lambda: ampl.get_constraint("C")[()].dual(),
+            lambda: y[()],
+            lambda: y[[]],
+            lambda: y.instances()[()],
+            lambda: y.instances()[[]],
+            lambda: ampl.get_objective("O")[()],
+            lambda: ampl.get_constraint("C")[()],
             lambda: ampl.get_parameter("cap")[()],
-            lambda: ampl.get_entity("cap")[()].value(),
+            lambda: ampl.get_entity("cap")[()],
         ]:
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(TypeError, "empty index"):
                 call()
         self.assertEqual(y[2026].value(), 4)
         self.assertEqual(ampl.get_parameter("cap")[2026], 5)
         # On a scalar entity, an empty index names the entity itself.
-        self.assertEqual(ampl.get_variable("x")[()].value(), 3)
+        x = ampl.get_variable("x")
+        self.assertEqual(x[()].value(), 3)
+        self.assertEqual(x.instances()[()].value(), 3)
+        self.assertEqual(x[()].indexarity(), 0)
+        self.assertTrue(x[()].is_scalar())
         self.assertEqual(ampl.get_parameter("q")[()], 11)
         self.assertEqual(ampl.get_entity("q")[()].value(), 11)
+
+    def test_empty_index_after_redeclaration(self):
+        # x[()] taken while x is scalar names the bare entity: once x is
+        # redeclared as indexed, the same object represents the whole family
+        # and all its accessors agree on that.
+        ampl = self.ampl
+        ampl.eval("var x := 3;")
+        x0 = ampl.get_variable("x")[()]
+        self.assertEqual(x0.value(), 3)
+        ampl.reset()
+        ampl.eval("set S := {'a'}; var x {S} := 1;")
+        self.assertEqual(x0.indexarity(), 1)
+        self.assertFalse(x0.is_scalar())
+        with self.assertRaises(TypeError):
+            x0.value()
+
+    def test_instances_string_key(self):
+        # A string key is one element of the index, not a sequence of
+        # characters (which used to give ('a', 'b') for "ab").
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'ab', 'c'};
+            set P := {('a', 'b')};
+            var y {S} := 1;
+            var z {P} := 2;
+        """
+        )
+        y = ampl.get_variable("y")
+        z = ampl.get_variable("z")
+        y["ab"].set_value(5)
+        self.assertEqual(y.instances()["ab"].value(), 5)
+        self.assertEqual(y.instances()["c"].value(), 1)
+        self.assertEqual(z.instances()[("a", "b")].value(), 2)
+        self.assertEqual(z.instances()[["a", "b"]].value(), 2)
 
     def test_indexed_entity_error_messages(self):
         ampl = self.ampl

@@ -104,6 +104,7 @@ cdef class Parameter(Entity):
             index = [index]
         if len(index) == 0:
             # p[()] names the bare parameter: valid only for a scalar one.
+            self._check_empty_index()
             return self.value()
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(index)
         try:

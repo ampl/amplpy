@@ -165,8 +165,12 @@ cdef class InstanceIterator(object):
             return (to_py_tuple(self.begin[self.iterator-1]), create_entity(self.entity_class, self._ampl, self._name, self.begin[self.iterator-1], self._entity))
 
     def __getitem__(self, key):
-        assert isinstance(key, str)
-        key = tuple(key)
+        # A string is a one-element key: tuple(key) would split it into
+        # characters (e.g., "ab" into ('a', 'b'), and "" into an empty index).
+        if not isinstance(key, (tuple, list)):
+            key = (key,)
+        if len(key) == 0 and self._entity is not None:
+            (<Entity>self._entity)._check_empty_index()
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(key)
         return create_entity(self.entity_class, self._ampl, self._name, tuple_c, self._entity)
 

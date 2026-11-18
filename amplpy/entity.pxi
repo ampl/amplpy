@@ -98,10 +98,29 @@ cdef class Entity(object):
                 f"(e.g., {example}). Use {bulk} to access all instances."
             )
 
+    cdef _check_empty_index(self):
+        """
+        Raise TypeError for an empty index (e.g., y[()]) on an indexed entity.
+        An empty index names the bare entity, which AMPL accepts: for an
+        indexed entity with a single instance it evaluates to the index of
+        that instance instead of failing. On a scalar entity, x[()] is valid
+        and names the entity itself.
+        """
+        cdef size_t indexarity = self._family_indexarity()
+        if indexarity > 0:
+            name = self._name.decode('utf-8')
+            raise TypeError(
+                f"'{name}' is an indexed entity (indexarity {indexarity}); an "
+                f"empty index is only valid for a scalar entity. Pass the "
+                f"index of an instance (e.g., {name}[...])."
+            )
+
     cdef bint _is_instance(self) except -1:
         """
         True if this object is a single instance. An empty tuple (e.g., from
-        x[()]) names the bare entity, like no tuple at all.
+        x[()] on a scalar entity) names the bare entity, like no tuple at all:
+        if the entity is later redeclared as indexed, such an object
+        represents the whole family.
         """
         cdef size_t size = 0
         if self._index is NULL:
@@ -266,6 +285,8 @@ cdef class Entity(object):
     def __getitem__(self, index):
         if not isinstance(index, (tuple, list)):
             index = [index]
+        if len(index) == 0:
+            self._check_empty_index()
         cdef campl.AMPL_TUPLE* tuple_c =  to_c_tuple(index)
         return create_entity(self.wrap_function, self._ampl, self._name, tuple_c, self)
 
@@ -356,7 +377,7 @@ cdef class Entity(object):
             The sum of the dimensions of the indexing sets or 0 if the
             entity is not indexed.
         """
-        if self._index is not NULL:
+        if self._is_instance():
             return 0
         return self._family_indexarity()
 
