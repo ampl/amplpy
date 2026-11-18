@@ -1017,6 +1017,19 @@ class TestEntities(TestBase.TestBase):
             with self.assertRaises(TypeError):
                 getter()
 
+    def test_find_deleted_entity(self):
+        # find() raises (and frees the parsed index) when the tuples of the
+        # entity cannot be read; the session stays usable.
+        ampl = self.ampl
+        ampl.eval("set S := {1, 2}; var x {S};")
+        x = ampl.get_variable("x")
+        self.assertIsNotNone(x.find(2))
+        self.assertIsNone(x.find(3))
+        ampl.eval("delete x;")
+        with self.assertRaises(KeyError):
+            x.find(2)
+        self.assertEqual(ampl.get_value("card(S)"), 2)
+
     def test_indexed_objective_minimization(self):
         ampl = self.ampl
         ampl.eval(

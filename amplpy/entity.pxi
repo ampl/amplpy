@@ -311,6 +311,7 @@ cdef class Entity(object):
         cdef size_t size
         errorinfo = campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
         if errorinfo:
+            campl.AMPL_TupleFree(&index_c)
             PY_AMPL_CALL(errorinfo)
         for i in range(size):
             if campl.AMPL_TupleCompare(index_c, indices_c[i]) == 0:
