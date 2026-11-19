@@ -67,38 +67,59 @@ cdef class Set(Entity):
 
     def get_values(self):
         """
-        Get values of this set in a DataFrame. Valid only for non-indexed sets.
+        Get values of this set in a DataFrame. Valid only for non-indexed sets
+        and for single instances of an indexed set (e.g., ``T['a']``).
+
+        Raises:
+            TypeError: if this is an indexed set.
         """
         cdef campl.AMPL_DATAFRAME* df_c
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_SetInstanceGetValuesDataframe(self._ampl._c_ampl, self._name, self._index, &df_c))
         return DataFrame.create(df_c)
 
     def members(self):
         """
-        Get members (tuples) of this Set. Valid only for non-indexed sets.
+        Get members (tuples) of this Set. Valid only for non-indexed sets
+        and for single instances of an indexed set.
+
+        Raises:
+            TypeError: if this is an indexed set.
         """
+        self._check_scalar()
         return MemberRangeIterator.create(self._ampl._c_ampl, self._name, self._index, self)
 
     def size(self):
         """
-        Get the number of tuples in this set. Valid only for non-indexed sets.
+        Get the number of tuples in this set. Valid only for non-indexed sets
+        and for single instances of an indexed set.
+
+        Raises:
+            TypeError: if this is an indexed set.
         """
         cdef size_t size
+        self._check_scalar()
         PY_AMPL_CALL(campl.AMPL_SetInstanceGetSize(self._ampl._c_ampl, self._name, self._index, &size))
         return int(size)
 
     def contains(self, t):
         """
         Check wether this set instance contains the specified Tuple.
-        Valid only for non-indexed sets.
+        Valid only for non-indexed sets and for single instances of an
+        indexed set.
 
         Args:
             t: Tuple to be found.
+
+        Raises:
+            TypeError: if this is an indexed set.
         """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef bool_c contains_c
-        cdef campl.AMPL_TUPLE* t_c = to_c_tuple(t)
-        errorinfo = campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, NULL, t_c, &contains_c)    
+        cdef campl.AMPL_TUPLE* t_c
+        self._check_scalar()
+        t_c = to_c_tuple(t)
+        errorinfo = campl.AMPL_SetInstanceContains(self._ampl._c_ampl, self._name, self._index, t_c, &contains_c)
         campl.AMPL_TupleFree(&t_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)

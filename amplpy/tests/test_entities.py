@@ -801,6 +801,664 @@ class TestEntities(TestBase.TestBase):
         self.assertEqual(r.to_dict(), {"a": 4})
         self.assertEqual(ampl.get_value("1+1"), 2)
 
+    def test_current_objective_indexed(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b c', "it's"};
+            set N := {1, 2.5};
+            var x >= 1;
+            maximize F {i in N}: i*x;
+            minimize G {s in S, i in N}: x + i;
+            minimize H: 7*x;
+            let x := 1;
+        """
+        )
+        for cmd, name, value, minimize in [
+            ("objective F[2.5];", "F", 2.5, False),
+            ("objective F[1];", "F", 1, False),
+            ("objective G['b c', 1];", "G", 2, True),
+            ("""objective G["it's", 2.5];""", "G", 3.5, True),
+            ("objective H;", "H", 7, True),
+        ]:
+            ampl.eval(cmd)
+            obj = ampl.get_current_objective()
+            self.assertEqual(obj.name(), name)
+            self.assertEqual(obj.value(), value)
+            self.assertEqual(obj.minimization(), minimize)
+
+    def test_indexed_entity_scalar_access(self):
+        ampl = self.ampl
+        # A single-instance family is the case in which the interpreter
+        # would otherwise return the indexing key instead of the suffix value.
+        for members in ["{'a'}", "{'a', 'b'}"]:
+            ampl.reset()
+            ampl.eval(
+                f"""
+                set S := {members};
+                var x >= 1;
+                var y {{S}} >= 0;
+                minimize Obj {{s in S}}: 2*x;
+                s.t. C {{s in S}}: y[s] <= 4;
+                let x := 1;
+            """
+            )
+            obj = ampl.get_objective("Obj")
+            y = ampl.get_variable("y")
+            c = ampl.get_constraint("C")
+            for getter in [
+                obj.value,
+                obj.astatus,
+                obj.exitcode,
+                y.value,
+                y.lb,
+                y.astatus,
+                y.defeqn,
+                c.body,
+                c.dual,
+                c.ub,
+                c.astatus,
+                c.defvar,
+            ]:
+                with self.assertRaises(TypeError):
+                    getter()
+            # The sense belongs to the whole indexed objective.
+            self.assertTrue(obj.minimization())
+            self.assertEqual(obj["a"].value(), 2)
+            self.assertTrue(obj["a"].minimization())
+            self.assertEqual(y["a"].value(), 0)
+            self.assertEqual(y["a"].lb(), 0)
+            self.assertEqual(c["a"].ub(), 4)
+            self.assertEqual(ampl.get_variable("x").value(), 1)
+            ampl.eval("objective Obj['a'];")
+            self.assertEqual(ampl.get_current_objective().value(), 2)
+
+    def test_indexed_entity_scalar_setters(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            var x;
+            var y {S} >= 0;
+            s.t. C {s in S}: y[s] <= 4;
+            param p {S} default 5;
+            param q := 3;
+            param r;
+        """
+        )
+        y = ampl.get_variable("y")
+        c = ampl.get_constraint("C")
+        p = ampl.get_parameter("p")
+        # These never worked on an indexed entity: AMPL rejected the
+        # generated statement (e.g. "let y := 1;") with a RuntimeError.
+        for setter in [
+            lambda: y.set_value(1),
+            lambda: y.fix(1),
+            lambda: c.set_dual(1),
+            lambda: ampl.var.__setitem__("y", 1),
+            lambda: ampl.con.__setitem__("C", 1),
+            lambda: p.set(1),
+            lambda: p.set("s"),
+            # A single value routes to Parameter.set(), not set_values().
+            lambda: ampl.param.__setitem__("p", 1),
+            lambda: ampl.param.__setitem__("p", "s"),
+            p.value,
+        ]:
+            with self.assertRaises(TypeError):
+                setter()
+        self.assertEqual(y.get_values().to_dict(), {"a": 0, "b": 0})
+        self.assertEqual((p["a"], p["b"]), (5, 5))
+        # Whole-family operations remain valid on indexed entities.
+        y.fix()
+        self.assertEqual(y["a"].astatus(), "fix")
+        y.unfix()
+        self.assertEqual(y["a"].astatus(), "unused")
+        c.drop()
+        self.assertEqual(c["a"].astatus(), "drop")
+        c.restore()
+        # Instances and scalar entities are unaffected.
+        y["a"].set_value(2)
+        self.assertEqual(y["a"].value(), 2)
+        y["b"].fix(3)
+        self.assertEqual(y["b"].value(), 3)
+        self.assertEqual(p["a"], 5)
+        self.assertEqual(p.get("a"), 5)
+        self.assertEqual(ampl.get_parameter("q").value(), 3)
+        ampl.get_variable("x").set_value(4)
+        self.assertEqual(ampl.get_variable("x").value(), 4)
+        # Assigning all instances of an indexed parameter still works.
+        ampl.param["p"] = {"a": 1, "b": 2}
+        self.assertEqual(p.get_values().to_dict(), {"a": 1, "b": 2})
+        ampl.param["r"] = 6
+        self.assertEqual(ampl.get_parameter("r").value(), 6)
+
+    def test_empty_index(self):
+        # An empty index names the bare entity. On an indexed entity with one
+        # instance, that returned the key or garbage instead of an error, so
+        # it is rejected as soon as the index is applied.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set T := {2026};
+            var y {T} := 4;
+            minimize O {t in T}: y[t];
+            s.t. C {t in T}: y[t] >= 1;
+            param cap {T} := 5;
+            var x := 3;
+            param q := 11;
+            param w;
+        """
+        )
+        y = ampl.get_variable("y")
+        for call in [
+            lambda: y[()],
+            lambda: y[[]],
+            lambda: y.instances()[()],
+            lambda: y.instances()[[]],
+            lambda: ampl.get_objective("O")[()],
+            lambda: ampl.get_constraint("C")[()],
+            lambda: ampl.get_parameter("cap")[()],
+            lambda: ampl.get_entity("cap")[()],
+            lambda: ampl.get_parameter("cap").__setitem__((), 6),
+            lambda: ampl.get_parameter("cap").set((), 6),
+            lambda: ampl.get_parameter("cap").set([], "s"),
+        ]:
+            with self.assertRaisesRegex(TypeError, "empty index"):
+                call()
+        self.assertEqual(y[2026].value(), 4)
+        self.assertEqual(ampl.get_parameter("cap")[2026], 5)
+        # Assigning through an empty index works like reading through one.
+        w = ampl.get_parameter("w")
+        w[()] = 12
+        self.assertEqual(w.value(), 12)
+        w.set((), 13)
+        self.assertEqual(w[()], 13)
+        # On a scalar entity, an empty index names the entity itself.
+        x = ampl.get_variable("x")
+        self.assertEqual(x[()].value(), 3)
+        self.assertEqual(x.instances()[()].value(), 3)
+        self.assertEqual(x[()].indexarity(), 0)
+        self.assertTrue(x[()].is_scalar())
+        self.assertEqual(ampl.get_parameter("q")[()], 11)
+        self.assertEqual(ampl.get_entity("q")[()].value(), 11)
+
+    def test_empty_index_after_redeclaration(self):
+        # x[()] taken while x is scalar names the bare entity: once x is
+        # redeclared as indexed, the same object represents the whole family
+        # and all its accessors agree on that.
+        ampl = self.ampl
+        ampl.eval("var x := 3;")
+        x0 = ampl.get_variable("x")[()]
+        self.assertEqual(x0.value(), 3)
+        ampl.reset()
+        ampl.eval("set S := {'a'}; var x {S} := 1;")
+        self.assertEqual(x0.indexarity(), 1)
+        self.assertFalse(x0.is_scalar())
+        with self.assertRaises(TypeError):
+            x0.value()
+
+    def test_instances_string_key(self):
+        # A string key is one element of the index, not a sequence of
+        # characters (which used to give ('a', 'b') for "ab").
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'ab', 'c'};
+            set P := {('a', 'b')};
+            var y {S} := 1;
+            var z {P} := 2;
+        """
+        )
+        y = ampl.get_variable("y")
+        z = ampl.get_variable("z")
+        y["ab"].set_value(5)
+        self.assertEqual(y.instances()["ab"].value(), 5)
+        self.assertEqual(y.instances()["c"].value(), 1)
+        self.assertEqual(z.instances()[("a", "b")].value(), 2)
+        self.assertEqual(z.instances()[["a", "b"]].value(), 2)
+
+    def test_indexed_entity_error_messages(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            var y {S};
+            param p {S} default 1;
+            set T {S} := {1};
+            param r;
+            problem P {s in S}: y;
+            problem Q: y;
+        """
+        )
+        # The advice in the message works for the entity type.
+        with self.assertRaisesRegex(TypeError, r"p\[\.\.\.\] = value.*set_values"):
+            ampl.get_parameter("p").set(2)
+        with self.assertRaisesRegex(TypeError, r"y\[\.\.\.\]\)\. Use get_values"):
+            ampl.get_variable("y").value()
+        with self.assertRaisesRegex(TypeError, r"T\[\.\.\.\]\)\. Use instances"):
+            ampl.get_set("T").size()
+        # Parameters, sets and problems have no suffixes, indexed or not
+        # (unchanged).
+        for name in ["p", "T", "r", "P", "Q"]:
+            with self.assertRaisesRegex(ValueError, "suffix", msg=name):
+                ampl.get_entity(name).set_suffix("relax", 1)
+
+    def test_objective_minimization_non_utf8_declaration(self):
+        # AMPL keeps the raw bytes of a Latin-1 model file in the declaration,
+        # so the sense must be read without decoding the declaration.
+        path = self.tmpfile("latin1.mod")
+        with open(path, "wb") as f:
+            f.write(
+                b"var x >= 0;\n"
+                b"minimize Cost 'co\xfbt total': x;\n"
+                b"maximize Profit {i in 1..2}: if 'caf\xe9' = 'x' then x else i*x;\n"
+                b"minimize Loss 'p\xe9nalit\xe9' {i in 1..2}: i*x;\n"
+            )
+        self.ampl.read(path)
+        self.assertTrue(self.ampl.get_objective("Cost").minimization())
+        self.assertFalse(self.ampl.get_objective("Profit")[1].minimization())
+        self.assertFalse(self.ampl.get_objective("Profit").minimization())
+        self.assertTrue(self.ampl.get_objective("Loss").minimization())
+
+    def test_minimization_deleted_objective(self):
+        # Like the other getters, minimization() raises TypeError once the
+        # objective is deleted.
+        ampl = self.ampl
+        ampl.eval("var x; minimize O: x;")
+        obj = ampl.get_objective("O")
+        ampl.eval("delete O;")
+        for getter in [obj.value, obj.minimization]:
+            with self.assertRaises(TypeError):
+                getter()
+
+    def test_find_deleted_entity(self):
+        # find() on a deleted entity raises KeyError (AMPL reports indexarity
+        # 0 for it, like for a scalar entity); the session stays usable.
+        ampl = self.ampl
+        ampl.eval("set S := {1, 2}; var x {S};")
+        x = ampl.get_variable("x")
+        self.assertIsNotNone(x.find(2))
+        self.assertIsNone(x.find(3))
+        ampl.eval("delete x;")
+        for index in [2, ()]:
+            with self.assertRaises(KeyError):
+                x.find(index)
+        self.assertEqual(ampl.get_value("card(S)"), 2)
+
+    def test_find_scalar_entity(self):
+        # find() on a scalar entity used to crash the process. Its only
+        # instance has the empty index, as with x[()].
+        ampl = self.ampl
+        ampl.eval("var z := 4; param q := 2; minimize O: z;")
+        z = ampl.get_variable("z")
+        for index in [1, (1,), "a", (1, 2)]:
+            self.assertIsNone(z.find(index))
+        for index in [(), []]:
+            self.assertEqual(z.find(index).value(), 4)
+        self.assertIsNone(ampl.get_parameter("q").find(1))
+        self.assertEqual(ampl.get_objective("O").find(()).value(), 4)
+
+    def test_set_indexed_accessors(self):
+        # Instance-level accessors of an indexed set used to return the data
+        # of one instance; they raise TypeError, as documented.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            set T {s in S} := if s = 'a' then {1, 2, 3} else {4};
+            set U := {1, 2};
+        """
+        )
+        T = ampl.get_set("T")
+        for call in [T.size, T.members, lambda: T.contains(1), T.get_values, T.to_list]:
+            with self.assertRaisesRegex(TypeError, r"T\[\.\.\.\]\)\. Use instances\(\)"):
+                call()
+        self.assertEqual(T["a"].size(), 3)
+        self.assertEqual(list(T["a"].members()), [1, 2, 3])
+        self.assertEqual(T["b"].get_values()._get_num_rows(), 1)
+        # contains() checks the instance it is called on.
+        self.assertTrue(T["a"].contains(2))
+        self.assertFalse(T["b"].contains(2))
+        self.assertTrue(T["b"].contains(4))
+        self.assertEqual(sorted(key for key, _ in T.instances()), [("a",), ("b",)])
+        U = ampl.get_set("U")
+        self.assertEqual(U.size(), 2)
+        self.assertEqual(list(U), [1, 2])
+        self.assertTrue(U.contains(1))
+        self.assertFalse(U.contains(3))
+
+    def test_instance_iterators_released(self):
+        # Iterators that are dropped before they are exhausted (including
+        # those of scalar entities, which hold no tuples) release their
+        # tuples without crashing.
+        ampl = self.ampl
+        ampl.eval("set S := 1..5; var y {S} := 1; var x := 2;")
+        y, x = ampl.get_variable("y"), ampl.get_variable("x")
+        for _ in range(200):
+            it = y.instances()
+            next(it)
+            del it
+            self.assertEqual(y.instances()[3].value(), 1)
+            x.instances()
+            self.assertEqual(len(list(x.instances())), 1)
+        self.assertEqual(sum(inst.value() for _, inst in y.instances()), 5)
+
+    def test_indexed_objective_minimization(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set I := 1..2;
+            set E := {};
+            var y;
+            maximize G {i in I}: y;
+            minimize H {i in I, j in I}: y + i;
+            minimize Z {i in E}: y;
+            maximize S: y;
+        """
+        )
+        self.assertFalse(ampl.get_objective("G").minimization())
+        self.assertFalse(ampl.get_objective("G")[1].minimization())
+        self.assertTrue(ampl.get_objective("H").minimization())
+        self.assertTrue(ampl.get_objective("H")[1, 2].minimization())
+        self.assertTrue(ampl.get_objective("Z").minimization())
+        self.assertFalse(ampl.get_objective("S").minimization())
+        G = ampl.get_objective("G")
+        ampl.eval("redeclare minimize G {i in I}: 2*y;")
+        self.assertTrue(G.minimization())
+
+    def test_current_objective_numeric_members(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set N := {1/3, 123456789.123456789, 1e20, -3, 2^60 + 1};
+            set S := {'a', "it's, [x]"};
+            var x >= 1;
+            maximize F {n in N}: x + n;
+            minimize G {s in S, n in N}: x + n;
+            let x := 1;
+        """
+        )
+        for cmd, expression in [
+            ("objective F[1/3];", "F[1/3]"),
+            ("objective F[123456789.123456789];", "F[123456789.123456789]"),
+            ("objective F[1e20];", "F[1e20]"),
+            ("objective F[-3];", "F[-3]"),
+            ("objective F[2^60 + 1];", "F[2^60 + 1]"),
+            ("""objective G["it's, [x]", 1/3];""", """G["it's, [x]", 1/3]"""),
+            ("objective G['a', -3];", "G['a', -3]"),
+        ]:
+            ampl.eval(cmd)
+            obj = ampl.get_current_objective()
+            self.assertEqual(obj.value(), ampl.get_value(expression), cmd)
+
+    def test_parse_ampl_subscript(self):
+        from amplpy.ampl import _parse_ampl_subscript as parse
+
+        self.assertEqual(parse("'a'"), ["a"])
+        self.assertEqual(parse("'a',1"), ["a", 1])
+        self.assertEqual(parse(" 'a' , 1 "), ["a", 1])
+        self.assertEqual(parse("1,'a',2.5"), [1, "a", 2.5])
+        self.assertEqual(parse("\"it's, [x]\",'say \"hi\"'"), ["it's, [x]", 'say "hi"'])
+        self.assertEqual(parse("'it''s'"), ["it's"])
+        self.assertEqual(parse("\"a\"\"b\""), ['a"b'])
+        self.assertEqual(parse("''"), [""])
+        self.assertEqual(parse("0.3333333333333333"), [1 / 3])
+        self.assertEqual(parse("-3"), [-3])
+        self.assertEqual(parse("+4"), [4])
+        self.assertEqual(parse(".5"), [0.5])
+        self.assertEqual(parse("1e-30"), [1e-30])
+        # Integral values are returned as int only while exactly representable.
+        self.assertIsInstance(parse("2")[0], int)
+        self.assertIsInstance(parse("1e+20")[0], float)
+        self.assertEqual(parse("1e+20"), [1e20])
+        # AMPL prints infinite members as Infinity and -Infinity.
+        self.assertEqual(parse("Infinity,-Infinity"), [float("inf"), float("-inf")])
+        # AMPL prints a newline in a string as a backslash and the newline;
+        # other backslashes are literal.
+        self.assertEqual(parse("'new\\\nline'"), ["new\nline"])
+        self.assertEqual(parse("'new\\\\\nline'"), ["new\\\nline"])
+        self.assertEqual(parse("'a\\b','\\'"), ["a\\b", "\\"])
+        # Only AMPL number syntax is numeric; other unquoted items stay strings.
+        self.assertEqual(parse("alpha"), ["alpha"])
+        self.assertEqual(parse("nan,inf,1_0"), ["nan", "inf", "1_0"])
+        for invalid in [
+            "'a",
+            "'a'b",
+            "'a' 'b'",
+            "1,",
+            ",1",
+            "1,,2",
+            "",
+            "1 2",
+            "a b",
+            "a'b",
+            "'a',1 2",
+        ]:
+            with self.assertRaises(ValueError, msg=invalid):
+                parse(invalid)
+
+    def test_current_objective_newline_members(self):
+        # The current objective is resolved to the member with the newline,
+        # not to the member with a backslash before the newline.
+        ampl = self.ampl
+        for position in (1, 2):
+            ampl.reset()
+            ampl.eval("set S ordered; maximize F {s in S}: ord(s);")
+            ampl.set["S"] = ["new\nline", "new\\\nline"]
+            ampl.eval(f"objective F[member({position}, S)];")
+            ampl.get_current_objective().drop()
+            self.assertEqual(
+                ampl.get_value(f"F[member({position}, S)].astatus"), "drop", position
+            )
+
+    def test_current_objective_without_model_generation(self):
+        # Resolving the current objective must not generate the model: that
+        # fails while data is missing elsewhere, and while option times is set
+        # it made the first lookup fail.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            param m;
+            var x >= 0 <= 1;
+            maximize F {s in S}: if s = 'a' then 2*x else 3*x;
+            s.t. c: x <= m;
+            objective F['a'];
+        """
+        )
+        obj = ampl.get_current_objective()
+        self.assertEqual(obj.name(), "F")
+        ampl.param["m"] = 1
+        ampl.eval("let x := 1;")
+        self.assertEqual(obj.value(), 2)
+        # (While times is set, the C API cannot read suffixes such as the
+        # value, but the lookup itself must work.)
+        ampl.eval("option times 1; let m := 0.5;")
+        self.assertEqual(ampl.get_current_objective().name(), "F")
+        ampl.eval("option times 0;")
+
+    def test_current_objective_infinite_members(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set N := {Infinity, -Infinity, 1};
+            var x >= 1;
+            maximize F {n in N}: x;
+            minimize G {s in {'a'}, n in N}: 2*x;
+            let x := 1;
+        """
+        )
+        for cmd, expected in [
+            ("objective F[Infinity];", "F[Infinity]"),
+            ("objective F[-Infinity];", "F[-Infinity]"),
+            ("objective G['a', Infinity];", "G['a',Infinity]"),
+        ]:
+            ampl.eval(cmd)
+            obj = ampl.get_current_objective()
+            self.assertIn(expected, obj.expand().replace(" ", ""), cmd)
+            self.assertEqual(obj.value(), ampl.get_value(cmd[10:-1]))
+
+    def test_current_objective_unresolved(self):
+        import amplpy.ampl as ampl_module
+
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set N := {1, 2};
+            var x >= 1;
+            maximize F {n in N}: x + n;
+            objective F[2];
+            let x := 1;
+        """
+        )
+        self.assertEqual(ampl.get_current_objective().value(), 3)
+        # An index that is not a member of the indexing set (as would result
+        # from a parsing mismatch) must be reported as KeyError.
+        parse = ampl_module._parse_ampl_subscript
+        try:
+            ampl_module._parse_ampl_subscript = lambda subscript: [7]
+            with self.assertRaises(KeyError):
+                ampl.get_current_objective()
+        finally:
+            ampl_module._parse_ampl_subscript = parse
+        self.assertEqual(ampl.get_current_objective().value(), 3)
+
+    def test_current_objective_drop_restore(self):
+        # Without a single current objective, AMPL lists all objectives with
+        # "drop" and "restore" statements, and there is no current objective.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            var x := 0;
+            set S ordered := {'a', 'b', 'c'};
+            maximize F {s in S}: x + ord(s);
+            minimize G: x + 10;
+        """
+        )
+        self.assertIsNone(ampl.get_current_objective())  # restore F; restore G;
+        for statement, value in [
+            ("objective F['a'];", 1),
+            ("drop F['b'];", 1),
+            ("restore F['b'];", None),  # drop F; restore F['a']; restore F['b']; drop G;
+            ("objective G;", 10),
+            ("drop G;", None),  # drop F; drop G;
+            ("restore G; objective F['c'];", 3),
+        ]:
+            ampl.eval(statement)
+            obj = ampl.get_current_objective()
+            if value is None:
+                self.assertIsNone(obj, msg=statement)
+            else:
+                self.assertEqual(obj.value(), value, msg=statement)
+        # A dropped scalar objective listed first is not the current one.
+        ampl.reset()
+        ampl.eval(
+            """
+            var x := 0;
+            minimize G: x + 10;
+            set S ordered := {'a', 'b'};
+            maximize F {s in S}: x + ord(s);
+            objective F['a'];
+            restore F['b'];
+        """
+        )
+        self.assertIsNone(ampl.get_current_objective())
+        ampl.eval("drop F['b'];")
+        self.assertEqual(ampl.get_current_objective().value(), 1)
+
+    def test_current_objective_semicolon_member(self):
+        # The statement printed by AMPL ends with a semicolon, and a member
+        # may contain one too.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            var x := 0;
+            set T ordered := {'a;b', 'c'};
+            maximize H {t in T}: x + ord(t);
+            objective H['a;b'];
+        """
+        )
+        self.assertEqual(ampl.get_current_objective().value(), 1)
+
+    def test_scalar_check_after_redeclaration(self):
+        ampl = self.ampl
+        ampl.eval("var x := 3;")
+        x = ampl.get_variable("x")
+        self.assertEqual(x.value(), 3)
+        # The same object must notice that x is now indexed.
+        ampl.reset()
+        ampl.eval("set S := {'a'}; var x {S} := 1;")
+        with self.assertRaises(TypeError):
+            x.value()
+        self.assertEqual(x["a"].value(), 1)
+        ampl.reset()
+        ampl.eval("var x := 5;")
+        self.assertEqual(x.value(), 5)
+
+    def test_parameter_instances(self):
+        ampl = self.ampl
+        for members in ["{'a'}", "{'a', 'b'}"]:
+            ampl.reset()
+            ampl.eval(
+                f"""
+                set S := {members};
+                param p {{S}};
+                param q {{S}} symbolic;
+                let {{s in S}} p[s] := if s = 'a' then 10 else 20;
+                let {{s in S}} q[s] := s & s;
+            """
+            )
+            p = ampl.get_parameter("p")
+            q = ampl.get_parameter("q")
+            for (key,), instance in p:
+                self.assertEqual(instance.value(), p[key])
+            for (key,), instance in q:
+                self.assertEqual(instance.value(), key + key)
+            for (key,), instance in p:
+                instance.set(7 if key == "a" else 8)
+            for (key,), instance in q:
+                instance.set("z" + key)
+            self.assertEqual(p["a"], 7)
+            self.assertEqual(q["a"], "za")
+            if members == "{'a', 'b'}":
+                self.assertEqual(p["b"], 8)
+                self.assertEqual(q["b"], "zb")
+            with self.assertRaises(TypeError):
+                p.set(9)
+            with self.assertRaises(TypeError):
+                q.set("z")
+            self.assertEqual(p["a"], 7)
+            # Plain entities resolve parameter instances to their values too.
+            self.assertEqual(ampl.get_entity("p").get("a"), 7)
+            self.assertEqual(p.get("a"), 7)
+            self.assertEqual(p.get(["a"]), 7)
+
+    def test_indexed_entity_get_and_suffix(self):
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a'};
+            var y {S} := 1;
+            var z := 2;
+        """
+        )
+        y = ampl.get_variable("y")
+        z = ampl.get_variable("z")
+        # get() without an index returns the indexed entity itself.
+        self.assertIs(y.get(), y)
+        with self.assertRaises(TypeError):
+            y.get().value()
+        self.assertEqual(y.get("a").value(), 1)
+        self.assertEqual(z.get().value(), 2)
+        # A single suffix value can only be assigned to a scalar or instance.
+        for value in [1, "s"]:
+            with self.assertRaises(TypeError):
+                y.set_suffix("relax", value)
+        y["a"].set_suffix("relax", 1)
+        self.assertEqual(ampl.get_value("y['a'].relax"), 1)
+        z.set_suffix("relax", 1)
+        self.assertEqual(ampl.get_value("z.relax"), 1)
+
     def test_set_values(self):
         ampl = self.ampl
         ampl.eval("var x{1..3};")

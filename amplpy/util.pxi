@@ -6,6 +6,7 @@ from cpython.long cimport PyLong_Check, PyLong_AsLong
 from cpython.float cimport PyFloat_AsDouble
 from cpython.object cimport PyObject
 from libcpp cimport bool
+import re
 
 cdef void PY_AMPL_CALL(campl.AMPL_ERRORINFO* errorinfo) except *:
     cdef campl.AMPL_ERRORCODE rc
@@ -96,6 +97,17 @@ cdef to_py_variant(campl.AMPL_VARIANT* variant):
     else:
         return None
 
+cdef bint _is_empty_index(campl.AMPL_TUPLE* index):
+    """
+    True if index is NULL or an empty tuple: both name the bare entity
+    rather than one of its instances.
+    """
+    cdef size_t size = 0
+    if index is NULL:
+        return True
+    campl.AMPL_TupleGetSize(index, &size)
+    return size == 0
+
 cdef to_py_tuple(campl.AMPL_TUPLE* tuple_c):
     cdef size_t size
     cdef campl.AMPL_VARIANT** variants
@@ -138,6 +150,83 @@ cdef campl.AMPL_VARIANT* to_c_variant(value)  except *:
     else:
         raise ValueError(f"unsupported type {type(value)}")
     return variant
+
+_AMPL_NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+_AMPL_INFINITY = {"Infinity": float("inf"), "-Infinity": float("-inf")}
+_AMPL_INVALID_UNQUOTED = re.compile(r"[\s'\"]")
+
+
+def _parse_ampl_subscript(str subscript):
+    """
+    Parse the subscript of an AMPL instance name (the text between the
+    outer brackets, e.g. ``'a', 1`` for ``Obj['a', 1]``) into a list of
+    Python values. Strings may be quoted with single or double quotes,
+    with embedded quotes doubled (AMPL prints a newline in a string as a
+    backslash followed by the newline). Unquoted items written in AMPL number
+    syntax become numbers (AMPL prints them with round-trip precision),
+    as do ``Infinity`` and ``-Infinity``; any other unquoted item is kept
+    as a string, provided it contains no whitespace or quotes.
+
+    Raises:
+        ValueError: if the subscript is malformed.
+    """
+    items = []
+    n = len(subscript)
+    i = 0
+    while True:
+        while i < n and subscript[i].isspace():
+            i += 1
+        if i < n and subscript[i] in "'\"":
+            quote = subscript[i]
+            i += 1
+            chars = []
+            while True:
+                if i >= n:
+                    raise ValueError(f"Unterminated string in subscript [{subscript}]")
+                if subscript[i] == quote:
+                    if i + 1 < n and subscript[i + 1] == quote:
+                        chars.append(quote)
+                        i += 2
+                        continue
+                    i += 1
+                    break
+                if subscript[i] == "\\" and i + 1 < n and subscript[i + 1] == "\n":
+                    # AMPL prints a newline in a string as a backslash
+                    # followed by the newline; other backslashes are literal.
+                    chars.append("\n")
+                    i += 2
+                    continue
+                chars.append(subscript[i])
+                i += 1
+            items.append("".join(chars))
+        else:
+            j = subscript.find(",", i)
+            if j == -1:
+                j = n
+            token = subscript[i:j].strip()
+            if not token:
+                raise ValueError(f"Invalid subscript [{subscript}]")
+            if _AMPL_NUMBER.fullmatch(token):
+                value = float(token)
+                if value.is_integer() and abs(value) < 2**53:
+                    value = int(value)
+            elif token in _AMPL_INFINITY:
+                value = _AMPL_INFINITY[token]
+            elif _AMPL_INVALID_UNQUOTED.search(token):
+                # e.g. "1 2" (missing comma) or "a'b" (misplaced quote)
+                raise ValueError(f"Invalid subscript [{subscript}]")
+            else:
+                value = token
+            items.append(value)
+            i = j
+        while i < n and subscript[i].isspace():
+            i += 1
+        if i >= n:
+            return items
+        if subscript[i] != ",":
+            raise ValueError(f"Invalid subscript [{subscript}]")
+        i += 1
+
 
 cdef create_entity(campl.AMPL_ENTITYTYPE entity_class, AMPL ampl, char* name, campl.AMPL_TUPLE* index, parent):
     if entity_class == campl.AMPL_VARIABLE:
