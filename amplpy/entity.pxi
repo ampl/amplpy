@@ -79,24 +79,9 @@ cdef class Entity(object):
         different indexing (e.g., after reset() or delete) while this
         object exists.
         """
-        cdef size_t indexarity
         if self._is_instance():
             return
-        PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
-        if indexarity > 0:
-            name = self._name.decode('utf-8')
-            if self.wrap_function == campl.AMPL_PARAMETER:
-                # p[...] is the value of an instance, not an instance object.
-                example = f"{name}[...] to read or {name}[...] = value to assign"
-                bulk = "get_values() or set_values()"
-            else:
-                example = f"{name}[...]"
-                bulk = "get_values()"
-            raise TypeError(
-                f"'{name}' is an indexed entity; this method can only be used "
-                f"on a scalar entity or on a single instance "
-                f"(e.g., {example}). Use {bulk} to access all instances."
-            )
+        self._raise_if_indexed(False)
 
     cdef _check_empty_index(self):
         """
@@ -106,14 +91,39 @@ cdef class Entity(object):
         that instance instead of failing. On a scalar entity, x[()] is valid
         and names the entity itself.
         """
+        self._raise_if_indexed(True)
+
+    cdef _raise_if_indexed(self, bint empty_index):
+        """
+        Shared by _check_scalar() and _check_empty_index(): raise TypeError if
+        the entity is indexed, with advice that suits the entity type.
+        """
         cdef size_t indexarity = self._family_indexarity()
-        if indexarity > 0:
-            name = self._name.decode('utf-8')
+        if indexarity == 0:
+            return
+        name = self._name.decode('utf-8')
+        if empty_index:
             raise TypeError(
                 f"'{name}' is an indexed entity (indexarity {indexarity}); an "
                 f"empty index is only valid for a scalar entity. Pass the "
                 f"index of an instance (e.g., {name}[...])."
             )
+        if self.wrap_function == campl.AMPL_PARAMETER:
+            # p[...] is the value of an instance, not an instance object.
+            example = f"{name}[...] to read or {name}[...] = value to assign"
+            bulk = "Use get_values() or set_values() to access all instances."
+        elif self.wrap_function == campl.AMPL_SET:
+            # Set.get_values() is itself an instance-level accessor.
+            example = f"{name}[...]"
+            bulk = "Use instances() to iterate over all instances."
+        else:
+            example = f"{name}[...]"
+            bulk = "Use get_values() to access all instances."
+        raise TypeError(
+            f"'{name}' is an indexed entity; this method can only be used "
+            f"on a scalar entity or on a single instance "
+            f"(e.g., {example}). {bulk}"
+        )
 
     cdef bint _is_instance(self) except -1:
         """
@@ -122,11 +132,7 @@ cdef class Entity(object):
         if the entity is later redeclared as indexed, such an object
         represents the whole family.
         """
-        cdef size_t size = 0
-        if self._index is NULL:
-            return False
-        campl.AMPL_TupleGetSize(self._index, &size)
-        return size > 0
+        return not _is_empty_index(self._index)
 
     cdef _get_double_suffix(self, campl.AMPL_NUMERICSUFFIX suffix):
         """Read a numeric suffix of this scalar entity or instance."""
@@ -142,11 +148,16 @@ cdef class Entity(object):
         PY_AMPL_CALL(campl.AMPL_InstanceGetIntSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value))
         return value
 
-    cdef _get_string_suffix(self, campl.AMPL_STRINGSUFFIX suffix):
-        """Read a string suffix of this scalar entity or instance."""
+    cdef _get_string_suffix(self, campl.AMPL_STRINGSUFFIX suffix, bint check=True):
+        """
+        Read a string suffix of this scalar entity or instance. Pass
+        check=False only if the caller has already checked that this object
+        is not an indexed entity.
+        """
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef char* value_c
-        self._check_scalar()
+        if check:
+            self._check_scalar()
         errorinfo = campl.AMPL_InstanceGetStringSuffix(self._ampl._c_ampl, self._name, self._index, suffix, &value_c)
         if errorinfo:
             PY_AMPL_CALL(errorinfo)
@@ -249,11 +260,14 @@ cdef class Entity(object):
 
     cdef _check_suffix_target(self):
         """
-        Check that a single suffix value can be set on this object. Parameters
-        and sets have no suffixes, which AMPL reports (ValueError) whether
-        they are indexed or not.
+        Check that a single suffix value can be set on this object. Only
+        variables, constraints and objectives have suffixes. For the other
+        entity types (parameters, sets, tables and problems), AMPL reports
+        that they have none (ValueError), whether they are indexed or not.
         """
-        if self.wrap_function != campl.AMPL_PARAMETER and self.wrap_function != campl.AMPL_SET:
+        if (self.wrap_function == campl.AMPL_VARIABLE
+                or self.wrap_function == campl.AMPL_CONSTRAINT
+                or self.wrap_function == campl.AMPL_OBJECTIVE):
             self._check_scalar()
 
     def expand(self):
@@ -320,6 +334,7 @@ cdef class Entity(object):
     def find(self, index):
         """
         Searches the current entity for an instance with the specified index.
+        The only instance of a scalar entity has the empty index ``()``.
 
         Returns:
             The wanted instance if found, otherwise it returns `None`.
@@ -327,9 +342,25 @@ cdef class Entity(object):
         assert self.wrap_function is not None
         cdef campl.AMPL_ERRORINFO* errorinfo
         cdef size_t i
-        cdef campl.AMPL_TUPLE* index_c = to_c_tuple(index)
+        cdef campl.AMPL_TUPLE* index_c
         cdef campl.AMPL_TUPLE** indices_c
         cdef size_t size
+        cdef campl.AMPL_ENTITYTYPE entitytype
+        if not isinstance(index, (tuple, list)):
+            index = [index]
+        if self._family_indexarity() == 0:
+            # AMPL also reports indexarity 0 for a deleted entity: make sure
+            # the entity exists, so that this raises KeyError as for an
+            # indexed entity instead of reporting a missing instance.
+            PY_AMPL_CALL(campl.AMPL_EntityGetType(self._ampl._c_ampl, self._name, &entitytype))
+            # A scalar entity has no tuples to search (AMPL_EntityGetTuples
+            # must not be called for it): an empty index names the entity
+            # itself, as with x[()], and any other index has no instance.
+            if len(index) != 0:
+                return None
+            index_c = to_c_tuple(index)
+            return create_entity(self.wrap_function, self._ampl, self._name, index_c, self)
+        index_c = to_c_tuple(index)
         errorinfo = campl.AMPL_EntityGetTuples(self._ampl._c_ampl, self._name, &indices_c, &size)
         if errorinfo:
             campl.AMPL_TupleFree(&index_c)

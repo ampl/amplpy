@@ -97,6 +97,17 @@ cdef to_py_variant(campl.AMPL_VARIANT* variant):
     else:
         return None
 
+cdef bint _is_empty_index(campl.AMPL_TUPLE* index):
+    """
+    True if index is NULL or an empty tuple: both name the bare entity
+    rather than one of its instances.
+    """
+    cdef size_t size = 0
+    if index is NULL:
+        return True
+    campl.AMPL_TupleGetSize(index, &size)
+    return size == 0
+
 cdef to_py_tuple(campl.AMPL_TUPLE* tuple_c):
     cdef size_t size
     cdef campl.AMPL_VARIANT** variants

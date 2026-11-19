@@ -946,6 +946,7 @@ class TestEntities(TestBase.TestBase):
             param cap {T} := 5;
             var x := 3;
             param q := 11;
+            param w;
         """
         )
         y = ampl.get_variable("y")
@@ -958,11 +959,20 @@ class TestEntities(TestBase.TestBase):
             lambda: ampl.get_constraint("C")[()],
             lambda: ampl.get_parameter("cap")[()],
             lambda: ampl.get_entity("cap")[()],
+            lambda: ampl.get_parameter("cap").__setitem__((), 6),
+            lambda: ampl.get_parameter("cap").set((), 6),
+            lambda: ampl.get_parameter("cap").set([], "s"),
         ]:
             with self.assertRaisesRegex(TypeError, "empty index"):
                 call()
         self.assertEqual(y[2026].value(), 4)
         self.assertEqual(ampl.get_parameter("cap")[2026], 5)
+        # Assigning through an empty index works like reading through one.
+        w = ampl.get_parameter("w")
+        w[()] = 12
+        self.assertEqual(w.value(), 12)
+        w.set((), 13)
+        self.assertEqual(w[()], 13)
         # On a scalar entity, an empty index names the entity itself.
         x = ampl.get_variable("x")
         self.assertEqual(x[()].value(), 3)
@@ -1016,6 +1026,8 @@ class TestEntities(TestBase.TestBase):
             param p {S} default 1;
             set T {S} := {1};
             param r;
+            problem P {s in S}: y;
+            problem Q: y;
         """
         )
         # The advice in the message works for the entity type.
@@ -1023,8 +1035,11 @@ class TestEntities(TestBase.TestBase):
             ampl.get_parameter("p").set(2)
         with self.assertRaisesRegex(TypeError, r"y\[\.\.\.\]\)\. Use get_values"):
             ampl.get_variable("y").value()
-        # Parameters and sets have no suffixes, indexed or not (unchanged).
-        for name in ["p", "T", "r"]:
+        with self.assertRaisesRegex(TypeError, r"T\[\.\.\.\]\)\. Use instances"):
+            ampl.get_set("T").size()
+        # Parameters, sets and problems have no suffixes, indexed or not
+        # (unchanged).
+        for name in ["p", "T", "r", "P", "Q"]:
             with self.assertRaisesRegex(ValueError, "suffix", msg=name):
                 ampl.get_entity(name).set_suffix("relax", 1)
 
@@ -1057,17 +1072,76 @@ class TestEntities(TestBase.TestBase):
                 getter()
 
     def test_find_deleted_entity(self):
-        # find() raises (and frees the parsed index) when the tuples of the
-        # entity cannot be read; the session stays usable.
+        # find() on a deleted entity raises KeyError (AMPL reports indexarity
+        # 0 for it, like for a scalar entity); the session stays usable.
         ampl = self.ampl
         ampl.eval("set S := {1, 2}; var x {S};")
         x = ampl.get_variable("x")
         self.assertIsNotNone(x.find(2))
         self.assertIsNone(x.find(3))
         ampl.eval("delete x;")
-        with self.assertRaises(KeyError):
-            x.find(2)
+        for index in [2, ()]:
+            with self.assertRaises(KeyError):
+                x.find(index)
         self.assertEqual(ampl.get_value("card(S)"), 2)
+
+    def test_find_scalar_entity(self):
+        # find() on a scalar entity used to crash the process. Its only
+        # instance has the empty index, as with x[()].
+        ampl = self.ampl
+        ampl.eval("var z := 4; param q := 2; minimize O: z;")
+        z = ampl.get_variable("z")
+        for index in [1, (1,), "a", (1, 2)]:
+            self.assertIsNone(z.find(index))
+        for index in [(), []]:
+            self.assertEqual(z.find(index).value(), 4)
+        self.assertIsNone(ampl.get_parameter("q").find(1))
+        self.assertEqual(ampl.get_objective("O").find(()).value(), 4)
+
+    def test_set_indexed_accessors(self):
+        # Instance-level accessors of an indexed set used to return the data
+        # of one instance; they raise TypeError, as documented.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            set S := {'a', 'b'};
+            set T {s in S} := if s = 'a' then {1, 2, 3} else {4};
+            set U := {1, 2};
+        """
+        )
+        T = ampl.get_set("T")
+        for call in [T.size, T.members, lambda: T.contains(1), T.get_values, T.to_list]:
+            with self.assertRaisesRegex(TypeError, r"T\[\.\.\.\]\)\. Use instances\(\)"):
+                call()
+        self.assertEqual(T["a"].size(), 3)
+        self.assertEqual(list(T["a"].members()), [1, 2, 3])
+        self.assertEqual(T["b"].get_values()._get_num_rows(), 1)
+        # contains() checks the instance it is called on.
+        self.assertTrue(T["a"].contains(2))
+        self.assertFalse(T["b"].contains(2))
+        self.assertTrue(T["b"].contains(4))
+        self.assertEqual(sorted(key for key, _ in T.instances()), [("a",), ("b",)])
+        U = ampl.get_set("U")
+        self.assertEqual(U.size(), 2)
+        self.assertEqual(list(U), [1, 2])
+        self.assertTrue(U.contains(1))
+        self.assertFalse(U.contains(3))
+
+    def test_instance_iterators_released(self):
+        # Iterators that are dropped before they are exhausted (including
+        # those of scalar entities, which hold no tuples) release their
+        # tuples without crashing.
+        ampl = self.ampl
+        ampl.eval("set S := 1..5; var y {S} := 1; var x := 2;")
+        y, x = ampl.get_variable("y"), ampl.get_variable("x")
+        for _ in range(200):
+            it = y.instances()
+            next(it)
+            del it
+            self.assertEqual(y.instances()[3].value(), 1)
+            x.instances()
+            self.assertEqual(len(list(x.instances())), 1)
+        self.assertEqual(sum(inst.value() for _, inst in y.instances()), 5)
 
     def test_indexed_objective_minimization(self):
         ampl = self.ampl
@@ -1248,6 +1322,63 @@ class TestEntities(TestBase.TestBase):
         finally:
             ampl_module._parse_ampl_subscript = parse
         self.assertEqual(ampl.get_current_objective().value(), 3)
+
+    def test_current_objective_drop_restore(self):
+        # Without a single current objective, AMPL lists all objectives with
+        # "drop" and "restore" statements, and there is no current objective.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            var x := 0;
+            set S ordered := {'a', 'b', 'c'};
+            maximize F {s in S}: x + ord(s);
+            minimize G: x + 10;
+        """
+        )
+        self.assertIsNone(ampl.get_current_objective())  # restore F; restore G;
+        for statement, value in [
+            ("objective F['a'];", 1),
+            ("drop F['b'];", 1),
+            ("restore F['b'];", None),  # drop F; restore F['a']; restore F['b']; drop G;
+            ("objective G;", 10),
+            ("drop G;", None),  # drop F; drop G;
+            ("restore G; objective F['c'];", 3),
+        ]:
+            ampl.eval(statement)
+            obj = ampl.get_current_objective()
+            if value is None:
+                self.assertIsNone(obj, msg=statement)
+            else:
+                self.assertEqual(obj.value(), value, msg=statement)
+        # A dropped scalar objective listed first is not the current one.
+        ampl.reset()
+        ampl.eval(
+            """
+            var x := 0;
+            minimize G: x + 10;
+            set S ordered := {'a', 'b'};
+            maximize F {s in S}: x + ord(s);
+            objective F['a'];
+            restore F['b'];
+        """
+        )
+        self.assertIsNone(ampl.get_current_objective())
+        ampl.eval("drop F['b'];")
+        self.assertEqual(ampl.get_current_objective().value(), 1)
+
+    def test_current_objective_semicolon_member(self):
+        # The statement printed by AMPL ends with a semicolon, and a member
+        # may contain one too.
+        ampl = self.ampl
+        ampl.eval(
+            """
+            var x := 0;
+            set T ordered := {'a;b', 'c'};
+            maximize H {t in T}: x + ord(t);
+            objective H['a;b'];
+        """
+        )
+        self.assertEqual(ampl.get_current_objective().value(), 1)
 
     def test_scalar_check_after_redeclaration(self):
         ampl = self.ampl

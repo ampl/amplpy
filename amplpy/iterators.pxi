@@ -132,23 +132,28 @@ cdef class InstanceIterator(object):
             instanceit.begin = NULL
             instanceit.iterator = 0
             return instanceit
+        instanceit.begin = NULL
+        instanceit._size = 0
+        instanceit.iterator = 0
         errorinfo = campl.AMPL_EntityGetTuples(instanceit._ampl._c_ampl, instanceit._name, &instanceit.begin, &instanceit._size)
         if errorinfo:
-            for i in range(instanceit._size):
-                campl.AMPL_TupleFree(&instanceit.begin[i])
-            free(instanceit.begin)
+            if instanceit.begin != NULL:
+                for i in range(instanceit._size):
+                    campl.AMPL_TupleFree(&instanceit.begin[i])
+                free(instanceit.begin)
+            # Nothing is left for __dealloc__ to free.
+            instanceit.begin = NULL
+            instanceit._size = 0
             PY_AMPL_CALL(errorinfo)
-        if instanceit._size == 0:
-            instanceit.iterator = 0
-        else:
-            instanceit.iterator = 0
         return instanceit
 
     def __dealloc__(self):
-        if self.iterator+1 < self._size:
-            for i in range(self.iterator+1, self._size):
-                campl.AMPL_TupleFree(&self.begin[i])
+        # The tuples before self.iterator were handed over to the instances
+        # returned by __next__, which free them; the rest are still owned
+        # here. begin is NULL for a scalar entity, which has no tuples.
         if self.begin != NULL:
+            for i in range(self.iterator, self._size):
+                campl.AMPL_TupleFree(&self.begin[i])
             free(self.begin)
             self.begin = NULL
 

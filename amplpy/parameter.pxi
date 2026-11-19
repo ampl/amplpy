@@ -23,10 +23,7 @@ cdef _get_parameter_value(AMPL ampl, char* name, campl.AMPL_TUPLE* index):
     cdef campl.AMPL_ERRORINFO* errorinfo
     cdef char* expression = NULL
     cdef campl.AMPL_VARIANT* v
-    cdef size_t size = 0
-    if index is not NULL:
-        campl.AMPL_TupleGetSize(index, &size)
-    if size == 0:
+    if _is_empty_index(index):
         errorinfo = campl.AMPL_GetValue(ampl._c_ampl, name, &v)
     else:
         PY_AMPL_CALL(campl.AMPL_InstanceGetName(ampl._c_ampl, name, index, &expression))
@@ -104,8 +101,9 @@ cdef class Parameter(Entity):
             index = [index]
         if len(index) == 0:
             # p[()] names the bare parameter: valid only for a scalar one.
+            # The check passed, so read it without the check of value().
             self._check_empty_index()
-            return self.value()
+            return _get_parameter_value(self._ampl, self._name, self._index)
         cdef campl.AMPL_TUPLE* tuple_c = to_c_tuple(index)
         try:
             return _get_parameter_value(self._ampl, self._name, tuple_c)
@@ -163,6 +161,11 @@ cdef class Parameter(Entity):
             index, value = args
             if not isinstance(index, (tuple, list)):
                 index = [index]
+            if len(index) == 0:
+                # p[()] = value names the bare parameter (as p[()] does when
+                # reading): valid only for a scalar one.
+                self._check_empty_index()
+                return self.set(value)
             index_c = to_c_tuple(index)
             if isinstance(value, Real):
                 errorinfo = campl.AMPL_ParameterInstanceSetNumericValue(self._ampl._c_ampl, self._name, index_c, float(value))

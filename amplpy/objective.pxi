@@ -100,14 +100,12 @@ cdef class Objective(Entity):
         False if maximize. All instances of an indexed objective share the
         sense, so this also works on the indexed objective itself.
         """
-        cdef size_t indexarity = 0
         cdef char* declaration_c = NULL
         cdef bint minimize
-        if not self._is_instance():
-            PY_AMPL_CALL(campl.AMPL_EntityGetIndexarity(self._ampl._c_ampl, self._name, &indexarity))
-        if indexarity == 0:
-            # A scalar objective or an instance: read the sense suffix.
-            return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SENSE) == 'minimize'
+        if self._is_instance() or self._family_indexarity() == 0:
+            # A scalar objective or an instance: read the sense suffix. The
+            # indexarity was just checked, so skip the check of the getter.
+            return self._get_string_suffix(campl.AMPL_STRINGSUFFIX.AMPL_SENSE, False) == 'minimize'
         # An indexed objective has no sense suffix of its own (and may have no
         # instances), but its instances share the sense of the declaration,
         # which AMPL normalizes to start with "minimize" or "maximize". Compare

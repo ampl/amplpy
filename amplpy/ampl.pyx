@@ -767,17 +767,22 @@ cdef class AMPL:
 
     def get_current_objective(self):
         """
-        Get the the current objective. Returns `None` if no objective is set.
+        Get the the current objective. Returns `None` if no objective is set,
+        or if no single objective is current (e.g., several instances of an
+        indexed objective are restored, or all objectives are dropped).
         """
-        cdef campl.AMPL_ERRORINFO* errorinfo
-        cdef char* objname_c
-        errorinfo = campl.AMPL_GetCurrentObjective(self._c_ampl, &objname_c)
-        if errorinfo:
-            PY_AMPL_CALL(errorinfo)
-        objname = str(objname_c.decode('utf-8'))
-        campl.AMPL_StringFree(&objname_c)
-        if objname == "":
+        # With a single current objective, AMPL prints "objective NAME;".
+        # Otherwise it lists every objective with "drop" or "restore"
+        # statements. AMPL_GetCurrentObjective returns the name in the first
+        # statement unless it is a "restore", which gives a dropped objective
+        # or a whole family for "drop F; restore F['a']; ...", so the output
+        # is read here instead.
+        # No negative slice indices: this module disables wraparound.
+        prefix = "objective "
+        output = self.get_output("objective;").strip()
+        if not output.startswith(prefix) or not output.endswith(";"):
             return None
+        objname = output[len(prefix):len(output) - 1].strip()
         bracket = objname.find("[")
         if bracket == -1 or not objname.endswith("]"):
             return self.get_objective(objname)
@@ -785,15 +790,14 @@ cdef class AMPL:
         # (e.g., Obj['a']): return that instance of the objective family.
         objective = self.get_objective(objname[:bracket])
         try:
-            # No negative slice index: this module disables wraparound.
-            subscript = objname[bracket + 1:len(objname) - 1]
-            # find() checks the parsed index against the tuples of this
-            # objective only. Reading a suffix of the instance instead (e.g.
-            # astatus) makes AMPL generate the whole model, which is costly
-            # and can fail for unrelated reasons (missing data elsewhere).
-            instance = objective.find(_parse_ampl_subscript(subscript))
+            index = _parse_ampl_subscript(objname[bracket + 1:len(objname) - 1])
         except ValueError:
-            instance = None
+            index = None
+        # find() checks the parsed index against the tuples of this objective
+        # only. Reading a suffix of the instance instead (e.g. astatus) makes
+        # AMPL generate the whole model, which is costly and can fail for
+        # unrelated reasons (missing data elsewhere).
+        instance = objective.find(index) if index is not None else None
         if instance is None:
             raise KeyError(
                 f"The current objective {objname} cannot be resolved to an "
